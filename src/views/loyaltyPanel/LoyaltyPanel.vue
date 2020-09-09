@@ -1,9 +1,9 @@
 <template>
-    <div class="home"></div>
+    <router-view></router-view>
 </template>
 
 <script>
 export default {
-    name: "Home"
+    name: "LoyaltyPanel",
 };
 </script>

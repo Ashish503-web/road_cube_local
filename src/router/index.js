@@ -1,29 +1,58 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import Vue from "vue";
+import VueRouter from "vue-router";
+import Home from "../views/Home.vue";
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
 
-  const routes = [
-  {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
-  }
-]
+const routes = [
+    {
+        path: "/",
+        name: "Home",
+        component: Home
+    },
+    {
+        path: "/loyaltypanel",
+        components: {
+            header: () =>
+                import(
+                    /* webpackChunkName: "appHeader" */ "../components/AppHeader.vue"
+                ),
+            default: () =>
+                import(
+                    /* webpackChunkName: "loyaltyPanel" */ "../views/loyaltyPanel/LoyaltyPanel.vue"
+                )
+        },
+        children: [
+            {
+                path: "",
+                name: "LoyaltyPanel",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "defaultDashboard" */ "../views/loyaltyPanel/DefaultDashboard.vue"
+                    )
+            },
+            {
+                path: "dashboard/saas",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "saasDashboard" */ "../views/loyaltyPanel/SaasDashboard.vue"
+                    )
+            },
+            {
+                path: "dashboard/crypto",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "cryptoDashboard" */ "../views/loyaltyPanel/CryptoDashboard.vue"
+                    )
+            }
+        ]
+    }
+];
 
 const router = new VueRouter({
-  mode: 'history',
-  base: process.env.BASE_URL,
-  routes
-})
+    mode: "history",
+    base: process.env.BASE_URL,
+    routes
+});
 
-export default router
+export default router;
