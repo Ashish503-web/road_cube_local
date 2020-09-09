@@ -14,7 +14,7 @@ export default {
 
     data: () => ({
         //
-    })
+    }),
 };
 </script>
 
@@ -25,5 +25,15 @@ export default {
 
 .bw {
     border: 1px solid white !important;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+input[type="number"] {
+    -moz-appearance: textfield;
 }
 </style>

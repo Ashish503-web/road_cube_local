@@ -1,7 +1,7 @@
 <template>
     <header>
         <v-app-bar app flat color="white">
-            <v-app-bar-nav-icon @click.stop="mini = !mini"></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon></v-app-bar-nav-icon>
             <v-col cols="4">
                 <v-text-field
                     placeholder="Search..."
@@ -179,62 +179,45 @@
             </v-btn>
         </v-app-bar>
 
-        <v-navigation-drawer
-            app
-            color="secondary"
-            :mini-variant="mini"
-            mini-variant-width="80"
-            permanent
-            dark
-        >
-            <v-toolbar color="secondary" flat>
-                <v-toolbar-title class="mx-auto">
-                    <v-img src="../assets/logo-light.png" width="90"></v-img>
-                </v-toolbar-title>
-            </v-toolbar>
+        <v-navigation-drawer app color="secondary" permanent dark>
+            <v-row class="py-3" no-gutters justify="center">
+                <v-sheet light class="pa-2 rounded-circle" width="70">
+                    <v-img src="../assets/store-logo.png" width="50"></v-img>
+                </v-sheet>
+                <v-col cols="12" class="text-center mt-4">
+                    <v-btn icon>
+                        <v-icon v-text="icons.mdiWeb"></v-icon>
+                    </v-btn>
+                    <v-btn icon class="mx-3">
+                        <v-icon v-text="icons.mdiPower"></v-icon>
+                    </v-btn>
+                    <v-btn icon>
+                        <v-icon v-text="icons.mdiAccountQuestion"></v-icon>
+                    </v-btn>
+                </v-col>
+                <v-col cols="12" class="text-center mt-4">
+                    <h1 class="subtitle-1 white--text">Maroudas Optika</h1>
+                </v-col>
+            </v-row>
 
-            <v-container class="pa-0" style="height: calc(100vh - 64px); overflow: auto">
+            <v-divider></v-divider>
+
+            <v-container class="pa-0" style="height: calc(100vh - 187px); overflow: auto">
                 <v-list dense nav>
-                    <v-subheader
-                        class="text-caption"
-                        :class="{ 'justify-center': mini }"
-                        v-text="menu.title"
-                    ></v-subheader>
+                    <v-subheader class="text-caption" v-text="use.title"></v-subheader>
 
-                    <v-list-group
-                        v-for="item in menu.itemsGroup"
-                        :key="item.title"
-                        :prepend-icon="item.icon"
-                        no-action
-                        color="white"
-                    >
-                        <template v-slot:activator>
-                            <v-list-item-content>
-                                <v-list-item-title v-text="item.title"></v-list-item-title>
-                            </v-list-item-content>
-                        </template>
-
-                        <v-list-item
-                            v-for="subItem in item.items"
-                            :key="subItem.title"
-                            :to="subItem.to"
-                            exact
-                        >
-                            <v-list-item-content>
-                                <v-list-item-title v-text="subItem.title"></v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-                    </v-list-group>
+                    <v-list-item v-for="item in use.items" :key="item.title" :to="item.to" exact>
+                        <v-list-item-icon>
+                            <v-icon v-text="item.icon"></v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title v-text="item.title"></v-list-item-title>
+                    </v-list-item>
                 </v-list>
 
                 <v-list dense nav subheader>
-                    <v-subheader
-                        class="text-caption"
-                        :class="{ 'justify-center': mini }"
-                        v-text="apps.title"
-                    ></v-subheader>
+                    <v-subheader class="text-caption" v-text="settings.title"></v-subheader>
 
-                    <v-list-item v-for="item in apps.items" :key="item.title" :to="item.to">
+                    <v-list-item v-for="item in settings.items" :key="item.title" :to="item.to">
                         <v-list-item-icon>
                             <v-icon v-text="item.icon"></v-icon>
                         </v-list-item-icon>
@@ -242,100 +225,41 @@
                             <v-list-item-title v-text="item.title"></v-list-item-title>
                         </v-list-item-content>
                     </v-list-item>
-
-                    <v-list-group
-                        v-for="item in apps.itemsGroup"
-                        :key="item.title"
-                        :prepend-icon="item.icon"
-                        no-action
-                        color="white"
-                    >
-                        <template v-slot:activator>
-                            <v-list-item-content>
-                                <v-list-item-title v-text="item.title"></v-list-item-title>
-                            </v-list-item-content>
-                        </template>
-
-                        <v-list-item
-                            v-for="subItem in item.items"
-                            :key="subItem.title"
-                            :to="subItem.to"
-                        >
-                            <v-list-item-content>
-                                <v-list-item-title v-text="subItem.title"></v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-                    </v-list-group>
-                </v-list>
-
-                <v-list dense nav subheader>
-                    <v-subheader
-                        class="text-caption"
-                        :class="{ 'justify-center': mini }"
-                        v-text="pages.title"
-                    ></v-subheader>
-
-                    <v-list-group
-                        v-for="item in pages.itemsGroup"
-                        :key="item.title"
-                        :prepend-icon="item.icon"
-                        no-action
-                        color="white"
-                    >
-                        <template v-slot:activator>
-                            <v-list-item-content>
-                                <v-list-item-title v-text="item.title"></v-list-item-title>
-                            </v-list-item-content>
-                        </template>
-
-                        <v-list-item
-                            v-for="subItem in item.items"
-                            :key="subItem.title"
-                            :to="subItem.to"
-                        >
-                            <v-list-item-content>
-                                <v-list-item-title v-text="subItem.title"></v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-                    </v-list-group>
                 </v-list>
             </v-container>
-        </v-navigation-drawer>
-
-        <v-navigation-drawer v-model="drawer" app right temporary>
-            <v-toolbar flat>
-                <v-toolbar-title>Settings</v-toolbar-title>
-                <v-spacer></v-spacer>
-                <v-btn icon @click.stop="drawer = !drawer">
-                    <v-icon>{{icons.mdiClose}}</v-icon>
-                </v-btn>
-            </v-toolbar>
-            <v-divider></v-divider>
         </v-navigation-drawer>
     </header>
 </template>
 
 <script>
-import { mdiMagnify } from "@mdi/js";
-import { mdiChevronDown } from "@mdi/js";
-import { mdiViewGridPlusOutline } from "@mdi/js";
-import { mdiBellOutline } from "@mdi/js";
-import { mdiClockOutline } from "@mdi/js";
-import { mdiLogout } from "@mdi/js";
-import { mdiCogOutline } from "@mdi/js";
-import { mdiClose } from "@mdi/js";
-import { mdiCartOutline } from "@mdi/js";
-import { mdiCheckDecagram } from "@mdi/js";
-import { mdiHome } from "@mdi/js";
-import { mdiHomeOutline } from "@mdi/js";
-import { mdiCalendarMonth } from "@mdi/js";
-import { mdiForumOutline } from "@mdi/js";
-import { mdiStorefrontOutline } from "@mdi/js";
-import { mdiCurrencyBtc } from "@mdi/js";
-import { mdiAccountOutline } from "@mdi/js";
-import { mdiWalletOutline } from "@mdi/js";
-import { mdiWrenchOutline } from "@mdi/js";
-import { mdiLockOpenOutline } from "@mdi/js";
+import {
+    mdiPower,
+    mdiWeb,
+    mdiAccountQuestion,
+    mdiChartBar,
+    mdiPlusThick,
+    mdiCurrencyEur,
+    mdiGift,
+    mdiCurrencyUsdCircleOutline,
+    mdiTrophyVariant,
+    mdiPackageVariantClosed,
+    mdiTagMultiple,
+    mdiCog,
+    mdiMagnify,
+    mdiChevronDown,
+    mdiViewGridPlusOutline,
+    mdiBellOutline,
+    mdiClockOutline,
+    mdiLogout,
+    mdiCogOutline,
+    mdiCartOutline,
+    mdiCheckDecagram,
+    mdiAccountOutline,
+    mdiWalletOutline,
+    mdiWrenchOutline,
+    mdiLockOpenOutline,
+} from "@mdi/js";
+
 import USFlag from "../assets/flags/US-flag.jpeg";
 import FranceFlag from "../assets/flags/France-flag.jpeg";
 import SpainFlag from "../assets/flags/Spain-flag.jpeg";
@@ -345,11 +269,15 @@ import avatar3 from "../assets/avatars/avatar-3.jpg";
 import avatar4 from "../assets/avatars/avatar-4.jpg";
 
 export default {
-    name: "AppHeader",
+    name: "StoreHeader",
 
     data() {
         return {
             icons: {
+                mdiPower,
+                mdiWeb,
+                mdiAccountQuestion,
+
                 mdiMagnify,
                 mdiChevronDown,
                 mdiViewGridPlusOutline,
@@ -357,179 +285,59 @@ export default {
                 mdiClockOutline,
                 mdiLogout,
                 mdiCogOutline,
-                mdiClose,
             },
-            mini: true,
-            drawer: false,
-            menu: {
-                title: "MENU",
-                itemsGroup: [
+            use: {
+                title: "USE",
+                items: [
+                    { icon: mdiChartBar, title: "Home", to: "/storepanel" },
                     {
-                        icon: mdiHomeOutline,
-                        title: "Dashboards",
-                        items: [
-                            { title: "Default", to: "/loyaltyPanel" },
-                            {
-                                title: "Saas",
-                                to: "/loyaltyPanel/dashboard/saas",
-                            },
-                            {
-                                title: "Crypto",
-                                to: "/loyaltyPanel/dashboard/crypto",
-                            },
-                        ],
+                        icon: mdiPlusThick,
+                        title: "New Transaction",
+                        to: "/storepanel/new-transaction",
+                    },
+                    {
+                        icon: mdiCurrencyEur,
+                        title: "Transactions",
+                        to: "/storepanel/transactions",
+                    },
+                    {
+                        icon: mdiGift,
+                        title: "Redeem",
+                        to: "/storepanel/redeem",
+                    },
+                    {
+                        icon: mdiCurrencyUsdCircleOutline,
+                        title: "History",
+                        to: "/storepanel/history",
+                    },
+                    {
+                        icon: mdiTrophyVariant,
+                        title: "Contests",
+                        to: "/storepanel/contests",
                     },
                 ],
             },
-            apps: {
-                title: "APPS",
+            settings: {
+                title: "SETTINGS",
                 items: [
                     {
-                        icon: mdiCalendarMonth,
-                        title: "Calendar",
-                        to: "/loyaltyPanel/calendar",
+                        icon: mdiPackageVariantClosed,
+                        title: "Products",
+                        to: "/storepanel/products",
                     },
                     {
-                        icon: mdiForumOutline,
-                        title: "Chat",
-                        to: "/loyaltyPanel/chat",
-                    },
-                ],
-                itemsGroup: [
-                    {
-                        icon: mdiStorefrontOutline,
-                        title: "Ecommerce",
-                        items: [
-                            { title: "Products", to: "/loyaltyPanel" },
-                            {
-                                title: "Product Detail",
-                                to: "/loyaltyPanel/saas",
-                            },
-                            { title: "Orders", to: "/loyaltyPanel/crypto" },
-                            { title: "Customers", to: "/loyaltyPanel/crypto" },
-                            { title: "Cart", to: "/loyaltyPanel/crypto" },
-                            { title: "Checkout", to: "/loyaltyPanel/crypto" },
-                            { title: "Shops", to: "/loyaltyPanel/crypto" },
-                            {
-                                title: "Add Product",
-                                to: "/loyaltyPanel/crypto",
-                            },
-                        ],
+                        icon: mdiTagMultiple,
+                        title: "Voucher",
+                        to: "/storepanel/voucher",
                     },
                     {
-                        icon: mdiCurrencyBtc,
-                        title: "Crypto",
-                        items: [
-                            { title: "Wallet", to: "/loyaltyPanel" },
-                            { title: "Buy/sell", to: "/loyaltyPanel/saas" },
-                            { title: "Exchange", to: "/loyaltyPanel/crypto" },
-                            { title: "Lending", to: "/loyaltyPanel/crypto" },
-                            { title: "Orders", to: "/loyaltyPanel/crypto" },
-                            {
-                                title: "KYC Application",
-                                to: "/loyaltyPanel/crypto",
-                            },
-                            {
-                                title: "ICO Landing",
-                                to: "/loyaltyPanel/crypto",
-                            },
-                        ],
-                    },
-                    {
-                        icon: mdiHome,
-                        title: "Email",
-                        items: [
-                            { title: "Inbox", to: "/loyaltyPanel" },
-                            { title: "Read Email", to: "/loyaltyPanel/saas" },
-                        ],
-                    },
-                    {
-                        icon: mdiHome,
-                        title: "Invoices",
-                        items: [
-                            { title: "Invoice List", to: "/loyaltyPanel" },
-                            {
-                                title: "Invoice Detail",
-                                to: "/loyaltyPanel/saas",
-                            },
-                        ],
-                    },
-                    {
-                        icon: mdiHome,
-                        title: "Projects",
-                        items: [
-                            { title: "Projects Grid", to: "/loyaltyPanel" },
-                            {
-                                title: "Projects List",
-                                to: "/loyaltyPanel/saas",
-                            },
-                            {
-                                title: "Project Overview",
-                                to: "/loyaltyPanel/crypto",
-                            },
-                            { title: "Create New", to: "/loyaltyPanel/crypto" },
-                        ],
-                    },
-                    {
-                        icon: mdiHome,
-                        title: "Tasks",
-                        items: [
-                            { title: "Task List", to: "/loyaltyPanel" },
-                            { title: "Kanban Board", to: "/loyaltyPanel/saas" },
-                            {
-                                title: "Create Task",
-                                to: "/loyaltyPanel/crypto",
-                            },
-                        ],
-                    },
-                    {
-                        icon: mdiHome,
-                        title: "Contacts",
-                        items: [
-                            { title: "User Grid", to: "/loyaltyPanel" },
-                            { title: "User List ", to: "/loyaltyPanel/saas" },
-                            { title: "Profile", to: "/loyaltyPanel/crypto" },
-                        ],
+                        icon: mdiCog,
+                        title: "Settings",
+                        to: "/storepanel/settings",
                     },
                 ],
             },
-            pages: {
-                title: "Pages",
-                itemsGroup: [
-                    {
-                        icon: mdiHome,
-                        title: "Authentication",
-                        items: [
-                            { title: "Login", to: "/loyaltyPanel" },
-                            { title: "Register", to: "/loyaltyPanel/saas" },
-                            {
-                                title: "Recover Password",
-                                to: "/loyaltyPanel/crypto",
-                            },
-                            {
-                                title: "Lock Screen",
-                                to: "/loyaltyPanel/crypto",
-                            },
-                        ],
-                    },
-                    {
-                        icon: mdiHome,
-                        title: "Utility",
-                        items: [
-                            { title: "Starter Page", to: "/loyaltyPanel" },
-                            { title: "Maintenance", to: "/loyaltyPanel/saas" },
-                            { title: "Timeline", to: "/loyaltyPanel/crypto" },
-                            { title: "FAQs", to: "/loyaltyPanel/crypto" },
-                            { title: "Pricing", to: "/loyaltyPanel/crypto" },
-                            {
-                                title: "Error 404",
-                                to: "/loyaltyPanel/crypto",
-                            },
-                            { title: "Error 500", to: "/loyaltyPanel/crypto" },
-                        ],
-                    },
-                ],
-            },
+
             megaMenuItems: [
                 {
                     title: "UI Components",

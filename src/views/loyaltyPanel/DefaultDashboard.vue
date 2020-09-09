@@ -2,7 +2,7 @@
     <v-container fluid class="py-0" style="background: #f8f8fb">
         <v-card-title class="pl-3 pb-2">DASHBOARD</v-card-title>
         <v-row no-gutters>
-            <v-col class="pa-3" cols="4">
+            <v-col cols="4" class="pa-3">
                 <v-row no-gutters>
                     <v-col cols="12">
                         <v-card flat class="pb-5">
@@ -155,8 +155,62 @@
                                 </v-row>
                             </v-card>
                         </v-col>
+
+                        <v-col cols="12">
+                            <v-card flat tile>
+                                <v-card-title class="subtitle-1 font-weight-medium">
+                                    <v-col>Email Sent</v-col>
+                                    <v-col>
+                                        <v-tabs right>
+                                            <v-tab class="text-capitalize">week</v-tab>
+                                            <v-tab class="text-capitalize">month</v-tab>
+                                            <v-tab class="text-capitalize">year</v-tab>
+                                        </v-tabs>
+                                    </v-col>
+                                </v-card-title>
+
+                                <v-sparkline
+                                    height="118"
+                                    :value="value"
+                                    :gradient="gradient"
+                                    :smooth="radius || false"
+                                    :padding="padding"
+                                    :line-width="width"
+                                    :stroke-linecap="lineCap"
+                                    :gradient-direction="gradientDirection"
+                                    :fill="fill"
+                                    :type="type"
+                                    :auto-line-width="autoLineWidth"
+                                    auto-draw
+                                ></v-sparkline>
+                            </v-card>
+                        </v-col>
                     </v-row>
                 </v-container>
+            </v-col>
+        </v-row>
+
+        <v-row no-gutters>
+            <v-col cols="4" class="pa-3">
+                <v-card flat outlined>
+                    <v-card-title class="subtitle-1 font-weight-medium">
+                        <v-col>Social Source</v-col>
+                    </v-card-title>
+                </v-card>
+            </v-col>
+            <v-col cols="4" class="pa-3">
+                <v-card flat outlined>
+                    <v-card-title class="subtitle-1 font-weight-medium">
+                        <v-col>Activity</v-col>
+                    </v-card-title>
+                </v-card>
+            </v-col>
+            <v-col cols="4" class="pa-3">
+                <v-card flat outlined>
+                    <v-card-title class="subtitle-1 font-weight-medium">
+                        <v-col>Top Cities Selling Product</v-col>
+                    </v-card-title>
+                </v-card>
             </v-col>
         </v-row>
     </v-container>
@@ -169,6 +223,15 @@ import { mdiTextBoxMultipleOutline } from "@mdi/js";
 import { mdiTagOutline } from "@mdi/js";
 import { mdiPackageDown } from "@mdi/js";
 
+const gradients = [
+    ["#222"],
+    ["#42b3f4"],
+    ["red", "orange", "yellow"],
+    ["purple", "violet"],
+    ["#00c6ff", "#F0F", "#FF0"],
+    ["#f72047", "#ffd200", "#1feaea"],
+];
+
 export default {
     name: "DefaultDashboard",
 
@@ -180,6 +243,17 @@ export default {
             mdiTagOutline,
             mdiPackageDown,
         },
+        width: 2,
+        radius: 10,
+        padding: 8,
+        lineCap: "round",
+        gradient: gradients[5],
+        value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
+        gradientDirection: "top",
+        gradients,
+        fill: false,
+        type: "trend",
+        autoLineWidth: false,
     }),
 };
 </script>
