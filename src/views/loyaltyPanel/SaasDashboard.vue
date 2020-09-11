@@ -443,7 +443,7 @@
                           <v-tab class="text-capitalize">In Process</v-tab>
                           <v-tab class="text-capitalize">Upcoming</v-tab>
                         </v-tabs>
-                        <v-card flat width="100%" max-height="400px" style="overflow: auto">
+                        <v-card flat width="100%" max-height="400px" class="tasks">
                           <v-row no-gutters class="mt-5" style="border-top: 1px solid #edf0f6">
                             <v-col class="pl-5 pr-5" cols="2">
                               <v-checkbox></v-checkbox>
@@ -653,7 +653,7 @@
                       </v-row>
                       <v-row no-gutters class="pa-3 pt-0">
                         <v-row style="border-bottom: 1px solid #edf0f6" class="pa-3">
-                          <v-card flat width="100%" max-height="410px" style="overflow-y: auto" class="pa-3 pt-0">
+                          <v-card flat width="100%" max-height="410px" class="pa-3 pt-0 chat">
                             <v-row no-gutters class="pb-5">
                               <hr width="35%" color="#eff2f7" class="mt-3">
                               <h4 class="subtitle-2 font-weight-light ma-auto">Today</h4>
@@ -674,13 +674,13 @@
                                   size="19"
                               ></v-icon>
                             </v-row>
-                            <v-row no-gutters class="pb-5" align="right">
+                            <v-row no-gutters class="pb-5" align="end">
                               <v-icon
                                   v-text="icons.mdiDotsVertical"
                                   size="19"
                                   class="ml-auto"
                               ></v-icon>
-                              <v-card color="#eff2f7" class="pa-7 pt-3 pb-3 d-inline-block" flat width="fit-content" max-width="90%" align="right">
+                              <v-card color="#eff2f7" class="pa-7 pt-3 pb-3 d-inline-block" flat width="fit-content" max-width="90%" align="end">
                                 <h4 class="subtitle-2 font-weight-medium primary--text">Henry Wells</h4>
                                 <h4 class="subtitle-2 font-weight-light" max-width="70%">Hi, How are you? What about our next meeting?</h4>
                                 <v-icon
@@ -726,7 +726,7 @@
                                   size="19"
                                   class="ml-auto"
                               ></v-icon>
-                              <v-card color="#eff2f7" class="pa-7 pt-3 pb-3 d-inline-block" flat width="fit-content" max-width="90%" align="right">
+                              <v-card color="#eff2f7" class="pa-7 pt-3 pb-3 d-inline-block" flat width="fit-content" max-width="90%" align="end">
                                 <h4 class="subtitle-2 font-weight-medium primary--text">Henry Wells</h4>
                                 <h4 class="subtitle-2 font-weight-light" max-width="70%">Wow that's great</h4>
                                 <v-icon
@@ -835,3 +835,25 @@
     }),
 };
 </script>
+
+
+<style>
+
+.tasks, .chat {
+  overflow-y: auto;
+}
+.tasks::-webkit-scrollbar-track, .chat::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(83, 81, 81, 0.3);
+  background-color: #F5F5F5;
+  border-radius: 1000px;
+}
+.tasks::-webkit-scrollbar, .chat::-webkit-scrollbar {
+  width: 5px;
+  background-color: #F5F5F5;
+}
+.tasks::-webkit-scrollbar-thumb, .chat::-webkit-scrollbar-thumb {
+  background-color: #c4c4c4;
+  border-radius: 10px;
+}
+
+</style>
