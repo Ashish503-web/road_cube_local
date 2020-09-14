@@ -1,9 +1,9 @@
 <template>
-    <router-view></router-view>
+    <h1>Roadcodes</h1>
 </template>
 
 <script>
 export default {
-    name: "StorePanel"
+    name: "Roadcodes"
 };
 </script>

@@ -28,21 +28,198 @@ const routes = [
                 name: "LoyaltyPanel",
                 component: () =>
                     import(
-                        /* webpackChunkName: "defaultDashboard" */ "../views/loyaltyPanel/DefaultDashboard.vue"
+                        /* webpackChunkName: "defaultDashboard" */ "../views/loyaltyPanel/Dashboard.vue"
                     )
             },
             {
-                path: "dashboard/saas",
+                path: "",
                 component: () =>
                     import(
-                        /* webpackChunkName: "saasDashboard" */ "../views/loyaltyPanel/SaasDashboard.vue"
+                        /* webpackChunkName: "dashboard" */ "../views/loyaltyPanel/Dashboard.vue"
                     )
             },
             {
-                path: "dashboard/crypto",
+                path: "branch-debt",
+                name: "BranchDebt",
                 component: () =>
                     import(
-                        /* webpackChunkName: "cryptoDashboard" */ "../views/loyaltyPanel/CryptoDashboard.vue"
+                        /* webpackChunkName: "branchDebt" */ "../views/loyaltyPanel/BranchDebt.vue"
+                    )
+            },
+            {
+                path: "branches",
+                name: "Branches",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "branches" */ "../views/loyaltyPanel/Branches.vue"
+                    )
+            },
+            {
+                path: "subscriptions",
+                name: "Subscriptions",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "subscriptions" */ "../views/loyaltyPanel/Subscriptions.vue"
+                    )
+            },
+            {
+                path: "collaborators",
+                name: "Collaborators",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "collaborators" */ "../views/loyaltyPanel/Collaborators.vue"
+                    )
+            },
+            {
+                path: "products",
+                name: "Products",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "products" */ "../views/loyaltyPanel/Products.vue"
+                    )
+            },
+            {
+                path: "branch-debt",
+                name: "BranchDebt",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "branchDebt" */ "../views/loyaltyPanel/BranchDebt.vue"
+                    )
+            },
+            {
+                path: "customer",
+                name: "Customer",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "customer" */ "../views/loyaltyPanel/Customer.vue"
+                    )
+            },
+            {
+                path: "user-rights",
+                name: "UserRights",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "userRights" */ "../views/loyaltyPanel/UserRights.vue"
+                    )
+            },
+            {
+                path: "business-profile",
+                name: "BusinessProfile",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "businessProfile" */ "../views/loyaltyPanel/BusinessProfile.vue"
+                    )
+            },
+            {
+                path: "business-statistics",
+                name: "BusinessStatistics",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "businessStatistics" */ "../views/loyaltyPanel/BusinessStatistics.vue"
+                    )
+            },
+            {
+                path: "category-management",
+                name: "CategoryManagement",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "categoryManagement" */ "../views/loyaltyPanel/CategoryManagement.vue"
+                    )
+            },
+            {
+                path: "gift-status",
+                name: "GiftStatus",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "giftStatus" */ "../views/loyaltyPanel/GiftStatus.vue"
+                    )
+            },
+            {
+                path: "catalog-management",
+                name: "CatalogManagement",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "catalogManagement" */ "../views/loyaltyPanel/CatalogManagement.vue"
+                    )
+            },
+            {
+                path: "supplier-management",
+                name: "SupplierManagement",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "supplierManagement" */ "../views/loyaltyPanel/SupplierManagement.vue"
+                    )
+            },
+            {
+                path: "sampling",
+                name: "Sampling",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "sampling" */ "../views/loyaltyPanel/Sampling.vue"
+                    )
+            },
+            {
+                path: "receipt-scanning",
+                name: "ReceiptScanning",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "receiptScanning" */ "../views/loyaltyPanel/ReceiptScanning.vue"
+                    )
+            },
+            {
+                path: "check-in",
+                name: "CheckIn",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "checkin" */ "../views/loyaltyPanel/CheckIn.vue"
+                    )
+            },
+            {
+                path: "serial-shopping",
+                name: "SerialShopping",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "serialShopping" */ "../views/loyaltyPanel/SerialShopping.vue"
+                    )
+            },
+            {
+                path: "contest-survey",
+                name: "ContestSurvey",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "contestSurvey" */ "../views/loyaltyPanel/ContestSurvey.vue"
+                    )
+            },
+            {
+                path: "roadcodes",
+                name: "Roadcodes",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "roadcodes" */ "../views/loyaltyPanel/Roadcodes.vue"
+                    )
+            },
+            {
+                path: "multiple-coupons",
+                name: "MultipleCoupons",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "multipleCoupons" */ "../views/loyaltyPanel/MultipleCoupons.vue"
+                    )
+            },
+            {
+                path: "view-campaigns",
+                name: "ViewCampaigns",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "viewCampaigns" */ "../views/loyaltyPanel/ViewCampaigns.vue"
+                    )
+            },
+            {
+                path: "new-campaign",
+                name: "NewCampaign",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "newCampaign" */ "../views/loyaltyPanel/NewCampaign.vue"
                     )
             }
         ]

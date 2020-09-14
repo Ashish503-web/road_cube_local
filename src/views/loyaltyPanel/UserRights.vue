@@ -1,9 +1,9 @@
 <template>
-    <router-view></router-view>
+    <h1>User Rights</h1>
 </template>
 
 <script>
 export default {
-    name: "StorePanel"
+    name: "UserRights"
 };
 </script>

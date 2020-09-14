@@ -1432,6 +1432,7 @@ export default {
 .tasks::-webkit-scrollbar-track,
 .chat::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(83, 81, 81, 0.3);
+    box-shadow: inset 0 0 6px rgba(83, 81, 81, 0.3);
     background-color: #f5f5f5;
     border-radius: 1000px;
 }

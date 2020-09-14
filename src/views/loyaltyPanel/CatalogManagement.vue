@@ -1,9 +1,9 @@
 <template>
-    <router-view></router-view>
+    <h1>Catalog Management</h1>
 </template>
 
 <script>
 export default {
-    name: "StorePanel"
+    name: "CatalogManagement"
 };
 </script>

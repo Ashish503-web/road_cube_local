@@ -1,9 +1,9 @@
 <template>
-    <router-view></router-view>
+    <h1>Business Profile</h1>
 </template>
 
 <script>
 export default {
-    name: "StorePanel"
+    name: "BusinessProfile"
 };
 </script>

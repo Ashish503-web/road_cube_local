@@ -24,7 +24,7 @@
                     bottom
                     :close-on-content-click="false"
                 >
-                    <template v-slot:activator="{on}">
+                    <template v-slot:activator="{ on }">
                         <v-btn
                             class="text-capitalize font-weight-regular"
                             color="secondary"
@@ -46,14 +46,19 @@
                                         cols="3"
                                         class="pa-1"
                                     >
-                                        <v-card-title v-text="item.title" class="subtitle-1"></v-card-title>
+                                        <v-card-title
+                                            v-text="item.title"
+                                            class="subtitle-1"
+                                        ></v-card-title>
                                         <v-list dense>
                                             <v-list-item-group color="primary">
                                                 <v-list-item
                                                     v-for="subItem in item.items"
                                                     :key="subItem"
                                                 >
-                                                    <v-list-item-title v-text="subItem"></v-list-item-title>
+                                                    <v-list-item-title
+                                                        v-text="subItem"
+                                                    ></v-list-item-title>
                                                 </v-list-item>
                                             </v-list-item-group>
                                         </v-list>
@@ -61,7 +66,11 @@
                                 </v-row>
                             </v-col>
                             <v-col cols="2">
-                                <v-img src="../assets/megamenu-img.png" width="150" class="mt-12"></v-img>
+                                <v-img
+                                    src="../assets/megamenu-img.png"
+                                    width="150"
+                                    class="mt-12"
+                                ></v-img>
                             </v-col>
                         </v-row>
                     </v-card>
@@ -72,7 +81,11 @@
 
             <v-menu offset-y transition="slide-y-transition" bottom>
                 <template v-slot:activator="{ on }">
-                    <v-btn class="text-capitalize font-weight-regular" text v-on="on">
+                    <v-btn
+                        class="text-capitalize font-weight-regular"
+                        text
+                        v-on="on"
+                    >
                         <img :src="lang.img" width="25" class="mr-1" />
                         {{ lang.title }}
                         <v-icon v-text="icons.mdiChevronDown"></v-icon>
@@ -81,11 +94,17 @@
 
                 <v-list dense>
                     <v-list-item-group v-model="lang" color="primary">
-                        <v-list-item v-for="lang in langs" :key="lang.title" :value="lang">
+                        <v-list-item
+                            v-for="lang in langs"
+                            :key="lang.title"
+                            :value="lang"
+                        >
                             <v-list-item-action class="mr-1">
                                 <img :src="lang.img" width="25" />
                             </v-list-item-action>
-                            <v-list-item-title v-text="lang.title"></v-list-item-title>
+                            <v-list-item-title
+                                v-text="lang.title"
+                            ></v-list-item-title>
                         </v-list-item>
                     </v-list-item-group>
                 </v-list>
@@ -96,7 +115,7 @@
             </v-btn>
 
             <v-menu offset-y transition="slide-y-transition" bottom>
-                <template v-slot:activator="{on}">
+                <template v-slot:activator="{ on }">
                     <v-btn text v-on="on">
                         <v-badge color="red" content="3">
                             <v-icon v-text="icons.mdiBellOutline"></v-icon>
@@ -108,7 +127,9 @@
                     <v-card-title class="subtitle-1">
                         Notifications
                         <v-spacer></v-spacer>
-                        <router-link class="text-caption" to="/loyaltypanel">View all</router-link>
+                        <router-link class="text-caption" to="/loyaltypanel"
+                            >View all</router-link
+                        >
                     </v-card-title>
 
                     <v-divider></v-divider>
@@ -120,21 +141,34 @@
                                 :key="notification.title"
                                 three-line
                             >
-                                <v-list-item-avatar :color="notification.color" size="32">
+                                <v-list-item-avatar
+                                    :color="notification.color"
+                                    size="32"
+                                >
                                     <v-icon
                                         v-if="notification.icon"
                                         dark
                                         size="20"
                                         v-text="notification.icon"
                                     ></v-icon>
-                                    <v-img v-else :src="notification.img"></v-img>
+                                    <v-img
+                                        v-else
+                                        :src="notification.img"
+                                    ></v-img>
                                 </v-list-item-avatar>
                                 <v-list-item-content>
-                                    <v-list-item-title v-text="notification.title"></v-list-item-title>
-                                    <v-list-item-subtitle v-text="notification.text"></v-list-item-subtitle>
+                                    <v-list-item-title
+                                        v-text="notification.title"
+                                    ></v-list-item-title>
+                                    <v-list-item-subtitle
+                                        v-text="notification.text"
+                                    ></v-list-item-subtitle>
                                     <small class="grey--text text--darken-1">
-                                        <v-icon v-text="icons.mdiClockOutline" small></v-icon>
-                                        {{notification.timestamp}}
+                                        <v-icon
+                                            v-text="icons.mdiClockOutline"
+                                            small
+                                        ></v-icon>
+                                        {{ notification.timestamp }}
                                     </small>
                                 </v-list-item-content>
                             </v-list-item>
@@ -145,30 +179,46 @@
 
             <v-menu offset-y bottom transition="slide-y-transition">
                 <template v-slot:activator="{ on }">
-                    <v-btn class="text-capitalize font-weight-regular ml-3" text v-on="on">
+                    <v-btn
+                        class="text-capitalize font-weight-regular ml-3"
+                        text
+                        v-on="on"
+                    >
                         <v-avatar size="32" class="mr-2">
-                            <v-img src="../assets/avatars/avatar-1.jpg"></v-img>
-                        </v-avatar>Henry
+                            <v-img
+                                src="../assets/avatars/avatar-1.jpg"
+                            ></v-img> </v-avatar
+                        >Henry
                         <v-icon v-text="icons.mdiChevronDown"></v-icon>
                     </v-btn>
                 </template>
 
                 <v-list dense>
                     <v-list-item-group color="primary">
-                        <v-list-item v-for="link in profileLinks" :key="link.title">
+                        <v-list-item
+                            v-for="link in profileLinks"
+                            :key="link.title"
+                        >
                             <v-list-item-icon class="mr-3">
                                 <v-icon v-text="link.icon"></v-icon>
                             </v-list-item-icon>
-                            <v-list-item-title v-text="link.text"></v-list-item-title>
+                            <v-list-item-title
+                                v-text="link.text"
+                            ></v-list-item-title>
                         </v-list-item>
 
                         <v-divider class="my-1"></v-divider>
 
                         <v-list-item color="red">
                             <v-list-item-icon class="mr-3">
-                                <v-icon color="red" v-text="icons.mdiLogout"></v-icon>
+                                <v-icon
+                                    color="red"
+                                    v-text="icons.mdiLogout"
+                                ></v-icon>
                             </v-list-item-icon>
-                            <v-list-item-title class="red--text">Logout</v-list-item-title>
+                            <v-list-item-title class="red--text"
+                                >Logout</v-list-item-title
+                            >
                         </v-list-item>
                     </v-list-item-group>
                 </v-list>
@@ -193,111 +243,36 @@
                 </v-toolbar-title>
             </v-toolbar>
 
-            <v-container class="pa-0" style="height: calc(100vh - 64px); overflow: auto">
-                <v-list dense nav>
+            <v-container
+                class="pa-0"
+                style="height: calc(100vh - 64px); overflow: auto"
+            >
+                <v-list
+                    v-for="navLink in navLinks"
+                    :key="navLink.title"
+                    dense
+                    nav
+                    :subheader="navLink.title !== 'MANAGE'"
+                >
                     <v-subheader
                         class="text-caption"
                         :class="{ 'justify-center': mini }"
-                        v-text="menu.title"
+                        v-text="navLink.title"
                     ></v-subheader>
 
-                    <v-list-group
-                        v-for="item in menu.itemsGroup"
+                    <v-list-item
+                        v-for="item in navLink.children"
                         :key="item.title"
-                        :prepend-icon="item.icon"
-                        no-action
-                        color="white"
+                        :to="item.to"
+                        exact
                     >
-                        <template v-slot:activator>
-                            <v-list-item-content>
-                                <v-list-item-title v-text="item.title"></v-list-item-title>
-                            </v-list-item-content>
-                        </template>
-
-                        <v-list-item
-                            v-for="subItem in item.items"
-                            :key="subItem.title"
-                            :to="subItem.to"
-                            exact
-                        >
-                            <v-list-item-content>
-                                <v-list-item-title v-text="subItem.title"></v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-                    </v-list-group>
-                </v-list>
-
-                <v-list dense nav subheader>
-                    <v-subheader
-                        class="text-caption"
-                        :class="{ 'justify-center': mini }"
-                        v-text="apps.title"
-                    ></v-subheader>
-
-                    <v-list-item v-for="item in apps.items" :key="item.title" :to="item.to">
                         <v-list-item-icon>
                             <v-icon v-text="item.icon"></v-icon>
                         </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title v-text="item.title"></v-list-item-title>
-                        </v-list-item-content>
+                        <v-list-item-title
+                            v-text="item.title"
+                        ></v-list-item-title>
                     </v-list-item>
-
-                    <v-list-group
-                        v-for="item in apps.itemsGroup"
-                        :key="item.title"
-                        :prepend-icon="item.icon"
-                        no-action
-                        color="white"
-                    >
-                        <template v-slot:activator>
-                            <v-list-item-content>
-                                <v-list-item-title v-text="item.title"></v-list-item-title>
-                            </v-list-item-content>
-                        </template>
-
-                        <v-list-item
-                            v-for="subItem in item.items"
-                            :key="subItem.title"
-                            :to="subItem.to"
-                        >
-                            <v-list-item-content>
-                                <v-list-item-title v-text="subItem.title"></v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-                    </v-list-group>
-                </v-list>
-
-                <v-list dense nav subheader>
-                    <v-subheader
-                        class="text-caption"
-                        :class="{ 'justify-center': mini }"
-                        v-text="pages.title"
-                    ></v-subheader>
-
-                    <v-list-group
-                        v-for="item in pages.itemsGroup"
-                        :key="item.title"
-                        :prepend-icon="item.icon"
-                        no-action
-                        color="white"
-                    >
-                        <template v-slot:activator>
-                            <v-list-item-content>
-                                <v-list-item-title v-text="item.title"></v-list-item-title>
-                            </v-list-item-content>
-                        </template>
-
-                        <v-list-item
-                            v-for="subItem in item.items"
-                            :key="subItem.title"
-                            :to="subItem.to"
-                        >
-                            <v-list-item-content>
-                                <v-list-item-title v-text="subItem.title"></v-list-item-title>
-                            </v-list-item-content>
-                        </v-list-item>
-                    </v-list-group>
                 </v-list>
             </v-container>
         </v-navigation-drawer>
@@ -307,7 +282,7 @@
                 <v-toolbar-title>Settings</v-toolbar-title>
                 <v-spacer></v-spacer>
                 <v-btn icon @click.stop="drawer = !drawer">
-                    <v-icon>{{icons.mdiClose}}</v-icon>
+                    <v-icon>{{ icons.mdiClose }}</v-icon>
                 </v-btn>
             </v-toolbar>
             <v-divider></v-divider>
@@ -327,21 +302,21 @@ import {
     mdiClose,
     mdiCartOutline,
     mdiCheckDecagram,
-    mdiHome,
-    mdiHomeOutline,
-    mdiCalendarMonth,
-    mdiForumOutline,
-    mdiStorefrontOutline,
-    mdiCurrencyBtc,
-    mdiEmailOutline,
-    mdiFileDocumentOutline,
-    mdiWalletTravel,
-    mdiCalendarCheck,
-    mdiAccountDetails,
+    // mdiHome,
+    // mdiHomeOutline,
+    // mdiCalendarMonth,
+    // mdiForumOutline,
+    // mdiStorefrontOutline,
+    // mdiCurrencyBtc,
+    // mdiEmailOutline,
+    // mdiFileDocumentOutline,
+    // mdiWalletTravel,
+    // mdiCalendarCheck,
+    // mdiAccountDetails,
     mdiAccountOutline,
     mdiWalletOutline,
     mdiWrenchOutline,
-    mdiLockOpenOutline,
+    mdiLockOpenOutline
 } from "@mdi/js";
 
 import USFlag from "../assets/flags/US-flag.jpeg";
@@ -365,179 +340,144 @@ export default {
                 mdiClockOutline,
                 mdiLogout,
                 mdiCogOutline,
-                mdiClose,
+                mdiClose
             },
             mini: false,
             drawer: false,
-            menu: {
-                title: "MENU",
-                itemsGroup: [
-                    {
-                        icon: mdiHomeOutline,
-                        title: "Dashboards",
-                        items: [
-                            { title: "Default", to: "/loyaltyPanel" },
-                            {
-                                title: "Saas",
-                                to: "/loyaltyPanel/dashboard/saas",
-                            },
-                            {
-                                title: "Crypto",
-                                to: "/loyaltyPanel/dashboard/crypto",
-                            },
-                        ],
-                    },
-                ],
-            },
-            apps: {
-                title: "APPS",
-                items: [
-                    {
-                        icon: mdiCalendarMonth,
-                        title: "Calendar",
-                        to: "/loyaltyPanel/calendar",
-                    },
-                    {
-                        icon: mdiForumOutline,
-                        title: "Chat",
-                        to: "/loyaltyPanel/chat",
-                    },
-                ],
-                itemsGroup: [
-                    {
-                        icon: mdiStorefrontOutline,
-                        title: "Ecommerce",
-                        items: [
-                            { title: "Products", to: "/loyaltyPanel" },
-                            {
-                                title: "Product Detail",
-                                to: "/loyaltyPanel/saas",
-                            },
-                            { title: "Orders", to: "/loyaltyPanel/crypto" },
-                            { title: "Customers", to: "/loyaltyPanel/crypto" },
-                            { title: "Cart", to: "/loyaltyPanel/crypto" },
-                            { title: "Checkout", to: "/loyaltyPanel/crypto" },
-                            { title: "Shops", to: "/loyaltyPanel/crypto" },
-                            {
-                                title: "Add Product",
-                                to: "/loyaltyPanel/crypto",
-                            },
-                        ],
-                    },
-                    {
-                        icon: mdiCurrencyBtc,
-                        title: "Crypto",
-                        items: [
-                            { title: "Wallet", to: "/loyaltyPanel" },
-                            { title: "Buy/sell", to: "/loyaltyPanel/saas" },
-                            { title: "Exchange", to: "/loyaltyPanel/crypto" },
-                            { title: "Lending", to: "/loyaltyPanel/crypto" },
-                            { title: "Orders", to: "/loyaltyPanel/crypto" },
-                            {
-                                title: "KYC Application",
-                                to: "/loyaltyPanel/crypto",
-                            },
-                            {
-                                title: "ICO Landing",
-                                to: "/loyaltyPanel/crypto",
-                            },
-                        ],
-                    },
-                    {
-                        icon: mdiEmailOutline,
-                        title: "Email",
-                        items: [
-                            { title: "Inbox", to: "/loyaltyPanel" },
-                            { title: "Read Email", to: "/loyaltyPanel/saas" },
-                        ],
-                    },
-                    {
-                        icon: mdiFileDocumentOutline,
-                        title: "Invoices",
-                        items: [
-                            { title: "Invoice List", to: "/loyaltyPanel" },
-                            {
-                                title: "Invoice Detail",
-                                to: "/loyaltyPanel/saas",
-                            },
-                        ],
-                    },
-                    {
-                        icon: mdiWalletTravel,
-                        title: "Projects",
-                        items: [
-                            { title: "Projects Grid", to: "/loyaltyPanel" },
-                            {
-                                title: "Projects List",
-                                to: "/loyaltyPanel/saas",
-                            },
-                            {
-                                title: "Project Overview",
-                                to: "/loyaltyPanel/crypto",
-                            },
-                            { title: "Create New", to: "/loyaltyPanel/crypto" },
-                        ],
-                    },
-                    {
-                        icon: mdiCalendarCheck,
-                        title: "Tasks",
-                        items: [
-                            { title: "Task List", to: "/loyaltyPanel" },
-                            { title: "Kanban Board", to: "/loyaltyPanel/saas" },
-                            {
-                                title: "Create Task",
-                                to: "/loyaltyPanel/crypto",
-                            },
-                        ],
-                    },
-                    {
-                        icon: mdiAccountDetails,
-                        title: "Contacts",
-                        items: [
-                            { title: "User Grid", to: "/loyaltyPanel" },
-                            { title: "User List ", to: "/loyaltyPanel/saas" },
-                            { title: "Profile", to: "/loyaltyPanel/crypto" },
-                        ],
-                    },
-                ],
-            },
-            pages: {
-                title: "Pages",
-                itemsGroup: [
-                    {
-                        icon: mdiHome,
-                        title: "Authentication",
-                        items: [
-                            { title: "Login", to: "/loyaltyPanel" },
-                            { title: "Register", to: "/loyaltyPanel/saas" },
-                            {
-                                title: "Recover Password",
-                                to: "/loyaltyPanel/crypto",
-                            },
-                            {
-                                title: "Lock Screen",
-                                to: "/loyaltyPanel/crypto",
-                            },
-                        ],
-                    },
-                    {
-                        icon: mdiHome,
-                        title: "Utility",
-                        items: [
-                            { title: "Starter Page", to: "/loyaltyPanel" },
-                            { title: "Maintenance", to: "/loyaltyPanel/saas" },
-                            { title: "Timeline", to: "/loyaltyPanel/crypto" },
-                            { title: "FAQs", to: "/loyaltyPanel/crypto" },
-                            { title: "Pricing", to: "/loyaltyPanel/crypto" },
-                            {
-                                title: "Error 404",
-                                to: "/loyaltyPanel/crypto",
-                            },
-                            { title: "Error 500", to: "/loyaltyPanel/crypto" },
-                        ],
-                    },
-                ],
-            },
+            navLinks: [
+                {
+                    title: "MANAGE",
+                    children: [
+                        { icon: "", title: "Dashboard", to: "/loyaltyPanel" },
+                        {
+                            icon: "",
+                            title: "Branch Debt",
+                            to: "/loyaltyPanel/branch-debt"
+                        },
+                        {
+                            icon: "",
+                            title: "Branches",
+                            to: "/loyaltyPanel/branches"
+                        },
+                        {
+                            icon: "",
+                            title: "Subscriptions",
+                            to: "/loyaltyPanel/subscriptions"
+                        },
+                        {
+                            icon: "",
+                            title: "Collaborators",
+                            to: "/loyaltyPanel/collaborators"
+                        },
+                        {
+                            icon: "",
+                            title: "Products",
+                            to: "/loyaltyPanel/products"
+                        },
+                        {
+                            icon: "",
+                            title: "Customer",
+                            to: "/loyaltyPanel/customer"
+                        },
+                        {
+                            icon: "",
+                            title: "User Rights",
+                            to: "/loyaltyPanel/user-rights"
+                        },
+                        {
+                            icon: "",
+                            title: "Business Profile",
+                            to: "/loyaltyPanel/business-profile"
+                        },
+                        {
+                            icon: "",
+                            title: "Business Statistics",
+                            to: "/loyaltyPanel/business-statistics"
+                        }
+                    ]
+                },
+                {
+                    title: "GIFT LIST",
+                    children: [
+                        {
+                            icon: "",
+                            title: "Category Management",
+                            to: "/loyaltyPanel/category-management"
+                        },
+                        {
+                            icon: "",
+                            title: "Gift Status",
+                            to: "/loyaltyPanel/gift-status"
+                        },
+                        {
+                            icon: "",
+                            title: "Catalog Management",
+                            to: "/loyaltyPanel/catalog-management"
+                        },
+                        {
+                            icon: "",
+                            title: "Supplier Management",
+                            to: "/loyaltyPanel/supplier-management"
+                        }
+                    ]
+                },
+                {
+                    title: "PROMO ACTIONS",
+                    children: [
+                        {
+                            icon: "",
+                            title: "1+1 / Sampling",
+                            to: "/loyaltyPanel/sampling"
+                        },
+                        {
+                            icon: "",
+                            title: "Receipt Scanning",
+                            to: "/loyaltyPanel/receipt-scanning"
+                        },
+                        {
+                            icon: "",
+                            title: "Check In",
+                            to: "/loyaltyPanel/check-in"
+                        },
+                        {
+                            icon: "",
+                            title: "Serial Shopping",
+                            to: "/loyaltyPanel/serial-shopping"
+                        },
+                        {
+                            icon: "",
+                            title: "Contest & Survey",
+                            to: "/loyaltyPanel/contest-survey"
+                        },
+                        {
+                            icon: "",
+                            title: "Roadcodes",
+                            to: "/loyaltyPanel/roadcodes"
+                        },
+                        {
+                            icon: "",
+                            title: "Multiple Coupons",
+                            to: "/loyaltyPanel/multiple-coupons"
+                        }
+                    ]
+                },
+                {
+                    title: "ATTRACT CUSTOMERS",
+                    children: [
+                        {
+                            icon: "",
+                            title: "View Campaigns",
+                            to: "/loyaltyPanel/view-campaigns"
+                        },
+                        {
+                            icon: "",
+                            title: "New Campaign",
+                            to: "/loyaltyPanel/new-campaign"
+                        }
+                    ]
+                }
+            ],
+
             megaMenuItems: [
                 {
                     title: "UI Components",
@@ -548,8 +488,8 @@ export default {
                         "Rating",
                         "Forms",
                         "Tables",
-                        "Charts",
-                    ],
+                        "Charts"
+                    ]
                 },
                 {
                     title: "Applications",
@@ -559,8 +499,8 @@ export default {
                         "Email",
                         "Projects",
                         "Tasks",
-                        "Contacts",
-                    ],
+                        "Contacts"
+                    ]
                 },
                 {
                     title: "Extra Pages",
@@ -571,8 +511,8 @@ export default {
                         "Maintenance",
                         "Coming Soon",
                         "Timeline",
-                        "FAQs",
-                    ],
+                        "FAQs"
+                    ]
                 },
                 {
                     title: "UI Components 2",
@@ -583,21 +523,21 @@ export default {
                         "Rating",
                         "Forms",
                         "Tables",
-                        "Charts",
-                    ],
-                },
+                        "Charts"
+                    ]
+                }
             ],
             lang: {
                 img: USFlag,
                 title: "English",
-                urlTitle: "en",
+                urlTitle: "en"
             },
             langs: [
                 { img: USFlag, title: "English", urlTitle: "en" },
                 { img: FranceFlag, title: "French", urlTitle: "fr" },
                 { img: SpainFlag, title: "Spanish", urlTitle: "sp" },
                 { img: ChinaFlag, title: "Chinese", urlTitle: "ch" },
-                { img: ArabicFlag, title: "Arabic", urlTitle: "ar" },
+                { img: ArabicFlag, title: "Arabic", urlTitle: "ar" }
             ],
             notifications: [
                 {
@@ -606,14 +546,14 @@ export default {
                     color: "blue",
                     title: "Your order is placed",
                     text: "If several languages coalesce the grammar",
-                    timestamp: "3 min ago",
+                    timestamp: "3 min ago"
                 },
                 {
                     img: avatar3,
                     icon: "",
                     title: "James Lemire",
                     text: "It will seem like simplified English.",
-                    timestamp: "1 hours ago",
+                    timestamp: "1 hours ago"
                 },
                 {
                     img: "",
@@ -621,24 +561,24 @@ export default {
                     color: "green",
                     title: "Your item is shipped",
                     text: "If several languages coalesce the grammar",
-                    timestamp: "3 min ago",
+                    timestamp: "3 min ago"
                 },
                 {
                     img: avatar4,
                     icon: "",
                     title: "Salena Layfield",
                     text: "As a skeptical Cambridge friend of mine occidental.",
-                    timestamp: "1 hours ago",
-                },
+                    timestamp: "1 hours ago"
+                }
             ],
             profileLinks: [
                 { icon: mdiAccountOutline, text: "Profile" },
                 { icon: mdiWalletOutline, text: "My Wallet" },
                 { icon: mdiWrenchOutline, text: "Settings" },
-                { icon: mdiLockOpenOutline, text: "Lock Screen" },
-            ],
+                { icon: mdiLockOpenOutline, text: "Lock Screen" }
+            ]
         };
-    },
+    }
 };
 </script>
 
