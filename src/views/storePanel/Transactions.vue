@@ -31,6 +31,7 @@
                                         outlined
                                         dense
                                         clearable
+                                        hide-details
                                         :prepend-inner-icon="icons.mdiMagnify"
                                     ></v-text-field>
                                 </v-col>
@@ -48,6 +49,7 @@
                                         outlined
                                         dense
                                         clearable
+                                        hide-details
                                         :prepend-inner-icon="icons.mdiMagnify"
                                     ></v-text-field>
                                 </v-col>
