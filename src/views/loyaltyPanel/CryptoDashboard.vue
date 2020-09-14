@@ -460,14 +460,15 @@
                                     <form>
                                         <label class="title-label">Payment method :</label>
                                         <v-select
-                                                class="payment-select mb-3"
-                                                :items="payment"
-                                                label="Credit / Debit Card"
-                                                dense
-                                                solo
-                                                outlined
-                                                flat
-                                                hide-details
+
+                                            class="payment-select mb-3"
+                                            :items="payment"
+                                            label="Credit / Debit Card"
+                                            dense
+                                            solo
+                                            outlined
+                                            flat
+                                            hide-details
                                         ></v-select>
                                         <div>
                                             <label class="title-label">Add Amount :</label>
@@ -595,15 +596,17 @@
 </template>
 
 <script>
-    import {mdiBitcoin, mdiEthereum, mdiLitecoin, mdiArrowUp, mdiArrowDown,mdiArrowRight, mdiCircle, mdiWallet, mdiArrowDownCircleOutline, mdiArrowUpCircleOutline, mdiAccount} from '@mdi/js'
-    const gradients = [
-        ['#222'],
-        ['#42b3f4'],
-        ['red', 'orange', 'yellow'],
-        ['purple', 'violet'],
-        ['#00c6ff', '#F0F', '#FF0'],
-        ['#f72047', '#ffd200', '#1feaea'],
-    ]
+import {mdiBitcoin, mdiEthereum, mdiLitecoin, mdiArrowUp, mdiArrowDown,mdiArrowRight, mdiCircle, mdiWallet, mdiArrowDownCircleOutline, mdiArrowUpCircleOutline, mdiAccount} from '@mdi/js'
+    
+const gradients = [
+    ['#222'],
+    ['#42b3f4'],
+    ['red', 'orange', 'yellow'],
+    ['purple', 'violet'],
+    ['#00c6ff', '#F0F', '#FF0'],
+    ['#f72047', '#ffd200', '#1feaea'],
+]
+
     export default {
         name: "CryptoDashboard",
         data: () => ({
@@ -703,6 +706,7 @@
         }),
     };
 </script>
+
 <style type="text/css" scoped>
     body{
         color: #495057;

@@ -109,6 +109,30 @@ const routes = [
                     )
             },
             {
+                path: "view-participants",
+                name: "ViewParticipants",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "viewParticipants" */ "../views/storePanel/ViewParticipants.vue"
+                    )
+            },
+            {
+                path: "view-participant-answer",
+                name: "ViewParticipantAnswer",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "viewParticipantAnswer" */ "../views/storePanel/ViewParticipantAnswer.vue"
+                    )
+            },
+            {
+                path: "view-contest",
+                name: "ViewContest",
+                component: () =>
+                    import(
+                        /* webpackChunkName: "viewContests" */ "../views/storePanel/ViewContest.vue"
+                    )
+            },
+            {
                 path: "products",
                 name: "Products",
                 component: () =>
