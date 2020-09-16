@@ -12,13 +12,16 @@
                     <v-tabs-items v-model="tab">
                         <v-tab-item>
                             <v-toolbar flat height="80" class="pt-2">
-                                <a class="export-link" href @click.prevent>Export to CSV/Excel</a>
+                                <a class="export-link" href @click.prevent
+                                    >Export to CSV/Excel</a
+                                >
 
                                 <v-spacer></v-spacer>
 
                                 <v-col cols="4">
                                     <v-text-field
                                         label="Search"
+                                        rounded
                                         outlined
                                         dense
                                         clearable
@@ -33,9 +36,15 @@
                                 :footer-props="{ itemsPerPageOptions }"
                                 class="mt-4"
                             >
-                                <template v-slot:item.edit="{item}">
-                                    <v-btn color="yellow darken-3" icon @click="myFunc(item)">
-                                        <v-icon v-text="icons.mdiPencilOutline"></v-icon>
+                                <template v-slot:item.edit="{ item }">
+                                    <v-btn
+                                        color="yellow darken-3"
+                                        icon
+                                        @click="myFunc(item)"
+                                    >
+                                        <v-icon
+                                            v-text="icons.mdiPencilOutline"
+                                        ></v-icon>
                                     </v-btn>
                                 </template>
                             </v-data-table>
@@ -43,13 +52,16 @@
 
                         <v-tab-item>
                             <v-toolbar flat height="80" class="pt-2">
-                                <a class="export-link" href @click.prevent>Export to CSV/Excel</a>
+                                <a class="export-link" href @click.prevent
+                                    >Export to CSV/Excel</a
+                                >
 
                                 <v-spacer></v-spacer>
 
                                 <v-col cols="4">
                                     <v-text-field
                                         label="Search"
+                                        rounded
                                         outlined
                                         dense
                                         clearable
@@ -64,9 +76,15 @@
                                 :footer-props="{ itemsPerPageOptions }"
                                 class="mt-4"
                             >
-                                <template v-slot:item.edit="{item}">
-                                    <v-btn color="yellow darken-3" icon @click="myFunc(item)">
-                                        <v-icon v-text="icons.mdiPencilOutline"></v-icon>
+                                <template v-slot:item.edit="{ item }">
+                                    <v-btn
+                                        color="yellow darken-3"
+                                        icon
+                                        @click="myFunc(item)"
+                                    >
+                                        <v-icon
+                                            v-text="icons.mdiPencilOutline"
+                                        ></v-icon>
                                     </v-btn>
                                 </template>
                             </v-data-table>
@@ -93,15 +111,15 @@ export default {
             { text: "Prodcut", value: "amount" },
             { text: "Bank", value: "product" },
             { text: "With Subsidy", value: "address" },
-            { text: "Without Subsidy", value: "information" },
+            { text: "Without Subsidy", value: "information" }
         ],
         monthlyPointHeaders: [
             { text: "Date", value: "user" },
             { text: "With Subsidy", value: "address" },
             { text: "Without Subsidy", value: "information" },
-            { text: "Sum", value: "sum" },
-        ],
-    }),
+            { text: "Sum", value: "sum" }
+        ]
+    })
 };
 </script>
 

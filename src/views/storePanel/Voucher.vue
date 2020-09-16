@@ -39,7 +39,7 @@
                                                         >
                                                             <v-icon
                                                                 v-text="
-                                                                    icons.mdiDelete
+                                                                    icons.mdiClose
                                                                 "
                                                                 large
                                                             ></v-icon>
@@ -68,16 +68,19 @@
 
                                         <v-text-field
                                             label="Reward user after"
+                                            rounded
                                             outlined
                                             dense
                                         ></v-text-field>
                                         <v-text-field
                                             label="Minimum transaction limit in euro"
+                                            rounded
                                             outlined
                                             dense
                                         ></v-text-field>
                                         <v-text-field
                                             label="Maximum time between visits: (Days)"
+                                            rounded
                                             outlined
                                             dense
                                         ></v-text-field>
@@ -112,6 +115,7 @@
                             >
                                 <v-col cols="auto">
                                     <v-btn
+                                        rounded
                                         color="primary"
                                         class="text-capitalize"
                                         @click="codeDialog = true"
@@ -120,7 +124,10 @@
                                 </v-col>
 
                                 <v-col cols="auto">
-                                    <v-alert type="info" dense
+                                    <v-alert
+                                        type="info"
+                                        dense
+                                        class="rounded-xl"
                                         >You can either share the coupon codes
                                         on facebook or give them to users with
                                         an application.</v-alert
@@ -133,6 +140,7 @@
                                 <v-col cols="4">
                                     <v-text-field
                                         label="Search"
+                                        rounded
                                         outlined
                                         dense
                                         clearable
@@ -175,7 +183,7 @@
                                                 @click="myFunc(item)"
                                             >
                                                 <v-icon
-                                                    v-text="icons.mdiDelete"
+                                                    v-text="icons.mdiClose"
                                                 ></v-icon>
                                             </v-btn>
                                         </template>
@@ -185,7 +193,12 @@
                                 </template>
 
                                 <template v-slot:item.social>
-                                    <v-btn color="blue darken-1" dark small>
+                                    <v-btn
+                                        rounded
+                                        color="blue darken-1"
+                                        dark
+                                        small
+                                    >
                                         <v-icon
                                             class="mr-1"
                                             v-text="icons.mdiFacebook"
@@ -201,7 +214,9 @@
                                 max-width="40%"
                             >
                                 <v-card>
-                                    <v-card-title class="secondary--text">
+                                    <v-card-title
+                                        class="secondary--text grey lighten-3"
+                                    >
                                         <v-icon
                                             class="mr-2"
                                             large
@@ -218,6 +233,7 @@
                                             <v-text-field
                                                 class="mt-2"
                                                 placeholder="e.g. Maroudas Optika"
+                                                rounded
                                                 outlined
                                                 dense
                                                 clearable
@@ -231,6 +247,7 @@
                                             <v-text-field
                                                 type="number"
                                                 class="mt-2"
+                                                rounded
                                                 outlined
                                                 dense
                                                 clearable
@@ -242,6 +259,7 @@
                                             <v-text-field
                                                 type="number"
                                                 class="mt-2"
+                                                rounded
                                                 outlined
                                                 dense
                                                 clearable
@@ -259,19 +277,23 @@
                                             </v-checkbox>
 
                                             <v-card v-if="checkbox" flat>
-                                                <v-text-field
-                                                    label="Title"
-                                                    class="mt-2"
-                                                    outlined
-                                                    dense
-                                                    clearable
-                                                ></v-text-field>
+                                                <template>
+                                                    <v-text-field
+                                                        label="Title"
+                                                        class="mt-2"
+                                                        rounded
+                                                        outlined
+                                                        dense
+                                                        clearable
+                                                    ></v-text-field>
 
-                                                <v-textarea
-                                                    label="Description"
-                                                    outlined
-                                                    clearable
-                                                ></v-textarea>
+                                                    <v-textarea
+                                                        label="Description"
+                                                        rounded
+                                                        outlined
+                                                        clearable
+                                                    ></v-textarea>
+                                                </template>
 
                                                 <v-checkbox v-model="checkbox2">
                                                     <template v-slot:label>
@@ -307,6 +329,7 @@
                                                         </v-col>
                                                         <v-col cols="5">
                                                             <v-file-input
+                                                                rounded
                                                                 outlined
                                                                 dense
                                                                 hide-details
@@ -339,6 +362,7 @@
                         <v-tab-item>
                             <v-toolbar flat height="100" class="pt-2 mb-3">
                                 <v-btn
+                                    rounded
                                     color="primary"
                                     class="text-capitalize"
                                     @click="productDialog = true"
@@ -348,6 +372,7 @@
                                 <v-col cols="4">
                                     <v-text-field
                                         label="Search"
+                                        rounded
                                         outlined
                                         dense
                                         clearable
@@ -391,7 +416,7 @@
                                                 @click="myFunc(item)"
                                             >
                                                 <v-icon
-                                                    v-text="icons.mdiDelete"
+                                                    v-text="icons.mdiClose"
                                                 ></v-icon>
                                             </v-btn>
                                         </template>
@@ -401,7 +426,12 @@
                                 </template>
 
                                 <template v-slot:item.social>
-                                    <v-btn color="blue darken-1" dark small>
+                                    <v-btn
+                                        rounded
+                                        color="blue darken-1"
+                                        dark
+                                        small
+                                    >
                                         <v-icon
                                             class="mr-1"
                                             v-text="icons.mdiFacebook"
@@ -417,7 +447,8 @@
                                 max-width="40%"
                             >
                                 <v-card>
-                                    <v-card-title class="secondary--text"
+                                    <v-card-title
+                                        class="secondary--text grey lighten-3"
                                         >Add Action</v-card-title
                                     >
                                     <v-divider></v-divider>
@@ -466,7 +497,9 @@
                                             <v-row no-gutters>
                                                 <v-col cols="6" class="px-3">
                                                     <v-select
+                                                        menu-props="offsetY"
                                                         label="Product for sale"
+                                                        rounded
                                                         outlined
                                                         dense
                                                         hide-details
@@ -474,7 +507,9 @@
                                                 </v-col>
                                                 <v-col cols="6" class="px-3">
                                                     <v-select
+                                                        menu-props="offsetY"
                                                         label="Product for gift"
+                                                        rounded
                                                         outlined
                                                         dense
                                                         hide-details
@@ -487,10 +522,13 @@
                                             <v-text-field
                                                 type="number"
                                                 label="Quantity"
+                                                rounded
                                                 outlined
                                                 dense
                                                 clearable
+                                                hide-details
                                             ></v-text-field>
+                                            <template></template>
                                         </v-card>
                                     </v-card-text>
 
@@ -599,6 +637,7 @@
                                             <v-btn
                                                 v-if="item.discount != '-'"
                                                 color="red"
+                                                rounded
                                                 dark
                                                 class="text-capitalize"
                                                 depressed
@@ -606,13 +645,14 @@
                                             >
                                                 <v-icon
                                                     class="mr-1"
-                                                    v-text="icons.mdiDelete"
+                                                    v-text="icons.mdiClose"
                                                 ></v-icon>
                                                 delete discount
                                             </v-btn>
                                             <v-btn
                                                 v-else
                                                 color="primary"
+                                                rounded
                                                 dark
                                                 class="text-capitalize"
                                                 depressed
@@ -638,7 +678,7 @@
 
 <script>
 import {
-    mdiDelete,
+    mdiClose,
     mdiAutoFix,
     mdiMagnify,
     mdiPencilOutline,
@@ -652,7 +692,7 @@ export default {
 
     data: () => ({
         icons: {
-            mdiDelete,
+            mdiClose,
             mdiAutoFix,
             mdiMagnify,
             mdiPencilOutline,

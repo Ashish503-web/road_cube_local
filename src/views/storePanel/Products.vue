@@ -13,6 +13,7 @@
                         <v-tab-item>
                             <v-toolbar flat height="80" class="pt-2">
                                 <v-btn
+                                    rounded
                                     color="primary"
                                     class="text-capitalize"
                                     @click="productDialog = true"
@@ -55,7 +56,7 @@
                                                 @click="myFunc(item)"
                                             >
                                                 <v-icon
-                                                    v-text="icons.mdiDelete"
+                                                    v-text="icons.mdiClose"
                                                 ></v-icon>
                                             </v-btn>
                                         </template>
@@ -71,7 +72,7 @@
                                 max-width="50%"
                             >
                                 <v-card>
-                                    <v-card-title
+                                    <v-card-title class="grey lighten-3"
                                         >New Product or Service</v-card-title
                                     >
                                     <v-divider></v-divider>
@@ -119,6 +120,7 @@
 
                                         <v-text-field
                                             label="Product Name"
+                                            rounded
                                             outlined
                                             dense
                                             clearable
@@ -126,6 +128,7 @@
 
                                         <v-textarea
                                             label="Product Description"
+                                            rounded
                                             outlined
                                             clearable
                                         ></v-textarea>
@@ -134,6 +137,7 @@
                                             <v-text-field
                                                 type="number"
                                                 label="Selling Price"
+                                                rounded
                                                 outlined
                                                 dense
                                                 clearable
@@ -145,6 +149,7 @@
                                             <v-text-field
                                                 type="number"
                                                 label="Wholesale Price"
+                                                rounded
                                                 outlined
                                                 dense
                                                 clearable
@@ -155,7 +160,7 @@
                                         </div>
 
                                         <v-sheet
-                                            color="#e9e9e9"
+                                            color="grey lighten-3"
                                             class="mt-3 pa-4"
                                         >
                                             <h3 class="secondary--text mb-2">
@@ -186,8 +191,9 @@
                                                     <v-select
                                                         v-model="discountType"
                                                         :items="discountTypes"
+                                                        menu-props="offsetY"
                                                         label="Discount Type"
-                                                        menu-props="overflowY"
+                                                        rounded
                                                         outlined
                                                         dense
                                                         hide-details
@@ -208,7 +214,7 @@
                                                 <v-col cols="auto">
                                                     <v-sheet
                                                         width="30"
-                                                        color="#e9e9e9"
+                                                        color="grey lighten-3"
                                                     >
                                                         <v-btn
                                                             icon
@@ -282,6 +288,7 @@
                                                 </v-col>
                                                 <v-col cols="5" class="mr-3">
                                                     <v-file-input
+                                                        rounded
                                                         outlined
                                                         dense
                                                         hide-details
@@ -348,8 +355,10 @@
                                         <v-select
                                             v-if="checkbox3"
                                             :items="['root', 'katigoria1']"
+                                            menu-props="offsetY"
                                             label="Select Category"
                                             class="mt-1"
+                                            rounded
                                             outlined
                                             dense
                                             hide-details
@@ -376,6 +385,7 @@
                         <v-tab-item>
                             <v-toolbar flat height="80" class="pt-2">
                                 <v-btn
+                                    rounded
                                     color="primary"
                                     class="text-capitalize"
                                     @click="productGroupDialog = true"
@@ -394,7 +404,7 @@
                                 max-width="50%"
                             >
                                 <v-card>
-                                    <v-card-title
+                                    <v-card-title class="grey lighten-3"
                                         >New Product Group</v-card-title
                                     >
                                     <v-divider></v-divider>
@@ -402,6 +412,7 @@
                                     <v-card-text class="pt-5">
                                         <v-text-field
                                             label="Product Group Name"
+                                            rounded
                                             outlined
                                             dense
                                             clearable
@@ -409,6 +420,7 @@
 
                                         <v-textarea
                                             label="Product Group Description"
+                                            rounded
                                             outlined
                                             clearable
                                         ></v-textarea>
@@ -417,6 +429,7 @@
                                             <v-text-field
                                                 type="number"
                                                 label="Target Price"
+                                                rounded
                                                 outlined
                                                 dense
                                                 clearable
@@ -427,7 +440,7 @@
                                         </div>
 
                                         <v-sheet
-                                            color="#e9e9e9"
+                                            color="grey lighten-3"
                                             class="mt-3 pa-4"
                                         >
                                             <h3 class="secondary--text mb-2">
@@ -459,7 +472,7 @@
                                                         v-model="discountType"
                                                         :items="discountTypes"
                                                         label="Discount Type"
-                                                        menu-props="overflowY"
+                                                        menu-props="offsetY"
                                                         outlined
                                                         dense
                                                         hide-details
@@ -556,6 +569,7 @@
                                                 </v-col>
                                                 <v-col cols="5" class="mr-3">
                                                     <v-file-input
+                                                        rounded
                                                         outlined
                                                         dense
                                                         hide-details
@@ -623,8 +637,10 @@
                                         <v-select
                                             v-if="checkbox3"
                                             :items="['root', 'katigoria1']"
+                                            menu-props="offsetY"
                                             label="Select Category"
                                             class="mt-1"
+                                            rounded
                                             outlined
                                             dense
                                             hide-details
@@ -655,7 +671,7 @@
 <script>
 import {
     mdiPencilOutline,
-    mdiDelete,
+    mdiClose,
     mdiCurrencyEur,
     mdiPercent,
     mdiMenuUp,
@@ -663,12 +679,12 @@ import {
 } from "@mdi/js";
 
 export default {
-    name: "Redeem",
+    name: "StoreProducts",
 
     data: () => ({
         icons: {
             mdiPencilOutline,
-            mdiDelete,
+            mdiClose,
             mdiCurrencyEur,
             mdiPercent,
             mdiMenuUp,

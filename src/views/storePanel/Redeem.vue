@@ -3,7 +3,7 @@
         <v-sheet color="#eaedf1" class="pa-4">
             <v-row class="mt-12" no-gutters>
                 <v-col cols="auto">
-                    <v-tabs v-model="tab" color="accent">
+                    <v-tabs v-model="tab">
                         <v-tab class="text-capitalize">redeem voucher</v-tab>
                         <v-tab class="text-capitalize">coupons overview</v-tab>
                         <v-tab class="text-capitalize">multiple coupons</v-tab>
@@ -13,47 +13,52 @@
                     <v-tabs-items v-model="tab">
                         <v-tab-item>
                             <v-card-text>
-                                When the customer wins a discount or a gift our system will
-                                generate a voucher which will have a code. This voucher will
-                                be sended in the user account. Type the voucher code below
+                                When the customer wins a discount or a gift our
+                                system will generate a voucher which will have a
+                                code. This voucher will be sended in the user
+                                account. Type the voucher code below
                             </v-card-text>
                             <v-card-title class="subtitle-1 font-weight-medium">
                                 <v-col cols="auto">Coupon Code</v-col>
                                 <v-col cols="auto">
                                     <v-text-field
-                                        color="accent"
-                                        hide-details
+                                        rounded
                                         outlined
                                         dense
                                         clearable
+                                        hide-details
                                     ></v-text-field>
                                 </v-col>
-                                <v-btn color="accent">
-                                    <v-icon class="mr-2" v-text="icons.mdiArrowRight"></v-icon>validation
+                                <v-btn color="primary" rounded>
+                                    <v-icon
+                                        class="mr-2"
+                                        v-text="icons.mdiArrowRight"
+                                    ></v-icon
+                                    >validation
                                 </v-btn>
                             </v-card-title>
                         </v-tab-item>
 
                         <v-tab-item>
                             <v-toolbar flat height="80" class="pt-2">
-                                <a
-                                    class="export-link accent--text"
-                                    href
-                                    @click.prevent
-                                >Export to Excel</a>
-                                <v-divider class="mx-3" vertical inset></v-divider>
-                                <a
-                                    class="export-link accent--text"
-                                    href
-                                    @click.prevent
-                                >Export to CSV</a>
+                                <a class="export-link" href @click.prevent
+                                    >Export to Excel</a
+                                >
+                                <v-divider
+                                    class="mx-3"
+                                    vertical
+                                    inset
+                                ></v-divider>
+                                <a class="export-link" href @click.prevent
+                                    >Export to CSV</a
+                                >
 
                                 <v-spacer></v-spacer>
 
                                 <v-col cols="4">
                                     <v-text-field
                                         label="Search"
-                                        color="accent"
+                                        rounded
                                         outlined
                                         dense
                                         clearable
@@ -68,9 +73,15 @@
                                 :footer-props="{ itemsPerPageOptions }"
                                 class="mt-4 coupon-table"
                             >
-                                <template v-slot:item.edit="{item}">
-                                    <v-btn color="yellow darken-3" icon @click="myFunc(item)">
-                                        <v-icon v-text="icons.mdiPencilOutline"></v-icon>
+                                <template v-slot:item.edit="{ item }">
+                                    <v-btn
+                                        color="yellow darken-3"
+                                        icon
+                                        @click="myFunc(item)"
+                                    >
+                                        <v-icon
+                                            v-text="icons.mdiPencilOutline"
+                                        ></v-icon>
                                     </v-btn>
                                 </template>
                             </v-data-table>
@@ -108,17 +119,17 @@ export default {
             { text: "Redeemed", value: "information" },
             { text: "Available", value: "actions" },
             { text: "Edit", value: "edit" },
-            { text: "Available", value: "actions" },
+            { text: "Available", value: "actions" }
         ],
         coupons: [{ user: "Edgar" }],
         multipleCouponsHeaders: [
             { text: "Voucher / Action", value: "user" },
             { text: "Voucher", value: "amount" },
             { text: "Coupon Code", value: "product" },
-            { text: "Coupon Value", value: "address" },
+            { text: "Coupon Value", value: "address" }
         ],
-        multipleCoupons: [],
-    }),
+        multipleCoupons: []
+    })
 };
 </script>
 

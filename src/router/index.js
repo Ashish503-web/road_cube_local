@@ -72,18 +72,10 @@ const routes = [
             },
             {
                 path: "products",
-                name: "Products",
+                name: "LoyaltyProducts",
                 component: () =>
                     import(
                         /* webpackChunkName: "products" */ "../views/loyaltyPanel/Products.vue"
-                    )
-            },
-            {
-                path: "branch-debt",
-                name: "BranchDebt",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "branchDebt" */ "../views/loyaltyPanel/BranchDebt.vue"
                     )
             },
             {
@@ -311,7 +303,7 @@ const routes = [
             },
             {
                 path: "products",
-                name: "Products",
+                name: "StoreProducts",
                 component: () =>
                     import(
                         /* webpackChunkName: "products" */ "../views/storePanel/Products.vue"

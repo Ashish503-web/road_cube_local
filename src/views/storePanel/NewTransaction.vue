@@ -6,17 +6,21 @@
                     <v-card tile flat height="100%">
                         <v-row no-gutters justify="center">
                             <v-col cols="5">
-                                <v-card-title class="text-h5 font-weight-bold pl-0 mt-5">
+                                <v-card-title
+                                    class="text-h5 font-weight-bold pl-0 mt-5"
+                                >
                                     <v-icon
                                         class="text--primary ml-n1 mr-3"
                                         large
                                         v-text="icons.mdiPlusThick"
-                                    ></v-icon>New Transaction
+                                    ></v-icon
+                                    >New Transaction
                                 </v-card-title>
 
                                 <v-text-field
                                     label="User"
-                                    class="rounded-0 mt-12"
+                                    class="mt-12"
+                                    rounded
                                     outlined
                                     dense
                                     clearable
@@ -25,7 +29,8 @@
                                 <v-text-field
                                     type="number"
                                     label="Amount"
-                                    class="rounded-0 mt-5"
+                                    class="mt-5"
+                                    rounded
                                     outlined
                                     dense
                                     clearable
@@ -35,13 +40,21 @@
                                 <v-text-field
                                     type="number"
                                     label="Receipt Number"
-                                    class="rounded-0 mt-5"
+                                    class="mt-5"
+                                    rounded
                                     outlined
                                     dense
                                     clearable
                                 ></v-text-field>
 
-                                <v-btn color="primary" class="mt-12" block large>load points</v-btn>
+                                <v-btn
+                                    color="primary"
+                                    class="mt-12"
+                                    block
+                                    large
+                                    rounded
+                                    >load points</v-btn
+                                >
                             </v-col>
                         </v-row>
                     </v-card>
@@ -60,8 +73,8 @@ export default {
     data: () => ({
         icons: {
             mdiPlusThick,
-            mdiCurrencyEur,
-        },
-    }),
+            mdiCurrencyEur
+        }
+    })
 };
 </script>

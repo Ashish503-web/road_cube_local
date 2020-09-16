@@ -231,9 +231,14 @@
 
         <v-navigation-drawer app color="secondary" permanent dark>
             <v-row class="py-3" no-gutters justify="center">
-                <v-sheet light class="pa-2 rounded-circle" width="70">
-                    <v-img src="../assets/store-logo.png" width="50"></v-img>
-                </v-sheet>
+                <router-link to="/">
+                    <v-sheet light class="pa-2 rounded-circle" width="70">
+                        <v-img
+                            src="../assets/store-logo.png"
+                            width="50"
+                        ></v-img>
+                    </v-sheet>
+                </router-link>
                 <v-col cols="12" class="text-center mt-4">
                     <v-btn icon>
                         <v-icon v-text="icons.mdiWeb"></v-icon>
@@ -312,7 +317,7 @@ import {
     mdiPlusThick,
     mdiCurrencyEur,
     mdiGift,
-    mdiCurrencyUsdCircleOutline,
+    mdiDatabaseSync,
     mdiTrophyVariant,
     mdiPackageVariantClosed,
     mdiTagMultiple,
@@ -349,7 +354,6 @@ export default {
                 mdiPower,
                 mdiWeb,
                 mdiAccountQuestion,
-
                 mdiMagnify,
                 mdiChevronDown,
                 mdiViewGridPlusOutline,
@@ -378,7 +382,7 @@ export default {
                         to: "/storepanel/redeem"
                     },
                     {
-                        icon: mdiCurrencyUsdCircleOutline,
+                        icon: mdiDatabaseSync,
                         title: "History",
                         to: "/storepanel/history"
                     },

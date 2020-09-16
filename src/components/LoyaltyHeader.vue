@@ -237,11 +237,13 @@
             permanent
             dark
         >
-            <v-toolbar color="secondary" flat>
-                <v-toolbar-title class="mx-auto">
-                    <v-img src="../assets/logo-light.png" width="90"></v-img>
-                </v-toolbar-title>
-            </v-toolbar>
+            <router-link to="/">
+                <v-toolbar class="home-link" color="secondary" flat>
+                    <v-toolbar-title class="mx-auto">
+                        <v-img src="../assets/loyalty-logo.png"></v-img>
+                    </v-toolbar-title>
+                </v-toolbar>
+            </router-link>
 
             <v-container
                 class="pa-0"
@@ -260,19 +262,48 @@
                         v-text="navLink.title"
                     ></v-subheader>
 
-                    <v-list-item
-                        v-for="item in navLink.children"
-                        :key="item.title"
-                        :to="item.to"
-                        exact
-                    >
-                        <v-list-item-icon>
-                            <v-icon v-text="item.icon"></v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-title
-                            v-text="item.title"
-                        ></v-list-item-title>
-                    </v-list-item>
+                    <div v-for="item in navLink.children" :key="item.title">
+                        <v-tooltip v-if="mini" right>
+                            <template v-slot:activator="{ on }">
+                                <v-list-item :to="item.to" exact v-on="on">
+                                    <v-list-item-icon>
+                                        <v-icon v-text="item.icon"></v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-title
+                                        v-text="item.title"
+                                    ></v-list-item-title>
+                                </v-list-item>
+                            </template>
+
+                            <span v-text="item.title"></span>
+                        </v-tooltip>
+
+                        <v-list-item v-else :to="item.to" exact>
+                            <v-list-item-icon>
+                                <v-icon v-text="item.icon"></v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-title
+                                v-text="item.title"
+                            ></v-list-item-title>
+                        </v-list-item>
+                    </div>
+                </v-list>
+
+                <v-list dense nav class="mt-12">
+                    <v-tooltip right>
+                        <template v-slot:activator="{ on }">
+                            <v-list-item to="/logout" v-on="on">
+                                <v-list-item-icon>
+                                    <v-icon v-text="icons.mdiLogout"></v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-title
+                                    v-text="'Logout'"
+                                ></v-list-item-title>
+                            </v-list-item>
+                        </template>
+
+                        <span>Logout</span>
+                    </v-tooltip>
                 </v-list>
             </v-container>
         </v-navigation-drawer>
@@ -302,17 +333,25 @@ import {
     mdiClose,
     mdiCartOutline,
     mdiCheckDecagram,
-    // mdiHome,
-    // mdiHomeOutline,
-    // mdiCalendarMonth,
-    // mdiForumOutline,
-    // mdiStorefrontOutline,
-    // mdiCurrencyBtc,
-    // mdiEmailOutline,
-    // mdiFileDocumentOutline,
-    // mdiWalletTravel,
-    // mdiCalendarCheck,
-    // mdiAccountDetails,
+    mdiChartBar,
+    mdiCashMultiple,
+    mdiSourceBranch,
+    mdiFileDocument,
+    mdiCreditCardOutline,
+    mdiPackageVariantClosed,
+    mdiAccountBox,
+    mdiAccount,
+    mdiOfficeBuilding,
+    mdiFinance,
+    mdiViewList,
+    mdiGift,
+    mdiTrophyVariant,
+    mdiHelpCircle,
+    mdiTrophy,
+    mdiMapMarker,
+    mdiStore,
+    mdiFire,
+    mdiBullhorn,
     mdiAccountOutline,
     mdiWalletOutline,
     mdiWrenchOutline,
@@ -348,49 +387,53 @@ export default {
                 {
                     title: "MANAGE",
                     children: [
-                        { icon: "", title: "Dashboard", to: "/loyaltyPanel" },
                         {
-                            icon: "",
+                            icon: mdiChartBar,
+                            title: "Dashboard",
+                            to: "/loyaltyPanel"
+                        },
+                        {
+                            icon: mdiCashMultiple,
                             title: "Branch Debt",
                             to: "/loyaltyPanel/branch-debt"
                         },
                         {
-                            icon: "",
+                            icon: mdiSourceBranch,
                             title: "Branches",
                             to: "/loyaltyPanel/branches"
                         },
                         {
-                            icon: "",
+                            icon: mdiFileDocument,
                             title: "Subscriptions",
                             to: "/loyaltyPanel/subscriptions"
                         },
                         {
-                            icon: "",
+                            icon: mdiCreditCardOutline,
                             title: "Collaborators",
                             to: "/loyaltyPanel/collaborators"
                         },
                         {
-                            icon: "",
+                            icon: mdiPackageVariantClosed,
                             title: "Products",
                             to: "/loyaltyPanel/products"
                         },
                         {
-                            icon: "",
+                            icon: mdiAccountBox,
                             title: "Customer",
                             to: "/loyaltyPanel/customer"
                         },
                         {
-                            icon: "",
+                            icon: mdiAccount,
                             title: "User Rights",
                             to: "/loyaltyPanel/user-rights"
                         },
                         {
-                            icon: "",
+                            icon: mdiOfficeBuilding,
                             title: "Business Profile",
                             to: "/loyaltyPanel/business-profile"
                         },
                         {
-                            icon: "",
+                            icon: mdiFinance,
                             title: "Business Statistics",
                             to: "/loyaltyPanel/business-statistics"
                         }
@@ -400,22 +443,22 @@ export default {
                     title: "GIFT LIST",
                     children: [
                         {
-                            icon: "",
+                            icon: mdiViewList,
                             title: "Category Management",
                             to: "/loyaltyPanel/category-management"
                         },
                         {
-                            icon: "",
+                            icon: mdiGift,
                             title: "Gift Status",
                             to: "/loyaltyPanel/gift-status"
                         },
                         {
-                            icon: "",
+                            icon: mdiTrophyVariant,
                             title: "Catalog Management",
                             to: "/loyaltyPanel/catalog-management"
                         },
                         {
-                            icon: "",
+                            icon: mdiPackageVariantClosed,
                             title: "Supplier Management",
                             to: "/loyaltyPanel/supplier-management"
                         }
@@ -425,37 +468,37 @@ export default {
                     title: "PROMO ACTIONS",
                     children: [
                         {
-                            icon: "",
+                            icon: mdiHelpCircle,
                             title: "1+1 / Sampling",
                             to: "/loyaltyPanel/sampling"
                         },
                         {
-                            icon: "",
+                            icon: mdiTrophy,
                             title: "Receipt Scanning",
                             to: "/loyaltyPanel/receipt-scanning"
                         },
                         {
-                            icon: "",
+                            icon: mdiMapMarker,
                             title: "Check In",
                             to: "/loyaltyPanel/check-in"
                         },
                         {
-                            icon: "",
+                            icon: mdiStore,
                             title: "Serial Shopping",
                             to: "/loyaltyPanel/serial-shopping"
                         },
                         {
-                            icon: "",
+                            icon: mdiTrophyVariant,
                             title: "Contest & Survey",
                             to: "/loyaltyPanel/contest-survey"
                         },
                         {
-                            icon: "",
+                            icon: mdiFire,
                             title: "Roadcodes",
                             to: "/loyaltyPanel/roadcodes"
                         },
                         {
-                            icon: "",
+                            icon: mdiCreditCardOutline,
                             title: "Multiple Coupons",
                             to: "/loyaltyPanel/multiple-coupons"
                         }
@@ -465,12 +508,12 @@ export default {
                     title: "ATTRACT CUSTOMERS",
                     children: [
                         {
-                            icon: "",
+                            icon: mdiBullhorn,
                             title: "View Campaigns",
                             to: "/loyaltyPanel/view-campaigns"
                         },
                         {
-                            icon: "",
+                            icon: mdiBullhorn,
                             title: "New Campaign",
                             to: "/loyaltyPanel/new-campaign"
                         }
@@ -583,6 +626,10 @@ export default {
 </script>
 
 <style scoped>
+.home-link:hover {
+    background-color: #1bbae1 !important;
+}
+
 ::-webkit-scrollbar {
     width: 4px;
 }

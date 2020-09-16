@@ -10,13 +10,20 @@
             <v-row no-gutters>
                 <v-col cols="12">
                     <v-toolbar flat height="80" class="pt-2">
-                        <v-btn color="primary" class="text-none" width="230">Add Contest/Survey</v-btn>
+                        <v-btn
+                            rounded
+                            color="primary"
+                            class="text-none"
+                            width="230"
+                            >Add Contest/Survey</v-btn
+                        >
 
                         <v-spacer></v-spacer>
 
                         <v-col cols="4">
                             <v-text-field
                                 label="Search"
+                                rounded
                                 outlined
                                 dense
                                 clearable
@@ -32,7 +39,11 @@
                         :footer-props="{ itemsPerPageOptions }"
                     >
                         <template v-slot:item.winners="{ item }">
-                            <router-link v-if="!item.inProgress" :to="item.winners">View Winners</router-link>
+                            <router-link
+                                v-if="!item.inProgress"
+                                :to="item.winners"
+                                >View Winners</router-link
+                            >
                             <div v-else>{{ item.winners }}</div>
                         </template>
 
@@ -46,7 +57,10 @@
                                         v-on="on"
                                         to="/storepanel/view-contest"
                                     >
-                                        <v-icon size="20" v-text="icons.mdiEyeOutline"></v-icon>
+                                        <v-icon
+                                            size="20"
+                                            v-text="icons.mdiEyeOutline"
+                                        ></v-icon>
                                     </v-btn>
                                 </template>
 
@@ -61,7 +75,10 @@
                                         v-on="on"
                                         to="/storepanel/view-participants"
                                     >
-                                        <v-icon size="20" v-text="icons.mdiHelp"></v-icon>
+                                        <v-icon
+                                            size="20"
+                                            v-text="icons.mdiHelp"
+                                        ></v-icon>
                                     </v-btn>
                                 </template>
 
@@ -71,7 +88,10 @@
                             <v-tooltip top>
                                 <template v-slot:activator="{ on }">
                                     <v-btn color="red" icon v-on="on">
-                                        <v-icon size="20" v-text="icons.mdiClose"></v-icon>
+                                        <v-icon
+                                            size="20"
+                                            v-text="icons.mdiClose"
+                                        ></v-icon>
                                     </v-btn>
                                 </template>
 
@@ -92,7 +112,7 @@ import {
     mdiEyeOutline,
     mdiHelp,
     mdiClose,
-    mdiCloseThick,
+    mdiCloseThick
 } from "@mdi/js";
 
 export default {
@@ -105,7 +125,7 @@ export default {
             mdiEyeOutline,
             mdiHelp,
             mdiClose,
-            mdiCloseThick,
+            mdiCloseThick
         },
         tab: 0,
         itemsPerPageOptions: [10, 20, 30, -1],
@@ -116,7 +136,7 @@ export default {
             { text: "Type", value: "type" },
             { text: "Status", value: "status" },
             { text: "Winners", value: "winners" },
-            { text: "Actions", value: "actions" },
+            { text: "Actions", value: "actions" }
         ],
         items: [
             {
@@ -125,7 +145,7 @@ export default {
                 endDate: "2020-02-04 14:40:00",
                 type: "Contest",
                 status: "Inactive",
-                winners: "/storepanel/contest-winner",
+                winners: "/storepanel/contest-winner"
             },
             {
                 title: "aa",
@@ -134,9 +154,9 @@ export default {
                 type: "Contest",
                 status: "Active",
                 winners: "In Progress",
-                inProgress: true,
-            },
-        ],
-    }),
+                inProgress: true
+            }
+        ]
+    })
 };
 </script>

@@ -1,16 +1,19 @@
 <template>
     <v-container class="px-4">
         <v-sheet color="#eaedf1" class="pa-4 text-right">
-            <v-btn color="primary" class="text-capitalize mt-4">
-                <v-icon class="mr-1" v-text="icons.mdiCellphoneIphone"></v-icon>open digital payments
+            <v-btn rounded color="primary" class="text-capitalize mt-4">
+                <v-icon class="mr-1" v-text="icons.mdiCellphoneIphone"></v-icon
+                >open digital payments
             </v-btn>
 
-            <v-btn color="primary" class="text-capitalize mx-2 mt-4">
-                <v-icon class="mr-1" v-text="icons.mdiPrinter"></v-icon>fund closure
+            <v-btn rounded color="primary" class="text-capitalize mx-2 mt-4">
+                <v-icon class="mr-1" v-text="icons.mdiPrinter"></v-icon>fund
+                closure
             </v-btn>
 
-            <v-btn color="primary" class="text-capitalize mt-4">
-                <v-icon class="mr-1" v-text="icons.mdiOpenInNew"></v-icon>download all transactions
+            <v-btn rounded color="primary" class="text-capitalize mt-4">
+                <v-icon class="mr-1" v-text="icons.mdiOpenInNew"></v-icon
+                >download all transactions
             </v-btn>
 
             <v-row class="mt-5" no-gutters>
@@ -28,6 +31,7 @@
                                 <v-col cols="4">
                                     <v-text-field
                                         label="Search"
+                                        rounded
                                         outlined
                                         dense
                                         clearable
@@ -46,6 +50,7 @@
                                 <v-col cols="4">
                                     <v-text-field
                                         label="Search"
+                                        rounded
                                         outlined
                                         dense
                                         clearable
@@ -71,7 +76,7 @@ import {
     mdiCellphoneIphone,
     mdiPrinter,
     mdiOpenInNew,
-    mdiMagnify,
+    mdiMagnify
 } from "@mdi/js";
 
 export default {
@@ -82,7 +87,7 @@ export default {
             mdiCellphoneIphone,
             mdiPrinter,
             mdiOpenInNew,
-            mdiMagnify,
+            mdiMagnify
         },
         tab: 0,
         itemsPerPageOptions: [10, 20, 30, -1],
@@ -92,7 +97,7 @@ export default {
             { text: "Product", value: "product" },
             { text: "Address", value: "address" },
             { text: "Information", value: "information" },
-            { text: "Actions", value: "actions" },
+            { text: "Actions", value: "actions" }
         ],
         paidHeaders: [
             { text: "User", value: "user" },
@@ -100,8 +105,8 @@ export default {
             { text: "Points", value: "points" },
             { text: "Product", value: "product" },
             { text: "Date", value: "date" },
-            { text: "Information", value: "information" },
-        ],
-    }),
+            { text: "Information", value: "information" }
+        ]
+    })
 };
 </script>
