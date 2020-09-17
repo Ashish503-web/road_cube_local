@@ -28,13 +28,6 @@ const routes = [
                 name: "LoyaltyPanel",
                 component: () =>
                     import(
-                        /* webpackChunkName: "defaultDashboard" */ "../views/loyaltyPanel/Dashboard.vue"
-                    )
-            },
-            {
-                path: "",
-                component: () =>
-                    import(
                         /* webpackChunkName: "dashboard" */ "../views/loyaltyPanel/Dashboard.vue"
                     )
             },
@@ -112,35 +105,59 @@ const routes = [
             },
             {
                 path: "category-management",
-                name: "CategoryManagement",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "categoryManagement" */ "../views/loyaltyPanel/CategoryManagement.vue"
-                    )
+                name: "Category Management",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "categoryManagement" */ "../views/loyaltyPanel/CategoryManagement.vue"
+                        )
+                }
             },
             {
                 path: "gift-status",
-                name: "GiftStatus",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "giftStatus" */ "../views/loyaltyPanel/GiftStatus.vue"
-                    )
+                name: "Gift Status",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "giftStatus" */ "../views/loyaltyPanel/GiftStatus.vue"
+                        )
+                }
             },
             {
                 path: "catalog-management",
-                name: "CatalogManagement",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "catalogManagement" */ "../views/loyaltyPanel/CatalogManagement.vue"
-                    )
+                name: "Catalog Management",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "catalogManagement" */ "../views/loyaltyPanel/CatalogManagement.vue"
+                        )
+                }
             },
             {
                 path: "supplier-management",
-                name: "SupplierManagement",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "supplierManagement" */ "../views/loyaltyPanel/SupplierManagement.vue"
-                    )
+                name: "Supplier Management",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "supplierManagement" */ "../views/loyaltyPanel/SupplierManagement.vue"
+                        )
+                }
             },
             {
                 path: "sampling",
