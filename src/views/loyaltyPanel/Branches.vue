@@ -19,7 +19,7 @@
 
     <v-row class="pa-5 pt-3 pb-3" style="background: #eaedf1">
       <v-col cols="12">
-        <v-card flat tile min-height="400">
+        <v-card flat tile>
           <v-card tile flat color="#f9fafc" class="pa-1 pb-0">
             <v-tabs
                 v-model="tab"
