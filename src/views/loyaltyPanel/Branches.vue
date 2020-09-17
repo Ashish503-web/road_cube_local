@@ -25,7 +25,7 @@
                 v-model="tab"
                 background-color="#f9fafc"
             >
-              <v-tab class="pa-5 text-capitalize" color="red">Branches</v-tab>
+              <v-tab class="pa-5 text-capitalize">Branches</v-tab>
               <v-tab class="pa-5 text-capitalize">Financial data</v-tab>
               <v-tab class="pa-5 text-capitalize">Setting of Admin Panel</v-tab>
               <v-tab class="pa-5 text-capitalize">Settings of Application</v-tab>
@@ -678,6 +678,53 @@
                                 rounded
                                 class="mt-1 mb-0"
                             ></v-text-field>
+                            <v-row>
+                              <label
+                                class="font-weight-bold ml-5 mr-1"
+                              >
+                                Active
+                              </label>
+                              <v-checkbox class="d-inline-block ma-0 pa-0"></v-checkbox>
+                            </v-row>
+                            <v-row>
+                              <label
+                                class="font-weight-bold ml-5 mr-1"
+                              >
+                                General Discount
+                              </label>
+                              <v-checkbox class="d-inline-block ma-0 pa-0"></v-checkbox>
+                            </v-row>
+                            <v-row>
+                              <label
+                                class="font-weight-bold ml-5 mr-1"
+                              >
+                                Ability to change product range
+                              </label>
+                              <v-checkbox class="d-inline-block ma-0 pa-0"></v-checkbox>
+                            </v-row>
+                            <v-row>
+                              <label
+                                class="font-weight-bold ml-5 mr-1"
+                              >
+                                Receipt number
+                              </label>
+                              <v-checkbox class="d-inline-block ma-0 pa-0"></v-checkbox>
+                            </v-row>
+                            <v-row>
+                              <label
+                                class="font-weight-bold ml-5 mr-1 d-block"
+                              >
+                                Loyalty Programs
+                              </label>
+                            </v-row>
+                            <v-row class="ma-2">
+                              <v-checkbox class="d-inline-block ma-0 pa-0"></v-checkbox>
+                              <h4 class="d-inline-block ma-0 mr-5 pa-0">Επιστροφή</h4>
+                              <v-checkbox class="d-inline-block ma-0 pa-0"></v-checkbox>
+                              <h4 class="d-inline-block ma-0 mr-5 pa-0">go4more</h4>
+                              <v-checkbox class="d-inline-block ma-0 pa-0"></v-checkbox>
+                              <h4 class="d-inline-block ma-0 mr-5 pa-0">Alpha Bank Bonus</h4>
+                            </v-row>
                           </v-form>
                         </v-card-text>
 
