@@ -1,12 +1,12 @@
 <template>
-    <v-container class="px-4">
+    <v-container fluid class="px-3">
         <v-toolbar flat>
             <v-toolbar-title>Contest & Survey</v-toolbar-title>
             <v-spacer></v-spacer>
             <v-icon x-large color="grey" v-text="icons.mdiViewGrid"></v-icon>
         </v-toolbar>
 
-        <v-sheet color="#eaedf1" class="pa-4">
+        <v-sheet color="#eaedf1" class="pa-3">
             <v-row no-gutters>
                 <v-col cols="12">
                     <v-toolbar flat height="80" class="pt-2">
@@ -58,7 +58,6 @@
                                         to="/storepanel/view-contest"
                                     >
                                         <v-icon
-                                            size="20"
                                             v-text="icons.mdiEyeOutline"
                                         ></v-icon>
                                     </v-btn>
@@ -75,10 +74,7 @@
                                         v-on="on"
                                         to="/storepanel/view-participants"
                                     >
-                                        <v-icon
-                                            size="20"
-                                            v-text="icons.mdiHelp"
-                                        ></v-icon>
+                                        <v-icon v-text="icons.mdiHelp"></v-icon>
                                     </v-btn>
                                 </template>
 
@@ -89,7 +85,6 @@
                                 <template v-slot:activator="{ on }">
                                     <v-btn color="red" icon v-on="on">
                                         <v-icon
-                                            size="20"
                                             v-text="icons.mdiClose"
                                         ></v-icon>
                                     </v-btn>

@@ -347,7 +347,7 @@ import {
     mdiGift,
     mdiTrophyVariant,
     mdiHelpCircle,
-    mdiTrophy,
+    mdiReceipt,
     mdiMapMarker,
     mdiStore,
     mdiFire,
@@ -355,7 +355,7 @@ import {
     mdiAccountOutline,
     mdiWalletOutline,
     mdiWrenchOutline,
-    mdiLockOpenOutline
+    mdiLockOpenOutline, 
 } from "@mdi/js";
 
 import USFlag from "../assets/flags/US-flag.jpeg";
@@ -473,7 +473,7 @@ export default {
                             to: "/loyaltyPanel/sampling"
                         },
                         {
-                            icon: mdiTrophy,
+                            icon: mdiReceipt,
                             title: "Receipt Scanning",
                             to: "/loyaltyPanel/receipt-scanning"
                         },

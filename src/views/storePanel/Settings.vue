@@ -1,7 +1,7 @@
 <template>
-    <v-container class="px-4">
-        <v-sheet color="#eaedf1" class="pa-4">
-            <v-row class="mt-12" no-gutters>
+    <v-container fluid class="px-3">
+        <v-sheet color="#eaedf1" class="pa-3">
+            <v-row no-gutters>
                 <v-col cols="auto">
                     <v-tabs v-model="tab" show-arrows>
                         <v-tab
@@ -49,7 +49,6 @@
                                                 <v-file-input
                                                     color="secondary"
                                                     class="mt-1"
-                                                    rounded
                                                     outlined
                                                     dense
                                                     hide-details
@@ -70,9 +69,6 @@
                                             class="text-capitalize"
                                             rounded
                                         >
-                                            <v-icon
-                                                v-text="icons.mdiArrowRight"
-                                            ></v-icon>
                                             update logo
                                         </v-btn>
                                     </v-card-actions>
@@ -111,7 +107,6 @@
                                                 <v-file-input
                                                     color="secondary"
                                                     class="mt-1"
-                                                    rounded
                                                     outlined
                                                     dense
                                                     hide-details
@@ -143,9 +138,6 @@
                                             class="text-capitalize"
                                             rounded
                                         >
-                                            <v-icon
-                                                v-text="icons.mdiArrowRight"
-                                            ></v-icon>
                                             update logo
                                         </v-btn>
                                     </v-card-actions>
@@ -161,7 +153,6 @@
                                                 <v-text-field
                                                     label="Business Name"
                                                     color="secondary"
-                                                    rounded
                                                     outlined
                                                     dense
                                                     clearable
@@ -171,7 +162,6 @@
                                                 <v-text-field
                                                     label="Business Address"
                                                     color="secondary"
-                                                    rounded
                                                     outlined
                                                     dense
                                                     clearable
@@ -182,7 +172,6 @@
                                                     menu-props="offsetY"
                                                     label="Basic Business Category"
                                                     color="secondary"
-                                                    rounded
                                                     outlined
                                                     dense
                                                 ></v-select>
@@ -191,7 +180,6 @@
                                                 <v-text-field
                                                     label="Business Activity"
                                                     color="secondary"
-                                                    rounded
                                                     outlined
                                                     dense
                                                     clearable
@@ -201,7 +189,6 @@
                                                 <v-autocomplete
                                                     label="Country"
                                                     color="secondary"
-                                                    rounded
                                                     outlined
                                                     dense
                                                     clearable
@@ -212,7 +199,6 @@
                                                     type="number"
                                                     label="Business Telephone Number"
                                                     color="secondary"
-                                                    rounded
                                                     outlined
                                                     dense
                                                     clearable
@@ -223,7 +209,6 @@
                                                     type="number"
                                                     label="Business Telephone Number 2"
                                                     color="secondary"
-                                                    rounded
                                                     outlined
                                                     dense
                                                     clearable
@@ -234,7 +219,6 @@
                                                     type="number"
                                                     label="Owner's Mobile Phone"
                                                     color="secondary"
-                                                    rounded
                                                     outlined
                                                     dense
                                                     clearable
@@ -244,7 +228,6 @@
                                                 <v-text-field
                                                     label="Owner's Fullname"
                                                     color="secondary"
-                                                    rounded
                                                     outlined
                                                     dense
                                                     clearable
@@ -255,7 +238,6 @@
                                                     type="email"
                                                     label="Email"
                                                     color="secondary"
-                                                    rounded
                                                     outlined
                                                     dense
                                                     clearable
@@ -272,10 +254,8 @@
                                         <v-btn
                                             color="primary"
                                             class="text-capitalize"
+                                            rounded
                                         >
-                                            <v-icon
-                                                v-text="icons.mdiArrowRight"
-                                            ></v-icon>
                                             update logo
                                         </v-btn>
                                     </v-card-actions>
@@ -388,7 +368,6 @@
                                                                             .startTime
                                                                     "
                                                                     label="Start Time"
-                                                                    rounded
                                                                     outlined
                                                                     dense
                                                                     clearable
@@ -469,7 +448,6 @@
                                                                             .endTime
                                                                     "
                                                                     label="End Time"
-                                                                    rounded
                                                                     outlined
                                                                     dense
                                                                     clearable
@@ -569,7 +547,6 @@
                                                                             .startTime
                                                                     "
                                                                     label="Start Time"
-                                                                    rounded
                                                                     outlined
                                                                     dense
                                                                     clearable
@@ -655,7 +632,6 @@
                                                                             .endTime
                                                                     "
                                                                     label="End Time"
-                                                                    rounded
                                                                     outlined
                                                                     dense
                                                                     clearable
@@ -741,7 +717,6 @@
                                                                             .startTime
                                                                     "
                                                                     label="Start Time"
-                                                                    rounded
                                                                     outlined
                                                                     dense
                                                                     clearable
@@ -827,7 +802,6 @@
                                                                             .endTime
                                                                     "
                                                                     label="End Time"
-                                                                    rounded
                                                                     outlined
                                                                     dense
                                                                     clearable
@@ -885,10 +859,20 @@
                                         </v-row>
                                         <v-divider></v-divider>
                                     </v-container>
+
+                                    <v-card-actions class="pl-4 mt-3">
+                                        <v-btn
+                                            color="primary"
+                                            class="text-capitalize"
+                                            rounded
+                                        >
+                                            update details
+                                        </v-btn>
+                                    </v-card-actions>
                                 </v-card>
 
                                 <v-card class="mt-12 rounded-lg">
-                                    <v-card-title class="secondary white--text">
+                                    <v-card-title class="grey lighten-3">
                                         Invoicing
                                     </v-card-title>
 
@@ -903,7 +887,6 @@
                                                         <v-text-field
                                                             label="Legal Name"
                                                             color="secondary"
-                                                            rounded
                                                             outlined
                                                             dense
                                                             clearable
@@ -913,7 +896,6 @@
                                                         <v-text-field
                                                             label="Tax Id"
                                                             color="secondary"
-                                                            rounded
                                                             outlined
                                                             dense
                                                             clearable
@@ -923,7 +905,6 @@
                                                         <v-text-field
                                                             label="Business Address"
                                                             color="secondary"
-                                                            rounded
                                                             outlined
                                                             dense
                                                             clearable
@@ -933,7 +914,6 @@
                                                         <v-text-field
                                                             label="Profession"
                                                             color="secondary"
-                                                            rounded
                                                             outlined
                                                             dense
                                                             clearable
@@ -943,7 +923,6 @@
                                                         <v-text-field
                                                             label="Jurisdiction"
                                                             color="secondary"
-                                                            rounded
                                                             outlined
                                                             dense
                                                             clearable
@@ -960,7 +939,6 @@
                                                             label="Invoice from"
                                                             color="secondary"
                                                             item-color="secondary"
-                                                            rounded
                                                             outlined
                                                             dense
                                                         ></v-select>
@@ -976,16 +954,13 @@
                                             class="text-capitalize"
                                             rounded
                                         >
-                                            <v-icon
-                                                v-text="icons.mdiArrowRight"
-                                            ></v-icon>
                                             send invoice settings
                                         </v-btn>
                                     </v-card-actions>
                                 </v-card>
 
                                 <v-card class="mt-12 rounded-lg">
-                                    <v-card-title class="primary white--text">
+                                    <v-card-title class="grey lighten-3">
                                         Receipt Information
                                     </v-card-title>
 
@@ -999,7 +974,6 @@
                                                     <v-col cols="5">
                                                         <v-text-field
                                                             label="Business Telephone Number"
-                                                            rounded
                                                             outlined
                                                             dense
                                                             clearable
@@ -1008,7 +982,6 @@
                                                     <v-col cols="5">
                                                         <v-text-field
                                                             label="Tax Id"
-                                                            rounded
                                                             outlined
                                                             dense
                                                             clearable
@@ -1017,7 +990,6 @@
                                                     <v-col cols="5">
                                                         <v-text-field
                                                             label="Business Address"
-                                                            rounded
                                                             outlined
                                                             dense
                                                             clearable
@@ -1026,7 +998,6 @@
                                                     <v-col cols="5">
                                                         <v-text-field
                                                             label="Business Name"
-                                                            rounded
                                                             outlined
                                                             dense
                                                             clearable
@@ -1043,9 +1014,6 @@
                                             class="text-capitalize"
                                             rounded
                                         >
-                                            <v-icon
-                                                v-text="icons.mdiArrowRight"
-                                            ></v-icon>
                                             update details
                                         </v-btn>
                                     </v-card-actions>
@@ -1109,7 +1077,6 @@
                                                     label="Radius m2"
                                                     color="secondary"
                                                     class="mt-4"
-                                                    rounded
                                                     outlined
                                                     dense
                                                     clearable
@@ -1152,7 +1119,6 @@
                                                         label="Amount"
                                                         color="secondary"
                                                         class="mt-4"
-                                                        rounded
                                                         outlined
                                                         dense
                                                         clearable
@@ -1202,7 +1168,6 @@
                                                         label="Amount"
                                                         color="secondary"
                                                         class="mt-4"
-                                                        rounded
                                                         outlined
                                                         dense
                                                         clearable
@@ -1221,9 +1186,6 @@
                                             class="text-capitalize"
                                             rounded
                                         >
-                                            <v-icon
-                                                v-text="icons.mdiArrowRight"
-                                            ></v-icon>
                                             update details
                                         </v-btn>
                                     </v-card-actions>
@@ -1239,7 +1201,6 @@
                                             type="password"
                                             label="Password"
                                             color="secondary"
-                                            rounded
                                             outlined
                                             dense
                                             clearable
@@ -1248,7 +1209,6 @@
                                             type="password"
                                             label="New Password"
                                             color="secondary"
-                                            rounded
                                             outlined
                                             dense
                                             clearable
@@ -1257,7 +1217,6 @@
                                             type="password"
                                             label="Confirm Password"
                                             color="secondary"
-                                            rounded
                                             outlined
                                             dense
                                             clearable
@@ -1315,7 +1274,6 @@
                                                         v-model="category"
                                                         label="Enter Category"
                                                         color="secondary"
-                                                        rounded
                                                         outlined
                                                         dense
                                                         clearable
@@ -1398,7 +1356,6 @@
                                     <v-card-text class="pt-8">
                                         <v-textarea
                                             color="secondary"
-                                            rounded
                                             outlined
                                             clearable
                                         ></v-textarea>
@@ -1412,7 +1369,6 @@
                                                 <v-text-field
                                                     label="Password"
                                                     color="secondary"
-                                                    rounded
                                                     outlined
                                                     dense
                                                     clearable
@@ -1451,7 +1407,6 @@
                                             <v-col class="pl-3">
                                                 <v-switch
                                                     color="secondary"
-                                                    inset
                                                     hide-details
                                                 ></v-switch>
                                             </v-col>
@@ -1465,6 +1420,7 @@
                                     <v-col cols="9">
                                         <v-checkbox
                                             v-model="sendPoints"
+                                            color="secondary"
                                             class="pa-0 pl-4 ma-0"
                                             hide-details
                                         >
@@ -1517,13 +1473,13 @@
                                                             menu-props="offsetY"
                                                             color="secondary"
                                                             item-color="secondary"
-                                                            rounded
                                                             outlined
                                                             dense
                                                             hide-details
                                                         ></v-select>
 
                                                         <v-checkbox
+                                                            color="secondary"
                                                             hide-details
                                                         >
                                                             <template
@@ -1541,6 +1497,7 @@
                                                         </v-checkbox>
 
                                                         <v-checkbox
+                                                            color="secondary"
                                                             hide-details
                                                         >
                                                             <template
@@ -1559,6 +1516,7 @@
                                                         </v-checkbox>
 
                                                         <v-checkbox
+                                                            color="secondary"
                                                             hide-details
                                                         >
                                                             <template
@@ -1591,6 +1549,7 @@
 
                                         <v-checkbox
                                             v-model="pointDelivery"
+                                            color="secondary"
                                             class="pa-0 pl-4 ma-0"
                                             hide-details
                                         >
@@ -1623,8 +1582,9 @@
                                             </span>
 
                                             <v-checkbox
-                                                hide-details
+                                                color="secondary"
                                                 class="ml-8"
+                                                hide-details
                                             >
                                                 <template v-slot:label>
                                                     <h4 class="subtitle-2">
@@ -1634,8 +1594,9 @@
                                             </v-checkbox>
 
                                             <v-checkbox
-                                                hide-details
+                                                color="secondary"
                                                 class="ml-8"
+                                                hide-details
                                             >
                                                 <template v-slot:label>
                                                     <h4 class="subtitle-2">
@@ -1657,6 +1618,7 @@
 
                                         <v-checkbox
                                             v-model="scanReceipt"
+                                            color="secondary"
                                             class="pa-0 pl-4 ma-0"
                                             hide-details
                                         >
@@ -1704,7 +1666,6 @@
                                                             type="number"
                                                             color="secondary"
                                                             class="mt-3"
-                                                            rounded
                                                             outlined
                                                             dense
                                                             clearable
@@ -1725,7 +1686,6 @@
                                                             type="number"
                                                             color="secondary"
                                                             class="mt-3"
-                                                            rounded
                                                             outlined
                                                             dense
                                                             clearable
@@ -1745,7 +1705,6 @@
                                                         <v-text-field
                                                             color="secondary"
                                                             class="mt-3"
-                                                            rounded
                                                             outlined
                                                             dense
                                                             clearable
@@ -1765,7 +1724,6 @@
                                                         <v-text-field
                                                             color="secondary"
                                                             class="mt-3"
-                                                            rounded
                                                             outlined
                                                             dense
                                                             clearable
@@ -1786,7 +1744,6 @@
                                                             type="number"
                                                             color="secondary"
                                                             class="mt-3"
-                                                            rounded
                                                             outlined
                                                             dense
                                                             clearable
@@ -1810,7 +1767,6 @@
                                                             type="number"
                                                             color="secondary"
                                                             class="mt-3"
-                                                            rounded
                                                             outlined
                                                             dense
                                                             clearable
@@ -1835,6 +1791,7 @@
 
                                         <v-checkbox
                                             v-model="rewardWithPresence"
+                                            color="secondary"
                                             class="pa-0 pl-4 ma-0"
                                             hide-details
                                         >
@@ -1872,6 +1829,7 @@
 
                                         <v-checkbox
                                             v-model="mobilePayments"
+                                            color="secondary"
                                             class="pa-0 pl-4 ma-0"
                                             hide-details
                                         >
@@ -1894,18 +1852,18 @@
 
                                         <div class="pl-12 mt-3">
                                             <v-btn
-                                                rounded
                                                 color="primary"
                                                 class="text-capitalize"
+                                                rounded
                                                 >appoint cleaners</v-btn
                                             >
                                         </div>
 
                                         <div class="pl-12 mt-3">
                                             <v-btn
-                                                rounded
                                                 color="primary"
                                                 class="text-capitalize"
+                                                rounded
                                                 >set a payment direction</v-btn
                                             >
                                         </div>
@@ -1927,7 +1885,6 @@
                                             <v-sheet class="rounded-xl">
                                                 <v-text-field
                                                     v-model="item.points"
-                                                    rounded
                                                     outlined
                                                     dense
                                                     clearable
@@ -1952,7 +1909,6 @@
                                                         'Per Euro'
                                                     ]"
                                                     menu-props="offsetY"
-                                                    rounded
                                                     outlined
                                                     dense
                                                     hide-details
@@ -1967,6 +1923,7 @@
                                         <v-checkbox
                                             v-model="item.pointSubsidy"
                                             label="Subsidized Points"
+                                            color="secondary"
                                             class="ma-0"
                                             hide-details
                                         >
@@ -2085,10 +2042,10 @@
                                     <v-dialog
                                         v-model="userDialog"
                                         max-width="50%"
+                                        scrollable
                                     >
                                         <v-card>
-                                            <v-card-title
-                                                class="grey lighten-3 justify-center"
+                                            <v-card-title class="grey lighten-3"
                                                 >Register User</v-card-title
                                             >
 
@@ -2100,7 +2057,6 @@
                                                         <v-col cols="6">
                                                             <v-text-field
                                                                 label="Username"
-                                                                rounded
                                                                 outlined
                                                                 dense
                                                                 clearable
@@ -2109,7 +2065,6 @@
                                                         <v-col cols="6">
                                                             <v-text-field
                                                                 label="Password"
-                                                                rounded
                                                                 outlined
                                                                 dense
                                                                 clearable
@@ -2121,13 +2076,12 @@
                                                             >Rights</v-col
                                                         >
 
-                                                        <v-col
-                                                            cols="6"
-                                                            class="pt-0"
-                                                        >
+                                                        <v-col cols="6">
                                                             <v-checkbox
                                                                 v-for="right in rights"
                                                                 :key="right"
+                                                                color="secondary"
+                                                                class="mt-0"
                                                                 hide-details
                                                             >
                                                                 <template
@@ -2142,13 +2096,12 @@
                                                                 </template>
                                                             </v-checkbox>
                                                         </v-col>
-                                                        <v-col
-                                                            cols="6"
-                                                            class="pt-0"
-                                                        >
+                                                        <v-col cols="6">
                                                             <v-checkbox
                                                                 v-for="right in rights2"
                                                                 :key="right"
+                                                                color="secondary"
+                                                                class="mt-0"
                                                                 hide-details
                                                             >
                                                                 <template
@@ -2167,7 +2120,10 @@
                                                 </v-container>
                                             </v-card-text>
 
+                                            <v-divider></v-divider>
+
                                             <v-card-actions class="px-8">
+                                                <v-spacer></v-spacer>
                                                 <v-btn
                                                     text
                                                     @click="userDialog = false"
@@ -2245,7 +2201,6 @@
                                                     class="py-3"
                                                 >
                                                     <v-file-input
-                                                        rounded
                                                         outlined
                                                         dense
                                                         hide-details
@@ -2411,7 +2366,6 @@
                                                     <v-text-field
                                                         class="mt-5"
                                                         type="number"
-                                                        rounded
                                                         outlined
                                                         dense
                                                         clearable
@@ -2524,8 +2478,7 @@ import {
     mdiChevronDown,
     mdiPound,
     mdiCart,
-    mdiArrowLeft,
-    
+    mdiArrowLeft
 } from "@mdi/js";
 
 import storeLogo from "@/assets/store-logo.png";
@@ -2551,10 +2504,9 @@ export default {
             mdiChevronDown,
             mdiPound,
             mdiCart,
-            mdiArrowLeft,
-            
+            mdiArrowLeft
         },
-        tab: 7,
+        tab: 0,
         tabs: [
             "profile",
             "reward",

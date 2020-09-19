@@ -73,10 +73,9 @@
                 <v-card-title class="subtitle-1 font-weight-bold pa-0 justify-end">3540</v-card-title>
                 <h4 class="subtitle-2 font-weight-regular text--secondary">User views</h4>
               </v-col>
+
             </v-row>
-          </v-card>
-        </v-hover>
-      </v-col>
+        </v-card>
 
       <v-col cols="12" sm="6" lg="3">
         <v-hover v-slot:default="{ hover }">
@@ -194,34 +193,34 @@
       </v-row>
     </v-row>
   </v-card>
+
 </template>
 
 <script>
 import {
-  mdiAccountGroup,
-  mdiDatabase,
-  mdiCurrencyEur,
-  mdiTrophyVariant,
-  mdiBinoculars,
-  mdiCursorDefault,
-  mdiCompassOutline,
-  mdiWallet
-} from '@mdi/js'
-
+    mdiAccountGroup,
+    mdiDatabase,
+    mdiCurrencyEur,
+    mdiTrophyVariant,
+    mdiBinoculars,
+    mdiCursorDefault,
+    mdiCompassOutline,
+    mdiWallet
+} from "@mdi/js";
 
 export default {
     name: "Dashboard",
     data: () => ({
-      icons: {
-        mdiAccountGroup,
-        mdiDatabase ,
-        mdiCurrencyEur,
-        mdiTrophyVariant,
-        mdiBinoculars,
-        mdiCursorDefault,
-        mdiCompassOutline,
-        mdiWallet
-      }
+        icons: {
+            mdiAccountGroup,
+            mdiDatabase,
+            mdiCurrencyEur,
+            mdiTrophyVariant,
+            mdiBinoculars,
+            mdiCursorDefault,
+            mdiCompassOutline,
+            mdiWallet
+        }
     })
 };
 </script>

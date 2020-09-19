@@ -1,7 +1,7 @@
 <template>
-    <v-container class="px-4">
-        <v-sheet color="#eaedf1" class="pa-4">
-            <v-row class="mt-12" no-gutters>
+    <v-container fluid class="px-3">
+        <v-sheet color="#eaedf1" class="pa-3">
+            <v-row no-gutters>
                 <v-col cols="auto">
                     <v-tabs v-model="tab" show-arrows>
                         <v-tab
@@ -68,19 +68,16 @@
 
                                         <v-text-field
                                             label="Reward user after"
-                                            rounded
                                             outlined
                                             dense
                                         ></v-text-field>
                                         <v-text-field
                                             label="Minimum transaction limit in euro"
-                                            rounded
                                             outlined
                                             dense
                                         ></v-text-field>
                                         <v-text-field
                                             label="Maximum time between visits: (Days)"
-                                            rounded
                                             outlined
                                             dense
                                         ></v-text-field>
@@ -233,7 +230,6 @@
                                             <v-text-field
                                                 class="mt-2"
                                                 placeholder="e.g. Maroudas Optika"
-                                                rounded
                                                 outlined
                                                 dense
                                                 clearable
@@ -247,7 +243,6 @@
                                             <v-text-field
                                                 type="number"
                                                 class="mt-2"
-                                                rounded
                                                 outlined
                                                 dense
                                                 clearable
@@ -259,13 +254,15 @@
                                             <v-text-field
                                                 type="number"
                                                 class="mt-2"
-                                                rounded
                                                 outlined
                                                 dense
                                                 clearable
                                             ></v-text-field>
 
-                                            <v-checkbox v-model="checkbox">
+                                            <v-checkbox
+                                                v-model="checkbox"
+                                                color="secondary"
+                                            >
                                                 <template v-slot:label>
                                                     <p class="ma-0 font-italic">
                                                         Fill in the following
@@ -281,7 +278,6 @@
                                                     <v-text-field
                                                         label="Title"
                                                         class="mt-2"
-                                                        rounded
                                                         outlined
                                                         dense
                                                         clearable
@@ -289,13 +285,15 @@
 
                                                     <v-textarea
                                                         label="Description"
-                                                        rounded
                                                         outlined
                                                         clearable
                                                     ></v-textarea>
                                                 </template>
 
-                                                <v-checkbox v-model="checkbox2">
+                                                <v-checkbox
+                                                    v-model="checkbox2"
+                                                    color="secondary"
+                                                >
                                                     <template v-slot:label>
                                                         <p
                                                             class="ma-0 subtitle-2"
@@ -329,7 +327,6 @@
                                                         </v-col>
                                                         <v-col cols="5">
                                                             <v-file-input
-                                                                rounded
                                                                 outlined
                                                                 dense
                                                                 hide-details
@@ -447,8 +444,7 @@
                                 max-width="40%"
                             >
                                 <v-card>
-                                    <v-card-title
-                                        class="secondary--text grey lighten-3"
+                                    <v-card-title class="grey lighten-3"
                                         >Add Action</v-card-title
                                     >
                                     <v-divider></v-divider>
@@ -459,7 +455,9 @@
                                             >
                                                 <v-row no-gutters>
                                                     <v-col cols="6">
-                                                        <v-radio>
+                                                        <v-radio
+                                                            color="secondary"
+                                                        >
                                                             <template
                                                                 v-slot:label
                                                             >
@@ -472,7 +470,9 @@
                                                         </v-radio>
                                                     </v-col>
                                                     <v-col cols="6">
-                                                        <v-radio>
+                                                        <v-radio
+                                                            color="secondary"
+                                                        >
                                                             <template
                                                                 v-slot:label
                                                             >
@@ -499,7 +499,6 @@
                                                     <v-select
                                                         menu-props="offsetY"
                                                         label="Product for sale"
-                                                        rounded
                                                         outlined
                                                         dense
                                                         hide-details
@@ -509,7 +508,6 @@
                                                     <v-select
                                                         menu-props="offsetY"
                                                         label="Product for gift"
-                                                        rounded
                                                         outlined
                                                         dense
                                                         hide-details
@@ -522,7 +520,6 @@
                                             <v-text-field
                                                 type="number"
                                                 label="Quantity"
-                                                rounded
                                                 outlined
                                                 dense
                                                 clearable
@@ -598,7 +595,7 @@
                                                     </v-col>
                                                 </v-row>
 
-                                                <v-checkbox>
+                                                <v-checkbox color="secondary">
                                                     <template v-slot:label>
                                                         <v-card-text
                                                             class="pa-0"
@@ -618,7 +615,7 @@
                                 <v-card-actions>
                                     <v-spacer></v-spacer>
                                     <v-btn color="primary">accept</v-btn>
-                                    <v-btn text>delete</v-btn>
+                                    <v-btn color="red" dark>delete</v-btn>
                                 </v-card-actions>
                             </v-card>
                         </v-tab-item>
@@ -736,7 +733,6 @@ export default {
         },
         checkbox: false,
         checkbox2: false,
-
         couponsOnProductsHeaders: [
             { text: "Type", value: "type" },
             { text: "Product For Sale", value: "sale" },

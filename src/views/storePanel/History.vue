@@ -1,7 +1,7 @@
 <template>
-    <v-container class="px-4">
-        <v-sheet color="#eaedf1" class="pa-4">
-            <v-row class="mt-12" no-gutters>
+    <v-container fluid class="px-3">
+        <v-sheet color="#eaedf1" class="pa-3">
+            <v-row no-gutters>
                 <v-col cols="auto">
                     <v-tabs v-model="tab">
                         <v-tab class="text-capitalize">point analysis</v-tab>

@@ -1,6 +1,6 @@
 <template>
-    <v-container class="px-4">
-        <v-sheet color="#eaedf1" class="pa-4 text-right">
+    <v-container fluid class="px-3">
+        <v-sheet color="#eaedf1" class="pa-3 text-right">
             <v-btn rounded color="primary" class="text-capitalize mt-4">
                 <v-icon class="mr-1" v-text="icons.mdiCellphoneIphone"></v-icon
                 >open digital payments
@@ -16,7 +16,7 @@
                 >download all transactions
             </v-btn>
 
-            <v-row class="mt-5" no-gutters>
+            <v-row class="mt-4" no-gutters>
                 <v-col cols="auto">
                     <v-tabs v-model="tab">
                         <v-tab class="text-capitalize">pending</v-tab>

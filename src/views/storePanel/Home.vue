@@ -1,5 +1,5 @@
 <template>
-    <v-container>
+    <v-container fluid>
         <v-card flat>
             <v-row>
                 <v-col>
@@ -50,7 +50,7 @@
                         >
                             <v-col cols="auto">
                                 <v-sheet
-                                    color="primary"
+                                    color="accent"
                                     dark
                                     class="rounded-circle"
                                 >
@@ -92,7 +92,7 @@
                         >
                             <v-col cols="auto">
                                 <v-sheet
-                                    color="primary"
+                                    color="accent"
                                     dark
                                     class="rounded-circle"
                                 >
@@ -134,7 +134,7 @@
                         >
                             <v-col cols="auto">
                                 <v-sheet
-                                    color="primary"
+                                    color="accent"
                                     dark
                                     class="rounded-circle"
                                 >
@@ -176,7 +176,7 @@
                         >
                             <v-col cols="auto">
                                 <v-sheet
-                                    color="primary"
+                                    color="accent"
                                     dark
                                     class="rounded-circle"
                                 >
@@ -218,7 +218,7 @@
                         >
                             <v-col cols="auto">
                                 <v-sheet
-                                    color="primary"
+                                    color="accent"
                                     dark
                                     class="rounded-circle"
                                 >
@@ -260,7 +260,7 @@
                         >
                             <v-col cols="auto">
                                 <v-sheet
-                                    color="primary"
+                                    color="accent"
                                     dark
                                     class="rounded-circle"
                                 >
@@ -292,7 +292,7 @@
                     <v-card-title>Transactions</v-card-title>
                     <v-sheet
                         class="v-sheet--offset mx-auto"
-                        color="primary"
+                        color="accent"
                         max-width="calc(100% - 32px)"
                     >
                         <v-sparkline

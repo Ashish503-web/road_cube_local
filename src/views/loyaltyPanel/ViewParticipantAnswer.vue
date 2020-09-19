@@ -1,25 +1,7 @@
 <template>
-    <v-container class="px-4">
-        <v-toolbar flat>
-            <v-tooltip top>
-                <template v-slot:activator="{ on }">
-                    <v-btn class="mr-3" icon v-on="on" @click="$router.go(-1)">
-                        <v-icon v-text="icons.mdiArrowLeft"></v-icon>
-                    </v-btn>
-                </template>
-
-                <span>Back</span>
-            </v-tooltip>
-
-            <v-toolbar-title>View Answer</v-toolbar-title>
-
-            <v-spacer></v-spacer>
-
-            <v-icon x-large color="grey" v-text="icons.mdiViewGrid"></v-icon>
-        </v-toolbar>
-
-        <v-sheet color="#eaedf1" class="pa-3">
-            <v-card tile outlined>
+    <v-container fluid style="background: #eaedf1">
+        <v-sheet class="pa-3">
+            <v-card tile>
                 <v-card-title class="subtitle-1">User Details</v-card-title>
 
                 <v-divider></v-divider>
@@ -87,6 +69,7 @@
                     ></v-text-field>
 
                     <h4 class="secondary--text">Radio Group</h4>
+
                     <v-radio-group
                         v-model="radioGroup"
                         class="not-allowed"
@@ -106,16 +89,10 @@
 </template>
 
 <script>
-import { mdiArrowLeft, mdiViewGrid } from "@mdi/js";
-
 export default {
     name: "ViewParticipantAnswer",
 
     data: () => ({
-        icons: {
-            mdiArrowLeft,
-            mdiViewGrid
-        },
         user: {
             gender: "Female",
             email: "Email",

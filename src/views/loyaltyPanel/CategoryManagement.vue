@@ -1,5 +1,5 @@
 <template>
-    <v-container style="background: #eaedf1">
+    <v-container fluid style="background: #eaedf1">
         <v-sheet class="pa-3">
             <v-toolbar flat height="80">
                 <v-btn color="primary" rounded @click="dialog = true"

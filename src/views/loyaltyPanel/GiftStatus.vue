@@ -1,5 +1,5 @@
 <template>
-    <v-container style="background: #eaedf1">
+    <v-container fluid style="background: #eaedf1">
         <v-sheet>
             <v-row no-gutters style="background: #eaedf1">
                 <v-col cols="auto">

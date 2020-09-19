@@ -1,5 +1,5 @@
 <template>
-    <v-container style="background: #eaedf1">
+    <v-container fluid style="background: #eaedf1">
         <v-sheet>
             <v-app-bar flat dense>
                 <v-toolbar-title>Gifts</v-toolbar-title>
