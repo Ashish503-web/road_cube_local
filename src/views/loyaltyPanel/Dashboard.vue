@@ -1,11 +1,11 @@
 <template>
   <v-card class="pa-0" flat>
     <v-card flat>
-      <v-row>
-        <v-col cols="4">
-          <v-card-title class="pb-0">Dashboard</v-card-title>
+      <v-row class="ma-0">
+        <v-col sm="12" md="12" lg="4" class="d-none d-sm-block">
+          <v-card-title>Dashboard</v-card-title>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="12" sm="12" md="3" lg="2">
           <v-card-title class="pb-0 justify-center">23</v-card-title>
           <v-card-title
             class="pa-0 font-weight-light justify-center text--secondary"
@@ -18,7 +18,7 @@
             Customer
           </v-card-title>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="12" sm="12" md="3" lg="2">
           <v-card-title class="pb-0 justify-center">32</v-card-title>
           <v-card-title
             class="pa-0 font-weight-light justify-center text--secondary"
@@ -30,7 +30,7 @@
             </v-icon>Transactions
           </v-card-title>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="12" sm="12" md="3" lg="2">
           <v-card-title class="pb-0 justify-center">€1.748,18</v-card-title>
           <v-card-title
             class="pa-0 font-weight-light justify-center text--secondary"
@@ -43,7 +43,7 @@
             Total
           </v-card-title>
         </v-col>
-        <v-col cols="2">
+        <v-col cols="12" sm="12" md="3" lg="2">
           <v-card-title class="pb-0 justify-center">1630</v-card-title>
           <v-card-title
             class="pa-0 font-weight-light justify-center text--secondary"
@@ -60,7 +60,7 @@
     </v-card>
 
     <v-row class="pa-10 pt-8 pb-8" style="background: #eaedf1">
-      <v-col cols="3">
+      <v-col cols="12" sm="6" lg="3">
         <v-hover v-slot:default="{ hover }">
           <v-card tile class="pa-5" outlined :elevation="hover ? 3 : 0">
             <v-row no-gutters justify="space-between" align="center">
@@ -78,7 +78,7 @@
         </v-hover>
       </v-col>
 
-      <v-col cols="3">
+      <v-col cols="12" sm="6" lg="3">
         <v-hover v-slot:default="{ hover }">
           <v-card tile class="pa-5" outlined :elevation="hover ? 3 : 0">
             <v-row no-gutters justify="space-between" align="center">
@@ -96,7 +96,7 @@
         </v-hover>
       </v-col>
 
-      <v-col cols="3">
+      <v-col cols="12" sm="6" lg="3">
         <v-hover v-slot:default="{ hover }">
           <v-card tile class="pa-5" outlined :elevation="hover ? 3 : 0">
             <v-row no-gutters justify="space-between" align="center">
@@ -114,7 +114,7 @@
         </v-hover>
       </v-col>
 
-      <v-col cols="3">
+      <v-col cols="12" sm="6" lg="3">
         <v-hover v-slot:default="{ hover }">
           <v-card tile class="pa-5" outlined :elevation="hover ? 3 : 0">
             <v-row no-gutters justify="space-between" align="center">
@@ -132,7 +132,7 @@
         </v-hover>
       </v-col>
 
-      <v-col cols="6">
+      <v-col cols="12" md="6">
         <v-hover v-slot:default="{ hover }">
           <v-card tile class="pa-5" outlined :elevation="hover ? 3 : 0">
             <v-row no-gutters justify="space-between" align="center">
@@ -150,7 +150,7 @@
         </v-hover>
       </v-col>
 
-      <v-col cols="6">
+      <v-col cols="12" md="6"  >
         <v-hover v-slot:default="{ hover }">
           <v-card tile class="pa-5" outlined :elevation="hover ? 3 : 0">
             <v-row no-gutters justify="space-between" align="center">
@@ -168,29 +168,30 @@
         </v-hover>
       </v-col>
 
-      <v-col cols="6">
+      <v-col cols="12" md="6" sm="12">
         <v-card tile flat min-height="400">
           <v-card tile flat color="#f9fafc">
             <v-card-title class="subtitle-1 font-weight-regular pt-2 pb-2">Transactions</v-card-title>
           </v-card>
         </v-card>
       </v-col>
-
-      <v-col cols="3">
-        <v-card flat tile min-height="400" align="center">
-          <v-card tile flat color="#f9fafc">
-            <v-card-title class="subtitle-1 font-weight-regular pt-2 pb-2">View clicks</v-card-title>
+      <v-row class="ma-0">
+        <v-col cols="12" md="6" sm="12">
+          <v-card flat tile min-height="400" align="center">
+            <v-card tile flat color="#f9fafc">
+              <v-card-title class="subtitle-1 font-weight-regular pt-2 pb-2">View clicks</v-card-title>
+            </v-card>
           </v-card>
-        </v-card>
-      </v-col>
+        </v-col>
 
-      <v-col cols="3">
-        <v-card flat tile min-height="400" align="center">
-          <v-card tile flat color="#f9fafc">
-            <v-card-title class="subtitle-1 font-weight-regular pt-2 pb-2">View navigations</v-card-title>
+        <v-col cols="12" md="6" sm="12">
+          <v-card flat tile min-height="400" align="center">
+            <v-card tile flat color="#f9fafc">
+              <v-card-title class="subtitle-1 font-weight-regular pt-2 pb-2">View navigations</v-card-title>
+            </v-card>
           </v-card>
-        </v-card>
-      </v-col>
+        </v-col>
+      </v-row>
     </v-row>
   </v-card>
 </template>
