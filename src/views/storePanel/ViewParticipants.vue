@@ -7,20 +7,25 @@
                         <v-tooltip top>
                             <template v-slot:activator="{ on }">
                                 <v-btn icon v-on="on" @click="$router.go(-1)">
-                                    <v-icon v-text="icons.mdiArrowLeft"></v-icon>
+                                    <v-icon
+                                        v-text="icons.mdiArrowLeft"
+                                    ></v-icon>
                                 </v-btn>
                             </template>
 
                             <span>Back</span>
                         </v-tooltip>
 
-                        <v-toolbar-title>aa Contest Participants</v-toolbar-title>
+                        <v-toolbar-title
+                            >aa Contest Participants</v-toolbar-title
+                        >
 
                         <v-spacer></v-spacer>
 
                         <v-col cols="4">
                             <v-text-field
                                 label="Search"
+                                rounded
                                 outlined
                                 dense
                                 clearable
@@ -45,7 +50,9 @@
                                         v-on="on"
                                         to="/storepanel/view-participant-answer"
                                     >
-                                        <v-icon size="20" v-text="icons.mdiEyeOutline"></v-icon>
+                                        <v-icon
+                                            v-text="icons.mdiEyeOutline"
+                                        ></v-icon>
                                     </v-btn>
                                 </template>
 
@@ -69,7 +76,7 @@ export default {
         icons: {
             mdiArrowLeft,
             mdiMagnify,
-            mdiEyeOutline,
+            mdiEyeOutline
         },
         tab: 0,
         itemsPerPageOptions: [10, 25, 50, 100],
@@ -77,15 +84,15 @@ export default {
             { text: "No", value: "title" },
             { text: "Username", value: "username" },
             { text: "Date", value: "date" },
-            { text: "Actions", value: "actions" },
+            { text: "Actions", value: "actions" }
         ],
         items: [
             {
                 title: "2",
                 username: "Edgar",
-                date: "2020-02-04 14:40:00",
-            },
-        ],
-    }),
+                date: "2020-02-04 14:40:00"
+            }
+        ]
+    })
 };
 </script>

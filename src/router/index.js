@@ -161,59 +161,157 @@ const routes = [
             },
             {
                 path: "sampling",
-                name: "Sampling",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "sampling" */ "../views/loyaltyPanel/Sampling.vue"
-                    )
+                name: "1 + 1 and Sampling",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "1+1sampling" */ "../views/loyaltyPanel/Sampling.vue"
+                        )
+                }
             },
             {
                 path: "receipt-scanning",
-                name: "ReceiptScanning",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "receiptScanning" */ "../views/loyaltyPanel/ReceiptScanning.vue"
-                    )
+                name: "Receipt Scanning",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "receiptScanning" */ "../views/loyaltyPanel/ReceiptScanning.vue"
+                        )
+                }
             },
             {
                 path: "check-in",
-                name: "CheckIn",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "checkin" */ "../views/loyaltyPanel/CheckIn.vue"
-                    )
+                name: "Check In",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "checkin" */ "../views/loyaltyPanel/CheckIn.vue"
+                        )
+                }
             },
             {
                 path: "serial-shopping",
-                name: "SerialShopping",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "serialShopping" */ "../views/loyaltyPanel/SerialShopping.vue"
-                    )
+                name: "Serial Shopping",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "serialShopping" */ "../views/loyaltyPanel/SerialShopping.vue"
+                        )
+                }
             },
             {
                 path: "contest-survey",
-                name: "ContestSurvey",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "contestSurvey" */ "../views/loyaltyPanel/ContestSurvey.vue"
-                    )
+                name: "Contest & Survey",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "contestSurvey" */ "../views/loyaltyPanel/ContestSurvey.vue"
+                        )
+                }
+            },
+            {
+                path: "add-contest",
+                name: "Add Contest",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "addContest" */ "../views/loyaltyPanel/AddContest.vue"
+                        )
+                }
+            },
+            {
+                path: "view-contest",
+                name: "View Contest",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "viewContest" */ "../views/loyaltyPanel/ViewContest.vue"
+                        )
+                }
+            },
+            {
+                path: "view-participants",
+                name: "View Participants",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "viewParticipants" */ "../views/loyaltyPanel/ViewParticipants.vue"
+                        )
+                }
+            },
+            {
+                path: "view-participant-answer",
+                name: "View Answer",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "viewParticipantAnswer" */ "../views/loyaltyPanel/ViewParticipantAnswer.vue"
+                        )
+                }
             },
             {
                 path: "roadcodes",
                 name: "Roadcodes",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "roadcodes" */ "../views/loyaltyPanel/Roadcodes.vue"
-                    )
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "roadcodes" */ "../views/loyaltyPanel/Roadcodes.vue"
+                        )
+                }
             },
             {
                 path: "multiple-coupons",
-                name: "MultipleCoupons",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "multipleCoupons" */ "../views/loyaltyPanel/MultipleCoupons.vue"
-                    )
+                name: "Multiple Coupons",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "multipleCoupons" */ "../views/loyaltyPanel/MultipleCoupons.vue"
+                        )
+                }
             },
             {
                 path: "view-campaigns",

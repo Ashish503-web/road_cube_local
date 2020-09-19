@@ -209,7 +209,6 @@
                                                         '####-####-####-####-###'
                                                     "
                                                     label="Card Number"
-                                                    rounded
                                                     outlined
                                                     dense
                                                     clearable
@@ -264,7 +263,6 @@
 
                                                 <v-text-field
                                                     label="Name on Card"
-                                                    rounded
                                                     outlined
                                                     dense
                                                     clearable

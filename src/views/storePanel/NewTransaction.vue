@@ -1,7 +1,7 @@
 <template>
-    <v-container class="px-4">
+    <v-container fluid class="px-3">
         <v-sheet height="calc(100vh - 88px)" class color="#eaedf1">
-            <v-row no-gutters class="pa-5 fill-height" justify="center">
+            <v-row no-gutters class="pa-3 fill-height" justify="center">
                 <v-col cols="12">
                     <v-card tile flat height="100%">
                         <v-row no-gutters justify="center">
@@ -20,7 +20,6 @@
                                 <v-text-field
                                     label="User"
                                     class="mt-12"
-                                    rounded
                                     outlined
                                     dense
                                     clearable
@@ -30,7 +29,6 @@
                                     type="number"
                                     label="Amount"
                                     class="mt-5"
-                                    rounded
                                     outlined
                                     dense
                                     clearable
@@ -41,7 +39,6 @@
                                     type="number"
                                     label="Receipt Number"
                                     class="mt-5"
-                                    rounded
                                     outlined
                                     dense
                                     clearable

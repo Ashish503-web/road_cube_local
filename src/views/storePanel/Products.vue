@@ -1,7 +1,7 @@
 <template>
-    <v-container class="px-4">
-        <v-sheet color="#eaedf1" class="pa-4">
-            <v-row class="mt-12" no-gutters>
+    <v-container fluid class="px-3">
+        <v-sheet color="#eaedf1" class="pa-3">
+            <v-row no-gutters>
                 <v-col cols="auto">
                     <v-tabs v-model="tab">
                         <v-tab class="text-capitalize">products</v-tab>
@@ -87,7 +87,7 @@
                                         >
                                             <v-row no-gutters>
                                                 <v-col cols="6">
-                                                    <v-radio>
+                                                    <v-radio color="secondary">
                                                         <template v-slot:label>
                                                             <h4
                                                                 class="secondary--text"
@@ -101,7 +101,7 @@
                                                     </v-radio>
                                                 </v-col>
                                                 <v-col cols="6">
-                                                    <v-radio>
+                                                    <v-radio color="secondary">
                                                         <template v-slot:label>
                                                             <h4
                                                                 class="secondary--text"
@@ -120,7 +120,6 @@
 
                                         <v-text-field
                                             label="Product Name"
-                                            rounded
                                             outlined
                                             dense
                                             clearable
@@ -128,7 +127,6 @@
 
                                         <v-textarea
                                             label="Product Description"
-                                            rounded
                                             outlined
                                             clearable
                                         ></v-textarea>
@@ -137,7 +135,6 @@
                                             <v-text-field
                                                 type="number"
                                                 label="Selling Price"
-                                                rounded
                                                 outlined
                                                 dense
                                                 clearable
@@ -149,7 +146,6 @@
                                             <v-text-field
                                                 type="number"
                                                 label="Wholesale Price"
-                                                rounded
                                                 outlined
                                                 dense
                                                 clearable
@@ -193,7 +189,6 @@
                                                         :items="discountTypes"
                                                         menu-props="offsetY"
                                                         label="Discount Type"
-                                                        rounded
                                                         outlined
                                                         dense
                                                         hide-details
@@ -288,7 +283,6 @@
                                                 </v-col>
                                                 <v-col cols="5" class="mr-3">
                                                     <v-file-input
-                                                        rounded
                                                         outlined
                                                         dense
                                                         hide-details
@@ -358,7 +352,6 @@
                                             menu-props="offsetY"
                                             label="Select Category"
                                             class="mt-1"
-                                            rounded
                                             outlined
                                             dense
                                             hide-details
@@ -412,7 +405,6 @@
                                     <v-card-text class="pt-5">
                                         <v-text-field
                                             label="Product Group Name"
-                                            rounded
                                             outlined
                                             dense
                                             clearable
@@ -420,7 +412,6 @@
 
                                         <v-textarea
                                             label="Product Group Description"
-                                            rounded
                                             outlined
                                             clearable
                                         ></v-textarea>
@@ -429,7 +420,6 @@
                                             <v-text-field
                                                 type="number"
                                                 label="Target Price"
-                                                rounded
                                                 outlined
                                                 dense
                                                 clearable
@@ -569,7 +559,6 @@
                                                 </v-col>
                                                 <v-col cols="5" class="mr-3">
                                                     <v-file-input
-                                                        rounded
                                                         outlined
                                                         dense
                                                         hide-details
@@ -640,7 +629,6 @@
                                             menu-props="offsetY"
                                             label="Select Category"
                                             class="mt-1"
-                                            rounded
                                             outlined
                                             dense
                                             hide-details
