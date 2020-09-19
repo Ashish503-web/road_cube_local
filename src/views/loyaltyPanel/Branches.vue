@@ -2,15 +2,15 @@
   <v-card class="pa-0" flat>
     <v-card flat>
       <v-row>
-        <v-col cols="auto">
+        <v-col cols="12" sm="auto">
           <v-card-title>Branches</v-card-title>
         </v-col>
-        <v-col cols="auto" class="ml-auto">
+        <v-col cols="12" sm="auto" class="ml-sm-auto ml-5">
           <v-icon
               v-text="icons.mdiTools"
               size="56"
               color="#eaedf1"
-              class="mr-5"
+              class="mr-sm-5"
           >
           </v-icon>
         </v-col>
@@ -24,22 +24,23 @@
             <v-tabs
                 v-model="tab"
                 background-color="#f9fafc"
+                :vertical=$vuetify.breakpoint.md
             >
-              <v-tab class="pa-5 text-capitalize">Branches</v-tab>
-              <v-tab class="pa-5 text-capitalize">Financial data</v-tab>
-              <v-tab class="pa-5 text-capitalize">Setting of Admin Panel</v-tab>
-              <v-tab class="pa-5 text-capitalize">Settings of Application</v-tab>
-              <v-tab class="pa-5 text-capitalize">Daily Transaction Limits</v-tab>
+              <v-tab class="text-capitalize">Branches</v-tab>
+              <v-tab class="text-capitalize">Financial data</v-tab>
+              <v-tab class="text-capitalize">Setting of Admin Panel</v-tab>
+              <v-tab class="text-capitalize">Settings of Application</v-tab>
+              <v-tab class="text-capitalize">Daily Transaction Limits</v-tab>
             </v-tabs>
           </v-card>
 
           <v-tabs-items v-model="tab">
             <v-tab-item>
               <v-row class="pa-5 pt-2 pb-1">
-                <v-col cols="auto pb-0">
+                <v-col cols="12" sm="auto">
                   <v-dialog
                       v-model="addDialog"
-                      width="700"
+                      width="60%"
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
@@ -120,7 +121,6 @@
                               outlined
                               dense
                               rounded
-                              width="300px"
                           ></v-select>
                           <v-card tile flat style="position: relative; bottom: 20px">
                             <v-card-title>
@@ -143,7 +143,7 @@
                               class="pa-10 pb-5"
                             >
                               <h4 class="subtitle-2 font-weight-medium">Add Region</h4>
-                              <v-card class="pt-2 d-inline-block" flat tile width="350px">
+                              <v-card class="pt-2 d-inline-block" flat tile width="50%">
                                 <v-text-field
                                   v-model="new_region"
                                   placeholder="Name"
@@ -264,10 +264,10 @@
                     </v-card>
                   </v-dialog>
                 </v-col>
-                <v-col cols="auto" class="ml-auto pb-0">
+                <v-col cols="12" sm="auto" class="ml-sm-auto pb-0">
                   <v-dialog
                       v-model="rightsDialog"
-                      width="700"
+                      width="60%"
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
@@ -477,7 +477,7 @@
                   >
                     <v-dialog
                         v-model="editDialog"
-                        width="700"
+                        width="60%"
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-btn
@@ -569,7 +569,6 @@
                                 outlined
                                 dense
                                 rounded
-                                width="300px"
                             ></v-select>
                             <v-card tile flat style="position: relative; bottom: 20px">
                               <v-card-title>
@@ -592,7 +591,7 @@
                                   class="pa-10 pb-5"
                               >
                                 <h4 class="subtitle-2 font-weight-medium">Add Region</h4>
-                                <v-card class="pt-2 d-inline-block" flat tile width="350px">
+                                <v-card class="pt-2 d-inline-block" flat tile width="50%">
                                   <v-text-field
                                       v-model="new_region2"
                                       placeholder="Name"
@@ -752,7 +751,7 @@
                     </v-dialog>
                     <v-dialog
                         v-model="verificationDialog"
-                        width="500"
+                        width="50%"
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-btn
@@ -818,7 +817,7 @@
                     </v-dialog>
                     <v-dialog
                         v-model="deleteDialog"
-                        width="500"
+                        width="50%"
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-btn
@@ -890,7 +889,7 @@
                 <v-col cols="auto pb-0">
                   <v-dialog
                       v-model="addDialog"
-                      width="700"
+                      width="60%"
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
@@ -971,7 +970,6 @@
                               outlined
                               dense
                               rounded
-                              width="300px"
                           ></v-select>
                           <v-card tile flat style="position: relative; bottom: 20px">
                             <v-card-title>
@@ -994,7 +992,7 @@
                               class="pa-10 pb-5"
                             >
                               <h4 class="subtitle-2 font-weight-medium">Add Region</h4>
-                              <v-card class="pt-2 d-inline-block" flat tile width="350px">
+                              <v-card class="pt-2 d-inline-block" flat tile width="50%">
                                 <v-text-field
                                   v-model="new_region"
                                   placeholder="Name"
@@ -1118,7 +1116,7 @@
                 <v-col cols="auto" class="ml-auto pb-0">
                   <v-dialog
                       v-model="rightsDialog"
-                      width="700"
+                      width="60%"
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
@@ -1491,7 +1489,7 @@
                 <v-col cols="auto pb-0">
                   <v-dialog
                       v-model="generalLimitsDialog"
-                      width="700"
+                      width="60%"
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
@@ -1534,7 +1532,6 @@
                                 outlined
                                 dense
                                 rounded
-                                full-width="100px"
                             ></v-select>
                           </v-col>
                           <v-col cols="3" class="pl-2 pr-2 mt-2">
@@ -1557,7 +1554,6 @@
                                 outlined
                                 dense
                                 rounded
-                                full-width="100px"
                             ></v-select>
                           </v-col>
                         </v-row>
@@ -1617,7 +1613,7 @@
                   >
                     <v-dialog
                         v-model="limitDialog"
-                        width="700"
+                        width="60%"
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-btn
@@ -1669,7 +1665,6 @@
                                   outlined
                                   dense
                                   rounded
-                                  full-width="100px"
                               ></v-select>
                             </v-col>
                           </v-row>
