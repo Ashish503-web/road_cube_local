@@ -315,19 +315,31 @@ const routes = [
             },
             {
                 path: "view-campaigns",
-                name: "ViewCampaigns",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "viewCampaigns" */ "../views/loyaltyPanel/ViewCampaigns.vue"
-                    )
+                name: "Campaigns",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "viewCampaigns" */ "../views/loyaltyPanel/ViewCampaigns.vue"
+                        )
+                }
             },
             {
                 path: "new-campaign",
-                name: "NewCampaign",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "newCampaign" */ "../views/loyaltyPanel/NewCampaign.vue"
-                    )
+                name: "New Campaign",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "newCampaign" */ "../views/loyaltyPanel/NewCampaign.vue"
+                        )
+                }
             }
         ]
     },

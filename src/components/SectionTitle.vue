@@ -39,7 +39,8 @@ import {
     mdiMapMarker,
     mdiStore,
     mdiFire,
-    mdiCreditCardOutline
+    mdiCreditCardOutline,
+    mdiBullhorn
 } from "@mdi/js";
 
 export default {
@@ -58,7 +59,8 @@ export default {
             mdiMapMarker,
             mdiStore,
             mdiFire,
-            mdiCreditCardOutline
+            mdiCreditCardOutline,
+            mdiBullhorn
         }
     }),
 
@@ -104,6 +106,10 @@ export default {
                     break;
                 case "Multiple Coupons":
                     icon += "CreditCardOutline";
+                    break;
+                case "Campaigns":
+                case "New Campaign":
+                    icon += "Bullhorn";
             }
 
             return this.icons[icon];

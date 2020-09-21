@@ -240,7 +240,7 @@
             <router-link to="/">
                 <v-toolbar class="home-link" color="secondary" flat>
                     <v-toolbar-title class="mx-auto">
-                        <v-img src="../assets/loyalty-logo.png"></v-img>
+                        <v-img src="../assets/loyalty-logo.png" contain></v-img>
                     </v-toolbar-title>
                 </v-toolbar>
             </router-link>
@@ -290,7 +290,7 @@
                 </v-list>
 
                 <v-list dense nav class="mt-12">
-                    <v-tooltip right>
+                    <v-tooltip v-if="mini" right>
                         <template v-slot:activator="{ on }">
                             <v-list-item to="/logout" v-on="on">
                                 <v-list-item-icon>
@@ -304,6 +304,15 @@
 
                         <span>Logout</span>
                     </v-tooltip>
+
+                    <v-list-item v-else to="/logout">
+                        <v-list-item-icon>
+                            <v-icon v-text="icons.mdiLogout"></v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title
+                            v-text="'Logout'"
+                        ></v-list-item-title>
+                    </v-list-item>
                 </v-list>
             </v-container>
         </v-navigation-drawer>
@@ -355,7 +364,7 @@ import {
     mdiAccountOutline,
     mdiWalletOutline,
     mdiWrenchOutline,
-    mdiLockOpenOutline, 
+    mdiLockOpenOutline
 } from "@mdi/js";
 
 import USFlag from "../assets/flags/US-flag.jpeg";
@@ -635,10 +644,10 @@ export default {
 }
 
 ::-webkit-scrollbar-track {
-    background: #f1f1f1;
+    background: #2a3042;
 }
 
 ::-webkit-scrollbar-thumb {
-    background: #555;
+    background: grey;
 }
 </style>

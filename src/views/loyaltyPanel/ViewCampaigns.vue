@@ -1,9 +1,132 @@
 <template>
-    <h1>View Campaigns</h1>
+    <v-container fluid style="background: #eaedf1">
+        <v-sheet class="pa-3">
+            <v-toolbar flat height="80" outlined>
+                <v-spacer></v-spacer>
+                <v-col cols="4">
+                    <v-text-field
+                        label="Search"
+                        outlined
+                        dense
+                        clearable
+                        hide-details
+                        :append-icon="icons.mdiMagnify"
+                    ></v-text-field>
+                </v-col>
+            </v-toolbar>
+
+            <v-data-table
+                :headers="headers"
+                :items="campaigns"
+                :footer-props="{ itemsPerPageOptions }"
+                class="b-outlined rounded-0"
+            >
+                <template v-slot:item.title="{ item }">
+                    <v-btn
+                        color="primary"
+                        width="80"
+                        small
+                        v-text="item.title"
+                    ></v-btn>
+                </template>
+
+                <template v-slot:item.schedule>
+                    <v-btn color="brown" icon>
+                        <v-icon v-text="icons.mdiCalendarMonth"></v-icon>
+                    </v-btn>
+                </template>
+
+                <template v-slot:item.advertisingMeans>
+                    <v-tooltip top>
+                        <template v-slot:activator="{ on }">
+                            <v-icon
+                                color="green"
+                                style="cursor:pointer"
+                                v-text="icons.mdiChat"
+                                v-on="on"
+                            ></v-icon>
+                        </template>
+
+                        <span>21</span>
+                    </v-tooltip>
+
+                    <v-tooltip top>
+                        <template v-slot:activator="{ on }">
+                            <v-icon
+                                color="green"
+                                style="cursor:pointer"
+                                v-text="icons.mdiBell"
+                                v-on="on"
+                            ></v-icon>
+                        </template>
+
+                        <span>17</span>
+                    </v-tooltip>
+
+                    <v-tooltip top>
+                        <template v-slot:activator="{ on }">
+                            <v-icon
+                                color="green"
+                                style="cursor:pointer"
+                                v-text="icons.mdiChat"
+                                v-on="on"
+                            ></v-icon>
+                        </template>
+
+                        <span>34</span>
+                    </v-tooltip>
+                </template>
+
+                <template v-slot:item.edit>
+                    <v-icon v-text="icons.mdiLock"></v-icon>
+                </template>
+            </v-data-table>
+        </v-sheet>
+    </v-container>
 </template>
 
 <script>
+import {
+    mdiMagnify,
+    mdiCalendarMonth,
+    mdiChat,
+    mdiBell,
+    mdiEmail,
+    mdiLock
+} from "@mdi/js";
+
 export default {
-    name: "View Campaigns"
+    name: "View Campaigns",
+
+    data: () => ({
+        icons: {
+            mdiMagnify,
+            mdiCalendarMonth,
+            mdiChat,
+            mdiBell,
+            mdiEmail,
+            mdiLock
+        },
+        headers: [
+            { text: "Ημ. Δημιουργίας", value: "date" },
+            { text: "Title", value: "title" },
+            { text: "Status", value: "status" },
+            { text: "Schedule", value: "schedule" },
+            { text: "Advertising Means", value: "advertisingMeans" },
+            { text: "Edit", value: "edit" }
+        ],
+        campaigns: [
+            { date: "2020-08-24 12:09:30", title: 21, status: "pending" },
+            { date: "2020-07-16 18:23:34", title: "test", status: "completed" },
+            { date: "2020-08-24 12:09:30", title: "df", status: "completed" }
+        ],
+        itemsPerPageOptions: [10, 20, 30, -1]
+    })
 };
 </script>
+
+<style scoped>
+.b-outlined {
+    border: 1px solid rgba(0, 0, 0, 0.12);
+}
+</style>
