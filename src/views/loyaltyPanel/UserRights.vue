@@ -315,13 +315,14 @@
 </template>
 
 <script>
-import { mdiAccount, mdiSquareEditOutline, mdiTrashCan  } from '@mdi/js'
+import { mdiAccount, mdiMagnify, mdiSquareEditOutline, mdiTrashCan  } from '@mdi/js'
 
 export default {
   name: "UserRights",
   data: () => ({
     icons: {
       mdiAccount,
+      mdiMagnify,
       mdiSquareEditOutline,
       mdiTrashCan
     },

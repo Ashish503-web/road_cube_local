@@ -2,7 +2,7 @@
   <v-card class="pa-0" flat>
     <v-card flat>
       <v-row>
-        <v-col cols="3" class="pl-5 pa-0" style="position: relative; top: 20px">
+        <v-col cols="8" sm="6" md="4" lg="3" class="pl-5 pa-0" style="position: relative; top: 20px">
           <v-row class="pa-0">
             <v-col cols="10" class="pa-0 pl-5">
               <label class="subtitle-2 font-weight-regular ml-5">Search by date:</label>
@@ -30,15 +30,15 @@
             </v-col>
           </v-row>
         </v-col>
-        <v-col cols="6">
-          <h2 align="center" class="pa-6 title">Statistics</h2>
+        <v-col cols="5" sm="4" md="4" lg="6">
+          <h2 align="center" class="pa-6 title align-content-sm-center">Statistics</h2>
         </v-col>
-        <v-col cols="3" align="end">
+        <v-col cols="2" sm="2" md="4" lg="3" class="ml-sm-0 ml-5 pl-sm-0" align="end">
           <v-icon
               v-text="icons.mdiGift"
               size="80"
               color="#eaedf1"
-              class="mr-5"
+              class="mr-sm-5"
           >
           </v-icon>
         </v-col>
@@ -51,7 +51,7 @@
 
           <v-card flat tile class="pa-5">
             <v-row class="ma-0">
-              <v-col cols="4">
+              <v-col cols="12" md="8" lg="4">
                 <v-card color="#394263" class="pl-5 pr-5 pt-2 white--text elevation-10" height="80">
                   <v-icon
                       v-text="icons.mdiAccountGroup"
@@ -63,7 +63,7 @@
                   <h4 class="subtitle-2" style="line-height: 10px">*unique users in the last 2 months</h4>
                 </v-card>
               </v-col>
-              <v-col cols="4">
+              <v-col cols="12" md="8" lg="4">
                 <v-card color="#394263" class="pl-5 pr-5 pt-2 white--text elevation-10" height="80">
                   <v-icon
                       v-text="icons.mdiHumanHandsup"
@@ -74,7 +74,7 @@
                   <h4 class="title font-weight-regular d-inline-block"> All Unique Users: {{ }}</h4>
                 </v-card>
               </v-col>
-              <v-col cols="4">
+              <v-col cols="12" md="8" lg="4">
                 <v-card color="#46558c" class="pl-5 pr-5 white--text elevation-10" height="80">
                   <h4 class="title font-weight-regular" align="center">Select Tab</h4>
                   <h4 class="title font-weight-regular" style="line-height: 20px">Active:</h4>
@@ -100,8 +100,8 @@
               <v-card flat class="pa-5">
 
                 <v-card flat class="pa-0" color="#f9fafc">
-                  <v-row class="pa-3 pt-0 pb-0 justify-end">
-                    <v-col cols="4"  class="pa-3">
+                  <v-row class="pa-3 pt-0 pb-0 justify-md-end">
+                    <v-col cols="10" sm="8" md="6" lg="4" class="pa-3">
                       <v-text-field
                           label="Search"
                           outlined
@@ -120,76 +120,61 @@
                     :items="statisticsData"
                     :footer-props="{ itemsPerPageOptions }"
                 >
+                  <template
+                      v-slot:header.user_tab
+                  >
+                    <h4 class="subtitle-2 font-weight-bold d-inline-block">User Tab</h4>
+                  </template>
+                  <template
+                      v-slot:header.edit
+                  >
+                    <h4 class="subtitle-2 font-weight-bold d-inline-block">Edit</h4>
+                  </template>
 
                   <template
-                      v-slot:footer
+                      v-slot:item.total_amount="{item}"
+
                   >
-                    <v-card
-                        flat
-                        tile
-                        color="#f9fafc"
-                        width="100%"
-                        class="pa-3 pr-0"
-                    >
-                      <v-card flat tile class="d-inline-block" width="20%">
-                      </v-card>
-                      <v-card
-                          flat
-                          tile
-                          class="subtitle-2 font-weight-bold d-inline-block"
-                          color="#f9fafc"
-                          width="21%"
-                          align="center"
-                      >
-                        {{ statisticsTotalData.total_amount }}
-                      </v-card>
-                      <v-card
-                          flat
-                          tile
-                          class="subtitle-2 font-weight-bold d-inline-block"
-                          color="#f9fafc"
-                          width="16%"
-                          align="center"
-                      >
-                        {{ statisticsTotalData.transactions }}
-                      </v-card>
-                      <v-card
-                          flat
-                          tile
-                          class="subtitle-2 font-weight-bold d-inline-block"
-                          color="#f9fafc"
-                          width="19%"
-                          align="center"
-                      >
-                        {{ statisticsTotalData.total_points }}
-                      </v-card>
-                      <v-card
-                          flat
-                          tile
-                          class="subtitle-2
-                        font-weight-bold d-inline-block"
-                          color="#f9fafc"
-                          width="11%"
-                          align="center"
-                      >
-                        {{ statisticsTotalData.users }}
-                      </v-card>
-                      <v-card
-                          flat
-                          tile
-                          class="subtitle-2
-                        font-weight-bold d-inline-block"
-                          color="#f9fafc"
-                          width="13%"
-                          align="center"
-                      >
-                        {{ statisticsTotalData.cards }}
-                      </v-card>
-                    </v-card>
+                    <p :class="item.totalData? 'font-weight-bold mt-4': ' mt-4' ">
+                      {{ item.total_amount }}
+                    </p>
                   </template>
+                  <template
+                      v-slot:item.transactions="{item}"
+
+                  >
+                    <p :class="item.totalData? 'font-weight-bold mt-4': ' mt-4' ">
+                      {{ item.transactions }}
+                    </p>
+                  </template>
+                  <template
+                      v-slot:item.total_points="{item}"
+
+                  >
+                    <p :class="item.totalData? 'font-weight-bold mt-4': ' mt-4' ">
+                      {{ item.total_points }}
+                    </p>
+                  </template>
+                  <template
+                      v-slot:item.users="{item}"
+
+                  >
+                    <p :class="item.totalData? 'font-weight-bold mt-4': ' mt-4' ">
+                      {{ item.users }}
+                    </p>
+                  </template>
+                  <template
+                      v-slot:item.cards="{item}"
+
+                  >
+                    <p :class="item.totalData? 'font-weight-bold mt-4': ' mt-4' ">
+                      {{ item.cards }}
+                    </p>
+                  </template>
+
                 </v-data-table>
                 
-                <v-card flat tile color="#f9fafc" width="fit-content" class="pt-2 pb-2">
+                <v-card flat tile color="#f9fafc" class="pt-2 pb-2">
                   <v-btn
                     color="primary"
                     small
@@ -229,13 +214,14 @@
 </template>
 
 <script>
-import { mdiArrowRightCircle, mdiGift, mdiAccountGroup, mdiHumanHandsup } from '@mdi/js'
+import { mdiMagnify, mdiArrowRightCircle, mdiGift, mdiAccountGroup, mdiHumanHandsup } from '@mdi/js'
 
 export default {
   name: "BusinessStatistics",
   data: () => ({
     tab: 0,
     icons: {
+      mdiMagnify,
       mdiArrowRightCircle,
       mdiGift,
       mdiAccountGroup,
@@ -281,6 +267,7 @@ export default {
       },
     ],
     statisticsTotalData: {
+      totalData: true,
       total_amount: 0,
       transactions: 0,
       total_points: 0,
@@ -296,6 +283,7 @@ export default {
       this.statisticsTotalData.users += item.users
       this.statisticsTotalData.cards += item.cards
     })
+    this.statisticsData.push(this.statisticsTotalData)
   }
 };
 </script>
