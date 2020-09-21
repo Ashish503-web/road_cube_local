@@ -2,15 +2,15 @@
   <v-card class="pa-0" flat>
     <v-card flat>
       <v-row>
-        <v-col cols="auto">
+        <v-col cols="12" sm="auto">
           <v-card-title>Customer</v-card-title>
         </v-col>
-        <v-col cols="auto" class="ml-auto">
+        <v-col cols="12" sm="auto" class="ml-sm-auto ml-5">
           <v-icon
               v-text="icons.mdiAccountBox"
               size="80"
               color="#eaedf1"
-              class="mr-5"
+              class="mr-sm-5"
           >
           </v-icon>
         </v-col>
@@ -24,11 +24,12 @@
             <v-tabs
                 v-model="tab"
                 background-color="#f9fafc"
+                :vertical=$vuetify.breakpoint.mdAndDown
             >
               <v-tab class="pa-5 text-capitalize">All</v-tab>
               <v-dialog
                   v-model="addTabDialog"
-                  width="600"
+                  width="60%"
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
@@ -330,7 +331,7 @@
                 <v-col cols="auto pb-0">
                   <v-dialog
                       v-model="addCustomerDialog"
-                      width="600"
+                      width="60%"
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
@@ -581,8 +582,8 @@
               </v-row>
               <v-card flat class="pa-5 pt-1 pb-1">
                 <v-card flat class="pa-0" color="#f9fafc">
-                  <v-row class="pa-3 pt-0 pb-0 justify-end">
-                    <v-col cols="4"  class="pa-3">
+                  <v-row class="pa-3 pt-0 pb-0 justify-md-end">
+                    <v-col cols="10" sm="8" md="6" lg="4" class="pa-3">
                       <v-text-field
                           label="Search"
                           outlined
@@ -677,11 +678,45 @@
                   </template>
 
                   <template
-                      v-slot:item.user_tab
+                    v-slot:item.transactions="{item}"
+
+                  >
+                    <p :class="item.totalData? 'font-weight-bold mt-4': ' mt-4' ">
+                      {{ item.transactions }}
+                    </p>
+                  </template>
+                  <template
+                    v-slot:item.total="{item}"
+
+                  >
+                    <p :class="item.totalData? 'font-weight-bold mt-4': ' mt-4' ">
+                      {{ item.total }}
+                    </p>
+                  </template>
+                  <template
+                    v-slot:item.redeemed="{item}"
+
+                  >
+                    <p :class="item.totalData? 'font-weight-bold mt-4': ' mt-4' ">
+                      {{ item.redeemed }}
+                    </p>
+                  </template>
+                  <template
+                    v-slot:item.available="{item}"
+
+                  >
+                    <p :class="item.totalData? 'font-weight-bold mt-4': ' mt-4' ">
+                      {{ item.available }}
+                    </p>
+                  </template>
+
+                  <template
+                      v-slot:item.user_tab="{item}"
                   >
                     <v-dialog
                         v-model="userTabDialog"
-                        width="600"
+                        width="60%"
+                        v-if="!item.totalData"
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-btn
@@ -817,11 +852,12 @@
                     </v-dialog>
                   </template>
                   <template
-                      v-slot:item.edit
+                      v-slot:item.edit="{item}"
                   >
                     <v-dialog
                         v-model="editDialog"
-                        width="600"
+                        width="60%"
+                        v-if="!item.totalData"
                     >
                       <template v-slot:activator="{ on, attrs }">
                         <v-btn
@@ -1063,61 +1099,6 @@
                     </v-dialog>
                   </template>
 
-                  <template
-                    v-slot:footer
-                  >
-                    <v-card
-                      flat
-                      tile
-                      color="#f9fafc"
-                      width="100%"
-                      class="pa-3"
-                    >
-                      <v-card flat tile class="subtitle-2 font-weight-bold d-inline-block" width="15.3%" align="center">
-                      </v-card>
-                      <v-card
-                        flat
-                        tile
-                        class="subtitle-2 font-weight-bold d-inline-block"
-                        color="#f9fafc"
-                        width="16%"
-                        align="center"
-                      >
-                        {{ customerTotalData.transactions }}
-                      </v-card>
-                      <v-card
-                        flat
-                        tile
-                        class="subtitle-2 font-weight-bold d-inline-block"
-                        color="#f9fafc"
-                        width="16.3%"
-                        align="center"
-                      >
-                        {{ customerTotalData.total }}
-                      </v-card>
-                      <v-card
-                        flat
-                        tile
-                        class="subtitle-2 font-weight-bold d-inline-block"
-                        color="#f9fafc"
-                        width="16.3%"
-                        align="center"
-                      >
-                        {{ customerTotalData.redeemed }}
-                      </v-card>
-                      <v-card
-                        flat
-                        tile
-                        class="subtitle-2
-                        font-weight-bold d-inline-block"
-                        color="#f9fafc"
-                        width="16.3%"
-                        align="center"
-                      >
-                        {{ customerTotalData.available }}
-                      </v-card>
-                    </v-card>
-                  </template>
                 </v-data-table>
               </v-card>
             </v-tab-item>
@@ -1173,6 +1154,7 @@ export default {
       },
     ],
     customerTotalData: {
+      totalData: true,
       transactions: 0,
       total: 0,
       redeemed: 0,
@@ -1186,6 +1168,7 @@ export default {
       this.customerTotalData.redeemed += item.redeemed
       this.customerTotalData.available += item.available
     })
+    this.customerData.push(this.customerTotalData)
   }
 };
 </script>
