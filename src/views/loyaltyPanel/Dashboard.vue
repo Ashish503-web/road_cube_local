@@ -76,6 +76,8 @@
 
             </v-row>
         </v-card>
+        </v-hover>
+      </v-col>
 
       <v-col cols="12" sm="6" lg="3">
         <v-hover v-slot:default="{ hover }">

@@ -24,7 +24,7 @@
             <v-tabs
                 v-model="tab"
                 background-color="#f9fafc"
-                :vertical=$vuetify.breakpoint.md
+                :vertical=$vuetify.breakpoint.mdAndDown
             >
               <v-tab class="text-capitalize">Branches</v-tab>
               <v-tab class="text-capitalize">Financial data</v-tab>
@@ -337,8 +337,8 @@
               </v-row>
               <v-card flat class="pa-5 pt-1 pb-1">
                 <v-card flat class="pa-0" color="#f9fafc">
-                  <v-row class="pa-3 pt-0 pb-0 justify-end">
-                    <v-col cols="4"  class="pa-3">
+                  <v-row class="pa-3 pt-0 pb-0 justify-md-end">
+                    <v-col cols="10" sm="8" md="6" lg="4" class="pa-3">
                       <v-text-field
                           label="Search"
                           outlined
