@@ -2,15 +2,15 @@
   <v-card class="pa-0" flat>
     <v-card flat>
       <v-row>
-        <v-col cols="auto">
+        <v-col cols="12" sm="auto">
           <v-card-title>User Rights</v-card-title>
         </v-col>
-        <v-col cols="auto" class="ml-auto">
+        <v-col cols="12" sm="auto" class="ml-sm-auto ml-5">
           <v-icon
               v-text="icons.mdiAccount"
               size="80"
               color="#eaedf1"
-              class="mr-5"
+              class="mr-sm-5"
           >
           </v-icon>
         </v-col>
@@ -24,7 +24,7 @@
             <v-col cols="auto pb-0">
               <v-dialog
                   v-model="addCustomerDialog"
-                  width="600"
+                  width="60%"
               >
                 <template v-slot:activator="{ on, attrs }">
                   <v-btn
@@ -124,8 +124,8 @@
           <v-card flat class="pa-5" align="center">
             <v-card class="pa-6 elevation-6" color="#f9fafc" width="95%" style="border-left: 3px solid #626262; border-right: 3px solid #626262">
               <v-row class="pa-3 pt-0 pb-0 title font-weight-bold">User List:</v-row>
-              <v-row class="pa-3 pt-0 pb-0 justify-end">
-                <v-col cols="4" class="pa-0">
+              <v-row class="pa-3 pt-0 pb-0 justify-md-end">
+                <v-col cols="10" sm="8" md="6" lg="4" class="pa-3">
                   <v-text-field
                       label="Search"
                       outlined
@@ -149,7 +149,7 @@
                 >
                   <v-dialog
                       v-model="editDialog"
-                      width="600"
+                      width="60%"
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
@@ -246,7 +246,7 @@
                   </v-dialog>
                   <v-dialog
                       v-model="deleteDialog"
-                      width="500"
+                      width="50%"
                   >
                     <template v-slot:activator="{ on, attrs }">
                       <v-btn
