@@ -48,6 +48,7 @@
 </template>
 <script>
 import ChooseFile from "@/views/loyaltyPanel/BusinessProfile/components/ChooseFile";
+import { Fragment } from 'vue-fragment'
 
 export default {
     data() {
@@ -63,7 +64,9 @@ export default {
         "card"
     ],
     components: {
-        "choose-file": ChooseFile
+        "choose-file": ChooseFile,
+        Fragment
+
     }
 };
 </script>
