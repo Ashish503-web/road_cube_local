@@ -1,43 +1,7 @@
 <template>
-  <v-card class="pa-0" flat>
-    <v-card flat>
-      <v-row>
-        <v-col cols="12" sm="auto">
-          <v-card-title>Branches</v-card-title>
-        </v-col>
-        <v-col cols="12" sm="auto" class="ml-sm-auto ml-5">
-          <v-icon
-              v-text="icons.mdiTools"
-              size="56"
-              color="#eaedf1"
-              class="mr-sm-5"
-          >
-          </v-icon>
-        </v-col>
-      </v-row>
-    </v-card>
-
-    <v-row class="pa-5 pt-3 pb-3" style="background: #eaedf1">
-      <v-col cols="12">
-        <v-card flat tile>
-          <v-card tile flat color="#f9fafc" class="pa-1 pb-0">
-            <v-tabs
-                v-model="tab"
-                background-color="#f9fafc"
-                :vertical=$vuetify.breakpoint.mdAndDown
-            >
-              <v-tab class="text-capitalize">Branches</v-tab>
-              <v-tab class="text-capitalize">Financial data</v-tab>
-              <v-tab class="text-capitalize">Setting of Admin Panel</v-tab>
-              <v-tab class="text-capitalize">Settings of Application</v-tab>
-              <v-tab class="text-capitalize">Daily Transaction Limits</v-tab>
-            </v-tabs>
-          </v-card>
-
-          <v-tabs-items v-model="tab">
-            <v-tab-item>
-              <v-row class="pa-5 pt-2 pb-1">
-
+    <v-card class="pa-0" flat>
+        <v-card flat>
+            <v-row>
                 <v-col cols="12" sm="auto">
                     <v-card-title>Branches</v-card-title>
                 </v-col>
@@ -364,167 +328,59 @@
                                                 </v-form>
                                             </v-card-text>
 
-                      <v-card color="#f9f9f9" class="pa-5 ma-5 mb-0" flat tile align="end">
-                        <v-btn
-                            color="#dbe1e8"
-                            @click="rightsDialog = false"
-                            class="mr-2 text-capitalize"
-                            small
-                            rounded
-                        >
-                          Cancel
-                        </v-btn>
-                        <v-btn
-                            color="primary"
-                            @click="rightsDialog = false"
-                            class="text-capitalize"
-                            small
-                            rounded
-                        >
-                          Save
-                        </v-btn>
-                      </v-card>
-                    </v-card>
-                  </v-dialog>
-                </v-col>
-              </v-row>
-              <v-card flat class="pa-5 pt-1 pb-1">
-                <v-card flat class="pa-0" color="#f9fafc">
-                  <v-row class="pa-3 pt-0 pb-0 justify-md-end">
-                    <v-col cols="10" sm="8" md="6" lg="4" class="pa-3">
-                      <v-text-field
-                          label="Search"
-                          outlined
-                          dense
-                          clearable
-                          rounded
-                          hide-details
-                          :prepend-inner-icon="icons.mdiMagnify"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                </v-card>
-                <v-data-table
-                    :headers="branchesHeaders"
-                    :items="branchesData"
-                    :footer-props="{ itemsPerPageOptions }"
-                >
-                  <template
-                      v-slot:header.name
-                  >
-                      <v-text-field
-                          label="Search"
-                          outlined
-                          dense
-                          rounded
-                          hide-details
-                          :prepend-inner-icon="icons.mdiMagnify"
-                      ></v-text-field>
-                    <h4 class="subtitle-2 font-weight-bold d-inline-block mt-2">Name</h4>
-                  </template>
-                  <template
-                      v-slot:header.name_of_shop
-                  >
-                    <v-text-field
-                        label="Search"
-                        outlined
-                        dense
-                        rounded
-                        hide-details
-                        :prepend-inner-icon="icons.mdiMagnify"
-                        class="pt-10"
-                    ></v-text-field>
-                    <h4 class="subtitle-2 font-weight-bold d-inline-block mt-2">Name of Shop(in app)</h4>
-                  </template>
-                  <template
-                      v-slot:header.map
-                  >
-                    <v-sheet height="60px">
-                    </v-sheet>
-                    <h4 class="subtitle-2 font-weight-bold d-inline-block mt-2">Map</h4>
-                  </template>
-                  <template
-                      v-slot:header.payments
-                  >
-                    <v-sheet height="60px">
-                    </v-sheet>
-                    <h4 class="subtitle-2 font-weight-bold d-inline-block mt-2">Payments</h4>
-                  </template>
-                  <template
-                      v-slot:header.z
-                  >
-                    <v-sheet height="60px">
-                    </v-sheet>
-                    <h4 class="subtitle-2 font-weight-bold d-inline-block mt-2">Z</h4>
-                  </template>
-                  <template
-                      v-slot:header.banks
-                  >
-                    <v-text-field
-                        label="Search"
-                        outlined
-                        dense
-                        rounded
-                        hide-details
-                        :prepend-inner-icon="icons.mdiMagnify"
-                    ></v-text-field>
-                    <h4 class="subtitle-2 font-weight-bold d-inline-block mt-2">Banks</h4>
-                  </template>
-                  <template
-                      v-slot:header.address
-                  >
-                    <v-text-field
-                        label="Search"
-                        outlined
-                        dense
-                        rounded
-                        hide-details
-                        :prepend-inner-icon="icons.mdiMagnify"
-                    ></v-text-field>
-                    <h4 class="subtitle-2 font-weight-bold d-inline-block mt-2">Address</h4>
-                  </template>
-                  <template
-                      v-slot:header.phone
-                  >
-                    <v-text-field
-                        label="Search"
-                        outlined
-                        dense
-                        rounded
-                        hide-details
-                        :prepend-inner-icon="icons.mdiMagnify"
-                    ></v-text-field>
-                    <h4 class="subtitle-2 font-weight-bold d-inline-block mt-2">Phone</h4>
-                  </template>
-                  <template
-                      v-slot:header.registration_date
-                  >
-                    <v-text-field
-                        label="Search"
-                        outlined
-                        dense
-                        rounded
-                        hide-details
-                        :prepend-inner-icon="icons.mdiMagnify"
-                        class="pt-10"
-                    ></v-text-field>
-                    <h4 class="subtitle-2 font-weight-bold d-inline-block mt-2">Registration Date</h4>
-                  </template>
-                  <template
-                      v-slot:header.active
-                  >
-                    <v-sheet height="60px">
-                    </v-sheet>
-                    <h4 class="subtitle-2 font-weight-bold d-inline-block mt-2">Active</h4>
-                  </template>
-                  <template
-                      v-slot:header.enter
-                  >
-                    <v-sheet height="60px">
-                    </v-sheet>
-                    <h4 class="subtitle-2 font-weight-bold d-inline-block mt-2">Enter</h4>
-                  </template>
-
+                                            <v-card
+                                                color="#f9f9f9"
+                                                class="pa-5 ma-5 mb-0"
+                                                flat
+                                                tile
+                                                align="end"
+                                            >
+                                                <v-btn
+                                                    color="#dbe1e8"
+                                                    @click="addDialog = false"
+                                                    class="mr-2 text-capitalize"
+                                                    small
+                                                    rounded
+                                                >
+                                                    Cancel
+                                                </v-btn>
+                                                <v-btn
+                                                    color="primary"
+                                                    @click="addDialog = false"
+                                                    class="text-capitalize"
+                                                    small
+                                                    rounded
+                                                >
+                                                    Add Shop
+                                                </v-btn>
+                                            </v-card>
+                                        </v-card>
+                                    </v-dialog>
+                                </v-col>
+                                <v-col
+                                    cols="12"
+                                    sm="auto"
+                                    class="ml-sm-auto pb-0"
+                                >
+                                    <v-dialog
+                                        v-model="rightsDialog"
+                                        width="60%"
+                                    >
+                                        <template
+                                            v-slot:activator="{ on, attrs }"
+                                        >
+                                            <v-btn
+                                                depressed
+                                                large
+                                                color="primary"
+                                                v-bind="attrs"
+                                                v-on="on"
+                                                rounded
+                                                class="text-capitalize"
+                                            >
+                                                Rights
+                                            </v-btn>
+                                        </template>
 
                                         <v-card class="pb-5">
                                             <v-card-title
@@ -2465,7 +2321,6 @@ import {
     mdiPlusThick,
     mdiCheckCircleOutline
 } from "@mdi/js";
-
 export default {
     name: "Branches",
     data: () => ({
