@@ -1,6 +1,6 @@
 <template>
-    <v-container fluid class="px-3">
-        <v-sheet color="#eaedf1" class="pa-3">
+    <v-container fluid class="b-container">
+        <v-sheet class="pa-3">
             <v-row no-gutters>
                 <v-col cols="auto">
                     <v-tabs v-model="tab" show-arrows>
@@ -28,7 +28,6 @@
                                         and will be on the physical cards. If we
                                         think that it can be improved we will
                                         contact you before publishment.
-
                                         <v-row
                                             class="dashed mt-5"
                                             no-gutters
@@ -68,9 +67,8 @@
                                             color="primary"
                                             class="text-capitalize"
                                             rounded
+                                            >update logo</v-btn
                                         >
-                                            update logo
-                                        </v-btn>
                                     </v-card-actions>
                                 </v-card>
 
@@ -101,8 +99,8 @@
                                                     v-if="mapPin.image"
                                                     :src="mapPin.image"
                                                     class="map-new-pin"
-                                                ></v-img>
-                                                Press the following button to
+                                                ></v-img
+                                                >Press the following button to
                                                 choose image:
                                                 <v-file-input
                                                     color="secondary"
@@ -137,9 +135,8 @@
                                             color="primary"
                                             class="text-capitalize"
                                             rounded
+                                            >update logo</v-btn
                                         >
-                                            update logo
-                                        </v-btn>
                                     </v-card-actions>
                                 </v-card>
 
@@ -255,9 +252,8 @@
                                             color="primary"
                                             class="text-capitalize"
                                             rounded
+                                            >update logo</v-btn
                                         >
-                                            update logo
-                                        </v-btn>
                                     </v-card-actions>
                                 </v-card>
 
@@ -865,16 +861,15 @@
                                             color="primary"
                                             class="text-capitalize"
                                             rounded
+                                            >update details</v-btn
                                         >
-                                            update details
-                                        </v-btn>
                                     </v-card-actions>
                                 </v-card>
 
                                 <v-card class="mt-12 rounded-lg">
-                                    <v-card-title class="grey lighten-3">
-                                        Invoicing
-                                    </v-card-title>
+                                    <v-card-title class="grey lighten-3"
+                                        >Invoicing</v-card-title
+                                    >
 
                                     <v-container class="pt-4 pb-0">
                                         <v-row>
@@ -953,16 +948,15 @@
                                             color="primary"
                                             class="text-capitalize"
                                             rounded
+                                            >send invoice settings</v-btn
                                         >
-                                            send invoice settings
-                                        </v-btn>
                                     </v-card-actions>
                                 </v-card>
 
                                 <v-card class="mt-12 rounded-lg">
-                                    <v-card-title class="grey lighten-3">
-                                        Receipt Information
-                                    </v-card-title>
+                                    <v-card-title class="grey lighten-3"
+                                        >Receipt Information</v-card-title
+                                    >
 
                                     <v-container class="pt-4 pb-0">
                                         <v-row>
@@ -1013,25 +1007,24 @@
                                             color="primary"
                                             class="text-capitalize"
                                             rounded
+                                            >update details</v-btn
                                         >
-                                            update details
-                                        </v-btn>
                                     </v-card-actions>
                                 </v-card>
 
                                 <v-card class="mt-12 pb-8 rounded-lg">
-                                    <v-card-title class="grey lighten-3">
-                                        Fast Payment
-                                    </v-card-title>
+                                    <v-card-title class="grey lighten-3"
+                                        >Fast Payment</v-card-title
+                                    >
 
                                     <v-container class="mt-5">
                                         <v-row no-gutters align="center">
                                             <v-col
                                                 cols="auto"
                                                 class="subtitle-2 ml-12"
+                                                >Toogle Fast Payment
+                                                option:</v-col
                                             >
-                                                Toogle Fast Payment option:
-                                            </v-col>
                                             <v-col cols="auto" class="ml-3">
                                                 <v-switch
                                                     v-model="fastPayment"
@@ -1048,9 +1041,9 @@
                                 </v-card>
 
                                 <v-card class="mt-12 rounded-lg">
-                                    <v-card-title class="grey lighten-3">
-                                        Orders
-                                    </v-card-title>
+                                    <v-card-title class="grey lighten-3"
+                                        >Orders</v-card-title
+                                    >
 
                                     <v-container>
                                         <v-row
@@ -1185,16 +1178,15 @@
                                             color="primary"
                                             class="text-capitalize"
                                             rounded
+                                            >update details</v-btn
                                         >
-                                            update details
-                                        </v-btn>
                                     </v-card-actions>
                                 </v-card>
 
                                 <v-card class="mt-12 rounded-lg">
-                                    <v-card-title class="grey lighten-3">
-                                        Change Password
-                                    </v-card-title>
+                                    <v-card-title class="grey lighten-3"
+                                        >Change Password</v-card-title
+                                    >
 
                                     <v-card-text class="pb-0 pt-8">
                                         <v-text-field
@@ -1234,9 +1226,10 @@
                                 </v-card>
 
                                 <v-card class="mt-12 rounded-lg">
-                                    <v-card-title class="grey lighten-3">
-                                        Choose redemption for the company
-                                    </v-card-title>
+                                    <v-card-title class="grey lighten-3"
+                                        >Choose redemption for the
+                                        company</v-card-title
+                                    >
 
                                     <v-card-text class="pb-0">
                                         <v-radio-group>
@@ -1262,9 +1255,9 @@
                                 </v-card>
 
                                 <v-card class="mt-12 rounded-lg">
-                                    <v-card-title class="grey lighten-3">
-                                        Product categories
-                                    </v-card-title>
+                                    <v-card-title class="grey lighten-3"
+                                        >Product categories</v-card-title
+                                    >
 
                                     <v-card-text class="pb-0 pt-8">
                                         <v-form @submit.prevent>
@@ -1314,8 +1307,7 @@
                                                         class="category-number"
                                                         content="5"
                                                         color="#4286f4"
-                                                    >
-                                                    </v-badge>
+                                                    ></v-badge>
                                                     {{ category }}
                                                     <v-sheet
                                                         color="red"
@@ -1349,9 +1341,9 @@
                                 </v-card>
 
                                 <v-card class="mt-12 rounded-lg">
-                                    <v-card-title class="grey lighten-3">
-                                        API Authentication
-                                    </v-card-title>
+                                    <v-card-title class="grey lighten-3"
+                                        >API Authentication</v-card-title
+                                    >
 
                                     <v-card-text class="pt-8">
                                         <v-textarea
@@ -1432,12 +1424,13 @@
                                                     number
                                                     <span
                                                         class="font-weight-light"
-                                                        >{{
+                                                    >
+                                                        {{
                                                             sendPoints
                                                                 ? "(Active)"
                                                                 : "(Inactive)"
-                                                        }}</span
-                                                    >
+                                                        }}
+                                                    </span>
                                                 </v-card-title>
                                             </template>
                                         </v-checkbox>
@@ -1537,9 +1530,9 @@
                                                             color="primary"
                                                             class="text-capitalize mt-5"
                                                             rounded
-                                                            >update
-                                                            details</v-btn
                                                         >
+                                                            update details
+                                                        </v-btn>
                                                     </v-col>
                                                 </v-row>
                                             </v-container>
@@ -1560,12 +1553,13 @@
                                                     Point Delivery
                                                     <span
                                                         class="font-weight-light"
-                                                        >{{
+                                                    >
+                                                        {{
                                                             pointDelivery
                                                                 ? "(Active)"
                                                                 : "(Inactive)"
-                                                        }}</span
-                                                    >
+                                                        }}
+                                                    </span>
                                                 </v-card-title>
                                             </template>
                                         </v-checkbox>
@@ -1629,12 +1623,13 @@
                                                     Scan Receipt
                                                     <span
                                                         class="font-weight-light"
-                                                        >{{
+                                                    >
+                                                        {{
                                                             scanReceipt
                                                                 ? "(Active)"
                                                                 : "(Inactive)"
-                                                        }}</span
-                                                    >
+                                                        }}
+                                                    </span>
                                                 </v-card-title>
                                             </template>
                                         </v-checkbox>
@@ -1803,12 +1798,13 @@
                                                     store
                                                     <span
                                                         class="font-weight-light"
-                                                        >{{
+                                                    >
+                                                        {{
                                                             rewardWithPresence
                                                                 ? "(Active)"
                                                                 : "(Inactive)"
-                                                        }}</span
-                                                    >
+                                                        }}
+                                                    </span>
                                                 </v-card-title>
                                             </template>
                                         </v-checkbox>
@@ -1840,12 +1836,13 @@
                                                     Mobile payments
                                                     <span
                                                         class="font-weight-light"
-                                                        >{{
+                                                    >
+                                                        {{
                                                             mobilePayments
                                                                 ? "(Active)"
                                                                 : "(Inactive)"
-                                                        }}</span
-                                                    >
+                                                        }}
+                                                    </span>
                                                 </v-card-title>
                                             </template>
                                         </v-checkbox>
@@ -1926,8 +1923,7 @@
                                             color="secondary"
                                             class="ma-0"
                                             hide-details
-                                        >
-                                        </v-checkbox>
+                                        ></v-checkbox>
                                     </template>
 
                                     <template v-slot:item.save>
@@ -2155,7 +2151,6 @@
                                     <v-card-text>
                                         Choose how each card will be cleared in
                                         your store.
-
                                         <v-row>
                                             <v-col cols="6">
                                                 <h4
@@ -2338,7 +2333,6 @@
                                                     Change logo size
                                                 </div>
                                                 Change logo size in card
-
                                                 <v-slider
                                                     thumb-label
                                                     hide-details
@@ -2361,7 +2355,6 @@
                                                 ordering process again and then
                                                 you can order as many additional
                                                 cards as you like.
-
                                                 <v-sheet width="70%">
                                                     <v-text-field
                                                         class="mt-5"
@@ -2416,18 +2409,15 @@
                                         >
                                             <v-card-title
                                                 class="justify-center secondary--text"
-                                                >Your order has been
-                                                registered!</v-card-title
                                             >
-
-                                            To complete the order you have to
+                                                Your order has been registered! </v-card-title
+                                            >To complete the order you have to
                                             pay off your cards which they will
                                             be delivered in your business's
                                             address. If there is some
                                             modification you wish to make please
                                             contact us at info@roadcube.com
                                             after the payment.
-
                                             <v-btn
                                                 color="primary"
                                                 class="text-capitalize mt-5"
@@ -2746,7 +2736,11 @@ export default {
             { text: "Actions", value: "actions" }
         ],
         users: [
-            { username: "Lefko", password: "Dia12345", rights: "Press edit..." }
+            {
+                username: "Lefko",
+                password: "Dia12345",
+                rights: "Press edit..."
+            }
         ],
         rights: ["Dashboard", "Sales", "Points", "Redeem Vouchers", "Settings"],
         rights2: [

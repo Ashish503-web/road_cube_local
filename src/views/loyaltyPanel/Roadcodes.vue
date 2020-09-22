@@ -22,8 +22,9 @@
                                     tabDialog = true;
                                 }
                             "
-                            ><v-icon v-text="icons.mdiPlus"></v-icon
-                        ></v-btn>
+                        >
+                            <v-icon v-text="icons.mdiPlus"></v-icon>
+                        </v-btn>
                     </v-tabs>
                 </v-col>
 
@@ -32,8 +33,7 @@
                     rounded
                     class="mt-1"
                     @click="promocodeDialog = true"
-                    >add promocode</v-btn
-                >
+                >add promocode</v-btn>
             </v-row>
 
             <v-tabs-items v-model="tabIndex">
@@ -61,11 +61,7 @@
                         <template v-slot:item.edit="{ item }">
                             <v-tooltip v-if="item.status === 'finished'" top>
                                 <template v-slot:activator="{ on }">
-                                    <v-icon
-                                        color="success"
-                                        v-text="icons.mdiCheck"
-                                        v-on="on"
-                                    ></v-icon>
+                                    <v-icon color="success" v-text="icons.mdiCheck" v-on="on"></v-icon>
                                 </template>
 
                                 <span>Finished</span>
@@ -73,14 +69,8 @@
 
                             <v-tooltip v-else top>
                                 <template v-slot:activator="{ on }">
-                                    <v-btn
-                                        color="yellow darken-3"
-                                        icon
-                                        v-on="on"
-                                    >
-                                        <v-icon
-                                            v-text="icons.mdiPencilOutline"
-                                        ></v-icon>
+                                    <v-btn color="yellow darken-3" icon v-on="on">
+                                        <v-icon v-text="icons.mdiPencilOutline"></v-icon>
                                     </v-btn>
                                 </template>
 
@@ -94,11 +84,7 @@
                             <v-card-title class="grey lighten-3">
                                 New Tab
                                 <v-spacer></v-spacer>
-                                <v-icon
-                                    color="secondary"
-                                    large
-                                    v-text="icons.mdiPlus"
-                                ></v-icon>
+                                <v-icon color="secondary" large v-text="icons.mdiPlus"></v-icon>
                             </v-card-title>
 
                             <v-card-text class="pt-7">
@@ -125,9 +111,7 @@
                                             hide-details
                                         >
                                             <template v-slot:label>
-                                                <h4 class="subtitle-2">
-                                                    Roadcodes
-                                                </h4>
+                                                <h4 class="subtitle-2">Roadcodes</h4>
                                             </template>
                                         </v-checkbox>
 
@@ -142,9 +126,7 @@
                                             hide-details
                                         >
                                             <template v-slot:label>
-                                                <h4 class="subtitle-2">
-                                                    Phone Number
-                                                </h4>
+                                                <h4 class="subtitle-2">Phone Number</h4>
                                             </template>
                                         </v-checkbox>
 
@@ -159,9 +141,7 @@
                                             hide-details
                                         >
                                             <template v-slot:label>
-                                                <h4 class="subtitle-2">
-                                                    Promocodes Amount
-                                                </h4>
+                                                <h4 class="subtitle-2">Promocodes Amount</h4>
                                             </template>
                                         </v-checkbox>
 
@@ -176,9 +156,7 @@
                                             hide-details
                                         >
                                             <template v-slot:label>
-                                                <h4 class="subtitle-2">
-                                                    Available
-                                                </h4>
+                                                <h4 class="subtitle-2">Available</h4>
                                             </template>
                                         </v-checkbox>
 
@@ -194,9 +172,7 @@
                                                 v-text="column.text"
                                             ></span>
                                             <v-tooltip right>
-                                                <template
-                                                    v-slot:activator="{ on }"
-                                                >
+                                                <template v-slot:activator="{ on }">
                                                     <v-btn
                                                         color="red"
                                                         icon
@@ -250,10 +226,7 @@
                                                 }
                                             "
                                         >
-                                            <v-icon
-                                                v-text="icons.mdiPlus"
-                                                size="32"
-                                            ></v-icon>
+                                            <v-icon v-text="icons.mdiPlus" size="32"></v-icon>
                                         </v-btn>
                                     </v-col>
                                 </v-row>
@@ -263,9 +236,7 @@
 
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn text @click="tabDialog = false"
-                                    >cancel</v-btn
-                                >
+                                <v-btn text @click="tabDialog = false">cancel</v-btn>
                                 <v-btn
                                     color="primary"
                                     width="80"
@@ -275,17 +246,12 @@
                                             tabDialog = false;
                                         }
                                     "
-                                    >save</v-btn
-                                >
+                                >save</v-btn>
                             </v-card-actions>
                         </v-card>
                     </v-dialog>
 
-                    <v-dialog
-                        v-model="promocodeDialog"
-                        max-width="40%"
-                        scrollable
-                    >
+                    <v-dialog v-model="promocodeDialog" max-width="40%" scrollable>
                         <v-card>
                             <v-card-title class="grey lighten-3">
                                 <v-icon
@@ -293,14 +259,9 @@
                                     color="secondary"
                                     large
                                     class="mr-3"
-                                ></v-icon>
-                                New Promocode
+                                ></v-icon>New Promocode
                                 <v-spacer></v-spacer>
-                                <v-icon
-                                    color="secondary"
-                                    large
-                                    v-text="icons.mdiPlus"
-                                ></v-icon>
+                                <v-icon color="secondary" large v-text="icons.mdiPlus"></v-icon>
                             </v-card-title>
 
                             <v-card-text class="pt-7">
@@ -335,25 +296,16 @@
 
                                 <v-row no-gutters class="mt-3">
                                     <v-col cols="4">
-                                        <h4 class="subtitle-2">
-                                            Select the tab you want to show:
-                                        </h4>
+                                        <h4 class="subtitle-2">Select the tab you want to show:</h4>
                                     </v-col>
 
                                     <v-col cols="8">
-                                        <v-radio-group
-                                            class="pa-0 mt-0"
-                                            hide-details
-                                        >
+                                        <v-radio-group class="pa-0 mt-0" hide-details>
                                             <v-row no-gutters>
                                                 <v-col cols="auto" class="pr-3">
                                                     <v-radio color="secondary">
                                                         <template v-slot:label>
-                                                            <h4
-                                                                class="subtitle-2"
-                                                            >
-                                                                All
-                                                            </h4>
+                                                            <h4 class="subtitle-2">All</h4>
                                                         </template>
                                                     </v-radio>
                                                 </v-col>
@@ -392,33 +344,16 @@
                                 <v-divider class="mt-3 mb-5"></v-divider>
 
                                 <template v-if="createCoupon">
-                                    <v-text-field
-                                        label="Title"
-                                        outlined
-                                        dense
-                                        clearable
-                                    ></v-text-field>
+                                    <v-text-field label="Title" outlined dense clearable></v-text-field>
 
-                                    <v-textarea
-                                        label="Description"
-                                        outlined
-                                        clearable
-                                    ></v-textarea>
+                                    <v-textarea label="Description" outlined clearable></v-textarea>
 
                                     <v-row no-gutters>
-                                        <v-col cols="6" class="subtitle-2"
-                                            >Select stores to redeem</v-col
-                                        >
+                                        <v-col cols="6" class="subtitle-2">Select stores to redeem</v-col>
                                         <v-col cols="6">
-                                            <v-checkbox
-                                                color="secondary"
-                                                class="mt-0"
-                                                hide-details
-                                            >
+                                            <v-checkbox color="secondary" class="mt-0" hide-details>
                                                 <template v-slot:label>
-                                                    <h4 class="subtitle-2">
-                                                        All
-                                                    </h4>
+                                                    <h4 class="subtitle-2">All</h4>
                                                 </template>
                                             </v-checkbox>
 
@@ -430,23 +365,15 @@
                                                 hide-details
                                             >
                                                 <template v-slot:label>
-                                                    <h4
-                                                        class="subtitle-2"
-                                                        v-text="store"
-                                                    ></h4>
+                                                    <h4 class="subtitle-2" v-text="store"></h4>
                                                 </template>
                                             </v-checkbox>
                                         </v-col>
                                     </v-row>
 
-                                    <v-checkbox
-                                        v-model="voucherImage"
-                                        color="secondary"
-                                    >
+                                    <v-checkbox v-model="voucherImage" color="secondary">
                                         <template v-slot:label>
-                                            <h4
-                                                class="subtitle-2 secondary--text"
-                                            >
+                                            <h4 class="subtitle-2 secondary--text">
                                                 I want an image to be displayed
                                                 in voucher
                                             </h4>
@@ -474,9 +401,7 @@
 
                             <v-card-actions>
                                 <v-spacer></v-spacer>
-                                <v-btn text @click="promocodeDialog = false"
-                                    >cancel</v-btn
-                                >
+                                <v-btn text @click="promocodeDialog = false">cancel</v-btn>
                                 <v-btn color="primary" width="80">save</v-btn>
                             </v-card-actions>
                         </v-card>
@@ -484,9 +409,7 @@
                 </v-tab-item>
 
                 <v-tab-item v-for="tab in tabs" :key="tab.name">
-                    <v-data-table
-                        :headers="tab.defaultColumns.concat(tab.columns)"
-                    ></v-data-table>
+                    <v-data-table :headers="tab.defaultColumns.concat(tab.columns)"></v-data-table>
                 </v-tab-item>
             </v-tabs-items>
         </v-sheet>
@@ -500,14 +423,14 @@ import {
     mdiAutoFix,
     mdiMagnify,
     mdiPencilOutline,
-    mdiCheck
+    mdiCheck,
 } from "@mdi/js";
 
 class Tab {
     constructor(tab = {}) {
         this.name = tab.name || "";
         this.defaultColumns = tab.defaultColumns || [
-            { text: "Roadcodes", value: "roadcodes" }
+            { text: "Roadcodes", value: "roadcodes" },
         ];
         this.columns = tab.columns || [];
     }
@@ -523,7 +446,7 @@ export default {
             mdiAutoFix,
             mdiMagnify,
             mdiPencilOutline,
-            mdiCheck
+            mdiCheck,
         },
         tabIndex: 0,
         tabs: [],
@@ -536,7 +459,7 @@ export default {
         voucherImage: false,
         voucher: {
             image: "",
-            imageFile: null
+            imageFile: null,
         },
         stores: ["Katerina", "Pelataki", "Kainouria", "Neo Meo", "Dimitris"],
         headers: [
@@ -544,7 +467,7 @@ export default {
             { text: "Promocodes Ammount", value: "promocodesAmount" },
             { text: "Available", value: "available" },
             { text: "KAT", value: "kat" },
-            { text: "Edit Promocode", value: "edit" }
+            { text: "Edit Promocode", value: "edit" },
         ],
         items: [
             {
@@ -552,17 +475,17 @@ export default {
                 promocodesAmount: "2",
                 available: "2",
                 kat: "10",
-                status: "finished"
+                status: "finished",
             },
             {
                 paymentCode: "testnikosa",
                 promocodesAmount: "2",
                 available: "2",
                 kat: "10",
-                status: "ongoing"
-            }
+                status: "ongoing",
+            },
         ],
-        itemsPerPageOptions: [10, 20, 30, -1]
+        itemsPerPageOptions: [10, 20, 30, -1],
     }),
 
     methods: {
@@ -570,8 +493,8 @@ export default {
             this.voucher.imageFile = event;
             const reader = new FileReader();
             reader.readAsDataURL(this.voucher.imageFile);
-            reader.onload = e => (this.voucher.image = e.target.result);
-        }
-    }
+            reader.onload = (e) => (this.voucher.image = e.target.result);
+        },
+    },
 };
 </script>

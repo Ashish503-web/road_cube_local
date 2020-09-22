@@ -1,6 +1,6 @@
 <template>
-    <v-container fluid class="px-3">
-        <v-sheet height="calc(100vh - 88px)" class color="#eaedf1">
+    <v-container fluid class="b-container">
+        <v-sheet height="calc(100vh - 88px)">
             <v-row no-gutters class="pa-3 fill-height" justify="center">
                 <v-col cols="12">
                     <v-card tile flat height="100%">

@@ -1,6 +1,6 @@
 <template>
-    <v-container fluid class="px-3">
-        <v-sheet color="#eaedf1" class="pa-3">
+    <v-container fluid class="b-container">
+        <v-sheet class="pa-3">
             <v-row no-gutters>
                 <v-col cols="auto">
                     <v-tabs v-model="tab" show-arrows>
@@ -20,10 +20,9 @@
                                 <v-row no-gutters class="pl-12">
                                     <v-col cols="6" class="ml-12 mt-5">
                                         <v-card-title>
-                                            <v-col class="pa-0"
-                                                >Coupons with
-                                                transactions</v-col
-                                            >
+                                            <v-col class="pa-0">
+                                                Coupons with transactions
+                                            </v-col>
                                             <v-col cols="auto" class="pa-0">
                                                 <v-tooltip right>
                                                     <template
@@ -125,10 +124,11 @@
                                         type="info"
                                         dense
                                         class="rounded-xl"
-                                        >You can either share the coupon codes
-                                        on facebook or give them to users with
-                                        an application.</v-alert
                                     >
+                                        You can either share the coupon codes on
+                                        facebook or give them to users with an
+                                        application.
+                                    </v-alert>
                                 </v-col>
                             </v-row>
 
@@ -218,15 +218,13 @@
                                             class="mr-2"
                                             large
                                             v-text="icons.mdiAutoFix"
-                                        ></v-icon>
-                                        Create Coupon</v-card-title
-                                    >
+                                        ></v-icon
+                                        >Create Coupon
+                                    </v-card-title>
                                     <v-divider></v-divider>
                                     <v-card-text class="py-5">
                                         <v-card outlined class="pa-5">
-                                            <h4>
-                                                Coupon Code
-                                            </h4>
+                                            <h4>Coupon Code</h4>
                                             <v-text-field
                                                 class="mt-2"
                                                 placeholder="e.g. Maroudas Optika"
@@ -311,9 +309,9 @@
                                                 >
                                                     <v-card-title
                                                         class="subtitle-1 font-weight-medium"
-                                                        >Product Image
-                                                        (optional)</v-card-title
                                                     >
+                                                        Product Image (optional)
+                                                    </v-card-title>
                                                     <v-row
                                                         no-gutters
                                                         justify="space-between"
@@ -485,14 +483,11 @@
                                                         </v-radio>
                                                     </v-col>
                                                 </v-row>
-                                            </v-radio-group>
-                                        </v-card>
-
-                                        To create a 1 + 1 Campaign you must
+                                            </v-radio-group> </v-card
+                                        >To create a 1 + 1 Campaign you must
                                         declare 1 product for Buy and one to
                                         give it Free.Define products from the
                                         lists below
-
                                         <v-card outlined class="mt-3 py-5 px-2">
                                             <v-row no-gutters>
                                                 <v-col cols="6" class="px-3">
@@ -551,8 +546,8 @@
                                 <v-row no-gutters class="pl-12">
                                     <v-col cols="6" class="ml-12 mt-5">
                                         <v-card-title
-                                            >Coupons with visits
-                                        </v-card-title>
+                                            >Coupons with visits</v-card-title
+                                        >
                                         <v-card-subtitle style="width: 90%">
                                             Reward those who enter your store
                                             with a coupon. It only applies to
@@ -572,10 +567,9 @@
                                                 >Gift Card</v-card-title
                                             >
 
-                                            <v-card-text
-                                                >Set a voucher that the customer
+                                            <v-card-text>
+                                                Set a voucher that the customer
                                                 will win at checkin
-
                                                 <v-row
                                                     no-gutters
                                                     align="center"
@@ -590,9 +584,9 @@
                                                         />
                                                         Coffee
                                                     </v-col>
-                                                    <v-col cols="5">
-                                                        10 voucher
-                                                    </v-col>
+                                                    <v-col cols="5"
+                                                        >10 voucher</v-col
+                                                    >
                                                 </v-row>
 
                                                 <v-checkbox color="secondary">
@@ -643,8 +637,8 @@
                                                 <v-icon
                                                     class="mr-1"
                                                     v-text="icons.mdiClose"
-                                                ></v-icon>
-                                                delete discount
+                                                ></v-icon
+                                                >delete discount
                                             </v-btn>
                                             <v-btn
                                                 v-else
@@ -658,8 +652,8 @@
                                                 <v-icon
                                                     class="mr-1"
                                                     v-text="icons.mdiPlusThick"
-                                                ></v-icon>
-                                                add discount
+                                                ></v-icon
+                                                >add discount
                                             </v-btn>
                                         </template>
                                     </v-data-table>
