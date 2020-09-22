@@ -1,0 +1,42 @@
+<template>
+    <v-tab-item>
+        <v-card-title class="justify-end">
+            <v-col cols="4">
+                <v-text-field
+                    label="Search"
+                    rounded
+                    outlined
+                    dense
+                    clearable
+                    hide-details
+                    :prepend-inner-icon="icons.mdiMagnify"
+                ></v-text-field>
+            </v-col>
+        </v-card-title>
+        <v-data-table
+            :headers="headers"
+            :footer-props="{ itemsPerPageOptions }"
+        ></v-data-table>
+    </v-tab-item>
+</template>
+
+<script>
+import { mdiMagnify } from "@mdi/js";
+
+export default {
+    name: "Pending",
+
+    data: () => ({
+        icons: { mdiMagnify },
+        headers: [
+            { text: "User", value: "user" },
+            { text: "Amount", value: "amount" },
+            { text: "Product", value: "product" },
+            { text: "Address", value: "address" },
+            { text: "Information", value: "information" },
+            { text: "Actions", value: "actions" }
+        ],
+        itemsPerPageOptions: [10, 20, 30, -1]
+    })
+};
+</script>

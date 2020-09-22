@@ -229,7 +229,14 @@
             </v-btn>
         </v-app-bar>
 
-        <v-navigation-drawer app color="secondary" permanent dark>
+        <v-navigation-drawer
+            app
+            color="secondary"
+            :mini-variant="mini"
+            mini-variant-width="80"
+            permanent
+            dark
+        >
             <v-row class="py-3" no-gutters justify="center">
                 <router-link to="/">
                     <v-sheet light class="pa-2 rounded-circle" width="70">
@@ -261,47 +268,44 @@
                 class="pa-0"
                 style="height: calc(100vh - 187px); overflow: auto"
             >
-                <v-list dense nav>
+                <v-list
+                    v-for="navLink in navLinks"
+                    :key="navLink.title"
+                    dense
+                    nav
+                    :subheader="navLink.title !== 'MANAGE'"
+                >
                     <v-subheader
                         class="text-caption"
-                        v-text="use.title"
+                        :class="{ 'justify-center': mini }"
+                        v-text="navLink.title"
                     ></v-subheader>
 
-                    <v-list-item
-                        v-for="item in use.items"
-                        :key="item.title"
-                        :to="item.to"
-                        exact
-                    >
-                        <v-list-item-icon>
-                            <v-icon v-text="item.icon"></v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-title
-                            v-text="item.title"
-                        ></v-list-item-title>
-                    </v-list-item>
-                </v-list>
+                    <div v-for="item in navLink.children" :key="item.title">
+                        <v-tooltip v-if="mini" right>
+                            <template v-slot:activator="{ on }">
+                                <v-list-item :to="item.to" exact v-on="on">
+                                    <v-list-item-icon>
+                                        <v-icon v-text="item.icon"></v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-title
+                                        v-text="item.title"
+                                    ></v-list-item-title>
+                                </v-list-item>
+                            </template>
 
-                <v-list dense nav subheader>
-                    <v-subheader
-                        class="text-caption"
-                        v-text="settings.title"
-                    ></v-subheader>
+                            <span v-text="item.title"></span>
+                        </v-tooltip>
 
-                    <v-list-item
-                        v-for="item in settings.items"
-                        :key="item.title"
-                        :to="item.to"
-                    >
-                        <v-list-item-icon>
-                            <v-icon v-text="item.icon"></v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-content>
+                        <v-list-item v-else :to="item.to" exact>
+                            <v-list-item-icon>
+                                <v-icon v-text="item.icon"></v-icon>
+                            </v-list-item-icon>
                             <v-list-item-title
                                 v-text="item.title"
                             ></v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
+                        </v-list-item>
+                    </div>
                 </v-list>
             </v-container>
         </v-navigation-drawer>
@@ -362,57 +366,60 @@ export default {
                 mdiLogout,
                 mdiCogOutline
             },
-            use: {
-                title: "USE",
-                items: [
-                    { icon: mdiChartBar, title: "Home", to: "/storepanel" },
-                    {
-                        icon: mdiPlusThick,
-                        title: "New Transaction",
-                        to: "/storepanel/new-transaction"
-                    },
-                    {
-                        icon: mdiCurrencyEur,
-                        title: "Transactions",
-                        to: "/storepanel/transactions"
-                    },
-                    {
-                        icon: mdiGift,
-                        title: "Redeem",
-                        to: "/storepanel/redeem"
-                    },
-                    {
-                        icon: mdiDatabaseSync,
-                        title: "History",
-                        to: "/storepanel/history"
-                    },
-                    {
-                        icon: mdiTrophyVariant,
-                        title: "Contests",
-                        to: "/storepanel/contests"
-                    }
-                ]
-            },
-            settings: {
-                title: "SETTINGS",
-                items: [
-                    {
-                        icon: mdiPackageVariantClosed,
-                        title: "Products",
-                        to: "/storepanel/products"
-                    },
-                    {
-                        icon: mdiTagMultiple,
-                        title: "Voucher",
-                        to: "/storepanel/voucher"
-                    },
-                    {
-                        icon: mdiCog,
-                        title: "Settings",
-                        to: "/storepanel/settings"
-                    }
-                ]
-            },
+            mini: false,
+            navLinks: [
+                {
+                    title: "USE",
+                    children: [
+                        { icon: mdiChartBar, title: "Home", to: "/storepanel" },
+                        {
+                            icon: mdiPlusThick,
+                            title: "New Transaction",
+                            to: "/storepanel/new-transaction"
+                        },
+                        {
+                            icon: mdiCurrencyEur,
+                            title: "Transactions",
+                            to: "/storepanel/transactions"
+                        },
+                        {
+                            icon: mdiGift,
+                            title: "Redeem",
+                            to: "/storepanel/redeem"
+                        },
+                        {
+                            icon: mdiDatabaseSync,
+                            title: "History",
+                            to: "/storepanel/history"
+                        },
+                        {
+                            icon: mdiTrophyVariant,
+                            title: "Contests",
+                            to: "/storepanel/contests"
+                        }
+                    ]
+                },
+                {
+                    title: "SETTINGS",
+                    children: [
+                        {
+                            icon: mdiPackageVariantClosed,
+                            title: "Products",
+                            to: "/storepanel/products"
+                        },
+                        {
+                            icon: mdiTagMultiple,
+                            title: "Voucher",
+                            to: "/storepanel/voucher"
+                        },
+                        {
+                            icon: mdiCog,
+                            title: "Settings",
+                            to: "/storepanel/settings"
+                        }
+                    ]
+                }
+            ],
 
             megaMenuItems: [
                 {

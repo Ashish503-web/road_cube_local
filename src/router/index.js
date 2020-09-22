@@ -109,7 +109,7 @@ const routes = [
                 components: {
                     title: () =>
                         import(
-                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                            /* webpackChunkName: "sectionTitle" */ "../components/loyaltyPanel/SectionTitle.vue"
                         ),
                     default: () =>
                         import(
@@ -123,7 +123,7 @@ const routes = [
                 components: {
                     title: () =>
                         import(
-                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                            /* webpackChunkName: "sectionTitle" */ "../components/loyaltyPanel/SectionTitle.vue"
                         ),
                     default: () =>
                         import(
@@ -137,7 +137,7 @@ const routes = [
                 components: {
                     title: () =>
                         import(
-                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                            /* webpackChunkName: "sectionTitle" */ "../components/loyaltyPanel/SectionTitle.vue"
                         ),
                     default: () =>
                         import(
@@ -151,7 +151,7 @@ const routes = [
                 components: {
                     title: () =>
                         import(
-                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                            /* webpackChunkName: "sectionTitle" */ "../components/loyaltyPanel/SectionTitle.vue"
                         ),
                     default: () =>
                         import(
@@ -165,7 +165,7 @@ const routes = [
                 components: {
                     title: () =>
                         import(
-                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                            /* webpackChunkName: "sectionTitle" */ "../components/loyaltyPanel/SectionTitle.vue"
                         ),
                     default: () =>
                         import(
@@ -179,7 +179,7 @@ const routes = [
                 components: {
                     title: () =>
                         import(
-                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                            /* webpackChunkName: "sectionTitle" */ "../components/loyaltyPanel/SectionTitle.vue"
                         ),
                     default: () =>
                         import(
@@ -193,7 +193,7 @@ const routes = [
                 components: {
                     title: () =>
                         import(
-                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                            /* webpackChunkName: "sectionTitle" */ "../components/loyaltyPanel/SectionTitle.vue"
                         ),
                     default: () =>
                         import(
@@ -207,7 +207,7 @@ const routes = [
                 components: {
                     title: () =>
                         import(
-                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                            /* webpackChunkName: "sectionTitle" */ "../components/loyaltyPanel/SectionTitle.vue"
                         ),
                     default: () =>
                         import(
@@ -221,7 +221,7 @@ const routes = [
                 components: {
                     title: () =>
                         import(
-                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                            /* webpackChunkName: "sectionTitle" */ "../components/loyaltyPanel/SectionTitle.vue"
                         ),
                     default: () =>
                         import(
@@ -235,7 +235,7 @@ const routes = [
                 components: {
                     title: () =>
                         import(
-                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                            /* webpackChunkName: "sectionTitle" */ "../components/loyaltyPanel/SectionTitle.vue"
                         ),
                     default: () =>
                         import(
@@ -249,7 +249,7 @@ const routes = [
                 components: {
                     title: () =>
                         import(
-                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                            /* webpackChunkName: "sectionTitle" */ "../components/loyaltyPanel/SectionTitle.vue"
                         ),
                     default: () =>
                         import(
@@ -263,7 +263,7 @@ const routes = [
                 components: {
                     title: () =>
                         import(
-                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                            /* webpackChunkName: "sectionTitle" */ "../components/loyaltyPanel/SectionTitle.vue"
                         ),
                     default: () =>
                         import(
@@ -273,11 +273,11 @@ const routes = [
             },
             {
                 path: "view-participant-answer",
-                name: "View Answer",
+                name: "View Participant Answer",
                 components: {
                     title: () =>
                         import(
-                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                            /* webpackChunkName: "sectionTitle" */ "../components/loyaltyPanel/SectionTitle.vue"
                         ),
                     default: () =>
                         import(
@@ -291,7 +291,7 @@ const routes = [
                 components: {
                     title: () =>
                         import(
-                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                            /* webpackChunkName: "sectionTitle" */ "../components/loyaltyPanel/SectionTitle.vue"
                         ),
                     default: () =>
                         import(
@@ -305,7 +305,7 @@ const routes = [
                 components: {
                     title: () =>
                         import(
-                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                            /* webpackChunkName: "sectionTitle" */ "../components/loyaltyPanel/SectionTitle.vue"
                         ),
                     default: () =>
                         import(
@@ -319,7 +319,7 @@ const routes = [
                 components: {
                     title: () =>
                         import(
-                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                            /* webpackChunkName: "sectionTitle" */ "../components/loyaltyPanel/SectionTitle.vue"
                         ),
                     default: () =>
                         import(
@@ -333,7 +333,7 @@ const routes = [
                 components: {
                     title: () =>
                         import(
-                            /* webpackChunkName: "sectionTitle" */ "../components/SectionTitle.vue"
+                            /* webpackChunkName: "sectionTitle" */ "../components/loyaltyPanel/SectionTitle.vue"
                         ),
                     default: () =>
                         import(
@@ -358,99 +358,185 @@ const routes = [
         children: [
             {
                 path: "",
-                name: "StorePanel",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "storeHome" */ "../views/storePanel/Home.vue"
-                    )
+                name: "Home",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/storePanel/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "storeHome" */ "../views/storePanel/Home.vue"
+                        )
+                }
             },
             {
                 path: "new-transaction",
-                name: "NewTransaction",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "newTransaction" */ "../views/storePanel/NewTransaction.vue"
-                    )
+                name: "New Transaction",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/storePanel/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "newTransaction" */ "../views/storePanel/NewTransaction.vue"
+                        )
+                }
             },
             {
                 path: "transactions",
                 name: "Transactions",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "transactions" */ "../views/storePanel/Transactions.vue"
-                    )
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/storePanel/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "transactions" */ "../views/storePanel//transactions/Transactions.vue"
+                        )
+                }
             },
             {
                 path: "redeem",
                 name: "Redeem",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "redeem" */ "../views/storePanel/Redeem.vue"
-                    )
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/storePanel/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "redeem" */ "../views/storePanel/redeem/Redeem.vue"
+                        )
+                }
             },
             {
                 path: "history",
                 name: "History",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "history" */ "../views/storePanel/History.vue"
-                    )
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/storePanel/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "history" */ "../views/storePanel/history/History.vue"
+                        )
+                }
             },
             {
                 path: "contests",
-                name: "Contests",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "contests" */ "../views/storePanel/Contests.vue"
-                    )
+                name: "Contest & Survey",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/storePanel/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "contests" */ "../views/storePanel/Contests.vue"
+                        )
+                }
             },
             {
-                path: "view-participants",
-                name: "ViewParticipants",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "viewParticipants" */ "../views/storePanel/ViewParticipants.vue"
-                    )
-            },
-            {
-                path: "view-participant-answer",
-                name: "ViewParticipantAnswer",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "viewParticipantAnswer" */ "../views/storePanel/ViewParticipantAnswer.vue"
-                    )
+                path: "add-contest",
+                name: "Add Contest",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/storePanel/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "viewContests" */ "../views/storePanel/AddContest.vue"
+                        )
+                }
             },
             {
                 path: "view-contest",
-                name: "ViewContest",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "viewContests" */ "../views/storePanel/ViewContest.vue"
-                    )
+                name: "View Contest",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/storePanel/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "viewContests" */ "../views/storePanel/ViewContest.vue"
+                        )
+                }
+            },
+            {
+                path: "view-participants",
+                name: "View Participants",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/storePanel/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "viewParticipants" */ "../views/storePanel/ViewParticipants.vue"
+                        )
+                }
+            },
+            {
+                path: "view-participant-answer",
+                name: "View Participant Answer",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/storePanel/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "viewParticipantAnswer" */ "../views/storePanel/ViewParticipantAnswer.vue"
+                        )
+                }
             },
             {
                 path: "products",
-                name: "StoreProducts",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "products" */ "../views/storePanel/Products.vue"
-                    )
+                name: "Products",
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/storePanel/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "products" */ "../views/storePanel/products/Products.vue"
+                        )
+                }
             },
             {
                 path: "voucher",
                 name: "Voucher",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "voucher" */ "../views/storePanel/Voucher.vue"
-                    )
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/storePanel/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "voucher" */ "../views/storePanel/Voucher.vue"
+                        )
+                }
             },
             {
                 path: "settings",
                 name: "Settings",
-                component: () =>
-                    import(
-                        /* webpackChunkName: "settings" */ "../views/storePanel/Settings.vue"
-                    )
+                components: {
+                    title: () =>
+                        import(
+                            /* webpackChunkName: "sectionTitle" */ "../components/storePanel/SectionTitle.vue"
+                        ),
+                    default: () =>
+                        import(
+                            /* webpackChunkName: "settings" */ "../views/storePanel/Settings.vue"
+                        )
+                }
             }
         ]
     }

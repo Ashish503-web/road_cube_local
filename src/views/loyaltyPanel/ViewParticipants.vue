@@ -52,21 +52,21 @@ export default {
     data: () => ({
         icons: {
             mdiMagnify,
-            mdiEyeOutline
+            mdiEyeOutline,
         },
         headers: [
             { text: "No", value: "number" },
             { text: "Username", value: "username" },
             { text: "Date", value: "date" },
-            { text: "Action", value: "action" }
+            { text: "Action", value: "action" },
         ],
         participants: [
             { number: 1, username: "Tsekouras", date: "2020-05-04 16:36:17" },
             { number: 2, username: "dimipak11", date: "2020-05-04 16:36:30" },
-            { number: 3, username: "kokoko", date: "2020-05-04 16:48:13" }
+            { number: 3, username: "kokoko", date: "2020-05-04 16:48:13" },
         ],
-        itemsPerPageOptions: [10, 20, 30, -1]
-    })
+        itemsPerPageOptions: [10, 20, 30, -1],
+    }),
 };
 </script>
 

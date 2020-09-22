@@ -22,12 +22,7 @@
                 class="b-outlined rounded-0"
             >
                 <template v-slot:item.title="{ item }">
-                    <v-btn
-                        color="primary"
-                        width="80"
-                        small
-                        v-text="item.title"
-                    ></v-btn>
+                    <v-btn color="primary" width="80" small v-text="item.title"></v-btn>
                 </template>
 
                 <template v-slot:item.schedule>
@@ -92,7 +87,7 @@ import {
     mdiChat,
     mdiBell,
     mdiEmail,
-    mdiLock
+    mdiLock,
 } from "@mdi/js";
 
 export default {
@@ -105,7 +100,7 @@ export default {
             mdiChat,
             mdiBell,
             mdiEmail,
-            mdiLock
+            mdiLock,
         },
         headers: [
             { text: "Ημ. Δημιουργίας", value: "date" },
@@ -113,15 +108,15 @@ export default {
             { text: "Status", value: "status" },
             { text: "Schedule", value: "schedule" },
             { text: "Advertising Means", value: "advertisingMeans" },
-            { text: "Edit", value: "edit" }
+            { text: "Edit", value: "edit" },
         ],
         campaigns: [
             { date: "2020-08-24 12:09:30", title: 21, status: "pending" },
             { date: "2020-07-16 18:23:34", title: "test", status: "completed" },
-            { date: "2020-08-24 12:09:30", title: "df", status: "completed" }
+            { date: "2020-08-24 12:09:30", title: "df", status: "completed" },
         ],
-        itemsPerPageOptions: [10, 20, 30, -1]
-    })
+        itemsPerPageOptions: [10, 20, 30, -1],
+    }),
 };
 </script>
 

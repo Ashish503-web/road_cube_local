@@ -2,13 +2,7 @@
     <v-toolbar flat outlined height="92">
         <v-tooltip v-if="showGoBack" top>
             <template v-slot:activator="{ on }">
-                <v-btn
-                    color="secondary"
-                    icon
-                    class="mr-3"
-                    v-on="on"
-                    @click="$router.go(-1)"
-                >
+                <v-btn color="secondary" icon class="mr-3" v-on="on" @click="$router.go(-1)">
                     <v-icon v-text="icons.mdiArrowLeft"></v-icon>
                 </v-btn>
             </template>
@@ -16,9 +10,7 @@
             <span>Go Back</span>
         </v-tooltip>
 
-        <v-toolbar-title class="text-h5 secondary--text">
-            {{ $route.name }}
-        </v-toolbar-title>
+        <v-toolbar-title class="text-h5 secondary--text">{{ $route.name }}</v-toolbar-title>
 
         <v-spacer></v-spacer>
 
@@ -40,7 +32,7 @@ import {
     mdiStore,
     mdiFire,
     mdiCreditCardOutline,
-    mdiBullhorn
+    mdiBullhorn,
 } from "@mdi/js";
 
 export default {
@@ -60,8 +52,8 @@ export default {
             mdiStore,
             mdiFire,
             mdiCreditCardOutline,
-            mdiBullhorn
-        }
+            mdiBullhorn,
+        },
     }),
 
     computed: {
@@ -94,12 +86,10 @@ export default {
                     icon += "Store";
                     break;
                 case "Contest & Survey":
-                case "View Participants":
-                case "View Answer":
-                    icon += "TrophyVariant";
-                    break;
                 case "Add Contest":
-                    icon += "Plus";
+                case "View Participants":
+                case "View Participant Answer":
+                    icon += "TrophyVariant";
                     break;
                 case "Roadcodes":
                     icon += "Fire";
@@ -120,12 +110,12 @@ export default {
                 case "Add Contest":
                 case "View Contest":
                 case "View Participants":
-                case "View Answer":
+                case "View Participant Answer":
                     return true;
                 default:
                     return false;
             }
-        }
-    }
+        },
+    },
 };
 </script>

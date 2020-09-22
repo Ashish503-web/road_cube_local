@@ -7,6 +7,6 @@
 
 <script>
 export default {
-    name: "LoyaltyPanel"
+    name: "LoyaltyPanel",
 };
 </script>

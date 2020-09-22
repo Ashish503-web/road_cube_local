@@ -1,24 +1,10 @@
 <template>
-    <v-container class="px-4">
-        <v-toolbar flat>
-            <v-tooltip top>
-                <template v-slot:activator="{ on }">
-                    <v-btn class="mr-3" icon v-on="on" @click="$router.go(-1)">
-                        <v-icon v-text="icons.mdiArrowLeft"></v-icon>
-                    </v-btn>
-                </template>
+    <v-container fluid class="b-container">
+        <v-sheet class="pa-3">
+            <v-toolbar flat>
+                <v-toolbar-title>Edgar's Answer</v-toolbar-title>
+            </v-toolbar>
 
-                <span>Back</span>
-            </v-tooltip>
-
-            <v-toolbar-title>View Answer</v-toolbar-title>
-
-            <v-spacer></v-spacer>
-
-            <v-icon x-large color="grey" v-text="icons.mdiViewGrid"></v-icon>
-        </v-toolbar>
-
-        <v-sheet color="#eaedf1" class="pa-3">
             <v-card tile outlined>
                 <v-card-title class="subtitle-1">User Details</v-card-title>
 
