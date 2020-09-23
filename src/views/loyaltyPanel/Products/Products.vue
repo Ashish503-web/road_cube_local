@@ -25,7 +25,9 @@
                                 v-model="activeTab"
                                 background-color="#f9fafc"
                         >
-                            <v-tab class="text-capitalize">Products</v-tab>
+                            <v-tab class="text-capitalize">
+                                Products
+                            </v-tab>
                             <v-tab class="text-capitalize">Products per Store</v-tab>
                             <v-tab class="text-capitalize">Series of Products</v-tab>
 
