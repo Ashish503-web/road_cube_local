@@ -46,7 +46,14 @@
         "parserOptions": {
             "parser": "babel-eslint"
         },
-        "rules": {}
+        "rules": {
+            "no-unused-vars": "off",
+            "vue/no-duplicate-attributes": ["error", {
+                "allowCoexistClass": true,
+                "allowCoexistAppendIcon": true,
+                "allowCoexistStyle": true
+            }]
+        }
     },
     "browserslist": [
         "> 1%",

@@ -68,7 +68,7 @@ const routes = [
                 name: "LoyaltyProducts",
                 component: () =>
                     import(
-                        /* webpackChunkName: "products" */ "../views/loyaltyPanel/Products.vue"
+                        /* webpackChunkName: "products" */ "../views/loyaltyPanel/Products/Products.vue"
                     )
             },
             {
