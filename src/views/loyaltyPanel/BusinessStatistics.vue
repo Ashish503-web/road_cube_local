@@ -33,7 +33,7 @@
         <v-col cols="5" sm="4" md="4" lg="6">
           <h2 align="center" class="pa-6 title align-content-sm-center">Statistics</h2>
         </v-col>
-        <v-col cols="2" sm="2" md="4" lg="3" class="ml-sm-0 ml-5 pl-sm-0" align="end">
+        <v-col cols="3" sm="2" md="4" lg="3" class="ml-sm-0 ml-5 pl-sm-0" align="end">
           <v-icon
               v-text="icons.mdiGift"
               size="80"
@@ -100,7 +100,7 @@
               <v-card flat class="pa-5">
 
                 <v-card flat class="pa-0" color="#f9fafc">
-                  <v-row class="pa-3 pt-0 pb-0 justify-md-end">
+                  <v-row class="pa-3 pt-0 pb-0 justify-end">
                     <v-col cols="10" sm="8" md="6" lg="4" class="pa-3">
                       <v-text-field
                           label="Search"

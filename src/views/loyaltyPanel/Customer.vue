@@ -581,102 +581,53 @@
                 </v-col>
               </v-row>
               <v-card flat class="pa-5 pt-1 pb-1">
-                <v-card flat class="pa-0" color="#f9fafc">
-                  <v-row class="pa-3 pt-0 pb-0 justify-md-end">
-                    <v-col cols="10" sm="8" md="6" lg="4" class="pa-3">
-                      <v-text-field
-                          label="Search"
-                          outlined
-                          dense
-                          clearable
-                          rounded
-                          hide-details
-                          :prepend-inner-icon="icons.mdiMagnify"
-                      ></v-text-field>
-                    </v-col>
-                  </v-row>
-                </v-card>
+                <v-row justify="end" no-gutters class="py-3 px-4">
+                  <v-col cols="10" sm="8" md="6" lg="4" >
+                    <v-menu v-model="menu" offset-y>
+                      <template v-slot:activator="{ attrs }">
+                        <v-text-field
+                            :label="
+                                    selectedSearchType === 'All Fields'
+                                        ? 'Search'
+                                        : selectedSearchType
+                                        ? 'Search by ' + selectedSearchType
+                                        : 'Search'
+                                "
+                            rounded
+                            outlined
+                            dense
+                            clearable
+                            hide-details
+                            :aria-expanded="attrs['aria-expanded']"
+                            :prepend-inner-icon="icons.mdiMagnify"
+                            :append-icon="icons.mdiChevronDown"
+                            @click:append="menu = true"
+                        ></v-text-field>
+                      </template>
+
+                      <v-list dense>
+                        <v-list-item-group
+                            v-model="selectedSearchType"
+                            color="primary"
+                        >
+                          <v-list-item
+                              v-for="searchType in searchTypes"
+                              :key="searchType"
+                              :value="searchType"
+                          >
+                            <v-list-item-title v-text="searchType">
+                            </v-list-item-title>
+                          </v-list-item>
+                        </v-list-item-group>
+                      </v-list>
+                    </v-menu>
+                  </v-col>
+                </v-row>
                 <v-data-table
                     :headers="customerHeaders"
                     :items="customerData"
                     :footer-props="{ itemsPerPageOptions }"
                 >
-                  <template
-                      v-slot:header.member_card
-                  >
-                    <h4 class="subtitle-2 font-weight-bold d-inline-block mt-4 mb-2">Member Card</h4>
-                    <v-text-field
-                        label="Search"
-                        outlined
-                        dense
-                        rounded
-                        hide-details
-                        :prepend-inner-icon="icons.mdiMagnify"
-                    ></v-text-field>
-                  </template>
-                  <template
-                      v-slot:header.transactions
-                  >
-                    <h4 class="subtitle-2 font-weight-bold d-inline-block mt-4 mb-2">Transactions</h4>
-                    <v-text-field
-                        label="Search"
-                        outlined
-                        dense
-                        rounded
-                        hide-details
-                        :prepend-inner-icon="icons.mdiMagnify"
-                    ></v-text-field>
-                  </template>
-                  <template
-                      v-slot:header.total
-                  >
-                    <h4 class="subtitle-2 font-weight-bold d-inline-block mt-4 mb-2">Total</h4>
-                    <v-text-field
-                        label="Search"
-                        outlined
-                        dense
-                        rounded
-                        hide-details
-                        :prepend-inner-icon="icons.mdiMagnify"
-                    ></v-text-field>
-                  </template>
-                  <template
-                      v-slot:header.redeemed
-                  >
-                    <h4 class="subtitle-2 font-weight-bold d-inline-block mt-4 mb-2">Redeemed</h4>
-                    <v-text-field
-                        label="Search"
-                        outlined
-                        dense
-                        rounded
-                        hide-details
-                        :prepend-inner-icon="icons.mdiMagnify"
-                    ></v-text-field>
-                  </template>
-                  <template
-                      v-slot:header.available
-                  >
-                    <h4 class="subtitle-2 font-weight-bold d-inline-block mt-4 mb-2">Available</h4>
-                    <v-text-field
-                        label="Search"
-                        outlined
-                        dense
-                        rounded
-                        hide-details
-                        :prepend-inner-icon="icons.mdiMagnify"
-                    ></v-text-field>
-                  </template>
-                  <template
-                      v-slot:header.user_tab
-                  >
-                    <h4 class="subtitle-2 font-weight-bold d-inline-block">User Tab</h4>
-                  </template>
-                  <template
-                      v-slot:header.edit
-                  >
-                    <h4 class="subtitle-2 font-weight-bold d-inline-block">Edit</h4>
-                  </template>
-
                   <template
                     v-slot:item.transactions="{item}"
 
@@ -1110,7 +1061,7 @@
 </template>
 
 <script>
-import { mdiAccountBox, mdiMagnify, mdiPlus  } from '@mdi/js'
+import { mdiAccountBox, mdiMagnify, mdiChevronDown, mdiPlus  } from '@mdi/js'
 
 export default {
   name: "Customer",
@@ -1118,6 +1069,7 @@ export default {
     icons: {
       mdiAccountBox,
       mdiMagnify,
+      mdiChevronDown,
       mdiPlus
     },
     tab: 0,
@@ -1126,16 +1078,26 @@ export default {
     editDialog: false,
     addTabDialog: false,
     itemsPerPageOptions: [10, 20, 30, -1],
+    menu: false,
+    searchTypes: [
+      "All Fields",
+      "Member Card",
+      "Transactions",
+      "Total",
+      "Redeemed",
+      "Available"
+    ],
+    selectedSearchType: "All Fields",
     operators: ['', 'greater than', 'less than', 'greater or equal', 'less or equal', 'equal'],
     operator: '',
     customerHeaders: [
-      {value: 'member_card', align: 'center'},
-      {value: 'transactions', align: 'center'},
-      {value: 'total', align: 'center'},
-      {value: 'redeemed', align: 'center'},
-      {value: 'available', align: 'center'},
-      {value: 'user_tab', align: 'center'},
-      {value: 'edit', align: 'center'}
+      {text: 'Member Card', value: 'member_card', align: 'center'},
+      {text: 'Transactions', value: 'transactions', align: 'center'},
+      {text: 'Total', value: 'total', align: 'center'},
+      {text: 'Redeemed', value: 'redeemed', align: 'center'},
+      {text: 'Available', value: 'available', align: 'center'},
+      {text: 'User Tab', value: 'user_tab', align: 'center'},
+      {text: 'Edit', value: 'edit', align: 'center'}
     ],
     customerData: [
       {

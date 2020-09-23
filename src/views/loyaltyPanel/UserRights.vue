@@ -124,7 +124,7 @@
           <v-card flat class="pa-5" align="center">
             <v-card class="pa-6 elevation-6" color="#f9fafc" width="95%" style="border-left: 3px solid #626262; border-right: 3px solid #626262">
               <v-row class="pa-3 pt-0 pb-0 title font-weight-bold">User List:</v-row>
-              <v-row class="pa-3 pt-0 pb-0 justify-md-end">
+              <v-row class="pa-3 pt-0 pb-0 justify-end">
                 <v-col cols="10" sm="8" md="6" lg="4" class="pa-3">
                   <v-text-field
                       label="Search"
