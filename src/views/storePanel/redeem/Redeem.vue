@@ -30,7 +30,7 @@ export default {
     name: "Redeem",
     components: { RedeemVoucher, CouponsOverview, MultipleCoupons },
     data: () => ({
-        tab: 0
-    })
+        tab: 0,
+    }),
 };
 </script>

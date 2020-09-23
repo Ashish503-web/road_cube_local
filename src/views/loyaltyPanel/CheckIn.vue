@@ -15,23 +15,15 @@
                         <v-card class="rounded-xl px-5" outlined>
                             <v-card-title
                                 class="subtitle-1 secondary--text font-weight-medium justify-center"
-                                >Points</v-card-title
-                            >
+                            >Points</v-card-title>
                             <v-card-text>
                                 When the customer comes to the store he will be
                                 rewarded with:
-
                                 <v-card outlined class="my-5 pa-5 text-center">
                                     <span
                                         class="subtitle-1 secondary--text font-weight-medium"
-                                    >
-                                        14 KAT</span
-                                    >
-                                    <span
-                                        class="text-h5 secondary--text font-weight-bold"
-                                    >
-                                        / Checkin</span
-                                    >
+                                    >14 KAT</span>
+                                    <span class="text-h5 secondary--text font-weight-bold">/ Checkin</span>
                                 </v-card>
 
                                 <v-alert type="info" dense class="subtitle-2">
@@ -45,8 +37,7 @@
                         <v-card class="rounded-xl px-5" outlined>
                             <v-card-title
                                 class="subtitle-1 secondary--text font-weight-medium justify-center"
-                                >Gift Card</v-card-title
-                            >
+                            >Gift Card</v-card-title>
 
                             <v-card-text class="pb-6">
                                 Set a voucher that the customer will win at
@@ -60,39 +51,14 @@
                                         style="vertical-align: middle"
                                     />
                                     Test
-                                </v-sheet>
-
-                                Number of active Voucher codes: 100
-
-                                <v-row
-                                    class="mt-5"
-                                    no-gutters
-                                    justify="space-between"
-                                >
-                                    <v-btn
-                                        color="red"
-                                        rounded
-                                        small
-                                        dark
-                                        @click="myFunc(item)"
-                                    >
-                                        <v-icon
-                                            v-text="icons.mdiClose"
-                                        ></v-icon>
-                                        delete
+                                </v-sheet>Number of active Voucher codes: 100
+                                <v-row class="mt-5" no-gutters justify="space-between">
+                                    <v-btn color="red" depressed small dark @click="myFunc(item)">
+                                        <v-icon size="20" v-text="icons.mdiClose"></v-icon>delete
                                     </v-btn>
 
-                                    <v-btn
-                                        rounded
-                                        color="blue darken-1"
-                                        dark
-                                        small
-                                    >
-                                        <v-icon
-                                            class="mr-1"
-                                            v-text="icons.mdiFacebook"
-                                        ></v-icon
-                                        >Share 0
+                                    <v-btn color="blue darken-1" depressed dark small>
+                                        <v-icon size="20" class="mr-1" v-text="icons.mdiFacebook"></v-icon>Share 0
                                     </v-btn>
                                 </v-row>
                             </v-card-text>
@@ -113,9 +79,9 @@ export default {
     data: () => ({
         icons: {
             mdiClose,
-            mdiFacebook
-        }
-    })
+            mdiFacebook,
+        },
+    }),
 };
 </script>
 

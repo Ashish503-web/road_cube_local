@@ -7,13 +7,13 @@
 
 <script>
 export default {
-    name: "StorePanel"
+    name: "StorePanel",
 };
 </script>
 
 <style>
 .b-container {
     background-color: rgba(234, 237, 241, 0.57);
-    min-height: calc(100vh - 156px);
+    min-height: calc(100vh - 64px);
 }
 </style>

@@ -6,13 +6,19 @@
             </v-app-bar>
             <v-divider></v-divider>
             <v-toolbar flat height="80">
-                <v-btn color="primary" rounded @click="giftDialog = true"
-                    >add gift</v-btn
-                >
+                <v-btn
+                    color="secondary"
+                    class="text-capitalize"
+                    depressed
+                    @click="giftDialog = true"
+                >add gift</v-btn>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" rounded @click="supplierDialog = true"
-                    >create supplier</v-btn
-                >
+                <v-btn
+                    color="secondary"
+                    class="text-capitalize"
+                    depressed
+                    @click="supplierDialog = true"
+                >create supplier</v-btn>
             </v-toolbar>
 
             <v-row justify="end" no-gutters class="py-3 px-4">
@@ -40,17 +46,13 @@
                         </template>
 
                         <v-list dense>
-                            <v-list-item-group
-                                v-model="selectedSearchType"
-                                color="primary"
-                            >
+                            <v-list-item-group v-model="selectedSearchType" color="primary">
                                 <v-list-item
                                     v-for="searchType in searchTypes"
                                     :key="searchType"
                                     :value="searchType"
                                 >
-                                    <v-list-item-title v-text="searchType">
-                                    </v-list-item-title>
+                                    <v-list-item-title v-text="searchType"></v-list-item-title>
                                 </v-list-item>
                             </v-list-item-group>
                         </v-list>
@@ -58,23 +60,12 @@
                 </v-col>
             </v-row>
 
-            <v-data-table
-                :headers="headers"
-                :items="gifts"
-                :footer-props="{ itemsPerPageOptions }"
-            >
+            <v-data-table :headers="headers" :items="gifts" :footer-props="{ itemsPerPageOptions }">
                 <template v-slot:item.actions="{ item }">
                     <v-tooltip top>
                         <template v-slot:activator="{ on }">
-                            <v-btn
-                                color="yellow darken-3"
-                                icon
-                                v-on="on"
-                                @click="myFunc(item)"
-                            >
-                                <v-icon
-                                    v-text="icons.mdiPencilOutline"
-                                ></v-icon>
+                            <v-btn color="yellow darken-3" icon v-on="on" @click="myFunc(item)">
+                                <v-icon v-text="icons.mdiPencilOutline"></v-icon>
                             </v-btn>
                         </template>
 
@@ -83,12 +74,7 @@
 
                     <v-tooltip top>
                         <template v-slot:activator="{ on }">
-                            <v-btn
-                                color="red"
-                                icon
-                                v-on="on"
-                                @click="myFunc(item)"
-                            >
+                            <v-btn color="red" icon v-on="on" @click="myFunc(item)">
                                 <v-icon v-text="icons.mdiClose"></v-icon>
                             </v-btn>
                         </template>
@@ -103,11 +89,7 @@
                     <v-card-title class="grey lighten-3">
                         New Gift
                         <v-spacer></v-spacer>
-                        <v-icon
-                            color="secondary"
-                            large
-                            v-text="icons.mdiPlus"
-                        ></v-icon>
+                        <v-icon color="secondary" large v-text="icons.mdiPlus"></v-icon>
                     </v-card-title>
 
                     <v-card-text class="pt-7">
@@ -119,29 +101,11 @@
                             clearable
                         ></v-text-field>
 
-                        <v-textarea
-                            label="Description"
-                            rounded
-                            outlined
-                            dense
-                            clearable
-                        ></v-textarea>
+                        <v-textarea label="Description" rounded outlined dense clearable></v-textarea>
 
-                        <v-text-field
-                            label="ID Catalog"
-                            rounded
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
+                        <v-text-field label="ID Catalog" rounded outlined dense clearable></v-text-field>
 
-                        <v-text-field
-                            label="Gift Code"
-                            rounded
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
+                        <v-text-field label="Gift Code" rounded outlined dense clearable></v-text-field>
 
                         <v-select
                             :items="categories"
@@ -181,9 +145,7 @@
 
                         <v-checkbox class="mt-0">
                             <template v-slot:label>
-                                <h4 class="subtitle-2">
-                                    Appear in catalog
-                                </h4>
+                                <h4 class="subtitle-2">Appear in catalog</h4>
                             </template>
                         </v-checkbox>
 
@@ -196,14 +158,7 @@
                             </template>
                         </v-checkbox>
 
-                        <v-text-field
-                            type="number"
-                            label="Points"
-                            rounded
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
+                        <v-text-field type="number" label="Points" rounded outlined dense clearable></v-text-field>
 
                         <h4 class="subtitle-2 secondary--text">Type</h4>
 
@@ -212,18 +167,14 @@
                                 <v-col cols="auto">
                                     <v-radio value="Αγαθό">
                                         <template v-slot:label>
-                                            <h4 class="subtitle-2">
-                                                Αγαθό
-                                            </h4>
+                                            <h4 class="subtitle-2">Αγαθό</h4>
                                         </template>
                                     </v-radio>
                                 </v-col>
                                 <v-col cols="auto" class="ml-3">
                                     <v-radio value="Gift Voucher">
                                         <template v-slot:label>
-                                            <h4 class="subtitle-2">
-                                                Gift voucher
-                                            </h4>
+                                            <h4 class="subtitle-2">Gift voucher</h4>
                                         </template>
                                     </v-radio>
                                 </v-col>
@@ -232,9 +183,7 @@
 
                         <v-row v-if="type === 'Gift Voucher'" no-gutters>
                             <v-col cols="6">
-                                <h3 class="subtitle-1 secondary--text">
-                                    Select stores to redeem
-                                </h3>
+                                <h3 class="subtitle-1 secondary--text">Select stores to redeem</h3>
                             </v-col>
 
                             <v-col cols="6">
@@ -246,10 +195,7 @@
                                     class="mt-0"
                                 >
                                     <template v-slot:label>
-                                        <h4
-                                            class="subtitle-2"
-                                            v-text="store"
-                                        ></h4>
+                                        <h4 class="subtitle-2" v-text="store"></h4>
                                     </template>
                                 </v-checkbox>
                             </v-col>
@@ -280,47 +226,17 @@
                     <v-card-title class="grey lighten-3">
                         New Supplier
                         <v-spacer></v-spacer>
-                        <v-icon
-                            color="secondary"
-                            large
-                            v-text="icons.mdiPlus"
-                        ></v-icon>
+                        <v-icon color="secondary" large v-text="icons.mdiPlus"></v-icon>
                     </v-card-title>
 
                     <v-card-text class="pt-7">
-                        <v-text-field
-                            label="Ονομα"
-                            rounded
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
+                        <v-text-field label="Ονομα" rounded outlined dense clearable></v-text-field>
 
-                        <v-text-field
-                            type="email"
-                            label="Email1"
-                            rounded
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
+                        <v-text-field type="email" label="Email1" rounded outlined dense clearable></v-text-field>
 
-                        <v-text-field
-                            type="email"
-                            label="Email2"
-                            rounded
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
+                        <v-text-field type="email" label="Email2" rounded outlined dense clearable></v-text-field>
 
-                        <v-text-field
-                            label="Κωδικός"
-                            rounded
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
+                        <v-text-field label="Κωδικός" rounded outlined dense clearable></v-text-field>
 
                         <v-text-field
                             type="number"
@@ -336,9 +252,7 @@
 
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn text @click="supplierDialog = false"
-                            >cancel</v-btn
-                        >
+                        <v-btn text @click="supplierDialog = false">cancel</v-btn>
                         <v-btn color="primary" width="80">save</v-btn>
                     </v-card-actions>
                 </v-card>
@@ -353,7 +267,7 @@ import {
     mdiChevronDown,
     mdiPencilOutline,
     mdiClose,
-    mdiPlus
+    mdiPlus,
 } from "@mdi/js";
 
 export default {
@@ -365,7 +279,7 @@ export default {
             mdiChevronDown,
             mdiPencilOutline,
             mdiClose,
-            mdiPlus
+            mdiPlus,
         },
         headers: [
             { text: "ID Catalog", value: "catalog" },
@@ -375,7 +289,7 @@ export default {
             { text: "Name", value: "name" },
             { text: "Type", value: "type" },
             { text: "Points", value: "points" },
-            { text: "Actions", value: "actions" }
+            { text: "Actions", value: "actions" },
         ],
         gifts: [
             {
@@ -384,8 +298,8 @@ export default {
                 category: "Γενικά",
                 name: "tetstetest",
                 type: "Αγαθό",
-                points: "23"
-            }
+                points: "23",
+            },
         ],
         itemsPerPageOptions: [10, 25, 50, 100],
         menu: false,
@@ -395,7 +309,7 @@ export default {
             "Supplier",
             "Category",
             "Name",
-            "Points"
+            "Points",
         ],
         selectedSearchType: "All Fields",
         giftDialog: false,
@@ -411,10 +325,10 @@ export default {
             "Dimitris",
             "Larouti",
             "Nikniknik",
-            "Arguris Epipla"
+            "Arguris Epipla",
         ],
         selectedStores: [],
-        supplierDialog: false
-    })
+        supplierDialog: false,
+    }),
 };
 </script>

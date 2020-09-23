@@ -7,88 +7,48 @@
                 </v-col>
                 <v-col cols="12" sm="12" md="3" lg="2">
                     <v-card-title class="pb-0 justify-center">23</v-card-title>
-                    <v-card-title
-                        class="pa-0 font-weight-light justify-center text--secondary"
-                    >
-                        <v-icon v-text="icons.mdiAccountGroup" class="mr-1">
-                        </v-icon>
-                        Customer
+                    <v-card-title class="pa-0 font-weight-light justify-center text--secondary">
+                        <v-icon v-text="icons.mdiAccountGroup" class="mr-1"></v-icon>Customer
                     </v-card-title>
                 </v-col>
                 <v-col cols="12" sm="12" md="3" lg="2">
                     <v-card-title class="pb-0 justify-center">32</v-card-title>
-                    <v-card-title
-                        class="pa-0 font-weight-light justify-center text--secondary"
-                    >
-                        <v-icon v-text="icons.mdiDatabase" class="mr-1">
-                        </v-icon
-                        >Transactions
+                    <v-card-title class="pa-0 font-weight-light justify-center text--secondary">
+                        <v-icon v-text="icons.mdiDatabase" class="mr-1"></v-icon>Transactions
                     </v-card-title>
                 </v-col>
                 <v-col cols="12" sm="12" md="3" lg="2">
-                    <v-card-title class="pb-0 justify-center"
-                        >€1.748,18</v-card-title
-                    >
-                    <v-card-title
-                        class="pa-0 font-weight-light justify-center text--secondary"
-                    >
-                        <v-icon v-text="icons.mdiCurrencyEur" class="mr-1">
-                        </v-icon>
-                        Total
+                    <v-card-title class="pb-0 justify-center">€1.748,18</v-card-title>
+                    <v-card-title class="pa-0 font-weight-light justify-center text--secondary">
+                        <v-icon v-text="icons.mdiCurrencyEur" class="mr-1"></v-icon>Total
                     </v-card-title>
                 </v-col>
                 <v-col cols="12" sm="12" md="3" lg="2">
-                    <v-card-title class="pb-0 justify-center"
-                        >1630</v-card-title
-                    >
-                    <v-card-title
-                        class="pa-0 font-weight-light justify-center text--secondary"
-                    >
-                        <v-icon v-text="icons.mdiTrophyVariant" class="mr-1">
-                        </v-icon>
-                        KAt
+                    <v-card-title class="pb-0 justify-center">1630</v-card-title>
+                    <v-card-title class="pa-0 font-weight-light justify-center text--secondary">
+                        <v-icon v-text="icons.mdiTrophyVariant" class="mr-1"></v-icon>KAt
                     </v-card-title>
                 </v-col>
             </v-row>
         </v-card>
 
-        <v-row class="pa-10 pt-8 pb-8" style="background: #eaedf1">
+        <v-row class="pa-3 pb-8" style="background: #eaedf1">
             <v-col cols="12" sm="6" lg="3">
                 <v-hover v-slot:default="{ hover }">
-                    <v-card
-                        tile
-                        class="pa-5"
-                        outlined
-                        :elevation="hover ? 3 : 0"
-                    >
-                        <v-row
-                            no-gutters
-                            justify="space-between"
-                            align="center"
-                        >
+                    <v-card tile class="pa-5" outlined :elevation="hover ? 3 : 0">
+                        <v-row no-gutters justify="space-between" align="center">
                             <v-col cols="auto">
-                                <v-sheet
-                                    color="#27ae60"
-                                    dark
-                                    class="rounded-circle"
-                                >
-                                    <v-icon
-                                        class="ma-3"
-                                        large
-                                        v-text="icons.mdiBinoculars"
-                                    ></v-icon>
+                                <v-sheet color="#27ae60" dark class="rounded-circle">
+                                    <v-icon class="ma-3" large v-text="icons.mdiBinoculars"></v-icon>
                                 </v-sheet>
                             </v-col>
                             <v-col cols="auto">
                                 <v-card-title
                                     class="subtitle-1 font-weight-bold pa-0 justify-end"
-                                    >3540</v-card-title
-                                >
+                                >3540</v-card-title>
                                 <h4
                                     class="subtitle-2 font-weight-regular text--secondary"
-                                >
-                                    User views
-                                </h4>
+                                >User views</h4>
                             </v-col>
                         </v-row>
                     </v-card>
@@ -97,40 +57,18 @@
 
             <v-col cols="12" sm="6" lg="3">
                 <v-hover v-slot:default="{ hover }">
-                    <v-card
-                        tile
-                        class="pa-5"
-                        outlined
-                        :elevation="hover ? 3 : 0"
-                    >
-                        <v-row
-                            no-gutters
-                            justify="space-between"
-                            align="center"
-                        >
+                    <v-card tile class="pa-5" outlined :elevation="hover ? 3 : 0">
+                        <v-row no-gutters justify="space-between" align="center">
                             <v-col cols="auto">
-                                <v-sheet
-                                    color="#e67e22"
-                                    dark
-                                    class="rounded-circle"
-                                >
-                                    <v-icon
-                                        class="ma-3"
-                                        large
-                                        v-text="icons.mdiCursorDefault"
-                                    ></v-icon>
+                                <v-sheet color="#e67e22" dark class="rounded-circle">
+                                    <v-icon class="ma-3" large v-text="icons.mdiCursorDefault"></v-icon>
                                 </v-sheet>
                             </v-col>
                             <v-col cols="auto">
                                 <v-card-title
                                     class="subtitle-1 font-weight-bold pa-0 justify-end"
-                                    >197</v-card-title
-                                >
-                                <h4
-                                    class="subtitle-2 font-weight-regular text--secondary"
-                                >
-                                    Clicks
-                                </h4>
+                                >197</v-card-title>
+                                <h4 class="subtitle-2 font-weight-regular text--secondary">Clicks</h4>
                             </v-col>
                         </v-row>
                     </v-card>
@@ -139,40 +77,20 @@
 
             <v-col cols="12" sm="6" lg="3">
                 <v-hover v-slot:default="{ hover }">
-                    <v-card
-                        tile
-                        class="pa-5"
-                        outlined
-                        :elevation="hover ? 3 : 0"
-                    >
-                        <v-row
-                            no-gutters
-                            justify="space-between"
-                            align="center"
-                        >
+                    <v-card tile class="pa-5" outlined :elevation="hover ? 3 : 0">
+                        <v-row no-gutters justify="space-between" align="center">
                             <v-col cols="auto">
-                                <v-sheet
-                                    color="#af64cc"
-                                    dark
-                                    class="rounded-circle"
-                                >
-                                    <v-icon
-                                        class="ma-3"
-                                        large
-                                        v-text="icons.mdiCompassOutline"
-                                    ></v-icon>
+                                <v-sheet color="#af64cc" dark class="rounded-circle">
+                                    <v-icon class="ma-3" large v-text="icons.mdiCompassOutline"></v-icon>
                                 </v-sheet>
                             </v-col>
                             <v-col cols="auto">
                                 <v-card-title
                                     class="subtitle-1 font-weight-bold pa-0 justify-end"
-                                    >42</v-card-title
-                                >
+                                >42</v-card-title>
                                 <h4
                                     class="subtitle-2 font-weight-regular text--secondary"
-                                >
-                                    User leads
-                                </h4>
+                                >User leads</h4>
                             </v-col>
                         </v-row>
                     </v-card>
@@ -181,40 +99,18 @@
 
             <v-col cols="12" sm="6" lg="3">
                 <v-hover v-slot:default="{ hover }">
-                    <v-card
-                        tile
-                        class="pa-5"
-                        outlined
-                        :elevation="hover ? 3 : 0"
-                    >
-                        <v-row
-                            no-gutters
-                            justify="space-between"
-                            align="center"
-                        >
+                    <v-card tile class="pa-5" outlined :elevation="hover ? 3 : 0">
+                        <v-row no-gutters justify="space-between" align="center">
                             <v-col cols="auto">
-                                <v-sheet
-                                    color="#e74c3c"
-                                    dark
-                                    class="rounded-circle"
-                                >
-                                    <v-icon
-                                        class="ma-3"
-                                        large
-                                        v-text="icons.mdiDatabase"
-                                    ></v-icon>
+                                <v-sheet color="#e74c3c" dark class="rounded-circle">
+                                    <v-icon class="ma-3" large v-text="icons.mdiDatabase"></v-icon>
                                 </v-sheet>
                             </v-col>
                             <v-col cols="auto">
                                 <v-card-title
                                     class="subtitle-1 font-weight-bold pa-0 justify-end"
-                                    >32</v-card-title
-                                >
-                                <h4
-                                    class="subtitle-2 font-weight-regular text--secondary"
-                                >
-                                    Payments
-                                </h4>
+                                >32</v-card-title>
+                                <h4 class="subtitle-2 font-weight-regular text--secondary">Payments</h4>
                             </v-col>
                         </v-row>
                     </v-card>
@@ -223,23 +119,10 @@
 
             <v-col cols="12" md="6">
                 <v-hover v-slot:default="{ hover }">
-                    <v-card
-                        tile
-                        class="pa-5"
-                        outlined
-                        :elevation="hover ? 3 : 0"
-                    >
-                        <v-row
-                            no-gutters
-                            justify="space-between"
-                            align="center"
-                        >
+                    <v-card tile class="pa-5" outlined :elevation="hover ? 3 : 0">
+                        <v-row no-gutters justify="space-between" align="center">
                             <v-col cols="auto">
-                                <v-sheet
-                                    color="accent"
-                                    dark
-                                    class="rounded-circle"
-                                >
+                                <v-sheet color="accent" dark class="rounded-circle">
                                     <v-icon
                                         class="ma-3"
                                         large
@@ -251,14 +134,11 @@
                             <v-col cols="auto">
                                 <v-card-title
                                     class="subtitle-1 font-weight-bold pa-0"
-                                    >0 Transactions / 0,00 Total</v-card-title
-                                >
+                                >0 Transactions / 0,00 Total</v-card-title>
                                 <h4
                                     class="subtitle-2 font-weight-regular text--secondary"
                                     align="end"
-                                >
-                                    Last 7 days
-                                </h4>
+                                >Last 7 days</h4>
                             </v-col>
                         </v-row>
                     </v-card>
@@ -267,23 +147,10 @@
 
             <v-col cols="12" md="6">
                 <v-hover v-slot:default="{ hover }">
-                    <v-card
-                        tile
-                        class="pa-5"
-                        outlined
-                        :elevation="hover ? 3 : 0"
-                    >
-                        <v-row
-                            no-gutters
-                            justify="space-between"
-                            align="center"
-                        >
+                    <v-card tile class="pa-5" outlined :elevation="hover ? 3 : 0">
+                        <v-row no-gutters justify="space-between" align="center">
                             <v-col cols="auto">
-                                <v-sheet
-                                    color="accent"
-                                    dark
-                                    class="rounded-circle"
-                                >
+                                <v-sheet color="accent" dark class="rounded-circle">
                                     <v-icon
                                         class="ma-3"
                                         large
@@ -295,14 +162,11 @@
                             <v-col cols="auto">
                                 <v-card-title
                                     class="subtitle-1 font-weight-bold pa-0"
-                                    >0 Transactions / 0,00 Total</v-card-title
-                                >
+                                >0 Transactions / 0,00 Total</v-card-title>
                                 <h4
                                     class="subtitle-2 font-weight-regular text--secondary"
                                     align="end"
-                                >
-                                    Last 24 hours
-                                </h4>
+                                >Last 24 hours</h4>
                             </v-col>
                         </v-row>
                     </v-card>
@@ -312,10 +176,7 @@
             <v-col cols="12" md="6" sm="12">
                 <v-card tile flat min-height="400">
                     <v-card tile flat color="#f9fafc">
-                        <v-card-title
-                            class="subtitle-1 font-weight-regular pt-2 pb-2"
-                            >Transactions</v-card-title
-                        >
+                        <v-card-title class="subtitle-1 font-weight-regular pt-2 pb-2">Transactions</v-card-title>
                     </v-card>
                 </v-card>
             </v-col>
@@ -325,8 +186,7 @@
                         <v-card tile flat color="#f9fafc">
                             <v-card-title
                                 class="subtitle-1 font-weight-regular pt-2 pb-2"
-                                >View clicks</v-card-title
-                            >
+                            >View clicks</v-card-title>
                         </v-card>
                     </v-card>
                 </v-col>
@@ -336,8 +196,7 @@
                         <v-card tile flat color="#f9fafc">
                             <v-card-title
                                 class="subtitle-1 font-weight-regular pt-2 pb-2"
-                                >View navigations</v-card-title
-                            >
+                            >View navigations</v-card-title>
                         </v-card>
                     </v-card>
                 </v-col>
@@ -355,7 +214,7 @@ import {
     mdiBinoculars,
     mdiCursorDefault,
     mdiCompassOutline,
-    mdiWallet
+    mdiWallet,
 } from "@mdi/js";
 
 export default {
@@ -369,8 +228,8 @@ export default {
             mdiBinoculars,
             mdiCursorDefault,
             mdiCompassOutline,
-            mdiWallet
-        }
-    })
+            mdiWallet,
+        },
+    }),
 };
 </script>

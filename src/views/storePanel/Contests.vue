@@ -3,12 +3,11 @@
         <v-sheet class="pa-3">
             <v-toolbar flat height="80">
                 <v-btn
-                    rounded
-                    color="primary"
+                    color="secondary"
                     class="text-none"
+                    depressed
                     to="/storePanel/add-contest"
-                    >Add Contest/Survey</v-btn
-                >
+                >Add Contest/Survey</v-btn>
 
                 <v-spacer></v-spacer>
 
@@ -25,15 +24,9 @@
                 </v-col>
             </v-toolbar>
 
-            <v-data-table
-                :headers="headers"
-                :items="items"
-                :footer-props="{ itemsPerPageOptions }"
-            >
+            <v-data-table :headers="headers" :items="items" :footer-props="{ itemsPerPageOptions }">
                 <template v-slot:item.winners="{ item }">
-                    <router-link v-if="!item.inProgress" :to="item.winners"
-                        >View Winners</router-link
-                    >
+                    <router-link v-if="!item.inProgress" :to="item.winners">View Winners</router-link>
                     <div v-else>{{ item.winners }}</div>
                 </template>
 
@@ -91,7 +84,7 @@ import {
     mdiEyeOutline,
     mdiHelp,
     mdiClose,
-    mdiCloseThick
+    mdiCloseThick,
 } from "@mdi/js";
 
 export default {
@@ -104,7 +97,7 @@ export default {
             mdiEyeOutline,
             mdiHelp,
             mdiClose,
-            mdiCloseThick
+            mdiCloseThick,
         },
         tab: 0,
         itemsPerPageOptions: [10, 20, 30, -1],
@@ -115,7 +108,7 @@ export default {
             { text: "Type", value: "type" },
             { text: "Status", value: "status" },
             { text: "Winners", value: "winners" },
-            { text: "Actions", value: "actions" }
+            { text: "Actions", value: "actions" },
         ],
         items: [
             {
@@ -124,7 +117,7 @@ export default {
                 endDate: "2020-02-04 14:40:00",
                 type: "Contest",
                 status: "Inactive",
-                winners: "/storepanel/contest-winner"
+                winners: "/storepanel/contest-winner",
             },
             {
                 title: "aa",
@@ -133,9 +126,9 @@ export default {
                 type: "Contest",
                 status: "Active",
                 winners: "In Progress",
-                inProgress: true
-            }
-        ]
-    })
+                inProgress: true,
+            },
+        ],
+    }),
 };
 </script>

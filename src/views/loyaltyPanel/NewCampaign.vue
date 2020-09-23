@@ -50,11 +50,16 @@
                         <v-divider></v-divider>
 
                         <v-card-actions>
-                            <v-btn color="brown" disabled>
+                            <v-btn color="brown" class="text-capitalize" depressed disabled>
                                 <v-icon size="20" v-text="icons.mdiArrowLeft"></v-icon>back
                             </v-btn>
                             <v-spacer></v-spacer>
-                            <v-btn color="primary" @click="step++">
+                            <v-btn
+                                color="secondary"
+                                class="text-capitalize"
+                                depressed
+                                @click="step++"
+                            >
                                 next
                                 <v-icon size="20" v-text="icons.mdiArrowRight"></v-icon>
                             </v-btn>
@@ -238,8 +243,7 @@
                                 </v-col>
                             </v-row>
 
-                            <v-divider class="mb-3"></v-divider>
-How to End a Repeat Campaign
+                            <v-divider class="mb-3"></v-divider>How to End a Repeat Campaign
                             <v-radio-group v-model="campaignEndType" class="pt-0">
                                 <v-row no-gutters>
                                     <v-col cols="6">
@@ -347,12 +351,23 @@ How to End a Repeat Campaign
                         <v-divider></v-divider>
 
                         <v-card-actions>
-                            <v-btn color="brown" dark @click="step--">
+                            <v-btn
+                                color="brown"
+                                class="text-capitalize"
+                                depressed
+                                dark
+                                @click="step--"
+                            >
                                 <v-icon size="20" v-text="icons.mdiArrowLeft"></v-icon>back
                             </v-btn>
                             <v-spacer></v-spacer>
 
-                            <v-btn color="primary" @click="step++">
+                            <v-btn
+                                color="secondary"
+                                class="text-capitalize"
+                                depressed
+                                @click="step++"
+                            >
                                 next
                                 <v-icon size="20" v-text="icons.mdiArrowRight"></v-icon>
                             </v-btn>
@@ -395,12 +410,23 @@ How to End a Repeat Campaign
                         <v-divider></v-divider>
 
                         <v-card-actions>
-                            <v-btn color="brown" dark @click="step--">
+                            <v-btn
+                                color="brown"
+                                class="text-capitalize"
+                                depressed
+                                dark
+                                @click="step--"
+                            >
                                 <v-icon size="20" v-text="icons.mdiArrowLeft"></v-icon>back
                             </v-btn>
                             <v-spacer></v-spacer>
 
-                            <v-btn color="primary" @click="step++">
+                            <v-btn
+                                color="secondary"
+                                class="text-capitalize"
+                                depressed
+                                @click="step++"
+                            >
                                 next
                                 <v-icon size="20" v-text="icons.mdiArrowRight"></v-icon>
                             </v-btn>
@@ -500,12 +526,23 @@ How to End a Repeat Campaign
                         </v-card-text>
 
                         <v-card-actions>
-                            <v-btn color="brown" dark @click="step--">
+                            <v-btn
+                                color="brown"
+                                class="text-capitalize"
+                                depressed
+                                dark
+                                @click="step--"
+                            >
                                 <v-icon size="20" v-text="icons.mdiArrowLeft"></v-icon>back
                             </v-btn>
                             <v-spacer></v-spacer>
 
-                            <v-btn color="primary" @click="step++">
+                            <v-btn
+                                color="secondary"
+                                class="text-capitalize"
+                                depressed
+                                @click="step++"
+                            >
                                 next
                                 <v-icon size="20" v-text="icons.mdiArrowRight"></v-icon>
                             </v-btn>
@@ -532,7 +569,7 @@ How to End a Repeat Campaign
                             <v-toolbar flat color="grey lighten-3">
                                 <v-toolbar-title>SMS</v-toolbar-title>
                                 <v-spacer></v-spacer>
-                                <v-btn color="primary">new sms</v-btn>
+                                <v-btn color="secondary" class="text-capitalize" depressed>new sms</v-btn>
                             </v-toolbar>
 
                             <v-card-text>
@@ -553,9 +590,9 @@ How to End a Repeat Campaign
 
                         <v-card outlined class="mt-5">
                             <v-toolbar flat color="grey lighten-3">
-                                <v-toolbar-title>PUSH</v-toolbar-title>
+                                <v-toolbar-title>Push</v-toolbar-title>
                                 <v-spacer></v-spacer>
-                                <v-btn color="primary">new push</v-btn>
+                                <v-btn color="secondary" class="text-capitalize" depressed>new push</v-btn>
                             </v-toolbar>
 
                             <v-card-text>
@@ -583,8 +620,7 @@ How to End a Repeat Campaign
                                     <v-col cols="6" class="pl-3">
                                         <v-card-title
                                             class="text--primary pt-0 justify-center"
-                                        >Upload Media</v-card-title>
-Enter the desired link and send it to
+                                        >Upload Media</v-card-title>Enter the desired link and send it to
                                         the users.
                                         <v-text-field
                                             label="Link to Page"
@@ -595,8 +631,7 @@ Enter the desired link and send it to
                                             :prepend-inner-icon="
                                                 icons.mdiLinkVariant
                                             "
-                                        ></v-text-field>
-Upload the desired image and send it to
+                                        ></v-text-field>Upload the desired image and send it to
                                         the users
                                         <h4 class="subtitle-2">Image Upload (.png or .jpeg)</h4>
 
@@ -619,9 +654,9 @@ Upload the desired image and send it to
 
                         <v-card outlined class="mt-5">
                             <v-toolbar flat color="grey lighten-3">
-                                <v-toolbar-title>EMAIL</v-toolbar-title>
+                                <v-toolbar-title>Email</v-toolbar-title>
                                 <v-spacer></v-spacer>
-                                <v-btn color="primary">new email</v-btn>
+                                <v-btn color="secondary" class="text-capitalize" depressed>new email</v-btn>
                             </v-toolbar>
 
                             <v-card-text>
@@ -650,8 +685,7 @@ Upload the desired image and send it to
                                     <v-col cols="6" class="pl-3">
                                         <v-card-title
                                             class="text--primary pt-0 justify-center"
-                                        >Upload Media</v-card-title>
-Enter the desired link and send it to
+                                        >Upload Media</v-card-title>Enter the desired link and send it to
                                         the users.
                                         <v-text-field
                                             label="Link to Page"
@@ -662,8 +696,7 @@ Enter the desired link and send it to
                                             :prepend-inner-icon="
                                                 icons.mdiLinkVariant
                                             "
-                                        ></v-text-field>
-Upload the desired image and send it to
+                                        ></v-text-field>Upload the desired image and send it to
                                         the users
                                         <h4 class="subtitle-2">Image Upload (.png or .jpeg)</h4>
 
@@ -674,12 +707,18 @@ Upload the desired image and send it to
                         </v-card>
 
                         <v-card-actions>
-                            <v-btn color="brown" dark @click="step--">
+                            <v-btn
+                                color="brown"
+                                class="text-capitalize"
+                                depressed
+                                dark
+                                @click="step--"
+                            >
                                 <v-icon size="20" v-text="icons.mdiArrowLeft"></v-icon>back
                             </v-btn>
                             <v-spacer></v-spacer>
 
-                            <v-btn color="primary">submit</v-btn>
+                            <v-btn color="secondary" class="text-capitalize" depressed>submit</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-window-item>

@@ -4,12 +4,7 @@
             <v-row no-gutters>
                 <v-col cols="auto">
                     <v-tabs v-model="tab" show-arrows>
-                        <v-tab
-                            v-for="tab in tabs"
-                            :key="tab"
-                            v-text="tab"
-                            class="text-capitalize"
-                        ></v-tab>
+                        <v-tab v-for="tab in tabs" :key="tab" v-text="tab" class="text-capitalize"></v-tab>
                     </v-tabs>
                 </v-col>
 
@@ -18,9 +13,7 @@
                         <v-tabs-items v-model="tab">
                             <v-tab-item>
                                 <v-card class="mt-5 rounded-lg">
-                                    <v-card-title class="grey lighten-3"
-                                        >Logo</v-card-title
-                                    >
+                                    <v-card-title class="grey lighten-3">Logo</v-card-title>
 
                                     <v-card-text>
                                         You can upload here the logo of your
@@ -28,19 +21,9 @@
                                         and will be on the physical cards. If we
                                         think that it can be improved we will
                                         contact you before publishment.
-                                        <v-row
-                                            class="dashed mt-5"
-                                            no-gutters
-                                            align="center"
-                                        >
-                                            <v-col
-                                                cols="auto"
-                                                class="pa-5 ml-12"
-                                            >
-                                                <v-img
-                                                    :src="logo.image"
-                                                    width="64"
-                                                ></v-img>
+                                        <v-row class="dashed mt-5" no-gutters align="center">
+                                            <v-col cols="auto" class="pa-5 ml-12">
+                                                <v-img :src="logo.image" width="64"></v-img>
                                             </v-col>
                                             <v-col cols="auto" class="ml-12">
                                                 Press the following button to
@@ -64,25 +47,17 @@
 
                                     <v-card-actions class="pl-4">
                                         <v-btn
-                                            color="primary"
+                                            color="secondary"
                                             class="text-capitalize"
-                                            rounded
-                                            >update logo</v-btn
-                                        >
+                                            depressed
+                                        >update logo</v-btn>
                                     </v-card-actions>
                                 </v-card>
 
                                 <v-card class="mt-12">
-                                    <v-row
-                                        no-gutters
-                                        justify="space-between"
-                                        class="px-3"
-                                    >
+                                    <v-row no-gutters justify="space-between" class="px-3">
                                         <v-col cols="5">
-                                            <v-card-title
-                                                class="pl-0 text--secondary"
-                                                >Pin Display</v-card-title
-                                            >
+                                            <v-card-title class="pl-0 text--secondary">Pin Display</v-card-title>
 
                                             <v-card-text class="pa-0 relative">
                                                 Here you can change the display
@@ -99,8 +74,7 @@
                                                     v-if="mapPin.image"
                                                     :src="mapPin.image"
                                                     class="map-new-pin"
-                                                ></v-img
-                                                >Press the following button to
+                                                ></v-img>Press the following button to
                                                 choose image:
                                                 <v-file-input
                                                     color="secondary"
@@ -117,10 +91,7 @@
                                                 ></v-file-input>
                                             </v-card-text>
                                         </v-col>
-                                        <v-col
-                                            cols="auto"
-                                            class="mt-5 relative"
-                                        >
+                                        <v-col cols="auto" class="mt-5 relative">
                                             <v-img
                                                 src="@/assets/theMapLogo3.png"
                                                 width="260"
@@ -132,20 +103,17 @@
 
                                     <v-card-actions class="pl-4">
                                         <v-btn
-                                            color="primary"
+                                            color="secondary"
                                             class="text-capitalize"
-                                            rounded
-                                            >update logo</v-btn
-                                        >
+                                            depressed
+                                        >update logo</v-btn>
                                     </v-card-actions>
                                 </v-card>
 
                                 <v-card class="mt-12 rounded-lg">
-                                    <v-card-title class="grey lighten-3"
-                                        >Business Information</v-card-title
-                                    >
-                                    <v-container>
-                                        <v-row justify="space-around">
+                                    <v-card-title class="grey lighten-3">Business Information</v-card-title>
+                                    <v-container class="pt-5">
+                                        <v-row no-gutters justify="space-around">
                                             <v-col cols="5">
                                                 <v-text-field
                                                     label="Business Name"
@@ -228,6 +196,7 @@
                                                     outlined
                                                     dense
                                                     clearable
+                                                    hide-details
                                                 ></v-text-field>
                                             </v-col>
                                             <v-col cols="5">
@@ -238,40 +207,32 @@
                                                     outlined
                                                     dense
                                                     clearable
+                                                    hide-details
                                                 ></v-text-field>
                                             </v-col>
                                         </v-row>
                                     </v-container>
 
-                                    <a href="#" class="ml-4"
-                                        >View on Google Maps</a
-                                    >
+                                    <a href="#" class="ml-12">View on Google Maps</a>
 
-                                    <v-card-actions class="pl-4">
+                                    <v-card-actions class="pl-4 mt-2">
                                         <v-btn
-                                            color="primary"
+                                            color="secondary"
                                             class="text-capitalize"
-                                            rounded
-                                            >update logo</v-btn
-                                        >
+                                            depressed
+                                        >update logo</v-btn>
                                     </v-card-actions>
                                 </v-card>
 
                                 <v-card class="mt-12 rounded-lg">
-                                    <v-card-title class="grey lighten-3"
-                                        >Hours of Operations</v-card-title
-                                    >
+                                    <v-card-title class="grey lighten-3">Hours of Operations</v-card-title>
 
                                     <v-container
                                         v-for="weekday in weekdays"
                                         :key="weekday.name"
                                         class="px-4"
                                     >
-                                        <v-row
-                                            no-gutters
-                                            justify="space-between"
-                                            align="center"
-                                        >
+                                        <v-row no-gutters justify="space-between" align="center">
                                             <v-col
                                                 cols="5"
                                                 class="subtitle-2"
@@ -294,20 +255,14 @@
                                                                 color="secondary"
                                                             ></v-radio>
                                                         </v-col>
-                                                        <v-col
-                                                            cols="auto"
-                                                            class="mx-1"
-                                                        >
+                                                        <v-col cols="auto" class="mx-1">
                                                             <v-radio
                                                                 label="Split Hours"
                                                                 value="Split Hours"
                                                                 color="secondary"
                                                             ></v-radio>
                                                         </v-col>
-                                                        <v-col
-                                                            cols="auto"
-                                                            class="mx-1"
-                                                        >
+                                                        <v-col cols="auto" class="mx-1">
                                                             <v-radio
                                                                 label="24 Hours"
                                                                 value="24 Hours"
@@ -337,10 +292,7 @@
                                                     justify="space-between"
                                                     class="py-5"
                                                 >
-                                                    <v-col
-                                                        cols="6"
-                                                        class="pa-3"
-                                                    >
+                                                    <v-col cols="6" class="pa-3">
                                                         <v-menu
                                                             v-model="
                                                                 weekday.regular
@@ -397,8 +349,7 @@
                                                                         @click="
                                                                             weekday.regular.startClockMenu = false
                                                                         "
-                                                                        >cancel</v-btn
-                                                                    >
+                                                                    >cancel</v-btn>
                                                                     <v-btn
                                                                         color="primary"
                                                                         :disabled="
@@ -410,17 +361,13 @@
                                                                                 weekday.regular.startClockMenu = false;
                                                                             }
                                                                         "
-                                                                        >accept</v-btn
-                                                                    >
+                                                                    >accept</v-btn>
                                                                 </v-card-actions>
                                                             </v-card>
                                                         </v-menu>
                                                     </v-col>
 
-                                                    <v-col
-                                                        cols="6"
-                                                        class="pa-3"
-                                                    >
+                                                    <v-col cols="6" class="pa-3">
                                                         <v-menu
                                                             v-model="
                                                                 weekday.regular
@@ -477,8 +424,7 @@
                                                                         @click="
                                                                             weekday.regular.endClockMenu = false
                                                                         "
-                                                                        >cancel</v-btn
-                                                                    >
+                                                                    >cancel</v-btn>
                                                                     <v-btn
                                                                         color="primary"
                                                                         :disabled="
@@ -490,8 +436,7 @@
                                                                                 weekday.regular.endClockMenu = false;
                                                                             }
                                                                         "
-                                                                        >accept</v-btn
-                                                                    >
+                                                                    >accept</v-btn>
                                                                 </v-card-actions>
                                                             </v-card>
                                                         </v-menu>
@@ -511,10 +456,7 @@
                                                     justify="space-between"
                                                     class="py-5"
                                                 >
-                                                    <v-col
-                                                        cols="3"
-                                                        class="pa-3"
-                                                    >
+                                                    <v-col cols="3" class="pa-3">
                                                         <v-menu
                                                             v-model="
                                                                 weekday
@@ -576,8 +518,7 @@
                                                                         @click="
                                                                             weekday.splitHours.first.startClockMenu = false
                                                                         "
-                                                                        >cancel</v-btn
-                                                                    >
+                                                                    >cancel</v-btn>
                                                                     <v-btn
                                                                         color="primary"
                                                                         :disabled="
@@ -589,17 +530,13 @@
                                                                                 weekday.splitHours.first.startClockMenu = false;
                                                                             }
                                                                         "
-                                                                        >accept</v-btn
-                                                                    >
+                                                                    >accept</v-btn>
                                                                 </v-card-actions>
                                                             </v-card>
                                                         </v-menu>
                                                     </v-col>
 
-                                                    <v-col
-                                                        cols="3"
-                                                        class="pa-3"
-                                                    >
+                                                    <v-col cols="3" class="pa-3">
                                                         <v-menu
                                                             v-model="
                                                                 weekday
@@ -661,8 +598,7 @@
                                                                         @click="
                                                                             weekday.splitHours.first.endClockMenu = false
                                                                         "
-                                                                        >cancel</v-btn
-                                                                    >
+                                                                    >cancel</v-btn>
                                                                     <v-btn
                                                                         color="primary"
                                                                         :disabled="
@@ -674,17 +610,13 @@
                                                                                 weekday.splitHours.first.endClockMenu = false;
                                                                             }
                                                                         "
-                                                                        >accept</v-btn
-                                                                    >
+                                                                    >accept</v-btn>
                                                                 </v-card-actions>
                                                             </v-card>
                                                         </v-menu>
                                                     </v-col>
 
-                                                    <v-col
-                                                        cols="3"
-                                                        class="pa-3"
-                                                    >
+                                                    <v-col cols="3" class="pa-3">
                                                         <v-menu
                                                             v-model="
                                                                 weekday
@@ -746,8 +678,7 @@
                                                                         @click="
                                                                             weekday.splitHours.second.startClockMenu = false
                                                                         "
-                                                                        >cancel</v-btn
-                                                                    >
+                                                                    >cancel</v-btn>
                                                                     <v-btn
                                                                         color="primary"
                                                                         :disabled="
@@ -759,17 +690,13 @@
                                                                                 weekday.splitHours.second.startClockMenu = false;
                                                                             }
                                                                         "
-                                                                        >accept</v-btn
-                                                                    >
+                                                                    >accept</v-btn>
                                                                 </v-card-actions>
                                                             </v-card>
                                                         </v-menu>
                                                     </v-col>
 
-                                                    <v-col
-                                                        cols="3"
-                                                        class="pa-3"
-                                                    >
+                                                    <v-col cols="3" class="pa-3">
                                                         <v-menu
                                                             v-model="
                                                                 weekday
@@ -831,8 +758,7 @@
                                                                         @click="
                                                                             weekday.splitHours.second.endClockMenu = false
                                                                         "
-                                                                        >cancel</v-btn
-                                                                    >
+                                                                    >cancel</v-btn>
                                                                     <v-btn
                                                                         color="primary"
                                                                         :disabled="
@@ -844,8 +770,7 @@
                                                                                 weekday.splitHours.second.endClockMenu = false;
                                                                             }
                                                                         "
-                                                                        >accept</v-btn
-                                                                    >
+                                                                    >accept</v-btn>
                                                                 </v-card-actions>
                                                             </v-card>
                                                         </v-menu>
@@ -858,26 +783,20 @@
 
                                     <v-card-actions class="pl-4 mt-3">
                                         <v-btn
-                                            color="primary"
+                                            color="secondary"
                                             class="text-capitalize"
-                                            rounded
-                                            >update details</v-btn
-                                        >
+                                            depressed
+                                        >update details</v-btn>
                                     </v-card-actions>
                                 </v-card>
 
                                 <v-card class="mt-12 rounded-lg">
-                                    <v-card-title class="grey lighten-3"
-                                        >Invoicing</v-card-title
-                                    >
+                                    <v-card-title class="grey lighten-3">Invoicing</v-card-title>
 
                                     <v-container class="pt-4 pb-0">
                                         <v-row>
                                             <v-col cols="8" class="pa-0">
-                                                <v-row
-                                                    no-gutters
-                                                    justify="space-around"
-                                                >
+                                                <v-row no-gutters justify="space-around">
                                                     <v-col cols="5">
                                                         <v-text-field
                                                             label="Legal Name"
@@ -945,26 +864,20 @@
 
                                     <v-card-actions class="pl-4">
                                         <v-btn
-                                            color="primary"
+                                            color="secondary"
                                             class="text-capitalize"
-                                            rounded
-                                            >send invoice settings</v-btn
-                                        >
+                                            depressed
+                                        >send invoice settings</v-btn>
                                     </v-card-actions>
                                 </v-card>
 
                                 <v-card class="mt-12 rounded-lg">
-                                    <v-card-title class="grey lighten-3"
-                                        >Receipt Information</v-card-title
-                                    >
+                                    <v-card-title class="grey lighten-3">Receipt Information</v-card-title>
 
                                     <v-container class="pt-4 pb-0">
                                         <v-row>
                                             <v-col cols="8" class="pa-0">
-                                                <v-row
-                                                    no-gutters
-                                                    justify="space-around"
-                                                >
+                                                <v-row no-gutters justify="space-around">
                                                     <v-col cols="5">
                                                         <v-text-field
                                                             label="Business Telephone Number"
@@ -1004,27 +917,22 @@
 
                                     <v-card-actions>
                                         <v-btn
-                                            color="primary"
+                                            color="secondary"
                                             class="text-capitalize"
-                                            rounded
-                                            >update details</v-btn
-                                        >
+                                            depressed
+                                        >update details</v-btn>
                                     </v-card-actions>
                                 </v-card>
 
                                 <v-card class="mt-12 pb-8 rounded-lg">
-                                    <v-card-title class="grey lighten-3"
-                                        >Fast Payment</v-card-title
-                                    >
+                                    <v-card-title class="grey lighten-3">Fast Payment</v-card-title>
 
                                     <v-container class="mt-5">
                                         <v-row no-gutters align="center">
-                                            <v-col
-                                                cols="auto"
-                                                class="subtitle-2 ml-12"
-                                                >Toogle Fast Payment
-                                                option:</v-col
-                                            >
+                                            <v-col cols="auto" class="subtitle-2 ml-12">
+                                                Toogle Fast Payment
+                                                option:
+                                            </v-col>
                                             <v-col cols="auto" class="ml-3">
                                                 <v-switch
                                                     v-model="fastPayment"
@@ -1041,9 +949,7 @@
                                 </v-card>
 
                                 <v-card class="mt-12 rounded-lg">
-                                    <v-card-title class="grey lighten-3"
-                                        >Orders</v-card-title
-                                    >
+                                    <v-card-title class="grey lighten-3">Orders</v-card-title>
 
                                     <v-container>
                                         <v-row
@@ -1079,13 +985,8 @@
                                                 ></v-text-field>
                                             </v-col>
 
-                                            <template
-                                                v-if="orderOption === 'On'"
-                                            >
-                                                <v-col
-                                                    cols="6"
-                                                    class="subtitle-2"
-                                                >
+                                            <template v-if="orderOption === 'On'">
+                                                <v-col cols="6" class="subtitle-2">
                                                     Validate minimum amount for
                                                     delivery after discount :
                                                     <v-switch
@@ -1102,10 +1003,7 @@
                                                     ></v-switch>
                                                 </v-col>
 
-                                                <v-col
-                                                    cols="4"
-                                                    class="subtitle-2"
-                                                >
+                                                <v-col cols="4" class="subtitle-2">
                                                     Minimum Amount for Delivery:
                                                     <v-text-field
                                                         type="number"
@@ -1121,10 +1019,7 @@
                                                     ></v-text-field>
                                                 </v-col>
 
-                                                <v-col
-                                                    cols="4"
-                                                    class="subtitle-2"
-                                                >
+                                                <v-col cols="4" class="subtitle-2">
                                                     Card payments:
                                                     <v-switch
                                                         v-model="cardPayment"
@@ -1136,10 +1031,7 @@
                                                     ></v-switch>
                                                 </v-col>
 
-                                                <v-col
-                                                    cols="4"
-                                                    class="subtitle-2"
-                                                >
+                                                <v-col cols="4" class="subtitle-2">
                                                     Cash payments:
                                                     <v-switch
                                                         v-model="cashPayment"
@@ -1151,10 +1043,7 @@
                                                     ></v-switch>
                                                 </v-col>
 
-                                                <v-col
-                                                    cols="4"
-                                                    class="subtitle-2"
-                                                >
+                                                <v-col cols="4" class="subtitle-2">
                                                     Cash on delivery Fee:
                                                     <v-text-field
                                                         type="number"
@@ -1175,18 +1064,15 @@
 
                                     <v-card-actions class="pl-4">
                                         <v-btn
-                                            color="primary"
+                                            color="secondary"
                                             class="text-capitalize"
-                                            rounded
-                                            >update details</v-btn
-                                        >
+                                            depressed
+                                        >update details</v-btn>
                                     </v-card-actions>
                                 </v-card>
 
                                 <v-card class="mt-12 rounded-lg">
-                                    <v-card-title class="grey lighten-3"
-                                        >Change Password</v-card-title
-                                    >
+                                    <v-card-title class="grey lighten-3">Change Password</v-card-title>
 
                                     <v-card-text class="pb-0 pt-8">
                                         <v-text-field
@@ -1217,19 +1103,18 @@
 
                                     <v-card-actions class="pl-4">
                                         <v-btn
-                                            color="primary"
+                                            color="secondary"
                                             class="text-capitalize"
-                                            rounded
-                                            >verification</v-btn
-                                        >
+                                            depressed
+                                        >verification</v-btn>
                                     </v-card-actions>
                                 </v-card>
 
                                 <v-card class="mt-12 rounded-lg">
-                                    <v-card-title class="grey lighten-3"
-                                        >Choose redemption for the
-                                        company</v-card-title
-                                    >
+                                    <v-card-title class="grey lighten-3">
+                                        Choose redemption for the
+                                        company
+                                    </v-card-title>
 
                                     <v-card-text class="pb-0">
                                         <v-radio-group>
@@ -1246,18 +1131,15 @@
 
                                     <v-card-actions class="pl-4">
                                         <v-btn
-                                            color="primary"
+                                            color="secondary"
                                             class="text-capitalize"
-                                            rounded
-                                            >verification</v-btn
-                                        >
+                                            depressed
+                                        >verification</v-btn>
                                     </v-card-actions>
                                 </v-card>
 
                                 <v-card class="mt-12 rounded-lg">
-                                    <v-card-title class="grey lighten-3"
-                                        >Product categories</v-card-title
-                                    >
+                                    <v-card-title class="grey lighten-3">Product categories</v-card-title>
 
                                     <v-card-text class="pb-0 pt-8">
                                         <v-form @submit.prevent>
@@ -1275,19 +1157,11 @@
                                                 <v-col class="ml-3">
                                                     <v-btn
                                                         type="submit"
-                                                        fab
-                                                        dark
                                                         color="secondary"
-                                                        small
+                                                        class="text-capitalize"
+                                                        depressed
                                                         @click="addCategory"
-                                                    >
-                                                        <v-icon
-                                                            size="30"
-                                                            v-text="
-                                                                icons.mdiPlus
-                                                            "
-                                                        ></v-icon>
-                                                    </v-btn>
+                                                    >add</v-btn>
                                                 </v-col>
                                             </v-row>
                                         </v-form>
@@ -1332,31 +1206,20 @@
 
                                     <v-card-actions class="pl-4">
                                         <v-btn
-                                            color="primary"
+                                            color="secondary"
                                             class="text-capitalize"
-                                            rounded
-                                            >verification</v-btn
-                                        >
+                                            depressed
+                                        >verification</v-btn>
                                     </v-card-actions>
                                 </v-card>
 
                                 <v-card class="mt-12 rounded-lg">
-                                    <v-card-title class="grey lighten-3"
-                                        >API Authentication</v-card-title
-                                    >
+                                    <v-card-title class="grey lighten-3">API Authentication</v-card-title>
 
                                     <v-card-text class="pt-8">
-                                        <v-textarea
-                                            color="secondary"
-                                            outlined
-                                            clearable
-                                        ></v-textarea>
+                                        <v-textarea color="secondary" outlined clearable></v-textarea>
 
-                                        <v-row
-                                            no-gutters
-                                            justify="space-between"
-                                            align="center"
-                                        >
+                                        <v-row no-gutters justify="space-between" align="center">
                                             <v-col cols="3">
                                                 <v-text-field
                                                     label="Password"
@@ -1367,40 +1230,29 @@
                                                     hide-details
                                                 ></v-text-field>
                                             </v-col>
-                                            <v-col
-                                                cols="6"
-                                                class="text-center secondary--text"
-                                            >
+                                            <v-col cols="6" class="text-center secondary--text">
                                                 You can find detailed
                                                 documentation
                                                 <a
                                                     class="secondary--text subtitle-2"
                                                     href="https://documenter.getpostman.com/view/5813491/SzKQxfkT?version=latest"
                                                     target="_blank"
-                                                    >here</a
-                                                >
+                                                >here</a>
                                             </v-col>
                                             <v-col cols="auto">
                                                 <v-btn
-                                                    color="primary"
+                                                    color="secondary"
                                                     class="text-capitalize"
-                                                    rounded
-                                                    >get token</v-btn
-                                                >
+                                                    depressed
+                                                >get token</v-btn>
                                             </v-col>
-                                            <v-col
-                                                cols="auto"
-                                                class="subtitle-2 mt-5"
-                                            >
+                                            <v-col cols="auto" class="subtitle-2 mt-5">
                                                 Reset all previously created
                                                 tokens:
                                             </v-col>
 
                                             <v-col class="pl-3">
-                                                <v-switch
-                                                    color="secondary"
-                                                    hide-details
-                                                ></v-switch>
+                                                <v-switch color="secondary" hide-details></v-switch>
                                             </v-col>
                                         </v-row>
                                     </v-card-text>
@@ -1417,18 +1269,16 @@
                                             hide-details
                                         >
                                             <template v-slot:label>
-                                                <v-card-title
-                                                    class="text--primary pl-0"
-                                                >
+                                                <v-card-title class="text--primary pl-0">
                                                     Send points by card or phone
                                                     number
                                                     <span
                                                         class="font-weight-light"
                                                     >
                                                         {{
-                                                            sendPoints
-                                                                ? "(Active)"
-                                                                : "(Inactive)"
+                                                        sendPoints
+                                                        ? "(Active)"
+                                                        : "(Inactive)"
                                                         }}
                                                     </span>
                                                 </v-card-title>
@@ -1436,10 +1286,7 @@
                                         </v-checkbox>
 
                                         <v-card-text>
-                                            <v-icon
-                                                color="secondary"
-                                                v-text="icons.mdiInformation"
-                                            ></v-icon>
+                                            <v-icon color="secondary" v-text="icons.mdiInformation"></v-icon>
                                             <span class="text--secondary ml-2">
                                                 You will be able to use the
                                                 donation from the New
@@ -1452,10 +1299,7 @@
                                             </h4>
                                             <v-container>
                                                 <v-row>
-                                                    <v-col
-                                                        cols="8"
-                                                        class="px-8 py-0"
-                                                    >
+                                                    <v-col cols="8" class="px-8 py-0">
                                                         <v-select
                                                             :items="[
                                                                 'Sms 1/month',
@@ -1471,16 +1315,9 @@
                                                             hide-details
                                                         ></v-select>
 
-                                                        <v-checkbox
-                                                            color="secondary"
-                                                            hide-details
-                                                        >
-                                                            <template
-                                                                v-slot:label
-                                                            >
-                                                                <h4
-                                                                    class="subtitle-2"
-                                                                >
+                                                        <v-checkbox color="secondary" hide-details>
+                                                            <template v-slot:label>
+                                                                <h4 class="subtitle-2">
                                                                     Ability to
                                                                     add a user
                                                                     to "Send
@@ -1489,16 +1326,9 @@
                                                             </template>
                                                         </v-checkbox>
 
-                                                        <v-checkbox
-                                                            color="secondary"
-                                                            hide-details
-                                                        >
-                                                            <template
-                                                                v-slot:label
-                                                            >
-                                                                <h4
-                                                                    class="subtitle-2"
-                                                                >
+                                                        <v-checkbox color="secondary" hide-details>
+                                                            <template v-slot:label>
+                                                                <h4 class="subtitle-2">
                                                                     Ability to
                                                                     select
                                                                     products in
@@ -1508,16 +1338,9 @@
                                                             </template>
                                                         </v-checkbox>
 
-                                                        <v-checkbox
-                                                            color="secondary"
-                                                            hide-details
-                                                        >
-                                                            <template
-                                                                v-slot:label
-                                                            >
-                                                                <h4
-                                                                    class="subtitle-2"
-                                                                >
+                                                        <v-checkbox color="secondary" hide-details>
+                                                            <template v-slot:label>
+                                                                <h4 class="subtitle-2">
                                                                     Show receipt
                                                                     code in
                                                                     "Send
@@ -1527,12 +1350,10 @@
                                                         </v-checkbox>
 
                                                         <v-btn
-                                                            color="primary"
+                                                            color="secondary"
                                                             class="text-capitalize mt-5"
-                                                            rounded
-                                                        >
-                                                            update details
-                                                        </v-btn>
+                                                            depressed
+                                                        >update details</v-btn>
                                                     </v-col>
                                                 </v-row>
                                             </v-container>
@@ -1547,17 +1368,13 @@
                                             hide-details
                                         >
                                             <template v-slot:label>
-                                                <v-card-title
-                                                    class="text--primary pl-0"
-                                                >
+                                                <v-card-title class="text--primary pl-0">
                                                     Point Delivery
-                                                    <span
-                                                        class="font-weight-light"
-                                                    >
+                                                    <span class="font-weight-light">
                                                         {{
-                                                            pointDelivery
-                                                                ? "(Active)"
-                                                                : "(Inactive)"
+                                                        pointDelivery
+                                                        ? "(Active)"
+                                                        : "(Inactive)"
                                                         }}
                                                     </span>
                                                 </v-card-title>
@@ -1565,33 +1382,20 @@
                                         </v-checkbox>
 
                                         <v-card-text>
-                                            <v-icon
-                                                color="secondary"
-                                                v-text="icons.mdiInformation"
-                                            ></v-icon>
+                                            <v-icon color="secondary" v-text="icons.mdiInformation"></v-icon>
                                             <span class="text--secondary ml-2">
                                                 You will be able to use the
                                                 Point Score via a Point Device
                                                 connected to your store.
                                             </span>
 
-                                            <v-checkbox
-                                                color="secondary"
-                                                class="ml-8"
-                                                hide-details
-                                            >
+                                            <v-checkbox color="secondary" class="ml-8" hide-details>
                                                 <template v-slot:label>
-                                                    <h4 class="subtitle-2">
-                                                        Show amount in POS
-                                                    </h4>
+                                                    <h4 class="subtitle-2">Show amount in POS</h4>
                                                 </template>
                                             </v-checkbox>
 
-                                            <v-checkbox
-                                                color="secondary"
-                                                class="ml-8"
-                                                hide-details
-                                            >
+                                            <v-checkbox color="secondary" class="ml-8" hide-details>
                                                 <template v-slot:label>
                                                     <h4 class="subtitle-2">
                                                         Serial Shopping mode in
@@ -1601,11 +1405,10 @@
                                             </v-checkbox>
 
                                             <v-btn
-                                                color="primary"
+                                                color="secondary"
                                                 class="text-capitalize mt-5 ml-8"
-                                                rounded
-                                                >update details</v-btn
-                                            >
+                                                depressed
+                                            >update details</v-btn>
                                         </v-card-text>
 
                                         <hr class="ml-4" />
@@ -1617,17 +1420,13 @@
                                             hide-details
                                         >
                                             <template v-slot:label>
-                                                <v-card-title
-                                                    class="text--primary pl-0"
-                                                >
+                                                <v-card-title class="text--primary pl-0">
                                                     Scan Receipt
-                                                    <span
-                                                        class="font-weight-light"
-                                                    >
+                                                    <span class="font-weight-light">
                                                         {{
-                                                            scanReceipt
-                                                                ? "(Active)"
-                                                                : "(Inactive)"
+                                                        scanReceipt
+                                                        ? "(Active)"
+                                                        : "(Inactive)"
                                                         }}
                                                     </span>
                                                 </v-card-title>
@@ -1635,10 +1434,7 @@
                                         </v-checkbox>
 
                                         <v-card-text>
-                                            <v-icon
-                                                color="secondary"
-                                                v-text="icons.mdiInformation"
-                                            ></v-icon>
+                                            <v-icon color="secondary" v-text="icons.mdiInformation"></v-icon>
                                             <span class="text--secondary ml-2">
                                                 Once activated, your customers
                                                 will be able to scan the
@@ -1647,13 +1443,8 @@
 
                                             <v-container>
                                                 <v-row>
-                                                    <v-col
-                                                        cols="6"
-                                                        class="pl-0"
-                                                    >
-                                                        <h4
-                                                            class="pl-4 subtitle-2"
-                                                        >
+                                                    <v-col cols="6" class="pl-0">
+                                                        <h4 class="pl-4 subtitle-2">
                                                             Business Telephone
                                                             Number
                                                         </h4>
@@ -1668,15 +1459,8 @@
                                                         ></v-text-field>
                                                     </v-col>
 
-                                                    <v-col
-                                                        cols="6"
-                                                        class="pr-0"
-                                                    >
-                                                        <h4
-                                                            class="pl-4 subtitle-2"
-                                                        >
-                                                            Tax Id
-                                                        </h4>
+                                                    <v-col cols="6" class="pr-0">
+                                                        <h4 class="pl-4 subtitle-2">Tax Id</h4>
                                                         <v-text-field
                                                             type="number"
                                                             color="secondary"
@@ -1688,15 +1472,8 @@
                                                         ></v-text-field>
                                                     </v-col>
 
-                                                    <v-col
-                                                        cols="6"
-                                                        class="pl-0"
-                                                    >
-                                                        <h4
-                                                            class="pl-4 subtitle-2"
-                                                        >
-                                                            Business Address
-                                                        </h4>
+                                                    <v-col cols="6" class="pl-0">
+                                                        <h4 class="pl-4 subtitle-2">Business Address</h4>
                                                         <v-text-field
                                                             color="secondary"
                                                             class="mt-3"
@@ -1707,15 +1484,8 @@
                                                         ></v-text-field>
                                                     </v-col>
 
-                                                    <v-col
-                                                        cols="6"
-                                                        class="pr-0"
-                                                    >
-                                                        <h4
-                                                            class="pl-4 subtitle-2"
-                                                        >
-                                                            Business name
-                                                        </h4>
+                                                    <v-col cols="6" class="pr-0">
+                                                        <h4 class="pl-4 subtitle-2">Business name</h4>
                                                         <v-text-field
                                                             color="secondary"
                                                             class="mt-3"
@@ -1726,15 +1496,8 @@
                                                         ></v-text-field>
                                                     </v-col>
 
-                                                    <v-col
-                                                        cols="6"
-                                                        class="pl-0"
-                                                    >
-                                                        <h4
-                                                            class="pl-4 subtitle-2"
-                                                        >
-                                                            VAT 1
-                                                        </h4>
+                                                    <v-col cols="6" class="pl-0">
+                                                        <h4 class="pl-4 subtitle-2">VAT 1</h4>
                                                         <v-text-field
                                                             type="number"
                                                             color="secondary"
@@ -1749,15 +1512,8 @@
                                                         ></v-text-field>
                                                     </v-col>
 
-                                                    <v-col
-                                                        cols="6"
-                                                        class="pr-0"
-                                                    >
-                                                        <h4
-                                                            class="pl-4 subtitle-2"
-                                                        >
-                                                            VAT 2
-                                                        </h4>
+                                                    <v-col cols="6" class="pr-0">
+                                                        <h4 class="pl-4 subtitle-2">VAT 2</h4>
                                                         <v-text-field
                                                             type="number"
                                                             color="secondary"
@@ -1775,11 +1531,10 @@
                                             </v-container>
 
                                             <v-btn
-                                                color="primary"
+                                                color="secondary"
                                                 class="text-capitalize mt-5"
-                                                rounded
-                                                >update details</v-btn
-                                            >
+                                                depressed
+                                            >update details</v-btn>
                                         </v-card-text>
 
                                         <hr class="ml-4" />
@@ -1791,18 +1546,16 @@
                                             hide-details
                                         >
                                             <template v-slot:label>
-                                                <v-card-title
-                                                    class="text--primary pl-0"
-                                                >
+                                                <v-card-title class="text--primary pl-0">
                                                     Reward with presence in the
                                                     store
                                                     <span
                                                         class="font-weight-light"
                                                     >
                                                         {{
-                                                            rewardWithPresence
-                                                                ? "(Active)"
-                                                                : "(Inactive)"
+                                                        rewardWithPresence
+                                                        ? "(Active)"
+                                                        : "(Inactive)"
                                                         }}
                                                     </span>
                                                 </v-card-title>
@@ -1810,10 +1563,7 @@
                                         </v-checkbox>
 
                                         <v-card-text>
-                                            <v-icon
-                                                color="secondary"
-                                                v-text="icons.mdiInformation"
-                                            ></v-icon>
+                                            <v-icon color="secondary" v-text="icons.mdiInformation"></v-icon>
                                             <span class="text--secondary ml-2">
                                                 Win points only with the
                                                 presence of the customer in the
@@ -1830,17 +1580,13 @@
                                             hide-details
                                         >
                                             <template v-slot:label>
-                                                <v-card-title
-                                                    class="text--primary pl-0"
-                                                >
+                                                <v-card-title class="text--primary pl-0">
                                                     Mobile payments
-                                                    <span
-                                                        class="font-weight-light"
-                                                    >
+                                                    <span class="font-weight-light">
                                                         {{
-                                                            mobilePayments
-                                                                ? "(Active)"
-                                                                : "(Inactive)"
+                                                        mobilePayments
+                                                        ? "(Active)"
+                                                        : "(Inactive)"
                                                         }}
                                                     </span>
                                                 </v-card-title>
@@ -1849,20 +1595,18 @@
 
                                         <div class="pl-12 mt-3">
                                             <v-btn
-                                                color="primary"
+                                                color="secondary"
                                                 class="text-capitalize"
-                                                rounded
-                                                >appoint cleaners</v-btn
-                                            >
+                                                depressed
+                                            >appoint cleaners</v-btn>
                                         </div>
 
                                         <div class="pl-12 mt-3">
                                             <v-btn
-                                                color="primary"
+                                                color="secondary"
                                                 class="text-capitalize"
-                                                rounded
-                                                >set a payment direction</v-btn
-                                            >
+                                                depressed
+                                            >set a payment direction</v-btn>
                                         </div>
                                     </v-col>
                                 </v-row>
@@ -1875,11 +1619,8 @@
                                     :footer-props="{ itemsPerPageOptions }"
                                 >
                                     <template v-slot:item.points="{ item }">
-                                        <v-sheet
-                                            style="background: transparent"
-                                            class="py-3"
-                                        >
-                                            <v-sheet class="rounded-xl">
+                                        <v-sheet style="background: transparent" class="py-3">
+                                            <v-sheet>
                                                 <v-text-field
                                                     v-model="item.points"
                                                     outlined
@@ -1892,11 +1633,8 @@
                                     </template>
 
                                     <template v-slot:item.type="{ item }">
-                                        <v-sheet
-                                            style="background: transparent"
-                                            class="py-3"
-                                        >
-                                            <v-sheet class="rounded-xl">
+                                        <v-sheet style="background: transparent" class="py-3">
+                                            <v-sheet>
                                                 <v-select
                                                     v-model="item.type"
                                                     :items="[
@@ -1914,9 +1652,7 @@
                                         </v-sheet>
                                     </template>
 
-                                    <template
-                                        v-slot:item.pointSubsidy="{ item }"
-                                    >
+                                    <template v-slot:item.pointSubsidy="{ item }">
                                         <v-checkbox
                                             v-model="item.pointSubsidy"
                                             label="Subsidized Points"
@@ -1928,39 +1664,29 @@
 
                                     <template v-slot:item.save>
                                         <v-btn
-                                            color="primary"
+                                            color="secondary"
                                             class="text-capitalize"
-                                            rounded
-                                            >change</v-btn
-                                        >
+                                            depressed
+                                        >change</v-btn>
                                     </template>
                                 </v-data-table>
                             </v-tab-item>
 
                             <v-tab-item>
                                 <v-btn
-                                    color="primary"
+                                    color="secondary"
                                     class="text-capitalize"
-                                    rounded
+                                    depressed
                                     @click="userDialog = true"
-                                    >register user</v-btn
-                                >
-                                <v-sheet
-                                    color="grey lighten-3"
-                                    class="pa-5 pt-0 mt-5"
-                                >
+                                >register user</v-btn>
+                                <v-sheet color="grey lighten-3" class="pa-5 pt-0 mt-5">
                                     <v-toolbar flat color="grey lighten-3">
-                                        <v-toolbar-title
-                                            >Users List:</v-toolbar-title
-                                        >
+                                        <v-toolbar-title>Users List:</v-toolbar-title>
 
                                         <v-spacer></v-spacer>
 
                                         <v-col cols="4">
-                                            <v-sheet
-                                                color="white"
-                                                class="rounded-xl"
-                                            >
+                                            <v-sheet color="white" class="rounded-xl">
                                                 <v-text-field
                                                     label="Search"
                                                     rounded
@@ -1988,13 +1714,9 @@
                                             ]
                                         }"
                                     >
-                                        <template
-                                            v-slot:item.actions="{ item }"
-                                        >
+                                        <template v-slot:item.actions="{ item }">
                                             <v-tooltip top>
-                                                <template
-                                                    v-slot:activator="{ on }"
-                                                >
+                                                <template v-slot:activator="{ on }">
                                                     <v-btn
                                                         color="yellow darken-3"
                                                         icon
@@ -2013,9 +1735,7 @@
                                             </v-tooltip>
 
                                             <v-tooltip top>
-                                                <template
-                                                    v-slot:activator="{ on }"
-                                                >
+                                                <template v-slot:activator="{ on }">
                                                     <v-btn
                                                         color="red"
                                                         icon
@@ -2035,15 +1755,9 @@
                                         </template>
                                     </v-data-table>
 
-                                    <v-dialog
-                                        v-model="userDialog"
-                                        max-width="50%"
-                                        scrollable
-                                    >
+                                    <v-dialog v-model="userDialog" max-width="50%" scrollable>
                                         <v-card>
-                                            <v-card-title class="grey lighten-3"
-                                                >Register User</v-card-title
-                                            >
+                                            <v-card-title class="grey lighten-3">Register User</v-card-title>
 
                                             <v-divider></v-divider>
 
@@ -2069,8 +1783,7 @@
                                                         <v-col
                                                             cols="12"
                                                             class="subtitle-1 text--primary py-0"
-                                                            >Rights</v-col
-                                                        >
+                                                        >Rights</v-col>
 
                                                         <v-col cols="6">
                                                             <v-checkbox
@@ -2080,9 +1793,7 @@
                                                                 class="mt-0"
                                                                 hide-details
                                                             >
-                                                                <template
-                                                                    v-slot:label
-                                                                >
+                                                                <template v-slot:label>
                                                                     <h4
                                                                         class="subtitle-2"
                                                                         v-text="
@@ -2100,9 +1811,7 @@
                                                                 class="mt-0"
                                                                 hide-details
                                                             >
-                                                                <template
-                                                                    v-slot:label
-                                                                >
+                                                                <template v-slot:label>
                                                                     <h4
                                                                         class="subtitle-2"
                                                                         v-text="
@@ -2120,16 +1829,8 @@
 
                                             <v-card-actions class="px-8">
                                                 <v-spacer></v-spacer>
-                                                <v-btn
-                                                    text
-                                                    @click="userDialog = false"
-                                                    >cancel</v-btn
-                                                >
-                                                <v-btn
-                                                    color="primary"
-                                                    width="80"
-                                                    >add</v-btn
-                                                >
+                                                <v-btn text @click="userDialog = false">cancel</v-btn>
+                                                <v-btn color="primary" width="80">add</v-btn>
                                             </v-card-actions>
                                         </v-card>
                                     </v-dialog>
@@ -2153,18 +1854,12 @@
                                         your store.
                                         <v-row>
                                             <v-col cols="6">
-                                                <h4
-                                                    class="secondary--text subtitle-2"
-                                                >
-                                                    Card From:
-                                                </h4>
+                                                <h4 class="secondary--text subtitle-2">Card From:</h4>
                                             </v-col>
                                             <v-col cols="6">
                                                 <h4
                                                     class="secondary--text subtitle-2"
-                                                >
-                                                    Clearance From:
-                                                </h4>
+                                                >Clearance From:</h4>
                                             </v-col>
                                         </v-row>
 
@@ -2184,33 +1879,15 @@
 
                                         <v-card outlined class="mt-5">
                                             <v-card-text>
-                                                <div
-                                                    class="secondary--text subtitle-2"
-                                                >
-                                                    Upload Image
-                                                </div>
-                                                Upload an image for your card's
+                                                <div class="secondary--text subtitle-2">Upload Image</div>Upload an image for your card's
                                                 background
-                                                <v-sheet
-                                                    width="70%"
-                                                    class="py-3"
-                                                >
-                                                    <v-file-input
-                                                        outlined
-                                                        dense
-                                                        hide-details
-                                                    ></v-file-input>
+                                                <v-sheet width="70%" class="py-3">
+                                                    <v-file-input outlined dense hide-details></v-file-input>
                                                 </v-sheet>
 
-                                                <v-divider
-                                                    class="my-3"
-                                                ></v-divider>
+                                                <v-divider class="my-3"></v-divider>
 
-                                                <div
-                                                    class="secondary--text subtitle-2"
-                                                >
-                                                    Choose Color
-                                                </div>
+                                                <div class="secondary--text subtitle-2">Choose Color</div>
                                                 <div>
                                                     Choose the color of the
                                                     card's background
@@ -2298,8 +1975,7 @@
                                                                     @click="
                                                                         colorPickerMenu = false
                                                                     "
-                                                                    >cancel</v-btn
-                                                                >
+                                                                >cancel</v-btn>
                                                                 <v-btn
                                                                     color="primary"
                                                                     small
@@ -2309,45 +1985,28 @@
                                                                             colorPickerMenu = false;
                                                                         }
                                                                     "
-                                                                    >choose</v-btn
-                                                                >
+                                                                >choose</v-btn>
                                                             </v-card-actions>
                                                         </v-card>
                                                     </v-menu>
 
                                                     <v-btn
-                                                        color="primary"
+                                                        color="secondary"
                                                         class="text-capitalize ml-10"
-                                                        rounded
-                                                        >default image</v-btn
-                                                    >
+                                                        depressed
+                                                    >default image</v-btn>
                                                 </div>
 
-                                                <v-divider
-                                                    class="my-3"
-                                                ></v-divider>
+                                                <v-divider class="my-3"></v-divider>
 
                                                 <div
                                                     class="secondary--text subtitle-2"
-                                                >
-                                                    Change logo size
-                                                </div>
-                                                Change logo size in card
-                                                <v-slider
-                                                    thumb-label
-                                                    hide-details
-                                                ></v-slider>
+                                                >Change logo size</div>Change logo size in card
+                                                <v-slider thumb-label hide-details></v-slider>
 
-                                                <v-divider
-                                                    class="my-3"
-                                                ></v-divider>
+                                                <v-divider class="my-3"></v-divider>
 
-                                                <div
-                                                    class="secondary--text subtitle-2"
-                                                >
-                                                    Card Amount
-                                                </div>
-                                                For the first card order (based
+                                                <div class="secondary--text subtitle-2">Card Amount</div>For the first card order (based
                                                 on the annual subscription
                                                 package) the cards are provided
                                                 Free and you can not change the
@@ -2374,13 +2033,14 @@
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
                                                 <v-btn
-                                                    color="primary"
-                                                    rounded
+                                                    color="secondary"
+                                                    depressed
                                                     width="100"
                                                     @click="step++"
                                                 >
                                                     next
                                                     <v-icon
+                                                        size="20"
                                                         v-text="
                                                             icons.mdiArrowRight
                                                         "
@@ -2392,10 +2052,7 @@
 
                                     <v-window-item :value="2">
                                         <v-btn large icon @click="step--">
-                                            <v-icon
-                                                large
-                                                v-text="icons.mdiArrowLeft"
-                                            ></v-icon>
+                                            <v-icon large v-text="icons.mdiArrowLeft"></v-icon>
                                         </v-btn>
                                         <v-img
                                             src="@/assets/orderImageCheckout.png"
@@ -2409,31 +2066,23 @@
                                         >
                                             <v-card-title
                                                 class="justify-center secondary--text"
-                                            >
-                                                Your order has been registered! </v-card-title
-                                            >To complete the order you have to
+                                            >Your order has been registered!</v-card-title>To complete the order you have to
                                             pay off your cards which they will
                                             be delivered in your business's
                                             address. If there is some
                                             modification you wish to make please
                                             contact us at info@roadcube.com
                                             after the payment.
+                                            <br />
                                             <v-btn
-                                                color="primary"
+                                                color="secondary"
                                                 class="text-capitalize mt-5"
-                                                rounded
+                                                depressed
                                                 large
                                             >
-                                                <v-icon
-                                                    large
-                                                    v-text="icons.mdiCart"
-                                                ></v-icon>
-                                                <span class="mx-3"
-                                                    >complete order</span
-                                                >
-                                                <span class="text-h5"
-                                                    >18.6 €</span
-                                                >
+                                                <v-icon large v-text="icons.mdiCart"></v-icon>
+                                                <span class="mx-3">complete order</span>
+                                                <span class="text-h5">18.6 €</span>
                                             </v-btn>
                                         </v-sheet>
                                     </v-window-item>
@@ -2468,7 +2117,8 @@ import {
     mdiChevronDown,
     mdiPound,
     mdiCart,
-    mdiArrowLeft
+    mdiArrowLeft,
+    mdiMagnify,
 } from "@mdi/js";
 
 import storeLogo from "@/assets/store-logo.png";
@@ -2494,7 +2144,8 @@ export default {
             mdiChevronDown,
             mdiPound,
             mdiCart,
-            mdiArrowLeft
+            mdiArrowLeft,
+            mdiMagnify,
         },
         tab: 0,
         tabs: [
@@ -2505,17 +2156,17 @@ export default {
             "cleaner management",
             "direction of payments",
             "cards",
-            "subscription"
+            "subscription",
         ],
         logo: {
             image: storeLogo,
-            imageFile: ""
+            imageFile: "",
         },
         bubbleLogo,
         bubbleNew,
         mapPin: {
             image: "",
-            imageFile: ""
+            imageFile: "",
         },
         weekdays: [
             {
@@ -2525,22 +2176,22 @@ export default {
                     startClockMenu: false,
                     endClockMenu: false,
                     startTime: "",
-                    endTime: ""
+                    endTime: "",
                 },
                 splitHours: {
                     first: {
                         startClockMenu: false,
                         endClockMenu: false,
                         startTime: "",
-                        endTime: ""
+                        endTime: "",
                     },
                     second: {
                         startClockMenu: false,
                         endClockMenu: false,
                         startTime: "",
-                        endTime: ""
-                    }
-                }
+                        endTime: "",
+                    },
+                },
             },
             {
                 name: "Tuesday",
@@ -2549,22 +2200,22 @@ export default {
                     startClockMenu: false,
                     endClockMenu: false,
                     startTime: "",
-                    endTime: ""
+                    endTime: "",
                 },
                 splitHours: {
                     first: {
                         startClockMenu: false,
                         endClockMenu: false,
                         startTime: "",
-                        endTime: ""
+                        endTime: "",
                     },
                     second: {
                         startClockMenu: false,
                         endClockMenu: false,
                         startTime: "",
-                        endTime: ""
-                    }
-                }
+                        endTime: "",
+                    },
+                },
             },
             {
                 name: "Wednesday",
@@ -2573,22 +2224,22 @@ export default {
                     startClockMenu: false,
                     endClockMenu: false,
                     startTime: "",
-                    endTime: ""
+                    endTime: "",
                 },
                 splitHours: {
                     first: {
                         startClockMenu: false,
                         endClockMenu: false,
                         startTime: "",
-                        endTime: ""
+                        endTime: "",
                     },
                     second: {
                         startClockMenu: false,
                         endClockMenu: false,
                         startTime: "",
-                        endTime: ""
-                    }
-                }
+                        endTime: "",
+                    },
+                },
             },
             {
                 name: "Thursday",
@@ -2597,22 +2248,22 @@ export default {
                     startClockMenu: false,
                     endClockMenu: false,
                     startTime: "",
-                    endTime: ""
+                    endTime: "",
                 },
                 splitHours: {
                     first: {
                         startClockMenu: false,
                         endClockMenu: false,
                         startTime: "",
-                        endTime: ""
+                        endTime: "",
                     },
                     second: {
                         startClockMenu: false,
                         endClockMenu: false,
                         startTime: "",
-                        endTime: ""
-                    }
-                }
+                        endTime: "",
+                    },
+                },
             },
             {
                 name: "Friday",
@@ -2621,22 +2272,22 @@ export default {
                     startClockMenu: false,
                     endClockMenu: false,
                     startTime: "",
-                    endTime: ""
+                    endTime: "",
                 },
                 splitHours: {
                     first: {
                         startClockMenu: false,
                         endClockMenu: false,
                         startTime: "",
-                        endTime: ""
+                        endTime: "",
                     },
                     second: {
                         startClockMenu: false,
                         endClockMenu: false,
                         startTime: "",
-                        endTime: ""
-                    }
-                }
+                        endTime: "",
+                    },
+                },
             },
             {
                 name: "Saturday",
@@ -2645,22 +2296,22 @@ export default {
                     startClockMenu: false,
                     endClockMenu: false,
                     startTime: "",
-                    endTime: ""
+                    endTime: "",
                 },
                 splitHours: {
                     first: {
                         startClockMenu: false,
                         endClockMenu: false,
                         startTime: "",
-                        endTime: ""
+                        endTime: "",
                     },
                     second: {
                         startClockMenu: false,
                         endClockMenu: false,
                         startTime: "",
-                        endTime: ""
-                    }
-                }
+                        endTime: "",
+                    },
+                },
             },
             {
                 name: "Sunday",
@@ -2669,23 +2320,23 @@ export default {
                     startClockMenu: false,
                     endClockMenu: false,
                     startTime: "",
-                    endTime: ""
+                    endTime: "",
                 },
                 splitHours: {
                     first: {
                         startClockMenu: false,
                         endClockMenu: false,
                         startTime: "",
-                        endTime: ""
+                        endTime: "",
                     },
                     second: {
                         startClockMenu: false,
                         endClockMenu: false,
                         startTime: "",
-                        endTime: ""
-                    }
-                }
-            }
+                        endTime: "",
+                    },
+                },
+            },
         ],
         timePicker: "",
         fastPayment: "Off",
@@ -2706,54 +2357,54 @@ export default {
             { text: "Points", value: "points" },
             { text: "Type", value: "type" },
             { text: "Point Subsidy", value: "pointSubsidy" },
-            { text: "Save", value: "save" }
+            { text: "Save", value: "save" },
         ],
         productPoints: [
             {
                 name: "Maroudas Optika's unnamed API product 58526",
                 points: 0,
                 type: "Per Transaction",
-                pointSubsidy: true
+                pointSubsidy: true,
             },
             {
                 name: "Maroudas Optika's unnamed API product 58534",
                 points: 4,
                 type: "Per Transaction",
-                pointSubsidy: true
+                pointSubsidy: true,
             },
             {
                 name: "stest_stest",
                 points: 0,
                 type: "Liters",
-                pointSubsidy: false
-            }
+                pointSubsidy: false,
+            },
         ],
         userDialog: false,
         userHeaders: [
             { text: "Username", value: "username" },
             { text: "User Password", value: "password" },
             { text: "Rights", value: "rights" },
-            { text: "Actions", value: "actions" }
+            { text: "Actions", value: "actions" },
         ],
         users: [
             {
                 username: "Lefko",
                 password: "Dia12345",
-                rights: "Press edit..."
-            }
+                rights: "Press edit...",
+            },
         ],
         rights: ["Dashboard", "Sales", "Points", "Redeem Vouchers", "Settings"],
         rights2: [
             "Products & Services",
             "Point Management",
             "Creating Coupons",
-            "Contest & Survey"
+            "Contest & Survey",
         ],
         cardBackgroundColor: "#ffffff",
         pickedColor: "#ffffff",
         colorPickerMenu: false,
         showSwatches: false,
-        step: 1
+        step: 1,
     }),
 
     methods: {
@@ -2761,7 +2412,7 @@ export default {
             item.imageFile = event;
             const reader = new FileReader();
             reader.readAsDataURL(item.imageFile);
-            reader.onload = e => (item.image = e.target.result);
+            reader.onload = (e) => (item.image = e.target.result);
         },
 
         addCategory() {
@@ -2771,8 +2422,8 @@ export default {
 
         removeCategory(index) {
             this.categories.splice(index, 1);
-        }
-    }
+        },
+    },
 };
 </script>
 

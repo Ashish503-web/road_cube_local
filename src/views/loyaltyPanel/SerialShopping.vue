@@ -6,24 +6,15 @@
 
                 <v-sheet class="b-dashed mx-3 pa-5">
                     <div class="setting-wrapper">
-                        <div
-                            v-for="setting in settings"
-                            :key="setting.text"
-                            class="pa-3 setting"
-                        >
-                            <h4
-                                class="subtitle-2 mb-2"
-                                v-text="setting.text"
-                            ></h4>
-                            <span class="text--secondary" v-text="setting.value"
-                                >1 kanapes dwro</span
-                            >
+                        <div v-for="setting in settings" :key="setting.text" class="pa-3 setting">
+                            <h4 class="subtitle-2 mb-2" v-text="setting.text"></h4>
+                            <span class="text--secondary" v-text="setting.value">1 kanapes dwro</span>
                         </div>
                     </div>
                 </v-sheet>
             </v-card>
 
-            <v-btn color="red" dark class="my-5 mx-3 px-10">delete</v-btn>
+            <v-btn color="red" depressed dark class="my-5 mx-3 px-10">delete</v-btn>
         </v-sheet>
     </v-container>
 </template>
@@ -40,10 +31,10 @@ export default {
             { text: "Number of Purchases", value: "2" },
             {
                 text: "Minimum transaction limit in euro",
-                value: "2"
-            }
-        ]
-    })
+                value: "2",
+            },
+        ],
+    }),
 };
 </script>
 

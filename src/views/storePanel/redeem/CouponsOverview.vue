@@ -51,11 +51,11 @@ export default {
             { text: "Redeemed", value: "information" },
             { text: "Available", value: "actions" },
             { text: "Edit", value: "edit" },
-            { text: "Available", value: "actions" }
+            { text: "Available", value: "actions" },
         ],
         coupons: [{ user: "Edgar" }],
-        itemsPerPageOptions: [10, 25, 50, 100]
-    })
+        itemsPerPageOptions: [10, 25, 50, 100],
+    }),
 };
 </script>
 

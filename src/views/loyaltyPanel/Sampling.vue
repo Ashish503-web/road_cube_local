@@ -9,12 +9,11 @@
 
             <v-toolbar flat height="80">
                 <v-btn
-                    color="primary"
-                    class="px-8"
-                    rounded
+                    color="secondary"
+                    class="text-capitalize px-8"
+                    depressed
                     @click="dialog = true"
-                    >add action</v-btn
-                >
+                >add action</v-btn>
             </v-toolbar>
 
             <v-data-table
@@ -26,15 +25,8 @@
                 <template v-slot:item.actions="{ item }">
                     <v-tooltip top>
                         <template v-slot:activator="{ on }">
-                            <v-btn
-                                color="yellow darken-3"
-                                icon
-                                v-on="on"
-                                @click="myFunc(item)"
-                            >
-                                <v-icon
-                                    v-text="icons.mdiPencilOutline"
-                                ></v-icon>
+                            <v-btn color="yellow darken-3" icon v-on="on" @click="myFunc(item)">
+                                <v-icon v-text="icons.mdiPencilOutline"></v-icon>
                             </v-btn>
                         </template>
 
@@ -43,12 +35,7 @@
 
                     <v-tooltip top>
                         <template v-slot:activator="{ on }">
-                            <v-btn
-                                color="red"
-                                icon
-                                v-on="on"
-                                @click="myFunc(item)"
-                            >
+                            <v-btn color="red" icon v-on="on" @click="myFunc(item)">
                                 <v-icon v-text="icons.mdiClose"></v-icon>
                             </v-btn>
                         </template>
@@ -58,9 +45,8 @@
                 </template>
 
                 <template v-slot:item.social>
-                    <v-btn rounded color="blue darken-1" dark small>
-                        <v-icon class="mr-1" v-text="icons.mdiFacebook"></v-icon
-                        >Share 0
+                    <v-btn color="blue darken-1" class="text-capitalize" depressed dark small>
+                        <v-icon class="mr-1" v-text="icons.mdiFacebook"></v-icon>Share 0
                     </v-btn>
                 </template>
             </v-data-table>
@@ -70,11 +56,7 @@
                     <v-card-title class="grey lighten-3">
                         New Action
                         <v-spacer></v-spacer>
-                        <v-icon
-                            color="secondary"
-                            large
-                            v-text="icons.mdiPlus"
-                        ></v-icon>
+                        <v-icon color="secondary" large v-text="icons.mdiPlus"></v-icon>
                     </v-card-title>
 
                     <v-card-text class="pt-7">
@@ -83,26 +65,20 @@
                                 <v-col cols="6">
                                     <v-radio value="action 1 + 1">
                                         <template v-slot:label>
-                                            <h4 class="subtitle-2">
-                                                action 1 + 1
-                                            </h4>
+                                            <h4 class="subtitle-2">action 1 + 1</h4>
                                         </template>
                                     </v-radio>
                                 </v-col>
                                 <v-col cols="6">
                                     <v-radio value="sampling">
                                         <template v-slot:label>
-                                            <h4 class="subtitle-2">
-                                                sampling
-                                            </h4>
+                                            <h4 class="subtitle-2">sampling</h4>
                                         </template>
                                     </v-radio>
                                 </v-col>
                             </v-row>
                         </v-radio-group>
-
                         {{ typeText }}
-
                         <v-card outlined class="mt-5 pt-7">
                             <v-row no-gutters justify="space-around">
                                 <v-col cols="5">
@@ -166,7 +142,7 @@ export default {
             mdiPencilOutline,
             mdiClose,
             mdiFacebook,
-            mdiPlus
+            mdiPlus,
         },
         headers: [
             { text: "Type", value: "type" },
@@ -174,25 +150,25 @@ export default {
             { text: "Product for Gift", value: "giftProduct" },
             { text: "Quantity", value: "quantity" },
             { text: "Actions", value: "actions" },
-            { text: "Social Media", value: "social" }
+            { text: "Social Media", value: "social" },
         ],
         actions: [
             {
                 type: "1+1",
                 saleProduct: "katq",
                 giftProduct: "kat2",
-                quantity: "2"
+                quantity: "2",
             },
             {
                 type: "Sampling",
                 saleProduct: "-",
                 giftProduct: "kat2",
-                quantity: "5"
-            }
+                quantity: "5",
+            },
         ],
         itemsPerPageOptions: [10, 20, 30, -1],
         dialog: false,
-        type: "action 1 + 1"
+        type: "action 1 + 1",
     }),
 
     computed: {
@@ -200,8 +176,8 @@ export default {
             return this.type === "action 1 + 1"
                 ? "To create a 1 + 1 Campaign you must declare 1 product for Buy and one to give it Free.Define products from the lists below"
                 : "To create a Sampling / Free Campaign, you must declare 1 product to serve as a sample";
-        }
-    }
+        },
+    },
 };
 </script>
 

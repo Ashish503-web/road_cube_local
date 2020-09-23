@@ -2,9 +2,12 @@
     <v-container fluid style="background: #eaedf1">
         <v-sheet class="pa-3">
             <v-toolbar flat height="80">
-                <v-btn color="primary" rounded @click="dialog = true"
-                    >create supplier</v-btn
-                >
+                <v-btn
+                    color="secondary"
+                    class="text-capitalize"
+                    depressed
+                    @click="dialog = true"
+                >create supplier</v-btn>
                 <v-spacer></v-spacer>
 
                 <v-col cols="4">
@@ -29,15 +32,8 @@
                 <template v-slot:item.actions="{ item }">
                     <v-tooltip top>
                         <template v-slot:activator="{ on }">
-                            <v-btn
-                                color="yellow darken-3"
-                                icon
-                                v-on="on"
-                                @click="myFunc(item)"
-                            >
-                                <v-icon
-                                    v-text="icons.mdiPencilOutline"
-                                ></v-icon>
+                            <v-btn color="yellow darken-3" icon v-on="on" @click="myFunc(item)">
+                                <v-icon v-text="icons.mdiPencilOutline"></v-icon>
                             </v-btn>
                         </template>
 
@@ -46,12 +42,7 @@
 
                     <v-tooltip top>
                         <template v-slot:activator="{ on }">
-                            <v-btn
-                                color="red"
-                                icon
-                                v-on="on"
-                                @click="myFunc(item)"
-                            >
+                            <v-btn color="red" icon v-on="on" @click="myFunc(item)">
                                 <v-icon v-text="icons.mdiClose"></v-icon>
                             </v-btn>
                         </template>
@@ -66,48 +57,17 @@
                     <v-card-title class="grey lighten-3">
                         New Supplier
                         <v-spacer></v-spacer>
-                        <v-icon
-                            color="secondary"
-                            large
-                            v-text="icons.mdiPlus"
-                        ></v-icon>
+                        <v-icon color="secondary" large v-text="icons.mdiPlus"></v-icon>
                     </v-card-title>
 
                     <v-card-text class="pt-7">
-                        <v-text-field
-                            label="Name"
-                            rounded
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
+                        <v-text-field label="Name" rounded outlined dense clearable></v-text-field>
 
-                        <v-text-field
-                            type="email"
-                            label="Email1"
-                            rounded
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
+                        <v-text-field type="email" label="Email1" rounded outlined dense clearable></v-text-field>
 
-                        <v-text-field
-                            type="email"
-                            label="Email2"
-                            rounded
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
+                        <v-text-field type="email" label="Email2" rounded outlined dense clearable></v-text-field>
 
-                        <v-text-field
-                            type="number"
-                            label="Phone"
-                            rounded
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
+                        <v-text-field type="number" label="Phone" rounded outlined dense clearable></v-text-field>
                     </v-card-text>
 
                     <v-divider></v-divider>
@@ -134,21 +94,21 @@ export default {
             mdiPencilOutline,
             mdiClose,
             mdiMagnify,
-            mdiPlus
+            mdiPlus,
         },
         headers: [
             { text: "Name", value: "name" },
             { text: "Email", value: "email" },
-            { text: "Actions", value: "actions" }
+            { text: "Actions", value: "actions" },
         ],
         items: [
             { name: "Vasso", email: "vasso.fitrou@gmail.com" },
             { name: "Test Lefko", email: "lefkothea@roadcube.com" },
-            { name: "Papadakis Mixail", email: "info@roadcube.com" }
+            { name: "Papadakis Mixail", email: "info@roadcube.com" },
         ],
         itemsPerPageOptions: [10, 20, 30, -1],
-        dialog: false
-    })
+        dialog: false,
+    }),
 };
 </script>
 

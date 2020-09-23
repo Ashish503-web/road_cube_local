@@ -1,6 +1,6 @@
 <template>
-    <v-container fluid>
-        <v-card flat>
+    <v-container fluid class="b-container">
+        <v-card flat tile>
             <v-row>
                 <v-col>
                     <v-card-title class="pb-0">Maroudas Optika</v-card-title>
@@ -27,7 +27,7 @@
             </v-row>
         </v-card>
 
-        <v-row class="mx-1" style="background: #eaedf1">
+        <v-row style="background: #eaedf1">
             <v-col cols="3">
                 <v-card tile class="pa-5" outlined>
                     <v-row no-gutters justify="space-between" align="center">
@@ -133,17 +133,19 @@
             <v-col cols="12">
                 <v-card tile flat>
                     <v-card-title>Transactions</v-card-title>
-                    <v-sheet
-                        class="v-sheet--offset mx-auto"
-                        color="accent"
-                        max-width="calc(100% - 32px)"
-                    >
+                    <v-sheet class="v-sheet--offset mx-auto" max-width="calc(100% - 32px)">
                         <v-sparkline
-                            :labels="labels"
                             :value="value"
-                            color="white"
-                            line-width="2"
-                            padding="16"
+                            :gradient="gradient"
+                            :smooth="radius || false"
+                            :padding="padding"
+                            :line-width="width"
+                            :stroke-linecap="lineCap"
+                            :gradient-direction="gradientDirection"
+                            :fill="fill"
+                            :type="type"
+                            :auto-line-width="autoLineWidth"
+                            auto-draw
                         ></v-sparkline>
                     </v-sheet>
                 </v-card>
@@ -159,12 +161,19 @@ import { mdiCompassOutline } from "@mdi/js";
 import { mdiPhone } from "@mdi/js";
 import { mdiWallet } from "@mdi/js";
 
+const gradients = [
+    ["#222"],
+    ["#42b3f4"],
+    ["red", "orange", "yellow"],
+    ["purple", "violet"],
+    ["#00c6ff", "#F0F", "#FF0"],
+    ["#f72047", "#ffd200", "#1feaea"],
+];
+
 export default {
     name: "StorePanelHome",
 
     data: () => ({
-        labels: ["0", "10", "20", "30", "40", "50", "60", "70", "80", "90"],
-        value: [200, 675, 410, 390, 310, 460, 250, 240, 220, 370],
         icons: {
             mdiBinoculars,
             mdiCursorDefault,
@@ -172,6 +181,17 @@ export default {
             mdiPhone,
             mdiWallet,
         },
+        width: 2,
+        radius: 10,
+        padding: 8,
+        lineCap: "round",
+        gradient: gradients[5],
+        value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
+        gradientDirection: "top",
+        gradients,
+        fill: false,
+        type: "trend",
+        autoLineWidth: false,
     }),
 };
 </script>

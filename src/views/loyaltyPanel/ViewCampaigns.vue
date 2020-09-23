@@ -22,7 +22,7 @@
                 class="b-outlined rounded-0"
             >
                 <template v-slot:item.title="{ item }">
-                    <v-btn color="primary" width="80" small v-text="item.title"></v-btn>
+                    <v-btn color="secondary" depressed width="80" small v-text="item.title"></v-btn>
                 </template>
 
                 <template v-slot:item.schedule>
@@ -73,7 +73,7 @@
                 </template>
 
                 <template v-slot:item.edit>
-                    <v-icon v-text="icons.mdiLock"></v-icon>
+                    <v-icon color="secondary" v-text="icons.mdiLock"></v-icon>
                 </template>
             </v-data-table>
         </v-sheet>

@@ -3,12 +3,11 @@
         <v-sheet class="pa-3">
             <v-toolbar flat height="80">
                 <v-btn
-                    color="primary"
-                    class="px-8"
-                    rounded
+                    color="secondary"
+                    class="text-capitalize px-8"
+                    depressed
                     to="/loyaltyPanel/add-contest"
-                    >add contest/survey</v-btn
-                >
+                >add contest/survey</v-btn>
 
                 <v-spacer></v-spacer>
 
@@ -39,12 +38,7 @@
                 <template v-slot:item.actions="{ item }">
                     <v-tooltip top v-if="item.winners === 'In Progress'">
                         <template v-slot:activator="{ on }">
-                            <v-btn
-                                color="primary"
-                                icon
-                                v-on="on"
-                                to="/loyaltyPanel/view-contest"
-                            >
+                            <v-btn color="primary" icon v-on="on" to="/loyaltyPanel/view-contest">
                                 <v-icon v-text="icons.mdiEyeOutline"></v-icon>
                             </v-btn>
                         </template>
@@ -69,12 +63,7 @@
 
                     <v-tooltip top>
                         <template v-slot:activator="{ on }">
-                            <v-btn
-                                color="red"
-                                icon
-                                v-on="on"
-                                @click="myFunc(item)"
-                            >
+                            <v-btn color="red" icon v-on="on" @click="myFunc(item)">
                                 <v-icon v-text="icons.mdiClose"></v-icon>
                             </v-btn>
                         </template>
@@ -98,7 +87,7 @@ export default {
             mdiMagnify,
             mdiHelp,
             mdiEyeOutline,
-            mdiClose
+            mdiClose,
         },
         headers: [
             { text: "Title", value: "title" },
@@ -107,7 +96,7 @@ export default {
             { text: "Type", value: "type" },
             { text: "Status", value: "status" },
             { text: "Winners", value: "winners" },
-            { text: "Actions", value: "actions" }
+            { text: "Actions", value: "actions" },
         ],
         contestsAndSurveys: [
             {
@@ -116,7 +105,7 @@ export default {
                 dateEnd: "2020-05-04 17:00:00",
                 type: "Survey",
                 status: "Inactive",
-                winners: "-"
+                winners: "-",
             },
             {
                 title: "terste",
@@ -124,10 +113,10 @@ export default {
                 dateEnd: "2020-06-19 23:59:00",
                 type: "Contest",
                 status: "Active",
-                winners: "In Progress"
-            }
+                winners: "In Progress",
+            },
         ],
-        itemsPerPageOptions: [10, 20, 30, -1]
-    })
+        itemsPerPageOptions: [10, 20, 30, -1],
+    }),
 };
 </script>

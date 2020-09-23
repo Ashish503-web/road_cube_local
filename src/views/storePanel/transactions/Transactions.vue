@@ -3,22 +3,17 @@
         <v-sheet class="pa-3">
             <v-toolbar flat color="#EAEDF191">
                 <v-spacer></v-spacer>
-                <v-btn rounded color="primary" class="text-capitalize ">
-                    <v-icon
-                        class="mr-1"
-                        v-text="icons.mdiCellphoneIphone"
-                    ></v-icon
-                    >open digital payments
+                <v-btn color="secondary" depressed class="text-capitalize">
+                    <v-icon class="mr-1" v-text="icons.mdiCellphoneIphone"></v-icon>open digital payments
                 </v-btn>
 
-                <v-btn rounded color="primary" class="text-capitalize mx-2">
+                <v-btn color="secondary" depressed class="text-capitalize mx-2">
                     <v-icon class="mr-1" v-text="icons.mdiPrinter"></v-icon>fund
                     closure
                 </v-btn>
 
-                <v-btn rounded color="primary" class="text-capitalize">
-                    <v-icon class="mr-1" v-text="icons.mdiOpenInNew"></v-icon
-                    >download all transactions
+                <v-btn color="secondary" depressed class="text-capitalize">
+                    <v-icon class="mr-1" v-text="icons.mdiOpenInNew"></v-icon>download all transactions
                 </v-btn>
             </v-toolbar>
 
@@ -51,9 +46,9 @@ export default {
         icons: {
             mdiCellphoneIphone,
             mdiPrinter,
-            mdiOpenInNew
+            mdiOpenInNew,
         },
-        tab: 0
-    })
+        tab: 0,
+    }),
 };
 </script>

@@ -29,9 +29,9 @@
                 </v-col>
 
                 <v-btn
-                    color="primary"
-                    rounded
-                    class="mt-1"
+                    color="secondary"
+                    class="text-capitalize mt-1"
+                    depressed
                     @click="promocodeDialog = true"
                 >add promocode</v-btn>
             </v-row>

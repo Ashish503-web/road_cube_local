@@ -3,16 +3,18 @@
         <v-sheet class="pa-3">
             <v-toolbar flat>
                 <v-btn
-                    color="primary"
-                    rounded
+                    color="secondary"
+                    class="text-capitalize"
+                    depressed
                     @click="multipleCouponDialog = true"
-                    >create</v-btn
-                >
+                >create</v-btn>
                 <v-spacer></v-spacer>
-
-                <v-btn color="primary" rounded @click="analiticsDialog = true"
-                    >analitical report</v-btn
-                >
+                <v-btn
+                    color="secondary"
+                    class="text-capitalize"
+                    depressed
+                    @click="analiticsDialog = true"
+                >analitical report</v-btn>
             </v-toolbar>
 
             <v-toolbar flat>
@@ -36,20 +38,11 @@
                 :footer-props="{ itemsPerPageOptions }"
             >
                 <template v-slot:item.name="{ item }">
-                    <router-link
-                        class="navLink"
-                        to="/loyaltyPanel/multiple-coupons"
-                        >{{ item.name }}</router-link
-                    >
+                    <router-link class="navLink" to="/loyaltyPanel/multiple-coupons">{{ item.name }}</router-link>
                 </template>
 
                 <template v-slot:item.actions>
-                    <v-btn
-                        color="primary"
-                        class="text-capitalize mr-2"
-                        outlined
-                        depressed
-                    >
+                    <v-btn color="primary" class="text-capitalize mr-2" outlined depressed>
                         <a href="#" class="navLink">download excel</a>
                     </v-btn>
 
@@ -70,34 +63,15 @@
                     <v-card-title class="grey lighten-3">
                         New Multiple Coupon
                         <v-spacer></v-spacer>
-                        <v-icon
-                            color="secondary"
-                            large
-                            v-text="icons.mdiPlus"
-                        ></v-icon>
+                        <v-icon color="secondary" large v-text="icons.mdiPlus"></v-icon>
                     </v-card-title>
 
                     <v-card-text class="pt-7">
-                        <v-text-field
-                            label="Name"
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
+                        <v-text-field label="Name" outlined dense clearable></v-text-field>
 
-                        <v-text-field
-                            label="Description"
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
+                        <v-text-field label="Description" outlined dense clearable></v-text-field>
 
-                        <v-text-field
-                            label="Coupon Value"
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
+                        <v-text-field label="Coupon Value" outlined dense clearable></v-text-field>
 
                         <v-text-field
                             type="number"
@@ -107,12 +81,7 @@
                             clearable
                         ></v-text-field>
 
-                        <v-text-field
-                            type="number"
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
+                        <v-text-field type="number" outlined dense clearable></v-text-field>
 
                         <v-row>
                             <v-col cols="6">
@@ -120,40 +89,19 @@
                             </v-col>
                             <v-col cols="6">
                                 Upload Voucher Image:
-                                <v-file-input
-                                    outlined
-                                    dense
-                                    hide-details
-                                    @change="onFileSelected"
-                                ></v-file-input>
+                                <v-file-input outlined dense hide-details @change="onFileSelected"></v-file-input>
                             </v-col>
                         </v-row>
 
-                        <v-checkbox
-                            v-model="notificationViaEmail"
-                            color="secondary"
-                            class="pa-0"
-                        >
+                        <v-checkbox v-model="notificationViaEmail" color="secondary" class="pa-0">
                             <template v-slot:label>
-                                <h4 class="subtitle-2">
-                                    Notification via Email
-                                </h4>
+                                <h4 class="subtitle-2">Notification via Email</h4>
                             </template>
                         </v-checkbox>
 
                         <template v-if="notificationViaEmail">
-                            <v-text-field
-                                label="Email1"
-                                outlined
-                                dense
-                                clearable
-                            ></v-text-field>
-                            <v-text-field
-                                label="Email2"
-                                outlined
-                                dense
-                                clearable
-                            ></v-text-field>
+                            <v-text-field label="Email1" outlined dense clearable></v-text-field>
+                            <v-text-field label="Email2" outlined dense clearable></v-text-field>
                             <v-text-field
                                 type="number"
                                 label="Update how many days to send email"
@@ -163,27 +111,17 @@
                             ></v-text-field>
                         </template>
 
-                        <v-text-field
-                            label="Κωδικός κουπονιού"
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
+                        <v-text-field label="Κωδικός κουπονιού" outlined dense clearable></v-text-field>
 
                         <v-row>
-                            <v-col cols="6" class="subitle-2 secondary--text">
-                                Select stores to redeem
-                            </v-col>
+                            <v-col
+                                cols="6"
+                                class="subitle-2 secondary--text"
+                            >Select stores to redeem</v-col>
                             <v-col cols="6">
-                                <v-checkbox
-                                    color="secondary"
-                                    class="mt-0"
-                                    hide-details
-                                >
+                                <v-checkbox color="secondary" class="mt-0" hide-details>
                                     <template v-slot:label>
-                                        <h4 class="subtitle-2">
-                                            All
-                                        </h4>
+                                        <h4 class="subtitle-2">All</h4>
                                     </template>
                                 </v-checkbox>
 
@@ -195,10 +133,7 @@
                                     hide-details
                                 >
                                     <template v-slot:label>
-                                        <h4
-                                            class="subtitle-2"
-                                            v-text="store"
-                                        ></h4>
+                                        <h4 class="subtitle-2" v-text="store"></h4>
                                     </template>
                                 </v-checkbox>
                             </v-col>
@@ -209,9 +144,7 @@
 
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn text @click="multipleCouponDialog = false"
-                            >cancel</v-btn
-                        >
+                        <v-btn text @click="multipleCouponDialog = false">cancel</v-btn>
                         <v-btn color="primary" width="80">save</v-btn>
                     </v-card-actions>
                 </v-card>
@@ -219,9 +152,7 @@
 
             <v-dialog v-model="analiticsDialog" max-width="400" scrollable>
                 <v-card>
-                    <v-card-title class="grey lighten-3">
-                        Analytical Report
-                    </v-card-title>
+                    <v-card-title class="grey lighten-3">Analytical Report</v-card-title>
 
                     <v-card-text class="pt-7">
                         <v-row justify="space-between">
@@ -262,9 +193,7 @@
 
                     <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn text @click="analiticsDialog = false"
-                            >cancel</v-btn
-                        >
+                        <v-btn text @click="analiticsDialog = false">cancel</v-btn>
                         <v-btn color="primary">download excel</v-btn>
                     </v-card-actions>
                 </v-card>
@@ -288,18 +217,18 @@ export default {
         analiticsDialog: false,
         voucher: {
             image: "",
-            imageFile: ""
+            imageFile: "",
         },
         headers: [
             { text: "Name", value: "name" },
             { text: "Number of Coupons", value: "count" },
-            { text: "Actions", value: "actions" }
+            { text: "Actions", value: "actions" },
         ],
         multipleCoupons: [
             { name: "vasso", count: 10 },
-            { name: "testvasso", count: 1 }
+            { name: "testvasso", count: 1 },
         ],
-        itemsPerPageOptions: [10, 20, 30, -1]
+        itemsPerPageOptions: [10, 20, 30, -1],
     }),
 
     methods: {
@@ -307,8 +236,8 @@ export default {
             this.voucher.imageFile = event;
             const reader = new FileReader();
             reader.readAsDataURL(this.voucher.imageFile);
-            reader.onload = e => (this.voucher.image = e.target.result);
-        }
+            reader.onload = (e) => (this.voucher.image = e.target.result);
+        },
     },
 
     watch: {
@@ -318,8 +247,8 @@ export default {
                 val[0] = val[1];
                 val[1] = holder;
             }
-        }
-    }
+        },
+    },
 };
 </script>
 

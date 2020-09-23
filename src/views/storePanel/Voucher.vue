@@ -4,12 +4,7 @@
             <v-row no-gutters>
                 <v-col cols="auto">
                     <v-tabs v-model="tab" show-arrows>
-                        <v-tab
-                            v-for="tab in tabs"
-                            :key="tab"
-                            v-text="tab"
-                            class="text-capitalize"
-                        ></v-tab>
+                        <v-tab v-for="tab in tabs" :key="tab" v-text="tab" class="text-capitalize"></v-tab>
                     </v-tabs>
                 </v-col>
 
@@ -17,37 +12,11 @@
                     <v-tabs-items v-model="tab">
                         <v-tab-item>
                             <v-card tile flat>
-                                <v-row no-gutters class="pl-12">
-                                    <v-col cols="6" class="ml-12 mt-5">
+                                <v-row no-gutters class="mt-5">
+                                    <v-col cols="6" class="px-3">
                                         <v-card-title>
-                                            <v-col class="pa-0">
-                                                Coupons with transactions
-                                            </v-col>
-                                            <v-col cols="auto" class="pa-0">
-                                                <v-tooltip right>
-                                                    <template
-                                                        v-slot:activator="{
-                                                            on
-                                                        }"
-                                                    >
-                                                        <v-btn
-                                                            color="red"
-                                                            icon
-                                                            x-large
-                                                            v-on="on"
-                                                        >
-                                                            <v-icon
-                                                                v-text="
-                                                                    icons.mdiClose
-                                                                "
-                                                                large
-                                                            ></v-icon>
-                                                        </v-btn>
-                                                    </template>
-
-                                                    <span>Delete</span>
-                                                </v-tooltip>
-                                            </v-col>
+                                            <v-col class="pa-0">Coupons with transactions</v-col>
+                                            <v-col cols="auto" class="pa-0"></v-col>
                                         </v-card-title>
                                         <v-card-subtitle style="width: 90%">
                                             <p class="ma-0">
@@ -60,16 +29,11 @@
                                                 the coupon.
                                             </p>
                                         </v-card-subtitle>
-                                        <v-img
-                                            src="@/assets/serial_shopping.jpg"
-                                            width="280"
-                                        ></v-img>
+                                        <v-img src="@/assets/serial_shopping.jpg" width="280"></v-img>
+                                    </v-col>
 
-                                        <v-text-field
-                                            label="Reward user after"
-                                            outlined
-                                            dense
-                                        ></v-text-field>
+                                    <v-col cols="6" class="px-3 pt-6">
+                                        <v-text-field label="Reward user after" outlined dense></v-text-field>
                                         <v-text-field
                                             label="Minimum transaction limit in euro"
                                             outlined
@@ -89,42 +53,39 @@
                                                         width="35"
                                                     ></v-img>
                                                 </v-col>
-                                                <v-col cols="auto" class="ml-2"
-                                                    >sada</v-col
-                                                >
+                                                <v-col cols="auto" class="ml-2">sada</v-col>
                                                 <v-spacer></v-spacer>
-                                                <v-col cols="auto"
-                                                    >1231 voucher</v-col
-                                                >
+                                                <v-col cols="auto">1231 voucher</v-col>
                                             </v-row>
                                         </v-card>
+
+                                        <v-card-actions class="mt-12">
+                                            <v-spacer></v-spacer>
+                                            <v-btn
+                                                color="red"
+                                                class="text-capitalize px-5"
+                                                depressed
+                                                dark
+                                            >delete</v-btn>
+                                        </v-card-actions>
                                     </v-col>
                                 </v-row>
                             </v-card>
                         </v-tab-item>
 
                         <v-tab-item>
-                            <v-row
-                                no-gutters
-                                justify="space-between"
-                                class="pt-8 pa-5"
-                            >
+                            <v-row no-gutters justify="space-between" class="pt-8 pa-5">
                                 <v-col cols="auto">
                                     <v-btn
-                                        rounded
-                                        color="primary"
+                                        color="secondary"
                                         class="text-capitalize"
+                                        depressed
                                         @click="codeDialog = true"
-                                        >add coupon</v-btn
-                                    >
+                                    >add coupon</v-btn>
                                 </v-col>
 
                                 <v-col cols="auto">
-                                    <v-alert
-                                        type="info"
-                                        dense
-                                        class="rounded-xl"
-                                    >
+                                    <v-alert type="info" dense>
                                         You can either share the coupon codes on
                                         facebook or give them to users with an
                                         application.
@@ -173,15 +134,8 @@
 
                                     <v-tooltip top>
                                         <template v-slot:activator="{ on }">
-                                            <v-btn
-                                                color="red"
-                                                icon
-                                                v-on="on"
-                                                @click="myFunc(item)"
-                                            >
-                                                <v-icon
-                                                    v-text="icons.mdiClose"
-                                                ></v-icon>
+                                            <v-btn color="red" icon v-on="on" @click="myFunc(item)">
+                                                <v-icon v-text="icons.mdiClose"></v-icon>
                                             </v-btn>
                                         </template>
 
@@ -190,36 +144,16 @@
                                 </template>
 
                                 <template v-slot:item.social>
-                                    <v-btn
-                                        rounded
-                                        color="blue darken-1"
-                                        dark
-                                        small
-                                    >
-                                        <v-icon
-                                            class="mr-1"
-                                            v-text="icons.mdiFacebook"
-                                        ></v-icon
-                                        >Share 0
+                                    <v-btn color="blue darken-1" depressed dark small>
+                                        <v-icon class="mr-1" v-text="icons.mdiFacebook"></v-icon>Share 0
                                     </v-btn>
                                 </template>
                             </v-data-table>
 
-                            <v-dialog
-                                v-model="codeDialog"
-                                scrollable
-                                max-width="40%"
-                            >
+                            <v-dialog v-model="codeDialog" scrollable max-width="40%">
                                 <v-card>
-                                    <v-card-title
-                                        class="secondary--text grey lighten-3"
-                                    >
-                                        <v-icon
-                                            class="mr-2"
-                                            large
-                                            v-text="icons.mdiAutoFix"
-                                        ></v-icon
-                                        >Create Coupon
+                                    <v-card-title class="secondary--text grey lighten-3">
+                                        <v-icon class="mr-2" large v-text="icons.mdiAutoFix"></v-icon>Create Coupon
                                     </v-card-title>
                                     <v-divider></v-divider>
                                     <v-card-text class="py-5">
@@ -235,9 +169,7 @@
                                                 persistent-hint
                                             ></v-text-field>
 
-                                            <h4 class="mt-5">
-                                                Moves (RoadCube Points)
-                                            </h4>
+                                            <h4 class="mt-5">Moves (RoadCube Points)</h4>
                                             <v-text-field
                                                 type="number"
                                                 class="mt-2"
@@ -246,9 +178,7 @@
                                                 clearable
                                             ></v-text-field>
 
-                                            <h4 class="mt-3">
-                                                Vouchers Ammount
-                                            </h4>
+                                            <h4 class="mt-3">Vouchers Ammount</h4>
                                             <v-text-field
                                                 type="number"
                                                 class="mt-2"
@@ -257,10 +187,7 @@
                                                 clearable
                                             ></v-text-field>
 
-                                            <v-checkbox
-                                                v-model="checkbox"
-                                                color="secondary"
-                                            >
+                                            <v-checkbox v-model="checkbox" color="secondary">
                                                 <template v-slot:label>
                                                     <p class="ma-0 font-italic">
                                                         Fill in the following
@@ -288,14 +215,9 @@
                                                     ></v-textarea>
                                                 </template>
 
-                                                <v-checkbox
-                                                    v-model="checkbox2"
-                                                    color="secondary"
-                                                >
+                                                <v-checkbox v-model="checkbox2" color="secondary">
                                                     <template v-slot:label>
-                                                        <p
-                                                            class="ma-0 subtitle-2"
-                                                        >
+                                                        <p class="ma-0 subtitle-2">
                                                             I want an image to
                                                             be displayed in
                                                             voucher
@@ -303,19 +225,11 @@
                                                     </template>
                                                 </v-checkbox>
 
-                                                <v-card
-                                                    v-if="checkbox2"
-                                                    outlined
-                                                >
+                                                <v-card v-if="checkbox2" outlined>
                                                     <v-card-title
                                                         class="subtitle-1 font-weight-medium"
-                                                    >
-                                                        Product Image (optional)
-                                                    </v-card-title>
-                                                    <v-row
-                                                        no-gutters
-                                                        justify="space-between"
-                                                    >
+                                                    >Product Image (optional)</v-card-title>
+                                                    <v-row no-gutters justify="space-between">
                                                         <v-col cols="6">
                                                             <v-img
                                                                 :src="
@@ -343,12 +257,8 @@
 
                                     <v-card-actions>
                                         <v-spacer></v-spacer>
-                                        <v-btn text @click="codeDialog = false"
-                                            >close</v-btn
-                                        >
-                                        <v-btn color="primary" width="80"
-                                            >save</v-btn
-                                        >
+                                        <v-btn text @click="codeDialog = false">close</v-btn>
+                                        <v-btn color="primary" width="80">save</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
@@ -357,12 +267,11 @@
                         <v-tab-item>
                             <v-toolbar flat height="100" class="pt-2 mb-3">
                                 <v-btn
-                                    rounded
-                                    color="primary"
+                                    color="secondary"
                                     class="text-capitalize"
+                                    depressed
                                     @click="productDialog = true"
-                                    >add action</v-btn
-                                >
+                                >add action</v-btn>
                                 <v-spacer></v-spacer>
                                 <v-col cols="4">
                                     <v-text-field
@@ -404,15 +313,8 @@
 
                                     <v-tooltip top>
                                         <template v-slot:activator="{ on }">
-                                            <v-btn
-                                                color="red"
-                                                icon
-                                                v-on="on"
-                                                @click="myFunc(item)"
-                                            >
-                                                <v-icon
-                                                    v-text="icons.mdiClose"
-                                                ></v-icon>
+                                            <v-btn color="red" icon v-on="on" @click="myFunc(item)">
+                                                <v-icon v-text="icons.mdiClose"></v-icon>
                                             </v-btn>
                                         </template>
 
@@ -421,70 +323,37 @@
                                 </template>
 
                                 <template v-slot:item.social>
-                                    <v-btn
-                                        rounded
-                                        color="blue darken-1"
-                                        dark
-                                        small
-                                    >
-                                        <v-icon
-                                            class="mr-1"
-                                            v-text="icons.mdiFacebook"
-                                        ></v-icon
-                                        >Share 0
+                                    <v-btn color="blue darken-1" depressed dark small>
+                                        <v-icon class="mr-1" v-text="icons.mdiFacebook"></v-icon>Share 0
                                     </v-btn>
                                 </template>
                             </v-data-table>
 
-                            <v-dialog
-                                v-model="productDialog"
-                                scrollable
-                                max-width="40%"
-                            >
+                            <v-dialog v-model="productDialog" scrollable max-width="40%">
                                 <v-card>
-                                    <v-card-title class="grey lighten-3"
-                                        >Add Action</v-card-title
-                                    >
+                                    <v-card-title class="grey lighten-3">Add Action</v-card-title>
                                     <v-divider></v-divider>
                                     <v-card-text class="py-5">
                                         <v-card outlined class="px-5 mb-3">
-                                            <v-radio-group
-                                                v-model="product.type"
-                                            >
+                                            <v-radio-group v-model="product.type">
                                                 <v-row no-gutters>
                                                     <v-col cols="6">
-                                                        <v-radio
-                                                            color="secondary"
-                                                        >
-                                                            <template
-                                                                v-slot:label
-                                                            >
-                                                                <h4
-                                                                    class="subtitle-2"
-                                                                >
-                                                                    action 1+1
-                                                                </h4>
+                                                        <v-radio color="secondary">
+                                                            <template v-slot:label>
+                                                                <h4 class="subtitle-2">action 1+1</h4>
                                                             </template>
                                                         </v-radio>
                                                     </v-col>
                                                     <v-col cols="6">
-                                                        <v-radio
-                                                            color="secondary"
-                                                        >
-                                                            <template
-                                                                v-slot:label
-                                                            >
-                                                                <h4
-                                                                    class="subtitle-2"
-                                                                >
-                                                                    sampling
-                                                                </h4>
+                                                        <v-radio color="secondary">
+                                                            <template v-slot:label>
+                                                                <h4 class="subtitle-2">sampling</h4>
                                                             </template>
                                                         </v-radio>
                                                     </v-col>
                                                 </v-row>
-                                            </v-radio-group> </v-card
-                                        >To create a 1 + 1 Campaign you must
+                                            </v-radio-group>
+                                        </v-card>To create a 1 + 1 Campaign you must
                                         declare 1 product for Buy and one to
                                         give it Free.Define products from the
                                         lists below
@@ -528,14 +397,8 @@
 
                                     <v-card-actions>
                                         <v-spacer></v-spacer>
-                                        <v-btn
-                                            text
-                                            @click="productDialog = false"
-                                            >close</v-btn
-                                        >
-                                        <v-btn color="primary" width="80"
-                                            >save</v-btn
-                                        >
+                                        <v-btn text @click="productDialog = false">close</v-btn>
+                                        <v-btn color="primary" width="80">save</v-btn>
                                     </v-card-actions>
                                 </v-card>
                             </v-dialog>
@@ -545,27 +408,21 @@
                             <v-card tile flat>
                                 <v-row no-gutters class="pl-12">
                                     <v-col cols="6" class="ml-12 mt-5">
-                                        <v-card-title
-                                            >Coupons with visits</v-card-title
-                                        >
+                                        <v-card-title>Coupons with visits</v-card-title>
                                         <v-card-subtitle style="width: 90%">
                                             Reward those who enter your store
                                             with a coupon. It only applies to
                                             users with an application and is
                                             recognized by GPS.
                                         </v-card-subtitle>
-                                        <v-img
-                                            src="@/assets/checkin_image.jpg"
-                                            width="280"
-                                        ></v-img>
+                                        <v-img src="@/assets/checkin_image.jpg" width="280"></v-img>
                                     </v-col>
 
                                     <v-col cols="5" class="mt-10">
                                         <v-card outlined class="pb-10">
                                             <v-card-title
                                                 class="justify-center subtitle-2"
-                                                >Gift Card</v-card-title
-                                            >
+                                            >Gift Card</v-card-title>
 
                                             <v-card-text>
                                                 Set a voucher that the customer
@@ -584,16 +441,12 @@
                                                         />
                                                         Coffee
                                                     </v-col>
-                                                    <v-col cols="5"
-                                                        >10 voucher</v-col
-                                                    >
+                                                    <v-col cols="5">10 voucher</v-col>
                                                 </v-row>
 
                                                 <v-checkbox color="secondary">
                                                     <template v-slot:label>
-                                                        <v-card-text
-                                                            class="pa-0"
-                                                        >
+                                                        <v-card-text class="pa-0">
                                                             Reward with presence
                                                             in the store
                                                         </v-card-text>
@@ -608,8 +461,8 @@
 
                                 <v-card-actions>
                                     <v-spacer></v-spacer>
-                                    <v-btn color="primary">accept</v-btn>
-                                    <v-btn color="red" dark>delete</v-btn>
+                                    <v-btn color="primary" class="text-capitalize" depressed>accept</v-btn>
+                                    <v-btn color="red" class="text-capitalize" depressed dark>delete</v-btn>
                                 </v-card-actions>
                             </v-card>
                         </v-tab-item>
@@ -622,39 +475,26 @@
                                         :items="couponsWithDiscount"
                                         outlined
                                     >
-                                        <template
-                                            v-slot:item.actions="{ item }"
-                                        >
-                                            <v-btn
-                                                v-if="item.discount != '-'"
-                                                color="red"
-                                                rounded
-                                                dark
-                                                class="text-capitalize"
-                                                depressed
-                                                small
-                                            >
-                                                <v-icon
-                                                    class="mr-1"
-                                                    v-text="icons.mdiClose"
-                                                ></v-icon
-                                                >delete discount
-                                            </v-btn>
-                                            <v-btn
-                                                v-else
-                                                color="primary"
-                                                rounded
-                                                dark
-                                                class="text-capitalize"
-                                                depressed
-                                                small
-                                            >
-                                                <v-icon
-                                                    class="mr-1"
-                                                    v-text="icons.mdiPlusThick"
-                                                ></v-icon
-                                                >add discount
-                                            </v-btn>
+                                        <template v-slot:item.actions="{ item }">
+                                            <v-tooltip v-if="item.discount != '-'" top>
+                                                <template v-slot:activator="{ on }">
+                                                    <v-btn color="red" icon v-on="on">
+                                                        <v-icon v-text="icons.mdiClose"></v-icon>
+                                                    </v-btn>
+                                                </template>
+
+                                                <span>Delete Discount</span>
+                                            </v-tooltip>
+
+                                            <v-tooltip v-else top>
+                                                <template v-slot:activator="{ on }">
+                                                    <v-btn color="primary" icon v-on="on">
+                                                        <v-icon v-text="icons.mdiPlusThick"></v-icon>
+                                                    </v-btn>
+                                                </template>
+
+                                                <span>Add Discount</span>
+                                            </v-tooltip>
                                         </template>
                                     </v-data-table>
                                 </v-card>
@@ -675,7 +515,7 @@ import {
     mdiPencilOutline,
     mdiEmoticonSadOutline,
     mdiFacebook,
-    mdiPlusThick
+    mdiPlusThick,
 } from "@mdi/js";
 
 export default {
@@ -689,7 +529,7 @@ export default {
             mdiPencilOutline,
             mdiEmoticonSadOutline,
             mdiFacebook,
-            mdiPlusThick
+            mdiPlusThick,
         },
         tab: 0,
         tabs: [
@@ -697,7 +537,7 @@ export default {
             "coupons with code",
             "coupons on products",
             "coupons with visits",
-            "coupons with discount"
+            "coupons with discount",
         ],
         itemsPerPageOptions: [10, 20, 30, -1],
         couponsWithCodeHeaders: [
@@ -708,7 +548,7 @@ export default {
             { text: "Redeemed", value: "redeemed" },
             { text: "Available", value: "available" },
             { text: "Actions", value: "actions" },
-            { text: "Social Media", value: "social" }
+            { text: "Social Media", value: "social" },
         ],
         couponsWithCode: [
             {
@@ -717,13 +557,13 @@ export default {
                 points: 0,
                 acquired: 4,
                 redeemed: 3,
-                available: 2
-            }
+                available: 2,
+            },
         ],
         codeDialog: false,
         coupon: {
             image: "",
-            imageFile: ""
+            imageFile: "",
         },
         checkbox: false,
         checkbox2: false,
@@ -733,32 +573,32 @@ export default {
             { text: "Product For Gift", value: "gift" },
             { text: "Quantity", value: "quantity" },
             { text: "Actions", value: "actions" },
-            { text: "Social Media", value: "social" }
+            { text: "Social Media", value: "social" },
         ],
         couponsOnProducts: [
             {
                 type: "1+1",
                 sale: "discount product",
                 gift: "discount product",
-                quantity: 5
-            }
+                quantity: 5,
+            },
         ],
         productDialog: false,
         product: {
             type: "",
             image: "",
-            imageFile: ""
+            imageFile: "",
         },
         couponsWithDiscountHeaders: [
             { text: "Product Name", value: "name" },
             { text: "Discount", value: "discount" },
             { text: "Points", value: "points" },
-            { text: "Actions", value: "actions" }
+            { text: "Actions", value: "actions" },
         ],
         couponsWithDiscount: [
             { name: "test lefko", discount: "-10%", points: "0 points" },
-            { name: "CARWASH_ΕΞΩΤΕΡΙΚΟ", discount: "-", points: "-" }
-        ]
+            { name: "CARWASH_ΕΞΩΤΕΡΙΚΟ", discount: "-", points: "-" },
+        ],
     }),
 
     methods: {
@@ -766,9 +606,9 @@ export default {
             this.coupon.imageFile = event;
             const reader = new FileReader();
             reader.readAsDataURL(this.coupon.imageFile);
-            reader.onload = e => (this.coupon.image = e.target.result);
-        }
-    }
+            reader.onload = (e) => (this.coupon.image = e.target.result);
+        },
+    },
 };
 </script>
 

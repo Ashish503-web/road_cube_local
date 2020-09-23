@@ -1,22 +1,5 @@
 <template>
     <v-card class="pa-0" flat>
-        <v-card flat>
-            <v-row>
-                <v-col cols="12" sm="auto">
-                    <v-card-title>Branches</v-card-title>
-                </v-col>
-                <v-col cols="12" sm="auto" class="ml-sm-auto ml-5">
-                    <v-icon
-                        v-text="icons.mdiTools"
-                        size="56"
-                        color="#eaedf1"
-                        class="mr-sm-5"
-                    >
-                    </v-icon>
-                </v-col>
-            </v-row>
-        </v-card>
-
         <v-row class="pa-5 pt-3 pb-3" style="background: #eaedf1">
             <v-col cols="12">
                 <v-card flat tile>
@@ -27,18 +10,10 @@
                             :vertical="$vuetify.breakpoint.md"
                         >
                             <v-tab class="text-capitalize">Branches</v-tab>
-                            <v-tab class="text-capitalize"
-                                >Financial data</v-tab
-                            >
-                            <v-tab class="text-capitalize"
-                                >Setting of Admin Panel</v-tab
-                            >
-                            <v-tab class="text-capitalize"
-                                >Settings of Application</v-tab
-                            >
-                            <v-tab class="text-capitalize"
-                                >Daily Transaction Limits</v-tab
-                            >
+                            <v-tab class="text-capitalize">Financial data</v-tab>
+                            <v-tab class="text-capitalize">Setting of Admin Panel</v-tab>
+                            <v-tab class="text-capitalize">Settings of Application</v-tab>
+                            <v-tab class="text-capitalize">Daily Transaction Limits</v-tab>
                         </v-tabs>
                     </v-card>
 
@@ -47,20 +22,14 @@
                             <v-row class="pa-5 pt-2 pb-1">
                                 <v-col cols="12" sm="auto">
                                     <v-dialog v-model="addDialog" width="60%">
-                                        <template
-                                            v-slot:activator="{ on, attrs }"
-                                        >
+                                        <template v-slot:activator="{ on, attrs }">
                                             <v-btn
+                                                color="secondary"
+                                                class="text-capitalize"
                                                 depressed
-                                                large
-                                                color="primary"
                                                 v-bind="attrs"
                                                 v-on="on"
-                                                rounded
-                                                class="text-capitalize"
-                                            >
-                                                Add Shop
-                                            </v-btn>
+                                            >Add Shop</v-btn>
                                         </template>
 
                                         <v-card class="pb-5">
@@ -75,9 +44,7 @@
                                                     @click="addDialog = false"
                                                     class="ml-auto mr-2 title text-lowercase"
                                                     style="transform: rotate(45deg)"
-                                                >
-                                                    +
-                                                </v-btn>
+                                                >+</v-btn>
                                             </v-card-title>
                                             <v-divider></v-divider>
 
@@ -85,8 +52,7 @@
                                                 <v-form class="pt-5">
                                                     <label
                                                         class="font-weight-bold ml-5"
-                                                        >Select Package</label
-                                                    >
+                                                    >Select Package</label>
                                                     <v-select
                                                         v-model="packageValue"
                                                         :items="packages"
@@ -96,12 +62,11 @@
                                                         dense
                                                         rounded
                                                     ></v-select>
-                                                    <label
-                                                        class="font-weight-bold ml-5"
-                                                        >Please choose category
+                                                    <label class="font-weight-bold ml-5">
+                                                        Please choose category
                                                         where gifts of company
-                                                        will show</label
-                                                    >
+                                                        will show
+                                                    </label>
                                                     <v-select
                                                         v-model="gift_category"
                                                         :items="gift_categories"
@@ -113,8 +78,19 @@
                                                     ></v-select>
                                                     <label
                                                         class="font-weight-bold ml-5"
-                                                        >Name of Shop</label
-                                                    >
+                                                    >Name of Shop</label>
+                                                    <v-text-field
+                                                        placeholder="Name"
+                                                        required
+                                                        outlined
+                                                        dense
+                                                        rounded
+                                                        class="mt-1 mb-0"
+                                                    ></v-text-field>
+                                                    <label class="font-weight-bold ml-5">
+                                                        Name of Shop(in
+                                                        app)
+                                                    </label>
                                                     <v-text-field
                                                         placeholder="Name"
                                                         required
@@ -125,21 +101,7 @@
                                                     ></v-text-field>
                                                     <label
                                                         class="font-weight-bold ml-5"
-                                                        >Name of Shop(in
-                                                        app)</label
-                                                    >
-                                                    <v-text-field
-                                                        placeholder="Name"
-                                                        required
-                                                        outlined
-                                                        dense
-                                                        rounded
-                                                        class="mt-1 mb-0"
-                                                    ></v-text-field>
-                                                    <label
-                                                        class="font-weight-bold ml-5"
-                                                        >Select Region</label
-                                                    >
+                                                    >Select Region</label>
                                                     <v-select
                                                         v-model="region"
                                                         :items="regions"
@@ -167,9 +129,7 @@
                                                                         icons.mdiPlusThick
                                                                     "
                                                                     color="primary"
-                                                                >
-                                                                </v-icon>
-                                                                Add Region
+                                                                ></v-icon>Add Region
                                                             </v-btn>
                                                         </v-card-title>
                                                         <v-card-text
@@ -181,9 +141,7 @@
                                                         >
                                                             <h4
                                                                 class="subtitle-2 font-weight-medium"
-                                                            >
-                                                                Add Region
-                                                            </h4>
+                                                            >Add Region</h4>
                                                             <v-card
                                                                 class="pt-2 d-inline-block"
                                                                 flat
@@ -202,8 +160,7 @@
                                                                     @keypress="
                                                                         writtenRegion = true
                                                                     "
-                                                                >
-                                                                </v-text-field>
+                                                                ></v-text-field>
                                                             </v-card>
                                                             <v-icon
                                                                 v-text="
@@ -224,14 +181,12 @@
                                                                     new_region =
                                                                         '';
                                                                 "
-                                                            >
-                                                            </v-icon>
+                                                            ></v-icon>
                                                         </v-card-text>
                                                     </v-card>
                                                     <label
                                                         class="font-weight-bold d-block ml-5"
-                                                        >Password of Shop</label
-                                                    >
+                                                    >Password of Shop</label>
                                                     <v-text-field
                                                         placeholder="Code"
                                                         required
@@ -240,11 +195,10 @@
                                                         rounded
                                                         class="mt-1 mb-0"
                                                     ></v-text-field>
-                                                    <label
-                                                        class="font-weight-bold ml-5"
-                                                        >Email of Shop(in
-                                                        app)</label
-                                                    >
+                                                    <label class="font-weight-bold ml-5">
+                                                        Email of Shop(in
+                                                        app)
+                                                    </label>
                                                     <v-text-field
                                                         placeholder="Email"
                                                         required
@@ -255,8 +209,7 @@
                                                     ></v-text-field>
                                                     <label
                                                         class="font-weight-bold ml-5"
-                                                        >Address of Shop</label
-                                                    >
+                                                    >Address of Shop</label>
                                                     <v-text-field
                                                         placeholder="Address"
                                                         required
@@ -265,10 +218,7 @@
                                                         rounded
                                                         class="mt-1 mb-0"
                                                     ></v-text-field>
-                                                    <label
-                                                        class="font-weight-bold ml-5"
-                                                        >T.K</label
-                                                    >
+                                                    <label class="font-weight-bold ml-5">T.K</label>
                                                     <v-text-field
                                                         placeholder="T.K"
                                                         required
@@ -279,8 +229,7 @@
                                                     ></v-text-field>
                                                     <label
                                                         class="font-weight-bold ml-5"
-                                                        >Number of Shop</label
-                                                    >
+                                                    >Number of Shop</label>
                                                     <v-text-field
                                                         placeholder="Number"
                                                         required
@@ -289,10 +238,7 @@
                                                         rounded
                                                         class="mt-1 mb-0"
                                                     ></v-text-field>
-                                                    <label
-                                                        class="font-weight-bold ml-5"
-                                                        >Longitude</label
-                                                    >
+                                                    <label class="font-weight-bold ml-5">Longitude</label>
                                                     <v-text-field
                                                         placeholder="x"
                                                         required
@@ -301,10 +247,7 @@
                                                         rounded
                                                         class="mt-1 mb-0"
                                                     ></v-text-field>
-                                                    <label
-                                                        class="font-weight-bold ml-5"
-                                                        >Latitude</label
-                                                    >
+                                                    <label class="font-weight-bold ml-5">Latitude</label>
                                                     <v-text-field
                                                         placeholder="y"
                                                         required
@@ -313,10 +256,7 @@
                                                         rounded
                                                         class="mt-1 mb-0"
                                                     ></v-text-field>
-                                                    <label
-                                                        class="font-weight-bold ml-5"
-                                                        >ID</label
-                                                    >
+                                                    <label class="font-weight-bold ml-5">ID</label>
                                                     <v-text-field
                                                         placeholder="ID"
                                                         required
@@ -341,45 +281,28 @@
                                                     class="mr-2 text-capitalize"
                                                     small
                                                     rounded
-                                                >
-                                                    Cancel
-                                                </v-btn>
+                                                >Cancel</v-btn>
                                                 <v-btn
                                                     color="primary"
                                                     @click="addDialog = false"
                                                     class="text-capitalize"
                                                     small
                                                     rounded
-                                                >
-                                                    Add Shop
-                                                </v-btn>
+                                                >Add Shop</v-btn>
                                             </v-card>
                                         </v-card>
                                     </v-dialog>
                                 </v-col>
-                                <v-col
-                                    cols="12"
-                                    sm="auto"
-                                    class="ml-sm-auto pb-0"
-                                >
-                                    <v-dialog
-                                        v-model="rightsDialog"
-                                        width="60%"
-                                    >
-                                        <template
-                                            v-slot:activator="{ on, attrs }"
-                                        >
+                                <v-col cols="12" sm="auto" class="ml-sm-auto pb-0">
+                                    <v-dialog v-model="rightsDialog" width="60%">
+                                        <template v-slot:activator="{ on, attrs }">
                                             <v-btn
+                                                color="secondary"
+                                                class="text-capitalize"
                                                 depressed
-                                                large
-                                                color="primary"
                                                 v-bind="attrs"
                                                 v-on="on"
-                                                rounded
-                                                class="text-capitalize"
-                                            >
-                                                Rights
-                                            </v-btn>
+                                            >Rights</v-btn>
                                         </template>
 
                                         <v-card class="pb-5">
@@ -395,16 +318,12 @@
                                                     "
                                                     class="ml-auto mr-2 title text-lowercase"
                                                     style="transform: rotate(45deg)"
-                                                >
-                                                    +
-                                                </v-btn>
+                                                >+</v-btn>
                                             </v-card-title>
                                             <v-divider></v-divider>
 
                                             <v-card-text>
-                                                <h4
-                                                    class="subtitle-2 font-weight-bold mt-10"
-                                                >
+                                                <h4 class="subtitle-2 font-weight-bold mt-10">
                                                     Select Companies which you
                                                     want to be able to Add /
                                                     Delete
@@ -416,8 +335,7 @@
                                                     class="mt-5"
                                                     show-select
                                                     item-key="company"
-                                                >
-                                                </v-data-table>
+                                                ></v-data-table>
                                             </v-card-text>
 
                                             <v-card
@@ -435,9 +353,7 @@
                                                     class="mr-2 text-capitalize"
                                                     small
                                                     rounded
-                                                >
-                                                    Cancel
-                                                </v-btn>
+                                                >Cancel</v-btn>
                                                 <v-btn
                                                     color="primary"
                                                     @click="
@@ -446,9 +362,7 @@
                                                     class="text-capitalize"
                                                     small
                                                     rounded
-                                                >
-                                                    Save
-                                                </v-btn>
+                                                >Save</v-btn>
                                             </v-card>
                                         </v-card>
                                     </v-dialog>
@@ -477,159 +391,9 @@
                                     :items="branchesData"
                                     :footer-props="{ itemsPerPageOptions }"
                                 >
-                                    <template v-slot:header.name>
-                                        <v-text-field
-                                            label="Search"
-                                            outlined
-                                            dense
-                                            rounded
-                                            hide-details
-                                            :prepend-inner-icon="
-                                                icons.mdiMagnify
-                                            "
-                                        ></v-text-field>
-                                        <h4
-                                            class="subtitle-2 font-weight-bold d-inline-block mt-2"
-                                        >
-                                            Name
-                                        </h4>
-                                    </template>
-                                    <template v-slot:header.name_of_shop>
-                                        <v-text-field
-                                            label="Search"
-                                            outlined
-                                            dense
-                                            rounded
-                                            hide-details
-                                            :prepend-inner-icon="
-                                                icons.mdiMagnify
-                                            "
-                                            class="pt-10"
-                                        ></v-text-field>
-                                        <h4
-                                            class="subtitle-2 font-weight-bold d-inline-block mt-2"
-                                        >
-                                            Name of Shop(in app)
-                                        </h4>
-                                    </template>
-                                    <template v-slot:header.map>
-                                        <v-sheet height="60px"> </v-sheet>
-                                        <h4
-                                            class="subtitle-2 font-weight-bold d-inline-block mt-2"
-                                        >
-                                            Map
-                                        </h4>
-                                    </template>
-                                    <template v-slot:header.payments>
-                                        <v-sheet height="60px"> </v-sheet>
-                                        <h4
-                                            class="subtitle-2 font-weight-bold d-inline-block mt-2"
-                                        >
-                                            Payments
-                                        </h4>
-                                    </template>
-                                    <template v-slot:header.z>
-                                        <v-sheet height="60px"> </v-sheet>
-                                        <h4
-                                            class="subtitle-2 font-weight-bold d-inline-block mt-2"
-                                        >
-                                            Z
-                                        </h4>
-                                    </template>
-                                    <template v-slot:header.banks>
-                                        <v-text-field
-                                            label="Search"
-                                            outlined
-                                            dense
-                                            rounded
-                                            hide-details
-                                            :prepend-inner-icon="
-                                                icons.mdiMagnify
-                                            "
-                                        ></v-text-field>
-                                        <h4
-                                            class="subtitle-2 font-weight-bold d-inline-block mt-2"
-                                        >
-                                            Banks
-                                        </h4>
-                                    </template>
-                                    <template v-slot:header.address>
-                                        <v-text-field
-                                            label="Search"
-                                            outlined
-                                            dense
-                                            rounded
-                                            hide-details
-                                            :prepend-inner-icon="
-                                                icons.mdiMagnify
-                                            "
-                                        ></v-text-field>
-                                        <h4
-                                            class="subtitle-2 font-weight-bold d-inline-block mt-2"
-                                        >
-                                            Address
-                                        </h4>
-                                    </template>
-                                    <template v-slot:header.phone>
-                                        <v-text-field
-                                            label="Search"
-                                            outlined
-                                            dense
-                                            rounded
-                                            hide-details
-                                            :prepend-inner-icon="
-                                                icons.mdiMagnify
-                                            "
-                                        ></v-text-field>
-                                        <h4
-                                            class="subtitle-2 font-weight-bold d-inline-block mt-2"
-                                        >
-                                            Phone
-                                        </h4>
-                                    </template>
-                                    <template v-slot:header.registration_date>
-                                        <v-text-field
-                                            label="Search"
-                                            outlined
-                                            dense
-                                            rounded
-                                            hide-details
-                                            :prepend-inner-icon="
-                                                icons.mdiMagnify
-                                            "
-                                            class="pt-10"
-                                        ></v-text-field>
-                                        <h4
-                                            class="subtitle-2 font-weight-bold d-inline-block mt-2"
-                                        >
-                                            Registration Date
-                                        </h4>
-                                    </template>
-                                    <template v-slot:header.active>
-                                        <v-sheet height="60px"> </v-sheet>
-                                        <h4
-                                            class="subtitle-2 font-weight-bold d-inline-block mt-2"
-                                        >
-                                            Active
-                                        </h4>
-                                    </template>
-                                    <template v-slot:header.enter>
-                                        <v-sheet height="60px"> </v-sheet>
-                                        <h4
-                                            class="subtitle-2 font-weight-bold d-inline-block mt-2"
-                                        >
-                                            Enter
-                                        </h4>
-                                    </template>
-
                                     <template v-slot:item.enter>
-                                        <v-dialog
-                                            v-model="editDialog"
-                                            width="60%"
-                                        >
-                                            <template
-                                                v-slot:activator="{ on, attrs }"
-                                            >
+                                        <v-dialog v-model="editDialog" width="60%">
+                                            <template v-slot:activator="{ on, attrs }">
                                                 <v-btn
                                                     color="primary"
                                                     dark
@@ -661,18 +425,13 @@
                                                         "
                                                         class="ml-auto mr-2 title text-lowercase"
                                                         style="transform: rotate(45deg)"
-                                                    >
-                                                        +
-                                                    </v-btn>
+                                                    >+</v-btn>
                                                 </v-card-title>
                                                 <v-divider></v-divider>
 
                                                 <v-card-text>
                                                     <v-form class="pt-5">
-                                                        <label
-                                                            class="font-weight-bold ml-5"
-                                                            >ID</label
-                                                        >
+                                                        <label class="font-weight-bold ml-5">ID</label>
                                                         <v-text-field
                                                             placeholder="ID"
                                                             required
@@ -681,13 +440,12 @@
                                                             rounded
                                                             class="mt-1 mb-0"
                                                         ></v-text-field>
-                                                        <label
-                                                            class="font-weight-bold ml-5"
-                                                            >Please choose
+                                                        <label class="font-weight-bold ml-5">
+                                                            Please choose
                                                             category where gifts
                                                             of company will
-                                                            show</label
-                                                        >
+                                                            show
+                                                        </label>
                                                         <v-select
                                                             v-model="
                                                                 gift_category
@@ -703,11 +461,10 @@
                                                             dense
                                                             rounded
                                                         ></v-select>
-                                                        <label
-                                                            class="font-weight-bold ml-5"
-                                                            >Select
-                                                            Package</label
-                                                        >
+                                                        <label class="font-weight-bold ml-5">
+                                                            Select
+                                                            Package
+                                                        </label>
                                                         <v-select
                                                             v-model="
                                                                 packageValue
@@ -723,8 +480,7 @@
                                                         ></v-select>
                                                         <label
                                                             class="font-weight-bold ml-5"
-                                                            >Name of Shop</label
-                                                        >
+                                                        >Name of Shop</label>
                                                         <v-text-field
                                                             placeholder="Name"
                                                             required
@@ -733,11 +489,10 @@
                                                             rounded
                                                             class="mt-1 mb-0"
                                                         ></v-text-field>
-                                                        <label
-                                                            class="font-weight-bold ml-5"
-                                                            >Name of Shop(in
-                                                            app)</label
-                                                        >
+                                                        <label class="font-weight-bold ml-5">
+                                                            Name of Shop(in
+                                                            app)
+                                                        </label>
                                                         <v-text-field
                                                             placeholder="Name"
                                                             required
@@ -746,11 +501,10 @@
                                                             rounded
                                                             class="mt-1 mb-0"
                                                         ></v-text-field>
-                                                        <label
-                                                            class="font-weight-bold ml-5"
-                                                            >Select
-                                                            Region</label
-                                                        >
+                                                        <label class="font-weight-bold ml-5">
+                                                            Select
+                                                            Region
+                                                        </label>
                                                         <v-select
                                                             v-model="region"
                                                             :items="regions"
@@ -778,9 +532,7 @@
                                                                             icons.mdiPlusThick
                                                                         "
                                                                         color="primary"
-                                                                    >
-                                                                    </v-icon>
-                                                                    Add Region
+                                                                    ></v-icon>Add Region
                                                                 </v-btn>
                                                             </v-card-title>
                                                             <v-card-text
@@ -792,9 +544,7 @@
                                                             >
                                                                 <h4
                                                                     class="subtitle-2 font-weight-medium"
-                                                                >
-                                                                    Add Region
-                                                                </h4>
+                                                                >Add Region</h4>
                                                                 <v-card
                                                                     class="pt-2 d-inline-block"
                                                                     flat
@@ -813,8 +563,7 @@
                                                                         @keypress="
                                                                             writtenRegion = true
                                                                         "
-                                                                    >
-                                                                    </v-text-field>
+                                                                    ></v-text-field>
                                                                 </v-card>
                                                                 <v-icon
                                                                     v-text="
@@ -835,15 +584,15 @@
                                                                         new_region2 =
                                                                             '';
                                                                     "
-                                                                >
-                                                                </v-icon>
+                                                                ></v-icon>
                                                             </v-card-text>
                                                         </v-card>
                                                         <label
                                                             class="font-weight-bold d-block ml-5"
-                                                            >Password of
-                                                            Shop</label
                                                         >
+                                                            Password of
+                                                            Shop
+                                                        </label>
                                                         <v-text-field
                                                             placeholder="Code"
                                                             required
@@ -852,11 +601,10 @@
                                                             rounded
                                                             class="mt-1 mb-0"
                                                         ></v-text-field>
-                                                        <label
-                                                            class="font-weight-bold ml-5"
-                                                            >Email of Shop(in
-                                                            app)</label
-                                                        >
+                                                        <label class="font-weight-bold ml-5">
+                                                            Email of Shop(in
+                                                            app)
+                                                        </label>
                                                         <v-text-field
                                                             placeholder="Email"
                                                             required
@@ -865,11 +613,10 @@
                                                             rounded
                                                             class="mt-1 mb-0"
                                                         ></v-text-field>
-                                                        <label
-                                                            class="font-weight-bold ml-5"
-                                                            >Address of
-                                                            Shop</label
-                                                        >
+                                                        <label class="font-weight-bold ml-5">
+                                                            Address of
+                                                            Shop
+                                                        </label>
                                                         <v-text-field
                                                             placeholder="Address"
                                                             required
@@ -878,10 +625,7 @@
                                                             rounded
                                                             class="mt-1 mb-0"
                                                         ></v-text-field>
-                                                        <label
-                                                            class="font-weight-bold ml-5"
-                                                            >T.K</label
-                                                        >
+                                                        <label class="font-weight-bold ml-5">T.K</label>
                                                         <v-text-field
                                                             placeholder="T.K"
                                                             required
@@ -890,11 +634,10 @@
                                                             rounded
                                                             class="mt-1 mb-0"
                                                         ></v-text-field>
-                                                        <label
-                                                            class="font-weight-bold ml-5"
-                                                            >Number of
-                                                            Shop</label
-                                                        >
+                                                        <label class="font-weight-bold ml-5">
+                                                            Number of
+                                                            Shop
+                                                        </label>
                                                         <v-text-field
                                                             placeholder="Number"
                                                             required
@@ -905,8 +648,7 @@
                                                         ></v-text-field>
                                                         <label
                                                             class="font-weight-bold ml-5"
-                                                            >Longitude</label
-                                                        >
+                                                        >Longitude</label>
                                                         <v-text-field
                                                             placeholder="x"
                                                             required
@@ -917,8 +659,7 @@
                                                         ></v-text-field>
                                                         <label
                                                             class="font-weight-bold ml-5"
-                                                            >Latitude</label
-                                                        >
+                                                        >Latitude</label>
                                                         <v-text-field
                                                             placeholder="y"
                                                             required
@@ -930,9 +671,7 @@
                                                         <v-row>
                                                             <label
                                                                 class="font-weight-bold ml-5 mr-1"
-                                                            >
-                                                                Active
-                                                            </label>
+                                                            >Active</label>
                                                             <v-checkbox
                                                                 class="d-inline-block ma-0 pa-0"
                                                             ></v-checkbox>
@@ -940,9 +679,7 @@
                                                         <v-row>
                                                             <label
                                                                 class="font-weight-bold ml-5 mr-1"
-                                                            >
-                                                                General Discount
-                                                            </label>
+                                                            >General Discount</label>
                                                             <v-checkbox
                                                                 class="d-inline-block ma-0 pa-0"
                                                             ></v-checkbox>
@@ -962,9 +699,7 @@
                                                         <v-row>
                                                             <label
                                                                 class="font-weight-bold ml-5 mr-1"
-                                                            >
-                                                                Receipt number
-                                                            </label>
+                                                            >Receipt number</label>
                                                             <v-checkbox
                                                                 class="d-inline-block ma-0 pa-0"
                                                             ></v-checkbox>
@@ -972,9 +707,7 @@
                                                         <v-row>
                                                             <label
                                                                 class="font-weight-bold ml-5 mr-1 d-block"
-                                                            >
-                                                                Loyalty Programs
-                                                            </label>
+                                                            >Loyalty Programs</label>
                                                         </v-row>
                                                         <v-row class="ma-2">
                                                             <v-checkbox
@@ -982,25 +715,19 @@
                                                             ></v-checkbox>
                                                             <h4
                                                                 class="d-inline-block ma-0 mr-5 pa-0"
-                                                            >
-                                                                Επιστροφή
-                                                            </h4>
+                                                            >Επιστροφή</h4>
                                                             <v-checkbox
                                                                 class="d-inline-block ma-0 pa-0"
                                                             ></v-checkbox>
                                                             <h4
                                                                 class="d-inline-block ma-0 mr-5 pa-0"
-                                                            >
-                                                                go4more
-                                                            </h4>
+                                                            >go4more</h4>
                                                             <v-checkbox
                                                                 class="d-inline-block ma-0 pa-0"
                                                             ></v-checkbox>
                                                             <h4
                                                                 class="d-inline-block ma-0 mr-5 pa-0"
-                                                            >
-                                                                Alpha Bank Bonus
-                                                            </h4>
+                                                            >Alpha Bank Bonus</h4>
                                                         </v-row>
                                                     </v-form>
                                                 </v-card-text>
@@ -1020,9 +747,7 @@
                                                         class="mr-2 text-capitalize"
                                                         small
                                                         rounded
-                                                    >
-                                                        Cancel
-                                                    </v-btn>
+                                                    >Cancel</v-btn>
                                                     <v-btn
                                                         color="primary"
                                                         @click="
@@ -1031,19 +756,12 @@
                                                         class="text-capitalize"
                                                         small
                                                         rounded
-                                                    >
-                                                        Change
-                                                    </v-btn>
+                                                    >Change</v-btn>
                                                 </v-card>
                                             </v-card>
                                         </v-dialog>
-                                        <v-dialog
-                                            v-model="verificationDialog"
-                                            width="50%"
-                                        >
-                                            <template
-                                                v-slot:activator="{ on, attrs }"
-                                            >
+                                        <v-dialog v-model="verificationDialog" width="50%">
+                                            <template v-slot:activator="{ on, attrs }">
                                                 <v-btn
                                                     color="primary"
                                                     dark
@@ -1076,25 +794,19 @@
                                                         "
                                                         class="ml-auto mr-2 title text-lowercase"
                                                         style="transform: rotate(45deg)"
-                                                    >
-                                                        +
-                                                    </v-btn>
+                                                    >+</v-btn>
                                                 </v-card-title>
                                                 <v-divider></v-divider>
 
                                                 <v-card-text>
-                                                    <h4
-                                                        class="subtitle-2 font-weight-medium mt-5"
-                                                    >
+                                                    <h4 class="subtitle-2 font-weight-medium mt-5">
                                                         Want to go to your
                                                         substitute on the road
                                                         {{}}.
                                                     </h4>
                                                     <h4
                                                         class="subtitle-2 font-weight-medium mt-5 mb-5"
-                                                    >
-                                                        Do you want to continue?
-                                                    </h4>
+                                                    >Do you want to continue?</h4>
                                                 </v-card-text>
 
                                                 <v-divider></v-divider>
@@ -1114,9 +826,7 @@
                                                         class="mr-2 text-capitalize"
                                                         small
                                                         rounded
-                                                    >
-                                                        Cancel
-                                                    </v-btn>
+                                                    >Cancel</v-btn>
                                                     <v-btn
                                                         color="primary"
                                                         @click="
@@ -1125,19 +835,12 @@
                                                         class="text-capitalize"
                                                         small
                                                         rounded
-                                                    >
-                                                        Ok
-                                                    </v-btn>
+                                                    >Ok</v-btn>
                                                 </v-card>
                                             </v-card>
                                         </v-dialog>
-                                        <v-dialog
-                                            v-model="deleteDialog"
-                                            width="50%"
-                                        >
-                                            <template
-                                                v-slot:activator="{ on, attrs }"
-                                            >
+                                        <v-dialog v-model="deleteDialog" width="50%">
+                                            <template v-slot:activator="{ on, attrs }">
                                                 <v-btn
                                                     color="primary"
                                                     dark
@@ -1169,27 +872,19 @@
                                                         "
                                                         class="ml-auto mr-2 title text-lowercase"
                                                         style="transform: rotate(45deg)"
-                                                    >
-                                                        +
-                                                    </v-btn>
+                                                    >+</v-btn>
                                                 </v-card-title>
                                                 <v-divider></v-divider>
 
                                                 <v-card-text>
-                                                    <h4
-                                                        class="subtitle-2 font-weight-medium mt-5"
-                                                    >
+                                                    <h4 class="subtitle-2 font-weight-medium mt-5">
                                                         Are you sure you want to
                                                         delete {{}}.
                                                     </h4>
                                                     <h4
                                                         class="subtitle-2 font-weight-medium mt-5 mb-4"
-                                                    >
-                                                        Do you want to continue?
-                                                    </h4>
-                                                    <v-checkbox
-                                                        class="d-inline-block ma-0"
-                                                    ></v-checkbox>
+                                                    >Do you want to continue?</h4>
+                                                    <v-checkbox class="d-inline-block ma-0"></v-checkbox>
                                                     <h4
                                                         class="subtitle-2 font-weight-medium d-inline-block"
                                                         style="position: relative; bottom: 7px"
@@ -1214,9 +909,7 @@
                                                         class="mr-2 text-capitalize"
                                                         small
                                                         rounded
-                                                    >
-                                                        Cancel
-                                                    </v-btn>
+                                                    >Cancel</v-btn>
                                                     <v-btn
                                                         color="primary"
                                                         @click="
@@ -1225,9 +918,7 @@
                                                         class="text-capitalize"
                                                         small
                                                         rounded
-                                                    >
-                                                        Ok
-                                                    </v-btn>
+                                                    >Ok</v-btn>
                                                 </v-card>
                                             </v-card>
                                         </v-dialog>
@@ -1235,24 +926,19 @@
                                 </v-data-table>
                             </v-card>
                         </v-tab-item>
+
                         <v-tab-item>
                             <v-row class="pa-5 pt-2 pb-1">
                                 <v-col cols="auto pb-0">
                                     <v-dialog v-model="addDialog" width="60%">
-                                        <template
-                                            v-slot:activator="{ on, attrs }"
-                                        >
+                                        <template v-slot:activator="{ on, attrs }">
                                             <v-btn
+                                                color="secondary"
+                                                class="text-capitalize"
                                                 depressed
-                                                large
-                                                color="primary"
                                                 v-bind="attrs"
                                                 v-on="on"
-                                                rounded
-                                                class="text-capitalize"
-                                            >
-                                                Add Shop
-                                            </v-btn>
+                                            >Add Shop</v-btn>
                                         </template>
 
                                         <v-card class="pb-5">
@@ -1267,9 +953,7 @@
                                                     @click="addDialog = false"
                                                     class="ml-auto mr-2 title text-lowercase"
                                                     style="transform: rotate(45deg)"
-                                                >
-                                                    +
-                                                </v-btn>
+                                                >+</v-btn>
                                             </v-card-title>
                                             <v-divider></v-divider>
 
@@ -1277,8 +961,7 @@
                                                 <v-form class="pt-5">
                                                     <label
                                                         class="font-weight-bold ml-5"
-                                                        >Select Package</label
-                                                    >
+                                                    >Select Package</label>
                                                     <v-select
                                                         v-model="packageValue"
                                                         :items="packages"
@@ -1288,12 +971,11 @@
                                                         dense
                                                         rounded
                                                     ></v-select>
-                                                    <label
-                                                        class="font-weight-bold ml-5"
-                                                        >Please choose category
+                                                    <label class="font-weight-bold ml-5">
+                                                        Please choose category
                                                         where gifts of company
-                                                        will show</label
-                                                    >
+                                                        will show
+                                                    </label>
                                                     <v-select
                                                         v-model="gift_category"
                                                         :items="gift_categories"
@@ -1305,8 +987,19 @@
                                                     ></v-select>
                                                     <label
                                                         class="font-weight-bold ml-5"
-                                                        >Name of Shop</label
-                                                    >
+                                                    >Name of Shop</label>
+                                                    <v-text-field
+                                                        placeholder="Name"
+                                                        required
+                                                        outlined
+                                                        dense
+                                                        rounded
+                                                        class="mt-1 mb-0"
+                                                    ></v-text-field>
+                                                    <label class="font-weight-bold ml-5">
+                                                        Name of Shop(in
+                                                        app)
+                                                    </label>
                                                     <v-text-field
                                                         placeholder="Name"
                                                         required
@@ -1317,21 +1010,7 @@
                                                     ></v-text-field>
                                                     <label
                                                         class="font-weight-bold ml-5"
-                                                        >Name of Shop(in
-                                                        app)</label
-                                                    >
-                                                    <v-text-field
-                                                        placeholder="Name"
-                                                        required
-                                                        outlined
-                                                        dense
-                                                        rounded
-                                                        class="mt-1 mb-0"
-                                                    ></v-text-field>
-                                                    <label
-                                                        class="font-weight-bold ml-5"
-                                                        >Select Region</label
-                                                    >
+                                                    >Select Region</label>
                                                     <v-select
                                                         v-model="region"
                                                         :items="regions"
@@ -1359,9 +1038,7 @@
                                                                         icons.mdiPlusThick
                                                                     "
                                                                     color="primary"
-                                                                >
-                                                                </v-icon>
-                                                                Add Region
+                                                                ></v-icon>Add Region
                                                             </v-btn>
                                                         </v-card-title>
                                                         <v-card-text
@@ -1373,9 +1050,7 @@
                                                         >
                                                             <h4
                                                                 class="subtitle-2 font-weight-medium"
-                                                            >
-                                                                Add Region
-                                                            </h4>
+                                                            >Add Region</h4>
                                                             <v-card
                                                                 class="pt-2 d-inline-block"
                                                                 flat
@@ -1394,8 +1069,7 @@
                                                                     @keypress="
                                                                         writtenRegion = true
                                                                     "
-                                                                >
-                                                                </v-text-field>
+                                                                ></v-text-field>
                                                             </v-card>
                                                             <v-icon
                                                                 v-text="
@@ -1416,14 +1090,12 @@
                                                                     new_region =
                                                                         '';
                                                                 "
-                                                            >
-                                                            </v-icon>
+                                                            ></v-icon>
                                                         </v-card-text>
                                                     </v-card>
                                                     <label
                                                         class="font-weight-bold d-block ml-5"
-                                                        >Password of Shop</label
-                                                    >
+                                                    >Password of Shop</label>
                                                     <v-text-field
                                                         placeholder="Code"
                                                         required
@@ -1432,11 +1104,10 @@
                                                         rounded
                                                         class="mt-1 mb-0"
                                                     ></v-text-field>
-                                                    <label
-                                                        class="font-weight-bold ml-5"
-                                                        >Email of Shop(in
-                                                        app)</label
-                                                    >
+                                                    <label class="font-weight-bold ml-5">
+                                                        Email of Shop(in
+                                                        app)
+                                                    </label>
                                                     <v-text-field
                                                         placeholder="Email"
                                                         required
@@ -1447,8 +1118,7 @@
                                                     ></v-text-field>
                                                     <label
                                                         class="font-weight-bold ml-5"
-                                                        >Address of Shop</label
-                                                    >
+                                                    >Address of Shop</label>
                                                     <v-text-field
                                                         placeholder="Address"
                                                         required
@@ -1457,10 +1127,7 @@
                                                         rounded
                                                         class="mt-1 mb-0"
                                                     ></v-text-field>
-                                                    <label
-                                                        class="font-weight-bold ml-5"
-                                                        >T.K</label
-                                                    >
+                                                    <label class="font-weight-bold ml-5">T.K</label>
                                                     <v-text-field
                                                         placeholder="T.K"
                                                         required
@@ -1471,8 +1138,7 @@
                                                     ></v-text-field>
                                                     <label
                                                         class="font-weight-bold ml-5"
-                                                        >Number of Shop</label
-                                                    >
+                                                    >Number of Shop</label>
                                                     <v-text-field
                                                         placeholder="Number"
                                                         required
@@ -1481,10 +1147,7 @@
                                                         rounded
                                                         class="mt-1 mb-0"
                                                     ></v-text-field>
-                                                    <label
-                                                        class="font-weight-bold ml-5"
-                                                        >Longitude</label
-                                                    >
+                                                    <label class="font-weight-bold ml-5">Longitude</label>
                                                     <v-text-field
                                                         placeholder="x"
                                                         required
@@ -1493,10 +1156,7 @@
                                                         rounded
                                                         class="mt-1 mb-0"
                                                     ></v-text-field>
-                                                    <label
-                                                        class="font-weight-bold ml-5"
-                                                        >Latitude</label
-                                                    >
+                                                    <label class="font-weight-bold ml-5">Latitude</label>
                                                     <v-text-field
                                                         placeholder="y"
                                                         required
@@ -1505,10 +1165,7 @@
                                                         rounded
                                                         class="mt-1 mb-0"
                                                     ></v-text-field>
-                                                    <label
-                                                        class="font-weight-bold ml-5"
-                                                        >ID</label
-                                                    >
+                                                    <label class="font-weight-bold ml-5">ID</label>
                                                     <v-text-field
                                                         placeholder="ID"
                                                         required
@@ -1533,41 +1190,28 @@
                                                     class="mr-2 text-capitalize"
                                                     small
                                                     rounded
-                                                >
-                                                    Cancel
-                                                </v-btn>
+                                                >Cancel</v-btn>
                                                 <v-btn
                                                     color="primary"
                                                     @click="addDialog = false"
                                                     class="text-capitalize"
                                                     small
                                                     rounded
-                                                >
-                                                    Add Shop
-                                                </v-btn>
+                                                >Add Shop</v-btn>
                                             </v-card>
                                         </v-card>
                                     </v-dialog>
                                 </v-col>
                                 <v-col cols="auto" class="ml-auto pb-0">
-                                    <v-dialog
-                                        v-model="rightsDialog"
-                                        width="60%"
-                                    >
-                                        <template
-                                            v-slot:activator="{ on, attrs }"
-                                        >
+                                    <v-dialog v-model="rightsDialog" width="60%">
+                                        <template v-slot:activator="{ on, attrs }">
                                             <v-btn
+                                                color="secondary"
+                                                class="text-capitalize"
                                                 depressed
-                                                large
-                                                color="primary"
                                                 v-bind="attrs"
                                                 v-on="on"
-                                                rounded
-                                                class="text-capitalize"
-                                            >
-                                                Rights
-                                            </v-btn>
+                                            >Rights</v-btn>
                                         </template>
 
                                         <v-card class="pb-5">
@@ -1583,16 +1227,12 @@
                                                     "
                                                     class="ml-auto mr-2 title text-lowercase"
                                                     style="transform: rotate(45deg)"
-                                                >
-                                                    +
-                                                </v-btn>
+                                                >+</v-btn>
                                             </v-card-title>
                                             <v-divider></v-divider>
 
                                             <v-card-text>
-                                                <h4
-                                                    class="subtitle-2 font-weight-bold mt-10"
-                                                >
+                                                <h4 class="subtitle-2 font-weight-bold mt-10">
                                                     Select Companies which you
                                                     want to be able to Add /
                                                     Delete
@@ -1604,8 +1244,7 @@
                                                     class="mt-5"
                                                     show-select
                                                     item-key="company"
-                                                >
-                                                </v-data-table>
+                                                ></v-data-table>
                                             </v-card-text>
 
                                             <v-card
@@ -1623,9 +1262,7 @@
                                                     class="mr-2 text-capitalize"
                                                     small
                                                     rounded
-                                                >
-                                                    Cancel
-                                                </v-btn>
+                                                >Cancel</v-btn>
                                                 <v-btn
                                                     color="primary"
                                                     @click="
@@ -1634,9 +1271,7 @@
                                                     class="text-capitalize"
                                                     small
                                                     rounded
-                                                >
-                                                    Save
-                                                </v-btn>
+                                                >Save</v-btn>
                                             </v-card>
                                         </v-card>
                                     </v-dialog>
@@ -1664,118 +1299,10 @@
                                     :headers="financialHeaders"
                                     :items="financialData"
                                     :footer-props="{ itemsPerPageOptions }"
-                                >
-                                    <template v-slot:header.name>
-                                        <v-text-field
-                                            label="Search"
-                                            outlined
-                                            dense
-                                            rounded
-                                            hide-details
-                                            :prepend-inner-icon="
-                                                icons.mdiMagnify
-                                            "
-                                            class="mt-2 mb-2"
-                                        ></v-text-field>
-                                        <h4
-                                            class="subtitle-2 mb-2 font-weight-bold d-inline-block"
-                                        >
-                                            Name
-                                        </h4>
-                                    </template>
-                                    <template v-slot:header.name_of_shop>
-                                        <v-text-field
-                                            label="Search"
-                                            outlined
-                                            dense
-                                            rounded
-                                            hide-details
-                                            :prepend-inner-icon="
-                                                icons.mdiMagnify
-                                            "
-                                            class="mt-2 mb-2"
-                                        ></v-text-field>
-                                        <h4
-                                            class="subtitle-2 mb-2 font-weight-bold d-inline-block"
-                                        >
-                                            Name of Shop(i app)
-                                        </h4>
-                                    </template>
-                                    <template v-slot:header.customer>
-                                        <v-text-field
-                                            label="Search"
-                                            outlined
-                                            dense
-                                            rounded
-                                            hide-details
-                                            :prepend-inner-icon="
-                                                icons.mdiMagnify
-                                            "
-                                            class="mt-2 mb-2"
-                                        ></v-text-field>
-                                        <h4
-                                            class="subtitle-2 mb-2 font-weight-bold d-inline-block"
-                                        >
-                                            Customer
-                                        </h4>
-                                    </template>
-                                    <template v-slot:header.transaction>
-                                        <v-text-field
-                                            label="Search"
-                                            outlined
-                                            dense
-                                            rounded
-                                            hide-details
-                                            :prepend-inner-icon="
-                                                icons.mdiMagnify
-                                            "
-                                            class="mt-2 mb-2"
-                                        ></v-text-field>
-                                        <h4
-                                            class="subtitle-2 mb-2 font-weight-bold d-inline-block"
-                                        >
-                                            Transaction
-                                        </h4>
-                                    </template>
-                                    <template v-slot:header.total>
-                                        <v-text-field
-                                            label="Search"
-                                            outlined
-                                            dense
-                                            rounded
-                                            hide-details
-                                            :prepend-inner-icon="
-                                                icons.mdiMagnify
-                                            "
-                                            class="mt-2 mb-2"
-                                        ></v-text-field>
-                                        <h4
-                                            class="subtitle-2 mb-2 font-weight-bold d-inline-block"
-                                        >
-                                            Total
-                                        </h4>
-                                    </template>
-                                    <template v-slot:header.points>
-                                        <v-text-field
-                                            label="Search"
-                                            outlined
-                                            dense
-                                            rounded
-                                            hide-details
-                                            :prepend-inner-icon="
-                                                icons.mdiMagnify
-                                            "
-                                            class="mt-2 mb-2"
-                                        ></v-text-field>
-                                        <h4
-                                            class="subtitle-2 mb-2 font-weight-bold d-inline-block"
-                                        >
-                                            Points
-                                        </h4>
-                                    </template>
-                                </v-data-table>
+                                ></v-data-table>
                             </v-card>
                         </v-tab-item>
+
                         <v-tab-item>
                             <v-card flat class="pa-5">
                                 <v-card flat class="pa-0" color="#f9fafc">
@@ -1803,77 +1330,55 @@
                                     class="mt-5"
                                 >
                                     <template v-slot:header.open_settings>
-                                        <h4 class="caption font-weight-bold">
-                                            Open Settings
-                                        </h4>
+                                        <h4 class="caption font-weight-bold">Open Settings</h4>
                                         <h4
                                             class="caption font-weight-bold d-inline-block mt-4"
-                                        >
-                                            Update All
-                                        </h4>
+                                        >Update All</h4>
                                         <v-checkbox class="ma-0"></v-checkbox>
                                     </template>
                                     <template v-slot:header.open_actions>
-                                        <h4 class="caption font-weight-bold">
-                                            Open Promotional Actions
-                                        </h4>
+                                        <h4
+                                            class="caption font-weight-bold"
+                                        >Open Promotional Actions</h4>
                                         <h4
                                             class="caption font-weight-bold d-inline-block"
-                                        >
-                                            Update All
-                                        </h4>
+                                        >Update All</h4>
                                         <v-checkbox
                                             class="d-inline-block ma-0"
                                             style="position: relative; top: 7px"
                                         ></v-checkbox>
                                     </template>
-                                    <template
-                                        v-slot:header.manual_points_delivery
-                                    >
-                                        <h4 class="caption font-weight-bold">
-                                            Manual Points Delivery
-                                        </h4>
+                                    <template v-slot:header.manual_points_delivery>
+                                        <h4 class="caption font-weight-bold">Manual Points Delivery</h4>
                                         <h4
                                             class="caption font-weight-bold d-inline-block"
-                                        >
-                                            Update All
-                                        </h4>
+                                        >Update All</h4>
                                         <v-checkbox
                                             class="d-inline-block ma-0"
                                             style="position: relative; top: 7px"
                                         ></v-checkbox>
                                     </template>
                                     <template v-slot:header.body_pricing_file>
-                                        <h4 class="caption font-weight-bold">
-                                            Body pricing file
-                                        </h4>
+                                        <h4 class="caption font-weight-bold">Body pricing file</h4>
                                         <h4
                                             class="caption font-weight-bold d-inline-block mt-4"
-                                        >
-                                            Update All
-                                        </h4>
+                                        >Update All</h4>
                                         <v-checkbox class="ma-0"></v-checkbox>
                                     </template>
                                     <template v-slot:header.open_add_coupon>
-                                        <h4 class="caption font-weight-bold">
-                                            Open Add Coupon
-                                        </h4>
+                                        <h4 class="caption font-weight-bold">Open Add Coupon</h4>
                                         <h4
                                             class="caption font-weight-bold d-inline-block mt-4"
-                                        >
-                                            Update All
-                                        </h4>
+                                        >Update All</h4>
                                         <v-checkbox class="ma-0"></v-checkbox>
                                     </template>
                                     <template v-slot:header.open_selection>
-                                        <h4 class="caption font-weight-bold">
-                                            Open Redeem Mode Selection
-                                        </h4>
+                                        <h4
+                                            class="caption font-weight-bold"
+                                        >Open Redeem Mode Selection</h4>
                                         <h4
                                             class="caption font-weight-bold d-inline-block"
-                                        >
-                                            Update All
-                                        </h4>
+                                        >Update All</h4>
                                         <v-checkbox
                                             class="d-inline-block ma-0"
                                             style="position: relative; top: 7px"
@@ -1886,23 +1391,17 @@
                                         </h4>
                                         <h4
                                             class="caption font-weight-bold d-inline-block"
-                                        >
-                                            Update All
-                                        </h4>
+                                        >Update All</h4>
                                         <v-checkbox
                                             class="d-inline-block ma-0"
                                             style="position: relative; top: 7px"
                                         ></v-checkbox>
                                     </template>
                                     <template v-slot:header.open_discount>
-                                        <h4 class="caption font-weight-bold">
-                                            Open General Discount
-                                        </h4>
+                                        <h4 class="caption font-weight-bold">Open General Discount</h4>
                                         <h4
                                             class="caption font-weight-bold d-inline-block"
-                                        >
-                                            Update All
-                                        </h4>
+                                        >Update All</h4>
                                         <v-checkbox
                                             class="d-inline-block ma-0"
                                             style="position: relative; top: 7px"
@@ -1915,9 +1414,7 @@
                                     <template v-slot:item.open_actions>
                                         <v-checkbox></v-checkbox>
                                     </template>
-                                    <template
-                                        v-slot:item.manual_points_delivery
-                                    >
+                                    <template v-slot:item.manual_points_delivery>
                                         <v-checkbox></v-checkbox>
                                     </template>
                                     <template v-slot:item.body_pricing_file>
@@ -1938,6 +1435,7 @@
                                 </v-data-table>
                             </v-card>
                         </v-tab-item>
+
                         <v-tab-item>
                             <v-card flat class="pa-5">
                                 <v-card flat class="pa-0" color="#f9fafc">
@@ -1966,42 +1464,30 @@
                                     :dense="true"
                                 >
                                     <template v-slot:header.open_shop>
-                                        <h4 class="caption font-weight-bold">
-                                            Open shop on Map
-                                        </h4>
+                                        <h4 class="caption font-weight-bold">Open shop on Map</h4>
                                         <h4
                                             class="caption font-weight-bold d-inline-block"
-                                        >
-                                            Update All
-                                        </h4>
+                                        >Update All</h4>
                                         <v-checkbox
                                             class="d-inline-block ma-0"
                                             style="position: relative; top: 7px"
                                         ></v-checkbox>
                                     </template>
                                     <template v-slot:header.open_checkin>
-                                        <h4 class="caption font-weight-bold">
-                                            Open Checkin
-                                        </h4>
+                                        <h4 class="caption font-weight-bold">Open Checkin</h4>
                                         <h4
                                             class="caption font-weight-bold d-inline-block"
-                                        >
-                                            Update All
-                                        </h4>
+                                        >Update All</h4>
                                         <v-checkbox
                                             class="d-inline-block ma-0"
                                             style="position: relative; top: 7px"
                                         ></v-checkbox>
                                     </template>
                                     <template v-slot:header.open_scanning>
-                                        <h4 class="caption font-weight-bold">
-                                            Open Receipt Scanning
-                                        </h4>
+                                        <h4 class="caption font-weight-bold">Open Receipt Scanning</h4>
                                         <h4
                                             class="caption font-weight-bold d-inline-block"
-                                        >
-                                            Update All
-                                        </h4>
+                                        >Update All</h4>
                                         <v-checkbox
                                             class="d-inline-block ma-0"
                                             style="position: relative; top: 7px"
@@ -2020,27 +1506,19 @@
                                 </v-data-table>
                             </v-card>
                         </v-tab-item>
+
                         <v-tab-item>
                             <v-row class="pa-5 pt-2 pb-1">
                                 <v-col cols="auto pb-0">
-                                    <v-dialog
-                                        v-model="generalLimitsDialog"
-                                        width="60%"
-                                    >
-                                        <template
-                                            v-slot:activator="{ on, attrs }"
-                                        >
+                                    <v-dialog v-model="generalLimitsDialog" width="60%">
+                                        <template v-slot:activator="{ on, attrs }">
                                             <v-btn
+                                                color="secondary"
+                                                class="text-capitalize"
                                                 depressed
-                                                large
-                                                color="primary"
                                                 v-bind="attrs"
                                                 v-on="on"
-                                                rounded
-                                                class="text-capitalize"
-                                            >
-                                                General Limits
-                                            </v-btn>
+                                            >General Limits</v-btn>
                                         </template>
 
                                         <v-card class="pb-5">
@@ -2058,18 +1536,13 @@
                                                     "
                                                     class="ml-auto mr-2 title text-lowercase"
                                                     style="transform: rotate(45deg)"
-                                                >
-                                                    +
-                                                </v-btn>
+                                                >+</v-btn>
                                             </v-card-title>
                                             <v-divider></v-divider>
 
                                             <v-card-text class="mt-5 pb-0">
                                                 <v-row>
-                                                    <v-col
-                                                        cols="3"
-                                                        class="pl-2 pr-2"
-                                                    >
+                                                    <v-col cols="3" class="pl-2 pr-2">
                                                         <v-select
                                                             v-model="on_off"
                                                             :items="
@@ -2082,21 +1555,13 @@
                                                             rounded
                                                         ></v-select>
                                                     </v-col>
-                                                    <v-col
-                                                        cols="3"
-                                                        class="pl-2 pr-2 mt-2"
-                                                    >
-                                                        <h4
-                                                            class="subtitle-2 font-weight-medium"
-                                                        >
+                                                    <v-col cols="3" class="pl-2 pr-2 mt-2">
+                                                        <h4 class="subtitle-2 font-weight-medium">
                                                             Daily Transaction
                                                             Limits
                                                         </h4>
                                                     </v-col>
-                                                    <v-col
-                                                        cols="3"
-                                                        class="pl-2 pr-2"
-                                                    >
+                                                    <v-col cols="3" class="pl-2 pr-2">
                                                         <v-text-field
                                                             outlined
                                                             dense
@@ -2104,10 +1569,7 @@
                                                             rounded
                                                         ></v-text-field>
                                                     </v-col>
-                                                    <v-col
-                                                        cols="3"
-                                                        class="pl-2 pr-2"
-                                                    >
+                                                    <v-col cols="3" class="pl-2 pr-2">
                                                         <v-select
                                                             v-model="money"
                                                             :items="
@@ -2138,9 +1600,7 @@
                                                     class="mr-2 text-capitalize"
                                                     small
                                                     rounded
-                                                >
-                                                    Cancel
-                                                </v-btn>
+                                                >Cancel</v-btn>
                                                 <v-btn
                                                     color="primary"
                                                     @click="
@@ -2149,9 +1609,7 @@
                                                     class="text-capitalize"
                                                     small
                                                     rounded
-                                                >
-                                                    Ok
-                                                </v-btn>
+                                                >Ok</v-btn>
                                             </v-card>
                                         </v-card>
                                     </v-dialog>
@@ -2185,23 +1643,17 @@
                                     :dense="true"
                                 >
                                     <template v-slot:item.offline_limits>
-                                        <v-dialog
-                                            v-model="limitDialog"
-                                            width="60%"
-                                        >
-                                            <template
-                                                v-slot:activator="{ on, attrs }"
-                                            >
+                                        <v-dialog v-model="limitDialog" width="60%">
+                                            <template v-slot:activator="{ on, attrs }">
                                                 <v-btn
-                                                    color="primary"
-                                                    rounded
+                                                    color="secondary"
+                                                    depressed
+                                                    small
                                                     class="ma-3 pl-5 pr-5"
                                                     v-bind="attrs"
                                                     v-on="on"
                                                     width="15%"
-                                                >
-                                                    20
-                                                </v-btn>
+                                                >20</v-btn>
                                             </template>
 
                                             <v-card class="pb-5">
@@ -2218,18 +1670,13 @@
                                                         "
                                                         class="ml-auto mr-2 title text-lowercase"
                                                         style="transform: rotate(45deg)"
-                                                    >
-                                                        +
-                                                    </v-btn>
+                                                    >+</v-btn>
                                                 </v-card-title>
                                                 <v-divider></v-divider>
 
                                                 <v-card-text class="mt-5 pb-0">
                                                     <v-row>
-                                                        <v-col
-                                                            cols="3"
-                                                            class="pl-2 pr-2 mt-2"
-                                                        >
+                                                        <v-col cols="3" class="pl-2 pr-2 mt-2">
                                                             <h4
                                                                 class="subtitle-2 font-weight-medium"
                                                             >
@@ -2238,10 +1685,7 @@
                                                                 Limits
                                                             </h4>
                                                         </v-col>
-                                                        <v-col
-                                                            cols="3"
-                                                            class="pl-2 pr-2"
-                                                        >
+                                                        <v-col cols="3" class="pl-2 pr-2">
                                                             <v-text-field
                                                                 outlined
                                                                 dense
@@ -2249,10 +1693,7 @@
                                                                 rounded
                                                             ></v-text-field>
                                                         </v-col>
-                                                        <v-col
-                                                            cols="3"
-                                                            class="pl-2 pr-2"
-                                                        >
+                                                        <v-col cols="3" class="pl-2 pr-2">
                                                             <v-select
                                                                 v-model="money"
                                                                 :items="
@@ -2283,9 +1724,7 @@
                                                         class="mr-2 text-capitalize"
                                                         small
                                                         rounded
-                                                    >
-                                                        Cancel
-                                                    </v-btn>
+                                                    >Cancel</v-btn>
                                                     <v-btn
                                                         color="primary"
                                                         @click="
@@ -2294,9 +1733,7 @@
                                                         class="text-capitalize"
                                                         small
                                                         rounded
-                                                    >
-                                                        Ok
-                                                    </v-btn>
+                                                    >Ok</v-btn>
                                                 </v-card>
                                             </v-card>
                                         </v-dialog>
@@ -2319,7 +1756,7 @@ import {
     mdiNavigation,
     mdiBackspace,
     mdiPlusThick,
-    mdiCheckCircleOutline
+    mdiCheckCircleOutline,
 } from "@mdi/js";
 export default {
     name: "Branches",
@@ -2331,7 +1768,7 @@ export default {
             mdiNavigation,
             mdiBackspace,
             mdiPlusThick,
-            mdiCheckCircleOutline
+            mdiCheckCircleOutline,
         },
         tab: 0,
         addDialog: false,
@@ -2359,7 +1796,7 @@ export default {
             "Health, Care, Beauty",
             "Department Stores",
             "Others",
-            "Technology"
+            "Technology",
         ],
         gift_category: "Auto - Moto",
         regions: [
@@ -2374,7 +1811,7 @@ export default {
             "wdqcdzvbngn",
             "ascafdf",
             "ipoljm",
-            "vcnmvnmnsgrg"
+            "vcnmvnmnsgrg",
         ],
         region: "No Region",
         on_off_options: ["offline"],
@@ -2384,24 +1821,24 @@ export default {
         companyHeaders: [{ text: "All", value: "company" }],
         companyData: [
             {
-                company: "liopujasdas"
+                company: "liopujasdas",
             },
             {
-                company: "cvbvcasdas"
+                company: "cvbvcasdas",
             },
             {
-                company: "ytujtasdas"
+                company: "ytujtasdas",
             },
             {
-                company: "asdascdasas"
-            }
+                company: "asdascdasas",
+            },
         ],
         branchesHeaders: [
             { text: "Name", value: "name", align: "center" },
             {
                 text: "Name of Shop(in app)",
                 value: "name_of_shop",
-                align: "center"
+                align: "center",
             },
             { text: "Map", value: "map", align: "center" },
             { text: "Payments", value: "payments", align: "center" },
@@ -2412,10 +1849,10 @@ export default {
             {
                 text: "Registration Date",
                 value: "registration_date",
-                align: "center"
+                align: "center",
             },
             { text: "Active", value: "active", align: "center" },
-            { text: "Enter", value: "enter" }
+            { text: "Enter", value: "enter" },
         ],
         branchesData: [
             {
@@ -2429,7 +1866,7 @@ export default {
                 phone: "545648989478",
                 registration_date: "2019/06/27",
                 active: "ON",
-                enter: ""
+                enter: "",
             },
             {
                 name: "Vasilis",
@@ -2442,7 +1879,7 @@ export default {
                 phone: "545648989478",
                 registration_date: "2019/06/27",
                 active: "ON",
-                enter: "icons"
+                enter: "icons",
             },
             {
                 name: "Vasilis",
@@ -2455,20 +1892,20 @@ export default {
                 phone: "545648989478",
                 registration_date: "2019/06/27",
                 active: "ON",
-                enter: "icons"
-            }
+                enter: "icons",
+            },
         ],
         financialHeaders: [
             { text: "Name", value: "name", align: "center" },
             {
                 text: "Name of Shop(in app)",
                 value: "name_of_shop",
-                align: "center"
+                align: "center",
             },
             { text: "Customer", value: "customer", align: "center" },
             { text: "Transaction", value: "transaction", align: "center" },
             { text: "Total", value: "total", align: "center" },
-            { text: "Points", value: "points", align: "center" }
+            { text: "Points", value: "points", align: "center" },
         ],
         financialData: [
             {
@@ -2477,7 +1914,7 @@ export default {
                 customer: "20",
                 transaction: "34",
                 total: "1905.18",
-                points: "3836"
+                points: "3836",
             },
             {
                 name: "Vasilis",
@@ -2485,7 +1922,7 @@ export default {
                 customer: "20",
                 transaction: "34",
                 total: "1905.18",
-                points: "3836"
+                points: "3836",
             },
             {
                 name: "Vasilis",
@@ -2493,8 +1930,8 @@ export default {
                 customer: "20",
                 transaction: "34",
                 total: "1905.18",
-                points: "3836"
-            }
+                points: "3836",
+            },
         ],
         adminSetHeaders: [
             { text: "Name", value: "name", sortable: false },
@@ -2502,44 +1939,44 @@ export default {
             {
                 text: "Open Promotional Actions",
                 value: "open_actions",
-                sortable: false
+                sortable: false,
             },
             {
                 text: "Manual Points Delivery",
                 value: "manual_points_delivery",
-                sortable: false
+                sortable: false,
             },
             {
                 text: "Body pricing file",
                 value: "body_pricing_file",
-                sortable: false
+                sortable: false,
             },
             {
                 text: "Open Add Coupon",
                 value: "open_add_coupon",
-                sortable: false
+                sortable: false,
             },
             {
                 text: "Open Redeem Mode Selection",
                 value: "open_selection",
-                sortable: false
+                sortable: false,
             },
             {
                 text: "Open Product Insertion / Modification",
-                value: "open_product"
+                value: "open_product",
             },
-            { text: "Open General Discount", value: "open_discount" }
+            { text: "Open General Discount", value: "open_discount" },
         ],
         adminSetData: [
             {
-                name: "Vasilis"
+                name: "Vasilis",
             },
             {
-                name: "Vasilis"
+                name: "Vasilis",
             },
             {
-                name: "Vasilis"
-            }
+                name: "Vasilis",
+            },
         ],
         appSetHeaders: [
             { text: "Name", value: "name" },
@@ -2548,39 +1985,39 @@ export default {
             {
                 text: "Open Receipt Scanning",
                 value: "open_scanning",
-                sortable: false
-            }
+                sortable: false,
+            },
         ],
         appSetData: [
             {
-                name: "Vasilisa"
+                name: "Vasilisa",
             },
             {
-                name: "Vasilisb"
+                name: "Vasilisb",
             },
             {
-                name: "Vasilisc"
-            }
+                name: "Vasilisc",
+            },
         ],
         limitsHeaders: [
             { text: "Name", value: "name", align: "center" },
             {
                 text: "Offline Transaction Limits",
                 value: "offline_limits",
-                align: "center"
-            }
+                align: "center",
+            },
         ],
         limitsData: [
             {
-                name: "Vasilis"
+                name: "Vasilis",
             },
             {
-                name: "Vasilis"
+                name: "Vasilis",
             },
             {
-                name: "Vasilis"
-            }
-        ]
-    })
+                name: "Vasilis",
+            },
+        ],
+    }),
 };
 </script>

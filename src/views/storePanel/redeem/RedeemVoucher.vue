@@ -8,20 +8,10 @@
         <v-card-title class="subtitle-1 font-weight-medium">
             <v-col cols="auto">Coupon Code</v-col>
             <v-col cols="auto">
-                <v-text-field
-                    outlined
-                    dense
-                    clearable
-                    hide-details
-                ></v-text-field>
+                <v-text-field outlined dense clearable hide-details></v-text-field>
             </v-col>
-            <v-btn color="primary text-capitalize" rounded>
-                <v-icon
-                    class="mr-2"
-                    size="20"
-                    v-text="icons.mdiArrowRight"
-                ></v-icon
-                >validation
+            <v-btn color="secondary" class="text-capitalize" depressed>
+                <v-icon class="mr-2" size="20" v-text="icons.mdiArrowRight"></v-icon>validation
             </v-btn>
         </v-card-title>
     </v-tab-item>
@@ -34,7 +24,7 @@ export default {
     name: "RedeemVoucher",
 
     data: () => ({
-        icons: { mdiArrowRight }
-    })
+        icons: { mdiArrowRight },
+    }),
 };
 </script>
