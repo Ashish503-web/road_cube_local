@@ -1,5 +1,5 @@
 <template>
-    <v-card class="rounded-lg" outlined>
+    <v-card outlined>
         <v-card-title class="grey lighten-3">Pin Display</v-card-title>
         <v-row no-gutters justify="space-between" class="px-4 pt-1">
             <v-col cols="6">
@@ -35,7 +35,7 @@
             </v-col>
         </v-row>
 
-        <v-card-actions class="pl-4 mt-1">
+        <v-card-actions class="pl-4 mt-3">
             <v-btn color="secondary" class="text-capitalize" depressed
                 >update logo</v-btn
             >

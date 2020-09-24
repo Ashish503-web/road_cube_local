@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mt-12 rounded-lg" outlined>
+    <v-card class="mt-12" outlined>
         <v-card-title class="grey lighten-3">Change Password</v-card-title>
 
         <v-card-text class="pb-0 pt-8">

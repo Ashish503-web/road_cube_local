@@ -1,19 +1,19 @@
 <template>
     <v-tab-item class="py-5">
         <v-row no-gutters>
-            <v-col cols="6" class="pr-1">
+            <v-col cols="6" class="pr-2">
                 <SendPoints />
             </v-col>
 
-            <v-col cols="6" class="pl-1">
+            <v-col cols="6" class="pl-2">
                 <PointDelivery />
             </v-col>
 
-            <v-col cols="6" class="pr-1">
+            <v-col cols="6" class="pr-2">
                 <ScanReceipt />
             </v-col>
 
-            <v-col cols="6" class="pl-1">
+            <v-col cols="6" class="pl-2">
                 <RewardWithPresence />
                 <MobilePayments />
             </v-col>

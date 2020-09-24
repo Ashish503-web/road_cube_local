@@ -1,0 +1,67 @@
+<template>
+    <v-tab-item class="pt-5">
+        <v-alert type="error" class="font-weight-bold">
+            The date for the next payment has passed. Please update your
+            subscription. Cost: 62.000,00 €
+        </v-alert>
+
+        <v-toolbar flat height="80">
+            <v-card-title>Transaction History</v-card-title>
+
+            <v-spacer></v-spacer>
+            <v-col cols="4">
+                <v-text-field
+                    label="Search"
+                    color="secondary"
+                    rounded
+                    outlined
+                    dense
+                    clearable
+                    hide-details
+                    :append-icon="icons.mdiMagnify"
+                ></v-text-field>
+            </v-col>
+        </v-toolbar>
+        <v-data-table
+            :headers="headers"
+            :items="transactions"
+            :footer-props="{ itemsPerPageOptions }"
+        ></v-data-table>
+    </v-tab-item>
+</template>
+
+<script>
+import { mdiMagnify } from "@mdi/js";
+
+export default {
+    name: "PaymentHistory",
+
+    data: () => ({
+        icons: {
+            mdiMagnify
+        },
+        tab: 0,
+        itemsPerPageOptions: [10, 25, 50, 100],
+        headers: [
+            { text: "Date", value: "date" },
+            { text: "Description", value: "description" },
+            { text: "Payment Through", value: "paymentThrough" },
+            { text: "Amount", value: "amount" }
+        ],
+        transactions: [
+            {
+                date: "19-05-2020",
+                description: "Payment: Online",
+                paymentThrough: "Card: **********3434",
+                amount: "37,20 €"
+            }
+        ]
+    })
+};
+</script>
+
+<style scoped>
+.border-red {
+    border: 1px solid red;
+}
+</style>

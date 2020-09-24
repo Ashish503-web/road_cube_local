@@ -1,8 +1,8 @@
 <template>
-    <v-card class="mt-12 rounded-lg" outlined>
+    <v-card class="mt-12" outlined>
         <v-card-title class="grey lighten-3">Receipt Information</v-card-title>
 
-        <v-card-text class="pt-8 pb-0">
+        <v-card-text class="pt-4 pb-0">
             <v-row no-gutters>
                 <v-col cols="6" class="pr-2">
                     <v-text-field
@@ -43,7 +43,7 @@
             </v-row>
         </v-card-text>
 
-        <v-card-actions class="pl-4">
+        <v-card-actions class="pl-4" style="margin-top: 65px">
             <v-btn color="secondary" class="text-capitalize" depressed
                 >update details</v-btn
             >

@@ -1,16 +1,16 @@
 <template>
-    <v-card class="rounded-lg" outlined>
+    <v-card outlined>
         <v-card-title class="grey lighten-3">Logo</v-card-title>
 
         <v-card-text class="pt-5">
             You can upload here the logo of your business which will appear in
             the app and will be on the physical cards. If we think that it can
             be improved we will contact you before publishment.
-            <v-row class="dashed mt-8 mb-3" no-gutters align="center">
-                <v-col cols="6">
+            <v-row class="dashed mt-3 pa-5" no-gutters align="center">
+                <v-col cols="5">
                     <v-img :src="logo.image" width="64" class="mx-auto"></v-img>
                 </v-col>
-                <v-col cols="6">
+                <v-col cols="7">
                     Press the following button to choose image:
                     <v-file-input
                         color="secondary"

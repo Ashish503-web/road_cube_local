@@ -1,5 +1,5 @@
 <template>
-    <v-card class="rounded-lg mt-5" outlined>
+    <v-card class="mt-5" outlined>
         <v-card-title class="grey lighten-3">
             <v-col cols="10" class="pa-0">
                 Reward with presence in the store

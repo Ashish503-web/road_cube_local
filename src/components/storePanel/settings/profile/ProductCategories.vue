@@ -1,11 +1,11 @@
 <template>
-    <v-card class="mt-12 rounded-lg" outlined>
+    <v-card class="mt-12" outlined>
         <v-card-title class="grey lighten-3">Product categories</v-card-title>
 
         <v-card-text class="pb-0 pt-8">
             <v-form @submit.prevent>
-                <v-row no-gutters>
-                    <v-col cols="4">
+                <v-row no-gutters align="center">
+                    <v-col cols="8">
                         <v-text-field
                             v-model="category"
                             label="Enter Category"
@@ -13,6 +13,7 @@
                             outlined
                             dense
                             clearable
+                            hide-details
                         ></v-text-field>
                     </v-col>
                     <v-col class="ml-3">
@@ -58,7 +59,7 @@
             </v-row>
         </v-card-text>
 
-        <v-card-actions class="pl-4">
+        <v-card-actions class="pl-4" style="margin-top: 192px">
             <v-btn color="secondary" class="text-capitalize" depressed
                 >verification</v-btn
             >

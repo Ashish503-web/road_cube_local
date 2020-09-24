@@ -1,5 +1,5 @@
 <template>
-    <v-card class="rounded-lg" outlined>
+    <v-card outlined>
         <v-card-title class="grey lighten-3">
             <v-col cols="10" class="pa-0">
                 Send points by card or phone number

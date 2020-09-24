@@ -99,9 +99,18 @@
                 </v-card>
             </v-menu> -->
 
-            <v-btn icon>
-                <v-icon v-text="icons.mdiAccountQuestion"></v-icon>
-            </v-btn>
+            <v-tooltip bottom>
+                <template v-slot:activator="{ on }">
+                    <v-btn icon v-on="on">
+                        <v-icon
+                            size="28"
+                            v-text="icons.mdiHelpCircleOutline"
+                        ></v-icon>
+                    </v-btn>
+                </template>
+
+                <span>Help</span>
+            </v-tooltip>
 
             <v-menu offset-y bottom transition="slide-y-transition">
                 <template v-slot:activator="{ on }">
@@ -159,14 +168,6 @@
             permanent
             dark
         >
-            <router-link to="/">
-                <v-toolbar class="home-link" color="secondary" flat>
-                    <v-toolbar-title class="mx-auto">
-                        <v-img src="../assets/loyalty-logo.png" contain></v-img>
-                    </v-toolbar-title>
-                </v-toolbar>
-            </router-link>
-
             <v-row class="py-3" no-gutters justify="center">
                 <v-sheet light class="pa-2 rounded-circle" width="70">
                     <v-img src="../assets/store-logo.png" width="50"></v-img>
@@ -222,6 +223,17 @@
                         </v-list-item>
                     </div>
                 </v-list>
+
+                <router-link to="/">
+                    <v-toolbar class="home-link mt-12" color="secondary" flat>
+                        <v-toolbar-title class="mx-auto">
+                            <v-img
+                                src="../assets/loyalty-logo.png"
+                                contain
+                            ></v-img>
+                        </v-toolbar-title>
+                    </v-toolbar>
+                </router-link>
             </v-container>
         </v-navigation-drawer>
     </header>
@@ -231,7 +243,7 @@
 import {
     mdiPower,
     mdiWeb,
-    mdiAccountQuestion,
+    mdiHelpCircleOutline,
     mdiChartBar,
     mdiPlusThick,
     mdiCurrencyEur,
@@ -272,7 +284,7 @@ export default {
             icons: {
                 mdiPower,
                 mdiWeb,
-                mdiAccountQuestion,
+                mdiHelpCircleOutline,
                 mdiMagnify,
                 mdiChevronDown,
                 mdiViewGridPlusOutline,
@@ -440,7 +452,7 @@ export default {
 
     computed: {
         containerHeight() {
-            return this.mini ? "calc(100vh - 227px)" : "calc(100vh - 199px)";
+            return this.mini ? "calc(100vh - 163px)" : "calc(100vh - 135px)";
         }
     }
 };

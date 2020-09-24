@@ -142,6 +142,7 @@
                                     color="secondary"
                                     thumb-label
                                     hide-details
+                                    track-color="secondary"
                                 ></v-slider>
 
                                 <v-divider class="my-3"></v-divider>

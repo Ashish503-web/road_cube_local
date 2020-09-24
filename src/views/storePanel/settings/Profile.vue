@@ -1,10 +1,10 @@
 <template>
     <v-tab-item class="py-5">
         <v-row no-gutters>
-            <v-col cols="6" class="pr-1">
+            <v-col cols="6" class="pr-2">
                 <Logo />
             </v-col>
-            <v-col cols="6" class="pl-1">
+            <v-col cols="6" class="pl-2">
                 <PinDisplay />
             </v-col>
             <v-col cols="12">
@@ -13,28 +13,28 @@
             <v-col cols="12">
                 <OperationHours />
             </v-col>
-            <v-col cols="6" class="pr-1">
+            <v-col cols="6" class="pr-2">
                 <Invoicing />
             </v-col>
-            <v-col cols="6" class="pl-1">
+            <v-col cols="6" class="pl-2">
                 <ReceiptInformation />
             </v-col>
-            <v-col cols="6" class="pr-1">
+            <v-col cols="6" class="pr-2">
                 <FastPayment />
             </v-col>
-            <v-col cols="6" class="pl-1">
+            <v-col cols="6" class="pl-2">
                 <Orders />
             </v-col>
-            <v-col cols="6" class="pr-1">
+            <v-col cols="6" class="pr-2">
                 <ChangePassword />
             </v-col>
-            <v-col cols="6" class="pl-1">
+            <v-col cols="6" class="pl-2">
                 <CompanyRedemption />
             </v-col>
-            <v-col cols="6" class="pr-1">
+            <v-col cols="6" class="pr-2">
                 <ProductCategories />
             </v-col>
-            <v-col cols="6" class="pl-1">
+            <v-col cols="6" class="pl-2">
                 <ApiAuthentication />
             </v-col>
         </v-row>

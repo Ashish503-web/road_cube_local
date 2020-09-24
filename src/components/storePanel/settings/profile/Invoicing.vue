@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mt-12 rounded-lg" outlined>
+    <v-card class="mt-12" outlined>
         <v-card-title class="grey lighten-3">Invoicing</v-card-title>
 
         <v-card-text class="pt-4 pb-0">

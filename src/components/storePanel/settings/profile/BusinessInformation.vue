@@ -1,5 +1,5 @@
 <template>
-    <v-card class="mt-12 rounded-lg" outlined>
+    <v-card class="mt-12" outlined>
         <v-card-title class="grey lighten-3">Business Information</v-card-title>
         <v-container class="pt-5">
             <v-row no-gutters justify="space-around">

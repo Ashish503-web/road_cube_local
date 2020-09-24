@@ -1,5 +1,5 @@
 <template>
-    <v-card class="rounded-lg" outlined>
+    <v-card outlined>
         <v-card-title class="grey lighten-3">
             <v-col cols="10" class="pa-0">
                 Point Delivery
@@ -58,7 +58,7 @@
             </v-row>
         </v-card-text>
 
-        <v-card-actions class="pl-4">
+        <v-card-actions class="pl-4" style="margin-top: 103px">
             <v-btn color="secondary" class="text-capitalize" depressed
                 >update details</v-btn
             >
