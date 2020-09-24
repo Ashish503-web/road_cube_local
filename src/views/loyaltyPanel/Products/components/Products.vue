@@ -56,7 +56,6 @@
             </template>
         </v-data-table>
         <modal-delete :dialog="dialog"></modal-delete>
-        <modal-form :formModal="formModal"></modal-form>
     </v-card>
 </template>
 <script>
@@ -64,10 +63,10 @@
         mdiMagnify,
     } from "@mdi/js";
     import Modal from './Modal'
-    import Form from './Form'
     import Vue from 'vue'
 
     export default {
+        props:['formModal'],
         data() {
             return {
                 icons: {
@@ -76,29 +75,6 @@
                 },
                 search: '',
                 dialog: false,
-                formModal: {
-                    active: false,
-                    title: '',
-                    productDisplay: '0',
-                    productName: '',
-                    productDescription: '',
-                    points: '',
-                    productId: null,
-                    percentage: 0,
-                    sellingPrice: '',
-                    wholesalePrice: '',
-                    changePriceCheck: 0,
-                    subPoints: 0,
-                    productImageCheck: {
-                        active: false,
-                    },
-                    productDisplayDays: {
-                        active: false,
-                    },
-                    updateProductCompanies: {
-                        active: false,
-                    }
-                },
                 pageItems: [
                     10,
                     20,
@@ -154,7 +130,6 @@
         },
         components: {
             'modal-delete': Modal,
-            'modal-form': Form
         }
     }
 </script>
