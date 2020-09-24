@@ -12,7 +12,13 @@
                             <v-tab class="pa-5 text-capitalize">All</v-tab>
                             <v-dialog v-model="addTabDialog" width="60%">
                                 <template v-slot:activator="{ on }">
-                                    <v-btn color="primary" text height="48" tile v-on="on">
+                                    <v-btn
+                                        color="primary"
+                                        text
+                                        height="48"
+                                        tile
+                                        v-on="on"
+                                    >
                                         <v-icon v-text="icons.mdiPlus"></v-icon>
                                     </v-btn>
                                 </template>
@@ -28,7 +34,8 @@
                                             @click="addTabDialog = false"
                                             class="ml-auto mr-2 title text-lowercase"
                                             style="transform: rotate(45deg)"
-                                        >+</v-btn>
+                                            >+</v-btn
+                                        >
                                     </v-card-title>
                                     <v-divider></v-divider>
 
@@ -38,7 +45,8 @@
                                                 <v-col cols="6">
                                                     <label
                                                         class="font-weight-bold ml-5"
-                                                    >New Tab Title</label>
+                                                        >New Tab Title</label
+                                                    >
                                                     <v-text-field
                                                         placeholder="New Tab Title"
                                                         required
@@ -52,7 +60,8 @@
                                                 <v-col cols="6">
                                                     <label
                                                         class="font-weight-bold ml-5"
-                                                    >User Filters</label>
+                                                        >User Filters</label
+                                                    >
                                                     <v-text-field
                                                         placeholder="ID"
                                                         required
@@ -65,7 +74,10 @@
                                             </v-row>
                                             <v-row>
                                                 <v-col cols="6">
-                                                    <label class="font-weight-bold ml-5">Operator</label>
+                                                    <label
+                                                        class="font-weight-bold ml-5"
+                                                        >Operator</label
+                                                    >
                                                     <v-select
                                                         v-model="operator"
                                                         :items="operators"
@@ -79,7 +91,9 @@
                                                 <v-col cols="6">
                                                     <label
                                                         class="font-weight-bold ml-5"
-                                                    >Registration Date</label>
+                                                        >Registration
+                                                        Date</label
+                                                    >
                                                     <v-text-field
                                                         placeholder="Company Name"
                                                         required
@@ -91,10 +105,15 @@
                                                     ></v-text-field>
                                                 </v-col>
                                             </v-row>
-                                            <label class="font-weight-bold d-block ml-5">Gender</label>
+                                            <label
+                                                class="font-weight-bold d-block ml-5"
+                                                >Gender</label
+                                            >
                                             <v-radio-group row class="pl-4">
                                                 <v-radio label="male"></v-radio>
-                                                <v-radio label="female"></v-radio>
+                                                <v-radio
+                                                    label="female"
+                                                ></v-radio>
                                                 <v-radio label="both"></v-radio>
                                             </v-radio-group>
 
@@ -102,7 +121,10 @@
 
                                             <v-row class="pt-5">
                                                 <v-col cols="6">
-                                                    <label class="font-weight-bold ml-5">Operator</label>
+                                                    <label
+                                                        class="font-weight-bold ml-5"
+                                                        >Operator</label
+                                                    >
                                                     <v-select
                                                         v-model="operator"
                                                         :items="operators"
@@ -116,7 +138,9 @@
                                                 <v-col cols="6">
                                                     <label
                                                         class="font-weight-bold ml-5"
-                                                    >Transactions Filters</label>
+                                                        >Transactions
+                                                        Filters</label
+                                                    >
                                                     <v-text-field
                                                         placeholder="Transactions Filters"
                                                         required
@@ -129,7 +153,10 @@
                                             </v-row>
                                             <v-row>
                                                 <v-col cols="6">
-                                                    <label class="font-weight-bold ml-5">Operator</label>
+                                                    <label
+                                                        class="font-weight-bold ml-5"
+                                                        >Operator</label
+                                                    >
                                                     <v-select
                                                         v-model="operator"
                                                         :items="operators"
@@ -143,7 +170,9 @@
                                                 <v-col cols="6">
                                                     <label
                                                         class="font-weight-bold ml-5"
-                                                    >Total transaction amount</label>
+                                                        >Total transaction
+                                                        amount</label
+                                                    >
                                                     <v-text-field
                                                         placeholder="Total transaction amount"
                                                         required
@@ -159,7 +188,10 @@
 
                                             <v-row class="pt-5">
                                                 <v-col cols="6">
-                                                    <label class="font-weight-bold ml-5">Operator</label>
+                                                    <label
+                                                        class="font-weight-bold ml-5"
+                                                        >Operator</label
+                                                    >
                                                     <v-select
                                                         v-model="operator"
                                                         :items="operators"
@@ -173,7 +205,8 @@
                                                 <v-col cols="6">
                                                     <label
                                                         class="font-weight-bold ml-5"
-                                                    >Point Filters</label>
+                                                        >Point Filters</label
+                                                    >
                                                     <v-text-field
                                                         placeholder="Point Filters"
                                                         required
@@ -189,7 +222,10 @@
                                                 <v-col cols="12">
                                                     <h4
                                                         class="d-inline-block subtitle-2 font-weight-bold"
-                                                    >Choose columns you need to be visible:</h4>
+                                                    >
+                                                        Choose columns you need
+                                                        to be visible:
+                                                    </h4>
                                                 </v-col>
                                             </v-row>
                                             <v-row class="pl-7">
@@ -201,7 +237,9 @@
                                                         <h4
                                                             class="d-inline-block subtitle-2 font-weight-medium"
                                                             style="position: relative; right: 5px; top: 1px"
-                                                        >ID</h4>
+                                                        >
+                                                            ID
+                                                        </h4>
                                                     </v-row>
                                                     <v-row>
                                                         <v-checkbox
@@ -210,7 +248,9 @@
                                                         <h4
                                                             class="d-inline-block subtitle-2 font-weight-medium"
                                                             style="position: relative; right: 5px; top: 1px"
-                                                        >Transactions Number</h4>
+                                                        >
+                                                            Transactions Number
+                                                        </h4>
                                                     </v-row>
                                                 </v-col>
                                                 <v-col cols="4">
@@ -221,7 +261,9 @@
                                                         <h4
                                                             class="d-inline-block subtitle-2 font-weight-medium"
                                                             style="position: relative; right: 5px; top: 1px"
-                                                        >Phone Number</h4>
+                                                        >
+                                                            Phone Number
+                                                        </h4>
                                                     </v-row>
                                                     <v-row>
                                                         <v-checkbox
@@ -230,7 +272,9 @@
                                                         <h4
                                                             class="d-inline-block subtitle-2 font-weight-medium"
                                                             style="position: relative; right: 5px; top: 1px"
-                                                        >Amount Transaction</h4>
+                                                        >
+                                                            Amount Transaction
+                                                        </h4>
                                                     </v-row>
                                                 </v-col>
                                                 <v-col cols="4">
@@ -241,7 +285,9 @@
                                                         <h4
                                                             class="d-inline-block subtitle-2 font-weight-medium"
                                                             style="position: relative; right: 5px; top: 1px"
-                                                        >Registration Date</h4>
+                                                        >
+                                                            Registration Date
+                                                        </h4>
                                                     </v-row>
                                                     <v-row>
                                                         <v-checkbox
@@ -250,14 +296,20 @@
                                                         <h4
                                                             class="d-inline-block subtitle-2 font-weight-medium"
                                                             style="position: relative; right: 5px; top: 1px"
-                                                        >Gender</h4>
+                                                        >
+                                                            Gender
+                                                        </h4>
                                                     </v-row>
                                                 </v-col>
-                                                <v-checkbox class="d-inline-block ma-0 pa-0"></v-checkbox>
+                                                <v-checkbox
+                                                    class="d-inline-block ma-0 pa-0"
+                                                ></v-checkbox>
                                                 <h4
                                                     class="d-inline-block subtitle-2 font-weight-medium"
                                                     style="position: relative; right: 5px; top: 1px"
-                                                >points</h4>
+                                                >
+                                                    points
+                                                </h4>
                                             </v-row>
                                         </v-form>
                                     </v-card-text>
@@ -275,14 +327,16 @@
                                             class="text-capitalize mr-2"
                                             small
                                             rounded
-                                        >Add Tab</v-btn>
+                                            >Add Tab</v-btn
+                                        >
                                         <v-btn
                                             color="#dbe1e8"
                                             @click="addTabDialog = false"
                                             class="text-capitalize"
                                             small
                                             rounded
-                                        >Cancel</v-btn>
+                                            >Cancel</v-btn
+                                        >
                                     </v-card>
                                 </v-card>
                             </v-dialog>
@@ -293,27 +347,37 @@
                         <v-tab-item>
                             <v-row class="pa-5 pt-2 pb-1">
                                 <v-col cols="auto pb-0">
-                                    <v-dialog v-model="addCustomerDialog" width="60%">
-                                        <template v-slot:activator="{ on, attrs }">
+                                    <v-dialog
+                                        v-model="addCustomerDialog"
+                                        width="60%"
+                                    >
+                                        <template
+                                            v-slot:activator="{ on, attrs }"
+                                        >
                                             <v-btn
                                                 color="secondary"
                                                 depressed
                                                 v-bind="attrs"
                                                 v-on="on"
                                                 class="text-capitalize"
-                                            >Add new customer</v-btn>
-                                            <h4 class="subtitle-2 font-weight-light mt-2">
+                                                >Add new customer</v-btn
+                                            >
+                                            <h4
+                                                class="subtitle-2 font-weight-light mt-2"
+                                            >
                                                 <a
                                                     href="#"
                                                     style="color: #1bbae1"
                                                     class="text-decoration-none"
-                                                >Export to Excel</a>
+                                                    >Export to Excel</a
+                                                >
                                                 /
                                                 <a
                                                     href="#"
                                                     style="color: #1bbae1"
                                                     class="text-decoration-none"
-                                                >Export to CSV</a>
+                                                    >Export to CSV</a
+                                                >
                                             </h4>
                                         </template>
 
@@ -326,16 +390,22 @@
                                                     color="grey"
                                                     icon
                                                     rounded
-                                                    @click="addCustomerDialog = false"
+                                                    @click="
+                                                        addCustomerDialog = false
+                                                    "
                                                     class="ml-auto mr-2 title text-lowercase"
                                                     style="transform: rotate(45deg)"
-                                                >+</v-btn>
+                                                    >+</v-btn
+                                                >
                                             </v-card-title>
                                             <v-divider></v-divider>
 
                                             <v-card-text>
                                                 <v-form class="pt-5">
-                                                    <label class="font-weight-bold ml-5">Card Number</label>
+                                                    <label
+                                                        class="font-weight-bold ml-5"
+                                                        >Card Number</label
+                                                    >
                                                     <v-text-field
                                                         placeholder="Card Number"
                                                         required
@@ -347,7 +417,8 @@
                                                     ></v-text-field>
                                                     <label
                                                         class="font-weight-bold ml-5"
-                                                    >Company Name</label>
+                                                        >Company Name</label
+                                                    >
                                                     <v-text-field
                                                         placeholder="Company Name"
                                                         required
@@ -356,7 +427,10 @@
                                                         rounded
                                                         class="mt-1 mb-0"
                                                     ></v-text-field>
-                                                    <label class="font-weight-bold ml-5">Surname</label>
+                                                    <label
+                                                        class="font-weight-bold ml-5"
+                                                        >Surname</label
+                                                    >
                                                     <v-text-field
                                                         placeholder="Surname"
                                                         required
@@ -367,7 +441,8 @@
                                                     ></v-text-field>
                                                     <label
                                                         class="font-weight-bold d-block ml-5"
-                                                    >Name</label>
+                                                        >Name</label
+                                                    >
                                                     <v-text-field
                                                         placeholder="Name"
                                                         required
@@ -378,7 +453,8 @@
                                                     ></v-text-field>
                                                     <label
                                                         class="font-weight-bold d-block ml-5"
-                                                    >Date of Birth</label>
+                                                        >Date of Birth</label
+                                                    >
                                                     <v-text-field
                                                         placeholder="Name"
                                                         required
@@ -390,12 +466,23 @@
                                                     ></v-text-field>
                                                     <label
                                                         class="font-weight-bold d-block ml-5"
-                                                    >Gender</label>
-                                                    <v-radio-group row class="pl-4">
-                                                        <v-radio label="male"></v-radio>
-                                                        <v-radio label="female"></v-radio>
+                                                        >Gender</label
+                                                    >
+                                                    <v-radio-group
+                                                        row
+                                                        class="pl-4"
+                                                    >
+                                                        <v-radio
+                                                            label="male"
+                                                        ></v-radio>
+                                                        <v-radio
+                                                            label="female"
+                                                        ></v-radio>
                                                     </v-radio-group>
-                                                    <label class="font-weight-bold ml-5">Address</label>
+                                                    <label
+                                                        class="font-weight-bold ml-5"
+                                                        >Address</label
+                                                    >
                                                     <v-text-field
                                                         placeholder="Address"
                                                         required
@@ -404,7 +491,10 @@
                                                         rounded
                                                         class="mt-1 mb-0"
                                                     ></v-text-field>
-                                                    <label class="font-weight-bold ml-5">T.K</label>
+                                                    <label
+                                                        class="font-weight-bold ml-5"
+                                                        >T.K</label
+                                                    >
                                                     <v-text-field
                                                         placeholder="T.K"
                                                         required
@@ -414,7 +504,10 @@
                                                         class="mt-1 mb-0"
                                                         type="number"
                                                     ></v-text-field>
-                                                    <label class="font-weight-bold ml-5">Area / City</label>
+                                                    <label
+                                                        class="font-weight-bold ml-5"
+                                                        >Area / City</label
+                                                    >
                                                     <v-text-field
                                                         placeholder="Area / City"
                                                         required
@@ -425,7 +518,8 @@
                                                     ></v-text-field>
                                                     <label
                                                         class="font-weight-bold ml-5"
-                                                    >Country Code</label>
+                                                        >Country Code</label
+                                                    >
                                                     <v-text-field
                                                         placeholder="Country Code"
                                                         required
@@ -437,7 +531,8 @@
                                                     ></v-text-field>
                                                     <label
                                                         class="font-weight-bold ml-5"
-                                                    >Callphone Number</label>
+                                                        >Callphone Number</label
+                                                    >
                                                     <v-text-field
                                                         placeholder="Callphone Number"
                                                         required
@@ -449,7 +544,8 @@
                                                     ></v-text-field>
                                                     <label
                                                         class="font-weight-bold ml-5"
-                                                    >Telephone Number</label>
+                                                        >Telephone Number</label
+                                                    >
                                                     <v-text-field
                                                         placeholder="Telephone Number"
                                                         required
@@ -459,7 +555,10 @@
                                                         class="mt-1 mb-0"
                                                         type="number"
                                                     ></v-text-field>
-                                                    <label class="font-weight-bold ml-5">Email</label>
+                                                    <label
+                                                        class="font-weight-bold ml-5"
+                                                        >Email</label
+                                                    >
                                                     <v-text-field
                                                         placeholder="Email"
                                                         required
@@ -471,7 +570,8 @@
                                                     ></v-text-field>
                                                     <label
                                                         class="font-weight-bold d-block ml-5"
-                                                    >Application Date</label>
+                                                        >Application Date</label
+                                                    >
                                                     <v-text-field
                                                         placeholder="Name"
                                                         required
@@ -481,16 +581,28 @@
                                                         class="mt-1 mb-0"
                                                         type="date"
                                                     ></v-text-field>
-                                                    <v-card flat tile class="pl-4">
+                                                    <v-card
+                                                        flat
+                                                        tile
+                                                        class="pl-4"
+                                                    >
                                                         <v-checkbox
                                                             class="d-inline-block ma-0 pa-0 font-weight-bold"
                                                         ></v-checkbox>
                                                         <h4
                                                             class="d-inline-block subtitle-2 font-weight-bold"
                                                             style="position: relative; right: 5px; bottom: 5px"
-                                                        >I wish to receive news & offers from katerina</h4>
+                                                        >
+                                                            I wish to receive
+                                                            news & offers from
+                                                            katerina
+                                                        </h4>
                                                     </v-card>
-                                                    <v-card flat tile class="pl-4">
+                                                    <v-card
+                                                        flat
+                                                        tile
+                                                        class="pl-4"
+                                                    >
                                                         <v-checkbox
                                                             class="d-inline-block ma-0 pa-0 font-weight-light"
                                                             disabled
@@ -498,7 +610,9 @@
                                                         <h4
                                                             class="text-uppercase d-inline-block subtitle-2 font-weight-light"
                                                             style="position: relative; right: 5px; bottom: 5px"
-                                                        >sms</h4>
+                                                        >
+                                                            sms
+                                                        </h4>
                                                         <v-checkbox
                                                             class="d-inline-block ma-0 pa-0 font-weight-light"
                                                             disabled
@@ -506,7 +620,9 @@
                                                         <h4
                                                             class="text-uppercase d-inline-block subtitle-2 font-weight-light"
                                                             style="position: relative; right: 5px; bottom: 5px"
-                                                        >email</h4>
+                                                        >
+                                                            email
+                                                        </h4>
                                                         <v-checkbox
                                                             class="d-inline-block ma-0 pa-0 font-weight-light"
                                                             disabled
@@ -514,7 +630,9 @@
                                                         <h4
                                                             class="text-uppercase d-inline-block subtitle-2 font-weight-light"
                                                             style="position: relative; right: 5px; bottom: 5px"
-                                                        >push</h4>
+                                                        >
+                                                            push
+                                                        </h4>
                                                         <v-checkbox
                                                             class="d-inline-block ma-0 pa-0 font-weight-light"
                                                             disabled
@@ -522,7 +640,9 @@
                                                         <h4
                                                             class="text-uppercase d-inline-block subtitle-2 font-weight-light"
                                                             style="position: relative; right: 5px; bottom: 5px"
-                                                        >viber</h4>
+                                                        >
+                                                            viber
+                                                        </h4>
                                                     </v-card>
                                                 </v-form>
                                             </v-card-text>
@@ -536,18 +656,24 @@
                                             >
                                                 <v-btn
                                                     color="#dbe1e8"
-                                                    @click="addCustomerDialog = false"
+                                                    @click="
+                                                        addCustomerDialog = false
+                                                    "
                                                     class="mr-2 text-capitalize"
                                                     small
                                                     rounded
-                                                >Cancel</v-btn>
+                                                    >Cancel</v-btn
+                                                >
                                                 <v-btn
                                                     color="primary"
-                                                    @click="addCustomerDialog = false"
+                                                    @click="
+                                                        addCustomerDialog = false
+                                                    "
                                                     class="text-capitalize"
                                                     small
                                                     rounded
-                                                >Add new customer</v-btn>
+                                                    >Add new customer</v-btn
+                                                >
                                             </v-card>
                                         </v-card>
                                     </v-dialog>
@@ -555,8 +681,16 @@
                             </v-row>
                             <v-card flat class="pa-5 pt-1 pb-1">
                                 <v-card flat class="pa-0" color="#f9fafc">
-                                    <v-row class="pa-3 pt-0 pb-0 justify-md-end">
-                                        <v-col cols="10" sm="8" md="6" lg="4" class="pa-3">
+                                    <v-row
+                                        class="pa-3 pt-0 pb-0 justify-md-end"
+                                    >
+                                        <v-col
+                                            cols="10"
+                                            sm="8"
+                                            md="6"
+                                            lg="4"
+                                            class="pa-3"
+                                        >
                                             <v-text-field
                                                 label="Search"
                                                 outlined
@@ -564,7 +698,9 @@
                                                 clearable
                                                 rounded
                                                 hide-details
-                                                :prepend-inner-icon="icons.mdiMagnify"
+                                                :prepend-inner-icon="
+                                                    icons.mdiMagnify
+                                                "
                                             ></v-text-field>
                                         </v-col>
                                     </v-row>
@@ -574,41 +710,70 @@
                                     :items="customerData"
                                     :footer-props="{ itemsPerPageOptions }"
                                 >
-                                    <template v-slot:item.transactions="{item}">
+                                    <template
+                                        v-slot:item.transactions="{ item }"
+                                    >
                                         <p
-                                            :class="item.totalData? 'font-weight-bold mt-4': ' mt-4' "
-                                        >{{ item.transactions }}</p>
+                                            :class="
+                                                item.totalData
+                                                    ? 'font-weight-bold mt-4'
+                                                    : ' mt-4'
+                                            "
+                                        >
+                                            {{ item.transactions }}
+                                        </p>
                                     </template>
-                                    <template v-slot:item.total="{item}">
+                                    <template v-slot:item.total="{ item }">
                                         <p
-                                            :class="item.totalData? 'font-weight-bold mt-4': ' mt-4' "
-                                        >{{ item.total }}</p>
+                                            :class="
+                                                item.totalData
+                                                    ? 'font-weight-bold mt-4'
+                                                    : ' mt-4'
+                                            "
+                                        >
+                                            {{ item.total }}
+                                        </p>
                                     </template>
-                                    <template v-slot:item.redeemed="{item}">
+                                    <template v-slot:item.redeemed="{ item }">
                                         <p
-                                            :class="item.totalData? 'font-weight-bold mt-4': ' mt-4' "
-                                        >{{ item.redeemed }}</p>
+                                            :class="
+                                                item.totalData
+                                                    ? 'font-weight-bold mt-4'
+                                                    : ' mt-4'
+                                            "
+                                        >
+                                            {{ item.redeemed }}
+                                        </p>
                                     </template>
-                                    <template v-slot:item.available="{item}">
+                                    <template v-slot:item.available="{ item }">
                                         <p
-                                            :class="item.totalData? 'font-weight-bold mt-4': ' mt-4' "
-                                        >{{ item.available }}</p>
+                                            :class="
+                                                item.totalData
+                                                    ? 'font-weight-bold mt-4'
+                                                    : ' mt-4'
+                                            "
+                                        >
+                                            {{ item.available }}
+                                        </p>
                                     </template>
 
-                                    <template v-slot:item.user_tab="{item}">
+                                    <template v-slot:item.user_tab="{ item }">
                                         <v-dialog
                                             v-model="userTabDialog"
                                             width="60%"
                                             v-if="!item.totalData"
                                         >
-                                            <template v-slot:activator="{ on, attrs }">
+                                            <template
+                                                v-slot:activator="{ on, attrs }"
+                                            >
                                                 <v-btn
                                                     color="primary"
                                                     class="text-capitalize d-block ma-1"
                                                     rounded
                                                     v-bind="attrs"
                                                     v-on="on"
-                                                >User Tab</v-btn>
+                                                    >User Tab</v-btn
+                                                >
                                             </template>
 
                                             <v-card>
@@ -619,10 +784,13 @@
                                                     <v-btn
                                                         color="grey"
                                                         icon
-                                                        @click="userTabDialog = false"
+                                                        @click="
+                                                            userTabDialog = false
+                                                        "
                                                         class="ml-auto mr-2 title text-lowercase"
                                                         style="transform: rotate(45deg)"
-                                                    >+</v-btn>
+                                                        >+</v-btn
+                                                    >
                                                 </v-card-title>
                                                 <v-divider></v-divider>
 
@@ -632,18 +800,24 @@
                                                             <v-col
                                                                 cols="4"
                                                                 class="font-weight-bold"
-                                                            >ID</v-col>
+                                                                >ID</v-col
+                                                            >
                                                             <v-col
                                                                 cols="7"
                                                                 class="font-weight-light"
-                                                            >62494</v-col>
+                                                                >62494</v-col
+                                                            >
                                                         </v-row>
                                                         <v-row class="pl-5">
                                                             <v-col
                                                                 cols="4"
                                                                 class="font-weight-bold"
-                                                            >Marketing</v-col>
-                                                            <v-col cols="7" class="pb-0">
+                                                                >Marketing</v-col
+                                                            >
+                                                            <v-col
+                                                                cols="7"
+                                                                class="pb-0"
+                                                            >
                                                                 <v-checkbox
                                                                     class="d-inline-block ma-0 pa-0 font-weight-light"
                                                                     disabled
@@ -651,7 +825,9 @@
                                                                 <h4
                                                                     class="text-uppercase d-inline-block subtitle-2 font-weight-light"
                                                                     style="position: relative; right: 5px; bottom: 5px"
-                                                                >sms</h4>
+                                                                >
+                                                                    sms
+                                                                </h4>
                                                                 <v-checkbox
                                                                     class="d-inline-block ma-0 pa-0 font-weight-light"
                                                                     disabled
@@ -659,7 +835,9 @@
                                                                 <h4
                                                                     class="text-uppercase d-inline-block subtitle-2 font-weight-light"
                                                                     style="position: relative; right: 5px; bottom: 5px"
-                                                                >email</h4>
+                                                                >
+                                                                    email
+                                                                </h4>
                                                                 <v-checkbox
                                                                     class="d-inline-block ma-0 pa-0 font-weight-light"
                                                                     disabled
@@ -667,7 +845,9 @@
                                                                 <h4
                                                                     class="text-uppercase d-inline-block subtitle-2 font-weight-light"
                                                                     style="position: relative; right: 5px; bottom: 5px"
-                                                                >push</h4>
+                                                                >
+                                                                    push
+                                                                </h4>
                                                                 <v-checkbox
                                                                     class="d-inline-block ma-0 pa-0 font-weight-light"
                                                                     disabled
@@ -675,48 +855,61 @@
                                                                 <h4
                                                                     class="text-uppercase d-inline-block subtitle-2 font-weight-light"
                                                                     style="position: relative; right: 5px; bottom: 5px"
-                                                                >viber</h4>
+                                                                >
+                                                                    viber
+                                                                </h4>
                                                             </v-col>
                                                         </v-row>
                                                         <v-row class="pl-5">
                                                             <v-col
                                                                 cols="4"
                                                                 class="font-weight-bold"
-                                                            >User Phone</v-col>
+                                                                >User
+                                                                Phone</v-col
+                                                            >
                                                             <v-col
                                                                 cols="7"
                                                                 class="font-weight-light"
-                                                            >6982591305</v-col>
+                                                                >6982591305</v-col
+                                                            >
                                                         </v-row>
                                                         <v-row class="pl-5">
                                                             <v-col
                                                                 cols="4"
                                                                 class="font-weight-bold"
-                                                            >User Email</v-col>
+                                                                >User
+                                                                Email</v-col
+                                                            >
                                                             <v-col
                                                                 cols="7"
                                                                 class="font-weight-light"
-                                                            >lefkothea@roadcube.com</v-col>
+                                                                >lefkothea@roadcube.com</v-col
+                                                            >
                                                         </v-row>
                                                         <v-row class="pl-5">
                                                             <v-col
                                                                 cols="4"
                                                                 class="font-weight-bold"
-                                                            >Gender</v-col>
+                                                                >Gender</v-col
+                                                            >
                                                             <v-col
                                                                 cols="7"
                                                                 class="font-weight-light"
-                                                            >Women</v-col>
+                                                                >Women</v-col
+                                                            >
                                                         </v-row>
                                                         <v-row class="pl-5">
                                                             <v-col
                                                                 cols="4"
                                                                 class="font-weight-bold"
-                                                            >Date of Birth</v-col>
+                                                                >Date of
+                                                                Birth</v-col
+                                                            >
                                                             <v-col
                                                                 cols="7"
                                                                 class="font-weight-light"
-                                                            >01-01-1000</v-col>
+                                                                >01-01-1000</v-col
+                                                            >
                                                         </v-row>
                                                     </v-card>
                                                 </v-card-text>
@@ -730,22 +923,27 @@
                                                 >
                                                     <v-btn
                                                         color="#dbe1e8"
-                                                        @click="userTabDialog = false"
+                                                        @click="
+                                                            userTabDialog = false
+                                                        "
                                                         class="text-capitalize"
                                                         small
                                                         rounded
-                                                    >Close</v-btn>
+                                                        >Close</v-btn
+                                                    >
                                                 </v-card>
                                             </v-card>
                                         </v-dialog>
                                     </template>
-                                    <template v-slot:item.edit="{item}">
+                                    <template v-slot:item.edit="{ item }">
                                         <v-dialog
                                             v-model="editDialog"
                                             width="60%"
                                             v-if="!item.totalData"
                                         >
-                                            <template v-slot:activator="{ on, attrs }">
+                                            <template
+                                                v-slot:activator="{ on, attrs }"
+                                            >
                                                 <v-btn
                                                     color="primary"
                                                     class="d-block ma-1 text-capitalize"
@@ -753,7 +951,8 @@
                                                     rounded
                                                     v-bind="attrs"
                                                     v-on="on"
-                                                >Edit</v-btn>
+                                                    >Edit</v-btn
+                                                >
                                             </template>
 
                                             <v-card class="pb-5">
@@ -764,10 +963,13 @@
                                                     <v-btn
                                                         color="grey"
                                                         icon
-                                                        @click="editDialog = false"
+                                                        @click="
+                                                            editDialog = false
+                                                        "
                                                         class="ml-auto mr-2 title text-lowercase"
                                                         style="transform: rotate(45deg)"
-                                                    >+</v-btn>
+                                                        >+</v-btn
+                                                    >
                                                 </v-card-title>
                                                 <v-divider></v-divider>
 
@@ -775,7 +977,8 @@
                                                     <v-form class="pt-5">
                                                         <label
                                                             class="font-weight-bold ml-5"
-                                                        >Card Number</label>
+                                                            >Card Number</label
+                                                        >
                                                         <v-text-field
                                                             placeholder="Card Number"
                                                             required
@@ -787,7 +990,8 @@
                                                         ></v-text-field>
                                                         <label
                                                             class="font-weight-bold ml-5"
-                                                        >Company Name</label>
+                                                            >Company Name</label
+                                                        >
                                                         <v-text-field
                                                             placeholder="Company Name"
                                                             required
@@ -796,7 +1000,10 @@
                                                             rounded
                                                             class="mt-1 mb-0"
                                                         ></v-text-field>
-                                                        <label class="font-weight-bold ml-5">Surname</label>
+                                                        <label
+                                                            class="font-weight-bold ml-5"
+                                                            >Surname</label
+                                                        >
                                                         <v-text-field
                                                             placeholder="Surname"
                                                             required
@@ -807,7 +1014,8 @@
                                                         ></v-text-field>
                                                         <label
                                                             class="font-weight-bold d-block ml-5"
-                                                        >Name</label>
+                                                            >Name</label
+                                                        >
                                                         <v-text-field
                                                             placeholder="Name"
                                                             required
@@ -818,7 +1026,9 @@
                                                         ></v-text-field>
                                                         <label
                                                             class="font-weight-bold d-block ml-5"
-                                                        >Date of Birth</label>
+                                                            >Date of
+                                                            Birth</label
+                                                        >
                                                         <v-text-field
                                                             placeholder="Name"
                                                             required
@@ -830,12 +1040,23 @@
                                                         ></v-text-field>
                                                         <label
                                                             class="font-weight-bold d-block ml-5"
-                                                        >Gender</label>
-                                                        <v-radio-group row class="pl-4">
-                                                            <v-radio label="male"></v-radio>
-                                                            <v-radio label="female"></v-radio>
+                                                            >Gender</label
+                                                        >
+                                                        <v-radio-group
+                                                            row
+                                                            class="pl-4"
+                                                        >
+                                                            <v-radio
+                                                                label="male"
+                                                            ></v-radio>
+                                                            <v-radio
+                                                                label="female"
+                                                            ></v-radio>
                                                         </v-radio-group>
-                                                        <label class="font-weight-bold ml-5">Address</label>
+                                                        <label
+                                                            class="font-weight-bold ml-5"
+                                                            >Address</label
+                                                        >
                                                         <v-text-field
                                                             placeholder="Address"
                                                             required
@@ -844,7 +1065,10 @@
                                                             rounded
                                                             class="mt-1 mb-0"
                                                         ></v-text-field>
-                                                        <label class="font-weight-bold ml-5">T.K</label>
+                                                        <label
+                                                            class="font-weight-bold ml-5"
+                                                            >T.K</label
+                                                        >
                                                         <v-text-field
                                                             placeholder="T.K"
                                                             required
@@ -856,7 +1080,8 @@
                                                         ></v-text-field>
                                                         <label
                                                             class="font-weight-bold ml-5"
-                                                        >Area / City</label>
+                                                            >Area / City</label
+                                                        >
                                                         <v-text-field
                                                             placeholder="Area / City"
                                                             required
@@ -867,7 +1092,8 @@
                                                         ></v-text-field>
                                                         <label
                                                             class="font-weight-bold ml-5"
-                                                        >Country Code</label>
+                                                            >Country Code</label
+                                                        >
                                                         <v-text-field
                                                             placeholder="Country Code"
                                                             required
@@ -879,7 +1105,9 @@
                                                         ></v-text-field>
                                                         <label
                                                             class="font-weight-bold ml-5"
-                                                        >Callphone Number</label>
+                                                            >Callphone
+                                                            Number</label
+                                                        >
                                                         <v-text-field
                                                             placeholder="Callphone Number"
                                                             required
@@ -891,7 +1119,9 @@
                                                         ></v-text-field>
                                                         <label
                                                             class="font-weight-bold ml-5"
-                                                        >Telephone Number</label>
+                                                            >Telephone
+                                                            Number</label
+                                                        >
                                                         <v-text-field
                                                             placeholder="Telephone Number"
                                                             required
@@ -901,7 +1131,10 @@
                                                             class="mt-1 mb-0"
                                                             type="number"
                                                         ></v-text-field>
-                                                        <label class="font-weight-bold ml-5">Email</label>
+                                                        <label
+                                                            class="font-weight-bold ml-5"
+                                                            >Email</label
+                                                        >
                                                         <v-text-field
                                                             placeholder="Email"
                                                             required
@@ -913,7 +1146,9 @@
                                                         ></v-text-field>
                                                         <label
                                                             class="font-weight-bold d-block ml-5"
-                                                        >Application Date</label>
+                                                            >Application
+                                                            Date</label
+                                                        >
                                                         <v-text-field
                                                             placeholder="Name"
                                                             required
@@ -923,16 +1158,29 @@
                                                             class="mt-1 mb-0"
                                                             type="date"
                                                         ></v-text-field>
-                                                        <v-card flat tile class="pl-4">
+                                                        <v-card
+                                                            flat
+                                                            tile
+                                                            class="pl-4"
+                                                        >
                                                             <v-checkbox
                                                                 class="d-inline-block ma-0 pa-0 font-weight-bold"
                                                             ></v-checkbox>
                                                             <h4
                                                                 class="d-inline-block subtitle-2 font-weight-bold"
                                                                 style="position: relative; right: 5px; bottom: 5px"
-                                                            >I wish to receive news & offers from katerina</h4>
+                                                            >
+                                                                I wish to
+                                                                receive news &
+                                                                offers from
+                                                                katerina
+                                                            </h4>
                                                         </v-card>
-                                                        <v-card flat tile class="pl-4">
+                                                        <v-card
+                                                            flat
+                                                            tile
+                                                            class="pl-4"
+                                                        >
                                                             <v-checkbox
                                                                 class="d-inline-block ma-0 pa-0 font-weight-light"
                                                                 disabled
@@ -940,7 +1188,9 @@
                                                             <h4
                                                                 class="text-uppercase d-inline-block subtitle-2 font-weight-light"
                                                                 style="position: relative; right: 5px; bottom: 5px"
-                                                            >sms</h4>
+                                                            >
+                                                                sms
+                                                            </h4>
                                                             <v-checkbox
                                                                 class="d-inline-block ma-0 pa-0 font-weight-light"
                                                                 disabled
@@ -948,7 +1198,9 @@
                                                             <h4
                                                                 class="text-uppercase d-inline-block subtitle-2 font-weight-light"
                                                                 style="position: relative; right: 5px; bottom: 5px"
-                                                            >email</h4>
+                                                            >
+                                                                email
+                                                            </h4>
                                                             <v-checkbox
                                                                 class="d-inline-block ma-0 pa-0 font-weight-light"
                                                                 disabled
@@ -956,7 +1208,9 @@
                                                             <h4
                                                                 class="text-uppercase d-inline-block subtitle-2 font-weight-light"
                                                                 style="position: relative; right: 5px; bottom: 5px"
-                                                            >push</h4>
+                                                            >
+                                                                push
+                                                            </h4>
                                                             <v-checkbox
                                                                 class="d-inline-block ma-0 pa-0 font-weight-light"
                                                                 disabled
@@ -964,7 +1218,9 @@
                                                             <h4
                                                                 class="text-uppercase d-inline-block subtitle-2 font-weight-light"
                                                                 style="position: relative; right: 5px; bottom: 5px"
-                                                            >viber</h4>
+                                                            >
+                                                                viber
+                                                            </h4>
                                                         </v-card>
                                                     </v-form>
                                                 </v-card-text>
@@ -978,18 +1234,24 @@
                                                 >
                                                     <v-btn
                                                         color="#dbe1e8"
-                                                        @click="editDialog = false"
+                                                        @click="
+                                                            editDialog = false
+                                                        "
                                                         class="mr-2 text-capitalize"
                                                         small
                                                         rounded
-                                                    >Cancel</v-btn>
+                                                        >Cancel</v-btn
+                                                    >
                                                     <v-btn
                                                         color="primary"
-                                                        @click="editDialog = false"
+                                                        @click="
+                                                            editDialog = false
+                                                        "
                                                         class="text-capitalize"
                                                         small
                                                         rounded
-                                                    >Save</v-btn>
+                                                        >Save</v-btn
+                                                    >
                                                 </v-card>
                                             </v-card>
                                         </v-dialog>
@@ -1013,7 +1275,7 @@ export default {
         icons: {
             mdiAccountBox,
             mdiMagnify,
-            mdiPlus,
+            mdiPlus
         },
         tab: 0,
         addCustomerDialog: false,
@@ -1027,7 +1289,7 @@ export default {
             "less than",
             "greater or equal",
             "less or equal",
-            "equal",
+            "equal"
         ],
         operator: "",
         customerHeaders: [
@@ -1037,7 +1299,7 @@ export default {
             { text: "Redeemed", value: "redeemed" },
             { text: "Available", value: "available" },
             { text: "User Tab", value: "user_tab" },
-            { text: "Edit", value: "edit" },
+            { text: "Edit", value: "edit" }
         ],
         customerData: [
             {
@@ -1045,32 +1307,32 @@ export default {
                 transactions: 1,
                 total: 15,
                 redeemed: 141500,
-                available: 10000,
+                available: 10000
             },
             {
                 member_card: 201137,
                 transactions: 0,
                 total: 0,
                 redeemed: 0,
-                available: 3000,
-            },
+                available: 3000
+            }
         ],
         customerTotalData: {
             totalData: true,
             transactions: 0,
             total: 0,
             redeemed: 0,
-            available: 0,
-        },
+            available: 0
+        }
     }),
     mounted() {
-        this.customerData.forEach((item) => {
+        this.customerData.forEach(item => {
             this.customerTotalData.transactions += item.transactions;
             this.customerTotalData.total += item.total;
             this.customerTotalData.redeemed += item.redeemed;
             this.customerTotalData.available += item.available;
         });
         this.customerData.push(this.customerTotalData);
-    },
+    }
 };
 </script>

@@ -13,15 +13,21 @@
                                         depressed
                                         v-bind="attrs"
                                         v-on="on"
-                                    >Register User</v-btn>
+                                        >Register User</v-btn
+                                    >
                                 </template>
 
                                 <v-card class="pb-5 pl-10 pr-10">
                                     <h4
                                         class="title font-weight-medium pa-5"
                                         align="center"
-                                    >Register User</h4>
-                                    <v-divider width="90%" class="ml-auto mr-auto mb-2"></v-divider>
+                                    >
+                                        Register User
+                                    </h4>
+                                    <v-divider
+                                        width="90%"
+                                        class="ml-auto mr-auto mb-2"
+                                    ></v-divider>
 
                                     <v-card-text width="80%" class="pb-0">
                                         <v-row class="pa-3 pt-5">
@@ -48,7 +54,11 @@
                                             </v-col>
                                         </v-row>
 
-                                        <h4 class="title font-weight-medium pa-0 mt-2">Rights</h4>
+                                        <h4
+                                            class="title font-weight-medium pa-0 mt-2"
+                                        >
+                                            Rights
+                                        </h4>
 
                                         <v-row>
                                             <v-col>
@@ -78,18 +88,23 @@
                                             @click="addCustomerDialog = false"
                                             class="mr-2 text-capitalize"
                                             rounded
-                                        >Cancel</v-btn>
+                                            >Cancel</v-btn
+                                        >
                                         <v-btn
                                             color="primary"
                                             @click="addCustomerDialog = false"
                                             class="text-capitalize"
                                             rounded
-                                        >Add</v-btn>
+                                            >Add</v-btn
+                                        >
                                     </v-card>
 
                                     <h4
                                         class="red--text pa-6 font-weight-regular subtitle-2"
-                                    >The code must have a minimum of 5 digits.</h4>
+                                    >
+                                        The code must have a minimum of 5
+                                        digits.
+                                    </h4>
                                 </v-card>
                             </v-dialog>
                         </v-col>
@@ -101,9 +116,17 @@
                             width="95%"
                             style="border-left: 3px solid #626262; border-right: 3px solid #626262"
                         >
-                            <v-row class="pa-3 pt-0 pb-0 title font-weight-bold">User List:</v-row>
+                            <v-row class="pa-3 pt-0 pb-0 title font-weight-bold"
+                                >User List:</v-row
+                            >
                             <v-row class="pa-3 pt-0 pb-0 justify-md-end">
-                                <v-col cols="10" sm="8" md="6" lg="4" class="pa-3">
+                                <v-col
+                                    cols="10"
+                                    sm="8"
+                                    md="6"
+                                    lg="4"
+                                    class="pa-3"
+                                >
                                     <v-text-field
                                         label="Search"
                                         outlined
@@ -124,7 +147,9 @@
                             >
                                 <template v-slot:item.edit>
                                     <v-dialog v-model="editDialog" width="60%">
-                                        <template v-slot:activator="{ on, attrs }">
+                                        <template
+                                            v-slot:activator="{ on, attrs }"
+                                        >
                                             <v-btn
                                                 color="primary"
                                                 dark
@@ -134,7 +159,11 @@
                                                 v-bind="attrs"
                                                 v-on="on"
                                             >
-                                                <v-icon v-text="icons.mdiSquareEditOutline"></v-icon>
+                                                <v-icon
+                                                    v-text="
+                                                        icons.mdiSquareEditOutline
+                                                    "
+                                                ></v-icon>
                                             </v-btn>
                                         </template>
 
@@ -142,12 +171,23 @@
                                             <h4
                                                 class="title font-weight-medium pa-5"
                                                 align="center"
-                                            >Register User</h4>
-                                            <v-divider width="90%" class="ml-auto mr-auto mb-2"></v-divider>
+                                            >
+                                                Register User
+                                            </h4>
+                                            <v-divider
+                                                width="90%"
+                                                class="ml-auto mr-auto mb-2"
+                                            ></v-divider>
 
-                                            <v-card-text width="80%" class="pb-0">
+                                            <v-card-text
+                                                width="80%"
+                                                class="pb-0"
+                                            >
                                                 <v-row class="pa-3 pt-5">
-                                                    <v-col cols="6" class="pa-1 pt-5">
+                                                    <v-col
+                                                        cols="6"
+                                                        class="pa-1 pt-5"
+                                                    >
                                                         <v-text-field
                                                             label="Username"
                                                             required
@@ -158,7 +198,10 @@
                                                             type="number"
                                                         ></v-text-field>
                                                     </v-col>
-                                                    <v-col cols="6" class="pa-1 pt-5">
+                                                    <v-col
+                                                        cols="6"
+                                                        class="pa-1 pt-5"
+                                                    >
                                                         <v-text-field
                                                             label="Password"
                                                             required
@@ -172,7 +215,9 @@
 
                                                 <h4
                                                     class="title font-weight-medium pa-0 mt-2"
-                                                >Rights</h4>
+                                                >
+                                                    Rights
+                                                </h4>
 
                                                 <v-row>
                                                     <v-col>
@@ -202,18 +247,25 @@
                                                     @click="editDialog = false"
                                                     class="mr-2 text-capitalize"
                                                     rounded
-                                                >Cancel</v-btn>
+                                                    >Cancel</v-btn
+                                                >
                                                 <v-btn
                                                     color="primary"
                                                     @click="editDialog = false"
                                                     class="text-capitalize"
                                                     rounded
-                                                >Change</v-btn>
+                                                    >Change</v-btn
+                                                >
                                             </v-card>
                                         </v-card>
                                     </v-dialog>
-                                    <v-dialog v-model="deleteDialog" width="50%">
-                                        <template v-slot:activator="{ on, attrs }">
+                                    <v-dialog
+                                        v-model="deleteDialog"
+                                        width="50%"
+                                    >
+                                        <template
+                                            v-slot:activator="{ on, attrs }"
+                                        >
                                             <v-btn
                                                 color="primary"
                                                 dark
@@ -223,30 +275,42 @@
                                                 v-bind="attrs"
                                                 v-on="on"
                                             >
-                                                <v-icon v-text="icons.mdiTrashCan"></v-icon>
+                                                <v-icon
+                                                    v-text="icons.mdiTrashCan"
+                                                ></v-icon>
                                             </v-btn>
                                         </template>
 
                                         <v-card class="pa-2 pb-0">
-                                            <v-card-title class="font-weight-medium pa-2 pl-4 pr-0">
+                                            <v-card-title
+                                                class="font-weight-medium pa-2 pl-4 pr-0"
+                                            >
                                                 Delete User Confirmation
                                                 <v-btn
                                                     color="grey"
                                                     icon
-                                                    @click="deleteDialog = false"
+                                                    @click="
+                                                        deleteDialog = false
+                                                    "
                                                     class="ml-auto mr-2 title text-lowercase"
                                                     style="transform: rotate(45deg)"
-                                                >+</v-btn>
+                                                    >+</v-btn
+                                                >
                                             </v-card-title>
                                             <v-divider></v-divider>
 
                                             <v-card-text>
                                                 <h4
                                                     class="subtitle-2 font-weight-regular mt-5"
-                                                >Do you want to delete User with name {{ }}.</h4>
+                                                >
+                                                    Do you want to delete User
+                                                    with name {{}}.
+                                                </h4>
                                                 <h4
                                                     class="subtitle-2 font-weight-regular mt-5 mb-4"
-                                                >Do you want to continue?</h4>
+                                                >
+                                                    Do you want to continue?
+                                                </h4>
                                             </v-card-text>
 
                                             <v-card
@@ -258,16 +322,22 @@
                                             >
                                                 <v-btn
                                                     color="#dbe1e8"
-                                                    @click="deleteDialog = false"
+                                                    @click="
+                                                        deleteDialog = false
+                                                    "
                                                     class="mr-2 text-capitalize"
                                                     rounded
-                                                >Cancel</v-btn>
+                                                    >Cancel</v-btn
+                                                >
                                                 <v-btn
                                                     color="error"
-                                                    @click="deleteDialog = false"
+                                                    @click="
+                                                        deleteDialog = false
+                                                    "
                                                     class="text-capitalize"
                                                     rounded
-                                                >Delete</v-btn>
+                                                    >Delete</v-btn
+                                                >
                                             </v-card>
                                         </v-card>
                                     </v-dialog>
@@ -286,7 +356,7 @@ import {
     mdiAccount,
     mdiMagnify,
     mdiSquareEditOutline,
-    mdiTrashCan,
+    mdiTrashCan
 } from "@mdi/js";
 
 export default {
@@ -296,7 +366,7 @@ export default {
             mdiAccount,
             mdiMagnify,
             mdiSquareEditOutline,
-            mdiTrashCan,
+            mdiTrashCan
         },
         editDialog: false,
         deleteDialog: false,
@@ -312,7 +382,7 @@ export default {
             "Check In",
             "Contest & Survey",
             "Multiple Coupons",
-            "New Campaign",
+            "New Campaign"
         ],
         rightRights: [
             "Branch Dept",
@@ -325,32 +395,32 @@ export default {
             "Receipt Scanning",
             "Serial Shopping",
             "Roadcodes",
-            "View Campaigns",
+            "View Campaigns"
         ],
         itemsPerPageOptions: [10, 20, 30, -1],
         usersHeaders: [
             { text: "Username", value: "username", align: "center" },
             { text: "User Password", value: "password", align: "center" },
             { text: "Rights", value: "rights", align: "center" },
-            { text: "Edit", value: "edit", align: "center" },
+            { text: "Edit", value: "edit", align: "center" }
         ],
         usersData: [
             {
                 username: "katerinanikos",
                 password: "pass1",
-                rights: "Press edit...",
+                rights: "Press edit..."
             },
             {
                 username: "katerinanikos",
                 password: "pass2",
-                rights: "Press edit...",
+                rights: "Press edit..."
             },
             {
                 username: "katerinanikos",
                 password: "pass3",
-                rights: "Press edit...",
-            },
-        ],
-    }),
+                rights: "Press edit..."
+            }
+        ]
+    })
 };
 </script>
