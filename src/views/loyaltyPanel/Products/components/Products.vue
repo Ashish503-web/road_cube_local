@@ -25,13 +25,13 @@
             <template v-slot:header="{ props: { headers } }">
                 <thead>
                 <tr>
-                    <th v-for="h in headers" :key="h.text" >
+                    <th v-for="h in headers" :key="h.text">
                         <v-text-field
                                 v-if="!h.action"
                                 v-model="search"
                                 :append-icon="icons.mdiMagnify"
                                 placeholder="Search"
-                              outlined
+                                outlined
                         ></v-text-field>
                     </th>
                 </tr>
@@ -43,10 +43,10 @@
                     <td>{{row.item.description}}</td>
                     <td>{{row.item.selling}}</td>
                     <td>{{row.item.wholesale}}</td>
-                    <td  width="30%">
-                        <div >
+                    <td width="30%">
+                        <div>
                             <v-btn @click="deleteHandler(row.item)" class="ma-2" small color="error">Delete</v-btn>
-                            <v-btn @click="editHandler(row.item.id)" class="ma-2" small color="primary">Edit</v-btn>
+                            <v-btn @click="editHandler(row.item)" class="ma-2" small color="primary">Edit</v-btn>
                         </div>
 
 
@@ -55,13 +55,18 @@
                 </tr>
             </template>
         </v-data-table>
+        <modal-delete :dialog="dialog"></modal-delete>
+        <modal-form :formModal="formModal"></modal-form>
     </v-card>
 </template>
 <script>
     import {
         mdiMagnify,
     } from "@mdi/js";
-import Vue from 'vue'
+    import Modal from './Modal'
+    import Form from './Form'
+    import Vue from 'vue'
+
     export default {
         data() {
             return {
@@ -70,6 +75,30 @@ import Vue from 'vue'
 
                 },
                 search: '',
+                dialog: false,
+                formModal: {
+                    active: false,
+                    title: '',
+                    productDisplay: '0',
+                    productName: '',
+                    productDescription: '',
+                    points: '',
+                    productId: null,
+                    percentage: 0,
+                    sellingPrice: '',
+                    wholesalePrice: '',
+                    changePriceCheck: 0,
+                    subPoints: 0,
+                    productImageCheck: {
+                        active: false,
+                    },
+                    productDisplayDays: {
+                        active: false,
+                    },
+                    updateProductCompanies: {
+                        active: false,
+                    }
+                },
                 pageItems: [
                     10,
                     20,
@@ -83,12 +112,12 @@ import Vue from 'vue'
                         align: 'start',
                         sortable: true,
                         value: 'name',
-                        action:false
+                        action: false
                     },
-                    {text: 'Product Description', value: 'description',action:false},
-                    {text: 'Selling Price', value: 'selling',action:false},
-                    {text: 'Wholesale Price', value: 'wholesale',action:false},
-                    {text: 'Edit', value: 'edit',  sortable: false,action:true},
+                    {text: 'Product Description', value: 'description', action: false},
+                    {text: 'Selling Price', value: 'selling', action: false},
+                    {text: 'Wholesale Price', value: 'wholesale', action: false},
+                    {text: 'Edit', value: 'edit', sortable: false, action: true},
                 ],
                 products: [
                     {
@@ -109,12 +138,23 @@ import Vue from 'vue'
             }
         },
         methods: {
-            deleteHandler:function(product) {
-
+            deleteHandler: function (product) {
+                this.dialog = true;
             },
-            editHandler(id) {
-                console.log(id)
+            editHandler(product) {
+                this.formModal.active = true;
+                this.formModal.title = 'Edit Product';
+                this.formModal.productName = product.name;
+                this.formModal.productDescription = product.description;
+                this.formModal.id = product.id;
+                this.formModal.sellingPrice = product.selling;
+                this.formModal.wholesalePrice = product.wholesale;
+
             }
+        },
+        components: {
+            'modal-delete': Modal,
+            'modal-form': Form
         }
     }
 </script>
