@@ -61,130 +61,10 @@
                 </v-tabs>
                 <v-tabs-items v-model="tab">
                     <v-tab-item>
-                        <v-row
-                            no-gutters
-                            justify="space-between"
-                            align="center"
-                            class="table-search px-3 pt-3 pb-1"
-                        >
-                            <v-col cols="1">
-                                <v-select
-                                    :items="perPage"
-                                    :value="itemsPerPage"
-                                    @input="itemsPerPage = parseInt($event, 10)"
-                                    dense
-                                    solo
-                                    flat
-                                    hide-details
-                                    outlined
-                                    rounded
-                                    class="pa-0"
-                                ></v-select>
-                            </v-col>
-                            <v-col cols="2">
-                                <v-text-field
-                                    v-model="search"
-                                    :append-icon="icons.mdiMagnify"
-                                    label="Search"
-                                    single-line
-                                    hide-details
-                                    dense
-                                    rounded
-                                    outlined
-                                    class="px-4"
-                                ></v-text-field>
-                            </v-col>
-                        </v-row>
-                        <v-data-table
-                            :headers="tableheader"
-                            :items="tablebody"
-                            :search="search"
-                            :page.sync="page"
-                            :items-per-page="itemsPerPage"
-                            @page-count="pageCount = $event"
-                            class="branch-table rounded-0 pa-3"
-                            hide-default-footer
-                        >
-                        </v-data-table>
-                        <div>
-                            <v-row
-                                no-gutters
-                                justify="space-between"
-                                align="center"
-                                class="px-3 py-1 pagination"
-                            >
-                                <p class="ma-0">{{ itemsPerPage }}</p>
-                                <v-pagination
-                                    v-model="page"
-                                    :length="pageCount"
-                                    circle
-                                    color="#1bbae1"
-                                ></v-pagination>
-                            </v-row>
-                        </div>
+                        <monthly-invoicing></monthly-invoicing>
                     </v-tab-item>
                     <v-tab-item>
-                        <v-row
-                            no-gutters
-                            justify="space-between"
-                            align="center"
-                            class="table-search px-3 pt-3 pb-1"
-                        >
-                            <v-col cols="1">
-                                <v-select
-                                    :items="perPage"
-                                    :value="itemsPerPage"
-                                    @input="itemsPerPage = parseInt($event, 10)"
-                                    dense
-                                    solo
-                                    flat
-                                    hide-details
-                                    outlined
-                                    rounded
-                                    class="pa-0"
-                                ></v-select>
-                            </v-col>
-                            <v-col cols="2">
-                                <v-text-field
-                                    v-model="search"
-                                    :append-icon="icons.mdiMagnify"
-                                    label="Search"
-                                    single-line
-                                    hide-details
-                                    dense
-                                    rounded
-                                    outlined
-                                    class="px-4"
-                                ></v-text-field>
-                            </v-col>
-                        </v-row>
-                        <v-data-table
-                            :headers="tableheader2"
-                            :items="tablebody2"
-                            :search="search"
-                            :page.sync="page"
-                            :items-per-page="itemsPerPage"
-                            @page-count="pageCount = $event"
-                            class="branch-table rounded-0 pa-3"
-                            hide-default-footer
-                        >
-                        </v-data-table>
-                        <div>
-                            <v-row
-                                no-gutters
-                                justify="space-between"
-                                align="center"
-                                class="px-3 py-1 pagination"
-                            >
-                                <p class="ma-0">{{ itemsPerPage }}</p>
-                                <v-pagination
-                                    v-model="page"
-                                    :length="pageCount"
-                                    circle
-                                    color="#1bbae1"
-                                ></v-pagination>
-                            </v-row>
-                        </div>
+                        <redemption-invoice></redemption-invoice>
                     </v-tab-item>
                 </v-tabs-items>
             </v-card>
@@ -194,7 +74,8 @@
 
 <script>
 import { mdiCalendar, mdiMagnify } from "@mdi/js";
-
+import MonthlyInvoicing from './components/MonthlyInvoicing'
+import RedemptionInvoice from './components/RedemptionInvoice'
 export default {
     name: "BranchDebt",
     data: () => ({
@@ -356,7 +237,11 @@ export default {
         pageCount: 0,
         itemsPerPage: 10,
         perPage: [10, 20, 30]
-    })
+    }),
+    components:{
+        'monthly-invoicing':MonthlyInvoicing,
+        'redemption-invoice':RedemptionInvoice
+    }
 };
 </script>
 

@@ -36,7 +36,7 @@ const routes = [
                 name: "BranchDebt",
                 component: () =>
                     import(
-                        /* webpackChunkName: "branchDebt" */ "../views/loyaltyPanel/BranchDebt.vue"
+                        /* webpackChunkName: "branchDebt" */ "@/views/loyaltyPanel/BranchDebt/BranchDebt.vue"
                     )
             },
             {
