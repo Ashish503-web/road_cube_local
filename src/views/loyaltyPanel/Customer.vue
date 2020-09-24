@@ -6,14 +6,14 @@
                     <v-card tile flat color="#f9fafc" class="pa-1 pb-0">
                         <v-tabs
                             v-model="tab"
-                            background-color="#f9fafc"
+                            color="black"
                             :vertical="$vuetify.breakpoint.mdAndDown"
                         >
                             <v-tab class="pa-5 text-capitalize">All</v-tab>
                             <v-dialog v-model="addTabDialog" width="60%">
                                 <template v-slot:activator="{ on }">
                                     <v-btn
-                                        color="primary"
+                                        color="black"
                                         text
                                         height="48"
                                         tile

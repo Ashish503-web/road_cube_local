@@ -1,22 +1,30 @@
 <template>
-    <section>
+    <v-tab-item>
         <v-row no-gutters justify="space-between" class="pa-5">
             <v-col cols="auto">
                 <v-toolbar-title>Plan</v-toolbar-title>
             </v-col>
 
             <v-col cols="auto">
-                <v-card>
+                <v-card outlined>
                     <v-row no-gutters>
                         <v-col cols="6">
-                            <v-card-title class="justify-center">Type</v-card-title>
+                            <v-card-title class="justify-center"
+                                >Type</v-card-title
+                            >
                             <v-divider></v-divider>
-                            <v-card-text class="text-center">Monthly Amount</v-card-text>
+                            <v-card-text class="text-center"
+                                >Monthly Amount</v-card-text
+                            >
                         </v-col>
                         <v-col cols="6">
-                            <v-card-title class="justify-center">Amount</v-card-title>
+                            <v-card-title class="justify-center"
+                                >Amount</v-card-title
+                            >
                             <v-divider></v-divider>
-                            <v-card-text class="text-center">50000€</v-card-text>
+                            <v-card-text class="text-center"
+                                >50000€</v-card-text
+                            >
                         </v-col>
                     </v-row>
                 </v-card>
@@ -28,27 +36,38 @@
         </v-row>
 
         <v-sheet color="#eaedf1" class="pa-5">
-            <v-tabs v-model="tab">
+            <v-tabs v-model="tab" color="black">
                 <v-tab class="text-capitalize">detailed information</v-tab>
                 <v-tab class="text-capitalize">payment</v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
                 <v-tab-item class="pa-10">
-                    <v-sheet class="border-red pa-3">
-                        <v-card-title
-                            class="text-h4 red--text"
-                        >The date for the next payment has passed</v-card-title>
-                        <h4 class="pl-5 red--text">Please update your subscription</h4>
+                    <v-row no-gutters align="center" justify="center">
+                        <v-col cols="auto">
+                            <v-icon
+                                size="100"
+                                color="red"
+                                v-text="icons.mdiAlertOutline"
+                            ></v-icon>
+                        </v-col>
 
-                        <v-card-title class="text-h4 red--text font-weight-light">Cost: 62.000,00 €</v-card-title>
-                    </v-sheet>
+                        <v-col cols="auto">
+                            <v-card-title
+                                class="pa-0 pl-5 red--text font-weight-bold"
+                            >
+                                The date for the next payment has passed
+                                <br />
+                                Please update your subscription
+                                <br />
+                                Cost: 62.000,00 €
+                            </v-card-title>
+                        </v-col>
+                    </v-row>
 
-                    <v-card-title
-                        class="text-h4 font-weight-light justify-center mt-10"
-                    >Transaction History</v-card-title>
+                    <v-toolbar flat height="80" class="mt-5">
+                        <v-card-title>Transaction History</v-card-title>
 
-                    <v-toolbar flat>
                         <v-spacer></v-spacer>
                         <v-col cols="5">
                             <v-text-field
@@ -73,9 +92,9 @@
                     <v-window v-model="step">
                         <v-window-item :value="1">
                             <v-card outlined>
-                                <v-card-title
-                                    class="text-h5 font-weight-light"
-                                >Pay with Debit/Credit Card</v-card-title>
+                                <v-card-title class="text-h5 font-weight-light"
+                                    >Pay with Debit/Credit Card</v-card-title
+                                >
                             </v-card>
 
                             <v-btn
@@ -84,7 +103,8 @@
                                 width="120"
                                 depressed
                                 @click="step++"
-                            >payment</v-btn>
+                                >payment</v-btn
+                            >
                         </v-window-item>
 
                         <v-window-item :value="2">
@@ -95,18 +115,31 @@
                             <v-card class="rounded-lg elevation-5 mt-5">
                                 <v-row no-gutters>
                                     <v-col cols="5" class="grey lighten-3 pa-3">
-                                        <v-img src="@/assets/cardlink_image.png" width="100%"></v-img>
+                                        <v-img
+                                            src="@/assets/cardlink_image.png"
+                                            width="100%"
+                                        ></v-img>
 
                                         <v-card-title
                                             class="justify-center font-weight-regular text--secondary text-h5"
-                                        >Transaction Details</v-card-title>
+                                            >Transaction Details</v-card-title
+                                        >
 
-                                        <v-row no-gutters justify="space-between">
-                                            <v-col cols="6" class="text-caption text--secondary">
+                                        <v-row
+                                            no-gutters
+                                            justify="space-between"
+                                        >
+                                            <v-col
+                                                cols="6"
+                                                class="text-caption text--secondary"
+                                            >
                                                 Merchant:
                                                 <br />Merchant site:
                                             </v-col>
-                                            <v-col cols="6" class="text-caption text--secondary">
+                                            <v-col
+                                                cols="6"
+                                                class="text-caption text--secondary"
+                                            >
                                                 www.roadcube.com
                                                 <br />http://www.roadcube.com
                                             </v-col>
@@ -116,36 +149,62 @@
                                             <v-col
                                                 cols="6"
                                                 class="text-caption text--secondary"
-                                            >This is recurring payment:</v-col>
+                                                >This is recurring
+                                                payment:</v-col
+                                            >
 
-                                            <v-col cols="6" class="text-caption text--secondary">
+                                            <v-col
+                                                cols="6"
+                                                class="text-caption text--secondary"
+                                            >
                                                 Reccuring on every 28 days
-                                                <br />Reccuring ends on 16/ 09/ 2024
+                                                <br />Reccuring ends on 16/ 09/
+                                                2024
                                             </v-col>
                                         </v-row>
 
-                                        <v-card outlined class="mt-3 mx-7 rounded py-3">
-                                            <h4 class="subtitle-2 text-center">Order Amount:</h4>
+                                        <v-card
+                                            outlined
+                                            class="mt-3 mx-7 rounded py-3"
+                                        >
+                                            <h4 class="subtitle-2 text-center">
+                                                Order Amount:
+                                            </h4>
                                             <v-card-title
                                                 class="text--secondary justify-center py-0"
-                                            >62,000.00 €</v-card-title>
+                                                >62,000.00 €</v-card-title
+                                            >
                                         </v-card>
 
-                                        <v-row no-gutters justify="center" class="mt-3">
+                                        <v-row
+                                            no-gutters
+                                            justify="center"
+                                            class="mt-3"
+                                        >
                                             <v-col cols="2" class="mr-1">
-                                                <v-img src="@/assets/visa_verified.png"></v-img>
+                                                <v-img
+                                                    src="@/assets/visa_verified.png"
+                                                ></v-img>
                                             </v-col>
                                             <v-col cols="3">
-                                                <v-img src="@/assets/mastercard_securecode.png"></v-img>
+                                                <v-img
+                                                    src="@/assets/mastercard_securecode.png"
+                                                ></v-img>
                                             </v-col>
                                         </v-row>
                                     </v-col>
 
                                     <v-col cols="7" class="grey lighten-5 pa-3">
-                                        <v-card color="grey lighten-5" tile flat class="mx-10">
-                                            <v-card-title class="font-weight-regular">
-                                                Enter Your Card
-                                                Details:
+                                        <v-card
+                                            color="grey lighten-5"
+                                            tile
+                                            flat
+                                            class="mx-10"
+                                        >
+                                            <v-card-title
+                                                class="font-weight-regular"
+                                            >
+                                                Enter Your Card Details:
                                             </v-card-title>
 
                                             <v-card-text clas>
@@ -165,7 +224,10 @@
                                                     justify="space-between"
                                                     align="center"
                                                 >
-                                                    <v-col cols="4" class="pr-1">
+                                                    <v-col
+                                                        cols="4"
+                                                        class="pr-1"
+                                                    >
                                                         <v-select
                                                             class="d-inline-block"
                                                             :items="months"
@@ -176,7 +238,10 @@
                                                         ></v-select>
                                                     </v-col>
 
-                                                    <v-col cols="4" class="px-1">
+                                                    <v-col
+                                                        cols="4"
+                                                        class="px-1"
+                                                    >
                                                         <v-select
                                                             :items="years"
                                                             menu-props="offsetY"
@@ -186,7 +251,10 @@
                                                         ></v-select>
                                                     </v-col>
 
-                                                    <v-col cols="4" class="pl-1">
+                                                    <v-col
+                                                        cols="4"
+                                                        class="pl-1"
+                                                    >
                                                         <v-text-field
                                                             v-model="cvv"
                                                             v-mask="'####'"
@@ -210,13 +278,15 @@
                                                     depressed
                                                     width="45%"
                                                     class="mx-2"
-                                                >cancel</v-btn>
+                                                    >cancel</v-btn
+                                                >
                                                 <v-btn
                                                     color="secondary"
                                                     width="45%"
                                                     depressed
                                                     class="mx-2"
-                                                >payment</v-btn>
+                                                    >payment</v-btn
+                                                >
                                             </v-card-text>
                                         </v-card>
                                     </v-col>
@@ -227,11 +297,16 @@
                 </v-tab-item>
             </v-tabs-items>
         </v-sheet>
-    </section>
+    </v-tab-item>
 </template>
 
 <script>
-import { mdiCashMultiple, mdiMagnify, mdiArrowLeft } from "@mdi/js";
+import {
+    mdiCashMultiple,
+    mdiMagnify,
+    mdiArrowLeft,
+    mdiAlertOutline
+} from "@mdi/js";
 
 export default {
     name: "Subscription",
@@ -241,6 +316,7 @@ export default {
             mdiCashMultiple,
             mdiMagnify,
             mdiArrowLeft,
+            mdiAlertOutline
         },
         tab: 0,
         itemsPerPageOptions: [10, 25, 50, 100],
@@ -248,15 +324,15 @@ export default {
             { text: "Date", value: "date" },
             { text: "Description", value: "description" },
             { text: "Payment Through", value: "paymentThrough" },
-            { text: "Amount", value: "amount" },
+            { text: "Amount", value: "amount" }
         ],
         transactions: [
             {
                 date: "19-05-2020",
                 description: "Payment: Online",
                 paymentThrough: "Card: **********3434",
-                amount: "37,20 €",
-            },
+                amount: "37,20 €"
+            }
         ],
         step: 1,
         cardNumber: "",
@@ -272,9 +348,9 @@ export default {
             "09",
             "10",
             "11",
-            "12",
+            "12"
         ],
-        cvv: "",
+        cvv: ""
     }),
 
     computed: {
@@ -289,8 +365,8 @@ export default {
             }
 
             return arr;
-        },
-    },
+        }
+    }
 };
 </script>
 

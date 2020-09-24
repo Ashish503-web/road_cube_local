@@ -3,7 +3,7 @@
         <v-sheet>
             <v-row no-gutters style="background: #eaedf1">
                 <v-col cols="auto">
-                    <v-tabs v-model="tab">
+                    <v-tabs v-model="tab" color="black">
                         <v-tab class="text-capitalize">pending</v-tab>
                         <v-tab class="text-capitalize">sent</v-tab>
                     </v-tabs>

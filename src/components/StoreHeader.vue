@@ -1,81 +1,7 @@
 <template>
     <header>
         <v-app-bar app flat color="white">
-            <v-app-bar-nav-icon></v-app-bar-nav-icon>
-            <v-col cols="4">
-                <v-text-field
-                    placeholder="Search..."
-                    color="white"
-                    flat
-                    rounded
-                    solo-inverted
-                    dense
-                    hide-details
-                    clearable
-                    :prepend-inner-icon="icons.mdiMagnify"
-                ></v-text-field>
-            </v-col>
-            <v-col cols="2" class="pl-3">
-                <v-menu
-                    offset-y
-                    min-width="96vw"
-                    nudge-bottom="2"
-                    transition="slide-y-reverse-transition"
-                    bottom
-                    :close-on-content-click="false"
-                >
-                    <template v-slot:activator="{ on }">
-                        <v-btn
-                            class="text-capitalize font-weight-regular"
-                            color="secondary"
-                            text
-                            v-on="on"
-                        >
-                            Mega Menu
-                            <v-icon v-text="icons.mdiChevronDown"></v-icon>
-                        </v-btn>
-                    </template>
-
-                    <v-card>
-                        <v-row no-gutters>
-                            <v-col cols="10">
-                                <v-row no-gutters>
-                                    <v-col
-                                        v-for="item in megaMenuItems"
-                                        :key="item.title"
-                                        cols="3"
-                                        class="pa-1"
-                                    >
-                                        <v-card-title
-                                            v-text="item.title"
-                                            class="subtitle-1"
-                                        ></v-card-title>
-                                        <v-list dense>
-                                            <v-list-item-group color="primary">
-                                                <v-list-item
-                                                    v-for="subItem in item.items"
-                                                    :key="subItem"
-                                                >
-                                                    <v-list-item-title
-                                                        v-text="subItem"
-                                                    ></v-list-item-title>
-                                                </v-list-item>
-                                            </v-list-item-group>
-                                        </v-list>
-                                    </v-col>
-                                </v-row>
-                            </v-col>
-                            <v-col cols="2">
-                                <v-img
-                                    src="../assets/megamenu-img.png"
-                                    width="150"
-                                    class="mt-12"
-                                ></v-img>
-                            </v-col>
-                        </v-row>
-                    </v-card>
-                </v-menu>
-            </v-col>
+            <v-app-bar-nav-icon @click="mini = !mini"></v-app-bar-nav-icon>
 
             <v-spacer></v-spacer>
 
@@ -110,11 +36,7 @@
                 </v-list>
             </v-menu>
 
-            <v-btn text>
-                <v-icon v-text="icons.mdiViewGridPlusOutline"></v-icon>
-            </v-btn>
-
-            <v-menu offset-y transition="slide-y-transition" bottom>
+            <!-- <v-menu offset-y transition="slide-y-transition" bottom>
                 <template v-slot:activator="{ on }">
                     <v-btn text v-on="on">
                         <v-badge color="red" content="3">
@@ -175,12 +97,16 @@
                         </v-list-item-group>
                     </v-list>
                 </v-card>
-            </v-menu>
+            </v-menu> -->
+
+            <v-btn icon>
+                <v-icon v-text="icons.mdiAccountQuestion"></v-icon>
+            </v-btn>
 
             <v-menu offset-y bottom transition="slide-y-transition">
                 <template v-slot:activator="{ on }">
                     <v-btn
-                        class="text-capitalize font-weight-regular ml-3"
+                        class="text-capitalize font-weight-regular"
                         text
                         v-on="on"
                     >
@@ -223,10 +149,6 @@
                     </v-list-item-group>
                 </v-list>
             </v-menu>
-
-            <v-btn text icon @click.stop="drawer = !drawer">
-                <v-icon v-text="icons.mdiCogOutline"></v-icon>
-            </v-btn>
         </v-app-bar>
 
         <v-navigation-drawer
@@ -237,26 +159,19 @@
             permanent
             dark
         >
+            <router-link to="/">
+                <v-toolbar class="home-link" color="secondary" flat>
+                    <v-toolbar-title class="mx-auto">
+                        <v-img src="../assets/loyalty-logo.png" contain></v-img>
+                    </v-toolbar-title>
+                </v-toolbar>
+            </router-link>
+
             <v-row class="py-3" no-gutters justify="center">
-                <router-link to="/">
-                    <v-sheet light class="pa-2 rounded-circle" width="70">
-                        <v-img
-                            src="../assets/store-logo.png"
-                            width="50"
-                        ></v-img>
-                    </v-sheet>
-                </router-link>
-                <v-col cols="12" class="text-center mt-4">
-                    <v-btn icon>
-                        <v-icon v-text="icons.mdiWeb"></v-icon>
-                    </v-btn>
-                    <v-btn icon class="mx-3">
-                        <v-icon v-text="icons.mdiPower"></v-icon>
-                    </v-btn>
-                    <v-btn icon>
-                        <v-icon v-text="icons.mdiAccountQuestion"></v-icon>
-                    </v-btn>
-                </v-col>
+                <v-sheet light class="pa-2 rounded-circle" width="70">
+                    <v-img src="../assets/store-logo.png" width="50"></v-img>
+                </v-sheet>
+
                 <v-col cols="12" class="text-center mt-4">
                     <h1 class="subtitle-1 white--text">Maroudas Optika</h1>
                 </v-col>
@@ -266,7 +181,7 @@
 
             <v-container
                 class="pa-0"
-                style="height: calc(100vh - 187px); overflow: auto"
+                :style="{ height: containerHeight, overflow: 'auto' }"
             >
                 <v-list
                     v-for="navLink in navLinks"
@@ -521,11 +436,21 @@ export default {
                 { icon: mdiLockOpenOutline, text: "Lock Screen" }
             ]
         };
+    },
+
+    computed: {
+        containerHeight() {
+            return this.mini ? "calc(100vh - 227px)" : "calc(100vh - 199px)";
+        }
     }
 };
 </script>
 
 <style scoped>
+.home-link:hover {
+    background-color: #1bbae1 !important;
+}
+
 ::-webkit-scrollbar {
     width: 4px;
 }

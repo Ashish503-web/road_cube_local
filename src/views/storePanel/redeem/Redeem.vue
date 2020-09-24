@@ -3,7 +3,7 @@
         <v-sheet class="pa-3">
             <v-row no-gutters>
                 <v-col cols="auto">
-                    <v-tabs v-model="tab">
+                    <v-tabs v-model="tab" color="black">
                         <v-tab class="text-capitalize">redeem voucher</v-tab>
                         <v-tab class="text-capitalize">coupons overview</v-tab>
                         <v-tab class="text-capitalize">multiple coupons</v-tab>
@@ -30,7 +30,7 @@ export default {
     name: "Redeem",
     components: { RedeemVoucher, CouponsOverview, MultipleCoupons },
     data: () => ({
-        tab: 0,
-    }),
+        tab: 0
+    })
 };
 </script>

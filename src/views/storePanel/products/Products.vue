@@ -3,7 +3,7 @@
         <v-sheet class="pa-3">
             <v-row no-gutters>
                 <v-col cols="auto">
-                    <v-tabs v-model="tab">
+                    <v-tabs v-model="tab" color="black">
                         <v-tab class="text-capitalize">products</v-tab>
                         <v-tab class="text-capitalize">product group</v-tab>
                     </v-tabs>

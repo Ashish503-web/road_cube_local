@@ -6,7 +6,7 @@
                     <v-card tile flat color="#f9fafc" class="pa-1 pb-0">
                         <v-tabs
                             v-model="tab"
-                            background-color="#f9fafc"
+                            color="black"
                             :vertical="$vuetify.breakpoint.mdAndDown"
                         >
                             <v-tab class="text-capitalize">Branches</v-tab>

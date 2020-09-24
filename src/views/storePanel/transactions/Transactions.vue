@@ -4,7 +4,11 @@
             <v-toolbar flat color="#EAEDF191">
                 <v-spacer></v-spacer>
                 <v-btn color="secondary" depressed class="text-capitalize">
-                    <v-icon class="mr-1" v-text="icons.mdiCellphoneIphone"></v-icon>open digital payments
+                    <v-icon
+                        class="mr-1"
+                        v-text="icons.mdiCellphoneIphone"
+                    ></v-icon
+                    >open digital payments
                 </v-btn>
 
                 <v-btn color="secondary" depressed class="text-capitalize mx-2">
@@ -13,13 +17,14 @@
                 </v-btn>
 
                 <v-btn color="secondary" depressed class="text-capitalize">
-                    <v-icon class="mr-1" v-text="icons.mdiOpenInNew"></v-icon>download all transactions
+                    <v-icon class="mr-1" v-text="icons.mdiOpenInNew"></v-icon
+                    >download all transactions
                 </v-btn>
             </v-toolbar>
 
             <v-row no-gutters style="background: #EAEDF191" class="px-3 pt-3">
                 <v-col cols="auto">
-                    <v-tabs v-model="tab">
+                    <v-tabs v-model="tab" color="black">
                         <v-tab class="text-capitalize">pending</v-tab>
                         <v-tab class="text-capitalize">paid</v-tab>
                     </v-tabs>
@@ -46,9 +51,9 @@ export default {
         icons: {
             mdiCellphoneIphone,
             mdiPrinter,
-            mdiOpenInNew,
+            mdiOpenInNew
         },
-        tab: 0,
-    }),
+        tab: 0
+    })
 };
 </script>
