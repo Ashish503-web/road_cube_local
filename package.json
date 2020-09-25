@@ -8,6 +8,7 @@
         "lint": "vue-cli-service lint"
     },
     "dependencies": {
+        "axios": "^0.20.0",
         "core-js": "^3.6.5",
         "v-mask": "^2.2.3",
         "vue": "^2.6.11",
@@ -48,11 +49,14 @@
         },
         "rules": {
             "no-unused-vars": "off",
-            "vue/no-duplicate-attributes": ["error", {
-                "allowCoexistClass": true,
-                "allowCoexistAppendIcon": true,
-                "allowCoexistStyle": true
-            }]
+            "vue/no-duplicate-attributes": [
+                "error",
+                {
+                    "allowCoexistClass": true,
+                    "allowCoexistAppendIcon": true,
+                    "allowCoexistStyle": true
+                }
+            ]
         }
     },
     "browserslist": [

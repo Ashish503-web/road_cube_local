@@ -11,6 +11,11 @@
                     block
                     to="/storepanel"
                 >go to store panel</v-btn>
+
+            </v-col>
+            <v-col
+            cols="10">
+                <v-btn color="primary" x-large outlined block to="/example-backend-request"> backend request functions examples</v-btn>
             </v-col>
         </v-row>
     </v-container>

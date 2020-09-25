@@ -419,7 +419,15 @@ const routes = [
                 }
             }
         ]
-    }
+    },
+    {
+        path: "/example-backend-request",
+        name: "backendExample",
+        component: () =>
+            import(
+                /* webpackChunkName: "ExampleBackendRequest" */ "@/views/ExampleBackendRequest.vue"
+                )
+    },
 ];
 
 const router = new VueRouter({
