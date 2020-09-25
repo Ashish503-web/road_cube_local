@@ -255,7 +255,7 @@ const routes = [
                 components: {
                     default: () =>
                         import(
-                            /* webpackChunkName: "voucher" */ "@/views/storePanel/Voucher.vue"
+                            /* webpackChunkName: "voucher" */ "@/views/storePanel/voucher/Voucher.vue"
                             )
                 }
             },
