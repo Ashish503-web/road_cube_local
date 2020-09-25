@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 Vue.use(Vuex)
-import exampleModule from './exampleModule/exampleModule'
+import modules from './modules/index'
 
 export default new Vuex.Store({
   state: {
@@ -14,7 +14,5 @@ export default new Vuex.Store({
   getters:{
 
   },
-  modules: {
-    exampleModule
-  }
+  modules: modules
 })
