@@ -6,19 +6,30 @@
                     <v-card tile flat height="100%">
                         <v-row no-gutters justify="center">
                             <v-col cols="5">
-                                <v-card-title class="text-h5 font-weight-bold pl-0 mt-5">
+                                <v-card-title
+                                    class="text-h5 font-weight-bold pl-0 mt-5"
+                                >
                                     <v-icon
                                         class="text--primary ml-n1 mr-3"
                                         large
                                         v-text="icons.mdiPlusThick"
-                                    ></v-icon>New Transaction
+                                    ></v-icon
+                                    >New Transaction
                                 </v-card-title>
 
-                                <v-text-field label="User" class="mt-12" outlined dense clearable></v-text-field>
+                                <v-text-field
+                                    label="User"
+                                    color="secondary"
+                                    class="mt-12"
+                                    outlined
+                                    dense
+                                    clearable
+                                ></v-text-field>
 
                                 <v-text-field
                                     type="number"
                                     label="Amount"
+                                    color="secondary"
                                     class="mt-5"
                                     outlined
                                     dense
@@ -29,6 +40,7 @@
                                 <v-text-field
                                     type="number"
                                     label="Receipt Number"
+                                    color="secondary"
                                     class="mt-5"
                                     outlined
                                     dense
@@ -41,7 +53,8 @@
                                     class="mt-12"
                                     block
                                     large
-                                >load points</v-btn>
+                                    >load points</v-btn
+                                >
                             </v-col>
                         </v-row>
                     </v-card>
@@ -60,8 +73,8 @@ export default {
     data: () => ({
         icons: {
             mdiPlusThick,
-            mdiCurrencyEur,
-        },
-    }),
+            mdiCurrencyEur
+        }
+    })
 };
 </script>

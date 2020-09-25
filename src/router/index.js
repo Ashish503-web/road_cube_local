@@ -404,7 +404,7 @@ const routes = [
                 components: {
                     default: () =>
                         import(
-                            /* webpackChunkName: "voucher" */ "@/views/storePanel/Voucher.vue"
+                            /* webpackChunkName: "voucher" */ "@/views/storePanel/voucher/Voucher.vue"
                         )
                 }
             },
@@ -426,8 +426,8 @@ const routes = [
         component: () =>
             import(
                 /* webpackChunkName: "ExampleBackendRequest" */ "@/views/ExampleBackendRequest.vue"
-                )
-    },
+            )
+    }
 ];
 
 const router = new VueRouter({

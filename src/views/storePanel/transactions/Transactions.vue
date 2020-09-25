@@ -3,13 +3,23 @@
         <v-sheet class="pa-3">
             <v-toolbar flat color="#EAEDF191">
                 <v-spacer></v-spacer>
-                <v-btn color="secondary" depressed class="text-capitalize">
-                    <v-icon
-                        class="mr-1"
-                        v-text="icons.mdiCellphoneIphone"
-                    ></v-icon
-                    >open digital payments
-                </v-btn>
+
+                <v-switch color="secondary" hide-details>
+                    <template v-slot:label>
+                        <v-tooltip top>
+                            <template v-slot:activator="{ on }">
+                                <v-icon
+                                    color="secondary"
+                                    class="mr-1"
+                                    v-text="icons.mdiCellphoneIphone"
+                                    v-on="on"
+                                ></v-icon>
+                            </template>
+
+                            <span>Open Digital Payments</span>
+                        </v-tooltip>
+                    </template>
+                </v-switch>
 
                 <v-btn color="secondary" depressed class="text-capitalize mx-2">
                     <v-icon class="mr-1" v-text="icons.mdiPrinter"></v-icon>fund
