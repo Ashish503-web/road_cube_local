@@ -1,235 +1,128 @@
 <template>
-    <v-card class="pa-0" flat>
-        <v-card flat>
-            <v-row class="ma-0">
-                <v-col sm="12" md="12" lg="4" class="d-none d-sm-block">
-                    <v-card-title>Dashboard</v-card-title>
-                </v-col>
-                <v-col cols="12" sm="12" md="3" lg="2">
-                    <v-card-title class="pb-0 justify-center">23</v-card-title>
-                    <v-card-title class="pa-0 font-weight-light justify-center text--secondary">
-                        <v-icon v-text="icons.mdiAccountGroup" class="mr-1"></v-icon>Customer
-                    </v-card-title>
-                </v-col>
-                <v-col cols="12" sm="12" md="3" lg="2">
-                    <v-card-title class="pb-0 justify-center">32</v-card-title>
-                    <v-card-title class="pa-0 font-weight-light justify-center text--secondary">
-                        <v-icon v-text="icons.mdiDatabase" class="mr-1"></v-icon>Transactions
-                    </v-card-title>
-                </v-col>
-                <v-col cols="12" sm="12" md="3" lg="2">
-                    <v-card-title class="pb-0 justify-center">€1.748,18</v-card-title>
-                    <v-card-title class="pa-0 font-weight-light justify-center text--secondary">
-                        <v-icon v-text="icons.mdiCurrencyEur" class="mr-1"></v-icon>Total
-                    </v-card-title>
-                </v-col>
-                <v-col cols="12" sm="12" md="3" lg="2">
-                    <v-card-title class="pb-0 justify-center">1630</v-card-title>
-                    <v-card-title class="pa-0 font-weight-light justify-center text--secondary">
-                        <v-icon v-text="icons.mdiTrophyVariant" class="mr-1"></v-icon>KAt
-                    </v-card-title>
-                </v-col>
-            </v-row>
-        </v-card>
+  <v-card class="pa-0" flat>
+    <v-card flat>
+      <v-row class="ma-0">
+        <Title/>
 
-        <v-row class="pa-3 pb-8" style="background: #eaedf1">
-            <v-col cols="12" sm="6" lg="3">
-                <v-hover v-slot:default="{ hover }">
-                    <v-card tile class="pa-5" outlined :elevation="hover ? 3 : 0">
-                        <v-row no-gutters justify="space-between" align="center">
-                            <v-col cols="auto">
-                                <v-sheet color="#27ae60" dark class="rounded-circle">
-                                    <v-icon class="ma-3" large v-text="icons.mdiBinoculars"></v-icon>
-                                </v-sheet>
-                            </v-col>
-                            <v-col cols="auto">
-                                <v-card-title
-                                    class="subtitle-1 font-weight-bold pa-0 justify-end"
-                                >3540</v-card-title>
-                                <h4
-                                    class="subtitle-2 font-weight-regular text--secondary"
-                                >User views</h4>
-                            </v-col>
-                        </v-row>
-                    </v-card>
-                </v-hover>
-            </v-col>
-
-            <v-col cols="12" sm="6" lg="3">
-                <v-hover v-slot:default="{ hover }">
-                    <v-card tile class="pa-5" outlined :elevation="hover ? 3 : 0">
-                        <v-row no-gutters justify="space-between" align="center">
-                            <v-col cols="auto">
-                                <v-sheet color="#e67e22" dark class="rounded-circle">
-                                    <v-icon class="ma-3" large v-text="icons.mdiCursorDefault"></v-icon>
-                                </v-sheet>
-                            </v-col>
-                            <v-col cols="auto">
-                                <v-card-title
-                                    class="subtitle-1 font-weight-bold pa-0 justify-end"
-                                >197</v-card-title>
-                                <h4 class="subtitle-2 font-weight-regular text--secondary">Clicks</h4>
-                            </v-col>
-                        </v-row>
-                    </v-card>
-                </v-hover>
-            </v-col>
-
-            <v-col cols="12" sm="6" lg="3">
-                <v-hover v-slot:default="{ hover }">
-                    <v-card tile class="pa-5" outlined :elevation="hover ? 3 : 0">
-                        <v-row no-gutters justify="space-between" align="center">
-                            <v-col cols="auto">
-                                <v-sheet color="#af64cc" dark class="rounded-circle">
-                                    <v-icon class="ma-3" large v-text="icons.mdiCompassOutline"></v-icon>
-                                </v-sheet>
-                            </v-col>
-                            <v-col cols="auto">
-                                <v-card-title
-                                    class="subtitle-1 font-weight-bold pa-0 justify-end"
-                                >42</v-card-title>
-                                <h4
-                                    class="subtitle-2 font-weight-regular text--secondary"
-                                >User leads</h4>
-                            </v-col>
-                        </v-row>
-                    </v-card>
-                </v-hover>
-            </v-col>
-
-            <v-col cols="12" sm="6" lg="3">
-                <v-hover v-slot:default="{ hover }">
-                    <v-card tile class="pa-5" outlined :elevation="hover ? 3 : 0">
-                        <v-row no-gutters justify="space-between" align="center">
-                            <v-col cols="auto">
-                                <v-sheet color="#e74c3c" dark class="rounded-circle">
-                                    <v-icon class="ma-3" large v-text="icons.mdiDatabase"></v-icon>
-                                </v-sheet>
-                            </v-col>
-                            <v-col cols="auto">
-                                <v-card-title
-                                    class="subtitle-1 font-weight-bold pa-0 justify-end"
-                                >32</v-card-title>
-                                <h4 class="subtitle-2 font-weight-regular text--secondary">Payments</h4>
-                            </v-col>
-                        </v-row>
-                    </v-card>
-                </v-hover>
-            </v-col>
-
-            <v-col cols="12" md="6">
-                <v-hover v-slot:default="{ hover }">
-                    <v-card tile class="pa-5" outlined :elevation="hover ? 3 : 0">
-                        <v-row no-gutters justify="space-between" align="center">
-                            <v-col cols="auto">
-                                <v-sheet color="accent" dark class="rounded-circle">
-                                    <v-icon
-                                        class="ma-3"
-                                        large
-                                        v-text="icons.mdiWallet"
-                                        style="transform: rotate(-90deg)"
-                                    ></v-icon>
-                                </v-sheet>
-                            </v-col>
-                            <v-col cols="auto">
-                                <v-card-title
-                                    class="subtitle-1 font-weight-bold pa-0"
-                                >0 Transactions / 0,00 Total</v-card-title>
-                                <h4
-                                    class="subtitle-2 font-weight-regular text--secondary"
-                                    align="end"
-                                >Last 7 days</h4>
-                            </v-col>
-                        </v-row>
-                    </v-card>
-                </v-hover>
-            </v-col>
-
-            <v-col cols="12" md="6">
-                <v-hover v-slot:default="{ hover }">
-                    <v-card tile class="pa-5" outlined :elevation="hover ? 3 : 0">
-                        <v-row no-gutters justify="space-between" align="center">
-                            <v-col cols="auto">
-                                <v-sheet color="accent" dark class="rounded-circle">
-                                    <v-icon
-                                        class="ma-3"
-                                        large
-                                        v-text="icons.mdiWallet"
-                                        style="transform: rotate(-90deg)"
-                                    ></v-icon>
-                                </v-sheet>
-                            </v-col>
-                            <v-col cols="auto">
-                                <v-card-title
-                                    class="subtitle-1 font-weight-bold pa-0"
-                                >0 Transactions / 0,00 Total</v-card-title>
-                                <h4
-                                    class="subtitle-2 font-weight-regular text--secondary"
-                                    align="end"
-                                >Last 24 hours</h4>
-                            </v-col>
-                        </v-row>
-                    </v-card>
-                </v-hover>
-            </v-col>
-
-            <v-col cols="12" md="6" sm="12">
-                <v-card tile flat min-height="400">
-                    <v-card tile flat color="#f9fafc">
-                        <v-card-title class="subtitle-1 font-weight-regular pt-2 pb-2">Transactions</v-card-title>
-                    </v-card>
-                </v-card>
-            </v-col>
-            <v-row class="ma-0">
-                <v-col cols="12" md="6" sm="12">
-                    <v-card flat tile min-height="400" align="center">
-                        <v-card tile flat color="#f9fafc">
-                            <v-card-title
-                                class="subtitle-1 font-weight-regular pt-2 pb-2"
-                            >View clicks</v-card-title>
-                        </v-card>
-                    </v-card>
-                </v-col>
-
-                <v-col cols="12" md="6" sm="12">
-                    <v-card flat tile min-height="400" align="center">
-                        <v-card tile flat color="#f9fafc">
-                            <v-card-title
-                                class="subtitle-1 font-weight-regular pt-2 pb-2"
-                            >View navigations</v-card-title>
-                        </v-card>
-                    </v-card>
-                </v-col>
-            </v-row>
-        </v-row>
+        <TitleBox
+          v-for="box in boxes"
+          v-bind:key="box.label"
+          v-bind:box="box"
+        />
+      </v-row>
     </v-card>
+
+    <v-row class="pa-3 pb-8" style="background: #eaedf1">
+      <Widget
+          v-for="widget in widgets"
+          v-bind:key="widget.label"
+          v-bind:widget="widget"
+      />
+
+      <TransactionsWidget
+          v-for="widget in transactionsWidgets"
+          v-bind:key="widget.label"
+          v-bind:widget="widget"
+      />
+
+      <TransactionsChart/>
+
+      <v-row class="ma-0">
+        <ClicksChart/>
+        <NavigationChart/>
+      </v-row>
+    </v-row>
+  </v-card>
 </template>
 
 <script>
+import Title from "@/components/loyaltyPanel/Dashboard/Title";
+import TitleBox from "@/components/loyaltyPanel/Dashboard/TitleBox";
+import Widget from '@/components/loyaltyPanel/Dashboard/Card'
+import TransactionsWidget from "@/components/loyaltyPanel/Dashboard/TransactionsCard";
+import TransactionsChart from "@/components/loyaltyPanel/Dashboard/TransactionsChart";
+import ClicksChart from "@/components/loyaltyPanel/Dashboard/ClicksChart";
+import NavigationChart from "@/components/loyaltyPanel/Dashboard/NavigationChart";
+
 import {
-    mdiAccountGroup,
-    mdiDatabase,
-    mdiCurrencyEur,
-    mdiTrophyVariant,
-    mdiBinoculars,
-    mdiCursorDefault,
-    mdiCompassOutline,
-    mdiWallet,
+  mdiAccountGroup,
+  mdiDatabase,
+  mdiCurrencyEur,
+  mdiTrophyVariant,
+  mdiBinoculars,
+  mdiCursorDefault,
+  mdiCompassOutline,
+  mdiWallet,
 } from "@mdi/js";
 
 export default {
-    name: "Dashboard",
-    data: () => ({
-        icons: {
-            mdiAccountGroup,
-            mdiDatabase,
-            mdiCurrencyEur,
-            mdiTrophyVariant,
-            mdiBinoculars,
-            mdiCursorDefault,
-            mdiCompassOutline,
-            mdiWallet,
-        },
-    }),
+  name: "Dashboard",
+  data: () => ({
+    boxes: [
+      {
+        title: 0,
+        icon: mdiAccountGroup,
+        label: 'Customer'
+      },
+      {
+        title: 0,
+        icon: mdiDatabase,
+        label: 'Transactions'
+      },
+      {
+        title: '0,00',
+        icon: mdiCurrencyEur,
+        label: 'Total'
+      },
+      {
+        title: 0,
+        icon: mdiTrophyVariant,
+        label: 'username'
+      },
+    ],
+    widgets: [
+      {
+        color:  "#27ae60",
+        icon: mdiBinoculars,
+        count: 0,
+        label: 'User views'
+      },
+      {
+        color:  "#e67e22",
+        icon: mdiCursorDefault,
+        count: 0,
+        label: 'Clicks'
+      },
+      {
+        color:  "#af64cc",
+        icon: mdiDatabase,
+        count: 0,
+        label: 'User leads'
+      },
+      {
+        color:  "#e74c3c",
+        icon: mdiCompassOutline,
+        count: 0,
+        label: 'Payments'
+      },
+    ],
+    transactionsWidgets: [
+      {
+        color:  "#1bbae1",
+        title: '0 Transactions / 0,00 Total',
+        label: 'Last 24 hours',
+        icon: mdiWallet,
+      },
+      {
+        color:  "#1bbae1",
+        title: '0 Transactions / 0,00 Total',
+        label: 'Last 7 Days',
+        icon: mdiWallet,
+      }
+    ]
+  }),
+  components: {
+    Title, TitleBox, Widget, TransactionsWidget, TransactionsChart, ClicksChart, NavigationChart
+  }
 };
 </script>
