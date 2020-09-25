@@ -10,6 +10,7 @@
             <v-col cols="4">
                 <v-text-field
                     label="Search"
+                    color="secondary"
                     rounded
                     outlined
                     dense
@@ -27,9 +28,20 @@
             class="mt-4 coupon-table"
         >
             <template v-slot:item.edit="{ item }">
-                <v-btn color="yellow darken-3" icon @click="myFunc(item)">
-                    <v-icon v-text="icons.mdiPencilOutline"></v-icon>
-                </v-btn>
+                <v-tooltip top>
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            color="yellow darken-3"
+                            icon
+                            v-on="on"
+                            @click="myFunc(item)"
+                        >
+                            <v-icon v-text="icons.mdiPencilOutline"></v-icon>
+                        </v-btn>
+                    </template>
+
+                    <span>Update</span>
+                </v-tooltip>
             </template>
         </v-data-table>
     </v-tab-item>
@@ -51,11 +63,11 @@ export default {
             { text: "Redeemed", value: "information" },
             { text: "Available", value: "actions" },
             { text: "Edit", value: "edit" },
-            { text: "Available", value: "actions" },
+            { text: "Available", value: "actions" }
         ],
         coupons: [{ user: "Edgar" }],
-        itemsPerPageOptions: [10, 25, 50, 100],
-    }),
+        itemsPerPageOptions: [10, 25, 50, 100]
+    })
 };
 </script>
 

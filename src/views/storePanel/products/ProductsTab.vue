@@ -6,7 +6,8 @@
                 class="text-capitalize"
                 depressed
                 @click="dialog = true"
-            >add product</v-btn>
+                >add product</v-btn
+            >
         </v-toolbar>
 
         <v-data-table
@@ -18,7 +19,12 @@
             <template v-slot:item.actions="{ item }">
                 <v-tooltip top>
                     <template v-slot:activator="{ on }">
-                        <v-btn color="yellow darken-3" icon v-on="on" @click="myFunc(item)">
+                        <v-btn
+                            color="yellow darken-3"
+                            icon
+                            v-on="on"
+                            @click="myFunc(item)"
+                        >
                             <v-icon v-text="icons.mdiPencilOutline"></v-icon>
                         </v-btn>
                     </template>
@@ -53,17 +59,17 @@ export default {
             { text: "Product Description", value: "description" },
             { text: "Selling Price", value: "price" },
             { text: "Coupon", value: "coupon" },
-            { text: "Actions", value: "actions" },
+            { text: "Actions", value: "actions" }
         ],
         products: [
             {
                 name: "test lefko",
                 description: "test lefko",
                 price: "0.01€",
-                coupon: "-10%",
-            },
+                coupon: "-10%"
+            }
         ],
-        itemsPerPageOptions: [10, 20, 30, -1],
-    }),
+        itemsPerPageOptions: [10, 20, 30, -1]
+    })
 };
 </script>

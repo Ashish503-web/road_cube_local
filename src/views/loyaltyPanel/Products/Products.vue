@@ -18,15 +18,14 @@
         </v-card>
 
         <v-row class="pa-5 pt-3 pb-3" style="background: #eaedf1">
-
             <v-col cols="12">
                 <v-card flat tile>
-                    <v-btn class="primary ma-4" @click="addHandler">New Product Service</v-btn>
+                    <v-btn class="primary ma-4" @click="addHandler"
+                        >New Product Service</v-btn
+                    >
 
                     <v-card tile flat color="#f9fafc" class="pa-1 pb-0">
-
                         <v-tabs v-model="activeTab" color="black">
-
                             <v-tab class="text-capitalize">
                                 Products
                             </v-tab>
@@ -54,7 +53,6 @@
             </v-col>
         </v-row>
         <modal-form :formModal="formModal"></modal-form>
-
     </v-card>
 </template>
 
@@ -71,7 +69,7 @@ import {
 import Products from "./components/Products";
 import ProductsStore from "./components/ProductsStore";
 import SeriesProducts from "./components/SeriesProducts";
-import Form from './components/Form'
+import Form from "./components/Form";
 
 export default {
     name: "Products",
@@ -79,8 +77,7 @@ export default {
         "tab-products": Products,
         "products-store": ProductsStore,
         "products-series": SeriesProducts,
-        'modal-form': Form
-
+        "modal-form": Form
     },
     data() {
         return {
@@ -96,50 +93,47 @@ export default {
             activeTab: 0,
             formModal: {
                 active: false,
-                title: 'Create Product',
-                productDisplay: '0',
-                productName: '',
-                productDescription: '',
-                points: '',
+                title: "Create Product",
+                productDisplay: "0",
+                productName: "",
+                productDescription: "",
+                points: "",
                 productId: null,
                 percentage: 0,
-                sellingPrice: '',
-                wholesalePrice: '',
+                sellingPrice: "",
+                wholesalePrice: "",
                 changePriceCheck: 0,
                 subPoints: 0,
                 productImageCheck: {
-                    active: false,
+                    active: false
                 },
                 productDisplayDays: {
-                    active: false,
+                    active: false
                 },
                 updateProductCompanies: {
-                    active: false,
+                    active: false
                 }
-            },
+            }
         };
     },
-    methods:{
-        addHandler(){
+    methods: {
+        addHandler() {
             this.formModal.active = true;
-            this.formModal.title = 'Create Product';
-            this.formModal.productDisplay = '0';
-            this.formModal.productName = '';
-            this.formModal.productDescription = '';
-            this.formModal.points = '';
-            this.formModal.productId =null;
-            this.formModal.percentage =0;
-            this.formModal.sellingPrice ='';
-            this.formModal.wholesalePrice ='';
-            this.formModal.changePriceCheck =0;
-            this.formModal.subPoints =0;
-            this.formModal.productImageCheck.active =false;
-            this.formModal.productDisplayDays.active =false;
-            this.formModal.updateProductCompanies.active =false;
-
+            this.formModal.title = "Create Product";
+            this.formModal.productDisplay = "0";
+            this.formModal.productName = "";
+            this.formModal.productDescription = "";
+            this.formModal.points = "";
+            this.formModal.productId = null;
+            this.formModal.percentage = 0;
+            this.formModal.sellingPrice = "";
+            this.formModal.wholesalePrice = "";
+            this.formModal.changePriceCheck = 0;
+            this.formModal.subPoints = 0;
+            this.formModal.productImageCheck.active = false;
+            this.formModal.productDisplayDays.active = false;
+            this.formModal.updateProductCompanies.active = false;
         }
-    },
-
-
+    }
 };
 </script>
