@@ -19,7 +19,7 @@
 
     <v-card class="pb-5">
       <v-card-title
-          class="primary--text font-weight-medium pa-2 pl-4 pr-0"
+          class="secondary--text font-weight-medium pa-2 pl-4 pr-0"
       >
         Delete Company
         <v-btn

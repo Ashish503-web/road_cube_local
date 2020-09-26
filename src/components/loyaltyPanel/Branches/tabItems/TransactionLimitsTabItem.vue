@@ -17,7 +17,7 @@
 
 <script>
   import GeneralLimitsButton from "@/components/loyaltyPanel/Branches/buttons/GeneralLimitsButton";
-  import SearchField from "@/components/loyaltyPanel/Branches/SearchField";
+  import SearchField from "@/components/loyaltyPanel/SearchField";
   import TransactionLimitsTable from "@/components/loyaltyPanel/Branches/tables/TransactionLimitsTable";
 
   export default {
