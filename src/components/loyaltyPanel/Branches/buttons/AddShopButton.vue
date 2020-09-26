@@ -13,7 +13,7 @@
 
       <v-card class="pb-5">
         <v-card-title
-            class="primary--text font-weight-medium pa-2 pl-4 pr-0"
+            class="secondary--text font-weight-medium pa-2 pl-4 pr-0"
         >
           Add Shop
           <v-btn
@@ -93,8 +93,8 @@
 </template>
 
 <script>
-  import SelectField from "@/components/loyaltyPanel/Branches/SelectField";
-  import TextField from "@/components/loyaltyPanel/Branches/TextField";
+  import SelectField from "@/components/loyaltyPanel/SelectField";
+  import TextField from "@/components/loyaltyPanel/TextField";
   import AddRegionButton from "@/components/loyaltyPanel/Branches/buttons/AddRegionButton";
 
   export default {

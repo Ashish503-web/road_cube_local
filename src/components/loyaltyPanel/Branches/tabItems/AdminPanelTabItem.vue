@@ -10,7 +10,7 @@
 </template>
 
 <script>
-  import SearchField from "@/components/loyaltyPanel/Branches/SearchField";
+  import SearchField from "@/components/loyaltyPanel/SearchField";
   import AdminPanelTable from "@/components/loyaltyPanel/Branches/tables/AdminPanelTable";
 
   export default {

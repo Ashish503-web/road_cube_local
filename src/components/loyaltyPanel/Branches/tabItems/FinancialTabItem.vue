@@ -22,7 +22,7 @@
 <script>
 import AddShopButton from "@/components/loyaltyPanel/Branches/buttons/AddShopButton";
 import RightsButton from "@/components/loyaltyPanel/Branches/buttons/RightsButton";
-import SearchField from "@/components/loyaltyPanel/Branches/SearchField";
+import SearchField from "@/components/loyaltyPanel/SearchField";
 import FinancialTable from "@/components/loyaltyPanel/Branches/tables/FinancialTable";
 
 export default {
