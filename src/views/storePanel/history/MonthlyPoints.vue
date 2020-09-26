@@ -8,6 +8,7 @@
             <v-col cols="4">
                 <v-text-field
                     label="Search"
+                    color="secondary"
                     rounded
                     outlined
                     dense

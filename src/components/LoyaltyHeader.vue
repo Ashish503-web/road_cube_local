@@ -159,17 +159,32 @@
             permanent
             dark
         >
-            <router-link to="/">
-                <v-toolbar class="home-link" color="secondary" flat>
-                    <v-toolbar-title class="mx-auto">
-                        <v-img src="../assets/loyalty-logo.png" contain></v-img>
-                    </v-toolbar-title>
-                </v-toolbar>
+            <router-link to="/" class="d-block pa-3 home-link">
+                <v-img
+                    src="../assets/loyalty-logo.png"
+                    class="mx-auto"
+                    width="70%"
+                    contain
+                ></v-img>
             </router-link>
+
+            <v-divider></v-divider>
+
+            <v-row class="pt-4 pb-3" no-gutters justify="center">
+                <v-sheet light class="pa-2 rounded-circle" width="70">
+                    <v-img src="../assets/store-logo.png" width="50"></v-img>
+                </v-sheet>
+
+                <v-col cols="12" class="text-center mt-3">
+                    <h1 class="subtitle-1 white--text">Loyalty Panel</h1>
+                </v-col>
+            </v-row>
+
+            <v-divider></v-divider>
 
             <v-container
                 class="pa-0"
-                style="height: calc(100vh - 64px); overflow: auto"
+                :style="{ height: containerHeight, overflow: 'auto' }"
             >
                 <v-list
                     v-for="navLink in navLinks"
@@ -185,7 +200,7 @@
                     ></v-subheader>
 
                     <div v-for="item in navLink.children" :key="item.title">
-                        <v-tooltip v-if="mini" right>
+                        <v-tooltip v-if="mini" color="secondary" right>
                             <template v-slot:activator="{ on }">
                                 <v-list-item :to="item.to" exact v-on="on">
                                     <v-list-item-icon>
@@ -209,32 +224,6 @@
                             ></v-list-item-title>
                         </v-list-item>
                     </div>
-                </v-list>
-
-                <v-list dense nav class="mt-12">
-                    <v-tooltip v-if="mini" right>
-                        <template v-slot:activator="{ on }">
-                            <v-list-item to="/logout" v-on="on">
-                                <v-list-item-icon>
-                                    <v-icon v-text="icons.mdiLogout"></v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-title
-                                    v-text="'Logout'"
-                                ></v-list-item-title>
-                            </v-list-item>
-                        </template>
-
-                        <span>Logout</span>
-                    </v-tooltip>
-
-                    <v-list-item v-else to="/logout">
-                        <v-list-item-icon>
-                            <v-icon v-text="icons.mdiLogout"></v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-title
-                            v-text="'Logout'"
-                        ></v-list-item-title>
-                    </v-list-item>
                 </v-list>
             </v-container>
         </v-navigation-drawer>
@@ -552,6 +541,12 @@ export default {
                 { icon: mdiLockOpenOutline, text: "Lock Screen" }
             ]
         };
+    },
+
+    computed: {
+        containerHeight() {
+            return this.mini ? "calc(100vh - 192px)" : "calc(100vh - 184px)";
+        }
     }
 };
 </script>

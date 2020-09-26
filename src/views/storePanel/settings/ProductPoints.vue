@@ -10,6 +10,7 @@
                     <v-sheet>
                         <v-text-field
                             v-model="item.points"
+                            color="secondary"
                             outlined
                             dense
                             clearable
@@ -31,6 +32,8 @@
                                 'Per Euro'
                             ]"
                             menu-props="offsetY"
+                            color="secondary"
+                            item-color="secondary"
                             outlined
                             dense
                             hide-details
