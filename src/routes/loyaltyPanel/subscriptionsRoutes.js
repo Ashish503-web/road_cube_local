@@ -3,6 +3,6 @@ export default    {
     name: "Subscriptions",
     component: () =>
         import(
-            /* webpackChunkName: "subscriptions" */ "@/views/loyaltyPanel/Subscriptions.vue"
+            /* webpackChunkName: "subscriptions" */ "@/views/loyaltyPanel/Subscriptions/Subscriptions.vue"
             )
 }
