@@ -28,7 +28,7 @@
             class="mt-4 coupon-table"
         >
             <template v-slot:item.edit="{ item }">
-                <v-tooltip top>
+                <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
                         <v-btn
                             color="yellow darken-3"

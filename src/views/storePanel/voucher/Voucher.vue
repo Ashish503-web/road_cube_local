@@ -1,12 +1,20 @@
 <template>
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
-            <v-tabs v-model="tab" color="black" show-arrows>
+            <v-tabs
+                v-model="tab"
+                color="black"
+                active-class="b-tab-active"
+                show-arrows
+                hide-slider
+                :ripple="false"
+            >
                 <v-tab
                     v-for="tab in tabs"
                     :key="tab"
                     v-text="tab"
                     class="text-capitalize"
+                    :ripple="false"
                 ></v-tab>
             </v-tabs>
 
@@ -42,7 +50,7 @@ export default {
         CouponsWithDiscount
     },
     data: () => ({
-        tab: 4,
+        tab: 0,
         tabs: [
             "coupons with transactions",
             "coupons with code",
@@ -58,5 +66,11 @@ export default {
 .dashed {
     border: 1px dashed grey;
     border-radius: 10px;
+}
+
+.b-tab-active {
+    border-radius: 4px;
+    background-color: #2a3042;
+    color: white;
 }
 </style>

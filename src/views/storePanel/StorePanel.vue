@@ -7,7 +7,7 @@
 
 <script>
 export default {
-    name: "StorePanel",
+    name: "StorePanel"
 };
 </script>
 

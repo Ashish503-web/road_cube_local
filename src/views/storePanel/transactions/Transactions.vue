@@ -4,24 +4,57 @@
             <v-toolbar flat color="#EAEDF191">
                 <v-spacer></v-spacer>
 
-                <v-switch color="secondary" hide-details>
-                    <template v-slot:label>
-                        <v-tooltip top>
-                            <template v-slot:activator="{ on }">
-                                <v-icon
-                                    color="secondary"
-                                    class="mr-1"
-                                    v-text="icons.mdiCellphoneIphone"
-                                    v-on="on"
-                                ></v-icon>
-                            </template>
+                <v-icon
+                    color="secondary"
+                    v-text="icons.mdiCellphoneIphone"
+                ></v-icon>
+                Mobile Payments
+                <v-switch
+                    color="secondary"
+                    class="ml-3"
+                    hide-details
+                ></v-switch>
 
-                            <span>Open Digital Payments</span>
-                        </v-tooltip>
+                <v-menu offset-y left>
+                    <template v-slot:activator="{ on }">
+                        <v-btn text v-on="on">
+                            <v-icon
+                                color="secondary"
+                                v-text="icons.mdiFormatListCheckbox"
+                            ></v-icon>
+                        </v-btn>
                     </template>
-                </v-switch>
 
-                <v-btn color="secondary" depressed class="text-capitalize mx-2">
+                    <v-list dense>
+                        <v-list-item-group>
+                            <v-list-item>
+                                <v-list-item-icon>
+                                    <v-icon
+                                        color="secondary"
+                                        v-text="icons.mdiPrinter"
+                                    ></v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-title
+                                    >Fund Closure</v-list-item-title
+                                >
+                            </v-list-item>
+
+                            <v-list-item>
+                                <v-list-item-icon>
+                                    <v-icon
+                                        color="secondary"
+                                        v-text="icons.mdiOpenInNew"
+                                    ></v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-title
+                                    >Download All
+                                    Transactions</v-list-item-title
+                                >
+                            </v-list-item>
+                        </v-list-item-group>
+                    </v-list>
+                </v-menu>
+                <!-- <v-btn color="secondary" depressed class="text-capitalize mx-2">
                     <v-icon class="mr-1" v-text="icons.mdiPrinter"></v-icon>fund
                     closure
                 </v-btn>
@@ -29,7 +62,7 @@
                 <v-btn color="secondary" depressed class="text-capitalize">
                     <v-icon class="mr-1" v-text="icons.mdiOpenInNew"></v-icon
                     >download all transactions
-                </v-btn>
+                </v-btn> -->
             </v-toolbar>
 
             <v-row no-gutters style="background: #EAEDF191" class="px-3 pt-3">
@@ -50,7 +83,12 @@
 </template>
 
 <script>
-import { mdiCellphoneIphone, mdiPrinter, mdiOpenInNew } from "@mdi/js";
+import {
+    mdiCellphoneIphone,
+    mdiFormatListCheckbox,
+    mdiPrinter,
+    mdiOpenInNew
+} from "@mdi/js";
 import Pending from "./Pending";
 import Paid from "./Paid";
 
@@ -60,6 +98,7 @@ export default {
     data: () => ({
         icons: {
             mdiCellphoneIphone,
+            mdiFormatListCheckbox,
             mdiPrinter,
             mdiOpenInNew
         },

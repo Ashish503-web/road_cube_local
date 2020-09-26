@@ -28,18 +28,21 @@
                         color="secondary"
                         outlined
                         dense
+                        clearable
                     ></v-text-field>
                     <v-text-field
                         label="Minimum transaction limit in euro"
                         color="secondary"
                         outlined
                         dense
+                        clearable
                     ></v-text-field>
                     <v-text-field
                         label="Maximum time between visits: (Days)"
                         color="secondary"
                         outlined
                         dense
+                        clearable
                     ></v-text-field>
 
                     <v-card outlined class="pa-3">

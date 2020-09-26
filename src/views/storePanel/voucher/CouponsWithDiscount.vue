@@ -8,7 +8,11 @@
                     outlined
                 >
                     <template v-slot:item.actions="{ item }">
-                        <v-tooltip v-if="item.discount != '-'" top>
+                        <v-tooltip
+                            v-if="item.discount != '-'"
+                            color="secondary"
+                            top
+                        >
                             <template v-slot:activator="{ on }">
                                 <v-btn color="red" icon v-on="on">
                                     <v-icon v-text="icons.mdiClose"></v-icon>
@@ -18,7 +22,7 @@
                             <span>Delete Discount</span>
                         </v-tooltip>
 
-                        <v-tooltip v-else top>
+                        <v-tooltip v-else color="secondary" top>
                             <template v-slot:activator="{ on }">
                                 <v-btn color="primary" icon v-on="on">
                                     <v-icon

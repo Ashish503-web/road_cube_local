@@ -99,7 +99,7 @@
                 </v-card>
             </v-menu> -->
 
-            <v-tooltip bottom>
+            <v-tooltip color="secondary" bottom>
                 <template v-slot:activator="{ on }">
                     <v-btn icon v-on="on">
                         <v-icon
@@ -168,12 +168,23 @@
             permanent
             dark
         >
-            <v-row class="py-3" no-gutters justify="center">
+            <router-link to="/" class="d-block pa-3 home-link">
+                <v-img
+                    src="../assets/loyalty-logo.png"
+                    class="mx-auto"
+                    width="70%"
+                    contain
+                ></v-img>
+            </router-link>
+
+            <v-divider></v-divider>
+
+            <v-row class="pt-4 pb-3" no-gutters justify="center">
                 <v-sheet light class="pa-2 rounded-circle" width="70">
                     <v-img src="../assets/store-logo.png" width="50"></v-img>
                 </v-sheet>
 
-                <v-col cols="12" class="text-center mt-4">
+                <v-col cols="12" class="text-center mt-3">
                     <h1 class="subtitle-1 white--text">Maroudas Optika</h1>
                 </v-col>
             </v-row>
@@ -198,7 +209,7 @@
                     ></v-subheader>
 
                     <div v-for="item in navLink.children" :key="item.title">
-                        <v-tooltip v-if="mini" right>
+                        <v-tooltip v-if="mini" color="secondary" right>
                             <template v-slot:activator="{ on }">
                                 <v-list-item :to="item.to" exact v-on="on">
                                     <v-list-item-icon>
@@ -223,17 +234,6 @@
                         </v-list-item>
                     </div>
                 </v-list>
-
-                <router-link to="/">
-                    <v-toolbar class="home-link mt-12" color="secondary" flat>
-                        <v-toolbar-title class="mx-auto">
-                            <v-img
-                                src="../assets/loyalty-logo.png"
-                                contain
-                            ></v-img>
-                        </v-toolbar-title>
-                    </v-toolbar>
-                </router-link>
             </v-container>
         </v-navigation-drawer>
     </header>
@@ -452,7 +452,7 @@ export default {
 
     computed: {
         containerHeight() {
-            return this.mini ? "calc(100vh - 163px)" : "calc(100vh - 135px)";
+            return this.mini ? "calc(100vh - 192px)" : "calc(100vh - 184px)";
         }
     }
 };

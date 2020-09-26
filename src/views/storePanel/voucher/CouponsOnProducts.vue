@@ -29,7 +29,7 @@
             :footer-props="{ itemsPerPageOptions }"
         >
             <template v-slot:item.actions="{ item }">
-                <v-tooltip top>
+                <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
                         <v-btn
                             color="yellow darken-3"
@@ -44,7 +44,7 @@
                     <span>Update</span>
                 </v-tooltip>
 
-                <v-tooltip top>
+                <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
                         <v-btn color="red" icon v-on="on" @click="myFunc(item)">
                             <v-icon v-text="icons.mdiClose"></v-icon>

@@ -11,12 +11,14 @@ Vue.config.productionTip = false;
 /**
  * Axios
  */
-require('./axios');
+require("./axios");
 /**
  * mixins
  */
 import globalMixin from "./mixins/globalMixin";
+
 Vue.mixin(globalMixin);
+
 new Vue({
     router,
     store,
