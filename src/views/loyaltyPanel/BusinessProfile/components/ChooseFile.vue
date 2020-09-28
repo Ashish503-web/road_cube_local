@@ -1,7 +1,7 @@
 <template>
-    <v-btn
+   <!-- <v-btn
         color="light-blue darken-1"
-        class="ma-2 white&#45;&#45;text white--text"
+        class="ma-2 white&#45;&#45;text white&#45;&#45;text"
     >
         <v-icon
             v-text="icons.mdiCloudUpload"
@@ -9,7 +9,18 @@
         <span>
                        Choose a file…
                     </span>
-    </v-btn>
+    </v-btn>-->
+    <v-col cols="7">
+        Press the following button to choose image:
+        <v-file-input
+                color="secondary"
+                class="mt-1"
+                outlined
+                dense
+                hide-details
+                @change="onFileSelected(logo, $event)"
+        ></v-file-input>
+    </v-col>
 </template>
 <script>
 import {

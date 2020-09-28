@@ -13,16 +13,14 @@
         <v-list-item class="dashed_border mr-4 ml-4 mb-4">
             <v-container>
                 <v-row>
-
-
-
-
                     <v-col cols="12" >
                         <v-text-field
-                            label="REST API KEY"
-                            placeholder="Placeholder"
+
                             :value="val1"
+                            label="REST API KEY"
+                            color="secondary"
                             outlined
+                            dense
                         ></v-text-field>
                     </v-col>
                     <v-col cols="12" >
@@ -30,7 +28,9 @@
                             label="One Signal App ID"
                             placeholder="Placeholder"
                             :value="val2"
+                            color="secondary"
                             outlined
+                            dense
                         ></v-text-field>
                     </v-col>
 

@@ -20,10 +20,12 @@
 
                     <v-col cols="12" sm="6" md="6">
                         <v-text-field
-                            label="Outlined"
-                            placeholder="Placeholder"
                             :value="val"
+                            label="Add the number here"
+                            color="secondary"
                             outlined
+                            dense
+                            clearable
                         ></v-text-field>
                     </v-col>
 
@@ -33,8 +35,7 @@
         <v-card-actions>
 
         <v-btn
-            color="light-blue accent-1"
-            class="white--text"
+                color="secondary" class="text-capitalize" depressed
         >
             Save
         </v-btn>

@@ -1,7 +1,7 @@
 <template>
     <Fragment>
         <!--File upload-->
-        <v-list-item class="dashed_border mr-4 ml-4" v-if="card.fileUpload.active">
+       <!-- <v-list-item class="dashed_border mr-4 ml-4" v-if="card.fileUpload.active">
             <v-list-item-avatar
                 tile
                 size="80"
@@ -17,9 +17,16 @@
             </v-list-item-content>
 
 
-        </v-list-item>
+        </v-list-item>-->
+        <v-row class="dashed mt-3 pa-5" no-gutters align="center" v-if="card.fileUpload.active">
+            <v-col cols="5">
+                <v-img :src="card.img" width="64" class="mx-auto"></v-img>
+                <a v-if="card.pdf" :href="card.pdf" target="_blank">{{ card.pdf }}</a>
+            </v-col>
+            <choose-file></choose-file>
+        </v-row>
         <!--Select-->
-        <v-list-item class="dashed_border mr-4 ml-4" v-if="card.select.active">
+     <!--   <v-list-item class="dashed_border mr-4 ml-4" v-if="card.select.active">
             <v-list-item-content>
                 <v-col class="main-grid" cols="2">
 
@@ -41,7 +48,23 @@
                     %
                 </v-col>
             </v-list-item-content>
-        </v-list-item>
+        </v-list-item>-->
+        <v-row class="dashed mt-3 pa-5" no-gutters align="center" v-if="card.select.active">
+            <v-col cols="5">
+                <v-img :src="card.img" width="64" class="mx-auto"></v-img>
+                <a v-if="card.pdf" :href="card.pdf" target="_blank">{{ card.pdf }}</a>
+            </v-col>
+            <v-col cols="3">
+                <v-select
+                        class="mt-5 ml-4"
+                        v-model="relation"
+                        :items="items"
+                        outlined
+
+                        dense
+                ></v-select>
+            </v-col>
+        </v-row>
     </Fragment>
 
 
@@ -53,9 +76,9 @@ import { Fragment } from 'vue-fragment'
 export default {
     data() {
         return {
-            relation: 10,
+            relation: '10%',
             items: [
-                10, 20, 30, 40, 50, 60, 70
+                '10%', '20%', '30%', '40%', '50%', '60%', '70%'
             ]
 
         };

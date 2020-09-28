@@ -23,54 +23,93 @@
                 <v-row>
 
 
-                    <v-col cols="12" sm="12" md="12">
+                    <v-col cols="12">
                         <v-checkbox
                             v-model="usersOnline1"
                         >
                             <template #label>Unlimited users online</template>
                         </v-checkbox>
+                        <v-text-field
+                                class="float-left mr-4"
+                                label="Online Points"
+                                color="secondary"
+                                outlined
+                                dense
+                                clearable
+                        ></v-text-field>
+                        <v-text-field
+                                label="Online How many users in total"
+                                color="secondary"
+                                outlined
+                                dense
+                                clearable
+                        ></v-text-field>
                     </v-col>
 
 
-                    <v-col cols="12" sm="6" md="6">
+                   <!-- <v-col cols="12" sm="6" md="6">
                         <v-text-field
-                            label="Outlined"
-                            placeholder="Placeholder"
-                            outlined
+                                label="Online Points"
+                                color="secondary"
+                                outlined
+                                dense
+                                clearable
                         ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="6" v-if="usersOnline1">
                         <v-text-field
-                            label="Outlined"
-                            placeholder="Placeholder"
-                            outlined
+                                label="Online How many users in total"
+                                color="secondary"
+                                outlined
+                                dense
+                                clearable
                         ></v-text-field>
-                    </v-col>
-                    <v-col cols="12" sm="12" md="12">
+                    </v-col>-->
+
+                    <v-col cols="12">
                         <v-checkbox
                             v-model="usersOnline2"
                             @input="usersOnline2 = $event.target.value"
                         >
                             <template #label>Unlimited users online</template>
                         </v-checkbox>
+                        <v-text-field
+                                class="float-left mr-4"
+                                label="Offline Points"
+                                color="secondary"
+                                outlined
+                                dense
+                                clearable
+                        ></v-text-field>
+                        <v-text-field
+                                label="Offline How many users in total"
+                                color="secondary"
+                                outlined
+                                dense
+                                clearable
+                        ></v-text-field>
                     </v-col>
 
 
-                    <v-col cols="12" sm="6" md="6">
+                <!--    <v-col cols="12" sm="6" md="6">
                         <v-text-field
-                            label="Outlined"
-                            placeholder="Placeholder"
-                            outlined
+                                label="Offline Points"
+                                color="secondary"
+                                outlined
+                                dense
+                                clearable
                         ></v-text-field>
                     </v-col>
                     <v-col cols="12" sm="6" md="6" v-if="usersOnline2">
                         <v-text-field
-                            label="Outlined"
-                            placeholder="Placeholder"
-                            outlined
+                                label="Offline How many users in total"
+                                color="secondary"
+                                outlined
+                                dense
+                                clearable
                         ></v-text-field>
                     </v-col>
-
+-->
                     <v-col cols="12" sm="12" md="12">
                         <v-checkbox
                             v-model="usersOnline2"
@@ -86,8 +125,7 @@
         <v-card-actions>
 
             <v-btn
-                color="light-blue accent-1"
-                class="white--text"
+                    color="secondary" class="text-capitalize" depressed
             >
                 Save
             </v-btn>

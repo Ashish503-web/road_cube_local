@@ -1,7 +1,6 @@
 <template>
    <v-btn
-                    class="white--text mt-4 mb-3"
-                    color="light-blue accent-1"
+           color="secondary" class="text-capitalize" depressed
                 >
                     <v-icon
                         v-text="icons.mdiArrowRight"

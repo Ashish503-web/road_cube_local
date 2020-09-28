@@ -26,8 +26,8 @@
         <v-card-actions>
 
             <v-btn
-                color="light-blue accent-1"
-                class="white--text"
+                    color="secondary" class="text-capitalize"
+
             >
                 Save
             </v-btn>

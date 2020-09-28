@@ -23,6 +23,9 @@
                     ></file-upload-standart>
                 </v-col>
                 <v-col class="main-grid" cols="6">
+                    <pin-display
+                            :card="cards[1]"></pin-display>
+<!--
                     <v-card class="">
                         <v-row
                                 no-gutters
@@ -31,7 +34,7 @@
                         >
                             <v-col cols="6">
                                 <v-card-title
-                                        class="pl-0 text--secondary"
+                                        class="pl-0 text&#45;&#45;secondary"
                                 >Pin Display</v-card-title
                                 >
 
@@ -66,11 +69,7 @@
 
                         </v-card-actions>
                     </v-card>
-                </v-col>
-                <v-col class="main-grid" cols="6">
-                    <file-upload-standart
-                        :card="cards[1]"
-                    ></file-upload-standart>
+-->
                 </v-col>
                 <v-col class="main-grid" cols="6">
                     <file-upload-standart
@@ -85,6 +84,11 @@
                 <v-col class="main-grid" cols="6">
                     <file-upload-standart
                         :card="cards[4]"
+                    ></file-upload-standart>
+                </v-col>
+                <v-col class="main-grid" cols="6">
+                    <file-upload-standart
+                        :card="cards[5]"
                     ></file-upload-standart>
                 </v-col>
                 <v-col class="main-grid" cols="6">
@@ -120,7 +124,8 @@
     import CampaignCredentials from './components/CampaignCredentials'
     import YesNoRadio from './components/YesNoRadio'
     import CouponCreation from './components/CouponCreation'
-    import ApiAuthentication  from './components/ApiAuthentication '
+    import ApiAuthentication  from './components/ApiAuthentication'
+    import PinDisplay  from './components/PinDisplay'
 
     import {
         mdiAccountBox, mdiArrowLeft,
@@ -147,6 +152,28 @@ export default {
                         '                    choose image:',
                     buttonType:'update',
                     img:'https://www.roadcube.com/images/businessLogos/64651_118412logo.png',
+                    save:{
+                        active:false
+                    },
+                    deleteBtn:{
+                        active:false
+                    },
+                    update: {
+                        active:true
+                    },
+                    fileUpload:{
+                        active:true
+                    },
+                    select:{
+                        active:false
+                    }
+                },
+                {
+                    cardTitle:'Pin Display',
+                    cardDescription:' Here you can change the display of the pin on the map:',
+                    uploadDescription:'Press the following button to choose image :',
+                    buttonType:'update',
+                    img:'https://www.roadcube.com/proadt.png',
                     save:{
                         active:false
                     },
@@ -307,15 +334,16 @@ export default {
     },
     components:{
         'file-upload-standart' :FileUploadStandart,
-        'choose-file':ChooseFile,
-        'update-logo-button':UpdateLogoButton,
+        //'choose-file':ChooseFile,
+      //  'update-logo-button':UpdateLogoButton,
         'online-offline-registration':OnlineOfflineRegistration,
         'set-initial-form':SetInitialForm,
         'push-notifications':PushNotifications,
         'campaign-credentials':CampaignCredentials,
         'yes-no-radio':YesNoRadio,
         'coupon-creation':CouponCreation,
-        'api-authentication':ApiAuthentication ,
+        'api-authentication':ApiAuthentication,
+        'pin-display':PinDisplay,
 
 
     },
@@ -331,3 +359,33 @@ export default {
     },
 };
 </script>
+<style>
+    .dashed {
+        border: 1px dashed grey;
+        border-radius: 10px;
+    }
+
+    .relative {
+        position: relative;
+    }
+
+    .map-new-pin {
+        width: 50px;
+        position: absolute;
+        top: 37px;
+        left: 14px;
+    }
+
+    .category-number {
+        position: absolute;
+        top: 7px;
+        left: -5px;
+    }
+
+    .category-remove {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        cursor: pointer;
+    }
+</style>

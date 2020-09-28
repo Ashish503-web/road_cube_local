@@ -20,38 +20,31 @@
                         <p class="font-weight-medium d-inline-block">
                             1.
                         </p>
-                        <v-text-field dense outlined class="ml-2 d-inline-block"></v-text-field>
+                        <v-text-field  color="secondary"
+                                       outlined
+                                       dense
+                                       clearable class="ml-2 d-inline-block"></v-text-field>
                     </v-col>
 
                     <v-col cols="12" >
                         <p class="font-weight-medium d-inline-block">
                             2.
                         </p>
-                        <v-text-field dense outlined class="ml-2 d-inline-block"></v-text-field>
+                        <v-text-field  color="secondary"
+                                       outlined
+                                       dense
+                                       clearable  class="ml-2 d-inline-block"></v-text-field>
                     </v-col>
 
                     <v-col cols="12">
                         <p class="font-weight-medium d-inline-block">
                             3.
                         </p>
-                        <v-text-field dense outlined class="ml-2 d-inline-block"></v-text-field>
+                        <v-text-field  color="secondary"
+                                       outlined
+                                       dense
+                                       clearable class="ml-2 d-inline-block"></v-text-field>
                     </v-col>
-                    <!--<v-col cols="12" sm="6" md="6">
-
-
-                        <p class="font-weight-medium">
-
-
-                        </p>
-                        <p class="font-weight-medium">
-                            2.
-                            <v-text-field dense outlined></v-text-field>
-                        </p>
-                        <p class="font-weight-medium">
-                            3.
-                            <v-text-field dense outlined></v-text-field>
-                        </p>
-                    </v-col>-->
                 </v-row>
             </v-card-text>
         </div>
@@ -67,7 +60,11 @@
 
                 </p>
                 <p class="font-weight-light">Message Sender Name</p>
-                <v-text-field dense outlined></v-text-field>
+                <v-text-field
+                              color="secondary"
+                              outlined
+                              dense
+                              clearable></v-text-field>
                 <p class="font-weight-black ">
                     1. Email (First method)
 
@@ -144,13 +141,25 @@
                     be used
                 </p>
                 <p class="font-weight-light">Host</p>
-                <v-text-field dense outlined></v-text-field>
+                <v-text-field color="secondary"
+                              outlined
+                              dense
+                              clearable ></v-text-field>
                 <p class="font-weight-light">Name</p>
-                <v-text-field dense outlined></v-text-field>
+                <v-text-field color="secondary"
+                              outlined
+                              dense
+                              clearable ></v-text-field>
                 <p class="font-weight-light">Email</p>
-                <v-text-field dense outlined></v-text-field>
+                <v-text-field color="secondary"
+                              outlined
+                              dense
+                              clearable ></v-text-field>
                 <p class="font-weight-light">Password</p>
-                <v-text-field dense outlined></v-text-field>
+                <v-text-field color="secondary"
+                              outlined
+                              dense
+                              clearable ></v-text-field>
                 <v-alert
                     text
                     dense
@@ -167,8 +176,7 @@
         <v-card-actions>
 
             <v-btn
-                color="light-blue accent-1"
-                class="white--text"
+                    color="secondary" class="text-capitalize"
             >
                 Save
             </v-btn>
