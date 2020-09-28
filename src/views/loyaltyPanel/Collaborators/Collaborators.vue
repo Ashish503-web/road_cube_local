@@ -6,7 +6,6 @@
                         color="secondary"
                         class="text-none"
                         depressed
-                        to="/storePanel/add-contest"
                 >Add Brand</v-btn
                 >
 
