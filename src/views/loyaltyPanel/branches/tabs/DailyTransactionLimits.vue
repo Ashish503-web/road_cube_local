@@ -61,7 +61,7 @@
 <script>
 import { mdiMagnify } from "@mdi/js";
 import { mapMutations } from "vuex";
-import LimitsDialog from "@/components/loyaltyPanel/branches/LimitsDialog.vue";
+import LimitsDialog from "@/components/loyaltyPanel/Branches/LimitsDialog.vue";
 
 export default {
     name: "DailyTransactionLimits",

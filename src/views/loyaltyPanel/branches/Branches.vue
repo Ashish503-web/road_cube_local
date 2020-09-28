@@ -35,8 +35,8 @@ import FinancialData from "@/views/loyaltyPanel/branches/tabs/FinancialData";
 import AdminPanelSettings from "@/views/loyaltyPanel/branches/tabs/AdminPanelSettings";
 import ApplicationSettings from "@/views/loyaltyPanel/branches/tabs/ApplicationSettings";
 import DailyTransactionLimits from "@/views/loyaltyPanel/branches/tabs/DailyTransactionLimits";
-import ShopDialog from "@/components/loyaltyPanel/branches/ShopDialog";
-import RightsDialog from "@/components/loyaltyPanel/branches/RightsDialog";
+import ShopDialog from "@/components/loyaltyPanel/Branches/ShopDialog";
+import RightsDialog from "@/components/loyaltyPanel/Branches/RightsDialog";
 
 export default {
     name: "Branches",

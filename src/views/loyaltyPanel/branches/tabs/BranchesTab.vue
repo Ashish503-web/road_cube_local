@@ -104,8 +104,8 @@
 <script>
 import { mdiPencilOutline, mdiOpenInNew, mdiClose } from "@mdi/js";
 import { mapMutations } from "vuex";
-import RedirectDialog from "@/components/loyaltyPanel/branches/RedirectDialog.vue";
-import DeleteDialog from "@/components/loyaltyPanel/branches/DeleteDialog.vue";
+import RedirectDialog from "@/components/loyaltyPanel/Branches/RedirectDialog.vue";
+import DeleteDialog from "@/components/loyaltyPanel/Branches/DeleteDialog.vue";
 import SearchField from "@/components/loyaltyPanel/SearchField";
 
 export default {
