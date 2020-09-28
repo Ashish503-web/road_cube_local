@@ -50,7 +50,7 @@
     } from "@mdi/js";
 
     export default {
-        name: "Contests",
+        name: "Collaborators",
 
         data: () => ({
             icons: {
