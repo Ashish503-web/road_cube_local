@@ -1,10 +1,10 @@
-export default  {
+export default {
     path: "view-participants",
-    name: "View Participants",
+    name: "StoreViewParticipants",
     components: {
         default: () =>
             import(
                 /* webpackChunkName: "viewParticipants" */ "@/views/storePanel/ViewParticipants.vue"
-                )
+            )
     }
-}
+};

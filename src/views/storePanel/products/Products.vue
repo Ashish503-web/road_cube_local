@@ -20,22 +20,20 @@
 </template>
 
 <script>
-import { mdiCurrencyEur, mdiPercent, mdiMenuUp, mdiMenuDown } from "@mdi/js";
-import ProductsTab from "./ProductsTab";
-import ProductGroup from "./ProductGroup";
+import { mdiPercent, mdiMenuUp, mdiMenuDown } from "@mdi/js";
+import ProductsTab from "./tabs/ProductsTab";
+import ProductGroup from "./tabs/ProductGroup";
 
 export default {
     name: "StoreProducts",
     components: { ProductsTab, ProductGroup },
     data: () => ({
         icons: {
-            mdiCurrencyEur,
             mdiPercent,
             mdiMenuUp,
             mdiMenuDown
         },
         tab: 0,
-
         productDialog: false,
         product: {
             display: "",

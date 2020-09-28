@@ -3,19 +3,28 @@
         <v-row justify="center">
             <v-col cols="4">
                 <v-img src="../assets/logo.png"></v-img>
-                <v-btn color="primary" outlined block to="/loyaltypanel">go to loyalty panel</v-btn>
+                <v-btn color="primary" outlined block to="/loyaltypanel"
+                    >go to loyalty panel</v-btn
+                >
                 <v-btn
                     color="primary"
                     class="mt-3"
                     outlined
                     block
                     to="/storepanel"
-                >go to store panel</v-btn>
-
+                    >go to store panel</v-btn
+                >
             </v-col>
-            <v-col
-            cols="10">
-                <v-btn color="primary" x-large outlined block to="/example-backend-request"> backend request functions examples</v-btn>
+            <v-col cols="10">
+                <v-btn
+                    color="primary"
+                    x-large
+                    outlined
+                    block
+                    to="/example-backend-request"
+                >
+                    backend request functions examples</v-btn
+                >
             </v-col>
         </v-row>
     </v-container>
@@ -23,6 +32,6 @@
 
 <script>
 export default {
-    name: "Home",
+    name: "Home"
 };
 </script>

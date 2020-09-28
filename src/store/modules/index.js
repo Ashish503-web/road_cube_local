@@ -1,7 +1,7 @@
-import exampleModule from "./exampleModule/exampleModule";
-import globalModule from "./globalModule/globalModule";
+import loyaltyPanel from "./loyaltyPanel";
+import storePanel from "./storePanel";
 
 export default {
-    exampleModule,
-    globalModule
-}
+    loyaltyPanel,
+    storePanel
+};

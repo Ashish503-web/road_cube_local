@@ -1,11 +1,10 @@
-
-export default  {
+export default {
     path: "new-transaction",
-    name: "New Transaction",
+    name: "NewTransaction",
     components: {
         default: () =>
             import(
                 /* webpackChunkName: "newTransaction" */ "@/views/storePanel/NewTransaction.vue"
-                )
+            )
     }
-}
+};

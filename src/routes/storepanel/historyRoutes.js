@@ -5,6 +5,6 @@ export default {
         default: () =>
             import(
                 /* webpackChunkName: "history" */ "@/views/storePanel/history/History.vue"
-                )
+            )
     }
-}
+};

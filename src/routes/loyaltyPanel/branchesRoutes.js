@@ -1,8 +1,8 @@
-export default   {
+export default {
     path: "branches",
     name: "Branches",
     component: () =>
         import(
-            /* webpackChunkName: "branches" */ "@/views/loyaltyPanel/Branches.vue"
-            )
-}
+            /* webpackChunkName: "branches" */ "@/views/loyaltyPanel/branches/Branches.vue"
+        )
+};

@@ -1,10 +1,10 @@
 export default {
     path: "contests",
-    name: "Contest & Survey",
+    name: "StoreContestAndSurvey",
     components: {
         default: () =>
             import(
                 /* webpackChunkName: "contests" */ "@/views/storePanel/Contests.vue"
-                )
+            )
     }
-}
+};

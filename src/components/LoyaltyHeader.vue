@@ -171,8 +171,8 @@
             <v-divider></v-divider>
 
             <v-row class="pt-4 pb-3" no-gutters justify="center">
-                <v-sheet light class="pa-2 rounded-circle" width="70">
-                    <v-img src="../assets/store-logo.png" width="50"></v-img>
+                <v-sheet light class="pa-2 rounded-circle">
+                    <v-img src="../assets/logo.png" width="70"></v-img>
                 </v-sheet>
 
                 <v-col cols="12" class="text-center mt-3">
@@ -545,7 +545,7 @@ export default {
 
     computed: {
         containerHeight() {
-            return this.mini ? "calc(100vh - 192px)" : "calc(100vh - 184px)";
+            return this.mini ? "calc(100vh - 213px)" : "calc(100vh - 203px)";
         }
     }
 };

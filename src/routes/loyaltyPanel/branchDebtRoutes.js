@@ -3,6 +3,6 @@ export default {
     name: "BranchDebt",
     component: () =>
         import(
-            /* webpackChunkName: "branchDebt" */ "@/views/loyaltyPanel/BranchDebt/BranchDebt.vue"
-            )
-}
+            /* webpackChunkName: "branchDebt" */ "@/views/loyaltyPanel/branchDebt/BranchDebt.vue"
+        )
+};

@@ -1,6 +1,6 @@
 <template>
     <v-tab-item>
-        <v-toolbar flat height="80" class="pt-2">
+        <v-toolbar flat height="80">
             <a class="export-link" href @click.prevent>Export to Excel</a>
             <v-divider class="mx-3" vertical inset></v-divider>
             <a class="export-link" href @click.prevent>Export to CSV</a>

@@ -62,7 +62,7 @@
                         </v-col>
                         <v-col cols="2" class="ml-3">
                             <v-text-field
-                                v-model.number="product.discountAmount"
+                                v-model.number="productGroup.discountAmount"
                                 type="number"
                                 outlined
                                 dense
@@ -75,15 +75,17 @@
                                 <v-btn
                                     icon
                                     x-small
-                                    @click="product.discountAmount += 0.01"
+                                    @click="productGroup.discountAmount += 0.01"
                                 >
                                     <v-icon v-text="icons.mdiMenuUp"></v-icon>
                                 </v-btn>
                                 <v-btn
                                     icon
                                     x-small
-                                    :disabled="product.discountAmount < 0.01"
-                                    @click="product.discountAmount -= 0.01"
+                                    :disabled="
+                                        productGroup.discountAmount < 0.01
+                                    "
+                                    @click="productGroup.discountAmount -= 0.01"
                                 >
                                     <v-icon v-text="icons.mdiMenuDown"></v-icon>
                                 </v-btn>
@@ -189,14 +191,58 @@
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn text @click="productGroupDialog = false">cancel</v-btn>
-                <v-btn color="primary">save</v-btn>
+                <v-btn color="secondary" class="px-5" depressed>save</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>
 </template>
 
 <script>
+import { mdiPercent, mdiCurrencyEur, mdiMenuUp, mdiMenuDown } from "@mdi/js";
+import { mapMutations } from "vuex";
+
 export default {
-    name: "ProductGroupDialog"
+    name: "ProductGroupDialog",
+
+    data: () => ({
+        icons: { mdiPercent, mdiCurrencyEur, mdiMenuUp, mdiMenuDown },
+        productGroup: {
+            display: "",
+            discountAmount: 0,
+            image: "",
+            imageFile: ""
+        },
+        discountType: "Percentage",
+        discountTypes: ["Percentage", "Euro"],
+        checkbox: false,
+        checkbox2: false,
+        checkbox3: false,
+        weekdays: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+        ],
+        selectedWeekdays: []
+    }),
+
+    computed: {
+        productGroupDialog: {
+            get() {
+                return this.$store.state.storePanel.products.productGroupDialog;
+            },
+
+            set(val) {
+                this.setProductGroupDialog(val);
+            }
+        }
+    },
+
+    methods: {
+        ...mapMutations("storePanel/products", ["setProductGroupDialog"])
+    }
 };
 </script>

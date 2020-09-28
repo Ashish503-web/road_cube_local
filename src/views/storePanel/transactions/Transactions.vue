@@ -54,15 +54,6 @@
                         </v-list-item-group>
                     </v-list>
                 </v-menu>
-                <!-- <v-btn color="secondary" depressed class="text-capitalize mx-2">
-                    <v-icon class="mr-1" v-text="icons.mdiPrinter"></v-icon>fund
-                    closure
-                </v-btn>
-
-                <v-btn color="secondary" depressed class="text-capitalize">
-                    <v-icon class="mr-1" v-text="icons.mdiOpenInNew"></v-icon
-                    >download all transactions
-                </v-btn> -->
             </v-toolbar>
 
             <v-row no-gutters style="background: #EAEDF191" class="px-3 pt-3">
