@@ -3,6 +3,6 @@ export default  {
     name: "Collaborators",
     component: () =>
         import(
-            /* webpackChunkName: "collaborators" */ "@/views/loyaltyPanel/Collaborators.vue"
+            /* webpackChunkName: "collaborators" */ "@/views/loyaltyPanel/Collaborators/Collaborators.vue"
             )
 }
