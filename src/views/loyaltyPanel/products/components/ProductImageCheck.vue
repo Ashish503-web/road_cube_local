@@ -6,7 +6,7 @@
             label=" I want the product to be displayed with an image in the application"
         ></v-checkbox>
         <v-card
-            class="dashed_border  mt-4"
+            class="dashed_border  "
             v-if="formModal.productImageCheck.active"
         >
             <v-row>

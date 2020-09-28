@@ -1,7 +1,7 @@
 <template>
     <v-dialog v-model="formModal.active" max-width="60%">
         <v-card>
-            <v-card-title class="headline">
+            <v-card-title class="secondary white--text">
                 {{ formModal.title }}
             </v-card-title>
 
@@ -21,7 +21,12 @@
                             <v-text-field
                                 label="Product Name"
                                 :value="formModal.productName"
+                                menu-props="offsetY"
+                                color="secondary"
+                                item-color="secondary"
                                 outlined
+                                dense
+                                hide-details
                             ></v-text-field>
                         </v-col>
                         <v-col cols="12">
@@ -36,14 +41,24 @@
                             <v-text-field
                                 label="Points"
                                 :value="formModal.points"
+                                menu-props="offsetY"
+                                color="secondary"
+                                item-color="secondary"
                                 outlined
+                                dense
+                                hide-details
                             ></v-text-field>
                         </v-col>
                         <v-col cols="12">
                             <v-text-field
                                 label="Product Id"
                                 :value="formModal.productId"
+                                menu-props="offsetY"
+                                color="secondary"
+                                item-color="secondary"
                                 outlined
+                                dense
+                                hide-details
                             ></v-text-field>
                         </v-col>
                         <v-col class="d-flex" cols="12">
@@ -51,7 +66,12 @@
                                 :items="items"
                                 v-model="formModal.percentage"
                                 label="Percentage"
+                                menu-props="offsetY"
+                                color="secondary"
+                                item-color="secondary"
                                 outlined
+                                dense
+                                hide-details
                             ></v-select>
                         </v-col>
                     </v-col>
@@ -97,12 +117,12 @@
 
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn @click="formModal.active = false">
+                <v-btn text @click="formModal.active = false">
                     Close
                 </v-btn>
 
-                <v-btn class="primary" @click="formModal.active = false">
-                    Update
+                <v-btn color="secondary" class="px-5" depressed @click="formModal.active = false">
+                    Save
                 </v-btn>
             </v-card-actions>
         </v-card>

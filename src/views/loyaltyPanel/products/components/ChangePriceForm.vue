@@ -9,7 +9,11 @@
                     :value="formModal.sellingPrice"
                     :disabled="disabledInp"
 
+                    color="secondary"
+                    item-color="secondary"
                     outlined
+                    dense
+                    hide-details
             ></v-text-field>
         </v-col>
         <v-col cols="12">
@@ -17,7 +21,11 @@
                     label="Product Name"
                     :value="formModal.wholesalePrice"
                     :disabled="disabledInp"
+                    color="secondary"
+                    item-color="secondary"
                     outlined
+                    dense
+                    hide-details
             ></v-text-field>
         </v-col>
         <v-col cols="12">

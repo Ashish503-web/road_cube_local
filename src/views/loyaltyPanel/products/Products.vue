@@ -1,4 +1,4 @@
-<template>
+<!--<template>
     <v-card class="pa-0" flat>
         <v-card flat>
             <v-row>
@@ -136,4 +136,93 @@ export default {
         }
     }
 };
+</script>-->
+<template>
+    <v-container fluid class="b-container">
+        <v-sheet class="pa-3">
+            <v-tabs
+                    v-model="tab"
+                    color="secondary"
+                    :vertical="$vuetify.breakpoint.mdAndDown"
+            >
+                <v-tab
+                        v-for="tab in tabs"
+                        v-bind:key="tab"
+                        class="text-capitalize"
+                        v-text="tab"
+                >
+                </v-tab>
+            </v-tabs>
+
+            <v-tabs-items v-model="tab">
+                <v-tab-item>
+                    <tab-products :formModal="formModal"></tab-products>
+                </v-tab-item>
+                <v-tab-item>
+                    <products-store></products-store>
+                </v-tab-item>
+                <v-tab-item>
+                    <products-series></products-series>
+                </v-tab-item>
+            </v-tabs-items>
+
+
+
+        </v-sheet>
+    </v-container>
+</template>
+
+<script>
+    import {
+        mdiTools,
+        mdiMagnify,
+        mdiSquareEditOutline,
+        mdiNavigation,
+        mdiBackspace,
+        mdiPlusThick,
+        mdiCheckCircleOutline
+    } from "@mdi/js";
+    import Products from "./components/Products";
+    import ProductsStore from "./components/ProductsStore";
+    import SeriesProducts from "./components/SeriesProducts";
+    export default {
+        name: "Branches",
+        components: {
+            "tab-products": Products,
+            "products-store": ProductsStore,
+            "products-series": SeriesProducts,
+
+        },
+        data: () => ({
+            tab: 0,
+            tabs: [
+                "Products",
+                "Products per Store",
+                "Series of products",
+            ],
+            formModal: {
+                active: false,
+                title: "Create Product",
+                productDisplay: "0",
+                productName: "",
+                productDescription: "",
+                points: "",
+                productId: null,
+                percentage: 0,
+                sellingPrice: "",
+                wholesalePrice: "",
+                changePriceCheck: 0,
+                subPoints: 0,
+                productImageCheck: {
+                    active: false
+                },
+                productDisplayDays: {
+                    active: false
+                },
+                updateProductCompanies: {
+                    active: false
+                }
+            }
+        })
+    };
 </script>
