@@ -122,6 +122,18 @@ const routes = [
         ]
     },
     {
+        path: "/register",
+        name: "Register",
+        component: () =>
+            import(/* webpackChunkName: "register" */ "@/views/Register.vue")
+    },
+    {
+        path: "/sign-in",
+        name: "SignIn",
+        component: () =>
+            import(/* webpackChunkName: "signIn" */ "@/views/SignIn.vue")
+    },
+    {
         path: "/example-backend-request",
         name: "backendExample",
         component: () =>
@@ -134,7 +146,14 @@ const routes = [
 const router = new VueRouter({
     mode: "history",
     base: process.env.BASE_URL,
-    routes
+    routes,
+    scrollBehavior(to, from, savedPosition) {
+        if (savedPosition) {
+            return savedPosition;
+        } else {
+            return { x: 0, y: 0 };
+        }
+    }
 });
 
 export default router;

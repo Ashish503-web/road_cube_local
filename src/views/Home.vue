@@ -14,6 +14,24 @@
                     to="/storepanel"
                     >go to store panel</v-btn
                 >
+                <v-btn
+                    color="primary"
+                    class="mt-3"
+                    outlined
+                    block
+                    to="/register"
+                    >register</v-btn
+                >
+                <v-btn
+                    color="primary"
+                    class="mt-3"
+                    outlined
+                    block
+                    to="/sign-in"
+                >
+                    sign in
+                    <v-icon class="ml-1" v-text="icons.mdiLogin"></v-icon>
+                </v-btn>
             </v-col>
             <v-col cols="10">
                 <v-btn
@@ -31,7 +49,13 @@
 </template>
 
 <script>
+import { mdiLogin } from "@mdi/js";
+
 export default {
-    name: "Home"
+    name: "Home",
+
+    data: () => ({
+        icons: { mdiLogin }
+    })
 };
 </script>
