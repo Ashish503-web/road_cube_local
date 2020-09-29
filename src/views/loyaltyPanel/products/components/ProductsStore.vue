@@ -1,20 +1,17 @@
 <template>
     <v-card>
         <v-card-title>
-            <v-col class="d-flex" cols="12" sm="2">
+            <!--<v-col class="d-flex" cols="12" sm="2">
                 <v-select
                     :items="pageItems"
                     outlined
                     v-model="pageItem"
                 ></v-select>
-            </v-col>
+            </v-col>-->
             <v-spacer></v-spacer>
-            <v-text-field
-                v-model="search"
-                append-icon="mdi-magnify"
-                placeholder="Search"
-                outlined
-            ></v-text-field>
+            <SearchField
+
+            />
         </v-card-title>
         <v-data-table
             :headers="headers"
@@ -68,8 +65,12 @@
 </template>
 <script>
 import { mdiMagnify } from "@mdi/js";
+import SearchField from "@/components/loyaltyPanel/SearchField";
 
 export default {
+    components:{
+        SearchField
+    },
     data: () => ({
         dense: false,
         fixedHeader: true,
