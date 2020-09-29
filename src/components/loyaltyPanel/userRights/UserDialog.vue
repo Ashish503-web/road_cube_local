@@ -36,34 +36,49 @@
                         ></v-text-field>
                     </v-col>
 
-                    <v-col cols="12" class="mt-3 mb-1 subtitle-2">Rights</v-col>
-
-                    <v-col cols="6" class="pr-2">
-                        <v-checkbox
-                            v-for="right in leftRights"
-                            :key="right"
-                            color="secondary"
-                            class="pt-0 mt-0"
+                    <v-col cols="12" class="mt-3 mb-1 subtitle-2">
+                        Rights
+                        <v-radio-group
+                            v-model="selectedRights"
                             hide-details
+                            multiple
                         >
-                            <template v-slot:label>
-                                <h4 class="subtitle-2" v-text="right"></h4>
-                            </template>
-                        </v-checkbox>
-                    </v-col>
+                            <v-row no-gutters>
+                                <v-col cols="6" class="pr-2">
+                                    <v-radio
+                                        v-for="right in leftRights"
+                                        :key="right"
+                                        color="secondary"
+                                        class="mb-0"
+                                        hide-details
+                                    >
+                                        <template v-slot:label>
+                                            <h4
+                                                class="subtitle-2"
+                                                v-text="right"
+                                            ></h4>
+                                        </template>
+                                    </v-radio>
+                                </v-col>
 
-                    <v-col cols="6" class="pl-2">
-                        <v-checkbox
-                            v-for="right in rightRights"
-                            :key="right"
-                            color="secondary"
-                            class="pt-0 mt-0"
-                            hide-details
-                        >
-                            <template v-slot:label>
-                                <h4 class="subtitle-2" v-text="right"></h4>
-                            </template>
-                        </v-checkbox>
+                                <v-col cols="6" class="pl-2">
+                                    <v-radio
+                                        v-for="right in rightRights"
+                                        :key="right"
+                                        color="secondary"
+                                        class="mb-0"
+                                        hide-details
+                                    >
+                                        <template v-slot:label>
+                                            <h4
+                                                class="subtitle-2"
+                                                v-text="right"
+                                            ></h4>
+                                        </template>
+                                    </v-radio>
+                                </v-col>
+                            </v-row>
+                        </v-radio-group>
                     </v-col>
                 </v-row>
             </v-card-text>
@@ -117,7 +132,8 @@ export default {
             "Serial Shopping",
             "Roadcodes",
             "View Campaigns"
-        ]
+        ],
+        selectedRights: []
     }),
 
     computed: {

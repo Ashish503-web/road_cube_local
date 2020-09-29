@@ -3,7 +3,7 @@
         <v-row justify="center">
             <v-col cols="4">
                 <v-img src="../assets/logo.png"></v-img>
-                <v-btn color="primary" outlined block to="/loyaltypanel"
+                <v-btn color="primary" outlined block to="/loyaltyPanel"
                     >go to loyalty panel</v-btn
                 >
                 <v-btn
@@ -11,7 +11,7 @@
                     class="mt-3"
                     outlined
                     block
-                    to="/storepanel"
+                    to="/storePanel"
                     >go to store panel</v-btn
                 >
                 <v-btn

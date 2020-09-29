@@ -52,7 +52,7 @@ const routes = [
         component: Home
     },
     {
-        path: "/loyaltypanel",
+        path: "/loyaltyPanel",
         components: {
             header: () =>
                 import(
@@ -94,7 +94,7 @@ const routes = [
         ]
     },
     {
-        path: "/storepanel",
+        path: "/storePanel",
         components: {
             header: () =>
                 import(
