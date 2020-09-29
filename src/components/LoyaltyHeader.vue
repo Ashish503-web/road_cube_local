@@ -320,7 +320,7 @@ export default {
                         {
                             icon: mdiSourceBranch,
                             title: "Branches",
-                            to: "/loyaltyPanel/branches"
+                            to: "/loyaltyPanel/Branches"
                         },
                         {
                             icon: mdiFileDocument,

@@ -3,6 +3,6 @@ export default {
     name: "Branches",
     component: () =>
         import(
-            /* webpackChunkName: "branches" */ "@/views/loyaltyPanel/branches/Branches.vue"
+            /* webpackChunkName: "Branches" */ "@/views/loyaltyPanel/branches/Branches.vue"
         )
 };
