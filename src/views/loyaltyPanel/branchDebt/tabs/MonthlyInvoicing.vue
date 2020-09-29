@@ -15,7 +15,7 @@
                     <v-list-item href="#">
                         <v-list-item-icon>
                             <v-icon
-                                color="secondary"
+                                color="green darken-3"
                                 v-text="icons.mdiMicrosoftExcel"
                             ></v-icon>
                         </v-list-item-icon>
@@ -25,7 +25,7 @@
                     <v-list-item href="#">
                         <v-list-item-icon>
                             <v-icon
-                                color="secondary"
+                                color="blue darken-3"
                                 v-text="icons.mdiFileDelimitedOutline"
                             ></v-icon>
                         </v-list-item-icon>

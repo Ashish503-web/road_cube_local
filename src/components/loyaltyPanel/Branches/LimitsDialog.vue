@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="limitsDialog" max-width="600">
+    <v-dialog v-model="limitsDialog" max-width="600" scrollable>
         <v-card>
             <v-card-title class="grey lighten-3">
                 {{ title }}

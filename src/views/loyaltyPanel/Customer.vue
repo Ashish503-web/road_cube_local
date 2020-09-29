@@ -1,58 +1,148 @@
 <template>
-    <v-card class="pa-0" flat>
-        <v-card flat>
-            <v-row>
-                <PageTitle
-                    v-bind:title="pageTitle"
-                />
-                <PageIcon
-                    v-bind:icon="icons.mdiAccountBox"
-                    v-bind:iconSize="iconSize"
-                />
-            </v-row>
-        </v-card>
+    <v-container fluid class="b-container">
+        <v-sheet class="pa-3">
+            <v-tabs
+                v-model="tab"
+                color="secondary"
+                :vertical="$vuetify.breakpoint.mdAndDown"
+            >
+                <v-tab
+                    v-for="tab in tabs"
+                    :key="tab"
+                    v-text="tab"
+                    class="text-capitalize"
+                >
+                </v-tab>
 
-        <v-row class="pa-5 pt-3 pb-3" style="background: #eaedf1">
-            <v-col cols="12">
-                <v-card flat tile>
-                    <Tab/>
-                </v-card>
-            </v-col>
-        </v-row>
-    </v-card>
+                <v-btn
+                    color="secondary"
+                    text
+                    tile
+                    @click="
+                        () => {
+                            mode = 1;
+                            tabDialog = true;
+                        }
+                    "
+                >
+                    <v-icon v-text="icons.mdiPlus"></v-icon>
+                </v-btn>
+            </v-tabs>
+
+            <v-tabs-items v-model="tab">
+                <v-tab-item>
+                    <v-toolbar flat height="80">
+                        <v-btn
+                            color="secondary"
+                            class="text-capitalize"
+                            depressed
+                            @click="
+                                () => {
+                                    mode = 1;
+                                    customerDialog = true;
+                                }
+                            "
+                            >add new customer</v-btn
+                        >
+
+                        <v-spacer></v-spacer>
+
+                        <v-col cols="4">
+                            <v-text-field
+                                label="Search"
+                                color="secondary"
+                                rounded
+                                outlined
+                                dense
+                                clearable
+                                hide-details
+                                :prepend-inner-icon="icons.mdiMagnify"
+                            ></v-text-field>
+                        </v-col>
+                    </v-toolbar>
+
+                    <v-data-table
+                        :headers="headers"
+                        :items="items"
+                        :footer-props="{ itemsPerPageOptions }"
+                        class="b-outlined"
+                    ></v-data-table>
+                </v-tab-item>
+            </v-tabs-items>
+
+            <TabDialog />
+            <CustomerDialog />
+        </v-sheet>
+    </v-container>
 </template>
 
 <script>
-import { mdiAccountBox, mdiMagnify, mdiPlus } from "@mdi/js";
-import PageIcon from "@/components/loyaltyPanel/PageIcon";
-import PageTitle from "@/components/loyaltyPanel/PageTitle";
-import Tab from "@/components/loyaltyPanel/Customer/Tab";
+import { mdiPlus, mdiMagnify } from "@mdi/js";
+import { mapMutations } from "vuex";
+import TabDialog from "@/components/loyaltyPanel/customer/TabDialog.vue";
+import CustomerDialog from "@/components/loyaltyPanel/customer/CustomerDialog.vue";
 
 export default {
-  name: "Customer",
-  components: {Tab, PageTitle, PageIcon},
-  data: () => ({
+    name: "Customer",
+    components: { TabDialog, CustomerDialog },
+    data: () => ({
         icons: {
-            mdiAccountBox,
-            mdiMagnify,
-            mdiPlus
+            mdiPlus,
+            mdiMagnify
         },
-        pageTitle: 'Customer',
-        iconSize: '80',
         tab: 0,
-        addCustomerDialog: false,
-        userTabDialog: false,
-        editDialog: false,
-        addTabDialog: false,
+        tabs: ["All"],
+        headers: [
+            { text: "Member Cards", value: "memberCards" },
+            { text: "Transactions", value: "transactions" },
+            { text: "Total", value: "total" },
+            { text: "Redeemed", value: "redeemed" },
+            { text: "Available", value: "available" },
+            { text: "User Tab", value: "userTab" },
+            { text: "Actions", value: "actions" }
+        ],
+        items: [],
+        itemsPerPageOptions: [10, 25, 50, 100]
     }),
-    mounted() {
-        this.customerData.forEach(item => {
-            this.customerTotalData.transactions += item.transactions;
-            this.customerTotalData.total += item.total;
-            this.customerTotalData.redeemed += item.redeemed;
-            this.customerTotalData.available += item.available;
-        });
-        this.customerData.push(this.customerTotalData);
+
+    computed: {
+        mode: {
+            get() {
+                return this.$store.state.loyaltyPanel.customer.mode;
+            },
+
+            set(val) {
+                this.setMode(val);
+            }
+        },
+
+        tabDialog: {
+            get() {
+                return this.$store.state.loyaltyPanel.customer.tabDialog;
+            },
+
+            set(val) {
+                this.setTabDialog(val);
+            }
+        },
+
+        customerDialog: {
+            get() {
+                return this.$store.state.loyaltyPanel.customer.customerDialog;
+            },
+
+            set(val) {
+                this.setCustomerDialog(val);
+            }
+        }
+    },
+
+    methods: {
+        ...mapMutations("loyaltyPanel/customer", [
+            "setMode",
+            "setTabDialog",
+            "setCustomerDialog"
+        ])
     }
 };
 </script>

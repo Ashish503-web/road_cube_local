@@ -1,10 +1,10 @@
 <template>
-    <v-container fluid style="background: #eaedf1">
+    <v-container fluid class="b-container">
         <v-sheet class="pa-3">
             <v-toolbar flat height="80">
                 <v-btn
                     color="secondary"
-                    class="text-capitalize px-8"
+                    class="text-capitalize px-5"
                     depressed
                     to="/loyaltyPanel/add-contest"
                     >add contest/survey</v-btn
@@ -20,6 +20,7 @@
                 <v-col cols="4" class="pa-0">
                     <v-text-field
                         label="Search"
+                        color="secondary"
                         rounded
                         outlined
                         dense
@@ -37,7 +38,11 @@
                 class="b-outlined"
             >
                 <template v-slot:item.actions="{ item }">
-                    <v-tooltip top v-if="item.winners === 'In Progress'">
+                    <v-tooltip
+                        v-if="item.winners === 'In Progress'"
+                        color="secondary"
+                        top
+                    >
                         <template v-slot:activator="{ on }">
                             <v-btn
                                 color="primary"
@@ -49,10 +54,10 @@
                             </v-btn>
                         </template>
 
-                        <span>View Contest</span>
+                        <span class="font-weight-bold">View Contest</span>
                     </v-tooltip>
 
-                    <v-tooltip top>
+                    <v-tooltip color="secondary" top>
                         <template v-slot:activator="{ on }">
                             <v-btn
                                 color="primary"
@@ -64,10 +69,10 @@
                             </v-btn>
                         </template>
 
-                        <span>View Participants</span>
+                        <span class="font-weight-bold">View Participants</span>
                     </v-tooltip>
 
-                    <v-tooltip top>
+                    <v-tooltip color="secondary" top>
                         <template v-slot:activator="{ on }">
                             <v-btn
                                 color="red"
@@ -79,7 +84,7 @@
                             </v-btn>
                         </template>
 
-                        <span>Delete</span>
+                        <span class="font-weight-bold">Delete</span>
                     </v-tooltip>
                 </template>
             </v-data-table>

@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid style="background: #eaedf1">
+    <v-container fluid class="b-container">
         <v-sheet class="pa-3">
             <v-alert type="info">
                 When the customer scans a receipt with them Your details will
@@ -11,16 +11,17 @@
             <v-container>
                 <v-row justify="space-around">
                     <v-col cols="5">
-                        <v-card class="rounded-xl px-5" outlined>
+                        <v-card class="px-5" outlined>
                             <v-card-title
                                 class="subtitle-1 secondary--text font-weight-medium justify-center"
-                            >Points</v-card-title>
+                                >Points</v-card-title
+                            >
                             <v-card-text>
                                 When the customer comes to the store he will be
                                 rewarded with:
                                 <v-text-field
                                     class="mt-3"
-                                    rounded
+                                    color="secondary"
                                     outlined
                                     dense
                                     clearable
@@ -34,22 +35,26 @@
                             </v-card-text>
                         </v-card>
                     </v-col>
+
                     <v-col cols="5">
-                        <v-card class="rounded-xl px-5" outlined>
+                        <v-card class="px-5" outlined>
                             <v-card-title
                                 class="subtitle-1 secondary--text font-weight-medium justify-center"
-                            >Voucher</v-card-title>
+                                >Voucher</v-card-title
+                            >
 
                             <v-card-text class="pb-6">
                                 <v-sheet
-                                    class="b-dashed rounded-xl text-center text--secondary font-italic py-2 mb-5"
-                                >No giftware</v-sheet>Number of active Voucher codes:
+                                    class="b-dashed text-center text--secondary font-italic py-2 mb-5"
+                                    >No giftware</v-sheet
+                                >Number of active Voucher codes:
                                 <v-btn
                                     color="secondary"
                                     class="text-capitalize mt-5"
                                     depressed
                                     @click="dialog = true"
-                                >create new voucher</v-btn>
+                                    >create new voucher</v-btn
+                                >
                             </v-card-text>
                         </v-card>
                     </v-col>
@@ -59,15 +64,36 @@
             <v-dialog v-model="dialog" max-width="40%" scrollable>
                 <v-card>
                     <v-card-title class="grey lighten-3">
-                        <v-icon v-text="icons.mdiAutoFix" color="secondary" large class="mr-3"></v-icon>New Voucher
+                        <v-icon
+                            v-text="icons.mdiAutoFix"
+                            color="secondary"
+                            large
+                            class="mr-3"
+                        ></v-icon
+                        >New Voucher
                         <v-spacer></v-spacer>
-                        <v-icon color="secondary" large v-text="icons.mdiPlus"></v-icon>
+                        <v-icon
+                            color="secondary"
+                            large
+                            v-text="icons.mdiPlus"
+                        ></v-icon>
                     </v-card-title>
 
                     <v-card-text class="pt-7">
-                        <v-text-field label="Title" rounded outlined dense clearable></v-text-field>
+                        <v-text-field
+                            label="Title"
+                            rounded
+                            outlined
+                            dense
+                            clearable
+                        ></v-text-field>
 
-                        <v-textarea label="Description" rounded outlined clearable></v-textarea>
+                        <v-textarea
+                            label="Description"
+                            rounded
+                            outlined
+                            clearable
+                        ></v-textarea>
 
                         <v-text-field
                             type="number"
@@ -78,7 +104,12 @@
                             clearable
                         ></v-text-field>
 
-                        <v-file-input label="Upload Voucher Image" rounded outlined dense></v-file-input>
+                        <v-file-input
+                            label="Upload Voucher Image"
+                            rounded
+                            outlined
+                            dense
+                        ></v-file-input>
                     </v-card-text>
 
                     <v-divider></v-divider>
@@ -104,10 +135,10 @@ export default {
         icons: {
             mdiCurrencyEur,
             mdiPlus,
-            mdiAutoFix,
+            mdiAutoFix
         },
-        dialog: false,
-    }),
+        dialog: false
+    })
 };
 </script>
 

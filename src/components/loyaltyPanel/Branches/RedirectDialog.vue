@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="redirectDialog" max-width="500">
+    <v-dialog v-model="redirectDialog" max-width="500" scrollable>
         <v-card>
             <v-card-title class="grey lighten-3">
                 Verification

@@ -11,19 +11,13 @@
 
             <v-card-text class="pt-5 subtitle-1 font-weight-bold">
                 <p>
-                    Are you sure you want to delete
+                    Do you want to delete User with name
                     <span class="font-weight-bold text--primary font-italic"
-                        >dieuth.</span
+                        >lefkothea.</span
                     >
                 </p>
 
-                <v-checkbox color="secondary" class="pt-0" hide-details>
-                    <template v-slot:label>
-                        <h4 class="subtitle-1 font-weight-bold">
-                            Do you want to totally delete Company?
-                        </h4>
-                    </template>
-                </v-checkbox>
+                Do you want to continue?
             </v-card-text>
 
             <v-divider></v-divider>
@@ -46,13 +40,15 @@ import { mapMutations } from "vuex";
 
 export default {
     name: "DeleteDialog",
+
     data: () => ({
         icons: { mdiDelete }
     }),
+
     computed: {
         deleteDialog: {
             get() {
-                return this.$store.state.loyaltyPanel.branches.deleteDialog;
+                return this.$store.state.loyaltyPanel.userRights.deleteDialog;
             },
 
             set(val) {
@@ -62,7 +58,7 @@ export default {
     },
 
     methods: {
-        ...mapMutations("loyaltyPanel/branches", ["setDeleteDialog"])
+        ...mapMutations("loyaltyPanel/userRights", ["setDeleteDialog"])
     }
 };
 </script>

@@ -1,16 +1,18 @@
 <template>
     <v-container fluid style="background: #eaedf1">
         <v-sheet class="pa-3">
-            <v-toolbar flat height="80" outlined>
+            <v-toolbar flat height="80">
                 <v-spacer></v-spacer>
-                <v-col cols="4">
+                <v-col cols="4" class="pa-0">
                     <v-text-field
                         label="Search"
+                        color="secondary"
+                        rounded
                         outlined
                         dense
                         clearable
                         hide-details
-                        :append-icon="icons.mdiMagnify"
+                        :prepend-inner-icon="icons.mdiMagnify"
                     ></v-text-field>
                 </v-col>
             </v-toolbar>
@@ -22,7 +24,13 @@
                 class="b-outlined rounded-0"
             >
                 <template v-slot:item.title="{ item }">
-                    <v-btn color="secondary" depressed width="80" small v-text="item.title"></v-btn>
+                    <v-btn
+                        color="secondary"
+                        depressed
+                        width="80"
+                        small
+                        v-text="item.title"
+                    ></v-btn>
                 </template>
 
                 <template v-slot:item.schedule>
@@ -32,7 +40,7 @@
                 </template>
 
                 <template v-slot:item.advertisingMeans>
-                    <v-tooltip top>
+                    <v-tooltip color="secondary" top>
                         <template v-slot:activator="{ on }">
                             <v-icon
                                 color="green"
@@ -42,10 +50,10 @@
                             ></v-icon>
                         </template>
 
-                        <span>21</span>
+                        <span class="font-weight-bold">21</span>
                     </v-tooltip>
 
-                    <v-tooltip top>
+                    <v-tooltip color="secondary" top>
                         <template v-slot:activator="{ on }">
                             <v-icon
                                 color="green"
@@ -55,10 +63,10 @@
                             ></v-icon>
                         </template>
 
-                        <span>17</span>
+                        <span class="font-weight-bold">17</span>
                     </v-tooltip>
 
-                    <v-tooltip top>
+                    <v-tooltip color="secondary" top>
                         <template v-slot:activator="{ on }">
                             <v-icon
                                 color="green"
@@ -68,7 +76,7 @@
                             ></v-icon>
                         </template>
 
-                        <span>34</span>
+                        <span class="font-weight-bold">34</span>
                     </v-tooltip>
                 </template>
 
@@ -87,11 +95,11 @@ import {
     mdiChat,
     mdiBell,
     mdiEmail,
-    mdiLock,
+    mdiLock
 } from "@mdi/js";
 
 export default {
-    name: "View Campaigns",
+    name: "ViewCampaigns",
 
     data: () => ({
         icons: {
@@ -100,7 +108,7 @@ export default {
             mdiChat,
             mdiBell,
             mdiEmail,
-            mdiLock,
+            mdiLock
         },
         headers: [
             { text: "Ημ. Δημιουργίας", value: "date" },
@@ -108,15 +116,15 @@ export default {
             { text: "Status", value: "status" },
             { text: "Schedule", value: "schedule" },
             { text: "Advertising Means", value: "advertisingMeans" },
-            { text: "Edit", value: "edit" },
+            { text: "Edit", value: "edit" }
         ],
         campaigns: [
             { date: "2020-08-24 12:09:30", title: 21, status: "pending" },
             { date: "2020-07-16 18:23:34", title: "test", status: "completed" },
-            { date: "2020-08-24 12:09:30", title: "df", status: "completed" },
+            { date: "2020-08-24 12:09:30", title: "df", status: "completed" }
         ],
-        itemsPerPageOptions: [10, 20, 30, -1],
-    }),
+        itemsPerPageOptions: [10, 20, 30, -1]
+    })
 };
 </script>
 

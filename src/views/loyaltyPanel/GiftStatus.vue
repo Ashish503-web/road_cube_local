@@ -1,21 +1,19 @@
 <template>
-    <v-container fluid style="background: #eaedf1">
-        <v-sheet>
-            <v-row no-gutters style="background: #eaedf1">
-                <v-col cols="auto">
-                    <v-tabs v-model="tab" color="black">
-                        <v-tab class="text-capitalize">pending</v-tab>
-                        <v-tab class="text-capitalize">sent</v-tab>
-                    </v-tabs>
-                </v-col>
-            </v-row>
-            <v-tabs-items v-model="tab" class="pt-3">
+    <v-container fluid class="b-container">
+        <v-sheet class="pa-3">
+            <v-tabs v-model="tab" color="black">
+                <v-tab class="text-capitalize">pending</v-tab>
+                <v-tab class="text-capitalize">sent</v-tab>
+            </v-tabs>
+
+            <v-tabs-items v-model="tab">
                 <v-tab-item>
-                    <v-toolbar flat>
+                    <v-toolbar flat height="80">
                         <v-spacer></v-spacer>
-                        <v-col cols="4">
+                        <v-col cols="4" class="pa-0">
                             <v-text-field
                                 label="Search"
+                                color="secondary"
                                 rounded
                                 outlined
                                 dense
@@ -33,15 +31,60 @@
                 </v-tab-item>
 
                 <v-tab-item>
-                    <v-toolbar flat>
-                        <a class="export-link" href @click.prevent
-                            >Export to Excel</a
-                        >
-                        <v-divider class="mx-3" vertical inset></v-divider>
-                        <a class="export-link" href @click.prevent
-                            >Export to CSV</a
-                        >
+                    <v-toolbar flat height="80">
+                        <v-menu offset-y right>
+                            <template v-slot:activator="{ on }">
+                                <v-btn text v-on="on">
+                                    <v-icon
+                                        color="secondary"
+                                        v-text="icons.mdiFormatListCheckbox"
+                                    ></v-icon>
+                                </v-btn>
+                            </template>
+
+                            <v-list dense>
+                                <v-list-item href="#">
+                                    <v-list-item-icon>
+                                        <v-icon
+                                            color="green darken-3"
+                                            v-text="icons.mdiMicrosoftExcel"
+                                        ></v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-title
+                                        >Export to Excel</v-list-item-title
+                                    >
+                                </v-list-item>
+
+                                <v-list-item href="#">
+                                    <v-list-item-icon>
+                                        <v-icon
+                                            color="red darken-4"
+                                            v-text="icons.mdiFilePdf"
+                                        ></v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-title
+                                        >Export to PDF</v-list-item-title
+                                    >
+                                </v-list-item>
+
+                                <v-list-item href="#">
+                                    <v-list-item-icon>
+                                        <v-icon
+                                            color="blue darken-3"
+                                            v-text="
+                                                icons.mdiFileDelimitedOutline
+                                            "
+                                        ></v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-title
+                                        >Export to CSV</v-list-item-title
+                                    >
+                                </v-list-item>
+                            </v-list>
+                        </v-menu>
+
                         <v-spacer></v-spacer>
+
                         <v-col cols="4">
                             <v-menu v-model="menu" offset-y>
                                 <template v-slot:activator="{ attrs }">
@@ -99,12 +142,26 @@
 </template>
 
 <script>
-import { mdiMagnify, mdiChevronDown } from "@mdi/js";
+import {
+    mdiFormatListCheckbox,
+    mdiMicrosoftExcel,
+    mdiFilePdf,
+    mdiFileDelimitedOutline,
+    mdiMagnify,
+    mdiChevronDown
+} from "@mdi/js";
 
 export default {
     name: "GiftStatus",
     data: () => ({
-        icons: { mdiMagnify, mdiChevronDown },
+        icons: {
+            mdiFormatListCheckbox,
+            mdiMicrosoftExcel,
+            mdiFilePdf,
+            mdiFileDelimitedOutline,
+            mdiMagnify,
+            mdiChevronDown
+        },
         tab: 0,
         menu: false,
         headers: [

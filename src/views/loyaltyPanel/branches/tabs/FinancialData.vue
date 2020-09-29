@@ -106,7 +106,7 @@ export default {
             },
 
             set(val) {
-                this.updateMode(val);
+                this.setMode(val);
             }
         },
 
@@ -116,7 +116,7 @@ export default {
             },
 
             set(val) {
-                this.updateShopDialog(val);
+                this.setShopDialog(val);
             }
         },
 
@@ -126,16 +126,16 @@ export default {
             },
 
             set(val) {
-                this.updateRightsDialog(val);
+                this.setRightsDialog(val);
             }
         }
     },
 
     methods: {
         ...mapMutations("loyaltyPanel/branches", [
-            "updateMode",
-            "updateShopDialog",
-            "updateRightsDialog"
+            "setMode",
+            "setShopDialog",
+            "setRightsDialog"
         ])
     }
 };

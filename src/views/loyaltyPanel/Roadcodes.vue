@@ -1,7 +1,12 @@
 <template>
-    <v-container fluid style="background: #eaedf1">
+    <v-container fluid class="b-container">
         <v-sheet class="pa-3">
-            <v-row no-gutters justify="space-between" align="center">
+            <v-row
+                no-gutters
+                justify="space-between"
+                align="center"
+                class="pr-4"
+            >
                 <v-col cols="auto">
                     <v-tabs v-model="tabIndex" color="black">
                         <v-tab class="text-capitalize">All</v-tab>
@@ -14,7 +19,6 @@
                         <v-btn
                             color="black"
                             text
-                            height="48"
                             tile
                             @click="
                                 () => {
@@ -41,9 +45,10 @@
                 <v-tab-item>
                     <v-toolbar flat height="80">
                         <v-spacer></v-spacer>
-                        <v-col cols="4">
+                        <v-col cols="4" class="pa-0">
                             <v-text-field
                                 label="Search"
+                                color="secondary"
                                 rounded
                                 outlined
                                 dense
@@ -58,9 +63,14 @@
                         :headers="headers"
                         :items="items"
                         :footer-props="{ itemsPerPageOptions }"
+                        class="b-outlined"
                     >
                         <template v-slot:item.edit="{ item }">
-                            <v-tooltip v-if="item.status === 'finished'" top>
+                            <v-tooltip
+                                v-if="item.status === 'finished'"
+                                color="secondary"
+                                top
+                            >
                                 <template v-slot:activator="{ on }">
                                     <v-icon
                                         color="success"
@@ -69,10 +79,10 @@
                                     ></v-icon>
                                 </template>
 
-                                <span>Finished</span>
+                                <span class="font-weight-bold">Finished</span>
                             </v-tooltip>
 
-                            <v-tooltip v-else top>
+                            <v-tooltip v-else color="secondary" top>
                                 <template v-slot:activator="{ on }">
                                     <v-btn
                                         color="yellow darken-3"
@@ -85,7 +95,7 @@
                                     </v-btn>
                                 </template>
 
-                                <span>Update</span>
+                                <span class="font-weight-bold">Update</span>
                             </v-tooltip>
                         </template>
                     </v-data-table>

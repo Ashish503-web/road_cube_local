@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid style="background: #eaedf1">
+    <v-container fluid class="b-container">
         <v-sheet class="pa-3">
             <v-toolbar flat height="80">
                 <v-btn
@@ -14,6 +14,7 @@
                 <v-col cols="4">
                     <v-text-field
                         label="Search"
+                        color="secondary"
                         rounded
                         outlined
                         dense
@@ -31,7 +32,7 @@
                 class="b-outlined"
             >
                 <template v-slot:item.actions="{ item }">
-                    <v-tooltip top>
+                    <v-tooltip color="secondary" top>
                         <template v-slot:activator="{ on }">
                             <v-btn
                                 color="yellow darken-3"
@@ -45,10 +46,10 @@
                             </v-btn>
                         </template>
 
-                        <span>Update</span>
+                        <span style="font-weight: 600">Update</span>
                     </v-tooltip>
 
-                    <v-tooltip top>
+                    <v-tooltip color="secondary" top>
                         <template v-slot:activator="{ on }">
                             <v-btn
                                 color="red"
@@ -60,7 +61,7 @@
                             </v-btn>
                         </template>
 
-                        <span>Delete</span>
+                        <span style="font-weight: 600">Delete</span>
                     </v-tooltip>
                 </template>
             </v-data-table>

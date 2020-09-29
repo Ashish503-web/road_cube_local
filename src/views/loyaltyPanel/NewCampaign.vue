@@ -1,14 +1,27 @@
 <template>
     <v-container fluid style="background: #eaedf1">
         <v-sheet class="pa-3">
-            <v-progress-linear :color="progressColor" :value="progress" height="20" stream striped></v-progress-linear>
+            <v-progress-linear
+                :color="progressColor"
+                :value="progress"
+                height="20"
+                stream
+                striped
+            ></v-progress-linear>
 
             <v-window v-model="step">
                 <v-window-item :value="1">
-                    <v-card outlined max-width="500" class="mx-auto mt-3">
-                        <v-card-title class="subtitle-2" style="word-break: normal">
+                    <v-card outlined max-width="550" class="mx-auto mt-3">
+                        <v-card-title
+                            class="subtitle-2"
+                            style="word-break: normal"
+                        >
                             <v-sheet class="border-grey rounded-circle">
-                                <v-icon class="ma-1" size="60" v-text="icons.mdiBullhorn"></v-icon>
+                                <v-icon
+                                    class="ma-1"
+                                    size="60"
+                                    v-text="icons.mdiBullhorn"
+                                ></v-icon>
                             </v-sheet>
                             <v-col>
                                 Select in order of priority what means you will
@@ -25,9 +38,16 @@
                                 no-gutters
                                 class="b-outlined pa-3 mb-3"
                             >
-                                <v-col cols="4" class="subtitle-2" v-text="selection.title"></v-col>
+                                <v-col
+                                    cols="4"
+                                    class="subtitle-2"
+                                    v-text="selection.title"
+                                ></v-col>
                                 <v-col cols="8">
-                                    <v-radio-group class="mt-0 pt-0" hide-details>
+                                    <v-radio-group
+                                        class="mt-0 pt-0"
+                                        hide-details
+                                    >
                                         <v-row no-gutters>
                                             <v-col
                                                 v-for="contactMean in selection.contactMeans"
@@ -37,7 +57,10 @@
                                             >
                                                 <v-radio color="secondary">
                                                     <template v-slot:label>
-                                                        <h4 class="subtitle-2" v-text="contactMean"></h4>
+                                                        <h4
+                                                            class="subtitle-2"
+                                                            v-text="contactMean"
+                                                        ></h4>
                                                     </template>
                                                 </v-radio>
                                             </v-col>
@@ -50,8 +73,17 @@
                         <v-divider></v-divider>
 
                         <v-card-actions>
-                            <v-btn color="brown" class="text-capitalize" depressed disabled>
-                                <v-icon size="20" v-text="icons.mdiArrowLeft"></v-icon>back
+                            <v-btn
+                                color="brown"
+                                class="text-capitalize"
+                                depressed
+                                disabled
+                            >
+                                <v-icon
+                                    size="20"
+                                    v-text="icons.mdiArrowLeft"
+                                ></v-icon
+                                >back
                             </v-btn>
                             <v-spacer></v-spacer>
                             <v-btn
@@ -61,7 +93,10 @@
                                 @click="step++"
                             >
                                 next
-                                <v-icon size="20" v-text="icons.mdiArrowRight"></v-icon>
+                                <v-icon
+                                    size="20"
+                                    v-text="icons.mdiArrowRight"
+                                ></v-icon>
                             </v-btn>
                         </v-card-actions>
                     </v-card>
@@ -71,7 +106,10 @@
                     <v-card outlined max-width="500" class="mx-auto mt-3">
                         <v-row no-gutters align="center">
                             <v-col cols="8">
-                                <v-card-title class="subtitle-2 pr-0" style="word-break: normal">
+                                <v-card-title
+                                    class="subtitle-2 pr-0"
+                                    style="word-break: normal"
+                                >
                                     Select how many times you want your campaign
                                     to appear
                                 </v-card-title>
@@ -114,7 +152,9 @@
                                             ></v-text-field>
                                         </template>
 
-                                        <v-date-picker v-model="startDate"></v-date-picker>
+                                        <v-date-picker
+                                            v-model="startDate"
+                                        ></v-date-picker>
                                     </v-menu>
                                 </v-col>
                                 <v-col cols="6">
@@ -138,13 +178,20 @@
                                         </template>
 
                                         <v-card>
-                                            <v-time-picker v-model="pickedTime" ampm-in-title></v-time-picker>
+                                            <v-time-picker
+                                                v-model="pickedTime"
+                                                ampm-in-title
+                                            ></v-time-picker>
 
                                             <v-divider></v-divider>
 
                                             <v-card-actions>
                                                 <v-spacer></v-spacer>
-                                                <v-btn text @click="timePicker = false">cancel</v-btn>
+                                                <v-btn
+                                                    text
+                                                    @click="timePicker = false"
+                                                    >cancel</v-btn
+                                                >
                                                 <v-btn
                                                     color="primary"
                                                     :disabled="!pickedTime"
@@ -154,7 +201,8 @@
                                                             timePicker = false;
                                                         }
                                                     "
-                                                >accept</v-btn>
+                                                    >accept</v-btn
+                                                >
                                             </v-card-actions>
                                         </v-card>
                                     </v-menu>
@@ -174,7 +222,10 @@
                                 >
                                     <v-row no-gutters align="end">
                                         <v-col cols="12">
-                                            <h4 class="subtitle-2" v-text="weekday.name"></h4>
+                                            <h4
+                                                class="subtitle-2"
+                                                v-text="weekday.name"
+                                            ></h4>
                                         </v-col>
                                         <v-col cols="auto">
                                             <v-checkbox
@@ -191,7 +242,9 @@
                                                 v-model="weekday.timePicker"
                                                 :close-on-content-click="false"
                                             >
-                                                <template v-slot:activator="{ on }">
+                                                <template
+                                                    v-slot:activator="{ on }"
+                                                >
                                                     <v-text-field
                                                         v-model="
                                                             weekday.startTime
@@ -222,7 +275,8 @@
                                                             @click="
                                                                 weekday.timePicker = false
                                                             "
-                                                        >cancel</v-btn>
+                                                            >cancel</v-btn
+                                                        >
                                                         <v-btn
                                                             color="primary"
                                                             :disabled="
@@ -234,7 +288,8 @@
                                                                     weekday.timePicker = false;
                                                                 }
                                                             "
-                                                        >accept</v-btn>
+                                                            >accept</v-btn
+                                                        >
                                                     </v-card-actions>
                                                 </v-card>
                                             </v-menu>
@@ -243,22 +298,38 @@
                                 </v-col>
                             </v-row>
 
-                            <v-divider class="mb-3"></v-divider>How to End a Repeat Campaign
-                            <v-radio-group v-model="campaignEndType" class="pt-0">
+                            <v-divider class="mb-3"></v-divider>How to End a
+                            Repeat Campaign
+                            <v-radio-group
+                                v-model="campaignEndType"
+                                class="pt-0"
+                            >
                                 <v-row no-gutters>
                                     <v-col cols="6">
-                                        <v-radio color="secondary" value="Ending Date">
+                                        <v-radio
+                                            color="secondary"
+                                            value="Ending Date"
+                                        >
                                             <template v-slot:label>
-                                                <h4 class="subtitle-2 secondary--text">Ending Date</h4>
+                                                <h4
+                                                    class="subtitle-2 secondary--text"
+                                                >
+                                                    Ending Date
+                                                </h4>
                                             </template>
                                         </v-radio>
                                     </v-col>
                                     <v-col cols="6">
-                                        <v-radio color="secondary" value="Number of Repetitions">
+                                        <v-radio
+                                            color="secondary"
+                                            value="Number of Repetitions"
+                                        >
                                             <template v-slot:label>
                                                 <h4
                                                     class="subtitle-2 secondary--text"
-                                                >Number of Repetitions</h4>
+                                                >
+                                                    Number of Repetitions
+                                                </h4>
                                             </template>
                                         </v-radio>
                                     </v-col>
@@ -285,7 +356,9 @@
                                                 ></v-text-field>
                                             </template>
 
-                                            <v-date-picker v-model="startDate"></v-date-picker>
+                                            <v-date-picker
+                                                v-model="startDate"
+                                            ></v-date-picker>
                                         </v-menu>
                                     </v-col>
                                     <v-col cols="6">
@@ -309,7 +382,10 @@
                                             </template>
 
                                             <v-card>
-                                                <v-time-picker v-model="pickedTime" ampm-in-title></v-time-picker>
+                                                <v-time-picker
+                                                    v-model="pickedTime"
+                                                    ampm-in-title
+                                                ></v-time-picker>
 
                                                 <v-divider></v-divider>
 
@@ -320,7 +396,8 @@
                                                         @click="
                                                             timePicker = false
                                                         "
-                                                    >cancel</v-btn>
+                                                        >cancel</v-btn
+                                                    >
                                                     <v-btn
                                                         color="primary"
                                                         :disabled="!pickedTime"
@@ -330,7 +407,8 @@
                                                                 timePicker = false;
                                                             }
                                                         "
-                                                    >accept</v-btn>
+                                                        >accept</v-btn
+                                                    >
                                                 </v-card-actions>
                                             </v-card>
                                         </v-menu>
@@ -339,11 +417,16 @@
                             </template>
 
                             <template v-else>
-                                <h4
-                                    class="subtitle-2 secondary--text"
-                                >Your campaign will terminate after:</h4>
+                                <h4 class="subtitle-2 secondary--text">
+                                    Your campaign will terminate after:
+                                </h4>
                                 <v-sheet width="50%">
-                                    <v-text-field type="number" outlined dense clearable></v-text-field>
+                                    <v-text-field
+                                        type="number"
+                                        outlined
+                                        dense
+                                        clearable
+                                    ></v-text-field>
                                 </v-sheet>
                             </template>
                         </v-card-text>
@@ -358,7 +441,11 @@
                                 dark
                                 @click="step--"
                             >
-                                <v-icon size="20" v-text="icons.mdiArrowLeft"></v-icon>back
+                                <v-icon
+                                    size="20"
+                                    v-text="icons.mdiArrowLeft"
+                                ></v-icon
+                                >back
                             </v-btn>
                             <v-spacer></v-spacer>
 
@@ -369,7 +456,10 @@
                                 @click="step++"
                             >
                                 next
-                                <v-icon size="20" v-text="icons.mdiArrowRight"></v-icon>
+                                <v-icon
+                                    size="20"
+                                    v-text="icons.mdiArrowRight"
+                                ></v-icon>
                             </v-btn>
                         </v-card-actions>
                     </v-card>
@@ -383,7 +473,9 @@
                             <v-radio-group class="mt-0 pa-0" hide-details>
                                 <v-radio color="secondary">
                                     <template v-slot:label>
-                                        <h4 class="subtitle-2">Επιλογή όλων των πελατών</h4>
+                                        <h4 class="subtitle-2">
+                                            Επιλογή όλων των πελατών
+                                        </h4>
                                     </template>
                                 </v-radio>
                                 <v-radio color="secondary">
@@ -417,7 +509,11 @@
                                 dark
                                 @click="step--"
                             >
-                                <v-icon size="20" v-text="icons.mdiArrowLeft"></v-icon>back
+                                <v-icon
+                                    size="20"
+                                    v-text="icons.mdiArrowLeft"
+                                ></v-icon
+                                >back
                             </v-btn>
                             <v-spacer></v-spacer>
 
@@ -428,7 +524,10 @@
                                 @click="step++"
                             >
                                 next
-                                <v-icon size="20" v-text="icons.mdiArrowRight"></v-icon>
+                                <v-icon
+                                    size="20"
+                                    v-text="icons.mdiArrowRight"
+                                ></v-icon>
                             </v-btn>
                         </v-card-actions>
                     </v-card>
@@ -439,9 +538,8 @@
                         <v-card-title>Gender Filter</v-card-title>
 
                         <v-card-subtitle>
-                            Choose whether you want your campaign to target
-                            only men or women, or if you want to reach both
-                            sexes.
+                            Choose whether you want your campaign to target only
+                            men or women, or if you want to reach both sexes.
                         </v-card-subtitle>
 
                         <v-card-text>
@@ -456,8 +554,13 @@
                                     >
                                         <v-radio color="secondary">
                                             <template v-slot:label>
-                                                <v-icon v-text="gender.icon"></v-icon>
-                                                <h4 class="subtitle-2" v-text="gender.text"></h4>
+                                                <v-icon
+                                                    v-text="gender.icon"
+                                                ></v-icon>
+                                                <h4
+                                                    class="subtitle-2"
+                                                    v-text="gender.text"
+                                                ></h4>
                                             </template>
                                         </v-radio>
                                     </v-col>
@@ -469,9 +572,8 @@
 
                         <v-card-title>Points Filter</v-card-title>
                         <v-card-subtitle>
-                            Select the minimum and maximum number of user
-                            points that you want your campaign to
-                            target
+                            Select the minimum and maximum number of user points
+                            that you want your campaign to target
                         </v-card-subtitle>
 
                         <v-card-text class="py-0">
@@ -500,8 +602,7 @@
                         <v-card-title>Φίλτρο Αριθμού Συναλλαγών</v-card-title>
                         <v-card-subtitle>
                             Select the minimum and maximum number of user
-                            transactions that you want your campaign to
-                            target
+                            transactions that you want your campaign to target
                         </v-card-subtitle>
 
                         <v-card-text class="py-0">
@@ -533,7 +634,11 @@
                                 dark
                                 @click="step--"
                             >
-                                <v-icon size="20" v-text="icons.mdiArrowLeft"></v-icon>back
+                                <v-icon
+                                    size="20"
+                                    v-text="icons.mdiArrowLeft"
+                                ></v-icon
+                                >back
                             </v-btn>
                             <v-spacer></v-spacer>
 
@@ -544,7 +649,10 @@
                                 @click="step++"
                             >
                                 next
-                                <v-icon size="20" v-text="icons.mdiArrowRight"></v-icon>
+                                <v-icon
+                                    size="20"
+                                    v-text="icons.mdiArrowRight"
+                                ></v-icon>
                             </v-btn>
                         </v-card-actions>
                     </v-card>
@@ -552,7 +660,9 @@
 
                 <v-window-item :value="5">
                     <v-card flat max-width="500" class="mx-auto mt-3">
-                        <v-card-title class="justify-center">Τίτλος Καμπάνιας</v-card-title>
+                        <v-card-title class="justify-center"
+                            >Τίτλος Καμπάνιας</v-card-title
+                        >
 
                         <v-card-text>
                             <v-text-field
@@ -569,7 +679,12 @@
                             <v-toolbar flat color="grey lighten-3">
                                 <v-toolbar-title>SMS</v-toolbar-title>
                                 <v-spacer></v-spacer>
-                                <v-btn color="secondary" class="text-capitalize" depressed>new sms</v-btn>
+                                <v-btn
+                                    color="secondary"
+                                    class="text-capitalize"
+                                    depressed
+                                    >new sms</v-btn
+                                >
                             </v-toolbar>
 
                             <v-card-text>
@@ -592,7 +707,12 @@
                             <v-toolbar flat color="grey lighten-3">
                                 <v-toolbar-title>Push</v-toolbar-title>
                                 <v-spacer></v-spacer>
-                                <v-btn color="secondary" class="text-capitalize" depressed>new push</v-btn>
+                                <v-btn
+                                    color="secondary"
+                                    class="text-capitalize"
+                                    depressed
+                                    >new push</v-btn
+                                >
                             </v-toolbar>
 
                             <v-card-text>
@@ -600,7 +720,9 @@
                                     <v-col cols="6">
                                         <h4
                                             class="pt-1 pb-3 text-center subtitle-1 text--primary font-weight-medium"
-                                        >Text</h4>
+                                        >
+                                            Text
+                                        </h4>
                                         <v-textarea
                                             label="Ελληνικά"
                                             height="160"
@@ -620,7 +742,8 @@
                                     <v-col cols="6" class="pl-3">
                                         <v-card-title
                                             class="text--primary pt-0 justify-center"
-                                        >Upload Media</v-card-title>Enter the desired link and send it to
+                                            >Upload Media</v-card-title
+                                        >Enter the desired link and send it to
                                         the users.
                                         <v-text-field
                                             label="Link to Page"
@@ -631,13 +754,22 @@
                                             :prepend-inner-icon="
                                                 icons.mdiLinkVariant
                                             "
-                                        ></v-text-field>Upload the desired image and send it to
+                                        ></v-text-field
+                                        >Upload the desired image and send it to
                                         the users
-                                        <h4 class="subtitle-2">Image Upload (.png or .jpeg)</h4>
+                                        <h4 class="subtitle-2">
+                                            Image Upload (.png or .jpeg)
+                                        </h4>
 
-                                        <v-file-input class="mt-2" outlined dense></v-file-input>
+                                        <v-file-input
+                                            class="mt-2"
+                                            outlined
+                                            dense
+                                        ></v-file-input>
 
-                                        <h4 class="subtitle-2">Επέλεξε συγκεκριμένο κατάστημα</h4>
+                                        <h4 class="subtitle-2">
+                                            Επέλεξε συγκεκριμένο κατάστημα
+                                        </h4>
 
                                         <v-select
                                             menu-props="offsetY"
@@ -656,7 +788,12 @@
                             <v-toolbar flat color="grey lighten-3">
                                 <v-toolbar-title>Email</v-toolbar-title>
                                 <v-spacer></v-spacer>
-                                <v-btn color="secondary" class="text-capitalize" depressed>new email</v-btn>
+                                <v-btn
+                                    color="secondary"
+                                    class="text-capitalize"
+                                    depressed
+                                    >new email</v-btn
+                                >
                             </v-toolbar>
 
                             <v-card-text>
@@ -685,7 +822,8 @@
                                     <v-col cols="6" class="pl-3">
                                         <v-card-title
                                             class="text--primary pt-0 justify-center"
-                                        >Upload Media</v-card-title>Enter the desired link and send it to
+                                            >Upload Media</v-card-title
+                                        >Enter the desired link and send it to
                                         the users.
                                         <v-text-field
                                             label="Link to Page"
@@ -696,11 +834,19 @@
                                             :prepend-inner-icon="
                                                 icons.mdiLinkVariant
                                             "
-                                        ></v-text-field>Upload the desired image and send it to
+                                        ></v-text-field
+                                        >Upload the desired image and send it to
                                         the users
-                                        <h4 class="subtitle-2">Image Upload (.png or .jpeg)</h4>
+                                        <h4 class="subtitle-2">
+                                            Image Upload (.png or .jpeg)
+                                        </h4>
 
-                                        <v-file-input class="mt-2" outlined dense hide-details></v-file-input>
+                                        <v-file-input
+                                            class="mt-2"
+                                            outlined
+                                            dense
+                                            hide-details
+                                        ></v-file-input>
                                     </v-col>
                                 </v-row>
                             </v-card-text>
@@ -714,11 +860,20 @@
                                 dark
                                 @click="step--"
                             >
-                                <v-icon size="20" v-text="icons.mdiArrowLeft"></v-icon>back
+                                <v-icon
+                                    size="20"
+                                    v-text="icons.mdiArrowLeft"
+                                ></v-icon
+                                >back
                             </v-btn>
                             <v-spacer></v-spacer>
 
-                            <v-btn color="secondary" class="text-capitalize" depressed>submit</v-btn>
+                            <v-btn
+                                color="secondary"
+                                class="text-capitalize"
+                                depressed
+                                >submit</v-btn
+                            >
                         </v-card-actions>
                     </v-card>
                 </v-window-item>
@@ -740,7 +895,7 @@ import {
     mdiChevronLeft,
     mdiChevronRight,
     mdiLinkVariant,
-    mdiMenuRight,
+    mdiMenuRight
 } from "@mdi/js";
 
 export default {
@@ -756,19 +911,19 @@ export default {
             mdiChevronLeft,
             mdiChevronRight,
             mdiLinkVariant,
-            mdiMenuRight,
+            mdiMenuRight
         },
         step: 1,
         selections: [
             { title: "First Selection", contactMeans: ["sms", "push", "mail"] },
             {
                 title: "Second Selection",
-                contactMeans: ["sms", "push", "mail", "none"],
+                contactMeans: ["sms", "push", "mail", "none"]
             },
             {
                 title: "Third Selection",
-                contactMeans: ["sms", "push", "mail", "none"],
-            },
+                contactMeans: ["sms", "push", "mail", "none"]
+            }
         ],
         campaignAppearType: "Only Once",
         startDate: new Date().toISOString().substr(0, 10),
@@ -780,52 +935,52 @@ export default {
                 name: "Monday",
                 checked: false,
                 timePicker: false,
-                startTime: "",
+                startTime: ""
             },
             {
                 name: "Tuesday",
                 checked: false,
                 timePicker: false,
-                startTime: "",
+                startTime: ""
             },
             {
                 name: "Wednesday",
                 checked: false,
                 timePicker: false,
-                startTime: "",
+                startTime: ""
             },
             {
                 name: "Thursday",
                 checked: false,
                 timePicker: false,
-                startTime: "",
+                startTime: ""
             },
             {
                 name: "Friday",
                 checked: false,
                 timePicker: false,
-                startTime: "",
+                startTime: ""
             },
             {
                 name: "Saturday",
                 checked: false,
                 timePicker: false,
-                startTime: "",
+                startTime: ""
             },
             {
                 name: "Sunday",
                 checked: false,
                 timePicker: false,
-                startTime: "",
-            },
+                startTime: ""
+            }
         ],
         campaignEndType: "Number of Repetitions",
         genders: [
             { text: "Male", icon: mdiGenderMale },
             { text: "Female", icon: mdiGenderFemale },
-            { text: "Both", icon: mdiGenderMaleFemale },
+            { text: "Both", icon: mdiGenderMaleFemale }
         ],
-        smsText: "",
+        smsText: ""
     }),
 
     computed: {
@@ -869,8 +1024,8 @@ export default {
             }
 
             return color;
-        },
-    },
+        }
+    }
 };
 </script>
 
