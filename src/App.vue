@@ -9,12 +9,26 @@
 </template>
 
 <script>
+// import axios from "axios";
+
 export default {
     name: "App",
 
     data: () => ({
         //
     })
+
+    // mounted() {
+    //     let id = localStorage.getItem("companyId");
+    //     let token = localStorage.getItem("companyAccessToken");
+
+    //     axios.defaults.headers.Authorization = `Bearer ${token}`;
+
+    //     axios
+    //         .get(`https://api.roadcube.tk/v1/companies/${id}`)
+    //         .then(res => console.log(res))
+    //         .catch(err => console.error(err.response.data));
+    // }
 };
 </script>
 
