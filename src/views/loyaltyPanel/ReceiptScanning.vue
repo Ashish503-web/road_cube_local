@@ -40,9 +40,7 @@
                         <v-card class="px-5" outlined>
                             <v-card-title
                                 class="subtitle-1 secondary--text font-weight-medium justify-center"
-                                >Voucher</v-card-title
-                            >
-
+                                >Voucher</v-card-title>
                             <v-card-text class="pb-6">
                                 <v-sheet
                                     class="b-dashed text-center text--secondary font-italic py-2 mb-5"
@@ -62,80 +60,22 @@
             </v-container>
 
             <v-dialog v-model="dialog" max-width="40%" scrollable>
-                <v-card>
-                    <v-card-title class="grey lighten-3">
-                        <v-icon
-                            v-text="icons.mdiAutoFix"
-                            color="secondary"
-                            large
-                            class="mr-3"
-                        ></v-icon
-                        >New Voucher
-                        <v-spacer></v-spacer>
-                        <v-icon
-                            color="secondary"
-                            large
-                            v-text="icons.mdiPlus"
-                        ></v-icon>
-                    </v-card-title>
-
-                    <v-card-text class="pt-7">
-                        <v-text-field
-                            label="Title"
-                            rounded
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
-
-                        <v-textarea
-                            label="Description"
-                            rounded
-                            outlined
-                            clearable
-                        ></v-textarea>
-
-                        <v-text-field
-                            type="number"
-                            label="Number of Vouchers"
-                            rounded
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
-
-                        <v-file-input
-                            label="Upload Voucher Image"
-                            rounded
-                            outlined
-                            dense
-                        ></v-file-input>
-                    </v-card-text>
-
-                    <v-divider></v-divider>
-
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn text @click="dialog = false">cancel</v-btn>
-                        <v-btn color="primary" width="80">save</v-btn>
-                    </v-card-actions>
-                </v-card>
+                <CreateUpdateVoucher @close="dialog = false" />
             </v-dialog>
         </v-sheet>
     </v-container>
 </template>
 
 <script>
-import { mdiCurrencyEur, mdiPlus, mdiAutoFix } from "@mdi/js";
+import { mdiCurrencyEur } from "@mdi/js";
+import CreateUpdateVoucher from "../../components/loyaltyPanel/CreateUpdateReciept/CreateUpdateVoucher";
 
 export default {
     name: "ReceiptScanning",
-
+    components: { CreateUpdateVoucher },
     data: () => ({
         icons: {
-            mdiCurrencyEur,
-            mdiPlus,
-            mdiAutoFix
+            mdiCurrencyEur
         },
         dialog: false
     })
