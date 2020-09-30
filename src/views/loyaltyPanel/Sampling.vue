@@ -80,7 +80,7 @@
 
 <script>
 import { mdiPencilOutline, mdiClose, mdiFacebook, mdiPlus } from "@mdi/js";
-import CreateUpdateAction from "../../components/loyaltyPanel/CreateUpdateAction/CreateUpdateAction";
+import CreateUpdateAction from "../../components/loyaltyPanel/sampling/ActionForm";
 
 export default {
     name: "Sampling",

@@ -1,10 +1,10 @@
 <template>
     <v-card>
-        <v-card-title class="grey lighten-3">
+        <v-card-title class="secondary white--text">
             New Tab
             <v-spacer></v-spacer>
             <v-icon
-                    color="secondary"
+                    dark
                     large
                     v-text="icons.mdiPlus"
             ></v-icon>
@@ -14,6 +14,7 @@
             <v-text-field
                     v-model="tab.name"
                     label="New Tab"
+                    color="secondary"
                     outlined
                     dense
                     clearable
@@ -137,6 +138,7 @@
                             v-model="column"
                             label="Add Column"
                             class="mt-2"
+                            color="secondary"
                             outlined
                             dense
                             clearable
@@ -145,7 +147,7 @@
                 </v-col>
                 <v-col cols="auto">
                     <v-btn
-                            color="primary"
+                            color="secondary"
                             class="mt-1"
                             icon
                             large
@@ -190,6 +192,7 @@
 
 <script>
     import { mdiAutoFix, mdiPlus, mdiClose } from "@mdi/js";
+
     class Tab {
         constructor(tab = {}) {
             this.name = tab.name || "";
@@ -199,6 +202,7 @@
             this.columns = tab.columns || [];
         }
     }
+
     export default {
         name: "AddNewTabDialog",
         data: () => ({
@@ -210,7 +214,8 @@
             tab: {},
             column: "",
             tabs: [],
-            Tab
+            Tab,
+            tabIndex: 0
         })
     };
 </script>

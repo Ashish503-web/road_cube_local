@@ -108,7 +108,7 @@ export default {
         icons: { mdiPlus, mdiPencilOutline },
         leftRights: [
             "Dashboard",
-            "Branches",
+            "branches",
             "Collaborators",
             "Customer",
             "Business Profile",

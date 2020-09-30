@@ -72,206 +72,11 @@
             </v-data-table>
 
             <v-dialog v-model="multipleCouponDialog" max-width="520" scrollable>
-                <v-card>
-                    <v-card-title class="grey lighten-3">
-                        New Multiple Coupon
-                        <v-spacer></v-spacer>
-                        <v-icon
-                            color="secondary"
-                            large
-                            v-text="icons.mdiPlus"
-                        ></v-icon>
-                    </v-card-title>
-
-                    <v-card-text class="pt-7">
-                        <v-text-field
-                            label="Name"
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
-
-                        <v-text-field
-                            label="Description"
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
-
-                        <v-text-field
-                            label="Coupon Value"
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
-
-                        <v-text-field
-                            type="number"
-                            label="Number of Coupons"
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
-
-                        <v-text-field
-                            type="number"
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
-
-                        <v-row>
-                            <v-col cols="6">
-                                <v-img :src="voucher.image"></v-img>
-                            </v-col>
-                            <v-col cols="6">
-                                Upload Voucher Image:
-                                <v-file-input
-                                    outlined
-                                    dense
-                                    hide-details
-                                    @change="onFileSelected"
-                                ></v-file-input>
-                            </v-col>
-                        </v-row>
-
-                        <v-checkbox
-                            v-model="notificationViaEmail"
-                            color="secondary"
-                            class="pa-0"
-                        >
-                            <template v-slot:label>
-                                <h4 class="subtitle-2">
-                                    Notification via Email
-                                </h4>
-                            </template>
-                        </v-checkbox>
-
-                        <template v-if="notificationViaEmail">
-                            <v-text-field
-                                label="Email1"
-                                outlined
-                                dense
-                                clearable
-                            ></v-text-field>
-                            <v-text-field
-                                label="Email2"
-                                outlined
-                                dense
-                                clearable
-                            ></v-text-field>
-                            <v-text-field
-                                type="number"
-                                label="Update how many days to send email"
-                                outlined
-                                dense
-                                clearable
-                            ></v-text-field>
-                        </template>
-
-                        <v-text-field
-                            label="Κωδικός κουπονιού"
-                            outlined
-                            dense
-                            clearable
-                        ></v-text-field>
-
-                        <v-row>
-                            <v-col cols="6" class="subitle-2 secondary--text"
-                                >Select stores to redeem</v-col
-                            >
-                            <v-col cols="6">
-                                <v-checkbox
-                                    color="secondary"
-                                    class="mt-0"
-                                    hide-details
-                                >
-                                    <template v-slot:label>
-                                        <h4 class="subtitle-2">All</h4>
-                                    </template>
-                                </v-checkbox>
-
-                                <v-checkbox
-                                    v-for="store in stores"
-                                    :key="store"
-                                    color="secondary"
-                                    class="mt-0"
-                                    hide-details
-                                >
-                                    <template v-slot:label>
-                                        <h4
-                                            class="subtitle-2"
-                                            v-text="store"
-                                        ></h4>
-                                    </template>
-                                </v-checkbox>
-                            </v-col>
-                        </v-row>
-                    </v-card-text>
-
-                    <v-divider></v-divider>
-
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn text @click="multipleCouponDialog = false"
-                            >cancel</v-btn
-                        >
-                        <v-btn color="primary" width="80">save</v-btn>
-                    </v-card-actions>
-                </v-card>
+                <CreateForm  @close="multipleCouponDialog=false"/>
             </v-dialog>
 
             <v-dialog v-model="analiticsDialog" max-width="400" scrollable>
-                <v-card>
-                    <v-card-title class="grey lighten-3"
-                        >Analytical Report</v-card-title
-                    >
-
-                    <v-card-text class="pt-7">
-                        <v-row justify="space-between">
-                            <v-col cols="6">
-                                <v-text-field
-                                    v-model="pickedDates[0]"
-                                    label="Start Date"
-                                    outlined
-                                    dense
-                                    readonly
-                                    :append-icon="icons.mdiCalendarMonth"
-                                ></v-text-field>
-                            </v-col>
-
-                            <v-col cols="6">
-                                <v-text-field
-                                    v-model="pickedDates[1]"
-                                    label="End Date"
-                                    outlined
-                                    dense
-                                    readonly
-                                    :append-icon="icons.mdiCalendarMonth"
-                                ></v-text-field>
-                            </v-col>
-                        </v-row>
-
-                        <v-date-picker
-                            v-model="pickedDates"
-                            class="b-outlined"
-                            range
-                            scrollable
-                            full-width
-                            no-title
-                        ></v-date-picker>
-                    </v-card-text>
-
-                    <v-divider></v-divider>
-
-                    <v-card-actions>
-                        <v-spacer></v-spacer>
-                        <v-btn text @click="analiticsDialog = false"
-                            >cancel</v-btn
-                        >
-                        <v-btn color="primary">download excel</v-btn>
-                    </v-card-actions>
-                </v-card>
+                <AnaliticalReportForm @close="analiticsDialog=false"/>
             </v-dialog>
         </v-sheet>
     </v-container>
@@ -279,10 +84,12 @@
 
 <script>
 import { mdiCalendarMonth, mdiMagnify, mdiPlus, mdiClose } from "@mdi/js";
+import CreateForm from "../../components/loyaltyPanel/multipleCoupons/CreateForm";
+import AnaliticalReportForm from "../../components/loyaltyPanel/multipleCoupons/AnaliticalReportForm";
 
 export default {
     name: "MultipleCoupons",
-
+    components: { AnaliticalReportForm, CreateForm },
     data: () => ({
         icons: { mdiCalendarMonth, mdiMagnify, mdiPlus, mdiClose },
         pickedDates: [],

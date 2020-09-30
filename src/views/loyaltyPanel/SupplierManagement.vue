@@ -75,7 +75,7 @@
 
 <script>
 import { mdiPencilOutline, mdiClose, mdiMagnify, mdiPlus } from "@mdi/js";
-import CreateUpdateSupplier from "../../components/loyaltyPanel/CreateUpdateSupplier/CreateUpdateSupplier";
+import CreateUpdateSupplier from "../../components/loyaltyPanel/suppliermanagement/SupplierForm";
 
 export default {
     name: "SupplierManagement",

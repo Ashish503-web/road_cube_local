@@ -3,7 +3,7 @@
         <v-card-title class="secondary white--text">
             <v-icon
                     v-text="icons.mdiAutoFix"
-                    color="secondary"
+                    dark
                     large
                     class="mr-3"
             ></v-icon
@@ -11,7 +11,7 @@
             New Promocode
             <v-spacer></v-spacer>
             <v-icon
-                    color="secondary"
+                    dark
                     large
                     v-text="icons.mdiPlus"
             ></v-icon>
@@ -19,6 +19,7 @@
 
         <v-card-text class="pt-7">
             <v-text-field
+                    color="secondary"
                     label="Promocode Code"
                     outlined
                     dense
@@ -35,6 +36,9 @@
                     outlined
                     dense
                     clearable
+                    color="secondary"
+                    hide-details
+                    class="mb-3"
             ></v-text-field>
 
             <v-text-field
@@ -42,6 +46,8 @@
                     label="Vouchers Amount"
                     outlined
                     dense
+                    color="secondary"
+                    hide-details
                     clearable
             ></v-text-field>
 

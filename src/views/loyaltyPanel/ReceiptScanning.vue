@@ -68,7 +68,7 @@
 
 <script>
 import { mdiCurrencyEur } from "@mdi/js";
-import CreateUpdateVoucher from "../../components/loyaltyPanel/CreateUpdateReciept/CreateUpdateVoucher";
+import CreateUpdateVoucher from "../../components/loyaltyPanel/receiptScanning/VoucherFrom";
 
 export default {
     name: "ReceiptScanning",
