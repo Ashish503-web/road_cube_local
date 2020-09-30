@@ -107,11 +107,11 @@
             </v-data-table>
 
             <v-dialog v-model="giftDialog" max-width="40%" scrollable>
-                <CreateUpdateGiftCatalog @close="giftDialog=false" />
+                <GiftForm @close="giftDialog = false" />
             </v-dialog>
 
             <v-dialog v-model="supplierDialog" max-width="40%" scrollable>
-                <CreateUpdateSupplierCatalog @close="supplierDialog=false"/>
+                <SupplierForm @close="supplierDialog = false" />
             </v-dialog>
         </v-sheet>
     </v-container>
@@ -125,13 +125,13 @@ import {
     mdiClose,
     mdiPlus
 } from "@mdi/js";
-import CreateUpdateSupplierCatalog from "../../components/loyaltyPanel/CreateUpdateCatalog/CreateUpdateSupplierCatalog";
-import CreateUpdateGiftCatalog from "../../components/loyaltyPanel/CreateUpdateCatalog/CreateUpdateGiftCatalog";
 
+import GiftForm from "../../components/loyaltyPanel/catalogManagement/GiftForm";
+import SupplierForm from "../../components/loyaltyPanel/catalogManagement/SupplierForm";
 
 export default {
     name: "CatalogManagement",
-    components: { CreateUpdateGiftCatalog, CreateUpdateSupplierCatalog },
+    components: { GiftForm, SupplierForm },
     data: () => ({
         icons: {
             mdiMagnify,
