@@ -65,7 +65,7 @@
 
 <script>
 import SearchField from "@/components/loyaltyPanel/SearchField";
-import UpdateAllCheckbox from "@/components/loyaltyPanel/Branches/UpdateAllCheckbox";
+import UpdateAllCheckbox from "@/components/loyaltyPanel/branches/UpdateAllCheckbox";
 
 export default {
     name: "AdminPanelSettings",

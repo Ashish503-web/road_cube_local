@@ -53,18 +53,18 @@
                             <v-form
                                 v-model="valid"
                                 class="px-5"
-                                @submit.prevent
+                                @submit.prevent="register"
                             >
                                 <v-text-field
-                                    v-model="mobilePhone"
+                                    v-model="mobile"
                                     v-mask="'##########'"
                                     type="number"
                                     label="Mobile Phone"
                                     color="secondary"
                                     outlined
                                     clearable
-                                    :rules="mobilePhoneRules"
-                                    :success="mobilePhoneSuccess"
+                                    :rules="mobileRules"
+                                    :success="mobileSuccess"
                                 ></v-text-field>
 
                                 <!-- <v-text-field
@@ -134,7 +134,7 @@
                                         tile
                                         class="px-5"
                                         :disabled="disabled"
-                                        @click="step++"
+                                        :loading="loading"
                                         >register</v-btn
                                     >
                                 </v-card-actions>
@@ -154,18 +154,18 @@
                             <v-form
                                 v-model="valid"
                                 class="px-5"
-                                @submit.prevent
+                                @submit.prevent="verifyMobile"
                             >
                                 <v-text-field
-                                    v-model="mobileCode"
+                                    v-model="code"
                                     v-mask="'####'"
                                     type="number"
                                     label="Mobile Code"
                                     color="secondary"
                                     outlined
                                     clearable
-                                    :rules="mobileCodeRules"
-                                    :success="mobileCodeSuccess"
+                                    :rules="codeRules"
+                                    :success="codeSuccess"
                                 ></v-text-field>
 
                                 <v-alert v-if="serverError" type="error">{{
@@ -186,7 +186,7 @@
                                         tile
                                         class="px-5"
                                         :disabled="disabled"
-                                        @click="step++"
+                                        :loading="loading"
                                         >verify</v-btn
                                     >
                                 </v-card-actions>
@@ -233,232 +233,96 @@
 
                         <v-stepper-content step="4" class="pa-0">
                             <v-card>
-                                <v-card-title class="pt-0 justify-center">
+                                <v-card-title class="justify-center">
                                     Create a {{ mode }}
                                 </v-card-title>
 
-                                <v-divider></v-divider>
-
-                                <v-card-text class="pt-5">
-                                    <v-form>
+                                <v-form
+                                    v-model="valid"
+                                    @submit.prevent="createStore"
+                                >
+                                    <v-card-text class="pt-5">
                                         <v-row no-gutters>
-                                            <v-col cols="6" class="pr-2">
-                                                <v-select
-                                                    :items="packages"
-                                                    menu-props="offsetY"
-                                                    label="Select Package"
-                                                    color="secondary"
-                                                    item-color="secondary"
-                                                    outlined
-                                                    dense
-                                                    hide-details
-                                                ></v-select>
-                                            </v-col>
-                                            <v-col cols="6" class="pl-2">
-                                                <v-select
-                                                    :items="giftCategories"
-                                                    menu-props="offsetY"
-                                                    label="Choose Gift Category"
-                                                    color="secondary"
-                                                    item-color="secondary"
-                                                    outlined
-                                                    dense
-                                                    hide-details
-                                                ></v-select>
-                                            </v-col>
-
-                                            <v-col cols="6" class="pr-2">
+                                            <v-col cols="12">
                                                 <v-text-field
-                                                    label="Name of Shop"
+                                                    v-model="store.name"
+                                                    label="Name"
                                                     color="secondary"
-                                                    class="mt-3"
                                                     outlined
                                                     dense
                                                     clearable
-                                                    hide-details
+                                                    :rules="nameRules"
+                                                    :success="nameSuccess"
                                                 ></v-text-field>
                                             </v-col>
-                                            <v-col cols="6" class="pl-2">
+
+                                            <v-col cols="12">
                                                 <v-text-field
-                                                    label="Name of Shop (in app)"
+                                                    v-model="store.address"
+                                                    label="Address"
                                                     color="secondary"
-                                                    class="mt-3"
                                                     outlined
                                                     dense
                                                     clearable
-                                                    hide-details
+                                                    :rules="addressRules"
+                                                    :success="addressSuccess"
                                                 ></v-text-field>
                                             </v-col>
 
-                                            <v-col cols="6" class="pr-2">
-                                                <v-select
-                                                    :items="regions"
-                                                    menu-props="offsetY"
-                                                    label="Select Region"
+                                            <v-col cols="12">
+                                                <v-text-field
+                                                    v-model="store.zip"
+                                                    v-mask="'#####'"
+                                                    label="Zip Code"
                                                     color="secondary"
-                                                    item-color="secondary"
-                                                    class="mt-3"
                                                     outlined
                                                     dense
-                                                    hide-details
-                                                ></v-select>
-                                            </v-col>
-                                            <v-col cols="6" class="pl-2">
-                                                <v-form
-                                                    @submit.prevent="addRegion"
-                                                >
-                                                    <v-row no-gutters>
-                                                        <v-col cols="8">
-                                                            <v-text-field
-                                                                v-model="region"
-                                                                label="Add Region"
-                                                                color="secondary"
-                                                                class="mt-3"
-                                                                outlined
-                                                                dense
-                                                                clearable
-                                                                hide-details
-                                                                :prepend-inner-icon="
-                                                                    icons.mdiPlus
-                                                                "
-                                                            ></v-text-field>
-                                                        </v-col>
-
-                                                        <v-col
-                                                            cols="4"
-                                                            class="pl-3"
-                                                        >
-                                                            <v-btn
-                                                                type="submit"
-                                                                color="secondary"
-                                                                class="text-capitalize mt-3"
-                                                                height="40"
-                                                                depressed
-                                                                >add</v-btn
-                                                            >
-                                                        </v-col>
-                                                    </v-row>
-                                                </v-form>
+                                                    clearable
+                                                    :rules="zipRules"
+                                                    :success="zipSuccess"
+                                                ></v-text-field>
                                             </v-col>
 
-                                            <v-col cols="6" class="pr-2">
+                                            <v-col cols="12">
                                                 <v-text-field
+                                                    v-model="store.email"
                                                     type="email"
-                                                    label="Email of Shop"
+                                                    label="Email"
                                                     color="secondary"
-                                                    class="mt-3"
                                                     outlined
                                                     dense
                                                     clearable
-                                                    hide-details
-                                                ></v-text-field>
-                                            </v-col>
-                                            <v-col cols="6" class="pl-2">
-                                                <v-text-field
-                                                    type="password"
-                                                    label="Password of Shop"
-                                                    color="secondary"
-                                                    class="mt-3"
-                                                    outlined
-                                                    dense
-                                                    clearable
-                                                    hide-details
-                                                ></v-text-field>
-                                            </v-col>
-
-                                            <v-col cols="6" class="pr-2">
-                                                <v-autocomplete
-                                                    label="Address of Shop"
-                                                    color="secondary"
-                                                    item-color="secondary"
-                                                    class="mt-3"
-                                                    outlined
-                                                    dense
-                                                    clearable
-                                                    open-on-clear
-                                                    hide-details
-                                                ></v-autocomplete>
-                                            </v-col>
-                                            <v-col cols="6" class="pl-2">
-                                                <v-text-field
-                                                    label="T.K"
-                                                    color="secondary"
-                                                    class="mt-3"
-                                                    outlined
-                                                    dense
-                                                    clearable
-                                                    hide-details
-                                                ></v-text-field>
-                                            </v-col>
-
-                                            <v-col cols="6" class="pr-2">
-                                                <v-text-field
-                                                    type="number"
-                                                    label="Number of Shop"
-                                                    color="secondary"
-                                                    class="mt-3"
-                                                    outlined
-                                                    dense
-                                                    clearable
-                                                    hide-details
-                                                ></v-text-field>
-                                            </v-col>
-                                            <v-col cols="6" class="pl-2">
-                                                <v-text-field
-                                                    label="ID"
-                                                    color="secondary"
-                                                    class="mt-3"
-                                                    outlined
-                                                    dense
-                                                    clearable
-                                                    hide-details
-                                                ></v-text-field>
-                                            </v-col>
-
-                                            <v-col cols="6" class="pr-2">
-                                                <v-text-field
-                                                    type="number"
-                                                    label="Longitude(x)"
-                                                    color="secondary"
-                                                    class="mt-3"
-                                                    outlined
-                                                    dense
-                                                    clearable
-                                                    hide-details
-                                                ></v-text-field>
-                                            </v-col>
-                                            <v-col cols="6" class="pl-2">
-                                                <v-text-field
-                                                    type="number"
-                                                    label="Latitude(y)"
-                                                    color="secondary"
-                                                    class="mt-3"
-                                                    outlined
-                                                    dense
-                                                    clearable
-                                                    hide-details
+                                                    :rules="emailRules"
+                                                    :success="emailSuccess"
                                                 ></v-text-field>
                                             </v-col>
                                         </v-row>
-                                    </v-form>
-                                </v-card-text>
+                                    </v-card-text>
 
-                                <v-divider></v-divider>
+                                    <v-alert v-if="serverError" type="error">{{
+                                        serverError
+                                    }}</v-alert>
 
-                                <v-card-actions>
-                                    <v-spacer></v-spacer>
+                                    <v-divider></v-divider>
 
-                                    <v-btn text @click="shopDialog = false"
-                                        >cancel</v-btn
-                                    >
-                                    <v-btn
-                                        color="secondary"
-                                        class="px-5"
-                                        depressed
-                                    >
-                                        save
-                                    </v-btn>
-                                </v-card-actions>
+                                    <v-card-actions>
+                                        <v-spacer></v-spacer>
+
+                                        <v-btn text @click="shopDialog = false"
+                                            >cancel</v-btn
+                                        >
+                                        <v-btn
+                                            type="submit"
+                                            color="secondary"
+                                            class="px-5"
+                                            depressed
+                                            :disabled="disabled"
+                                            :loading="loading"
+                                        >
+                                            save
+                                        </v-btn>
+                                    </v-card-actions>
+                                </v-form>
                             </v-card>
                         </v-stepper-content>
                     </v-stepper-items>
@@ -504,26 +368,30 @@ export default {
             region: "",
             regions: ["Region 1", "Region 2", "Region 3"],
             step: 1,
-            mode: "",
+            mode: "Store",
             serverError: "",
             valid: false,
             disabled: true,
+            loading: false,
             showPassword: false,
             showConfirmPassword: false,
-            mobilePhone: "",
-            mobilePhoneSuccess: false,
-            mobileCode: "",
-            mobileCodeSuccess: false,
+            mobile: "",
+            mobileSuccess: false,
+            code: "",
+            codeSuccess: false,
             email: "",
             emailSuccess: false,
+            nameSuccess: false,
+            addressSuccess: false,
+            zipSuccess: false,
             password: "",
             passwordSuccess: false,
             confirmPassword: "",
             confirmPasswordSuccess: false,
-            mobilePhoneRules: [
+            mobileRules: [
                 v => {
                     if (v) {
-                        this.mobilePhoneSuccess = true;
+                        this.mobileSuccess = true;
                         return true;
                     } else {
                         return "Mobile Phone is required";
@@ -533,10 +401,10 @@ export default {
                     (v || "").length === 10 ||
                     "Mobile Phone must be 10 characters long"
             ],
-            mobileCodeRules: [
+            codeRules: [
                 v => {
                     if (v) {
-                        this.mobileCodeSuccess = true;
+                        this.codeSuccess = true;
                         return true;
                     } else {
                         return "Mobile Code is required";
@@ -545,6 +413,45 @@ export default {
                 v =>
                     (v || "").length === 4 ||
                     "Mobile Code must be 4 characters long"
+            ],
+            nameRules: [
+                v => {
+                    if (v) {
+                        this.nameSuccess = true;
+                        return true;
+                    } else {
+                        return "Name is required";
+                    }
+                },
+                v =>
+                    (v || "").length >= 5 ||
+                    "Name must be at least 5 characters long"
+            ],
+            addressRules: [
+                v => {
+                    if (v) {
+                        this.addressSuccess = true;
+                        return true;
+                    } else {
+                        return "Address is required";
+                    }
+                },
+                v =>
+                    (v || "").length >= 5 ||
+                    "Address must be at least 5 characters long"
+            ],
+            zipRules: [
+                v => {
+                    if (v) {
+                        this.zipSuccess = true;
+                        return true;
+                    } else {
+                        return "Zip Code is required";
+                    }
+                },
+                v =>
+                    (v || "").length === 5 ||
+                    "Zip Code must be 5 characters long"
             ],
             emailRules: [
                 v => {
@@ -581,32 +488,27 @@ export default {
                 },
                 v => v === this.password || "Must match password"
             ],
-            store_details: {
-                name: "Demo aaa",
-                address: "Test Address 42",
-                zip: "12345",
+            store: {
+                name: "",
+                address: "",
+                zip: "",
+                email: "",
                 lat: 35.124233,
                 lon: 11.432112,
                 vat_number: "132134120",
-                email: "email_of_store@example.com",
                 primary_phone: "2109090890",
                 store_category_id: 1,
                 parent_id: 1,
                 store_subscription_plan_id: 2,
                 country_id: 1
-            },
-            user_details: {
-                user_registration_identifier: "BZKRBK-ZZ43-6MK7WR-014020",
-                app_provider_id: 1,
-                full_name: "Bob Marsh",
-                password: "secret",
-                password_confirmation: "secret",
-                referral: "Facebook",
-                marketing: true,
-                birth_date: "1980-01-01",
-                tos: true
             }
         };
+    },
+
+    computed: {
+        user() {
+            return this.$store.state.user;
+        }
     },
 
     methods: {
@@ -614,25 +516,77 @@ export default {
 
         register() {
             this.disabled = true;
-            this.$axios
-                .post(
-                    "https://evening-headland-21583.herokuapp.com/api/users",
-                    {
-                        username: this.username,
-                        email: this.email,
-                        password: this.password
-                    }
-                )
+            this.loading = true;
+            axios
+                .post("https://api.roadcube.tk/v1/users/registration/init", {
+                    mobile: this.mobile,
+                    country_id: 1,
+                    tos: true
+                })
                 .then(res => {
-                    localStorage.setItem("token", res.headers["x-auth-token"]);
-                    this.setToken(res.headers["x-auth-token"]);
-                    this.setUser(res.data);
-                    this.$router.replace("/");
+                    this.loading = false;
+                    this.disabled = false;
+                    this.step++;
+                    this.setUser(res.data.data.user);
+                    this.code = this.user.mobile_verification_code;
                 })
                 .catch(err => {
-                    this.serverError = err.response.data;
+                    this.loading = false;
+                    this.serverError = err.response.data.message;
                     setTimeout(() => (this.serverError = ""), 5000);
                     this.disabled = false;
+                });
+        },
+
+        verifyMobile() {
+            this.disabled = true;
+            this.loading = true;
+            axios
+                .post("https://api.roadcube.tk/v1/users/mobile/verification", {
+                    user_registration_identifier: this.user
+                        .user_registration_identifier,
+                    mobile_verification_code: this.code
+                })
+                .then(res => {
+                    this.loading = false;
+                    this.step++;
+                })
+                .catch(err => {
+                    this.loading = false;
+                    this.serverError = err.response.data.message;
+                    setTimeout(() => (this.serverError = ""), 5000);
+                    this.disabled = false;
+                });
+        },
+
+        createStore() {
+            this.disabled = true;
+            this.loading = true;
+            axios
+                .post("https://api.roadcube.tk/v1/stores/", {
+                    store_details: this.store,
+                    user_details: {
+                        user_registration_identifier: this.user
+                            .user_registration_identifier,
+                        app_provider_id: 1,
+                        full_name: "Bob Marsh",
+                        password: "secret",
+                        password_confirmation: "secret",
+                        referral: "Facebook",
+                        marketing: true,
+                        birth_date: "1980-01-01",
+                        tos: true
+                    }
+                })
+                .then(res => {
+                    this.loading = false;
+                    console.log(res);
+                })
+                .catch(err => {
+                    this.loading = false;
+                    this.disabled = false;
+                    this.serverError = err.response.data.message;
+                    setTimeout(() => (this.serverError = ""), 5000);
                 });
         }
     },
@@ -646,16 +600,5 @@ export default {
             }
         }
     }
-
-    // mounted() {
-    //     axios
-    //         .post("https://api.roadcube.tk/v1/users/registration/init", {
-    //             mobile: "6988361172",
-    //             country_id: 1,
-    //             tos: true
-    //         })
-    //         .then(res => console.log(res))
-    //         .catch(err => console.error(err));
-    // }
 };
 </script>

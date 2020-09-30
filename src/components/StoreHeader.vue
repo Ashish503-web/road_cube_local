@@ -298,31 +298,31 @@ export default {
                 {
                     title: "USE",
                     children: [
-                        { icon: mdiChartBar, title: "Home", to: "/storepanel" },
+                        { icon: mdiChartBar, title: "Home", to: "/storePanel" },
                         {
                             icon: mdiPlusThick,
                             title: "New Transaction",
-                            to: "/storepanel/new-transaction"
+                            to: "/storePanel/new-transaction"
                         },
                         {
                             icon: mdiCurrencyEur,
                             title: "Transactions",
-                            to: "/storepanel/transactions"
+                            to: "/storePanel/transactions"
                         },
                         {
                             icon: mdiGift,
                             title: "Redeem",
-                            to: "/storepanel/redeem"
+                            to: "/storePanel/redeem"
                         },
                         {
                             icon: mdiDatabaseSync,
                             title: "History",
-                            to: "/storepanel/history"
+                            to: "/storePanel/history"
                         },
                         {
                             icon: mdiTrophyVariant,
                             title: "Contests",
-                            to: "/storepanel/contests"
+                            to: "/storePanel/contests"
                         }
                     ]
                 },
@@ -332,76 +332,28 @@ export default {
                         {
                             icon: mdiPackageVariantClosed,
                             title: "Products",
-                            to: "/storepanel/products"
+                            to: "/storePanel/products"
                         },
                         {
                             icon: mdiTagMultiple,
                             title: "Voucher",
-                            to: "/storepanel/voucher"
+                            to: "/storePanel/voucher"
                         },
                         {
                             icon: mdiCog,
                             title: "Settings",
-                            to: "/storepanel/settings"
+                            to: "/storePanel/settings"
                         }
                     ]
                 }
             ],
 
-            megaMenuItems: [
-                {
-                    title: "UI Components",
-                    items: [
-                        "Lightbox",
-                        "Range Slider",
-                        "Sweet Alert",
-                        "Rating",
-                        "Forms",
-                        "Tables",
-                        "Charts"
-                    ]
-                },
-                {
-                    title: "Applications",
-                    items: [
-                        "Ecommerce",
-                        "Calendar",
-                        "Email",
-                        "Projects",
-                        "Tasks",
-                        "Contacts"
-                    ]
-                },
-                {
-                    title: "Extra Pages",
-                    items: [
-                        "Light Sidebar",
-                        "Compact Sidebar",
-                        "Horizontal Layout",
-                        "Maintenance",
-                        "Coming Soon",
-                        "Timeline",
-                        "FAQs"
-                    ]
-                },
-                {
-                    title: "UI Components 2",
-                    items: [
-                        "Lightbox",
-                        "Range Slider",
-                        "Sweet Alert",
-                        "Rating",
-                        "Forms",
-                        "Tables",
-                        "Charts"
-                    ]
-                }
-            ],
             lang: {
                 img: USFlag,
                 title: "English",
                 urlTitle: "en"
             },
+
             langs: [
                 { img: USFlag, title: "English", urlTitle: "en" },
                 { img: FranceFlag, title: "French", urlTitle: "fr" },
@@ -409,38 +361,7 @@ export default {
                 { img: ChinaFlag, title: "Chinese", urlTitle: "ch" },
                 { img: ArabicFlag, title: "Arabic", urlTitle: "ar" }
             ],
-            notifications: [
-                {
-                    img: "",
-                    icon: mdiCartOutline,
-                    color: "blue",
-                    title: "Your order is placed",
-                    text: "If several languages coalesce the grammar",
-                    timestamp: "3 min ago"
-                },
-                {
-                    img: avatar3,
-                    icon: "",
-                    title: "James Lemire",
-                    text: "It will seem like simplified English.",
-                    timestamp: "1 hours ago"
-                },
-                {
-                    img: "",
-                    icon: mdiCheckDecagram,
-                    color: "green",
-                    title: "Your item is shipped",
-                    text: "If several languages coalesce the grammar",
-                    timestamp: "3 min ago"
-                },
-                {
-                    img: avatar4,
-                    icon: "",
-                    title: "Salena Layfield",
-                    text: "As a skeptical Cambridge friend of mine occidental.",
-                    timestamp: "1 hours ago"
-                }
-            ],
+
             profileLinks: [
                 { icon: mdiAccountOutline, text: "Profile" },
                 { icon: mdiWalletOutline, text: "My Wallet" },

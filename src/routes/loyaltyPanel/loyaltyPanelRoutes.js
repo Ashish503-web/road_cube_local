@@ -4,5 +4,5 @@ export default {
     component: () =>
         import(
             /* webpackChunkName: "dashboard" */ "@/views/loyaltyPanel/Dashboard.vue"
-            )
-}
+        )
+};
