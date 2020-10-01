@@ -15,7 +15,6 @@ Vue.use(VueMask);
  * mixins
  */
 import globalMixin from "./mixins/globalMixin";
-console.log(globalMixin)
 Vue.mixin(globalMixin);
 Vue.config.productionTip = false;
 
