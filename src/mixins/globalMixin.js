@@ -7,8 +7,8 @@
 import globalFunctions from "./functions/globalFunctions";
 import globalConstants from "./constants/globalConstants";
 export default {
-    data() {
+    /*data() {
         return globalConstants
-    },
+    },*/
     methods: globalFunctions,
 }

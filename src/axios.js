@@ -5,4 +5,3 @@
 
 // axios
 window.axios = require('axios');
-

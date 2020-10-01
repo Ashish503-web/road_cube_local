@@ -59,7 +59,7 @@ export default {
         }
     },
     computed: {
-        ...mapState({ examples: state => state.exampleModule.examples })
+        ...mapState({ examples: state => state.examples })
     }
 };
 </script>
