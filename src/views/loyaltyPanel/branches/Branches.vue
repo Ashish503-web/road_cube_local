@@ -52,7 +52,7 @@ export default {
     data: () => ({
         tab: 0,
         tabs: [
-            "Branches",
+            "branches",
             "Financial data",
             "Settings of Admin Panel",
             "Settings of Application",

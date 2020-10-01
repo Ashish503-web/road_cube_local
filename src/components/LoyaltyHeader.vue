@@ -319,8 +319,8 @@ export default {
                         },
                         {
                             icon: mdiSourceBranch,
-                            title: "Branches",
-                            to: "/loyaltyPanel/Branches"
+                            title: "branches",
+                            to: "/loyaltyPanel/branches"
                         },
                         {
                             icon: mdiFileDocument,
