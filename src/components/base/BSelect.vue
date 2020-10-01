@@ -1,9 +1,11 @@
 <template>
-    <v-text-field
+    <v-select
         :value="value"
         :label="label"
-        :type="type"
+        :items="items"
+        menu-props="offsetY"
         color="secondary"
+        item-color="secondary"
         outlined
         dense
         clearable
@@ -14,20 +16,21 @@
         :append-outer-icon="icons[`${appendOuterIcon}`]"
         @input="$emit('input', $event)"
         @click="$emit('click')"
-    ></v-text-field>
+    ></v-select>
 </template>
 
 <script>
-import { mdiPlus, mdiCurrencyEur } from "@mdi/js";
+import { mdiPlus } from "@mdi/js";
 
 export default {
-    name: "BTextField",
+    name: "BSelect",
+
     props: {
         value: {
             type: [String, Number]
         },
-        type: {
-            type: String
+        items: {
+            type: Array
         },
         label: {
             type: String
@@ -47,7 +50,7 @@ export default {
     },
 
     data: () => ({
-        icons: { mdiPlus, mdiCurrencyEur }
+        icons: { mdiPlus }
     })
 };
 </script>

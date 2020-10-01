@@ -1,6 +1,9 @@
 <template>
-    <v-card outlined width="500" class="mx-auto">
-        <v-card-title class="secondary white--text">
+    <v-card>
+        <v-card-title
+            class="white--text"
+            :class="type === 'delete' ? 'red' : 'secondary'"
+        >
             {{ title }}
             <v-spacer></v-spacer>
             <v-icon dark large>{{ icons[`${icon}`] }}</v-icon>
@@ -8,70 +11,67 @@
 
         <v-divider></v-divider>
 
-        <v-form>
-            <v-card-text class="pt-5">
+        <v-card-text class="pt-5">
+            <v-form @submit.prevent="$emit('submit')">
                 <slot></slot>
-            </v-card-text>
+                <button type="submit" hidden></button>
+            </v-form>
+        </v-card-text>
 
-            <v-divider></v-divider>
+        <v-divider></v-divider>
 
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn text @click="$emit('cancel')">{{ cancelText }}</v-btn>
-                <v-btn
-                    color="secondary"
-                    class="px-5"
-                    depressed
-                    @click="$emit('approve')"
-                    >{{ approveText }}</v-btn
-                >
-            </v-card-actions>
-        </v-form>
+        <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn text @click="$emit('cancel')">{{ cancelText }}</v-btn>
+            <v-btn
+                type="submit"
+                :color="type === 'delete' ? 'red' : 'secondary'"
+                class="px-5"
+                dark
+                depressed
+                @click="$emit('submit')"
+                >{{ submitText }}</v-btn
+            >
+        </v-card-actions>
     </v-card>
 </template>
 
 <script>
-import { mdiPlus, mdiPencilOutline } from "@mdi/js";
+import {
+    mdiPlus,
+    mdiPencilOutline,
+    mdiAccountTie,
+    mdiBankTransfer,
+    mdiDelete
+} from "@mdi/js";
 
 export default {
     name: "BCard",
     props: {
-        mode: {
+        type: {
             type: String,
-            default: "1"
+            default: "default"
         },
-        title: {
-            type: String
-        },
+        title: String,
+        icon: String,
         "cancel-text": {
             type: String,
             default: "cancel"
         },
-        "approve-text": {
+        "submit-text": {
             type: String,
             default: "save"
         }
     },
 
     data: () => ({
-        icons: { mdiPlus, mdiPencilOutline }
-    }),
-
-    computed: {
-        icon() {
-            let icon = "mdi";
-
-            switch (this.mode) {
-                case "1":
-                    icon += "Plus";
-                    break;
-                case "2":
-                    icon += "PencilOutline";
-                    break;
-            }
-
-            return icon;
+        icons: {
+            mdiPlus,
+            mdiPencilOutline,
+            mdiAccountTie,
+            mdiBankTransfer,
+            mdiDelete
         }
-    }
+    })
 };
 </script>

@@ -191,12 +191,8 @@
                             </v-card-title>
 
                             <v-tabs v-model="tab" color="secondary" centered>
-                                <v-tab class="text-capitalize"
-                                    >create a company</v-tab
-                                >
-                                <v-tab class="text-capitalize"
-                                    >create a store</v-tab
-                                >
+                                <v-tab class="text-capitalize">company</v-tab>
+                                <v-tab class="text-capitalize">store</v-tab>
                             </v-tabs>
 
                             <v-tabs-items v-model="tab">

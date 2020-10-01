@@ -96,21 +96,80 @@
             </v-sheet>
         </v-sheet>
 
-        <RedirectDialog />
-        <DeleteDialog />
+        <v-dialog v-model="shopDialog" max-width="600" scrollable>
+            <ShopForm
+                :mode="mode"
+                @cancel="shopDialog = false"
+                @submit="myFunc"
+            />
+        </v-dialog>
+
+        <v-dialog v-model="rightsDialog" max-width="500" scrollable>
+            <RightsForm
+                :mode="mode"
+                @cancel="rightsDialog = false"
+                @submit="myFunc"
+            />
+        </v-dialog>
+
+        <v-dialog v-model="redirectDialog" max-width="500" scrollable>
+            <b-card
+                title="Verification"
+                icon="mdiCheckCircleOutline"
+                @cancel="redirectDialog = false"
+                @submit="myFunc"
+            >
+                <p>
+                    Want to go to your substitute on the road
+                    <span class="text--primary font-italic">dieuth.</span>
+                </p>
+
+                Do you want to continue?
+            </b-card>
+        </v-dialog>
+
+        <v-dialog v-model="deleteDialog" max-width="500" scrollable>
+            <b-card
+                type="delete"
+                title="Delete Company"
+                icon="mdiDelete"
+                submit-text="delete"
+                @cancel="deleteDialog = false"
+                @submit="myFunc"
+            >
+                <p>
+                    Are you sure you want to delete
+                    <span class="font-weight-bold text--primary font-italic"
+                        >dieuth.</span
+                    >
+                </p>
+
+                <v-checkbox color="secondary" class="pt-0" hide-details>
+                    <template v-slot:label>
+                        <h4 class="subtitle-1 font-weight-bold">
+                            Do you want to totally delete Company?
+                        </h4>
+                    </template>
+                </v-checkbox>
+            </b-card>
+        </v-dialog>
     </v-tab-item>
 </template>
 
 <script>
 import { mdiPencilOutline, mdiOpenInNew, mdiClose } from "@mdi/js";
 import { mapMutations } from "vuex";
-import RedirectDialog from "@/components/loyaltyPanel/branches/RedirectDialog.vue";
-import DeleteDialog from "@/components/loyaltyPanel/branches/DeleteDialog.vue";
+import ShopForm from "@/components/loyaltyPanel/branches/ShopForm";
+import RightsForm from "@/components/loyaltyPanel/branches/RightsForm";
 import SearchField from "@/components/loyaltyPanel/SearchField";
 
 export default {
     name: "BranchesTab",
-    components: { RedirectDialog, DeleteDialog, SearchField },
+    components: {
+        ShopForm,
+        RightsForm,
+        SearchField
+    },
     data: () => ({
         icons: { mdiPencilOutline, mdiOpenInNew, mdiClose },
         searchTypes: [
@@ -180,69 +239,22 @@ export default {
                 active: "ON"
             }
         ],
-        itemsPerPageOptions: [10, 20, 30, -1]
+        itemsPerPageOptions: [10, 20, 30, -1],
+        mode: 0,
+        shopDialog: false,
+        rightsDialog: false,
+        redirectDialog: false,
+        deleteDialog: false
     }),
 
-    computed: {
-        mode: {
-            get() {
-                return this.$store.state.loyaltyPanel.branches.mode;
-            },
-
-            set(val) {
-                this.setMode(val);
-            }
-        },
-
-        shopDialog: {
-            get() {
-                return this.$store.state.loyaltyPanel.branches.addShopDialog;
-            },
-
-            set(val) {
-                this.setShopDialog(val);
-            }
-        },
-
-        rightsDialog: {
-            get() {
-                return this.$store.state.loyaltyPanel.branches.rightsDialog;
-            },
-
-            set(val) {
-                this.setRightsDialog(val);
-            }
-        },
-
-        redirectDialog: {
-            get() {
-                return this.$store.state.loyaltyPanel.branches.redirectDialog;
-            },
-
-            set(val) {
-                this.setRedirectDialog(val);
-            }
-        },
-
-        deleteDialog: {
-            get() {
-                return this.$store.state.loyaltyPanel.branches.deleteDialog;
-            },
-
-            set(val) {
-                this.setDeleteDialog(val);
-            }
-        }
-    },
+    computed: {},
 
     methods: {
-        ...mapMutations("loyaltyPanel/branches", [
-            "setMode",
-            "setShopDialog",
-            "setRightsDialog",
-            "setRedirectDialog",
-            "setDeleteDialog"
-        ])
+        ...mapMutations("loyaltyPanel/branches", []),
+
+        myFunc() {
+            alert(5);
+        }
     }
 };
 </script>

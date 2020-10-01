@@ -37,16 +37,34 @@
             class="b-outlined"
         >
         </v-data-table>
+
+        <v-dialog v-model="shopDialog" max-width="600" scrollable>
+            <ShopForm
+                :mode="mode"
+                @cancel="shopDialog = false"
+                @submit="myFunc"
+            />
+        </v-dialog>
+
+        <v-dialog v-model="rightsDialog" max-width="500" scrollable>
+            <RightsForm
+                :mode="mode"
+                @cancel="rightsDialog = false"
+                @submit="myFunc"
+            />
+        </v-dialog>
     </v-tab-item>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
+import ShopForm from "@/components/loyaltyPanel/branches/ShopForm";
+import RightsForm from "@/components/loyaltyPanel/branches/RightsForm";
 import SearchField from "@/components/loyaltyPanel/SearchField";
 
 export default {
     name: "FinancialData",
-    components: { SearchField },
+    components: { ShopForm, RightsForm, SearchField },
     data: () => ({
         searchTypes: [
             "All Fields",
@@ -96,47 +114,20 @@ export default {
                 points: "3836"
             }
         ],
-        itemsPerPageOptions: [10, 20, 30, -1]
+        itemsPerPageOptions: [10, 20, 30, -1],
+        mode: 0,
+        shopDialog: false,
+        rightsDialog: false
     }),
 
-    computed: {
-        mode: {
-            get() {
-                return this.$store.state.loyaltyPanel.branches.mode;
-            },
-
-            set(val) {
-                this.setMode(val);
-            }
-        },
-
-        shopDialog: {
-            get() {
-                return this.$store.state.loyaltyPanel.branches.addShopDialog;
-            },
-
-            set(val) {
-                this.setShopDialog(val);
-            }
-        },
-
-        rightsDialog: {
-            get() {
-                return this.$store.state.loyaltyPanel.branches.rightsDialog;
-            },
-
-            set(val) {
-                this.setRightsDialog(val);
-            }
-        }
-    },
+    computed: {},
 
     methods: {
-        ...mapMutations("loyaltyPanel/branches", [
-            "setMode",
-            "setShopDialog",
-            "setRightsDialog"
-        ])
+        ...mapMutations("loyaltyPanel/branches", []),
+
+        myFunc() {
+            alert(5);
+        }
     }
 };
 </script>

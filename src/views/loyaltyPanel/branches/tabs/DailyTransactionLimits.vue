@@ -54,18 +54,24 @@
             </template>
         </v-data-table>
 
-        <LimitsDialog />
+        <v-dialog v-model="limitsDialog" max-width="600" scrollable>
+            <LimitsForm
+                :mode="mode"
+                @cancel="limitsDialog = false"
+                @submit="myFunc"
+            />
+        </v-dialog>
     </v-tab-item>
 </template>
 
 <script>
 import { mdiMagnify } from "@mdi/js";
 import { mapMutations } from "vuex";
-import LimitsDialog from "@/components/loyaltyPanel/branches/LimitsDialog.vue";
+import LimitsForm from "@/components/loyaltyPanel/branches/LimitsForm.vue";
 
 export default {
     name: "DailyTransactionLimits",
-    components: { LimitsDialog },
+    components: { LimitsForm },
     data: () => ({
         icons: { mdiMagnify },
         headers: [
@@ -87,33 +93,17 @@ export default {
                 name: "Vasilis"
             }
         ],
-        itemsPerPageOptions: [10, 20, 30, -1]
+        itemsPerPageOptions: [10, 20, 30, -1],
+        mode: 0,
+        limitsDialog: false
     }),
 
-    computed: {
-        mode: {
-            get() {
-                return this.$store.state.loyaltyPanel.branches.mode;
-            },
-
-            set(val) {
-                this.setMode(val);
-            }
-        },
-
-        limitsDialog: {
-            get() {
-                return this.$store.state.loyaltyPanel.branches.limitsDialog;
-            },
-
-            set(val) {
-                this.setLimitsDialog(val);
-            }
-        }
-    },
-
     methods: {
-        ...mapMutations("loyaltyPanel/branches", ["setMode", "setLimitsDialog"])
+        ...mapMutations("loyaltyPanel/branches", []),
+
+        myFunc() {
+            alert(5);
+        }
     }
 };
 </script>

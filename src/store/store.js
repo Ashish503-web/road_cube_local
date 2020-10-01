@@ -7,10 +7,10 @@ import modules from "./modules";
 
 export default new Vuex.Store({
     state: {
-        storeToken: "",
-        companyToken: "",
         storeId: "",
+        storeToken: "",
         companyId: "",
+        companyToken: "",
         user: {
             user_registration_identifier: "4WMH2H-H7K2-8ZRRA8-052814",
             mobile: "",
@@ -19,20 +19,20 @@ export default new Vuex.Store({
     },
 
     mutations: {
-        setStoreToken(state, payload) {
-            state.storeToken = payload;
-        },
-
-        setCompanyToken(state, payload) {
-            state.companyToken = payload;
-        },
-
         setStoreId(state, payload) {
             state.storeId = payload;
         },
 
+        setStoreToken(state, payload) {
+            state.storeToken = payload;
+        },
+
         setCompanyId(state, payload) {
             state.companyId = payload;
+        },
+
+        setCompanyToken(state, payload) {
+            state.companyToken = payload;
         },
 
         setUser(state, payload) {

@@ -9,26 +9,27 @@
 </template>
 
 <script>
-// import axios from "axios";
+import axios from "axios";
+import { mapMutations } from "vuex";
 
 export default {
     name: "App",
 
     data: () => ({
         //
-    })
+    }),
 
-    // mounted() {
-    //     let id = localStorage.getItem("companyId");
-    //     let token = localStorage.getItem("companyAccessToken");
+    methods: {
+        ...mapMutations(["setStoreId", "setStoreToken"])
+    },
 
-    //     axios.defaults.headers.Authorization = `Bearer ${token}`;
+    mounted() {
+        let id = localStorage.getItem("storeId");
+        let token = localStorage.getItem("storeAccessToken");
 
-    //     axios
-    //         .get(`https://api.roadcube.tk/v1/companies/${id}`)
-    //         .then(res => console.log(res))
-    //         .catch(err => console.error(err.response.data));
-    // }
+        this.setStoreId(id);
+        this.setStoreToken(token);
+    }
 };
 </script>
 

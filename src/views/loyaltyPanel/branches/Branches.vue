@@ -22,9 +22,6 @@
                 <ApplicationSettings />
                 <DailyTransactionLimits />
             </v-tabs-items>
-
-            <ShopDialog />
-            <RightsDialog />
         </v-sheet>
     </v-container>
 </template>
@@ -35,8 +32,6 @@ import FinancialData from "@/views/loyaltyPanel/branches/tabs/FinancialData";
 import AdminPanelSettings from "@/views/loyaltyPanel/branches/tabs/AdminPanelSettings";
 import ApplicationSettings from "@/views/loyaltyPanel/branches/tabs/ApplicationSettings";
 import DailyTransactionLimits from "@/views/loyaltyPanel/branches/tabs/DailyTransactionLimits";
-import ShopDialog from "@/components/loyaltyPanel/branches/ShopDialog";
-import RightsDialog from "@/components/loyaltyPanel/branches/RightsDialog";
 
 export default {
     name: "Branches",
@@ -45,9 +40,7 @@ export default {
         FinancialData,
         AdminPanelSettings,
         ApplicationSettings,
-        DailyTransactionLimits,
-        ShopDialog,
-        RightsDialog
+        DailyTransactionLimits
     },
     data: () => ({
         tab: 0,

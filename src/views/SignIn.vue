@@ -12,67 +12,77 @@
                     </router-link>
                 </v-col>
 
-                <v-card-title>
-                    <v-col class="text-center">
-                        Sign In to RoadCube
-                    </v-col>
-                </v-card-title>
+                <v-tabs v-model="tab" color="secondary" centered>
+                    <v-tab class="text-capitalize">company</v-tab>
+                    <v-tab class="text-capitalize">store</v-tab>
+                </v-tabs>
 
-                <v-form v-model="valid" class="px-5" @submit.prevent="SignIn">
-                    <v-text-field
-                        v-model="email"
-                        type="email"
-                        label="Email"
-                        color="secondary"
-                        outlined
-                        clearable
-                        :rules="emailRules"
-                        :success="emailSuccess"
-                    ></v-text-field>
+                <v-card>
+                    <v-card-title class="justify-center">
+                        Sign in to a {{ mode }}
+                    </v-card-title>
 
-                    <v-text-field
-                        v-model="password"
-                        ref="password"
-                        :type="showPassword ? 'text' : 'password'"
-                        class="mt-1"
-                        label="Password"
-                        color="secondary"
-                        outlined
-                        clearable
-                        append-icon="mdi-eye"
-                        :rules="passwordRules"
-                        :success="passwordSuccess"
-                        @click:append="showPassword = !showPassword"
+                    <v-form
+                        v-model="valid"
+                        class="px-5"
+                        @submit.prevent="
+                            mode === 'Company' ? companySignIn() : storeSignIn()
+                        "
                     >
-                    </v-text-field>
-
-                    <v-alert v-if="serverError" type="error">{{
-                        serverError
-                    }}</v-alert>
-
-                    <v-card-actions class="px-0">
-                        Don't have an account?
-                        <router-link to="/register" class="blue--text mx-1"
-                            >Create one</router-link
-                        >
-                        here.
-                        <v-spacer></v-spacer>
-                        <v-btn
-                            type="submit"
+                        <v-text-field
+                            v-model="mobileLogin"
+                            v-mask="'##########'"
+                            type="number"
+                            label="Mobile Phone"
                             color="secondary"
-                            depressed
-                            tile
-                            :disabled="disabled"
-                            >sign in</v-btn
+                            outlined
+                            clearable
+                            :rules="mobileRules"
+                            :success="mobileSuccess"
+                        ></v-text-field>
+
+                        <v-text-field
+                            v-model="password"
+                            ref="password"
+                            :type="showPassword ? 'text' : 'password'"
+                            class="mt-1"
+                            label="Password"
+                            color="secondary"
+                            outlined
+                            clearable
+                            :append-icon="icons.mdiEye"
+                            :rules="passwordRules"
+                            :success="passwordSuccess"
+                            @click:append="showPassword = !showPassword"
                         >
-                    </v-card-actions>
-                </v-form>
+                        </v-text-field>
+
+                        <v-alert v-if="serverError" type="error">{{
+                            serverError
+                        }}</v-alert>
+
+                        <v-card-actions class="px-0">
+                            <v-spacer></v-spacer>
+                            <v-btn
+                                type="submit"
+                                color="secondary"
+                                tile
+                                class="px-5"
+                                :disabled="disabled"
+                                :loading="loading"
+                                >sign in</v-btn
+                            >
+                        </v-card-actions>
+                    </v-form>
+                </v-card>
             </v-card>
         </v-row>
     </v-container>
 </template>
 
 <script>
+import { mdiEye } from "@mdi/js";
+import axios from "axios";
 import { mapMutations } from "vuex";
 
 export default {
@@ -88,24 +98,28 @@ export default {
 
     data() {
         return {
-            serverError: "",
+            icons: { mdiEye },
+            tab: 0,
             valid: false,
             disabled: true,
+            loading: false,
+            mobileLogin: "",
+            mobileSuccess: false,
             showPassword: false,
-            email: "",
-            emailSuccess: false,
             password: "",
             passwordSuccess: false,
-            emailRules: [
+            mobileRules: [
                 v => {
                     if (v) {
-                        this.emailSuccess = true;
+                        this.mobileSuccess = true;
                         return true;
                     } else {
-                        return "E-mail is required";
+                        return "Mobile Phone is required";
                     }
                 },
-                v => /.+@.+/.test(v) || "E-mail must be valid"
+                v =>
+                    (v || "").length === 10 ||
+                    "Mobile Phone must be 10 characters long"
             ],
             passwordRules: [
                 v => {
@@ -118,31 +132,77 @@ export default {
                 },
                 v =>
                     (v || "").length >= 5 ||
-                    "Password must be at least 5 characters long"
-            ]
+                    "Password must be 6 characters long"
+            ],
+            serverError: ""
         };
     },
 
-    methods: {
-        ...mapMutations(["setToken", "setUser"]),
+    computed: {
+        mode() {
+            return this.tab === 0 ? "Company" : "Store";
+        }
+    },
 
-        SignIn() {
-            this.disabled = true;
-            this.$axios
-                .post("https://evening-headland-21583.herokuapp.com/api/auth", {
-                    email: this.email,
+    methods: {
+        ...mapMutations([
+            "setStoreToken",
+            "setStoreId",
+            "setCompanyToken",
+            "setCompanyId"
+        ]),
+
+        companySignIn() {
+            this.loading = true;
+
+            axios
+                .post("https://api.roadcube.tk/v1/users/login", {
+                    app_provider_id: 1,
+                    mobile: this.mobileLogin,
                     password: this.password
                 })
                 .then(res => {
-                    localStorage.setItem("token", res.headers["x-auth-token"]);
-                    this.setToken(res.headers["x-auth-token"]);
-                    this.setUser(res.data);
-                    this.$router.replace("/");
+                    this.loading = false;
+                    localStorage.setItem("companyId", 2);
+                    this.setCompanyId(2);
+                    localStorage.setItem(
+                        "companyAccessToken",
+                        res.data.access_token
+                    );
+                    this.setCompanyToken(res.data.access_token);
+                    this.$router.push("/loyaltyPanel");
                 })
                 .catch(err => {
-                    this.serverError = err.response.data;
+                    this.loading = false;
+                    this.serverError = err.response.data.message;
                     setTimeout(() => (this.serverError = ""), 5000);
-                    this.disabled = false;
+                });
+        },
+
+        storeSignIn() {
+            this.loading = true;
+
+            axios
+                .post("https://api.roadcube.tk/v1/users/login", {
+                    app_provider_id: 1,
+                    mobile: this.mobileLogin,
+                    password: this.password
+                })
+                .then(res => {
+                    this.loading = false;
+                    localStorage.setItem("storeId", 2);
+                    this.setStoreId(2);
+                    localStorage.setItem(
+                        "storeAccessToken",
+                        res.data.access_token
+                    );
+                    this.setStoreToken(res.data.access_token);
+                    this.$router.push("/storePanel");
+                })
+                .catch(err => {
+                    this.loading = false;
+                    this.serverError = err.response.data.message;
+                    setTimeout(() => (this.serverError = ""), 5000);
                 });
         }
     },

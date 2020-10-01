@@ -8,7 +8,7 @@
             <v-menu offset-y transition="slide-y-transition" bottom>
                 <template v-slot:activator="{ on }">
                     <v-btn
-                        class="text-capitalize font-weight-regular"
+                        class="text-capitalize font-weight-medium"
                         text
                         v-on="on"
                     >
@@ -102,7 +102,7 @@
             <v-menu offset-y bottom transition="slide-y-transition">
                 <template v-slot:activator="{ on }">
                     <v-btn
-                        class="text-capitalize font-weight-regular"
+                        class="text-capitalize font-weight-medium"
                         text
                         v-on="on"
                     >

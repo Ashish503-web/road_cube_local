@@ -1,11 +1,16 @@
 <template>
     <v-tab-item>
-        <v-toolbar flat height="80" class="pt-2">
+        <v-toolbar flat height="80">
             <v-btn
                 color="secondary"
                 class="text-capitalize"
                 depressed
-                @click="productDialog = true"
+                @click="
+                    () => {
+                        mode = 1;
+                        dialog = true;
+                    }
+                "
                 >add product</v-btn
             >
         </v-toolbar>
@@ -14,82 +19,193 @@
             :headers="headers"
             :items="products"
             :footer-props="{ itemsPerPageOptions }"
-            class="mt-4 coupon-table"
+            :page.sync="page"
+            :items-per-page.sync="perPage"
+            :server-items-length="serverItemsLength"
         >
             <template v-slot:item.actions="{ item }">
-                <v-tooltip top>
+                <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
                         <v-btn
                             color="yellow darken-3"
                             icon
                             v-on="on"
-                            @click="myFunc(item)"
+                            @click="
+                                () => {
+                                    product = item;
+                                    mode = 2;
+                                    dialog = true;
+                                }
+                            "
                         >
                             <v-icon v-text="icons.mdiPencilOutline"></v-icon>
                         </v-btn>
                     </template>
 
-                    <span>Update</span>
+                    <span class="font-weight-bold">Update</span>
                 </v-tooltip>
 
-                <v-tooltip top>
+                <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
-                        <v-btn color="red" icon v-on="on" @click="myFunc(item)">
+                        <v-btn
+                            color="red"
+                            icon
+                            v-on="on"
+                            @click="
+                                () => {
+                                    product = item;
+                                    deleteDialog = true;
+                                }
+                            "
+                        >
                             <v-icon v-text="icons.mdiClose"></v-icon>
                         </v-btn>
                     </template>
 
-                    <span>Delete</span>
+                    <span class="font-weight-bold">Delete</span>
                 </v-tooltip>
             </template>
         </v-data-table>
 
-        <ProductDialog />
+        <v-dialog v-model="dialog" scrollable max-width="600">
+            <ProductForm :mode="mode" @cancel="dialog = false" />
+        </v-dialog>
+
+        <v-dialog v-model="deleteDialog" scrollable max-width="600">
+            <b-card
+                type="delete"
+                title="Delete Product"
+                icon="mdiDelete"
+                submit-text="delete"
+                @cancel="deleteDialog = false"
+                @submit="
+                    deleteProduct({
+                        storeId,
+                        token: storeToken,
+                        productId: product.product_id
+                    })
+                "
+            >
+                <p>
+                    Are you sure you want to delete
+                    <span class="font-weight-bold text--primary font-italic">{{
+                        product.name
+                    }}</span>
+                </p>
+            </b-card>
+        </v-dialog>
     </v-tab-item>
 </template>
 
 <script>
+import axios from "axios";
 import { mdiPencilOutline, mdiClose } from "@mdi/js";
-import { mapMutations } from "vuex";
-import ProductDialog from "@/components/storePanel/products/ProductDialog.vue";
+import { mapState, mapMutations, mapActions } from "vuex";
+import ProductForm from "@/components/storePanel/products/ProductForm.vue";
 
 export default {
     name: "ProductsTab",
-    components: { ProductDialog },
-    data: () => ({
-        icons: { mdiPencilOutline, mdiClose },
-        headers: [
-            { text: "Product Name", value: "name" },
-            { text: "Product Description", value: "description" },
-            { text: "Selling Price", value: "price" },
-            { text: "Coupon", value: "coupon" },
-            { text: "Actions", value: "actions" }
-        ],
-        products: [
-            {
-                name: "test lefko",
-                description: "test lefko",
-                price: "0.01€",
-                coupon: "-10%"
-            }
-        ],
-        itemsPerPageOptions: [10, 20, 30, -1]
-    }),
+    components: { ProductForm },
+    data() {
+        return {
+            icons: { mdiPencilOutline, mdiClose },
+            headers: [
+                { text: "Product Name", value: "name" },
+                { text: "Product Description", value: "description" },
+                { text: "Selling Price", value: "price" },
+                { text: "Coupon", value: "coupon" },
+                { text: "Actions", value: "actions" }
+            ],
+            itemsPerPageOptions: [10, 20, 30, -1],
+            page: +this.$route.query.page,
+            perPage: +this.$route.query.perPage,
+            mode: 0,
+            dialog: false,
+            deleteDialog: false
+        };
+    },
 
     computed: {
-        productDialog: {
+        ...mapState(["storeId", "storeToken"]),
+
+        products() {
+            return this.$store.state.storePanel.products.products;
+        },
+
+        serverItemsLength() {
+            return this.$store.state.storePanel.products.serverItemsLength;
+        },
+
+        product: {
             get() {
-                return this.$store.state.storePanel.products.productDialog;
+                return this.$store.state.storePanel.products.product;
             },
 
             set(val) {
-                this.setProductDialog(val);
+                this.setProduct(val);
             }
+        },
+
+        query() {
+            let query = "?";
+
+            for (let key in this.$route.query) {
+                query += `${key}=${this.$route.query[key]}&`;
+            }
+
+            return query.slice(0, query.length - 1);
         }
     },
 
     methods: {
-        ...mapMutations("storePanel/products", ["setProductDialog"])
+        ...mapMutations("storePanel/products", ["setProduct"]),
+        ...mapActions("storePanel/products", ["getProducts", "deleteProduct"])
+    },
+
+    watch: {
+        $route() {
+            this.getProducts({
+                storeId: this.storeId,
+                token: this.storeToken,
+                query: this.query
+            });
+        },
+
+        page(page) {
+            this.$router.push({ query: { ...this.$route.query, page } });
+        },
+
+        perPage(perPage) {
+            this.$router.push({ query: { ...this.$route.query, perPage } });
+        }
+    },
+
+    beforeCreate() {
+        if (!this.$route.query.perPage) {
+            this.$router.push({
+                query: {
+                    perPage: 10,
+                    ...this.$route.query
+                }
+            });
+        }
+
+        if (!this.$route.query.page) {
+            this.$router.push({
+                query: {
+                    page: 1,
+                    ...this.$route.query
+                }
+            });
+        }
+    },
+
+    mounted() {
+        this.getProducts({
+            storeId: this.storeId,
+            token: this.storeToken,
+            query: this.query
+        });
     }
 };
 </script>
