@@ -10,7 +10,6 @@ import VueMask from "v-mask";
 require("./axios");
 Vue.use(VueMask);
 
-
 /**
  * mixins
  */

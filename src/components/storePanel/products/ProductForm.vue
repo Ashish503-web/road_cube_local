@@ -2,20 +2,10 @@
     <b-card
         :title="title"
         :icon="icon"
+        :loading="loading"
+        :error-message="errorMessage"
         @cancel="$emit('cancel')"
-        @submit="
-            mode === 1
-                ? createProduct({
-                      storeId,
-                      token: storeToken,
-                      product
-                  })
-                : updateProduct({
-                      storeId,
-                      token: storeToken,
-                      product
-                  })
-        "
+        @submit="mode === 1 ? createProduct(product) : updateProduct(product)"
     >
         <h3 class="secondary--text">
             Chooce how your product will be displayed:
@@ -264,7 +254,7 @@ export default {
     }),
 
     computed: {
-        ...mapState(["storeId", "storeToken"]),
+        ...mapState("storePanel/products", ["loading", "errorMessage"]),
 
         title() {
             return this.mode === 1

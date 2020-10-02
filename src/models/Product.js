@@ -12,8 +12,6 @@ export default class Product {
         this.shipping_cost = product.shipping_cost || null;
         this.delivery_cost = product.delivery_cost || null;
         this.product_category_id = product.product_category_id || null;
-        this.image = product.image || "";
-        this.imageFile = product.imageFile || null;
     }
 
     static get = (token, storeId, query) => {
@@ -29,13 +27,13 @@ export default class Product {
     static put = (token, storeId, product) => {
         axios.defaults.headers.Authorization = `Bearer ${token}`;
         return axios.put(
-            `${ApiEndpoint}${storeId}/products${product.product_id}`,
+            `${ApiEndpoint}${storeId}/products/${product.product_id}`,
             product
         );
     };
 
     static delete = (token, storeId, productId) => {
         axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.delete(`${ApiEndpoint}${storeId}/products${productId}`);
+        return axios.delete(`${ApiEndpoint}${storeId}/products/${productId}`);
     };
 }

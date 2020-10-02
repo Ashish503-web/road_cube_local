@@ -20,15 +20,24 @@ export default {
     }),
 
     methods: {
-        ...mapMutations(["setStoreId", "setStoreToken"])
+        ...mapMutations([
+            "setStoreId",
+            "setStoreToken",
+            "setCompanyId",
+            "setCompanyToken"
+        ])
     },
 
     mounted() {
-        let id = localStorage.getItem("storeId");
-        let token = localStorage.getItem("storeAccessToken");
+        let storeId = localStorage.getItem("storeId");
+        let storeToken = localStorage.getItem("storeAccessToken");
+        let companyId = localStorage.getItem("companyId");
+        let companyToken = localStorage.getItem("companyAccessToken");
 
-        this.setStoreId(id);
-        this.setStoreToken(token);
+        this.setStoreId(storeId);
+        this.setStoreToken(storeToken);
+        this.setCompanyId(companyId);
+        this.setCompanyToken(companyToken);
     }
 };
 </script>

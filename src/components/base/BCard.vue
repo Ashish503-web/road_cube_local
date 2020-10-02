@@ -12,11 +12,13 @@
         <v-divider></v-divider>
 
         <v-card-text class="pt-5">
-            <v-form @submit.prevent="$emit('submit')">
+            <v-form v-model="valid" @submit.prevent="$emit('submit')">
                 <slot></slot>
                 <button type="submit" hidden></button>
             </v-form>
         </v-card-text>
+
+        <v-alert v-if="errorMessage" type="error">{{ errorMessage }}</v-alert>
 
         <v-divider></v-divider>
 
@@ -29,6 +31,7 @@
                 class="px-5"
                 dark
                 depressed
+                :loading="loading"
                 @click="$emit('submit')"
                 >{{ submitText }}</v-btn
             >
@@ -54,14 +57,16 @@ export default {
         },
         title: String,
         icon: String,
-        "cancel-text": {
+        cancelText: {
             type: String,
             default: "cancel"
         },
-        "submit-text": {
+        submitText: {
             type: String,
             default: "save"
-        }
+        },
+        loading: Boolean,
+        errorMessage: String
     },
 
     data: () => ({
@@ -71,7 +76,19 @@ export default {
             mdiAccountTie,
             mdiBankTransfer,
             mdiDelete
+        },
+        valid: false,
+        disabled: true
+    }),
+
+    watch: {
+        valid(val) {
+            if (val) {
+                this.disabled = false;
+            } else {
+                this.disabled = true;
+            }
         }
-    })
+    }
 };
 </script>

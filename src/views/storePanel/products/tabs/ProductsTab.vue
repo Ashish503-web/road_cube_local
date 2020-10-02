@@ -7,6 +7,7 @@
                 depressed
                 @click="
                     () => {
+                        product = {};
                         mode = 1;
                         dialog = true;
                     }
@@ -77,20 +78,17 @@
                 title="Delete Product"
                 icon="mdiDelete"
                 submit-text="delete"
+                :loading="loading"
+                :error-message="errorMessage"
                 @cancel="deleteDialog = false"
-                @submit="
-                    deleteProduct({
-                        storeId,
-                        token: storeToken,
-                        productId: product.product_id
-                    })
-                "
+                @submit="deleteProduct(product.product_id)"
             >
                 <p>
                     Are you sure you want to delete
-                    <span class="font-weight-bold text--primary font-italic">{{
+                    <span class="font-weight-bold text--primary">{{
                         product.name
-                    }}</span>
+                    }}</span
+                    >?
                 </p>
             </b-card>
         </v-dialog>
@@ -112,28 +110,43 @@ export default {
             headers: [
                 { text: "Product Name", value: "name" },
                 { text: "Product Description", value: "description" },
-                { text: "Selling Price", value: "price" },
+                { text: "Selling Price", value: "retail_price" },
                 { text: "Coupon", value: "coupon" },
                 { text: "Actions", value: "actions" }
             ],
             itemsPerPageOptions: [10, 20, 30, -1],
             page: +this.$route.query.page,
             perPage: +this.$route.query.perPage,
-            mode: 0,
-            dialog: false,
-            deleteDialog: false
+            mode: 0
         };
     },
 
     computed: {
-        ...mapState(["storeId", "storeToken"]),
+        ...mapState("storePanel/products", [
+            "loading",
+            "errorMessage",
+            "products",
+            "serverItemsLength"
+        ]),
 
-        products() {
-            return this.$store.state.storePanel.products.products;
+        dialog: {
+            get() {
+                return this.$store.state.storePanel.products.dialog;
+            },
+
+            set(val) {
+                this.setDialog(val);
+            }
         },
 
-        serverItemsLength() {
-            return this.$store.state.storePanel.products.serverItemsLength;
+        deleteDialog: {
+            get() {
+                return this.$store.state.storePanel.products.deleteDialog;
+            },
+
+            set(val) {
+                this.setDeleteDialog(val);
+            }
         },
 
         product: {
@@ -158,7 +171,11 @@ export default {
     },
 
     methods: {
-        ...mapMutations("storePanel/products", ["setProduct"]),
+        ...mapMutations("storePanel/products", [
+            "setDialog",
+            "setDeleteDialog",
+            "setProduct"
+        ]),
         ...mapActions("storePanel/products", ["getProducts", "deleteProduct"])
     },
 
@@ -201,11 +218,7 @@ export default {
     },
 
     mounted() {
-        this.getProducts({
-            storeId: this.storeId,
-            token: this.storeToken,
-            query: this.query
-        });
+        this.getProducts(this.query);
     }
 };
 </script>
