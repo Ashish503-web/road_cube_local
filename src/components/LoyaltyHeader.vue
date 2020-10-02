@@ -1,7 +1,8 @@
 <template>
     <header>
         <v-app-bar app flat color="white">
-            <v-app-bar-nav-icon @click.stop="mini = !mini"></v-app-bar-nav-icon>
+<!--            <v-app-bar-nav-icon @click.stop="mini = !mini"></v-app-bar-nav-icon>-->
+            <v-app-bar-nav-icon @click.stop="$vuetify.breakpoint.mdAndUp ? (mini=!mini) : (leftDrawer=!leftDrawer)"></v-app-bar-nav-icon>
 
             <v-spacer></v-spacer>
 
@@ -146,7 +147,7 @@
                 </v-list>
             </v-menu>
 
-            <v-btn text icon @click.stop="drawer = !drawer">
+            <v-btn text icon @click.stop="rightDrawer = !rightDrawer">
                 <v-icon v-text="icons.mdiCogOutline"></v-icon>
             </v-btn>
         </v-app-bar>
@@ -154,9 +155,12 @@
         <v-navigation-drawer
             app
             color="secondary"
+            v-model="leftDrawer"
             :mini-variant="mini"
-            mini-variant-width="80"
-            permanent
+            :mini-variant-width="80"
+            :temporary="$vuetify.breakpoint.smAndDown"
+            absolute
+            :permanent="$vuetify.breakpoint.mdAndUp"
             dark
         >
             <router-link to="/" class="d-block pa-3 home-link">
@@ -228,11 +232,11 @@
             </v-container>
         </v-navigation-drawer>
 
-        <v-navigation-drawer v-model="drawer" app right temporary>
+        <v-navigation-drawer v-model="rightDrawer" app right temporary>
             <v-toolbar flat>
                 <v-toolbar-title>Settings</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-btn icon @click.stop="drawer = !drawer">
+                <v-btn icon @click.stop="rightDrawer = !rightDrawer">
                     <v-icon>{{ icons.mdiClose }}</v-icon>
                 </v-btn>
             </v-toolbar>
@@ -302,7 +306,8 @@ export default {
                 mdiClose
             },
             mini: false,
-            drawer: false,
+            leftDrawer:false,
+            rightDrawer: false,
             navLinks: [
                 {
                     title: "MANAGE",
@@ -543,11 +548,29 @@ export default {
         };
     },
 
+
+    // beforeDestroy () {
+    //     if (typeof window === 'undefined') return
+    //
+    //     window.removeEventListener('resize', this.onResize, { passive: true })
+    // },
+    //
+    // mounted () {
+    //     this.onResize()
+    //
+    //     window.addEventListener('resize', this.onResize, { passive: true })
+    // },
+    //
+    // methods: {
+    //     onResize () {
+    //         this.isMobile = window.innerWidth < 600
+    //     },
+    // },
     computed: {
         containerHeight() {
-            return this.mini ? "calc(100vh - 213px)" : "calc(100vh - 203px)";
+            return this.mini ? "calc(100vh - 223px)" : "calc(100vh - 213px)";
         }
-    }
+    },
 };
 </script>
 

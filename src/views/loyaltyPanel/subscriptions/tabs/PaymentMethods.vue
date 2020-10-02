@@ -26,7 +26,7 @@
                 </v-col>
             </v-row>
             <v-row class="mb-6 " no-gutters>
-                <v-col cols="2" class="border_top_payment">
+                <v-col cols="12" lg="2" md="3" sm="6" class="border_top_payment">
                     <v-card
                         class="pa-2 grey lighten-5 text-center"
                         outlined
