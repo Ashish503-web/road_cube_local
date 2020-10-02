@@ -1,7 +1,7 @@
 <template>
     <header>
         <v-app-bar app flat color="white">
-            <v-app-bar-nav-icon @click="mini = !mini"></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon @click="$vuetify.breakpoint.mdAndUp ? (mini=!mini) : (drawer=!drawer)"></v-app-bar-nav-icon>
 
             <v-spacer></v-spacer>
 
@@ -163,9 +163,11 @@
         <v-navigation-drawer
             app
             color="secondary"
+            v-model="drawer"
             :mini-variant="mini"
             mini-variant-width="80"
-            permanent
+            :temporary="$vuetify.breakpoint.smAndDown"
+            :permanent="$vuetify.breakpoint.mdAndUp"
             dark
         >
             <router-link to="/" class="d-block pa-3 home-link">
@@ -294,6 +296,7 @@ export default {
                 mdiCogOutline
             },
             mini: false,
+            drawer: false,
             navLinks: [
                 {
                     title: "USE",
@@ -373,7 +376,7 @@ export default {
 
     computed: {
         containerHeight() {
-            return this.mini ? "calc(100vh - 192px)" : "calc(100vh - 184px)";
+            return this.mini ? "calc(100vh - 202px)" : "calc(100vh - 184px)";
         }
     }
 };
