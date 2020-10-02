@@ -27,18 +27,7 @@ export default {
             mdiMenuUp,
             mdiMenuDown
         },
-        tab: 0,
-        productDialog: false,
-        product: {
-            display: "",
-            discountAmount: 0,
-            image: "",
-            imageFile: ""
-        },
-        discountType: "Percentage",
-        discountTypes: ["Percentage", "Euro"],
-        selectedWeekdays: [],
-        productGroupDialog: false
+        tab: 0
     })
 };
 </script>

@@ -1,56 +1,27 @@
 <template>
     <b-card
         :title="title"
-        :icon="icon"
         :loading="loading"
         :error-message="errorMessage"
         @cancel="$emit('cancel')"
-        @submit="mode === 1 ? createProduct(product) : updateProduct(product)"
+        @submit="
+            mode === 1
+                ? createProduct({ product, image: imageFile })
+                : updateProduct({ product, image: imageFile })
+        "
     >
-        <h3 class="secondary--text">
-            Chooce how your product will be displayed:
-        </h3>
-        <v-radio-group v-model="product.published">
-            <v-row no-gutters>
-                <v-col cols="6">
-                    <v-radio color="secondary" :value="true">
-                        <template v-slot:label>
-                            <h4 class="secondary--text">
-                                The product and it's price will be visible to
-                                the public
-                            </h4>
-                        </template>
-                    </v-radio>
-                </v-col>
-                <v-col cols="6">
-                    <v-radio color="secondary" :value="false">
-                        <template v-slot:label>
-                            <h4 class="secondary--text">
-                                The product will be hidden (it will not be
-                                visible to the public)
-                            </h4>
-                        </template>
-                    </v-radio>
-                </v-col>
-            </v-row>
-        </v-radio-group>
-
         <b-text-field
             v-model="product.name"
             label="Product Name"
+            no-top-margin
         ></b-text-field>
 
-        <v-textarea
+        <b-textarea
             v-model="product.description"
             label="Product Description"
-            color="secondary"
-            class="mt-3"
-            outlined
-            clearable
-            hide-details
-        ></v-textarea>
+        ></b-textarea>
 
-        <div class="b-dashed mt-3 pa-5 rounded-sm">
+        <div class="b-border mt-3 pa-5 pt-2 rounded-sm">
             <b-text-field
                 v-model="product.retail_price"
                 type="number"
@@ -62,12 +33,11 @@
                 v-model="product.wholesale_price"
                 type="number"
                 label="Wholesale Price"
-                class="mt-3"
                 append-outer-icon="mdiCurrencyEur"
             ></b-text-field>
         </div>
 
-        <div class="b-dashed mt-3 pa-5 rounded-sm">
+        <div class="b-border mt-3 pa-5 pt-2 rounded-sm">
             <b-text-field
                 v-model="product.delivery_cost"
                 type="number"
@@ -79,7 +49,6 @@
                 v-model="product.shipping_cost"
                 type="number"
                 label="Shipping Cost"
-                class="mt-3"
                 append-outer-icon="mdiCurrencyEur"
             ></b-text-field>
         </div>
@@ -143,35 +112,6 @@
                 </v-row>
             </v-sheet> -->
 
-        <!-- <v-checkbox v-model="showImageUpload" color="secondary">
-                <template v-slot:label>
-                    <h4 class="secondary--text">
-                        I want the product to be displayed with an image in the
-                        application
-                    </h4>
-                </template>
-            </v-checkbox>
-
-            <v-card v-if="showImageUpload" outlined>
-                <v-card-title class="subtitle-1 font-weight-medium">
-                    Product Image (optional)
-                </v-card-title>
-                <v-row no-gutters justify="space-between" class="pa-5">
-                    <v-col cols="6">
-                        <v-img :src="product.image"></v-img>
-                    </v-col>
-                    <v-col cols="5" class="mr-3">
-                        <v-file-input
-                            color="secondary"
-                            outlined
-                            dense
-                            hide-details
-                            @change="onFileSelected($event)"
-                        ></v-file-input>
-                    </v-col>
-                </v-row>
-            </v-card> -->
-
         <!-- <v-checkbox v-model="showDisplayDays" color="secondary">
                     <template v-slot:label>
                         <h4 class="secondary--text">
@@ -206,51 +146,73 @@
                     </v-container>
                 </v-card> -->
 
-        <v-checkbox v-model="showCategories" color="secondary">
+        <b-select
+            v-model="product.product_category_id"
+            :items="categories"
+            label="Select Category"
+        ></b-select>
+
+        <v-checkbox
+            v-model="showImageUpload"
+            color="secondary"
+            class="pt-0 mt-3"
+            hide-details="auto"
+        >
             <template v-slot:label>
                 <h4 class="secondary--text">
-                    I want my product to be part of a category
+                    I want the product to be displayed with an image in the
+                    application
                 </h4>
             </template>
         </v-checkbox>
 
-        <b-select
-            v-if="showCategories"
-            v-model="product.product_category_id"
-            :items="categories"
-            label="Select Category"
-            class="mt-1"
-        ></b-select>
+        <v-card v-if="showImageUpload" outlined class="mt-3">
+            <v-card-title class="subtitle-1 font-weight-medium">
+                Product Image (optional)
+            </v-card-title>
+            <v-row no-gutters justify="space-between" class="pa-5">
+                <v-col cols="6">
+                    <v-img :src="product.image"></v-img>
+                </v-col>
+                <v-col cols="5" class="mr-3">
+                    <v-file-input
+                        color="secondary"
+                        outlined
+                        dense
+                        hide-details
+                        @change="onFileSelected"
+                    ></v-file-input>
+                </v-col>
+            </v-row>
+        </v-card>
+
+        <v-checkbox
+            v-model="product.published"
+            color="secondary"
+            class="pt-0 mt-3"
+            hide-details="auto"
+        >
+            <template v-slot:label>
+                <h4 class="secondary--text">
+                    Published : {{ product.published }}
+                </h4>
+            </template>
+        </v-checkbox>
     </b-card>
 </template>
 
 <script>
-import { mdiPercent, mdiCurrencyEur, mdiMenuUp, mdiMenuDown } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
-    name: "ProductsTabDialog",
+    name: "Product",
     props: {
         mode: Number
     },
     data: () => ({
-        icons: { mdiPercent, mdiCurrencyEur, mdiMenuUp, mdiMenuDown },
-        discountType: "Percentage",
-        discountTypes: ["Percentage", "Euro"],
-        showImageUpload: false,
-        showDisplayDays: false,
-        showCategories: false,
         categories: [{ text: "category", value: 1 }],
-        weekdays: [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday"
-        ],
-        selectedWeekdays: []
+        showImageUpload: false,
+        imageFile: null
     }),
 
     computed: {
@@ -260,10 +222,6 @@ export default {
             return this.mode === 1
                 ? "New Product or Service"
                 : "Update Product or Service";
-        },
-
-        icon() {
-            return this.mode === 1 ? "mdiPlus" : "mdiPencilOutline";
         },
 
         product: {
@@ -285,17 +243,19 @@ export default {
         ]),
 
         onFileSelected(event) {
-            this.product.imageFile = event;
-            const reader = new FileReader();
-            reader.readAsDataURL(this.product.imageFile);
-            reader.onload = e => (this.product.image = e.target.result);
+            if (event) {
+                this.imageFile = event;
+                const reader = new FileReader();
+                reader.readAsDataURL(this.imageFile);
+                reader.onload = e => (this.product.image = e.target.result);
+            }
         }
     }
 };
 </script>
 
 <style scoped>
-.b-dashed {
-    border: 1px dashed black;
+.b-border {
+    border: 1px solid rgba(0, 0, 0, 0.4);
 }
 </style>

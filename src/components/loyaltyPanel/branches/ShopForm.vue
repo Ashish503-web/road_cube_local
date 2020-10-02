@@ -79,17 +79,10 @@
             </v-col>
 
             <v-col cols="6" class="pr-2">
-                <v-autocomplete
+                <b-autocomplete
                     label="Address of Shop"
-                    color="secondary"
-                    item-color="secondary"
                     class="mt-3"
-                    outlined
-                    dense
-                    clearable
-                    open-on-clear
-                    hide-details
-                ></v-autocomplete>
+                ></b-autocomplete>
             </v-col>
 
             <v-col cols="6" class="pl-2">

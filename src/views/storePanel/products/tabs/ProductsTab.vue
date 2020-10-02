@@ -96,7 +96,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import { mdiPencilOutline, mdiClose } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import ProductForm from "@/components/storePanel/products/ProductForm.vue";
@@ -181,11 +180,7 @@ export default {
 
     watch: {
         $route() {
-            this.getProducts({
-                storeId: this.storeId,
-                token: this.storeToken,
-                query: this.query
-            });
+            this.getProducts(this.query);
         },
 
         page(page) {

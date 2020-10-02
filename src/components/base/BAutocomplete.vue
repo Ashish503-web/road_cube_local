@@ -1,5 +1,5 @@
 <template>
-    <v-select
+    <v-autocomplete
         :value="value"
         :label="label"
         :items="items"
@@ -10,6 +10,7 @@
         outlined
         dense
         clearable
+        open-on-clear
         hide-details="auto"
         :prepend-icon="icons[`${prependIcon}`]"
         :prepend-inner-icon="icons[`${prependInnerIcon}`]"
@@ -17,14 +18,14 @@
         :append-outer-icon="icons[`${appendOuterIcon}`]"
         @input="$emit('input', $event)"
         @click="$emit('click')"
-    ></v-select>
+    ></v-autocomplete>
 </template>
 
 <script>
 import { mdiPlus } from "@mdi/js";
 
 export default {
-    name: "BSelect",
+    name: "BAutocomplete",
 
     props: {
         value: {

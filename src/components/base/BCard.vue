@@ -6,7 +6,9 @@
         >
             {{ title }}
             <v-spacer></v-spacer>
-            <v-icon dark large>{{ icons[`${icon}`] }}</v-icon>
+            <v-btn icon dark @click="$emit('cancel')">
+                <v-icon size="28" dark v-text="icons.mdiClose"></v-icon>
+            </v-btn>
         </v-card-title>
 
         <v-divider></v-divider>
@@ -40,13 +42,7 @@
 </template>
 
 <script>
-import {
-    mdiPlus,
-    mdiPencilOutline,
-    mdiAccountTie,
-    mdiBankTransfer,
-    mdiDelete
-} from "@mdi/js";
+import { mdiClose } from "@mdi/js";
 
 export default {
     name: "BCard",
@@ -56,7 +52,6 @@ export default {
             default: "default"
         },
         title: String,
-        icon: String,
         cancelText: {
             type: String,
             default: "cancel"
@@ -71,11 +66,7 @@ export default {
 
     data: () => ({
         icons: {
-            mdiPlus,
-            mdiPencilOutline,
-            mdiAccountTie,
-            mdiBankTransfer,
-            mdiDelete
+            mdiClose
         },
         valid: false,
         disabled: true

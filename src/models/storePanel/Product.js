@@ -12,11 +12,12 @@ export default class Product {
         this.shipping_cost = product.shipping_cost || null;
         this.delivery_cost = product.delivery_cost || null;
         this.product_category_id = product.product_category_id || null;
+        this.image = product.image || "";
     }
 
     static get = (token, storeId, query) => {
         axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.get(`${ApiEndpoint}${storeId}/products`);
+        return axios.get(`${ApiEndpoint}${storeId}/products${query}`);
     };
 
     static post = (token, storeId, product) => {
@@ -35,5 +36,13 @@ export default class Product {
     static delete = (token, storeId, productId) => {
         axios.defaults.headers.Authorization = `Bearer ${token}`;
         return axios.delete(`${ApiEndpoint}${storeId}/products/${productId}`);
+    };
+
+    static uploadImage = (token, storeId, productId, image) => {
+        axios.defaults.headers.Authorization = `Bearer ${token}`;
+        return axios.post(
+            `${ApiEndpoint}${storeId}/products/${productId}/images`,
+            image
+        );
     };
 }

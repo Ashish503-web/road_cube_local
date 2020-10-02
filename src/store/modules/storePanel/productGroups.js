@@ -1,4 +1,4 @@
-import Product from "@/models/storePanel/Product";
+import ProductGroup from "@/models/storePanel/ProductGroup";
 
 export default {
     namespaced: true,
@@ -9,8 +9,8 @@ export default {
         loading: false,
         errorMessage: "",
         serverItemsLength: 0,
-        products: [],
-        product: new Product()
+        productGroups: [],
+        productGroup: new ProductGroup()
     },
 
     mutations: {
@@ -34,70 +34,73 @@ export default {
             state.serverItemsLength = payload;
         },
 
-        setProducts(state, payload) {
-            state.products = payload;
+        setProductGroups(state, payload) {
+            state.productGroups = payload;
         },
 
-        setProduct(state, payload) {
-            state.product = new Product(payload);
+        setProductGroup(state, payload) {
+            state.productGroup = new ProductGroup(payload);
         },
 
-        addProduct(state, payload) {
-            state.products.unshift(payload);
+        addProductGroup(state, payload) {
+            state.productGroups.unshift(payload);
         },
 
-        updateProduct(state, payload) {
-            let index = state.products.findIndex(
+        updateProductGroup(state, payload) {
+            let index = state.productGroups.findIndex(
                 p => p.product_id === payload.product_id
             );
-            state.products.splice(index, 1, payload);
+            state.productGroups.splice(index, 1, payload);
         },
 
-        deleteProduct(state, id) {
-            state.products = state.products.filter(p => p.product_id !== id);
+        deleteProductGroup(state, id) {
+            state.productGroups = state.productGroups.filter(
+                p => p.product_id !== id
+            );
         }
     },
 
     actions: {
-        async getProducts({ commit, rootState }, query) {
+        async getProductGroups({ commit, rootState }, query) {
             try {
-                const { data } = await Product.get(
+                const { data } = await ProductGroup.get(
                     rootState.storeToken,
                     rootState.storeId,
                     query
                 );
-                const { products, pagination } = data.data;
 
-                commit("setProducts", products);
+                const { group_products, pagination } = data.data;
+
+                commit("setProductGroups", group_products);
                 commit("setServerItemsLength", pagination.total);
             } catch (ex) {
                 console.error(ex.response.data);
             }
         },
 
-        async createProduct(
+        async createProductGroup(
             { dispatch, commit, rootState },
-            { product, image }
+            { productGroup, image }
         ) {
-            delete product.product_id;
-            delete product.image;
+            delete productGroup.product_id;
+            delete productGroup.image;
             commit("setLoading", true);
 
             try {
-                const { data } = await Product.post(
+                const { data } = await ProductGroup.post(
                     rootState.storeToken,
                     rootState.storeId,
-                    product
+                    productGroup
                 );
 
                 if (image) {
                     dispatch("uploadImage", {
-                        product: data.data.product,
+                        productGroup: data.data.group_product,
                         image,
                         mode: 1
                     });
                 } else {
-                    commit("addProduct", data.data.product);
+                    commit("addProductGroup", data.data.group_product);
                     commit("setLoading", false);
                     commit("setDialog", false);
                 }
@@ -108,28 +111,28 @@ export default {
             }
         },
 
-        async updateProduct(
+        async updateProductGroup(
             { dispatch, commit, rootState },
-            { product, image }
+            { productGroup, image }
         ) {
-            delete product.image;
+            delete productGroup.image;
             commit("setLoading", true);
 
             try {
-                const { data } = await Product.put(
+                const { data } = await ProductGroup.put(
                     rootState.storeToken,
                     rootState.storeId,
-                    product
+                    productGroup
                 );
 
                 if (image) {
                     dispatch("uploadImage", {
-                        product: data.data.product,
+                        productGroup: data.data.group_product,
                         image,
                         mode: 2
                     });
                 } else {
-                    commit("updateProduct", data.data.product);
+                    commit("updateProductGroup", data.data.group_product);
                     commit("setLoading", false);
                     commit("setDialog", false);
                 }
@@ -140,18 +143,18 @@ export default {
             }
         },
 
-        async deleteProduct({ commit, rootState }, id) {
+        async deleteProductGroup({ commit, rootState }, id) {
             commit("setLoading", true);
 
             try {
-                await Product.delete(
+                await ProductGroup.delete(
                     rootState.storeToken,
                     rootState.storeId,
                     id
                 );
                 commit("setLoading", false);
                 commit("setDeleteDialog", false);
-                commit("deleteProduct", id);
+                commit("deleteProductGroup", id);
             } catch (ex) {
                 commit("setLoading", false);
                 commit("setErrorMessage", ex.response.data.message);
@@ -159,22 +162,25 @@ export default {
             }
         },
 
-        async uploadImage({ commit, rootState }, { product, image, mode }) {
+        async uploadImage(
+            { commit, rootState },
+            { productGroup, image, mode }
+        ) {
             try {
                 const fd = new FormData();
                 fd.append("image", image);
 
-                const { data } = await Product.uploadImage(
+                const { data } = await ProductGroup.uploadImage(
                     rootState.storeToken,
                     rootState.storeId,
-                    product.product_id,
+                    productGroup.product_id,
                     fd
                 );
 
-                product.image = data.data.image;
+                productGroup.image = data.data.image;
 
-                if (mode === 1) commit("addProduct", product);
-                else commit("updateProduct", product);
+                if (mode === 1) commit("addProductGroup", productGroup);
+                else commit("updateProductGroup", productGroup);
                 commit("setLoading", false);
                 commit("setDialog", false);
             } catch (ex) {

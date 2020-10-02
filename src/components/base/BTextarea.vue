@@ -1,12 +1,9 @@
 <template>
-    <v-select
+    <v-textarea
         :value="value"
         :label="label"
-        :items="items"
         :class="noTopMargin ? 'mt-0' : 'mt-3'"
-        menu-props="offsetY"
         color="secondary"
-        item-color="secondary"
         outlined
         dense
         clearable
@@ -17,20 +14,17 @@
         :append-outer-icon="icons[`${appendOuterIcon}`]"
         @input="$emit('input', $event)"
         @click="$emit('click')"
-    ></v-select>
+    ></v-textarea>
 </template>
 
 <script>
-import { mdiPlus } from "@mdi/js";
-
 export default {
-    name: "BSelect",
-
+    name: "BTextarea",
     props: {
         value: {
             type: [String, Number]
         },
-        items: Array,
+        type: String,
         label: String,
         prependIcon: String,
         prependInnerIcon: String,
@@ -40,7 +34,7 @@ export default {
     },
 
     data: () => ({
-        icons: { mdiPlus }
+        icons: {}
     })
 };
 </script>
