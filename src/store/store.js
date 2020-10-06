@@ -11,6 +11,10 @@ export default new Vuex.Store({
         storeToken: "",
         companyId: "",
         companyToken: "",
+        loading: false,
+        errorMessage: "",
+        snackbar: false,
+        snackbarText: "",
         user: {
             user_registration_identifier: "4WMH2H-H7K2-8ZRRA8-052814",
             mobile: "",
@@ -37,6 +41,22 @@ export default new Vuex.Store({
 
         setUser(state, payload) {
             state.user = payload;
+        },
+
+        setLoading(state, payload) {
+            state.loading = payload;
+        },
+
+        setErrorMessage(state, payload) {
+            state.errorMessage = payload;
+        },
+
+        setSnackbar(state, payload) {
+            state.snackbar = payload;
+        },
+
+        setSnackbarText(state, payload) {
+            state.snackbarText = payload;
         }
     },
 

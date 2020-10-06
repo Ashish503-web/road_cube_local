@@ -9,11 +9,11 @@
                 <PointDelivery />
             </v-col>
 
-            <v-col cols="6" class="pr-2">
+            <v-col cols="6" class="pr-2 mt-5">
                 <ScanReceipt />
             </v-col>
 
-            <v-col cols="6" class="pl-2">
+            <v-col cols="6" class="pl-2 mt-5">
                 <RewardWithPresence />
                 <MobilePayments />
             </v-col>

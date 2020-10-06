@@ -34,26 +34,26 @@ export default {
             state.serverItemsLength = payload;
         },
 
-        setProductGroups(state, payload) {
+        setItems(state, payload) {
             state.productGroups = payload;
         },
 
-        setProductGroup(state, payload) {
+        setItem(state, payload) {
             state.productGroup = new ProductGroup(payload);
         },
 
-        addProductGroup(state, payload) {
+        addItem(state, payload) {
             state.productGroups.unshift(payload);
         },
 
-        updateProductGroup(state, payload) {
+        updateItem(state, payload) {
             let index = state.productGroups.findIndex(
                 p => p.product_id === payload.product_id
             );
             state.productGroups.splice(index, 1, payload);
         },
 
-        deleteProductGroup(state, id) {
+        removeItem(state, id) {
             state.productGroups = state.productGroups.filter(
                 p => p.product_id !== id
             );
@@ -61,7 +61,7 @@ export default {
     },
 
     actions: {
-        async getProductGroups({ commit, rootState }, query) {
+        async getItems({ commit, rootState }, query) {
             try {
                 const { data } = await ProductGroup.get(
                     rootState.storeToken,
@@ -71,23 +71,20 @@ export default {
 
                 const { group_products, pagination } = data.data;
 
-                commit("setProductGroups", group_products);
+                commit("setItems", group_products);
                 commit("setServerItemsLength", pagination.total);
             } catch (ex) {
                 console.error(ex.response.data);
             }
         },
 
-        async createProductGroup(
-            { dispatch, commit, rootState },
-            { productGroup, image }
-        ) {
-            delete productGroup.product_id;
-            delete productGroup.image;
-            commit("setLoading", true);
-
+        async create({ dispatch, commit, rootState }, { productGroup, image }) {
             try {
-                const { data } = await ProductGroup.post(
+                delete productGroup.product_id;
+                delete productGroup.image;
+                commit("setLoading", true);
+
+                const { data } = await ProductGroup.create(
                     rootState.storeToken,
                     rootState.storeId,
                     productGroup
@@ -95,12 +92,12 @@ export default {
 
                 if (image) {
                     dispatch("uploadImage", {
-                        productGroup: data.data.group_product,
+                        item: data.data.group_product,
                         image,
                         mode: 1
                     });
                 } else {
-                    commit("addProductGroup", data.data.group_product);
+                    commit("addItem", data.data.group_product);
                     commit("setLoading", false);
                     commit("setDialog", false);
                 }
@@ -111,15 +108,12 @@ export default {
             }
         },
 
-        async updateProductGroup(
-            { dispatch, commit, rootState },
-            { productGroup, image }
-        ) {
-            delete productGroup.image;
-            commit("setLoading", true);
-
+        async update({ dispatch, commit, rootState }, { productGroup, image }) {
             try {
-                const { data } = await ProductGroup.put(
+                delete productGroup.image;
+                commit("setLoading", true);
+
+                const { data } = await ProductGroup.update(
                     rootState.storeToken,
                     rootState.storeId,
                     productGroup
@@ -127,12 +121,12 @@ export default {
 
                 if (image) {
                     dispatch("uploadImage", {
-                        productGroup: data.data.group_product,
+                        item: data.data.group_product,
                         image,
                         mode: 2
                     });
                 } else {
-                    commit("updateProductGroup", data.data.group_product);
+                    commit("updateItem", data.data.group_product);
                     commit("setLoading", false);
                     commit("setDialog", false);
                 }
@@ -143,18 +137,19 @@ export default {
             }
         },
 
-        async deleteProductGroup({ commit, rootState }, id) {
-            commit("setLoading", true);
-
+        async remove({ commit, rootState }, id) {
             try {
+                commit("setLoading", true);
+
                 await ProductGroup.delete(
                     rootState.storeToken,
                     rootState.storeId,
                     id
                 );
+
                 commit("setLoading", false);
                 commit("setDeleteDialog", false);
-                commit("deleteProductGroup", id);
+                commit("removeItem", id);
             } catch (ex) {
                 commit("setLoading", false);
                 commit("setErrorMessage", ex.response.data.message);
@@ -162,10 +157,7 @@ export default {
             }
         },
 
-        async uploadImage(
-            { commit, rootState },
-            { productGroup, image, mode }
-        ) {
+        async uploadImage({ commit, rootState }, { item, image, mode }) {
             try {
                 const fd = new FormData();
                 fd.append("image", image);
@@ -173,14 +165,14 @@ export default {
                 const { data } = await ProductGroup.uploadImage(
                     rootState.storeToken,
                     rootState.storeId,
-                    productGroup.product_id,
+                    item.product_id,
                     fd
                 );
 
-                productGroup.image = data.data.image;
+                item.image = data.data.image;
 
-                if (mode === 1) commit("addProductGroup", productGroup);
-                else commit("updateProductGroup", productGroup);
+                if (mode === 1) commit("addItem", item);
+                else commit("updateItem", item);
                 commit("setLoading", false);
                 commit("setDialog", false);
             } catch (ex) {

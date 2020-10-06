@@ -3,8 +3,18 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
-    name: "StorePanel"
+    name: "StorePanel",
+
+    methods: {
+        ...mapActions("storePanel", ["getStore"])
+    },
+
+    mounted() {
+        this.getStore();
+    }
 };
 </script>
 

@@ -1,14 +1,7 @@
 <template>
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
-            <v-tabs
-                v-model="tab"
-                color="black"
-                active-class="b-tab-active"
-                show-arrows
-                hide-slider
-                :ripple="false"
-            >
+            <v-tabs v-model="tab" show-arrows color="secondary" :ripple="false">
                 <v-tab
                     v-for="tab in tabs"
                     :key="tab"
@@ -34,20 +27,20 @@
 </template>
 
 <script>
-import CouponsWithTransactions from "./CouponsWithTransactions";
-import CouponsWithCode from "./CouponsWithCode";
-import CouponsOnProducts from "./CouponsOnProducts";
-import CouponsWithVisits from "./CouponsWithVisits";
-import CouponsWithDiscount from "./CouponsWithDiscount";
+import CouponsWithTransactions from "./tabs/CouponsWithTransactions";
+import CouponsWithCode from "./tabs/CouponsWithCode";
+import CouponsOnProducts from "./tabs/CouponsOnProducts";
+import CouponsWithVisits from "./tabs/CouponsWithVisits";
+import CouponsWithDiscount from "./tabs/CouponsWithDiscount";
 
 export default {
-    name: "Redeem",
+    name: "Coupons",
     components: {
         CouponsWithTransactions,
         CouponsWithCode,
         CouponsOnProducts,
         CouponsWithVisits,
-        CouponsWithDiscount
+        CouponsWithDiscount,
     },
     data: () => ({
         tab: 0,
@@ -56,9 +49,9 @@ export default {
             "coupons with code",
             "coupons on products",
             "coupons with visits",
-            "coupons with discount"
-        ]
-    })
+            "coupons with discount",
+        ],
+    }),
 };
 </script>
 
@@ -66,11 +59,5 @@ export default {
 .dashed {
     border: 1px dashed grey;
     border-radius: 10px;
-}
-
-.b-tab-active {
-    border-radius: 4px;
-    background-color: #2a3042;
-    color: white;
 }
 </style>

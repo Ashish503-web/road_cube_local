@@ -3,11 +3,11 @@
         <v-sheet class="pa-3">
             <v-tabs v-model="tab" color="black">
                 <v-tab class="text-capitalize">products</v-tab>
-                <v-tab class="text-capitalize">product group</v-tab>
+                <v-tab class="text-capitalize">product groups</v-tab>
             </v-tabs>
             <v-tabs-items v-model="tab">
                 <ProductsTab />
-                <ProductGroup />
+                <ProductGroups />
             </v-tabs-items>
         </v-sheet>
     </v-container>
@@ -16,11 +16,11 @@
 <script>
 import { mdiPercent, mdiMenuUp, mdiMenuDown } from "@mdi/js";
 import ProductsTab from "./tabs/ProductsTab";
-import ProductGroup from "./tabs/ProductGroup";
+import ProductGroups from "./tabs/ProductGroups";
 
 export default {
     name: "StoreProducts",
-    components: { ProductsTab, ProductGroup },
+    components: { ProductsTab, ProductGroups },
     data: () => ({
         icons: {
             mdiPercent,

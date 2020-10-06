@@ -68,11 +68,11 @@
             </template>
         </v-data-table>
 
-        <v-dialog v-model="dialog" scrollable max-width="600">
+        <v-dialog v-model="dialog" max-width="600">
             <ProductForm :mode="mode" @cancel="dialog = false" />
         </v-dialog>
 
-        <v-dialog v-model="deleteDialog" scrollable max-width="600">
+        <v-dialog v-model="deleteDialog" max-width="600">
             <b-card
                 type="delete"
                 title="Delete Product"
@@ -81,7 +81,7 @@
                 :loading="loading"
                 :error-message="errorMessage"
                 @cancel="deleteDialog = false"
-                @submit="deleteProduct(product.product_id)"
+                @submit="remove(product.product_id)"
             >
                 <p>
                     Are you sure you want to delete
@@ -111,12 +111,12 @@ export default {
                 { text: "Product Description", value: "description" },
                 { text: "Selling Price", value: "retail_price" },
                 { text: "Coupon", value: "coupon" },
-                { text: "Actions", value: "actions" }
+                { text: "Actions", value: "actions" },
             ],
             itemsPerPageOptions: [10, 20, 30, -1],
             page: +this.$route.query.page,
             perPage: +this.$route.query.perPage,
-            mode: 0
+            mode: 0,
         };
     },
 
@@ -125,7 +125,7 @@ export default {
             "loading",
             "errorMessage",
             "products",
-            "serverItemsLength"
+            "serverItemsLength",
         ]),
 
         dialog: {
@@ -135,7 +135,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         deleteDialog: {
@@ -145,7 +145,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            }
+            },
         },
 
         product: {
@@ -154,8 +154,8 @@ export default {
             },
 
             set(val) {
-                this.setProduct(val);
-            }
+                this.setItem(val);
+            },
         },
 
         query() {
@@ -166,21 +166,21 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
         ...mapMutations("storePanel/products", [
             "setDialog",
             "setDeleteDialog",
-            "setProduct"
+            "setItem",
         ]),
-        ...mapActions("storePanel/products", ["getProducts", "deleteProduct"])
+        ...mapActions("storePanel/products", ["getItems", "remove"]),
     },
 
     watch: {
         $route() {
-            this.getProducts(this.query);
+            this.getItems(this.query);
         },
 
         page(page) {
@@ -189,7 +189,7 @@ export default {
 
         perPage(perPage) {
             this.$router.push({ query: { ...this.$route.query, perPage } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -197,8 +197,8 @@ export default {
             this.$router.push({
                 query: {
                     perPage: 10,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
 
@@ -206,14 +206,14 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
-        this.getProducts(this.query);
-    }
+        this.getItems(this.query);
+    },
 };
 </script>

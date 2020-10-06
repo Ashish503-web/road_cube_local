@@ -10,7 +10,9 @@
         outlined
         dense
         clearable
+        open-on-clear
         hide-details="auto"
+        :readonly="readonly"
         :prepend-icon="icons[`${prependIcon}`]"
         :prepend-inner-icon="icons[`${prependInnerIcon}`]"
         :append-icon="icons[`${appendIcon}`]"
@@ -36,7 +38,8 @@ export default {
         prependInnerIcon: String,
         appendIcon: String,
         appendOuterIcon: String,
-        noTopMargin: Boolean
+        noTopMargin: Boolean,
+        readonly: Boolean
     },
 
     data: () => ({

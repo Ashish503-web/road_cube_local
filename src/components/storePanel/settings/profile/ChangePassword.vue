@@ -1,40 +1,13 @@
 <template>
-    <v-card class="mt-12" outlined>
-        <v-card-title class="grey lighten-3">Change Password</v-card-title>
-
-        <v-card-text class="pb-0 pt-8">
-            <v-text-field
-                type="password"
-                label="Password"
-                color="secondary"
-                outlined
-                dense
-                clearable
-            ></v-text-field>
-            <v-text-field
-                type="password"
-                label="New Password"
-                color="secondary"
-                outlined
-                dense
-                clearable
-            ></v-text-field>
-            <v-text-field
-                type="password"
-                label="Confirm Password"
-                color="secondary"
-                outlined
-                dense
-                clearable
-            ></v-text-field>
-        </v-card-text>
-
-        <v-card-actions class="pl-4">
-            <v-btn color="secondary" class="text-capitalize" depressed
-                >verification</v-btn
-            >
-        </v-card-actions>
-    </v-card>
+    <b-standard-card title="Change Password" submit-text="verification">
+        <b-text-field
+            type="password"
+            label="Password"
+            no-top-margin
+        ></b-text-field>
+        <b-text-field type="password" label="New Password"></b-text-field>
+        <b-text-field type="password" label="Confirm Password"></b-text-field>
+    </b-standard-card>
 </template>
 
 <script>

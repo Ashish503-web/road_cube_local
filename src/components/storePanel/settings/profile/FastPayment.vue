@@ -1,34 +1,61 @@
 <template>
-    <v-card class="mt-12 pb-8" outlined height="246">
-        <v-card-title class="grey lighten-3">Fast Payment</v-card-title>
-
-        <v-sheet height="85%">
-            <v-row no-gutters align="center fill-height">
-                <v-col cols="auto" class="subtitle-2 ml-12">
-                    Toogle Fast Payment option:
-                </v-col>
-                <v-col cols="auto" class="ml-3">
-                    <v-switch
-                        v-model="fastPayment"
-                        :label="fastPayment"
-                        color="secondary"
-                        true-value="On"
-                        false-value="Off"
-                        hide-details
-                        class="ma-0"
-                    ></v-switch>
-                </v-col>
-            </v-row>
-        </v-sheet>
-    </v-card>
+    <b-standard-card
+        title="Fast Payment"
+        :loading="loading"
+        :error-message="errorMessage"
+        @submit="updateQuickPayment"
+    >
+        <v-row no-gutters justify="center">
+            <v-col cols="auto" class="subtitle-2">
+                Toogle Fast Payment option:
+            </v-col>
+            <v-col cols="auto" class="subtitle-2 ml-3">
+                <v-switch
+                    v-model="quickPayment"
+                    :label="quickPayment ? 'On' : 'Off'"
+                    color="secondary"
+                    hide-details="auto"
+                    class="mt-0 pt-0"
+                ></v-switch>
+            </v-col>
+        </v-row>
+    </b-standard-card>
 </template>
 
 <script>
+import { mapMutations, mapActions } from "vuex";
+
 export default {
     name: "FastPayment",
 
-    data: () => ({
-        fastPayment: "Off"
-    })
+    data: () => ({}),
+
+    computed: {
+        loading() {
+            return this.$store.state.storePanel.settings.profile.loading
+                .quickPayment;
+        },
+
+        errorMessage() {
+            return this.$store.state.storePanel.settings.profile.errorMessage
+                .quickPayment;
+        },
+
+        quickPayment: {
+            get() {
+                return this.$store.state.storePanel.store.flags.general
+                    .quick_payment;
+            },
+
+            set(val) {
+                this.setQuickPayment(val);
+            },
+        },
+    },
+
+    methods: {
+        ...mapMutations("storePanel", ["setQuickPayment"]),
+        ...mapActions("storePanel/settings/profile", ["updateQuickPayment"]),
+    },
 };
 </script>

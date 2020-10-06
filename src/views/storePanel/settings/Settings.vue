@@ -34,15 +34,15 @@
 </template>
 
 <script>
-import Profile from "./Profile";
-import Reward from "./Reward";
-import ProductPoints from "./ProductPoints";
-import Users from "./Users";
-import CleanerManagement from "./CleanerManagement";
-import PaymentsDirection from "./PaymentsDirection";
-import Cards from "./Cards";
-import PaymentHistory from "./PaymentHistory";
-import PaymentMethods from "./PaymentMethods";
+import Profile from "./tabs/Profile";
+import Reward from "./tabs/Reward";
+import ProductPoints from "./tabs/ProductPoints";
+import Users from "./tabs/Users";
+import CleanerManagement from "./tabs/CleanerManagement";
+import PaymentsDirection from "./tabs/PaymentsDirection";
+import Cards from "./tabs/Cards";
+import PaymentHistory from "./tabs/PaymentHistory";
+import PaymentMethods from "./tabs/PaymentMethods";
 
 export default {
     name: "Settings",
@@ -82,13 +82,6 @@ export default {
 
 .relative {
     position: relative;
-}
-
-.map-new-pin {
-    width: 50px;
-    position: absolute;
-    top: 37px;
-    left: 14px;
 }
 
 .category-number {

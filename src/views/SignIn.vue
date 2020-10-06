@@ -109,7 +109,7 @@ export default {
             password: "",
             passwordSuccess: false,
             mobileRules: [
-                v => {
+                (v) => {
                     if (v) {
                         this.mobileSuccess = true;
                         return true;
@@ -117,12 +117,12 @@ export default {
                         return "Mobile Phone is required";
                     }
                 },
-                v =>
+                (v) =>
                     (v || "").length === 10 ||
-                    "Mobile Phone must be 10 characters long"
+                    "Mobile Phone must be 10 characters long",
             ],
             passwordRules: [
-                v => {
+                (v) => {
                     if (v) {
                         this.passwordSuccess = true;
                         return true;
@@ -130,18 +130,18 @@ export default {
                         return "Password is required";
                     }
                 },
-                v =>
+                (v) =>
                     (v || "").length >= 5 ||
-                    "Password must be 6 characters long"
+                    "Password must be 6 characters long",
             ],
-            serverError: ""
+            serverError: "",
         };
     },
 
     computed: {
         mode() {
             return this.tab === 0 ? "Company" : "Store";
-        }
+        },
     },
 
     methods: {
@@ -149,7 +149,7 @@ export default {
             "setStoreToken",
             "setStoreId",
             "setCompanyToken",
-            "setCompanyId"
+            "setCompanyId",
         ]),
 
         companySignIn() {
@@ -159,9 +159,9 @@ export default {
                 .post("https://api.roadcube.tk/v1/users/login", {
                     app_provider_id: 1,
                     mobile: this.mobileLogin,
-                    password: this.password
+                    password: this.password,
                 })
-                .then(res => {
+                .then((res) => {
                     this.loading = false;
                     localStorage.setItem("companyId", 2);
                     this.setCompanyId(2);
@@ -172,7 +172,7 @@ export default {
                     this.setCompanyToken(res.data.access_token);
                     this.$router.push("/loyaltyPanel");
                 })
-                .catch(err => {
+                .catch((err) => {
                     this.loading = false;
                     this.serverError = err.response.data.message;
                     setTimeout(() => (this.serverError = ""), 5000);
@@ -186,9 +186,9 @@ export default {
                 .post("https://api.roadcube.tk/v1/users/login", {
                     app_provider_id: 1,
                     mobile: this.mobileLogin,
-                    password: this.password
+                    password: this.password,
                 })
-                .then(res => {
+                .then((res) => {
                     this.loading = false;
                     localStorage.setItem("storeId", 2);
                     this.setStoreId(2);
@@ -199,12 +199,12 @@ export default {
                     this.setStoreToken(res.data.access_token);
                     this.$router.push("/storePanel");
                 })
-                .catch(err => {
+                .catch((err) => {
                     this.loading = false;
                     this.serverError = err.response.data.message;
                     setTimeout(() => (this.serverError = ""), 5000);
                 });
-        }
+        },
     },
 
     watch: {
@@ -214,7 +214,7 @@ export default {
             } else {
                 this.disabled = true;
             }
-        }
-    }
+        },
+    },
 };
 </script>

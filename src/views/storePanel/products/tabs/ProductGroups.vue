@@ -68,11 +68,11 @@
             </template>
         </v-data-table>
 
-        <v-dialog v-model="dialog" scrollable max-width="600">
+        <v-dialog v-model="dialog" max-width="600">
             <ProductGroupForm :mode="mode" @cancel="dialog = false" />
         </v-dialog>
 
-        <v-dialog v-model="deleteDialog" scrollable max-width="600">
+        <v-dialog v-model="deleteDialog" max-width="600">
             <b-card
                 type="delete"
                 title="Delete Product"
@@ -81,7 +81,7 @@
                 :loading="loading"
                 :error-message="errorMessage"
                 @cancel="deleteDialog = false"
-                @submit="deleteProductGroup(productGroup.product_id)"
+                @submit="remove(productGroup.product_id)"
             >
                 <p>
                     Are you sure you want to delete
@@ -101,7 +101,7 @@ import { mapState, mapMutations, mapActions } from "vuex";
 import ProductGroupForm from "@/components/storePanel/products/ProductGroupForm.vue";
 
 export default {
-    name: "ProductGroup",
+    name: "ProductGroups",
     components: { ProductGroupForm },
 
     data() {
@@ -111,12 +111,12 @@ export default {
                 { text: "Product Name", value: "name" },
                 { text: "Product Description", value: "description" },
                 { text: "Coupon", value: "coupon" },
-                { text: "Actions", value: "actions" }
+                { text: "Actions", value: "actions" },
             ],
             itemsPerPageOptions: [10, 20, 30, -1],
             page: +this.$route.query.page,
             perPage: +this.$route.query.perPage,
-            mode: 0
+            mode: 0,
         };
     },
 
@@ -125,7 +125,7 @@ export default {
             "loading",
             "errorMessage",
             "productGroups",
-            "serverItemsLength"
+            "serverItemsLength",
         ]),
 
         dialog: {
@@ -135,7 +135,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         deleteDialog: {
@@ -145,7 +145,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            }
+            },
         },
 
         productGroup: {
@@ -154,8 +154,8 @@ export default {
             },
 
             set(val) {
-                this.setProductGroup(val);
-            }
+                this.setItem(val);
+            },
         },
 
         query() {
@@ -166,24 +166,21 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
         ...mapMutations("storePanel/productGroups", [
             "setDialog",
             "setDeleteDialog",
-            "setProductGroup"
+            "setItem",
         ]),
-        ...mapActions("storePanel/productGroups", [
-            "getProductGroups",
-            "deleteProductGroup"
-        ])
+        ...mapActions("storePanel/productGroups", ["getItems", "remove"]),
     },
 
     watch: {
         $route() {
-            this.getProducts(this.query);
+            this.getItems(this.query);
         },
 
         page(page) {
@@ -192,7 +189,7 @@ export default {
 
         perPage(perPage) {
             this.$router.push({ query: { ...this.$route.query, perPage } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -200,8 +197,8 @@ export default {
             this.$router.push({
                 query: {
                     perPage: 10,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
 
@@ -209,14 +206,14 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
-        this.getProductGroups(this.query);
-    }
+        this.getItems(this.query);
+    },
 };
 </script>

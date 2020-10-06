@@ -2,15 +2,15 @@ import axios from "axios";
 const ApiEndpoint = `https://api.roadcube.tk/v1/stores/`;
 
 export default class ProductGroup {
-    constructor(productGroup = {}) {
-        this.product_id = productGroup.product_id || null;
-        this.name = productGroup.name || "";
-        this.description = productGroup.description || "";
-        this.average_price = productGroup.average_price || null;
-        this.product_category_id = productGroup.product_category_id || null;
-        this.availability_days = productGroup.availability_days || [];
-        this.published = productGroup.published || false;
-        this.image = productGroup.image || "";
+    constructor(item = {}) {
+        this.product_id = item.product_id || null;
+        this.name = item.name || "";
+        this.description = item.description || "";
+        this.average_price = item.average_price || null;
+        this.product_category_id = item.product_category_id || null;
+        this.availability_days = item.availability_days || [];
+        this.published = item.published || false;
+        this.image = item.image || "";
     }
 
     static get = (token, storeId, query) => {
@@ -18,33 +18,28 @@ export default class ProductGroup {
         return axios.get(`${ApiEndpoint}${storeId}/group-products${query}`);
     };
 
-    static post = (token, storeId, productGroup) => {
+    static create = (token, storeId, item) => {
         axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.post(
-            `${ApiEndpoint}${storeId}/group-products`,
-            productGroup
-        );
+        return axios.post(`${ApiEndpoint}${storeId}/group-products`, item);
     };
 
-    static put = (token, storeId, productGroup) => {
+    static update = (token, storeId, item) => {
         axios.defaults.headers.Authorization = `Bearer ${token}`;
         return axios.put(
-            `${ApiEndpoint}${storeId}/group-products/${productGroup.product_id}`,
-            productGroup
+            `${ApiEndpoint}${storeId}/group-products/${item.product_id}`,
+            item
         );
     };
 
-    static delete = (token, storeId, productId) => {
+    static delete = (token, storeId, id) => {
         axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.delete(
-            `${ApiEndpoint}${storeId}/group-products/${productId}`
-        );
+        return axios.delete(`${ApiEndpoint}${storeId}/group-products/${id}`);
     };
 
-    static uploadImage = (token, storeId, productId, image) => {
+    static uploadImage = (token, storeId, id, image) => {
         axios.defaults.headers.Authorization = `Bearer ${token}`;
         return axios.post(
-            `${ApiEndpoint}${storeId}/group-products/${productId}/images`,
+            `${ApiEndpoint}${storeId}/group-products/${id}/images`,
             image
         );
     };

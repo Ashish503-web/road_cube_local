@@ -1,57 +1,88 @@
 <template>
-    <v-card outlined>
-        <v-card-title class="grey lighten-3">Logo</v-card-title>
-
-        <v-card-text class="pt-5">
-            You can upload here the logo of your business which will appear in
-            the app and will be on the physical cards. If we think that it can
-            be improved we will contact you before publishment.
-            <v-row class="dashed mt-3 pa-5" no-gutters align="center">
-                <v-col cols="5">
-                    <v-img :src="logo.image" width="64" class="mx-auto"></v-img>
-                </v-col>
-                <v-col cols="7">
-                    Press the following button to choose image:
-                    <v-file-input
-                        color="secondary"
-                        class="mt-1"
-                        outlined
-                        dense
-                        hide-details
-                        @change="onFileSelected(logo, $event)"
-                    ></v-file-input>
-                </v-col>
-            </v-row>
-        </v-card-text>
-
-        <v-card-actions class="pl-4">
-            <v-btn color="secondary" class="text-capitalize" depressed
-                >update logo</v-btn
-            >
-        </v-card-actions>
-    </v-card>
+    <b-standard-card
+        title="Logo"
+        submit-text="update logo"
+        :loading="loading"
+        :error-message="errorMessage"
+        @submit="uploadLogo"
+    >
+        You can upload here the logo of your business which will appear in the
+        app and will be on the physical cards. If we think that it can be
+        improved we will contact you before publishment.
+        <v-row class="dashed mt-3 pa-5" no-gutters align="center">
+            <v-col cols="5">
+                <v-img :src="logo.image" width="64" class="mx-auto"></v-img>
+            </v-col>
+            <v-col cols="7">
+                Press the following button to choose image:
+                <v-file-input
+                    color="secondary"
+                    class="mt-1"
+                    outlined
+                    dense
+                    hide-details="auto"
+                    :rules="rules"
+                    :success="success"
+                    @change="onFileSelected"
+                ></v-file-input>
+            </v-col>
+        </v-row>
+    </b-standard-card>
 </template>
 
 <script>
-import storeLogo from "@/assets/store-logo.png";
+import { mapMutations, mapActions } from "vuex";
 
 export default {
     name: "Logo",
 
-    data: () => ({
+    data() {
+        return {
+            success: false,
+            rules: [
+                (v) => {
+                    if (v) {
+                        this.success = true;
+                        return true;
+                    } else {
+                        return "To continue you must upload a new image";
+                    }
+                },
+            ],
+        };
+    },
+
+    computed: {
+        loading() {
+            return this.$store.state.storePanel.settings.profile.loading.logo;
+        },
+
+        errorMessage() {
+            return this.$store.state.storePanel.settings.profile.errorMessage
+                .logo;
+        },
+
         logo: {
-            image: storeLogo,
-            imageFile: ""
-        }
-    }),
+            get() {
+                return this.$store.state.storePanel.settings.profile.logo;
+            },
+
+            set(val) {
+                this.setLogo(val);
+            },
+        },
+    },
 
     methods: {
-        onFileSelected(item, event) {
-            item.imageFile = event;
+        ...mapMutations("storePanel/settings/profile", ["setLogo"]),
+        ...mapActions("storePanel/settings/profile", ["uploadLogo"]),
+
+        onFileSelected(event) {
+            this.logo.imageFile = event;
             const reader = new FileReader();
-            reader.readAsDataURL(item.imageFile);
-            reader.onload = e => (item.image = e.target.result);
-        }
-    }
+            reader.readAsDataURL(this.logo.imageFile);
+            reader.onload = (e) => (this.logo.image = e.target.result);
+        },
+    },
 };
 </script>

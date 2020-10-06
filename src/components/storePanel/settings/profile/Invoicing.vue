@@ -1,80 +1,89 @@
 <template>
-    <v-card class="mt-12" outlined>
-        <v-card-title class="grey lighten-3">Invoicing</v-card-title>
-
-        <v-card-text class="pt-4 pb-0">
-            <v-row no-gutters>
-                <v-col cols="6" class="pr-2">
-                    <v-text-field
-                        label="Legal Name"
-                        color="secondary"
-                        outlined
-                        dense
-                        clearable
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="6" class="pl-2">
-                    <v-text-field
-                        label="Tax Id"
-                        color="secondary"
-                        outlined
-                        dense
-                        clearable
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="6" class="pr-2">
-                    <v-text-field
-                        label="Business Address"
-                        color="secondary"
-                        outlined
-                        dense
-                        clearable
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="6" class="pl-2">
-                    <v-text-field
-                        label="Profession"
-                        color="secondary"
-                        outlined
-                        dense
-                        clearable
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="6" class="pr-2">
-                    <v-text-field
-                        label="Jurisdiction"
-                        color="secondary"
-                        outlined
-                        dense
-                        clearable
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="6" class="pl-2">
-                    <v-select
-                        :items="['Greece 24%', 'Italy 22%', 'USA 0%']"
-                        menu-props="offsetY"
-                        label="Invoice from"
-                        color="secondary"
-                        item-color="secondary"
-                        outlined
-                        dense
-                    ></v-select>
-                </v-col>
-            </v-row>
-        </v-card-text>
-
-        <v-card-actions class="pl-4">
-            <v-btn color="secondary" class="text-capitalize" depressed
-                >send invoice settings</v-btn
-            >
-        </v-card-actions>
-    </v-card>
+    <b-standard-card
+        title="Invoicing"
+        submit-text="send invoice settings"
+        :loading="loading"
+        :error-message="errorMessage"
+        @submit="updateInvoicing"
+    >
+        <v-row no-gutters>
+            <v-col cols="6" class="pr-2">
+                <b-text-field
+                    v-model="invoicing.comp_name"
+                    label="Legal Name"
+                    no-top-margin
+                ></b-text-field>
+            </v-col>
+            <v-col cols="6" class="pl-2">
+                <b-text-field
+                    v-model="invoicing.vat_number"
+                    label="Tax Id"
+                    no-top-margin
+                ></b-text-field>
+            </v-col>
+            <v-col cols="6" class="pr-2">
+                <b-text-field
+                    v-model="invoicing.city"
+                    label="Business Address"
+                ></b-text-field>
+            </v-col>
+            <v-col cols="6" class="pl-2">
+                <b-text-field
+                    v-model="invoicing.occupation"
+                    label="Profession"
+                ></b-text-field>
+            </v-col>
+            <v-col cols="6" class="pr-2">
+                <b-text-field
+                    v-model="invoicing.tax_office"
+                    label="Jurisdiction"
+                ></b-text-field>
+            </v-col>
+            <v-col cols="6" class="pl-2">
+                <b-text-field
+                    v-model="invoicing.receipt_comp_name"
+                    label="Receipt Company Name"
+                ></b-text-field>
+            </v-col>
+            <v-col cols="6" class="pr-2">
+                <b-select
+                    v-model="invoicing.country_id"
+                    :items="countries"
+                    label="Invoice from"
+                ></b-select>
+            </v-col>
+        </v-row>
+    </b-standard-card>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
     name: "Invoicing",
 
-    data: () => ({})
+    data: () => ({
+        countries: [{ text: "Greece 24%", value: 1 }],
+    }),
+
+    computed: {
+        loading() {
+            return this.$store.state.storePanel.settings.profile.loading
+                .invoicing;
+        },
+
+        errorMessage() {
+            return this.$store.state.storePanel.settings.profile.errorMessage
+                .invoicing;
+        },
+
+        invoicing() {
+            return this.$store.state.storePanel.store.billing_details;
+        },
+    },
+
+    methods: {
+        ...mapActions("storePanel/settings/profile", ["updateInvoicing"]),
+    },
 };
 </script>

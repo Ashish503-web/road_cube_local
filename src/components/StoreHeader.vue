@@ -1,17 +1,19 @@
 <template>
     <header>
         <v-app-bar app flat color="white">
-            <v-app-bar-nav-icon @click="$vuetify.breakpoint.mdAndUp ? (mini=!mini) : (drawer=!drawer)"></v-app-bar-nav-icon>
+            <v-app-bar-nav-icon
+                @click="
+                    $vuetify.breakpoint.mdAndUp
+                        ? (mini = !mini)
+                        : (drawer = !drawer)
+                "
+            ></v-app-bar-nav-icon>
 
             <v-spacer></v-spacer>
 
-            <v-menu offset-y transition="slide-y-transition" bottom>
+            <v-menu offset-y transition="slide-y-transition">
                 <template v-slot:activator="{ on }">
-                    <v-btn
-                        class="text-capitalize font-weight-regular"
-                        text
-                        v-on="on"
-                    >
+                    <v-btn class="text-capitalize" text v-on="on">
                         <img :src="lang.img" width="25" class="mr-1" />
                         {{ lang.title }}
                         <v-icon v-text="icons.mdiChevronDown"></v-icon>
@@ -19,7 +21,7 @@
                 </template>
 
                 <v-list dense>
-                    <v-list-item-group v-model="lang" color="primary">
+                    <v-list-item-group v-model="lang" color="secondary">
                         <v-list-item
                             v-for="lang in langs"
                             :key="lang.title"
@@ -112,13 +114,9 @@
                 <span>Help</span>
             </v-tooltip>
 
-            <v-menu offset-y bottom transition="slide-y-transition">
+            <v-menu offset-y transition="slide-y-transition">
                 <template v-slot:activator="{ on }">
-                    <v-btn
-                        class="text-capitalize font-weight-regular"
-                        text
-                        v-on="on"
-                    >
+                    <v-btn class="text-capitalize" text v-on="on">
                         <v-avatar size="32" class="mr-2">
                             <v-img
                                 src="../assets/avatars/avatar-1.jpg"
@@ -129,7 +127,7 @@
                 </template>
 
                 <v-list dense>
-                    <v-list-item-group color="primary">
+                    <v-list-item-group color="secondary">
                         <v-list-item
                             v-for="link in profileLinks"
                             :key="link.title"
@@ -182,12 +180,12 @@
             <v-divider></v-divider>
 
             <v-row class="pt-4 pb-3" no-gutters justify="center">
-                <v-sheet light class="pa-2 rounded-circle" width="70">
-                    <v-img src="../assets/store-logo.png" width="50"></v-img>
+                <v-sheet light class="pa-2 rounded-circle">
+                    <v-img :src="logo" width="50"></v-img>
                 </v-sheet>
 
                 <v-col cols="12" class="text-center mt-3">
-                    <h1 class="subtitle-1 white--text">Maroudas Optika</h1>
+                    <h1 class="subtitle-1 white--text">{{ storeName }}</h1>
                 </v-col>
             </v-row>
 
@@ -223,7 +221,10 @@
                                 </v-list-item>
                             </template>
 
-                            <span v-text="item.title"></span>
+                            <span
+                                class="font-weight-bold"
+                                v-text="item.title"
+                            ></span>
                         </v-tooltip>
 
                         <v-list-item v-else :to="item.to" exact>
@@ -267,7 +268,7 @@ import {
     mdiAccountOutline,
     mdiWalletOutline,
     mdiWrenchOutline,
-    mdiLockOpenOutline
+    mdiLockOpenOutline,
 } from "@mdi/js";
 
 import USFlag from "../assets/flags/US-flag.jpeg";
@@ -293,7 +294,7 @@ export default {
                 mdiBellOutline,
                 mdiClockOutline,
                 mdiLogout,
-                mdiCogOutline
+                mdiCogOutline,
             },
             mini: false,
             drawer: false,
@@ -305,29 +306,29 @@ export default {
                         {
                             icon: mdiPlusThick,
                             title: "New Transaction",
-                            to: "/storePanel/new-transaction"
+                            to: "/storePanel/new-transaction",
                         },
                         {
                             icon: mdiCurrencyEur,
                             title: "Transactions",
-                            to: "/storePanel/transactions"
+                            to: "/storePanel/transactions",
                         },
                         {
                             icon: mdiGift,
                             title: "Redeem",
-                            to: "/storePanel/redeem"
+                            to: "/storePanel/redeem",
                         },
                         {
                             icon: mdiDatabaseSync,
                             title: "History",
-                            to: "/storePanel/history"
+                            to: "/storePanel/history",
                         },
                         {
                             icon: mdiTrophyVariant,
                             title: "Contests",
-                            to: "/storePanel/contests"
-                        }
-                    ]
+                            to: "/storePanel/contests",
+                        },
+                    ],
                 },
                 {
                     title: "SETTINGS",
@@ -335,26 +336,26 @@ export default {
                         {
                             icon: mdiPackageVariantClosed,
                             title: "Products",
-                            to: "/storePanel/products"
+                            to: "/storePanel/products",
                         },
                         {
                             icon: mdiTagMultiple,
-                            title: "Voucher",
-                            to: "/storePanel/voucher"
+                            title: "Coupons",
+                            to: "/storePanel/coupons",
                         },
                         {
                             icon: mdiCog,
                             title: "Settings",
-                            to: "/storePanel/settings"
-                        }
-                    ]
-                }
+                            to: "/storePanel/settings",
+                        },
+                    ],
+                },
             ],
 
             lang: {
                 img: USFlag,
                 title: "English",
-                urlTitle: "en"
+                urlTitle: "en",
             },
 
             langs: [
@@ -362,23 +363,31 @@ export default {
                 { img: FranceFlag, title: "French", urlTitle: "fr" },
                 { img: SpainFlag, title: "Spanish", urlTitle: "sp" },
                 { img: ChinaFlag, title: "Chinese", urlTitle: "ch" },
-                { img: ArabicFlag, title: "Arabic", urlTitle: "ar" }
+                { img: ArabicFlag, title: "Arabic", urlTitle: "ar" },
             ],
 
             profileLinks: [
                 { icon: mdiAccountOutline, text: "Profile" },
                 { icon: mdiWalletOutline, text: "My Wallet" },
                 { icon: mdiWrenchOutline, text: "Settings" },
-                { icon: mdiLockOpenOutline, text: "Lock Screen" }
-            ]
+                { icon: mdiLockOpenOutline, text: "Lock Screen" },
+            ],
         };
     },
 
     computed: {
+        logo() {
+            return this.$store.state.storePanel.settings.profile.logo.image;
+        },
+
+        storeName() {
+            return this.$store.state.storePanel.store.name;
+        },
+
         containerHeight() {
-            return this.mini ? "calc(100vh - 202px)" : "calc(100vh - 184px)";
-        }
-    }
+            return this.mini ? "calc(100vh - 193px)" : "calc(100vh - 183px)";
+        },
+    },
 };
 </script>
 

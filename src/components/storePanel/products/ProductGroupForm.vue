@@ -6,8 +6,8 @@
         @cancel="$emit('cancel')"
         @submit="
             mode === 1
-                ? createProductGroup({ productGroup, image: imageFile })
-                : updateProductGroup({ productGroup, image: imageFile })
+                ? create({ productGroup, image: imageFile })
+                : update({ productGroup, image: imageFile })
         "
     >
         <b-text-field
@@ -127,6 +127,7 @@
                 </v-col>
                 <v-col cols="5" class="mr-3">
                     <v-file-input
+                        color="secondary"
                         outlined
                         dense
                         hide-details
@@ -234,17 +235,14 @@ export default {
             },
 
             set(val) {
-                this.setProductGroup(val);
+                this.setItem(val);
             }
         }
     },
 
     methods: {
-        ...mapMutations("storePanel/productGroups", ["setProductGroup"]),
-        ...mapActions("storePanel/productGroups", [
-            "createProductGroup",
-            "updateProductGroup"
-        ]),
+        ...mapMutations("storePanel/productGroups", ["setItem"]),
+        ...mapActions("storePanel/productGroups", ["create", "update"]),
 
         onFileSelected(event) {
             if (event) {

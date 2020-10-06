@@ -1,7 +1,5 @@
 <template>
-    <v-card class="mt-12" outlined>
-        <v-card-title class="grey lighten-3">Orders</v-card-title>
-
+    <b-standard-card title="Orders">
         <v-container>
             <v-row
                 no-gutters
@@ -101,13 +99,7 @@
                 </template>
             </v-row>
         </v-container>
-
-        <v-card-actions class="pl-4">
-            <v-btn color="secondary" class="text-capitalize" depressed
-                >update details</v-btn
-            >
-        </v-card-actions>
-    </v-card>
+    </b-standard-card>
 </template>
 
 <script>

@@ -42,7 +42,7 @@ import ViewContestStorePanel from "./routes/storepanel/viewContestRoutes";
 import ViewParticipantsStorePanel from "./routes/storepanel/viewParticipantsRoutes";
 import ViewParticipantAnswerStorePanel from "./routes/storepanel/viewParticipantAnswerRoutes";
 import Products from "./routes/storepanel/productsRoutes";
-import Voucher from "./routes/storepanel/voucherRoutes";
+import Coupons from "./routes/storepanel/couponsRoutes";
 import Settings from "./routes/storepanel/settingsRoutes";
 
 const routes = [
@@ -117,7 +117,7 @@ const routes = [
             ViewParticipantsStorePanel,
             ViewParticipantAnswerStorePanel,
             Products,
-            Voucher,
+            Coupons,
             Settings
         ]
     },

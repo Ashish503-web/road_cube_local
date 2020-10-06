@@ -1,43 +1,45 @@
 <template>
     <v-card>
         <v-card-title
-            class="white--text"
-            :class="type === 'delete' ? 'red' : 'secondary'"
+            :class="{
+                red: type === 'delete',
+                'white--text': type === 'delete',
+            }"
         >
             {{ title }}
             <v-spacer></v-spacer>
-            <v-btn icon dark @click="$emit('cancel')">
-                <v-icon size="28" dark v-text="icons.mdiClose"></v-icon>
+            <v-btn icon :dark="type === 'delete'" @click="$emit('cancel')">
+                <v-icon size="28" v-text="icons.mdiClose"></v-icon>
             </v-btn>
         </v-card-title>
 
         <v-divider></v-divider>
 
-        <v-card-text class="pt-5">
-            <v-form v-model="valid" @submit.prevent="$emit('submit')">
+        <v-form v-model="valid" @submit.prevent="$emit('submit')">
+            <v-card-text class="pt-5">
                 <slot></slot>
-                <button type="submit" hidden></button>
-            </v-form>
-        </v-card-text>
+            </v-card-text>
 
-        <v-alert v-if="errorMessage" type="error">{{ errorMessage }}</v-alert>
+            <v-alert v-if="errorMessage" type="error">{{
+                errorMessage
+            }}</v-alert>
 
-        <v-divider></v-divider>
+            <v-divider></v-divider>
 
-        <v-card-actions>
-            <v-spacer></v-spacer>
-            <v-btn text @click="$emit('cancel')">{{ cancelText }}</v-btn>
-            <v-btn
-                type="submit"
-                :color="type === 'delete' ? 'red' : 'secondary'"
-                class="px-5"
-                dark
-                depressed
-                :loading="loading"
-                @click="$emit('submit')"
-                >{{ submitText }}</v-btn
-            >
-        </v-card-actions>
+            <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn text @click="$emit('cancel')">{{ cancelText }}</v-btn>
+                <v-btn
+                    type="submit"
+                    :color="type === 'delete' ? 'red' : 'secondary'"
+                    class="px-5"
+                    dark
+                    depressed
+                    :loading="loading"
+                    >{{ submitText }}</v-btn
+                >
+            </v-card-actions>
+        </v-form>
     </v-card>
 </template>
 
@@ -49,27 +51,27 @@ export default {
     props: {
         type: {
             type: String,
-            default: "default"
+            default: "default",
         },
         title: String,
         cancelText: {
             type: String,
-            default: "cancel"
+            default: "cancel",
         },
         submitText: {
             type: String,
-            default: "save"
+            default: "save",
         },
         loading: Boolean,
-        errorMessage: String
+        errorMessage: String,
     },
 
     data: () => ({
         icons: {
-            mdiClose
+            mdiClose,
         },
         valid: false,
-        disabled: true
+        disabled: true,
     }),
 
     watch: {
@@ -79,7 +81,7 @@ export default {
             } else {
                 this.disabled = true;
             }
-        }
-    }
+        },
+    },
 };
 </script>

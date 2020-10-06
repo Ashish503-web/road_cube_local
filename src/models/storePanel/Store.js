@@ -3,7 +3,14 @@ const ApiEndpoint = `https://api.roadcube.tk/v1/stores/`;
 
 export default class Product {
     constructor(item = {}) {
-        this.product_id = item.product_id || null;
+        this.billing_details = item.billing_details || {};
+        this.company = item.company || {};
+        this.flags = item.flags || {
+            app_settings: {},
+            general: {},
+            reward: {}
+        };
+        this.timetable = [];
         this.published = item.published || false;
         this.name = item.name || "";
         this.description = item.description || "";
@@ -15,9 +22,9 @@ export default class Product {
         this.image = item.image || "";
     }
 
-    static get = (token, storeId, query) => {
+    static get = (token, storeId) => {
         axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.get(`${ApiEndpoint}${storeId}/products${query}`);
+        return axios.get(`${ApiEndpoint}${storeId}`);
     };
 
     static create = (token, storeId, item) => {

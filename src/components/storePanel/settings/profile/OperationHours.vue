@@ -1,469 +1,163 @@
 <template>
-    <v-card class="mt-12" outlined>
-        <v-card-title class="grey lighten-3">Hours of Operations</v-card-title>
-
-        <v-container
-            v-for="weekday in weekdays"
-            :key="weekday.name"
-            class="px-4"
-        >
+    <b-standard-card
+        title="Hours of Operations"
+        no-body-padding
+        :loading="loading"
+        :error-message="errorMessage"
+        @submit="updateTimetable"
+    >
+        <v-container v-for="weekday in timetable" :key="weekday.name">
             <v-row no-gutters justify="space-between" align="center">
                 <v-col
-                    cols="5"
-                    class="subtitle-2"
+                    class="subtitle-1 font-weight-bold"
                     v-text="weekday.name"
                 ></v-col>
 
                 <v-col cols="auto">
                     <v-radio-group
-                        v-model="weekday.operationHours"
-                        class="ma-0"
+                        v-model="weekday.type"
+                        class="mt-0 pt-0"
                         hide-details
                     >
                         <v-row no-gutters>
-                            <v-col cols="auto">
+                            <v-col
+                                v-for="type in operationTypes"
+                                :key="type.text"
+                                cols="auto"
+                                class="mx-1"
+                            >
                                 <v-radio
-                                    label="Regular"
-                                    value="Regular"
-                                    color="secondary"
-                                ></v-radio>
-                            </v-col>
-                            <v-col cols="auto" class="mx-1">
-                                <v-radio
-                                    label="Split Hours"
-                                    value="Split Hours"
-                                    color="secondary"
-                                ></v-radio>
-                            </v-col>
-                            <v-col cols="auto" class="mx-1">
-                                <v-radio
-                                    label="24 Hours"
-                                    value="24 Hours"
-                                    color="secondary"
-                                ></v-radio>
-                            </v-col>
-                            <v-col cols="auto">
-                                <v-radio
-                                    label="Closed"
-                                    value="Closed"
-                                    color="red"
+                                    :label="type.text"
+                                    :value="type.value"
+                                    :color="
+                                        type.text === 'Closed'
+                                            ? 'red'
+                                            : 'secondary'
+                                    "
                                 ></v-radio>
                             </v-col>
                         </v-row>
                     </v-radio-group>
                 </v-col>
 
-                <v-col v-if="weekday.operationHours === 'Regular'" cols="12">
+                <v-col v-if="weekday.type === 'regular'" cols="12">
                     <v-row no-gutters justify="space-between" class="py-5">
-                        <v-col cols="6" class="pa-3">
-                            <v-menu
-                                v-model="weekday.regular.startClockMenu"
-                                max-width="290"
-                                offset-y
-                                :close-on-content-click="false"
-                            >
-                                <template
-                                    v-slot:activator="{
-                                        on
-                                    }"
-                                >
-                                    <v-text-field
-                                        v-model="weekday.regular.startTime"
-                                        label="Start Time"
-                                        outlined
-                                        dense
-                                        clearable
-                                        readonly
-                                        hide-details
-                                        v-on="on"
-                                        :prepend-inner-icon="
-                                            icons.mdiClockOutline
-                                        "
-                                        @click:clear="
-                                            weekday.regular.startClockMenu = true
-                                        "
-                                    ></v-text-field>
-                                </template>
-
-                                <v-card>
-                                    <v-time-picker
-                                        v-model="timePicker"
-                                        ampm-in-title
-                                        scrollable
-                                    ></v-time-picker>
-
-                                    <v-divider></v-divider>
-
-                                    <v-card-actions>
-                                        <v-spacer></v-spacer>
-                                        <v-btn
-                                            text
-                                            @click="
-                                                weekday.regular.startClockMenu = false
-                                            "
-                                            >cancel</v-btn
-                                        >
-                                        <v-btn
-                                            color="primary"
-                                            :disabled="!timePicker"
-                                            @click="
-                                                () => {
-                                                    weekday.regular.startTime = timePicker;
-                                                    weekday.regular.startClockMenu = false;
-                                                }
-                                            "
-                                            >accept</v-btn
-                                        >
-                                    </v-card-actions>
-                                </v-card>
-                            </v-menu>
+                        <v-col cols="6" class="pa-3 pt-0">
+                            <b-text-field
+                                v-model="weekday.shifts[0][0]"
+                                placeholder="Start Time"
+                                readonly
+                                prepend-inner-icon="mdiClockOutline"
+                                :class="weekday.name + 'Start'"
+                                :disabled="menu"
+                                @click="
+                                    openMenu(
+                                        weekday.name + 'Start',
+                                        weekday,
+                                        0,
+                                        0
+                                    )
+                                "
+                            ></b-text-field>
                         </v-col>
 
-                        <v-col cols="6" class="pa-3">
-                            <v-menu
-                                v-model="weekday.regular.endClockMenu"
-                                max-width="290"
-                                offset-y
-                                :close-on-content-click="false"
-                            >
-                                <template
-                                    v-slot:activator="{
-                                        on
-                                    }"
-                                >
-                                    <v-text-field
-                                        v-model="weekday.regular.endTime"
-                                        label="End Time"
-                                        outlined
-                                        dense
-                                        clearable
-                                        readonly
-                                        hide-details
-                                        v-on="on"
-                                        :prepend-inner-icon="
-                                            icons.mdiClockOutline
-                                        "
-                                        @click:clear="
-                                            weekday.regular.endClockMenu = true
-                                        "
-                                    ></v-text-field>
-                                </template>
-
-                                <v-card>
-                                    <v-time-picker
-                                        v-model="timePicker"
-                                        ampm-in-title
-                                        scrollable
-                                    ></v-time-picker>
-
-                                    <v-divider></v-divider>
-
-                                    <v-card-actions>
-                                        <v-spacer></v-spacer>
-                                        <v-btn
-                                            text
-                                            @click="
-                                                weekday.regular.endClockMenu = false
-                                            "
-                                            >cancel</v-btn
-                                        >
-                                        <v-btn
-                                            color="primary"
-                                            :disabled="!timePicker"
-                                            @click="
-                                                () => {
-                                                    weekday.regular.endTime = timePicker;
-                                                    weekday.regular.endClockMenu = false;
-                                                }
-                                            "
-                                            >accept</v-btn
-                                        >
-                                    </v-card-actions>
-                                </v-card>
-                            </v-menu>
+                        <v-col cols="6" class="pa-3 pt-0">
+                            <b-text-field
+                                v-model="weekday.shifts[0][1]"
+                                placeholder="End Time"
+                                readonly
+                                prepend-inner-icon="mdiClockOutline"
+                                :class="weekday.name + 'End'"
+                                :disabled="menu"
+                                @click="
+                                    openMenu(
+                                        weekday.name + 'End',
+                                        weekday,
+                                        0,
+                                        1
+                                    )
+                                "
+                            ></b-text-field>
                         </v-col>
                     </v-row>
                 </v-col>
 
-                <v-col
-                    v-if="weekday.operationHours === 'Split Hours'"
-                    cols="12"
-                >
+                <v-col v-if="weekday.type === 'break'" cols="12">
                     <v-row no-gutters justify="space-between" class="py-5">
-                        <v-col cols="3" class="pa-3">
-                            <v-menu
-                                v-model="
-                                    weekday.splitHours.first.startClockMenu
+                        <v-col cols="3" class="pa-3 pt-0">
+                            <b-text-field
+                                v-model="weekday.shifts[0][0]"
+                                placeholder="Start Time"
+                                readonly
+                                prepend-inner-icon="mdiClockOutline"
+                                :class="weekday.name + 'FirstStart'"
+                                :disabled="menu"
+                                @click="
+                                    openMenu(
+                                        weekday.name + 'FirstStart',
+                                        weekday,
+                                        0,
+                                        0
+                                    )
                                 "
-                                max-width="290"
-                                offset-y
-                                origin="center center"
-                                transition="scale-transition"
-                                :close-on-content-click="false"
-                            >
-                                <template
-                                    v-slot:activator="{
-                                        on
-                                    }"
-                                >
-                                    <v-text-field
-                                        v-model="
-                                            weekday.splitHours.first.startTime
-                                        "
-                                        label="Start Time"
-                                        outlined
-                                        dense
-                                        clearable
-                                        readonly
-                                        hide-details
-                                        v-on="on"
-                                        :prepend-inner-icon="
-                                            icons.mdiClockOutline
-                                        "
-                                        @click:clear="
-                                            weekday.splitHours.first.startClockMenu = true
-                                        "
-                                    ></v-text-field>
-                                </template>
-
-                                <v-card>
-                                    <v-time-picker
-                                        v-model="timePicker"
-                                        ampm-in-title
-                                        scrollable
-                                    ></v-time-picker>
-
-                                    <v-divider></v-divider>
-
-                                    <v-card-actions>
-                                        <v-spacer></v-spacer>
-                                        <v-btn
-                                            text
-                                            @click="
-                                                weekday.splitHours.first.startClockMenu = false
-                                            "
-                                            >cancel</v-btn
-                                        >
-                                        <v-btn
-                                            color="primary"
-                                            :disabled="!timePicker"
-                                            @click="
-                                                () => {
-                                                    weekday.splitHours.first.startTime = timePicker;
-                                                    weekday.splitHours.first.startClockMenu = false;
-                                                }
-                                            "
-                                            >accept</v-btn
-                                        >
-                                    </v-card-actions>
-                                </v-card>
-                            </v-menu>
+                            ></b-text-field>
                         </v-col>
 
-                        <v-col cols="3" class="pa-3">
-                            <v-menu
-                                v-model="weekday.splitHours.first.endClockMenu"
-                                max-width="290"
-                                offset-y
-                                origin="center center"
-                                transition="scale-transition"
-                                :close-on-content-click="false"
-                            >
-                                <template
-                                    v-slot:activator="{
-                                        on
-                                    }"
-                                >
-                                    <v-text-field
-                                        v-model="
-                                            weekday.splitHours.first.endTime
-                                        "
-                                        label="End Time"
-                                        outlined
-                                        dense
-                                        clearable
-                                        readonly
-                                        hide-details
-                                        v-on="on"
-                                        :prepend-inner-icon="
-                                            icons.mdiClockOutline
-                                        "
-                                        @click:clear="
-                                            weekday.splitHours.first.endClockMenu = true
-                                        "
-                                    ></v-text-field>
-                                </template>
-
-                                <v-card>
-                                    <v-time-picker
-                                        v-model="timePicker"
-                                        ampm-in-title
-                                        scrollable
-                                    ></v-time-picker>
-
-                                    <v-divider></v-divider>
-
-                                    <v-card-actions>
-                                        <v-spacer></v-spacer>
-                                        <v-btn
-                                            text
-                                            @click="
-                                                weekday.splitHours.first.endClockMenu = false
-                                            "
-                                            >cancel</v-btn
-                                        >
-                                        <v-btn
-                                            color="primary"
-                                            :disabled="!timePicker"
-                                            @click="
-                                                () => {
-                                                    weekday.splitHours.first.endTime = timePicker;
-                                                    weekday.splitHours.first.endClockMenu = false;
-                                                }
-                                            "
-                                            >accept</v-btn
-                                        >
-                                    </v-card-actions>
-                                </v-card>
-                            </v-menu>
-                        </v-col>
-
-                        <v-col cols="3" class="pa-3">
-                            <v-menu
-                                v-model="
-                                    weekday.splitHours.second.startClockMenu
+                        <v-col cols="3" class="pa-3 pt-0">
+                            <b-text-field
+                                v-model="weekday.shifts[0][1]"
+                                placeholder="End Time"
+                                readonly
+                                prepend-inner-icon="mdiClockOutline"
+                                :class="weekday.name + 'FirstEnd'"
+                                :disabled="menu"
+                                @click="
+                                    openMenu(
+                                        weekday.name + 'FirstEnd',
+                                        weekday,
+                                        0,
+                                        1
+                                    )
                                 "
-                                max-width="290"
-                                offset-y
-                                origin="center center"
-                                transition="scale-transition"
-                                :close-on-content-click="false"
-                            >
-                                <template
-                                    v-slot:activator="{
-                                        on
-                                    }"
-                                >
-                                    <v-text-field
-                                        v-model="
-                                            weekday.splitHours.second.startTime
-                                        "
-                                        label="Start Time"
-                                        outlined
-                                        dense
-                                        clearable
-                                        readonly
-                                        hide-details
-                                        v-on="on"
-                                        :prepend-inner-icon="
-                                            icons.mdiClockOutline
-                                        "
-                                        @click:clear="
-                                            weekday.splitHours.second.startClockMenu = true
-                                        "
-                                    ></v-text-field>
-                                </template>
-
-                                <v-card>
-                                    <v-time-picker
-                                        v-model="timePicker"
-                                        ampm-in-title
-                                        scrollable
-                                    ></v-time-picker>
-
-                                    <v-divider></v-divider>
-
-                                    <v-card-actions>
-                                        <v-spacer></v-spacer>
-                                        <v-btn
-                                            text
-                                            @click="
-                                                weekday.splitHours.second.startClockMenu = false
-                                            "
-                                            >cancel</v-btn
-                                        >
-                                        <v-btn
-                                            color="primary"
-                                            :disabled="!timePicker"
-                                            @click="
-                                                () => {
-                                                    weekday.splitHours.second.startTime = timePicker;
-                                                    weekday.splitHours.second.startClockMenu = false;
-                                                }
-                                            "
-                                            >accept</v-btn
-                                        >
-                                    </v-card-actions>
-                                </v-card>
-                            </v-menu>
+                            ></b-text-field>
                         </v-col>
 
-                        <v-col cols="3" class="pa-3">
-                            <v-menu
-                                v-model="weekday.splitHours.second.endClockMenu"
-                                max-width="290"
-                                offset-y
-                                origin="center center"
-                                transition="scale-transition"
-                                :close-on-content-click="false"
-                            >
-                                <template
-                                    v-slot:activator="{
-                                        on
-                                    }"
-                                >
-                                    <v-text-field
-                                        v-model="
-                                            weekday.splitHours.second.endTime
-                                        "
-                                        label="End Time"
-                                        outlined
-                                        dense
-                                        clearable
-                                        readonly
-                                        hide-details
-                                        v-on="on"
-                                        :prepend-inner-icon="
-                                            icons.mdiClockOutline
-                                        "
-                                        @click:clear="
-                                            weekday.splitHours.second.endClockMenu = true
-                                        "
-                                    ></v-text-field>
-                                </template>
+                        <v-col cols="3" class="pa-3 pt-0">
+                            <b-text-field
+                                v-model="weekday.shifts[1][0]"
+                                placeholder="Start Time"
+                                readonly
+                                prepend-inner-icon="mdiClockOutline"
+                                :class="weekday.name + 'SecondStart'"
+                                :disabled="menu"
+                                @click="
+                                    openMenu(
+                                        weekday.name + 'SecondStart',
+                                        weekday,
+                                        1,
+                                        0
+                                    )
+                                "
+                            ></b-text-field>
+                        </v-col>
 
-                                <v-card>
-                                    <v-time-picker
-                                        v-model="timePicker"
-                                        ampm-in-title
-                                        scrollable
-                                    ></v-time-picker>
-
-                                    <v-divider></v-divider>
-
-                                    <v-card-actions>
-                                        <v-spacer></v-spacer>
-                                        <v-btn
-                                            text
-                                            @click="
-                                                weekday.splitHours.second.endClockMenu = false
-                                            "
-                                            >cancel</v-btn
-                                        >
-                                        <v-btn
-                                            color="primary"
-                                            :disabled="!timePicker"
-                                            @click="
-                                                () => {
-                                                    weekday.splitHours.second.endTime = timePicker;
-                                                    weekday.splitHours.second.endClockMenu = false;
-                                                }
-                                            "
-                                            >accept</v-btn
-                                        >
-                                    </v-card-actions>
-                                </v-card>
-                            </v-menu>
+                        <v-col cols="3" class="pa-3 pt-0">
+                            <b-text-field
+                                v-model="weekday.shifts[1][1]"
+                                placeholder="End Time"
+                                readonly
+                                prepend-inner-icon="mdiClockOutline"
+                                :class="weekday.name + 'SecondEnd'"
+                                :disabled="menu"
+                                @click="
+                                    openMenu(
+                                        weekday.name + 'SecondEnd',
+                                        weekday,
+                                        1,
+                                        1
+                                    )
+                                "
+                            ></b-text-field>
                         </v-col>
                     </v-row>
                 </v-col>
@@ -471,16 +165,53 @@
             <v-divider></v-divider>
         </v-container>
 
-        <v-card-actions class="pl-4 mt-3">
-            <v-btn color="secondary" class="text-capitalize" depressed
-                >update details</v-btn
-            >
-        </v-card-actions>
-    </v-card>
+        <v-menu
+            v-model="menu"
+            max-width="290"
+            nudge-bottom="40"
+            origin="center center"
+            transition="scale-transition"
+            :attach="elemToWrap"
+            :close-on-content-click="false"
+        >
+            <v-card>
+                <v-time-picker
+                    v-model="timePicker"
+                    color="secondary"
+                    ampm-in-title
+                    scrollable
+                ></v-time-picker>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-btn text @click="menu = false">cancel</v-btn>
+                    <v-btn
+                        color="secondary"
+                        :disabled="!timePicker"
+                        @click="saveTime"
+                        >accept</v-btn
+                    >
+                </v-card-actions>
+            </v-card>
+        </v-menu>
+    </b-standard-card>
 </template>
 
 <script>
 import { mdiClockOutline } from "@mdi/js";
+import { mapMutations, mapActions, mapGetters } from "vuex";
+
+class Weekday {
+    constructor(weekday = {}) {
+        this.name = weekday.name || "";
+        if (weekday.day === 0) this.day = 0;
+        else this.day = weekday.day || null;
+        this.type = weekday.type || "";
+        this.shifts = weekday.shifts || [[], []];
+    }
+}
 
 export default {
     name: "OperationHours",
@@ -489,177 +220,62 @@ export default {
         icons: {
             mdiClockOutline
         },
-        weekdays: [
-            {
-                name: "Monday",
-                operationHours: "24 Hours",
-                regular: {
-                    startClockMenu: false,
-                    endClockMenu: false,
-                    startTime: "",
-                    endTime: ""
-                },
-                splitHours: {
-                    first: {
-                        startClockMenu: false,
-                        endClockMenu: false,
-                        startTime: "",
-                        endTime: ""
-                    },
-                    second: {
-                        startClockMenu: false,
-                        endClockMenu: false,
-                        startTime: "",
-                        endTime: ""
-                    }
-                }
-            },
-            {
-                name: "Tuesday",
-                operationHours: "24 Hours",
-                regular: {
-                    startClockMenu: false,
-                    endClockMenu: false,
-                    startTime: "",
-                    endTime: ""
-                },
-                splitHours: {
-                    first: {
-                        startClockMenu: false,
-                        endClockMenu: false,
-                        startTime: "",
-                        endTime: ""
-                    },
-                    second: {
-                        startClockMenu: false,
-                        endClockMenu: false,
-                        startTime: "",
-                        endTime: ""
-                    }
-                }
-            },
-            {
-                name: "Wednesday",
-                operationHours: "24 Hours",
-                regular: {
-                    startClockMenu: false,
-                    endClockMenu: false,
-                    startTime: "",
-                    endTime: ""
-                },
-                splitHours: {
-                    first: {
-                        startClockMenu: false,
-                        endClockMenu: false,
-                        startTime: "",
-                        endTime: ""
-                    },
-                    second: {
-                        startClockMenu: false,
-                        endClockMenu: false,
-                        startTime: "",
-                        endTime: ""
-                    }
-                }
-            },
-            {
-                name: "Thursday",
-                operationHours: "24 Hours",
-                regular: {
-                    startClockMenu: false,
-                    endClockMenu: false,
-                    startTime: "",
-                    endTime: ""
-                },
-                splitHours: {
-                    first: {
-                        startClockMenu: false,
-                        endClockMenu: false,
-                        startTime: "",
-                        endTime: ""
-                    },
-                    second: {
-                        startClockMenu: false,
-                        endClockMenu: false,
-                        startTime: "",
-                        endTime: ""
-                    }
-                }
-            },
-            {
-                name: "Friday",
-                operationHours: "24 Hours",
-                regular: {
-                    startClockMenu: false,
-                    endClockMenu: false,
-                    startTime: "",
-                    endTime: ""
-                },
-                splitHours: {
-                    first: {
-                        startClockMenu: false,
-                        endClockMenu: false,
-                        startTime: "",
-                        endTime: ""
-                    },
-                    second: {
-                        startClockMenu: false,
-                        endClockMenu: false,
-                        startTime: "",
-                        endTime: ""
-                    }
-                }
-            },
-            {
-                name: "Saturday",
-                operationHours: "24 Hours",
-                regular: {
-                    startClockMenu: false,
-                    endClockMenu: false,
-                    startTime: "",
-                    endTime: ""
-                },
-                splitHours: {
-                    first: {
-                        startClockMenu: false,
-                        endClockMenu: false,
-                        startTime: "",
-                        endTime: ""
-                    },
-                    second: {
-                        startClockMenu: false,
-                        endClockMenu: false,
-                        startTime: "",
-                        endTime: ""
-                    }
-                }
-            },
-            {
-                name: "Sunday",
-                operationHours: "24 Hours",
-                regular: {
-                    startClockMenu: false,
-                    endClockMenu: false,
-                    startTime: "",
-                    endTime: ""
-                },
-                splitHours: {
-                    first: {
-                        startClockMenu: false,
-                        endClockMenu: false,
-                        startTime: "",
-                        endTime: ""
-                    },
-                    second: {
-                        startClockMenu: false,
-                        endClockMenu: false,
-                        startTime: "",
-                        endTime: ""
-                    }
-                }
+        menu: false,
+        elemToWrap: "",
+        timePicker: "",
+        selectedWeekday: {},
+        array: null,
+        index: null,
+        operationTypes: [
+            { text: "Regular", value: "regular" },
+            { text: "Split Hours", value: "break" },
+            { text: "24 Hours", value: "24h" },
+            { text: "Closed", value: "closed" }
+        ]
+    }),
+
+    computed: {
+        loading() {
+            return this.$store.state.storePanel.settings.profile.loading
+                .operationHours;
+        },
+
+        errorMessage() {
+            return this.$store.state.storePanel.settings.profile.errorMessage
+                .operationHours;
+        },
+
+        timetable() {
+            return this.$store.state.storePanel.store.timetable;
+        }
+    },
+
+    methods: {
+        ...mapActions("storePanel/settings/profile", ["updateTimetable"]),
+
+        openMenu(className, weekday, array, index) {
+            this.elemToWrap = "." + className;
+            this.menu = true;
+            this.selectedWeekday = weekday;
+            this.array = array;
+            this.index = index;
+        },
+
+        saveTime() {
+            this.selectedWeekday.shifts[this.array][
+                this.index
+            ] = this.timePicker;
+
+            const { shifts } = this.selectedWeekday;
+
+            if (shifts[this.array][0] > shifts[this.array][1]) {
+                const holder = shifts[this.array][0];
+                shifts[this.array][0] = shifts[this.array][1];
+                shifts[this.array][1] = holder;
             }
-        ],
-        timePicker: ""
-    })
+
+            this.menu = false;
+        }
+    }
 };
 </script>

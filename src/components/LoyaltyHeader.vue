@@ -1,15 +1,21 @@
 <template>
     <header>
         <v-app-bar app flat color="white">
-<!--            <v-app-bar-nav-icon @click.stop="mini = !mini"></v-app-bar-nav-icon>-->
-            <v-app-bar-nav-icon @click.stop="$vuetify.breakpoint.mdAndUp ? (mini=!mini) : (leftDrawer=!leftDrawer)"></v-app-bar-nav-icon>
+            <!--            <v-app-bar-nav-icon @click.stop="mini = !mini"></v-app-bar-nav-icon>-->
+            <v-app-bar-nav-icon
+                @click.stop="
+                    $vuetify.breakpoint.mdAndUp
+                        ? (mini = !mini)
+                        : (leftDrawer = !leftDrawer)
+                "
+            ></v-app-bar-nav-icon>
 
             <v-spacer></v-spacer>
 
             <v-menu offset-y transition="slide-y-transition" bottom>
                 <template v-slot:activator="{ on }">
                     <v-btn
-                        class="text-capitalize font-weight-medium"
+                        class="text-capitalize secondary--text"
                         text
                         v-on="on"
                     >
@@ -103,7 +109,7 @@
             <v-menu offset-y bottom transition="slide-y-transition">
                 <template v-slot:activator="{ on }">
                     <v-btn
-                        class="text-capitalize font-weight-medium"
+                        class="text-capitalize secondary--text"
                         text
                         v-on="on"
                     >
@@ -216,7 +222,10 @@
                                 </v-list-item>
                             </template>
 
-                            <span v-text="item.title"></span>
+                            <span
+                                class="font-weight-bold"
+                                v-text="item.title"
+                            ></span>
                         </v-tooltip>
 
                         <v-list-item v-else :to="item.to" exact>
@@ -306,7 +315,7 @@ export default {
                 mdiClose
             },
             mini: false,
-            leftDrawer:false,
+            leftDrawer: false,
             rightDrawer: false,
             navLinks: [
                 {
@@ -324,7 +333,7 @@ export default {
                         },
                         {
                             icon: mdiSourceBranch,
-                            title: "branches",
+                            title: "Branches",
                             to: "/loyaltyPanel/branches"
                         },
                         {
@@ -548,29 +557,11 @@ export default {
         };
     },
 
-
-    // beforeDestroy () {
-    //     if (typeof window === 'undefined') return
-    //
-    //     window.removeEventListener('resize', this.onResize, { passive: true })
-    // },
-    //
-    // mounted () {
-    //     this.onResize()
-    //
-    //     window.addEventListener('resize', this.onResize, { passive: true })
-    // },
-    //
-    // methods: {
-    //     onResize () {
-    //         this.isMobile = window.innerWidth < 600
-    //     },
-    // },
     computed: {
         containerHeight() {
             return this.mini ? "calc(100vh - 223px)" : "calc(100vh - 213px)";
         }
-    },
+    }
 };
 </script>
 

@@ -9,6 +9,9 @@
         dense
         clearable
         hide-details="auto"
+        :readonly="readonly"
+        :disabled="disabled"
+        :placeholder="placeholder"
         :prepend-icon="icons[`${prependIcon}`]"
         :prepend-inner-icon="icons[`${prependInnerIcon}`]"
         :append-icon="icons[`${appendIcon}`]"
@@ -19,7 +22,7 @@
 </template>
 
 <script>
-import { mdiPlus, mdiCurrencyEur } from "@mdi/js";
+import { mdiPlus, mdiCurrencyEur, mdiClockOutline, mdiPercent } from "@mdi/js";
 
 export default {
     name: "BTextField",
@@ -33,11 +36,14 @@ export default {
         prependInnerIcon: String,
         appendIcon: String,
         appendOuterIcon: String,
-        noTopMargin: Boolean
+        noTopMargin: Boolean,
+        readonly: Boolean,
+        disabled: Boolean,
+        placeholder: String
     },
 
     data: () => ({
-        icons: { mdiPlus, mdiCurrencyEur }
+        icons: { mdiPlus, mdiCurrencyEur, mdiClockOutline, mdiPercent }
     })
 };
 </script>
