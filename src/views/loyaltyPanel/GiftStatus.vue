@@ -8,9 +8,9 @@
 
             <v-tabs-items v-model="tab">
                 <v-tab-item>
-                    <v-toolbar flat height="80">
+                    <v-toolbar flat height="90">
                         <v-spacer></v-spacer>
-                        <v-col cols="4" class="pa-0">
+                        <v-col cols="12" sm="4" class="pa-0">
                             <v-text-field
                                 label="Search"
                                 color="secondary"
@@ -31,65 +31,66 @@
                 </v-tab-item>
 
                 <v-tab-item>
-                    <v-toolbar flat height="80">
-                        <v-menu offset-y right>
-                            <template v-slot:activator="{ on }">
-                                <v-btn text v-on="on">
-                                    <v-icon
-                                        color="secondary"
-                                        v-text="icons.mdiFormatListCheckbox"
-                                    ></v-icon>
-                                </v-btn>
-                            </template>
+                    <v-toolbar flat height="90">
+                        <v-row class="d-flex">
+                            <v-col class="pa-0">
+                                <v-menu offset-y right>
+                                    <template v-slot:activator="{ on }">
+                                        <v-btn text v-on="on">
+                                            <v-icon
+                                                    color="secondary"
+                                                    v-text="icons.mdiFormatListCheckbox"
+                                            ></v-icon>
+                                        </v-btn>
+                                    </template>
 
-                            <v-list dense>
-                                <v-list-item href="#">
-                                    <v-list-item-icon>
-                                        <v-icon
-                                            color="green darken-3"
-                                            v-text="icons.mdiMicrosoftExcel"
-                                        ></v-icon>
-                                    </v-list-item-icon>
-                                    <v-list-item-title
-                                        >Export to Excel</v-list-item-title
-                                    >
-                                </v-list-item>
+                                    <v-list dense>
+                                        <v-list-item href="#">
+                                            <v-list-item-icon>
+                                                <v-icon
+                                                        color="green darken-3"
+                                                        v-text="icons.mdiMicrosoftExcel"
+                                                ></v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title
+                                            >Export to Excel</v-list-item-title
+                                            >
+                                        </v-list-item>
 
-                                <v-list-item href="#">
-                                    <v-list-item-icon>
-                                        <v-icon
-                                            color="red darken-4"
-                                            v-text="icons.mdiFilePdf"
-                                        ></v-icon>
-                                    </v-list-item-icon>
-                                    <v-list-item-title
-                                        >Export to PDF</v-list-item-title
-                                    >
-                                </v-list-item>
+                                        <v-list-item href="#">
+                                            <v-list-item-icon>
+                                                <v-icon
+                                                        color="red darken-4"
+                                                        v-text="icons.mdiFilePdf"
+                                                ></v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title
+                                            >Export to PDF</v-list-item-title
+                                            >
+                                        </v-list-item>
 
-                                <v-list-item href="#">
-                                    <v-list-item-icon>
-                                        <v-icon
-                                            color="blue darken-3"
-                                            v-text="
+                                        <v-list-item href="#">
+                                            <v-list-item-icon>
+                                                <v-icon
+                                                        color="blue darken-3"
+                                                        v-text="
                                                 icons.mdiFileDelimitedOutline
                                             "
-                                        ></v-icon>
-                                    </v-list-item-icon>
-                                    <v-list-item-title
-                                        >Export to CSV</v-list-item-title
-                                    >
-                                </v-list-item>
-                            </v-list>
-                        </v-menu>
+                                                ></v-icon>
+                                            </v-list-item-icon>
+                                            <v-list-item-title
+                                            >Export to CSV</v-list-item-title
+                                            >
+                                        </v-list-item>
+                                    </v-list>
+                                </v-menu>
+                            </v-col>
 
-                        <v-spacer></v-spacer>
-
-                        <v-col cols="4">
-                            <v-menu v-model="menu" offset-y>
-                                <template v-slot:activator="{ attrs }">
-                                    <v-text-field
-                                        :label="
+                            <v-col cols="12" sm="4" class="pa-0">
+                                <v-menu v-model="menu" offset-y>
+                                    <template v-slot:activator="{ attrs }">
+                                        <v-text-field
+                                                :label="
                                             selectedSearchType === 'All Fields'
                                                 ? 'Search'
                                                 : selectedSearchType
@@ -97,37 +98,38 @@
                                                   selectedSearchType
                                                 : 'Search'
                                         "
-                                        rounded
-                                        outlined
-                                        dense
-                                        clearable
-                                        hide-details
-                                        :aria-expanded="attrs['aria-expanded']"
-                                        :prepend-inner-icon="icons.mdiMagnify"
-                                        :append-icon="icons.mdiChevronDown"
-                                        @click:append="menu = true"
-                                    ></v-text-field>
-                                </template>
+                                                rounded
+                                                outlined
+                                                dense
+                                                clearable
+                                                hide-details
+                                                :aria-expanded="attrs['aria-expanded']"
+                                                :prepend-inner-icon="icons.mdiMagnify"
+                                                :append-icon="icons.mdiChevronDown"
+                                                @click:append="menu = true"
+                                        ></v-text-field>
+                                    </template>
 
-                                <v-list dense>
-                                    <v-list-item-group
-                                        v-model="selectedSearchType"
-                                        color="primary"
-                                    >
-                                        <v-list-item
-                                            v-for="searchType in searchTypes"
-                                            :key="searchType"
-                                            :value="searchType"
+                                    <v-list dense>
+                                        <v-list-item-group
+                                                v-model="selectedSearchType"
+                                                color="primary"
                                         >
-                                            <v-list-item-title
-                                                v-text="searchType"
+                                            <v-list-item
+                                                    v-for="searchType in searchTypes"
+                                                    :key="searchType"
+                                                    :value="searchType"
                                             >
-                                            </v-list-item-title>
-                                        </v-list-item>
-                                    </v-list-item-group>
-                                </v-list>
-                            </v-menu>
-                        </v-col>
+                                                <v-list-item-title
+                                                        v-text="searchType"
+                                                >
+                                                </v-list-item-title>
+                                            </v-list-item>
+                                        </v-list-item-group>
+                                    </v-list>
+                                </v-menu>
+                            </v-col>
+                        </v-row>
                     </v-toolbar>
 
                     <v-data-table

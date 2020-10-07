@@ -165,7 +165,6 @@
             :mini-variant="mini"
             :mini-variant-width="80"
             :temporary="$vuetify.breakpoint.smAndDown"
-            absolute
             :permanent="$vuetify.breakpoint.mdAndUp"
             dark
         >
@@ -182,7 +181,7 @@
 
             <v-row class="pt-4 pb-3" no-gutters justify="center">
                 <v-sheet light class="pa-2 rounded-circle">
-                    <v-img src="../assets/logo.png" width="70"></v-img>
+                    <v-img src="../assets/logo.png" width="55"></v-img>
                 </v-sheet>
 
                 <v-col cols="12" class="text-center mt-3">

@@ -10,7 +10,7 @@
 
             <v-container>
                 <v-row justify="space-around">
-                    <v-col cols="5">
+                    <v-col cols="12" md="5">
                         <v-card class="px-5" outlined>
                             <v-card-title
                                 class="subtitle-1 secondary--text font-weight-medium justify-center"
@@ -36,7 +36,7 @@
                         </v-card>
                     </v-col>
 
-                    <v-col cols="5">
+                    <v-col cols="12" md="5">
                         <v-card class="px-5" outlined>
                             <v-card-title
                                 class="subtitle-1 secondary--text font-weight-medium justify-center"

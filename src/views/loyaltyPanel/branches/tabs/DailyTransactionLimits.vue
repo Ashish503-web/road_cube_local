@@ -1,33 +1,33 @@
 <template>
     <v-tab-item>
-        <v-toolbar flat height="80">
-            <v-btn
-                color="secondary"
-                class="text-capitalize"
-                depressed
-                @click="
+        <v-toolbar flat height="80" class="my-3">
+           <v-row class="d-flex justify-space-between align-center flex-wrap">
+               <v-btn
+                       color="secondary"
+                       class="text-capitalize mb-2 mx-auto mx-sm-0"
+                       depressed
+                       @click="
                     () => {
                         mode = 1;
                         limitsDialog = true;
                     }
                 "
-                >general limits</v-btn
-            >
-
-            <v-spacer></v-spacer>
-
-            <v-col cols="4">
-                <v-text-field
-                    label="Search"
-                    color="secondary"
-                    rounded
-                    outlined
-                    dense
-                    clearable
-                    hide-details
-                    :prepend-inner-icon="icons.mdiMagnify"
-                ></v-text-field>
-            </v-col>
+               >general limits</v-btn
+               >
+               <v-col cols="12" sm="4" class="pa-0">
+                   <v-text-field
+                           class="pa-0 mb-2 mx-auto mx-sm-0"
+                           label="Search"
+                           color="secondary"
+                           rounded
+                           outlined
+                           dense
+                           clearable
+                           hide-details
+                           :prepend-inner-icon="icons.mdiMagnify"
+                   ></v-text-field>
+               </v-col>
+           </v-row>
         </v-toolbar>
 
         <v-data-table

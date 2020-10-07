@@ -1,28 +1,29 @@
 <template>
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
-            <v-toolbar flat height="80">
-                <v-btn
-                    color="secondary"
-                    class="text-capitalize"
-                    depressed
-                    @click="dialog = true"
+            <v-toolbar flat height="90">
+                <v-row class="d-flex justify-space-between align-center flex-wrap" style="width: 100%">
+                    <v-btn
+                            color="secondary"
+                            class="text-capitalize d-flex mx-auto mx-sm-0"
+                            depressed
+                            @click="dialog = true"
                     >create supplier</v-btn
-                >
-                <v-spacer></v-spacer>
+                    >
 
-                <v-col cols="4" class="pa-0">
-                    <v-text-field
-                        label="Search"
-                        color="secondary"
-                        rounded
-                        outlined
-                        dense
-                        clearable
-                        hide-details
-                        :prepend-inner-icon="icons.mdiMagnify"
-                    ></v-text-field>
-                </v-col>
+                    <v-col cols="12" sm="4" class="px-0 mx-auto mx-sm-0">
+                        <v-text-field
+                                label="Search"
+                                color="secondary"
+                                rounded
+                                outlined
+                                dense
+                                clearable
+                                hide-details
+                                :prepend-inner-icon="icons.mdiMagnify"
+                        ></v-text-field>
+                    </v-col>
+                </v-row>
             </v-toolbar>
 
             <v-data-table
@@ -55,7 +56,7 @@
                                 color="red"
                                 icon
                                 v-on="on"
-                                @click="myFunc(item)"
+                                @click="deleteDialog = true"
                             >
                                 <v-icon v-text="icons.mdiClose"></v-icon>
                             </v-btn>
@@ -66,20 +67,24 @@
                 </template>
             </v-data-table>
 
-            <v-dialog v-model="dialog" max-width="40%" scrollable>
+            <v-dialog v-model="dialog" :max-width="$vuetify.breakpoint.smAndDown ? '90%' : '40%'" scrollable>
                <CreateUpdateSupplier @close="dialog=false"/>
             </v-dialog>
         </v-sheet>
+
+        <DeleteDialog />
     </v-container>
 </template>
 
 <script>
 import { mdiPencilOutline, mdiClose, mdiMagnify, mdiPlus } from "@mdi/js";
 import CreateUpdateSupplier from "../../components/loyaltyPanel/suppliermanagement/SupplierForm";
+import DeleteDialog from "@/components/loyaltyPanel/userRights/DeleteDialog.vue";
+import { mapMutations } from "vuex";
 
 export default {
     name: "SupplierManagement",
-    components: { CreateUpdateSupplier },
+    components: { CreateUpdateSupplier, DeleteDialog },
     data: () => ({
         icons: {
             mdiPencilOutline,
@@ -99,7 +104,23 @@ export default {
         ],
         itemsPerPageOptions: [10, 20, 30, -1],
         dialog: false
-    })
+    }),
+    computed: {
+        deleteDialog: {
+            get() {
+                return this.$store.state.loyaltyPanel.userRights.deleteDialog;
+            },
+
+            set(val) {
+                this.setDeleteDialog(val);
+            }
+        },
+    },
+    methods: {
+        ...mapMutations("loyaltyPanel/userRights", [
+            "setDeleteDialog"
+        ])
+    }
 };
 </script>
 

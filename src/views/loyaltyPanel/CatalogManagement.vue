@@ -22,7 +22,7 @@
             <v-toolbar flat>
                 <v-spacer></v-spacer>
 
-                <v-col cols="4" class="pa-0">
+                <v-col cols="12" sm="4" class="pa-0">
                     <v-menu v-model="menu" offset-y>
                         <template v-slot:activator="{ attrs }">
                             <v-text-field
@@ -95,7 +95,7 @@
                                 color="red"
                                 icon
                                 v-on="on"
-                                @click="myFunc(item)"
+                                @click="deleteDialog = true"
                             >
                                 <v-icon v-text="icons.mdiClose"></v-icon>
                             </v-btn>
@@ -106,13 +106,15 @@
                 </template>
             </v-data-table>
 
-            <v-dialog v-model="giftDialog" max-width="40%" scrollable>
+            <v-dialog v-model="giftDialog" :max-width="$vuetify.breakpoint.smAndDown ? '90%' : '40%'" scrollable>
                 <GiftForm @close="giftDialog = false" />
             </v-dialog>
 
-            <v-dialog v-model="supplierDialog" max-width="40%" scrollable>
+            <v-dialog v-model="supplierDialog" :max-width="$vuetify.breakpoint.smAndDown ? '90%' : '40%'" scrollable>
                 <SupplierForm @close="supplierDialog = false" />
             </v-dialog>
+
+            <DeleteDialog />
         </v-sheet>
     </v-container>
 </template>
@@ -128,10 +130,12 @@ import {
 
 import GiftForm from "../../components/loyaltyPanel/catalogManagement/GiftForm";
 import SupplierForm from "../../components/loyaltyPanel/catalogManagement/SupplierForm";
+import DeleteDialog from "@/components/loyaltyPanel/userRights/DeleteDialog.vue";
+import { mapMutations } from "vuex";
 
 export default {
     name: "CatalogManagement",
-    components: { GiftForm, SupplierForm },
+    components: { GiftForm, SupplierForm, DeleteDialog },
     data: () => ({
         icons: {
             mdiMagnify,
@@ -173,6 +177,23 @@ export default {
         selectedSearchType: "All Fields",
         giftDialog: false,
         supplierDialog: false
-    })
+    }),
+
+    computed:{
+        deleteDialog: {
+            get() {
+                return this.$store.state.loyaltyPanel.userRights.deleteDialog;
+            },
+
+            set(val) {
+                this.setDeleteDialog(val);
+            }
+        },
+    },
+    methods: {
+        ...mapMutations("loyaltyPanel/userRights", [
+            "setDeleteDialog"
+        ])
+    }
 };
 </script>

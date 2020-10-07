@@ -15,7 +15,7 @@
 
             <v-card-text class="pt-5">
                 <v-row no-gutters>
-                    <v-col cols="6" class="pr-2">
+                    <v-col cols="12" sm="6" class="pr-0 pr-sm-2 mb-2 mb-sm-0">
                         <v-text-field
                             label="Username"
                             color="secondary"
@@ -25,7 +25,7 @@
                             hide-details
                         ></v-text-field>
                     </v-col>
-                    <v-col cols="6" class="pl-2">
+                    <v-col cols="12" sm="6" class="pl-0 pl-sm-2">
                         <v-text-field
                             label="Password"
                             color="secondary"
@@ -44,7 +44,7 @@
                             multiple
                         >
                             <v-row no-gutters>
-                                <v-col cols="6" class="pr-2">
+                                <v-col cols="12" sm="6" class="pr-0 pr-sm-2 mb-2 mb-sm-0">
                                     <v-radio
                                         v-for="right in leftRights"
                                         :key="right"
@@ -61,7 +61,7 @@
                                     </v-radio>
                                 </v-col>
 
-                                <v-col cols="6" class="pl-2">
+                                <v-col cols="12" sm="6" class="pl-0 pl-sm-2">
                                     <v-radio
                                         v-for="right in rightRights"
                                         :key="right"

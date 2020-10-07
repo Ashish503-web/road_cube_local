@@ -1,23 +1,25 @@
 <template>
     <div>
 
-        <v-toolbar flat height="80">
-            <v-btn
-                    color="secondary"
-                    class="text-capitalize"
-                    depressed
-                    @click="addHandler"
-            >New Product or Service</v-btn
-            >
+        <v-toolbar flat height="90">
+            <v-row class="d-flex justify-space-between align-center flex-wrap mt-2">
+                <v-btn
+                        color="secondary"
+                        class="text-capitalize d-flex mx-auto mx-sm-0"
+                        depressed
+                        @click="addHandler"
+                >New Product or Service</v-btn
+                >
 
-            <v-spacer></v-spacer>
 
+                    <SearchField
+                            :selectedSearchType="selectedSearchType"
+                            :searchTypes="searchTypes"
+                    />
 
+            </v-row>
         </v-toolbar>
-        <SearchField
-                :selectedSearchType="selectedSearchType"
-                :searchTypes="searchTypes"
-        />
+
 
         <v-sheet outlined style="overflow: auto">
             <v-sheet width="1400px">

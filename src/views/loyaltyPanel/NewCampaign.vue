@@ -39,11 +39,12 @@
                                 class="b-outlined pa-3 mb-3"
                             >
                                 <v-col
-                                    cols="4"
+                                    cols="12"
+                                    sm="4"
                                     class="subtitle-2"
                                     v-text="selection.title"
                                 ></v-col>
-                                <v-col cols="8">
+                                <v-col cols="12" sm="8">
                                     <v-radio-group
                                         class="mt-0 pt-0"
                                         hide-details
@@ -105,7 +106,7 @@
                 <v-window-item :value="2">
                     <v-card outlined max-width="500" class="mx-auto mt-3">
                         <v-row no-gutters align="center">
-                            <v-col cols="8">
+                            <v-col cols="12" sm="8">
                                 <v-card-title
                                     class="subtitle-2 pr-0"
                                     style="word-break: normal"
@@ -114,7 +115,7 @@
                                     to appear
                                 </v-card-title>
                             </v-col>
-                            <v-col cols="4" class="pr-4">
+                            <v-col cols="12" sm="4" class="pr-4 pl-4 pl-sm-0 pb-3 pb-sm-0">
                                 <v-select
                                     v-model="campaignAppearType"
                                     :items="['Only Once', 'Recursively']"
@@ -136,7 +137,7 @@
                             below. Caution! After that date and time, your
                             campaign will be terminated.
                             <v-row>
-                                <v-col cols="6">
+                                <v-col cols="12" sm="6">
                                     <v-menu offset-y>
                                         <template v-slot:activator="{ on }">
                                             <v-text-field
@@ -157,7 +158,7 @@
                                         ></v-date-picker>
                                     </v-menu>
                                 </v-col>
-                                <v-col cols="6">
+                                <v-col cols="12" sm="6">
                                     <v-menu
                                         v-model="timePicker"
                                         offset-y

@@ -1,8 +1,10 @@
 <template>
-    <v-col cols="12">
+    <v-col cols="12" class="pa-0">
         <v-checkbox
             v-model="formModal.productDisplayDays.active"
             label=" I want the product to be displayed on specific days"
+            hide-details
+            class="mb-2"
         ></v-checkbox>
         <v-col cols="12" v-if="formModal.productDisplayDays.active">
             <v-checkbox

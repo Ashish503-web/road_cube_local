@@ -15,7 +15,7 @@
 
             <v-card-text class="pt-5">
                 <v-row no-gutters>
-                    <v-col cols="6" class="pr-2">
+                    <v-col cols="12" sm="6" class="pr-0 pr-sm-2 mb-2 mb-sm-0">
                         <v-text-field
                             label="Card Number"
                             color="secondary"
@@ -25,7 +25,7 @@
                             hide-details
                         ></v-text-field>
                     </v-col>
-                    <v-col cols="6" class="pl-2">
+                    <v-col cols="12" sm="6" class="pl-0 pl-sm-2">
                         <v-autocomplete
                             menu-props="offsetY"
                             label="Company Name"
@@ -38,7 +38,7 @@
                         ></v-autocomplete>
                     </v-col>
 
-                    <v-col cols="6" class="pr-2">
+                    <v-col cols="12" sm="6" class="pr-0 pr-sm-2 mb-2 mb-sm-0">
                         <v-text-field
                             label="Name"
                             color="secondary"
@@ -49,12 +49,11 @@
                             hide-details
                         ></v-text-field>
                     </v-col>
-
-                    <v-col cols="6" class="pl-2">
+                    <v-col cols="12" sm="6" class="pl-0 pl-sm-2">
                         <v-text-field
                             label="Surname"
                             color="secondary"
-                            class="mt-3"
+                            class="mt-0 mt-sm-3"
                             outlined
                             dense
                             clearable
@@ -62,7 +61,7 @@
                         ></v-text-field>
                     </v-col>
 
-                    <v-col cols="6" class="pr-2">
+                    <v-col cols="12" sm="6" class="pr-0 pr-sm-2 mb-2 mb-sm-0">
                         <v-menu offset-y>
                             <template v-slot:activator="{ on }">
                                 <v-text-field
@@ -113,7 +112,7 @@
                         <v-divider class="mt-3"></v-divider>
                     </v-col>
 
-                    <v-col cols="6" class="pr-2">
+                    <v-col cols="12" sm="6" class="pr-0 pr-sm-2 mb-2 mb-sm-0">
                         <v-autocomplete
                             menu-props="offsetY"
                             label="Address"
@@ -126,13 +125,12 @@
                             hide-details
                         ></v-autocomplete>
                     </v-col>
-
-                    <v-col cols="6" class="pl-2">
+                    <v-col cols="12" sm="6" class="pl-0 pl-sm-2">
                         <v-text-field
                             type="number"
                             label="T.K"
                             color="secondary"
-                            class="mt-3"
+                            class="mt-0 mt-sm-3"
                             outlined
                             dense
                             clearable
@@ -140,7 +138,7 @@
                         ></v-text-field>
                     </v-col>
 
-                    <v-col cols="6" class="pr-2">
+                    <v-col cols="12" sm="6" class="pr-0 pr-sm-2 mb-2 mb-sm-0">
                         <v-autocomplete
                             menu-props="offsetY"
                             label="Area / City"
@@ -153,8 +151,7 @@
                             hide-details
                         ></v-autocomplete>
                     </v-col>
-
-                    <v-col cols="6" class="pl-2">
+                    <v-col cols="12" sm="6" class="pl-0 pl-sm-2">
                         <v-text-field
                             type="number"
                             label="Country Code"
@@ -167,7 +164,7 @@
                         ></v-text-field>
                     </v-col>
 
-                    <v-col cols="6" class="pr-2">
+                    <v-col cols="12" sm="6" class="pr-0 pr-sm-2 mb-2 mb-sm-0">
                         <v-text-field
                             type="number"
                             label="Cellphone Number"
@@ -179,8 +176,7 @@
                             hide-details
                         ></v-text-field>
                     </v-col>
-
-                    <v-col cols="6" class="pl-2">
+                    <v-col cols="12" sm="6" class="pl-0 pl-sm-2">
                         <v-text-field
                             type="number"
                             label="Telephone Number"
@@ -193,7 +189,7 @@
                         ></v-text-field>
                     </v-col>
 
-                    <v-col cols="6" class="pr-2">
+                    <v-col cols="12" sm="6" class="pr-0 pr-sm-2 mb-2 mb-sm-0">
                         <v-text-field
                             type="email"
                             label="Email"
@@ -205,8 +201,7 @@
                             hide-details
                         ></v-text-field>
                     </v-col>
-
-                    <v-col cols="6" class="pl-2">
+                    <v-col cols="12" sm="6" class="pl-0 pl-sm-2">
                         <v-menu offset-y>
                             <template v-slot:activator="{ on }">
                                 <v-text-field

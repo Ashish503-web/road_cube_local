@@ -36,46 +36,48 @@
 
             <v-spacer></v-spacer>
 
-            <v-col cols="4">
-                <v-menu
-                    :close-on-content-click="false"
-                    offset-y
-                    max-width="290px"
-                >
-                    <template v-slot:activator="{ on }">
-                        <v-text-field
-                            label="Range"
+            <v-row no-gutters class="d-flex flex-wrap justify-end">
+                <v-col cols="12" sm="4" class="ma-1">
+                    <v-menu
+                            :close-on-content-click="false"
+                            offset-y
+                            max-width="290px"
+                    >
+                        <template v-slot:activator="{ on }">
+                            <v-text-field
+                                    label="Range"
+                                    color="secondary"
+                                    rounded
+                                    outlined
+                                    dense
+                                    clearable
+                                    hide-details
+                                    :prepend-inner-icon="icons.mdiCalendarSearch"
+                                    v-on="on"
+                            ></v-text-field>
+                        </template>
+
+                        <v-date-picker
+                                v-model="range"
+                                color="secondary"
+                                range
+                        ></v-date-picker>
+                    </v-menu>
+                </v-col>
+
+                <v-col cols="12" sm="4" class="ma-1">
+                    <v-text-field
+                            label="Search"
                             color="secondary"
                             rounded
                             outlined
                             dense
                             clearable
                             hide-details
-                            :prepend-inner-icon="icons.mdiCalendarSearch"
-                            v-on="on"
-                        ></v-text-field>
-                    </template>
-
-                    <v-date-picker
-                        v-model="range"
-                        color="secondary"
-                        range
-                    ></v-date-picker>
-                </v-menu>
-            </v-col>
-
-            <v-col cols="4">
-                <v-text-field
-                    label="Search"
-                    color="secondary"
-                    rounded
-                    outlined
-                    dense
-                    clearable
-                    hide-details
-                    :prepend-inner-icon="icons.mdiMagnify"
-                ></v-text-field>
-            </v-col>
+                            :prepend-inner-icon="icons.mdiMagnify"
+                    ></v-text-field>
+                </v-col>
+            </v-row>
         </v-toolbar>
 
         <v-data-table

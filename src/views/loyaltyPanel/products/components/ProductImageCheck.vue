@@ -1,9 +1,11 @@
 <template>
-    <v-col cols="12">
+    <v-col cols="12" class="pa-0">
         <v-checkbox
             @input="checkHandler"
             v-model="formModal.productImageCheck.active"
             label=" I want the product to be displayed with an image in the application"
+            hide-details
+            class="mb-2"
         ></v-checkbox>
         <v-card
             class="dashed_border  "

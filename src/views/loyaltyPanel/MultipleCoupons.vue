@@ -21,7 +21,7 @@
 
             <v-toolbar flat>
                 <v-spacer></v-spacer>
-                <v-col cols="4" class="pa-0">
+                <v-col cols="12" sm="4" class="pa-0">
                     <v-text-field
                         label="Search"
                         color="secondary"
