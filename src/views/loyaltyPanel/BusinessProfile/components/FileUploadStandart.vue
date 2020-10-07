@@ -27,7 +27,6 @@
                             color="secondary" class="text-capitalize" depressed
                             v-if="card.deleteBtn.active"
                             :disabled="card.deleteBtn.disabled"
-
                     >
                         Delete
                     </v-btn>

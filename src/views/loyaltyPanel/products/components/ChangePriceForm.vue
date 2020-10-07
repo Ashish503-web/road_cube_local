@@ -1,5 +1,5 @@
 <template>
-    <v-card class="dashed_border mt-4">
+    <v-card class="dashed_border mt-4" flat>
         <v-col cols="12">
             <v-checkbox v-model="formModal.changePriceCheck" @click="handleChangePrice" label="I want to change price"></v-checkbox>
         </v-col>

@@ -47,7 +47,7 @@
                                 color="red"
                                 icon
                                 v-on="on"
-                                @click="myFunc(item)"
+                                @click="deleteDialog=true"
                             >
                                 <v-icon v-text="icons.mdiClose"></v-icon>
                             </v-btn>
@@ -71,9 +71,11 @@
                 </template>
             </v-data-table>
 
-            <v-dialog v-model="dialog" max-width="40%" scrollable>
+            <v-dialog v-model="dialog" :max-width="$vuetify.breakpoint.smAndDown ? '90%' : '40%'" scrollable>
                 <CreateUpdateAction @close="dialog=false" />
             </v-dialog>
+
+            <DeleteDialog />
         </v-sheet>
     </v-container>
 </template>
@@ -81,10 +83,12 @@
 <script>
 import { mdiPencilOutline, mdiClose, mdiFacebook, mdiPlus } from "@mdi/js";
 import CreateUpdateAction from "../../components/loyaltyPanel/sampling/ActionForm";
+import DeleteDialog from "../../components/loyaltyPanel/userRights/DeleteDialog";
+import { mapMutations } from "vuex";
 
 export default {
     name: "Sampling",
-    components: { CreateUpdateAction },
+    components: { DeleteDialog, CreateUpdateAction },
     data: () => ({
         icons: {
             mdiPencilOutline,
@@ -116,7 +120,23 @@ export default {
         ],
         itemsPerPageOptions: [10, 20, 30, -1],
         dialog: false,
-    })
+    }),
+    computed: {
+        deleteDialog: {
+            get() {
+                return this.$store.state.loyaltyPanel.userRights.deleteDialog;
+            },
+
+            set(val) {
+                this.setDeleteDialog(val);
+            }
+        },
+    },
+    methods: {
+        ...mapMutations("loyaltyPanel/userRights", [
+            "setDeleteDialog"
+        ])
+    }
 };
 </script>
 

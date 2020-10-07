@@ -1,6 +1,6 @@
 <template>
     <v-tab-item>
-        <v-toolbar flat height="80">
+        <v-toolbar class="toolbar-content" flat dense height="80">
             <v-btn
                 color="secondary"
                 class="text-capitalize"
@@ -258,3 +258,8 @@ export default {
     }
 };
 </script>
+<style scoped>
+    .toolbar-content{
+        padding: 0 !important;
+    }
+</style>

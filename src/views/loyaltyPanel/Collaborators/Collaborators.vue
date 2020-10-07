@@ -2,27 +2,27 @@
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
             <v-toolbar flat height="80">
-                <v-btn
-                        color="secondary"
-                        class="text-none"
-                        depressed
-                >Add Brand</v-btn
-                >
-
-                <v-spacer></v-spacer>
-
-                <v-col cols="4">
-                    <v-text-field
-                            label="Search"
+                <v-row class="d-flex justify-space-between align-center flex-wrap mt-4" style="width: 100%">
+                    <v-btn
                             color="secondary"
-                            rounded
-                            outlined
-                            dense
-                            clearable
-                            hide-details
-                            :prepend-inner-icon="icons.mdiMagnify"
-                    ></v-text-field>
-                </v-col>
+                            class="text-none d-flex mx-auto mx-sm-0"
+                            depressed
+                    >Add Brand</v-btn
+                    >
+
+                    <v-col cols="12" sm="4" class="px-0 mx-auto mx-sm-0">
+                        <v-text-field
+                                label="Search"
+                                color="secondary"
+                                rounded
+                                outlined
+                                dense
+                                clearable
+                                hide-details
+                                :prepend-inner-icon="icons.mdiMagnify"
+                        ></v-text-field>
+                    </v-col>
+                </v-row>
             </v-toolbar>
 
             <v-data-table

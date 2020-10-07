@@ -1,8 +1,8 @@
 <template>
     <v-card
-        class="mx-auto mt-4"
+            class="mx-auto mt-4"
 
-        outlined
+            outlined
     >
         <v-card-title class="">
             Push Notifications
@@ -13,24 +13,25 @@
         <v-list-item class="dashed_border mr-4 ml-4 mb-4">
             <v-container>
                 <v-row>
-                    <v-col cols="12" >
+                    <v-col cols="12" class="pa-0 mb-4">
                         <v-text-field
-
-                            :value="val1"
-                            label="REST API KEY"
-                            color="secondary"
-                            outlined
-                            dense
+                                hide-details
+                                :value="val1"
+                                label="REST API KEY"
+                                color="secondary"
+                                outlined
+                                dense
                         ></v-text-field>
                     </v-col>
-                    <v-col cols="12" >
+                    <v-col cols="12" class="pa-0">
                         <v-text-field
-                            label="One Signal App ID"
-                            placeholder="Placeholder"
-                            :value="val2"
-                            color="secondary"
-                            outlined
-                            dense
+                                hide-details
+                                label="One Signal App ID"
+                                placeholder="Placeholder"
+                                :value="val2"
+                                color="secondary"
+                                outlined
+                                dense
                         ></v-text-field>
                     </v-col>
 
@@ -40,9 +41,9 @@
         <v-card-actions>
 
             <v-btn
-                color="light-blue accent-1"
-                class="white--text"
-                disabled
+                    color="light-blue accent-1"
+                    class="white--text"
+                    disabled
             >
                 Save
             </v-btn>
@@ -52,21 +53,19 @@
 <script>
 
 
-export default {
-    data() {
-        return {
-            val1:'MDc4M2FhNDEtYTkxMy00M2IwLTgyZDktMDdjN2E4Njg3NzU1',
-            val2:'969b8c9f-a045-48f9-aff8-f31e365cd1d5',
-        };
-    },
-    methods:{
-
-    }
-};
+    export default {
+        data() {
+            return {
+                val1: "MDc4M2FhNDEtYTkxMy00M2IwLTgyZDktMDdjN2E4Njg3NzU1",
+                val2: "969b8c9f-a045-48f9-aff8-f31e365cd1d5"
+            };
+        },
+        methods: {}
+    };
 </script>
 <style scoped>
-.dashed_border {
-    border: 1px dashed grey;
-    border-radius: 10px;
-}
+    .dashed_border {
+        border: 1px dashed grey;
+        border-radius: 10px;
+    }
 </style>

@@ -1,10 +1,13 @@
 <template>
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
-            <v-tabs v-model="tab" color="black">
-                <v-tab class="text-capitalize">Stores</v-tab>
-                <v-tab class="text-capitalize">Registration plans</v-tab>
-                <v-tab class="text-capitalize">Payment methods</v-tab>
+            <v-tabs
+                    :vertical="$vuetify.breakpoint.mdAndDown"
+                    v-model="tab"
+                    color="black">
+                <v-tab class="text-capitalize text-left d-flex justify-start px-3">Stores</v-tab>
+                <v-tab class="text-capitalize text-left d-flex justify-start px-3">Registration plans</v-tab>
+                <v-tab class="text-capitalize text-left d-flex justify-start px-3">Payment methods</v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">

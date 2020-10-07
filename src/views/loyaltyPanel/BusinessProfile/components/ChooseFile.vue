@@ -10,7 +10,7 @@
                        Choose a file…
                     </span>
     </v-btn>-->
-    <v-col cols="7">
+    <v-col cols="12" sm="7">
         Press the following button to choose image:
         <v-file-input
                 color="secondary"
@@ -32,8 +32,20 @@ export default {
         return {
             icons: {
                 mdiCloudUpload,
+            },
+            logo: {
+                image: "",
+                imageFile: ""
             }
         };
+    },
+    methods: {
+        onFileSelected(item, event) {
+            item.imageFile = event;
+            const reader = new FileReader();
+            reader.readAsDataURL(item.imageFile);
+            reader.onload = e => (item.image = e.target.result);
+        }
     }
 }
 </script>

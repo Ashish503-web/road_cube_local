@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="formModal.active" max-width="60%">
+    <v-dialog v-model="formModal.active" max-width="950px" width="90%" class="product-form">
         <v-card>
             <v-card-title class="secondary white--text">
                 {{ formModal.title }}
@@ -93,12 +93,13 @@
                 </v-row>
                 <v-row>
                     <v-col row="12">
-                        <v-col cols="12">
+                        <v-col cols="12" class="pa-0">
                             <product-image-check
                                 :formModal="dataComponent"
                             ></product-image-check>
                         </v-col>
                         <v-col
+                                class="pa-0"
                             cols="12"
                             v-if="formModal.productDisplay !== '2'"
                         >
@@ -106,7 +107,7 @@
                                 :formModal="dataComponent"
                             ></product-display-days>
                         </v-col>
-                        <v-col cols="12">
+                        <v-col cols="12" class="pa-0">
                             <update-product-companies
                                 :formModal="dataComponent"
                             ></update-product-companies>
@@ -160,3 +161,13 @@ export default {
     }
 };
 </script>
+<style scoped>
+    .product-form{
+        max-width: 60%;
+    }
+    @media (max-width: 600px) {
+        .product-form{
+            max-width: 90%;
+        }
+    }
+</style>

@@ -18,12 +18,13 @@
 
 
 
-                    <v-col cols="12" sm="6" md="6">
+                    <v-col cols="12" sm="6" md="6" class="pa-0">
                         <v-text-field
                             :value="val"
                             label="Add the number here"
                             color="secondary"
                             outlined
+                            hide-details
                             dense
                             clearable
                         ></v-text-field>

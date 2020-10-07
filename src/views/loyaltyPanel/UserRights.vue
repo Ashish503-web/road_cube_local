@@ -1,34 +1,34 @@
 <template>
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
-            <v-toolbar flat height="80">
-                <v-btn
-                    color="secondary"
-                    class="text-capitalize"
-                    depressed
-                    @click="
+            <v-toolbar flat height="90">
+                <v-row class="d-flex justify-space-between align-center flex-wrap" style="width: 100%">
+                    <v-btn
+                            color="secondary"
+                            class="text-capitalize d-flex mx-auto mx-sm-0"
+                            depressed
+                            @click="
                         () => {
                             mode = 1;
                             userDialog = true;
                         }
                     "
                     >Register User</v-btn
-                >
+                    >
 
-                <v-spacer></v-spacer>
-
-                <v-col cols="10" sm="8" md="6" lg="4" class="pa-3">
-                    <v-text-field
-                        label="Search"
-                        color="secondary"
-                        outlined
-                        dense
-                        clearable
-                        rounded
-                        hide-details
-                        :prepend-inner-icon="icons.mdiMagnify"
-                    ></v-text-field>
-                </v-col>
+                    <v-col cols="11" sm="8" md="6" lg="4" class="pa-3 mx-auto mx-sm-0">
+                        <v-text-field
+                                label="Search"
+                                color="secondary"
+                                outlined
+                                dense
+                                clearable
+                                rounded
+                                hide-details
+                                :prepend-inner-icon="icons.mdiMagnify"
+                        ></v-text-field>
+                    </v-col>
+                </v-row>
             </v-toolbar>
 
             <v-data-table
@@ -62,7 +62,7 @@
 
                     <v-tooltip color="secondary" top>
                         <template v-slot:activator="{ on }">
-                            <v-btn
+    -                        <v-btn
                                 color="red"
                                 icon
                                 v-on="on"
@@ -153,7 +153,7 @@ export default {
             set(val) {
                 this.setDeleteDialog(val);
             }
-        }
+        },
     },
 
     methods: {

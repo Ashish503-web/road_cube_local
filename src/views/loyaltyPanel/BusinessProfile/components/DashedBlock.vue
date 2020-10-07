@@ -19,8 +19,8 @@
 
         </v-list-item>-->
         <v-row class="dashed mt-3 pa-5" no-gutters align="center" v-if="card.fileUpload.active">
-            <v-col cols="5">
-                <v-img :src="card.img" width="64" class="mx-auto"></v-img>
+            <v-col cols="12" sm="5">
+                <v-img :src="card.img" width="64" class="mx-auto mx-sm-0"></v-img>
                 <a v-if="card.pdf" :href="card.pdf" target="_blank">{{ card.pdf }}</a>
             </v-col>
             <choose-file></choose-file>
@@ -50,17 +50,16 @@
             </v-list-item-content>
         </v-list-item>-->
         <v-row class="dashed mt-3 pa-5" no-gutters align="center" v-if="card.select.active">
-            <v-col cols="5">
+            <v-col cols="12" sm="5">
                 <v-img :src="card.img" width="64" class="mx-auto"></v-img>
                 <a v-if="card.pdf" :href="card.pdf" target="_blank">{{ card.pdf }}</a>
             </v-col>
-            <v-col cols="3">
+            <v-col cols="12" sm="3">
                 <v-select
-                        class="mt-5 ml-4"
+                        class="mt-5 ml-0 ml-sm-4"
                         v-model="relation"
                         :items="items"
                         outlined
-
                         dense
                 ></v-select>
             </v-col>

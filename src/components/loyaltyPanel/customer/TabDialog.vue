@@ -15,7 +15,7 @@
 
             <v-card-text class="pt-5">
                 <v-row no-gutters>
-                    <v-col cols="6" class="pr-2">
+                    <v-col cols="12" sm="6" class="pr-0 pr-sm-2 mb-2 mb-sm-0">
                         <v-text-field
                             label="New Tab Title"
                             color="secondary"
@@ -25,7 +25,7 @@
                             hide-details
                         ></v-text-field>
                     </v-col>
-                    <v-col cols="6" class="pl-2">
+                    <v-col cols="12" sm="6" class="pl-0 pl-sm-2">
                         <v-text-field
                             label="User Filters"
                             color="secondary"
@@ -36,7 +36,7 @@
                         ></v-text-field>
                     </v-col>
 
-                    <v-col cols="6" class="pr-2">
+                    <v-col cols="12" sm="6" class="pr-0 pr-sm-2 mb-2 mb-sm-0">
                         <v-select
                             :items="operators"
                             menu-props="offsetY"
@@ -49,15 +49,14 @@
                             hide-details
                         ></v-select>
                     </v-col>
-
-                    <v-col cols="6" class="pl-2">
+                    <v-col cols="12" sm="6" class="pl-0 pl-sm-2">
                         <v-menu offset-y>
                             <template v-slot:activator="{ on }">
                                 <v-text-field
                                     v-model="registrationDate"
                                     label="Registration Date"
                                     color="secondary"
-                                    class="mt-3"
+                                    class="mt-0 mt-sm-3"
                                     outlined
                                     dense
                                     hide-details
@@ -101,7 +100,7 @@
                         <v-divider class="mt-3"></v-divider>
                     </v-col>
 
-                    <v-col cols="6" class="pr-2">
+                    <v-col cols="12" sm="6" class="pr-0 pr-sm-2 mb-2 mb-sm-0">
                         <v-select
                             :items="operators"
                             menu-props="offsetY"
@@ -114,20 +113,18 @@
                             hide-details
                         ></v-select>
                     </v-col>
-
-                    <v-col cols="6" class="pl-2">
+                    <v-col cols="12" sm="6" class="pl-0 pl-sm-2">
                         <v-text-field
                             label="Transactions Filters"
                             color="secondary"
-                            class="mt-3"
+                            class="mt-0 mt-sm-3"
                             outlined
                             dense
                             clearable
                             hide-details
                         ></v-text-field>
                     </v-col>
-
-                    <v-col cols="6" class="pr-2">
+                    <v-col cols="12" sm="6" class="pr-0 pr-sm-2 mb-2 mb-sm-0">
                         <v-select
                             :items="operators"
                             menu-props="offsetY"
@@ -140,20 +137,18 @@
                             hide-details
                         ></v-select>
                     </v-col>
-
-                    <v-col cols="6" class="pl-2">
+                    <v-col cols="12" sm="6" class="pl-0 pl-sm-2">
                         <v-text-field
                             label="Total Transaction Amount"
                             color="secondary"
-                            class="mt-3"
+                            class="mt-0 mt-sm-3"
                             outlined
                             dense
                             clearable
                             hide-details
                         ></v-text-field>
                     </v-col>
-
-                    <v-col cols="6" class="pr-2">
+                    <v-col cols="12" sm="6" class="pr-0 pr-sm-2 mb-2 mb-sm-0">
                         <v-select
                             :items="operators"
                             menu-props="offsetY"
@@ -166,12 +161,11 @@
                             hide-details
                         ></v-select>
                     </v-col>
-
-                    <v-col cols="6" class="pl-2">
+                    <v-col cols="12" sm="6" class="pl-0 pl-sm-2">
                         <v-text-field
                             label="Point Filters"
                             color="secondary"
-                            class="mt-3"
+                            class="mt-0 mt-sm-3"
                             outlined
                             dense
                             clearable
@@ -189,7 +183,9 @@
                             <v-col
                                 v-for="column in columns"
                                 :key="column"
-                                cols="4"
+                                cols="12"
+                                sm="6"
+                                md="4"
                             >
                                 <v-checkbox
                                     color="secondary"

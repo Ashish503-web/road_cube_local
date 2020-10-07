@@ -8,16 +8,20 @@
                     class="pr-4"
             >
                 <v-col cols="auto">
-                    <v-tabs v-model="tabIndex" color="black">
-                        <v-tab class="text-capitalize">All</v-tab>
+                    <v-tabs
+                            :vertical="$vuetify.breakpoint.smAndDown"
+                            v-model="tabIndex"
+                            color="black">
+                        <v-tab class="text-capitalize text-left d-flex justify-start justify-sm-center px-3">All</v-tab>
                         <v-tab
                                 v-for="tab in tabs"
                                 :key="tab.name"
                                 v-text="tab.name"
-                                class="text-capitalize"
+                                class="text-capitalize text-left d-flex justify-start justify-sm-center px-3"
                         ></v-tab>
                         <v-btn
                                 color="black"
+                                class="text-capitalize text-left d-flex justify-start justify-sm-center px-3"
                                 text
                                 tile
                                 @click="
@@ -46,7 +50,7 @@
                 <v-tab-item>
                     <v-toolbar flat height="80">
                         <v-spacer></v-spacer>
-                        <v-col cols="4" class="pa-0">
+                        <v-col cols="12" sm="4" class="pa-0">
                             <v-text-field
                                     label="Search"
                                     color="secondary"
@@ -101,13 +105,13 @@
                         </template>
                     </v-data-table>
 
-                    <v-dialog v-model="tabDialog" max-width="30%" scrollable>
+                    <v-dialog v-model="tabDialog" :max-width="$vuetify.breakpoint.smAndDown ? '90%' : '30%'" scrollable>
                         <AddTabForm @close="tabDialog=false"/>
                     </v-dialog>
 
                     <v-dialog
                             v-model="promocodeDialog"
-                            max-width="40%"
+                            :max-width="$vuetify.breakpoint.smAndDown ? '90%' : '40%'"
                             scrollable
                     >
                         <PromocodeForm @close="promocodeDialog=false"/>
