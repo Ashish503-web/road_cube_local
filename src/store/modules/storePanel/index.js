@@ -6,6 +6,7 @@ import settings from "./settings";
 class Weekday {
     constructor(weekday = {}) {
         this.name = weekday.name || "";
+        this.open = false;
         if (weekday.day === 0) this.day = 0;
         else this.day = weekday.day || null;
         this.type = weekday.type || "";

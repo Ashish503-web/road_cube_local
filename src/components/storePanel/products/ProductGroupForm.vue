@@ -13,6 +13,7 @@
         <b-text-field
             v-model="productGroup.name"
             label="Product Group Name"
+            no-top-margin
         ></b-text-field>
 
         <b-textarea
@@ -24,7 +25,7 @@
             v-model="productGroup.average_price"
             type="number"
             label="Average Price"
-            append-outer-icon="mdiCurrencyEur"
+            append-icon="mdiCurrencyEur"
         ></b-text-field>
 
         <b-select
@@ -32,76 +33,6 @@
             :items="categories"
             label="Select Category"
         ></b-select>
-
-        <!-- <v-sheet color="grey lighten-3" class="mt-3 pa-4">
-            <h3 class="secondary--text mb-2">
-                Set a discount for the product group
-            </h3>
-            When the user will gather X ammount of point moves he will win the
-            following discount:
-            <v-row no-gutters align="center" class="mt-5">
-                <v-col cols="5"></v-col>
-                <v-col cols="7">
-                    <h3
-                        class="secondary--text ml-3 mb-2"
-                        v-text="
-                            discountType === 'Percentage'
-                                ? 'Percentage'
-                                : 'Euro'
-                        "
-                    ></h3>
-                </v-col>
-                <v-col cols="5">
-                    <v-select
-                        v-model="discountType"
-                        :items="discountTypes"
-                        label="Discount Type"
-                        menu-props="offsetY"
-                        outlined
-                        dense
-                        hide-details
-                    ></v-select>
-                </v-col>
-                <v-col cols="2" class="ml-3">
-                    <v-text-field
-                        v-model.number="productGroup.discountAmount"
-                        type="number"
-                        outlined
-                        dense
-                        clearable
-                        hide-details
-                    ></v-text-field>
-                </v-col>
-                <v-col cols="auto">
-                    <v-sheet width="30" color="#e9e9e9">
-                        <v-btn
-                            icon
-                            x-small
-                            @click="productGroup.discountAmount += 0.01"
-                        >
-                            <v-icon v-text="icons.mdiMenuUp"></v-icon>
-                        </v-btn>
-                        <v-btn
-                            icon
-                            x-small
-                            :disabled="productGroup.discountAmount < 0.01"
-                            @click="productGroup.discountAmount -= 0.01"
-                        >
-                            <v-icon v-text="icons.mdiMenuDown"></v-icon>
-                        </v-btn>
-                    </v-sheet>
-                </v-col>
-                <v-col cols="1">
-                    <v-icon
-                        v-text="
-                            discountType === 'Percentage'
-                                ? icons.mdiPercent
-                                : icons.mdiCurrencyEur
-                        "
-                    ></v-icon>
-                </v-col>
-            </v-row>
-        </v-sheet> -->
 
         <v-checkbox
             v-model="showImageUpload"

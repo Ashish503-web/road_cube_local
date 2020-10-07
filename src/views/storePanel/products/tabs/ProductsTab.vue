@@ -23,6 +23,7 @@
             :page.sync="page"
             :items-per-page.sync="perPage"
             :server-items-length="serverItemsLength"
+            class="b-outlined"
         >
             <template v-slot:item.actions="{ item }">
                 <v-tooltip color="secondary" top>
@@ -111,12 +112,12 @@ export default {
                 { text: "Product Description", value: "description" },
                 { text: "Selling Price", value: "retail_price" },
                 { text: "Coupon", value: "coupon" },
-                { text: "Actions", value: "actions" },
+                { text: "Actions", value: "actions" }
             ],
             itemsPerPageOptions: [10, 20, 30, -1],
             page: +this.$route.query.page,
             perPage: +this.$route.query.perPage,
-            mode: 0,
+            mode: 0
         };
     },
 
@@ -125,7 +126,7 @@ export default {
             "loading",
             "errorMessage",
             "products",
-            "serverItemsLength",
+            "serverItemsLength"
         ]),
 
         dialog: {
@@ -135,7 +136,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            },
+            }
         },
 
         deleteDialog: {
@@ -145,7 +146,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            },
+            }
         },
 
         product: {
@@ -155,7 +156,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
+            }
         },
 
         query() {
@@ -166,16 +167,16 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        },
+        }
     },
 
     methods: {
         ...mapMutations("storePanel/products", [
             "setDialog",
             "setDeleteDialog",
-            "setItem",
+            "setItem"
         ]),
-        ...mapActions("storePanel/products", ["getItems", "remove"]),
+        ...mapActions("storePanel/products", ["getItems", "remove"])
     },
 
     watch: {
@@ -189,7 +190,7 @@ export default {
 
         perPage(perPage) {
             this.$router.push({ query: { ...this.$route.query, perPage } });
-        },
+        }
     },
 
     beforeCreate() {
@@ -197,8 +198,8 @@ export default {
             this.$router.push({
                 query: {
                     perPage: 10,
-                    ...this.$route.query,
-                },
+                    ...this.$route.query
+                }
             });
         }
 
@@ -206,14 +207,14 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query,
-                },
+                    ...this.$route.query
+                }
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    },
+    }
 };
 </script>

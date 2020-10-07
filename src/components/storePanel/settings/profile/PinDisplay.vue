@@ -47,17 +47,16 @@ export default {
     data() {
         return {
             bubble,
-            success: false,
             rules: [
-                (v) => {
+                v => {
                     if (v) {
                         this.success = true;
                         return true;
                     } else {
                         return "To continue you must upload a new image";
                     }
-                },
-            ],
+                }
+            ]
         };
     },
 
@@ -72,6 +71,17 @@ export default {
                 .mapLogo;
         },
 
+        success: {
+            get() {
+                return this.$store.state.storePanel.settings.profile.success
+                    .mapLogo;
+            },
+
+            set(val) {
+                this.setSuccess({ value: val, type: "mapLogo" });
+            }
+        },
+
         mapLogo: {
             get() {
                 return this.$store.state.storePanel.settings.profile.map_logo;
@@ -79,21 +89,24 @@ export default {
 
             set(val) {
                 this.setMapLogo(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
-        ...mapMutations("storePanel/settings/profile", ["setMapLogo"]),
+        ...mapMutations("storePanel/settings/profile", [
+            "setSuccess",
+            "setMapLogo"
+        ]),
         ...mapActions("storePanel/settings/profile", ["uploadMapLogo"]),
 
         onFileSelected(event) {
             this.mapLogo.imageFile = event;
             const reader = new FileReader();
             reader.readAsDataURL(this.mapLogo.imageFile);
-            reader.onload = (e) => (this.mapLogo.image = e.target.result);
-        },
-    },
+            reader.onload = e => (this.mapLogo.image = e.target.result);
+        }
+    }
 };
 </script>
 

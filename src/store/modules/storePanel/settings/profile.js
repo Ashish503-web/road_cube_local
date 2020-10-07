@@ -5,6 +5,10 @@ export default {
     namespaced: true,
 
     state: () => ({
+        success: {
+            logo: false,
+            mapLogo: false
+        },
         loading: {
             logo: false,
             mapLogo: false,
@@ -34,6 +38,10 @@ export default {
     }),
 
     mutations: {
+        setSuccess(state, { value, type }) {
+            state.success[type] = value;
+        },
+
         setLoading(state, { value, type }) {
             state.loading[type] = value;
         },
@@ -65,13 +73,18 @@ export default {
                     fd
                 );
 
+                commit("setSuccess", { value: false, type: "logo" });
                 commit("setLoading", { value: false, type: "logo" });
                 commit(
-                    "setSnackbarText",
-                    "You have successfully updated store logo!",
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated store logo!"
+                    },
+
                     { root: true }
                 );
-                commit("setSnackbar", true, { root: true });
             } catch (ex) {
                 commit("setLoading", { value: false, type: "logo" });
                 commit("setErrorMessage", {
@@ -99,13 +112,18 @@ export default {
                     fd
                 );
 
+                commit("setSuccess", { value: false, type: "mapLogo" });
                 commit("setLoading", { value: false, type: "mapLogo" });
                 commit(
-                    "setSnackbarText",
-                    "You have successfully updated map logo!",
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated map logo!"
+                    },
+
                     { root: true }
                 );
-                commit("setSnackbar", true, { root: true });
             } catch (ex) {
                 commit("setLoading", { value: false, type: "mapLogo" });
                 commit("setErrorMessage", {
@@ -151,11 +169,16 @@ export default {
 
                 commit("setLoading", { value: false, type: "operationHours" });
                 commit(
-                    "setSnackbarText",
-                    "You have successfully updated hours of operations!",
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text:
+                            "You have successfully updated hours of operations!"
+                    },
+
                     { root: true }
                 );
-                commit("setSnackbar", true, { root: true });
             } catch (ex) {
                 commit("setLoading", { value: false, type: "operationHours" });
                 commit("setErrorMessage", {
@@ -189,11 +212,15 @@ export default {
 
                 commit("setLoading", { value: false, type: "quickPayment" });
                 commit(
-                    "setSnackbarText",
-                    "You have successfully updated quick payment!",
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated fast payment!"
+                    },
+
                     { root: true }
                 );
-                commit("setSnackbar", true, { root: true });
             } catch (ex) {
                 commit("setLoading", { value: false, type: "quickPayment" });
                 commit("setErrorMessage", {
@@ -226,18 +253,22 @@ export default {
                         city: billing_details.city,
                         occupation: billing_details.occupation,
                         tax_office: billing_details.tax_office,
-                        receipt_comp_name: billing_details.receipt_comp_name,
                         country_id: billing_details.country_id
                     }
                 );
 
                 commit("setLoading", { value: false, type: "invoicing" });
                 commit(
-                    "setSnackbarText",
-                    "You have successfully updated invoicing information!",
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text:
+                            "You have successfully updated invoicing information!"
+                    },
+
                     { root: true }
                 );
-                commit("setSnackbar", true, { root: true });
             } catch (ex) {
                 commit("setLoading", { value: false, type: "invoicing" });
                 commit("setErrorMessage", {
@@ -277,11 +308,16 @@ export default {
                     type: "redemption"
                 });
                 commit(
-                    "setSnackbarText",
-                    "You have successfully updated receipt information!",
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text:
+                            "You have successfully updated receipt information!"
+                    },
+
                     { root: true }
                 );
-                commit("setSnackbar", true, { root: true });
             } catch (ex) {
                 commit("setLoading", {
                     value: false,
@@ -314,11 +350,16 @@ export default {
 
         //         commit("setLoading", false);
         //         commit(
-        //             "setSnackbarText",
-        //             "You have successfully updated business information!",
+        //             "setNotification",
+        //             {
+        //                 show: true,
+        //                 type: "success",
+        //                 text:
+        //                     "You have successfully updated receipt information!"
+        //             },
+
         //             { root: true }
         //         );
-        //         commit("setSnackbar", true, { root: true });
         //     } catch (ex) {
         //         commit("setLoading", false);
         //         commit("setErrorMessage", ex.response.data.message);

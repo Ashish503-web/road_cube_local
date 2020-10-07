@@ -42,13 +42,18 @@ export default {
                     item
                 );
 
-                commit("setLoading", { value: false, type });
+                commit("setSnackbar", true, { root: true });
                 commit(
-                    "setSnackbarText",
-                    "You have successfully updated invoicing information!",
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text:
+                            "You have successfully updated reward information!"
+                    },
+
                     { root: true }
                 );
-                commit("setSnackbar", true, { root: true });
             } catch (ex) {
                 commit("setLoading", { value: false, type });
                 commit("setErrorMessage", {

@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item class="py-5">
+    <v-tab-item class="pt-5">
         <v-row no-gutters>
             <v-col cols="6" class="pr-2">
                 <Logo />
@@ -65,6 +65,10 @@ export default {
         CompanyRedemption,
         ProductCategories,
         ApiAuthentication
+    },
+
+    mounted() {
+        this.$clearFocus();
     }
 };
 </script>

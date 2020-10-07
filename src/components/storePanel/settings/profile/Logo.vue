@@ -9,11 +9,11 @@
         You can upload here the logo of your business which will appear in the
         app and will be on the physical cards. If we think that it can be
         improved we will contact you before publishment.
-        <v-row class="dashed mt-3 pa-5" no-gutters align="center">
-            <v-col cols="5">
+        <v-row no-gutters align="center" style="margin-top: 4.6rem">
+            <v-col cols="5" class="pr-2">
                 <v-img :src="logo.image" width="64" class="mx-auto"></v-img>
             </v-col>
-            <v-col cols="7">
+            <v-col cols="7" class="pl-2">
                 Press the following button to choose image:
                 <v-file-input
                     color="secondary"
@@ -38,17 +38,16 @@ export default {
 
     data() {
         return {
-            success: false,
             rules: [
-                (v) => {
+                v => {
                     if (v) {
                         this.success = true;
                         return true;
                     } else {
                         return "To continue you must upload a new image";
                     }
-                },
-            ],
+                }
+            ]
         };
     },
 
@@ -62,6 +61,17 @@ export default {
                 .logo;
         },
 
+        success: {
+            get() {
+                return this.$store.state.storePanel.settings.profile.success
+                    .logo;
+            },
+
+            set(val) {
+                this.setSuccess({ value: val, type: "logo" });
+            }
+        },
+
         logo: {
             get() {
                 return this.$store.state.storePanel.settings.profile.logo;
@@ -69,20 +79,23 @@ export default {
 
             set(val) {
                 this.setLogo(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
-        ...mapMutations("storePanel/settings/profile", ["setLogo"]),
+        ...mapMutations("storePanel/settings/profile", [
+            "setSuccess",
+            "setLogo"
+        ]),
         ...mapActions("storePanel/settings/profile", ["uploadLogo"]),
 
         onFileSelected(event) {
             this.logo.imageFile = event;
             const reader = new FileReader();
             reader.readAsDataURL(this.logo.imageFile);
-            reader.onload = (e) => (this.logo.image = e.target.result);
-        },
-    },
+            reader.onload = e => (this.logo.image = e.target.result);
+        }
+    }
 };
 </script>

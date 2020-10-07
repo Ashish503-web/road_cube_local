@@ -75,6 +75,10 @@ export default {
             mdiPlusThick,
             mdiCurrencyEur
         }
-    })
+    }),
+
+    mounted() {
+        this.$clearFocus();
+    }
 };
 </script>

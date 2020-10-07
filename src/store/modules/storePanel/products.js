@@ -3,7 +3,7 @@ import Product from "@/models/storePanel/Product";
 export default {
     namespaced: true,
 
-    state: {
+    state: () => ({
         dialog: false,
         deleteDialog: false,
         loading: false,
@@ -11,7 +11,7 @@ export default {
         serverItemsLength: 0,
         products: [],
         product: new Product()
-    },
+    }),
 
     mutations: {
         setDialog(state, payload) {

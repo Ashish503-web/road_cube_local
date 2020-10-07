@@ -30,7 +30,7 @@
 
                 <v-checkbox
                     v-model="pointDelivery.pos_display_amount"
-                    :readonly="!pointDelivery.pos_points_delivery"
+                    :disabled="!pointDelivery.pos_points_delivery"
                     color="secondary"
                     class="pt-0 mt-1"
                     hide-details
@@ -44,7 +44,7 @@
 
                 <v-checkbox
                     v-model="pointDelivery.pos_goal_shopping"
-                    :readonly="!pointDelivery.pos_points_delivery"
+                    :disabled="!pointDelivery.pos_points_delivery"
                     color="secondary"
                     class="pt-0 mt-1"
                     hide-details

@@ -8,10 +8,19 @@
     >
         <v-container v-for="weekday in timetable" :key="weekday.name">
             <v-row no-gutters justify="space-between" align="center">
-                <v-col
-                    class="subtitle-1 font-weight-bold"
-                    v-text="weekday.name"
-                ></v-col>
+                <v-col class="subtitle-1 font-weight-bold">
+                    <v-btn text @click="weekday.open = !weekday.open">
+                        <v-icon
+                            v-text="
+                                weekday.open
+                                    ? icons.mdiChevronUp
+                                    : icons.mdiChevronDown
+                            "
+                        ></v-icon>
+                    </v-btn>
+
+                    {{ weekday.name }}
+                </v-col>
 
                 <v-col cols="auto">
                     <v-radio-group
@@ -40,127 +49,129 @@
                     </v-radio-group>
                 </v-col>
 
-                <v-col v-if="weekday.type === 'regular'" cols="12">
-                    <v-row no-gutters justify="space-between" class="py-5">
-                        <v-col cols="6" class="pa-3 pt-0">
-                            <b-text-field
-                                v-model="weekday.shifts[0][0]"
-                                placeholder="Start Time"
-                                readonly
-                                prepend-inner-icon="mdiClockOutline"
-                                :class="weekday.name + 'Start'"
-                                :disabled="menu"
-                                @click="
-                                    openMenu(
-                                        weekday.name + 'Start',
-                                        weekday,
-                                        0,
-                                        0
-                                    )
-                                "
-                            ></b-text-field>
-                        </v-col>
+                <template v-if="weekday.open">
+                    <v-col v-if="weekday.type === 'regular'" cols="12">
+                        <v-row no-gutters justify="space-between" class="py-5">
+                            <v-col cols="6" class="pa-3 pt-0">
+                                <b-text-field
+                                    v-model="weekday.shifts[0][0]"
+                                    placeholder="Start Time"
+                                    readonly
+                                    prepend-inner-icon="mdiClockOutline"
+                                    :class="weekday.name + 'Start'"
+                                    :disabled="menu"
+                                    @click="
+                                        openMenu(
+                                            weekday.name + 'Start',
+                                            weekday,
+                                            0,
+                                            0
+                                        )
+                                    "
+                                ></b-text-field>
+                            </v-col>
 
-                        <v-col cols="6" class="pa-3 pt-0">
-                            <b-text-field
-                                v-model="weekday.shifts[0][1]"
-                                placeholder="End Time"
-                                readonly
-                                prepend-inner-icon="mdiClockOutline"
-                                :class="weekday.name + 'End'"
-                                :disabled="menu"
-                                @click="
-                                    openMenu(
-                                        weekday.name + 'End',
-                                        weekday,
-                                        0,
-                                        1
-                                    )
-                                "
-                            ></b-text-field>
-                        </v-col>
-                    </v-row>
-                </v-col>
+                            <v-col cols="6" class="pa-3 pt-0">
+                                <b-text-field
+                                    v-model="weekday.shifts[0][1]"
+                                    placeholder="End Time"
+                                    readonly
+                                    prepend-inner-icon="mdiClockOutline"
+                                    :class="weekday.name + 'End'"
+                                    :disabled="menu"
+                                    @click="
+                                        openMenu(
+                                            weekday.name + 'End',
+                                            weekday,
+                                            0,
+                                            1
+                                        )
+                                    "
+                                ></b-text-field>
+                            </v-col>
+                        </v-row>
+                    </v-col>
 
-                <v-col v-if="weekday.type === 'break'" cols="12">
-                    <v-row no-gutters justify="space-between" class="py-5">
-                        <v-col cols="3" class="pa-3 pt-0">
-                            <b-text-field
-                                v-model="weekday.shifts[0][0]"
-                                placeholder="Start Time"
-                                readonly
-                                prepend-inner-icon="mdiClockOutline"
-                                :class="weekday.name + 'FirstStart'"
-                                :disabled="menu"
-                                @click="
-                                    openMenu(
-                                        weekday.name + 'FirstStart',
-                                        weekday,
-                                        0,
-                                        0
-                                    )
-                                "
-                            ></b-text-field>
-                        </v-col>
+                    <v-col v-else-if="weekday.type === 'break'" cols="12">
+                        <v-row no-gutters justify="space-between" class="py-5">
+                            <v-col cols="3" class="pa-3 pt-0">
+                                <b-text-field
+                                    v-model="weekday.shifts[0][0]"
+                                    placeholder="Start Time"
+                                    readonly
+                                    prepend-inner-icon="mdiClockOutline"
+                                    :class="weekday.name + 'FirstStart'"
+                                    :disabled="menu"
+                                    @click="
+                                        openMenu(
+                                            weekday.name + 'FirstStart',
+                                            weekday,
+                                            0,
+                                            0
+                                        )
+                                    "
+                                ></b-text-field>
+                            </v-col>
 
-                        <v-col cols="3" class="pa-3 pt-0">
-                            <b-text-field
-                                v-model="weekday.shifts[0][1]"
-                                placeholder="End Time"
-                                readonly
-                                prepend-inner-icon="mdiClockOutline"
-                                :class="weekday.name + 'FirstEnd'"
-                                :disabled="menu"
-                                @click="
-                                    openMenu(
-                                        weekday.name + 'FirstEnd',
-                                        weekday,
-                                        0,
-                                        1
-                                    )
-                                "
-                            ></b-text-field>
-                        </v-col>
+                            <v-col cols="3" class="pa-3 pt-0">
+                                <b-text-field
+                                    v-model="weekday.shifts[0][1]"
+                                    placeholder="End Time"
+                                    readonly
+                                    prepend-inner-icon="mdiClockOutline"
+                                    :class="weekday.name + 'FirstEnd'"
+                                    :disabled="menu"
+                                    @click="
+                                        openMenu(
+                                            weekday.name + 'FirstEnd',
+                                            weekday,
+                                            0,
+                                            1
+                                        )
+                                    "
+                                ></b-text-field>
+                            </v-col>
 
-                        <v-col cols="3" class="pa-3 pt-0">
-                            <b-text-field
-                                v-model="weekday.shifts[1][0]"
-                                placeholder="Start Time"
-                                readonly
-                                prepend-inner-icon="mdiClockOutline"
-                                :class="weekday.name + 'SecondStart'"
-                                :disabled="menu"
-                                @click="
-                                    openMenu(
-                                        weekday.name + 'SecondStart',
-                                        weekday,
-                                        1,
-                                        0
-                                    )
-                                "
-                            ></b-text-field>
-                        </v-col>
+                            <v-col cols="3" class="pa-3 pt-0">
+                                <b-text-field
+                                    v-model="weekday.shifts[1][0]"
+                                    placeholder="Start Time"
+                                    readonly
+                                    prepend-inner-icon="mdiClockOutline"
+                                    :class="weekday.name + 'SecondStart'"
+                                    :disabled="menu"
+                                    @click="
+                                        openMenu(
+                                            weekday.name + 'SecondStart',
+                                            weekday,
+                                            1,
+                                            0
+                                        )
+                                    "
+                                ></b-text-field>
+                            </v-col>
 
-                        <v-col cols="3" class="pa-3 pt-0">
-                            <b-text-field
-                                v-model="weekday.shifts[1][1]"
-                                placeholder="End Time"
-                                readonly
-                                prepend-inner-icon="mdiClockOutline"
-                                :class="weekday.name + 'SecondEnd'"
-                                :disabled="menu"
-                                @click="
-                                    openMenu(
-                                        weekday.name + 'SecondEnd',
-                                        weekday,
-                                        1,
-                                        1
-                                    )
-                                "
-                            ></b-text-field>
-                        </v-col>
-                    </v-row>
-                </v-col>
+                            <v-col cols="3" class="pa-3 pt-0">
+                                <b-text-field
+                                    v-model="weekday.shifts[1][1]"
+                                    placeholder="End Time"
+                                    readonly
+                                    prepend-inner-icon="mdiClockOutline"
+                                    :class="weekday.name + 'SecondEnd'"
+                                    :disabled="menu"
+                                    @click="
+                                        openMenu(
+                                            weekday.name + 'SecondEnd',
+                                            weekday,
+                                            1,
+                                            1
+                                        )
+                                    "
+                                ></b-text-field>
+                            </v-col>
+                        </v-row>
+                    </v-col>
+                </template>
             </v-row>
             <v-divider></v-divider>
         </v-container>
@@ -200,7 +211,7 @@
 </template>
 
 <script>
-import { mdiClockOutline } from "@mdi/js";
+import { mdiChevronUp, mdiChevronDown, mdiClockOutline } from "@mdi/js";
 import { mapMutations, mapActions, mapGetters } from "vuex";
 
 class Weekday {
@@ -218,6 +229,8 @@ export default {
 
     data: () => ({
         icons: {
+            mdiChevronUp,
+            mdiChevronDown,
             mdiClockOutline
         },
         menu: false,

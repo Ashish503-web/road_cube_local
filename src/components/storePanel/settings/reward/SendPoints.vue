@@ -37,13 +37,13 @@
                 <b-select
                     v-model="sendPoints.system_notification_id"
                     :items="systemNotifications"
-                    :readonly="!sendPoints.send_points_by_card_or_phone"
+                    :disabled="!sendPoints.send_points_by_card_or_phone"
                     label="How to notify a consumer of points"
                 ></b-select>
 
                 <v-checkbox
                     v-model="sendPoints.add_new_user_on_send_points"
-                    :readonly="!sendPoints.send_points_by_card_or_phone"
+                    :disabled="!sendPoints.send_points_by_card_or_phone"
                     color="secondary"
                     class="pt-0 mt-3"
                     hide-details
@@ -57,7 +57,7 @@
 
                 <v-checkbox
                     v-model="sendPoints.choose_product_on_send_points"
-                    :readonly="!sendPoints.send_points_by_card_or_phone"
+                    :disabled="!sendPoints.send_points_by_card_or_phone"
                     color="secondary"
                     class="pt-0 mt-1"
                     hide-details
@@ -71,7 +71,7 @@
 
                 <v-checkbox
                     v-model="sendPoints.display_receipt_on_send_points"
-                    :readonly="!sendPoints.send_points_by_card_or_phone"
+                    :disabled="!sendPoints.send_points_by_card_or_phone"
                     color="secondary"
                     class="pt-0 mt-1"
                     hide-details

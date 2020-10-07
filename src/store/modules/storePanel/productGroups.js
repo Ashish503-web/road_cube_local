@@ -3,7 +3,7 @@ import ProductGroup from "@/models/storePanel/ProductGroup";
 export default {
     namespaced: true,
 
-    state: {
+    state: () => ({
         dialog: false,
         deleteDialog: false,
         loading: false,
@@ -11,7 +11,7 @@ export default {
         serverItemsLength: 0,
         productGroups: [],
         productGroup: new ProductGroup()
-    },
+    }),
 
     mutations: {
         setDialog(state, payload) {

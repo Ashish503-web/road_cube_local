@@ -4,56 +4,52 @@
             :headers="productPointsHeaders"
             :items="productPoints"
             :footer-props="{ itemsPerPageOptions }"
+            :page.sync="page"
+            :items-per-page.sync="perPage"
+            :server-items-length="serverItemsLength"
+            :loading="loading"
+            loader-height="2"
+            class="b-outlined"
         >
-            <template v-slot:item.points="{ item }">
-                <v-sheet style="background: transparent" class="py-3">
-                    <v-sheet>
-                        <v-text-field
-                            v-model="item.points"
-                            color="secondary"
-                            outlined
-                            dense
-                            clearable
-                            hide-details
-                        ></v-text-field>
-                    </v-sheet>
+            <template v-slot:item.reward_points="{ item }">
+                <v-sheet>
+                    <b-text-field
+                        v-model="item.reward_points"
+                        type="number"
+                        class="mb-3"
+                    ></b-text-field>
                 </v-sheet>
             </template>
 
-            <template v-slot:item.type="{ item }">
-                <v-sheet style="background: transparent" class="py-3">
-                    <v-sheet>
-                        <v-select
-                            v-model="item.type"
-                            :items="[
-                                'Per Transaction',
-                                'Piece',
-                                'Liters',
-                                'Per Euro'
-                            ]"
-                            menu-props="offsetY"
-                            color="secondary"
-                            item-color="secondary"
-                            outlined
-                            dense
-                            hide-details
-                        ></v-select>
-                    </v-sheet>
+            <template v-slot:item.reward_type_id="{ item }">
+                <v-sheet>
+                    <b-select
+                        v-model="item.reward_type_id"
+                        :items="rewardTypes"
+                        class="mb-3"
+                    ></b-select>
                 </v-sheet>
             </template>
 
-            <template v-slot:item.pointSubsidy="{ item }">
+            <template v-slot:item.reward_points_shared="{ item }">
                 <v-checkbox
-                    v-model="item.pointSubsidy"
-                    label="Subsidized Points"
+                    v-model="item.reward_points_shared"
                     color="secondary"
-                    class="ma-0"
+                    class="mt-0 pt-0"
                     hide-details
-                ></v-checkbox>
+                >
+                    <template v-slot:label>
+                        <h4 class="subtitle-2">Subsidized Points</h4>
+                    </template>
+                </v-checkbox>
             </template>
 
-            <template v-slot:item.save>
-                <v-btn color="secondary" class="text-capitalize" depressed
+            <template v-slot:item.save="{ item }">
+                <v-btn
+                    color="secondary"
+                    class="text-capitalize"
+                    depressed
+                    @click="update(item)"
                     >change</v-btn
                 >
             </template>
@@ -62,38 +58,90 @@
 </template>
 
 <script>
+import { mapState, mapMutations, mapActions } from "vuex";
+
 export default {
     name: "ProductPoints",
 
-    data: () => ({
-        productPointsHeaders: [
-            { text: "Product Name", value: "name" },
-            { text: "Points", value: "points" },
-            { text: "Type", value: "type" },
-            { text: "Point Subsidy", value: "pointSubsidy" },
-            { text: "Save", value: "save" }
-        ],
-        productPoints: [
-            {
-                name: "Maroudas Optika's unnamed API product 58526",
-                points: 0,
-                type: "Per Transaction",
-                pointSubsidy: true
-            },
-            {
-                name: "Maroudas Optika's unnamed API product 58534",
-                points: 4,
-                type: "Per Transaction",
-                pointSubsidy: true
-            },
-            {
-                name: "stest_stest",
-                points: 0,
-                type: "Liters",
-                pointSubsidy: false
+    data() {
+        return {
+            rewardTypes: [
+                { text: "Per Transaction", value: 1 },
+                { text: "Piece", value: 2 },
+                { text: "Liters", value: 3 },
+                { text: "Per Euro", value: 4 }
+            ],
+            productPointsHeaders: [
+                { text: "Product Name", value: "name" },
+                { text: "Points", value: "reward_points" },
+                { text: "Type", value: "reward_type_id" },
+                { text: "Point Subsidy", value: "reward_points_shared" },
+                { text: "Save", value: "save" }
+            ],
+            itemsPerPageOptions: [10, 20, 30, -1],
+            page: +this.$route.query.page,
+            perPage: +this.$route.query.perPage
+        };
+    },
+
+    computed: {
+        ...mapState(["loading", "errorMessage", "serverItemsLength"]),
+        ...mapState("storePanel/settings/productPoints", ["productPoints"]),
+
+        query() {
+            let query = "?";
+
+            for (let key in this.$route.query) {
+                query += `${key}=${this.$route.query[key]}&`;
             }
-        ],
-        itemsPerPageOptions: [10, 20, 30, -1]
-    })
+
+            return query.slice(0, query.length - 1);
+        }
+    },
+
+    methods: {
+        ...mapActions("storePanel/settings/productPoints", [
+            "getItems",
+            "update"
+        ])
+    },
+
+    watch: {
+        $route() {
+            this.getItems(this.query);
+        },
+
+        page(page) {
+            this.$router.push({ query: { ...this.$route.query, page } });
+        },
+
+        perPage(perPage) {
+            this.$router.push({ query: { ...this.$route.query, perPage } });
+        }
+    },
+
+    beforeCreate() {
+        if (!this.$route.query.perPage) {
+            this.$router.push({
+                query: {
+                    perPage: 10,
+                    ...this.$route.query
+                }
+            });
+        }
+
+        if (!this.$route.query.page) {
+            this.$router.push({
+                query: {
+                    page: 1,
+                    ...this.$route.query
+                }
+            });
+        }
+    },
+
+    mounted() {
+        this.getItems(this.query);
+    }
 };
 </script>

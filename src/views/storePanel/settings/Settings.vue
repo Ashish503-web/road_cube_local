@@ -13,7 +13,7 @@
             <v-tabs-items v-model="tab">
                 <Profile />
 
-                <Reward />
+                <Reward :tab.sync="tab" />
 
                 <ProductPoints />
 
@@ -82,18 +82,5 @@ export default {
 
 .relative {
     position: relative;
-}
-
-.category-number {
-    position: absolute;
-    top: 7px;
-    left: -5px;
-}
-
-.category-remove {
-    position: absolute;
-    top: -10px;
-    right: -10px;
-    cursor: pointer;
 }
 </style>

@@ -17,6 +17,18 @@ import globalMixin from "./mixins/globalMixin";
 Vue.mixin(globalMixin);
 Vue.config.productionTip = false;
 
+// removing focus from icons
+
+Vue.prototype.$clearFocus = function() {
+    let elems = document.getElementsByClassName(
+        "v-icon notranslate v-icon--disabled v-icon--link v-icon--svg theme--light"
+    );
+
+    elems.forEach(elem => (elem.tabIndex = -1));
+};
+
+// automatic base components registration
+
 import upperFirst from "lodash/upperFirst";
 import camelCase from "lodash/camelCase";
 

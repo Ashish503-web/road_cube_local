@@ -40,12 +40,6 @@
                 ></b-text-field>
             </v-col>
             <v-col cols="6" class="pl-2">
-                <b-text-field
-                    v-model="invoicing.receipt_comp_name"
-                    label="Receipt Company Name"
-                ></b-text-field>
-            </v-col>
-            <v-col cols="6" class="pr-2">
                 <b-select
                     v-model="invoicing.country_id"
                     :items="countries"
@@ -63,7 +57,7 @@ export default {
     name: "Invoicing",
 
     data: () => ({
-        countries: [{ text: "Greece 24%", value: 1 }],
+        countries: [{ text: "Greece 24%", value: 1 }]
     }),
 
     computed: {
@@ -79,11 +73,11 @@ export default {
 
         invoicing() {
             return this.$store.state.storePanel.store.billing_details;
-        },
+        }
     },
 
     methods: {
-        ...mapActions("storePanel/settings/profile", ["updateInvoicing"]),
-    },
+        ...mapActions("storePanel/settings/profile", ["updateInvoicing"])
+    }
 };
 </script>

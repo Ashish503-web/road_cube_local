@@ -17,11 +17,21 @@
         "
     >
         <v-row no-gutters justify="space-around">
-            <v-btn color="secondary" class="text-capitalize" outlined
+            <v-btn
+                :disabled="!mobilePayments"
+                color="secondary"
+                class="text-capitalize"
+                outlined
+                @click="$emit('appoint-cleaners')"
                 >appoint cleaners</v-btn
             >
 
-            <v-btn color="secondary" class="text-capitalize" outlined
+            <v-btn
+                :disabled="!mobilePayments"
+                color="secondary"
+                class="text-capitalize"
+                outlined
+                @click="$emit('payment-direction')"
                 >set a payment direction</v-btn
             >
         </v-row>

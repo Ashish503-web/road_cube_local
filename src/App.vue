@@ -3,57 +3,29 @@
         <router-view name="header"></router-view>
 
         <v-main>
-            <v-snackbar v-model="snackbar" color="green" multi-line>
-                <v-icon class="mr-1" v-text="icons.mdiCheckCircle"></v-icon>
-                <span class="subtitle-1 font-weight-bold">
-                    {{ snackbarText }}
-                </span>
-                <template v-slot:action>
-                    <v-btn icon @click="snackbar = false">
-                        <v-icon v-text="icons.mdiClose"></v-icon>
-                    </v-btn>
-                </template>
-            </v-snackbar>
-
+            <Notification />
             <router-view></router-view>
         </v-main>
     </v-app>
 </template>
 
 <script>
-import { mdiCheckCircle, mdiClose } from "@mdi/js";
 import { mapMutations } from "vuex";
+import Notification from "@/components/Notification.vue";
 
 export default {
     name: "App",
-
+    components: { Notification },
     data: () => ({
-        icons: { mdiCheckCircle, mdiClose }
+        //
     }),
-
-    computed: {
-        snackbar: {
-            get() {
-                return this.$store.state.snackbar;
-            },
-
-            set(val) {
-                this.setSnackbar(val);
-            }
-        },
-
-        snackbarText() {
-            return this.$store.state.snackbarText;
-        }
-    },
 
     methods: {
         ...mapMutations([
             "setStoreId",
             "setStoreToken",
             "setCompanyId",
-            "setCompanyToken",
-            "setSnackbar"
+            "setCompanyToken"
         ])
     },
 

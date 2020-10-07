@@ -21,37 +21,50 @@
             label="Product Description"
         ></b-textarea>
 
-        <div class="b-border mt-3 pa-5 pt-2 rounded-sm">
-            <b-text-field
-                v-model="product.retail_price"
-                type="number"
-                label="Selling Price"
-                append-outer-icon="mdiCurrencyEur"
-            ></b-text-field>
-
-            <b-text-field
-                v-model="product.wholesale_price"
-                type="number"
-                label="Wholesale Price"
-                append-outer-icon="mdiCurrencyEur"
-            ></b-text-field>
-        </div>
-
-        <div class="b-border mt-3 pa-5 pt-2 rounded-sm">
-            <b-text-field
-                v-model="product.delivery_cost"
-                type="number"
-                label="Delivery Cost"
-                append-outer-icon="mdiCurrencyEur"
-            ></b-text-field>
-
-            <b-text-field
-                v-model="product.shipping_cost"
-                type="number"
-                label="Shipping Cost"
-                append-outer-icon="mdiCurrencyEur"
-            ></b-text-field>
-        </div>
+        <v-row no-gutters>
+            <v-col cols="12">
+                <h4 class="secondary--text mt-3">
+                    Prices
+                </h4>
+            </v-col>
+            <v-col cols="6" class="pr-2">
+                <b-text-field
+                    v-model="product.retail_price"
+                    type="number"
+                    label="Selling Price"
+                    append-icon="mdiCurrencyEur"
+                ></b-text-field>
+            </v-col>
+            <v-col cols="6" class="pl-2">
+                <b-text-field
+                    v-model="product.wholesale_price"
+                    type="number"
+                    label="Wholesale Price"
+                    append-icon="mdiCurrencyEur"
+                ></b-text-field>
+            </v-col>
+            <v-col cols="12">
+                <h4 class="secondary--text mt-3">
+                    Costs
+                </h4>
+            </v-col>
+            <v-col cols="6" class="pr-2">
+                <b-text-field
+                    v-model="product.delivery_cost"
+                    type="number"
+                    label="Delivery Cost"
+                    append-icon="mdiCurrencyEur"
+                ></b-text-field>
+            </v-col>
+            <v-col cols="6" class="pl-2">
+                <b-text-field
+                    v-model="product.shipping_cost"
+                    type="number"
+                    label="Shipping Cost"
+                    append-icon="mdiCurrencyEur"
+                ></b-text-field>
+            </v-col>
+        </v-row>
 
         <b-select
             v-model="product.product_category_id"
@@ -157,9 +170,3 @@ export default {
     }
 };
 </script>
-
-<style scoped>
-.b-border {
-    border: 1px solid rgba(0, 0, 0, 0.4);
-}
-</style>

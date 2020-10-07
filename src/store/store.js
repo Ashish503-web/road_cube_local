@@ -13,8 +13,12 @@ export default new Vuex.Store({
         companyToken: "",
         loading: false,
         errorMessage: "",
-        snackbar: false,
-        snackbarText: "",
+        serverItemsLength: 0,
+        notification: {
+            show: false,
+            type: "",
+            text: ""
+        },
         user: {
             user_registration_identifier: "4WMH2H-H7K2-8ZRRA8-052814",
             mobile: "",
@@ -51,12 +55,12 @@ export default new Vuex.Store({
             state.errorMessage = payload;
         },
 
-        setSnackbar(state, payload) {
-            state.snackbar = payload;
+        setServerItemsLength(state, payload) {
+            state.serverItemsLength = payload;
         },
 
-        setSnackbarText(state, payload) {
-            state.snackbarText = payload;
+        setNotification(state, payload) {
+            state.notification = payload;
         }
     },
 

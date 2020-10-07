@@ -33,7 +33,7 @@
             <v-col cols="6" class="pr-1">
                 <b-text-field
                     v-model="billingDetails.receipt_phone"
-                    :readonly="!scanReceipt"
+                    :disabled="!scanReceipt"
                     type="number"
                     label="Business Telephone Number"
                 ></b-text-field>
@@ -42,7 +42,7 @@
             <v-col cols="6" class="pl-1">
                 <b-text-field
                     v-model="billingDetails.receipt_vat_number"
-                    :readonly="!scanReceipt"
+                    :disabled="!scanReceipt"
                     type="number"
                     label="Vat Number"
                 ></b-text-field>
@@ -51,7 +51,7 @@
             <v-col cols="6" class="pr-1">
                 <b-text-field
                     v-model="billingDetails.receipt_address"
-                    :readonly="!scanReceipt"
+                    :disabled="!scanReceipt"
                     label="Business Address"
                 ></b-text-field>
             </v-col>
@@ -59,7 +59,7 @@
             <v-col cols="6" class="pl-1">
                 <b-text-field
                     v-model="billingDetails.receipt_comp_name"
-                    :readonly="!scanReceipt"
+                    :disabled="!scanReceipt"
                     label="Business name"
                 ></b-text-field>
             </v-col>
@@ -108,6 +108,10 @@ export default {
     methods: {
         ...mapMutations("storePanel", ["setScanReceipt"]),
         ...mapActions("storePanel/settings/reward", ["updateReward"])
+    },
+
+    mounted() {
+        this.$clearFocus();
     }
 };
 </script>

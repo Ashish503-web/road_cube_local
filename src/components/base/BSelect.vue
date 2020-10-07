@@ -12,7 +12,7 @@
         clearable
         open-on-clear
         hide-details="auto"
-        :readonly="readonly"
+        :disabled="disabled"
         :prepend-icon="icons[`${prependIcon}`]"
         :prepend-inner-icon="icons[`${prependInnerIcon}`]"
         :append-icon="icons[`${appendIcon}`]"
@@ -39,7 +39,7 @@ export default {
         appendIcon: String,
         appendOuterIcon: String,
         noTopMargin: Boolean,
-        readonly: Boolean
+        disabled: Boolean
     },
 
     data: () => ({
