@@ -7,39 +7,37 @@
         @submit="updateInvoicing"
     >
         <v-row no-gutters>
-            <v-col cols="6" class="pr-2">
+            <v-col cols="12" sm="6" class="pr-0 pr-sm-2">
                 <b-text-field
                     v-model="invoicing.comp_name"
                     label="Legal Name"
-                    no-top-margin
                 ></b-text-field>
             </v-col>
-            <v-col cols="6" class="pl-2">
+            <v-col cols="12" sm="6" class="pl-0 pl-sm-2">
                 <b-text-field
                     v-model="invoicing.vat_number"
                     label="Tax Id"
-                    no-top-margin
                 ></b-text-field>
             </v-col>
-            <v-col cols="6" class="pr-2">
+            <v-col cols="12" sm="6" class="pr-0 pr-sm-2">
                 <b-text-field
                     v-model="invoicing.city"
                     label="Business Address"
                 ></b-text-field>
             </v-col>
-            <v-col cols="6" class="pl-2">
+            <v-col cols="12" sm="6" class="pl-0 pl-sm-2">
                 <b-text-field
                     v-model="invoicing.occupation"
                     label="Profession"
                 ></b-text-field>
             </v-col>
-            <v-col cols="6" class="pr-2">
+            <v-col cols="12" sm="6" class="pr-0 pr-sm-2">
                 <b-text-field
                     v-model="invoicing.tax_office"
                     label="Jurisdiction"
                 ></b-text-field>
             </v-col>
-            <v-col cols="6" class="pl-2">
+            <v-col cols="12" sm="6" class="pl-0 pl-sm-2">
                 <b-select
                     v-model="invoicing.country_id"
                     :items="countries"

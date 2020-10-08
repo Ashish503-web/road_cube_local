@@ -20,7 +20,7 @@
             <v-btn
                 :disabled="!mobilePayments"
                 color="secondary"
-                class="text-capitalize"
+                class="text-capitalize mb-3 mb-sm-0"
                 outlined
                 @click="$emit('appoint-cleaners')"
                 >appoint cleaners</v-btn

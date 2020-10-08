@@ -3,15 +3,17 @@
         <v-window v-model="step">
             <v-window-item :value="1">
                 <v-row no-gutters>
-                    <v-col cols="5">
+                    <v-col cols="12" md="5" class="mr-0 mr-md-2 mb-3 mb-md-0 d-flex justify-center">
                         <v-img
                             src="@/assets/card.png"
-                            width="400"
+                            width="100%"
+                            max-width="400"
                             class="rounded-xl"
+                            contain
                         ></v-img>
                     </v-col>
 
-                    <v-col cols="7">
+                    <v-col cols="12" md="6">
                         <v-card class="rounded-lg" outlined>
                             <v-card-text>
                                 <div class="secondary--text subtitle-2">

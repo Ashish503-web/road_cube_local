@@ -16,7 +16,7 @@
                     hide-details
                 ></v-text-field>
             </v-col>
-            <v-btn color="secondary" class="text-capitalize" depressed>
+            <v-btn color="secondary" class="text-capitalize ml-3" depressed>
                 <v-icon
                     class="mr-2"
                     size="20"

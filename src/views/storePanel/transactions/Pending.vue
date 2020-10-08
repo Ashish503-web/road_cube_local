@@ -1,7 +1,7 @@
 <template>
     <v-tab-item>
         <v-card-title class="justify-end">
-            <v-col cols="4">
+            <v-col cols="12" md="4">
                 <v-text-field
                     label="Search"
                     color="secondary"

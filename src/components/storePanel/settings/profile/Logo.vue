@@ -10,10 +10,10 @@
         app and will be on the physical cards. If we think that it can be
         improved we will contact you before publishment.
         <v-row no-gutters align="center" style="margin-top: 4.6rem">
-            <v-col cols="5" class="pr-2">
+            <v-col cols="12" sm="5" class="pr-2">
                 <v-img :src="logo.image" width="64" class="mx-auto"></v-img>
             </v-col>
-            <v-col cols="7" class="pl-2">
+            <v-col cols="12" sm="7" class="pl-0 pl-sm-2">
                 Press the following button to choose image:
                 <v-file-input
                     color="secondary"

@@ -16,7 +16,7 @@
         "
     >
         <v-row no-gutters>
-            <v-col cols="auto">
+            <v-col cols="1" sm="auto">
                 <v-icon
                     color="secondary"
                     v-text="icons.mdiInformation"

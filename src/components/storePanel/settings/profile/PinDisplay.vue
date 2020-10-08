@@ -6,10 +6,10 @@
         :error-message="errorMessage"
         @submit="uploadMapLogo"
     >
-        <v-row no-gutters justify="space-between">
-            <v-col cols="6">
+        <v-row no-gutters justify="space-between" class="flex-wrap-reverse">
+            <v-col cols="12" sm="6">
                 Here you can change the display of the pin on the map:
-                <v-sheet width="84" class="relative">
+                <v-sheet width="84" class="relative mx-auto mx-sm-0" >
                     <v-img :src="bubble" width="84"></v-img>
                     <v-img :src="mapLogo.image" class="map-new-pin"></v-img>
                 </v-sheet>
@@ -25,7 +25,7 @@
                     @change="onFileSelected"
                 ></v-file-input>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="12" sm="6" class="mb-2">
                 <v-img
                     src="@/assets/theMapLogo3.png"
                     width="260"

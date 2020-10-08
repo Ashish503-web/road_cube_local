@@ -2,13 +2,13 @@
     <b-standard-card title="Product categories" :error-message="errorMessage">
         <v-form @submit.prevent>
             <v-row no-gutters align="center">
-                <v-tabs v-model="tab" color="secondary" class="mb-3">
-                    <v-tab class="text-capitalize">Greek</v-tab>
-                    <v-tab class="text-capitalize">English</v-tab>
-                    <v-tab class="text-capitalize">Italian</v-tab>
+                <v-tabs v-model="tab" :vertical="$vuetify.breakpoint.smAndDown" color="secondary" class="mb-3">
+                    <v-tab class="text-capitalize text-left text-md-center d-flex justify-start justify-md-center px-3">Greek</v-tab>
+                    <v-tab class="text-capitalize text-left text-md-center d-flex justify-start justify-md-center px-3">English</v-tab>
+                    <v-tab class="text-capitalize text-left text-md-center d-flex justify-start justify-md-center px-3">Italian</v-tab>
                 </v-tabs>
 
-                <v-col>
+                <v-col cols="auto" class="mb-2">
                     <v-tabs-items v-model="tab">
                         <v-tab-item>
                             <b-text-field
@@ -35,7 +35,7 @@
                         </v-tab-item>
                     </v-tabs-items>
                 </v-col>
-                <v-col cols="auto" class="ml-3">
+                <v-col cols="auto" class="ml-3 mx-auto mb-2">
                     <v-btn
                         type="submit"
                         color="secondary"
@@ -53,7 +53,7 @@
             <v-col
                 v-for="category in productCategories"
                 :key="category.name[langs[tab]]"
-                cols="4"
+                cols="auto"
             >
                 <v-card
                     outlined

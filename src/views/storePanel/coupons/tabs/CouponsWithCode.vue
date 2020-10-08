@@ -4,7 +4,7 @@
             <v-col cols="auto">
                 <v-btn
                     color="secondary"
-                    class="text-capitalize"
+                    class="text-capitalize mb-2 mb-md-0"
                     depressed
                     @click="dialog = true"
                     >add coupon</v-btn
@@ -21,7 +21,7 @@
 
         <v-toolbar flat>
             <v-spacer></v-spacer>
-            <v-col cols="4">
+            <v-col cols="12" sm="4">
                 <v-text-field
                     label="Search"
                     color="secondary"

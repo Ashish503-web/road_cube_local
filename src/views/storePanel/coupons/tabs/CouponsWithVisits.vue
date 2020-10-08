@@ -1,18 +1,22 @@
 <template>
     <v-tab-item>
         <v-card tile flat>
-            <v-row no-gutters class="pl-12">
-                <v-col cols="6" class="ml-12 mt-5">
+            <v-row no-gutters class="">
+                <v-col cols="12" sm="6" class="ml-0 ml-md-12 mt-5">
                     <v-card-title>Coupons with visits</v-card-title>
-                    <v-card-subtitle style="width: 90%">
+                    <v-card-subtitle>
                         Reward those who enter your store with a coupon. It only
                         applies to users with an application and is recognized
                         by GPS.
                     </v-card-subtitle>
-                    <v-img src="@/assets/checkin_image.jpg" width="280"></v-img>
+                    <v-img
+                            class="mx-auto mx-sm-0"
+                            src="@/assets/checkin_image.jpg"
+                            width="280"
+                    ></v-img>
                 </v-col>
 
-                <v-col cols="5" class="mt-10">
+                <v-col cols="12" sm="5" class="mt-10">
                     <v-card outlined class="pb-10">
                         <v-card-title class="justify-center subtitle-2"
                             >Gift Card</v-card-title
@@ -30,7 +34,7 @@
                                         src="@/assets/store-logo.png"
                                         width="35"
                                         style="vertical-align: middle"
-                                        class="mr-1"
+                                        class="mr-1 "
                                     />
                                     Coffee
                                 </v-col>

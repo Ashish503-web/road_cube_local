@@ -6,8 +6,8 @@
                     color="secondary"
                     :vertical="$vuetify.breakpoint.smAndDown"
             >
-                <v-tab class="text-capitalize text-left d-flex justify-start px-3">Monthly invoicing</v-tab>
-                <v-tab class="text-capitalize text-left d-flex justify-start px-3">Redemption invoice</v-tab>
+                <v-tab class="text-capitalize d-flex justify-sm-start justify-center px-3">Monthly invoicing</v-tab>
+                <v-tab class="text-capitalize d-flex justify-sm-start justify-center px-3">Redemption invoice</v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">

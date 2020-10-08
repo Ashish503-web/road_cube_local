@@ -2,7 +2,7 @@
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
             <v-toolbar flat color="#EAEDF191">
-                <v-spacer></v-spacer>
+                <v-spacer class="d-none d-sm-block"></v-spacer>
 
                 <v-icon
                     color="secondary"

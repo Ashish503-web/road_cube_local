@@ -33,7 +33,7 @@
                                 v-for="type in operationTypes"
                                 :key="type.text"
                                 cols="auto"
-                                class="mx-1"
+                                class="ma-1"
                             >
                                 <v-radio
                                     :label="type.text"
@@ -52,7 +52,7 @@
                 <template v-if="weekday.open">
                     <v-col v-if="weekday.type === 'regular'" cols="12">
                         <v-row no-gutters justify="space-between" class="py-5">
-                            <v-col cols="6" class="pa-3 pt-0">
+                            <v-col cols="12" sm="6" class="pa-3 pt-0">
                                 <b-text-field
                                     v-model="weekday.shifts[0][0]"
                                     placeholder="Start Time"
@@ -71,7 +71,7 @@
                                 ></b-text-field>
                             </v-col>
 
-                            <v-col cols="6" class="pa-3 pt-0">
+                            <v-col cols="12" sm="6" class="pa-3 pt-0">
                                 <b-text-field
                                     v-model="weekday.shifts[0][1]"
                                     placeholder="End Time"

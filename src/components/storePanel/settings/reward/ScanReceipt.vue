@@ -19,7 +19,7 @@
         "
     >
         <v-row no-gutters>
-            <v-col cols="auto">
+            <v-col cols="1" sm="auto">
                 <v-icon
                     color="secondary"
                     v-text="icons.mdiInformation"
@@ -30,7 +30,7 @@
                 from your store.
             </v-col>
 
-            <v-col cols="6" class="pr-1">
+            <v-col cols="12" sm="6" class="pr-0 pr-sm-1">
                 <b-text-field
                     v-model="billingDetails.receipt_phone"
                     :disabled="!scanReceipt"
@@ -39,7 +39,7 @@
                 ></b-text-field>
             </v-col>
 
-            <v-col cols="6" class="pl-1">
+            <v-col cols="12" sm="6" class="pl-0 pl-sm-1">
                 <b-text-field
                     v-model="billingDetails.receipt_vat_number"
                     :disabled="!scanReceipt"
@@ -48,7 +48,7 @@
                 ></b-text-field>
             </v-col>
 
-            <v-col cols="6" class="pr-1">
+            <v-col cols="12" sm="6" class="pr-0 pr-sm-1">
                 <b-text-field
                     v-model="billingDetails.receipt_address"
                     :disabled="!scanReceipt"
@@ -56,7 +56,7 @@
                 ></b-text-field>
             </v-col>
 
-            <v-col cols="6" class="pl-1">
+            <v-col cols="12" sm="6" class="pl-0 pl-sm-1">
                 <b-text-field
                     v-model="billingDetails.receipt_comp_name"
                     :disabled="!scanReceipt"

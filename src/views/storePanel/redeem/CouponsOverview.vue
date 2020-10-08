@@ -1,24 +1,28 @@
 <template>
     <v-tab-item>
-        <v-toolbar flat height="80">
-            <a class="export-link" href @click.prevent>Export to Excel</a>
-            <v-divider class="mx-3" vertical inset></v-divider>
-            <a class="export-link" href @click.prevent>Export to CSV</a>
+        <v-toolbar flat height="90">
+            <v-row>
+                <v-col cols="12" sm="8">
+                    <a class="export-link" href @click.prevent>Export to Excel</a>
+                    <v-divider class="mx-3" style="min-height: 20px" vertical inset></v-divider>
+                    <a class="export-link" href @click.prevent>Export to CSV</a>
+                </v-col>
 
-            <v-spacer></v-spacer>
+                <v-spacer></v-spacer>
 
-            <v-col cols="4">
-                <v-text-field
-                    label="Search"
-                    color="secondary"
-                    rounded
-                    outlined
-                    dense
-                    clearable
-                    hide-details
-                    :prepend-inner-icon="icons.mdiMagnify"
-                ></v-text-field>
-            </v-col>
+                <v-col cols="12" sm="4">
+                    <v-text-field
+                            label="Search"
+                            color="secondary"
+                            rounded
+                            outlined
+                            dense
+                            clearable
+                            hide-details
+                            :prepend-inner-icon="icons.mdiMagnify"
+                    ></v-text-field>
+                </v-col>
+            </v-row>
         </v-toolbar>
 
         <v-data-table

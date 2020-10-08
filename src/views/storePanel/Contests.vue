@@ -1,29 +1,28 @@
 <template>
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
-            <v-toolbar flat height="80">
-                <v-btn
-                    color="secondary"
-                    class="text-none"
-                    depressed
-                    to="/storePanel/add-contest"
+            <v-toolbar flat height="90">
+                <v-row class="d-flex justify-center justify-sm-space-between align-center mx-auto">
+                    <v-btn
+                            color="secondary"
+                            class="d-flex justify-center text-none mx-auto mx-sm-0"
+                            depressed
+                            to="/storePanel/add-contest"
                     >Add Contest/Survey</v-btn
-                >
-
-                <v-spacer></v-spacer>
-
-                <v-col cols="4">
-                    <v-text-field
-                        label="Search"
-                        color="secondary"
-                        rounded
-                        outlined
-                        dense
-                        clearable
-                        hide-details
-                        :prepend-inner-icon="icons.mdiMagnify"
-                    ></v-text-field>
-                </v-col>
+                    >
+                    <v-col cols="12" sm="4">
+                        <v-text-field
+                                label="Search"
+                                color="secondary"
+                                rounded
+                                outlined
+                                dense
+                                clearable
+                                hide-details
+                                :prepend-inner-icon="icons.mdiMagnify"
+                        ></v-text-field>
+                    </v-col>
+                </v-row>
             </v-toolbar>
 
             <v-data-table

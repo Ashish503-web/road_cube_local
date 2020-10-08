@@ -5,9 +5,9 @@
                     :vertical="$vuetify.breakpoint.mdAndDown"
                     v-model="tab"
                     color="black">
-                <v-tab class="text-capitalize text-left d-flex justify-start px-3">Stores</v-tab>
-                <v-tab class="text-capitalize text-left d-flex justify-start px-3">Registration plans</v-tab>
-                <v-tab class="text-capitalize text-left d-flex justify-start px-3">Payment methods</v-tab>
+                <v-tab class="text-capitalize d-flex justify-md-center justify-start px-3">Stores</v-tab>
+                <v-tab class="text-capitalize d-flex justify-md-center justify-start px-3">Registration plans</v-tab>
+                <v-tab class="text-capitalize d-flex justify-md-center justify-start px-3">Payment methods</v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">

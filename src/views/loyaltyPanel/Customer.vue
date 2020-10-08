@@ -11,7 +11,7 @@
                     v-for="tab in tabs"
                     :key="tab"
                     v-text="tab"
-                    class="text-capitalize text-left d-flex justify-lg-center justify-start px-3"
+                    class="text-capitalize d-flex justify-lg-center justify-start px-3"
                 >
                 </v-tab>
 

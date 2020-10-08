@@ -2,12 +2,12 @@
     <v-tab-item>
         <v-card tile flat>
             <v-row no-gutters class="mt-5">
-                <v-col cols="6" class="px-3">
+                <v-col cols="12" sm="6" class="px-3 mx-auto mx-sm-0 text-center text-sm-left">
                     <v-card-title>
                         <v-col class="pa-0">Coupons with transactions</v-col>
                         <v-col cols="auto" class="pa-0"></v-col>
                     </v-card-title>
-                    <v-card-subtitle style="width: 90%">
+                    <v-card-subtitle >
                         <p class="ma-0">
                             Reward every x transactions with a coupon.
                         </p>
@@ -19,10 +19,11 @@
                     <v-img
                         src="@/assets/serial_shopping.jpg"
                         width="280"
+                        class="mx-auto mx-sm-0"
                     ></v-img>
                 </v-col>
 
-                <v-col cols="6" class="px-3 pt-6">
+                <v-col cols="12" sm="6" class="px-3 pt-6">
                     <v-text-field
                         label="Reward user after"
                         color="secondary"

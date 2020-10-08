@@ -7,7 +7,7 @@
                 align="center"
                 class="px-4"
             >
-                <v-col cols="4" class="subtitle-2">
+                <v-col cols="12" sm="4" class="subtitle-2">
                     Toogle Order option:
                     <v-switch
                         v-model="orderOption"
@@ -19,7 +19,7 @@
                     ></v-switch>
                 </v-col>
 
-                <v-col cols="4" class="subtitle-2">
+                <v-col cols="12" sm="4" class="subtitle-2">
                     Limit:
                     <v-text-field
                         label="Radius m2"
@@ -33,7 +33,7 @@
                 </v-col>
 
                 <template v-if="orderOption === 'On'">
-                    <v-col cols="6" class="subtitle-2">
+                    <v-col cols="12" sm="6" class="subtitle-2">
                         Validate minimum amount for delivery after discount :
                         <v-switch
                             v-model="validateMinAmount"
@@ -45,7 +45,7 @@
                         ></v-switch>
                     </v-col>
 
-                    <v-col cols="4" class="subtitle-2">
+                    <v-col cols="12" sm="4" class="subtitle-2">
                         Minimum Amount for Delivery:
                         <v-text-field
                             type="number"
@@ -59,7 +59,7 @@
                         ></v-text-field>
                     </v-col>
 
-                    <v-col cols="4" class="subtitle-2">
+                    <v-col cols="12" sm="4" class="subtitle-2">
                         Card payments:
                         <v-switch
                             v-model="cardPayment"
@@ -71,7 +71,7 @@
                         ></v-switch>
                     </v-col>
 
-                    <v-col cols="4" class="subtitle-2">
+                    <v-col cols="12" sm="4" class="subtitle-2">
                         Cash payments:
                         <v-switch
                             v-model="cashPayment"
@@ -83,7 +83,7 @@
                         ></v-switch>
                     </v-col>
 
-                    <v-col cols="4" class="subtitle-2">
+                    <v-col cols="12" sm="4" class="subtitle-2">
                         Cash on delivery Fee:
                         <v-text-field
                             type="number"

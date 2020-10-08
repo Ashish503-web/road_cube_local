@@ -2,8 +2,8 @@
     <b-standard-card title="API Authentication">
         <b-textarea></b-textarea>
 
-        <v-row no-gutters justify="space-between" align="center">
-            <v-col cols="3">
+        <v-row no-gutters justify="space-between" align="center" >
+            <v-col cols="12" sm="3" class="mt-2">
                 <v-text-field
                     label="Password"
                     color="secondary"
@@ -13,7 +13,7 @@
                     hide-details
                 ></v-text-field>
             </v-col>
-            <v-col cols="6" class="text-center secondary--text">
+            <v-col cols="12" sm="6" class="text-center secondary--text">
                 You can find detailed documentation
                 <a
                     class="secondary--text subtitle-2"
@@ -22,7 +22,7 @@
                     >here</a
                 >
             </v-col>
-            <v-col cols="auto">
+            <v-col cols="12" sm="auto" class="d-flex justify-center justify-sm-start">
                 <v-btn color="secondary" class="text-capitalize" depressed
                     >get token</v-btn
                 >
@@ -31,7 +31,7 @@
                 Reset all previously created tokens:
             </v-col>
 
-            <v-col class="pl-3">
+            <v-col class="pl-3 d-flex justify-center justify-sm-start">
                 <v-switch color="secondary" hide-details></v-switch>
             </v-col>
         </v-row>

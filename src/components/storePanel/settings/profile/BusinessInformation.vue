@@ -1,68 +1,69 @@
 <template>
     <b-standard-card title="Business Information">
         <v-row no-gutters justify="space-around" class="pt-6 pb-4">
-            <v-col cols="5">
+            <v-col cols="12" sm="5">
                 <b-text-field
                     v-model="businessInformation.name"
                     label="Business Name"
-                    no-top-margin
+
+
                 ></b-text-field>
             </v-col>
-            <v-col cols="5">
+            <v-col cols="12" sm="5">
                 <b-text-field
                     v-model="businessInformation.address"
                     label="Business Address"
-                    no-top-margin
+
                 ></b-text-field>
             </v-col>
-            <v-col cols="5">
+            <v-col cols="12" sm="5">
                 <b-select
                     v-model="businessInformation.store_category_id"
                     label="Basic Business Category"
                     :items="categories"
                 ></b-select>
             </v-col>
-            <v-col cols="5">
+            <v-col cols="12" sm="5">
                 <b-text-field
                     v-model="businessInformation.activity"
                     label="Business Activity"
                 ></b-text-field>
             </v-col>
-            <v-col cols="5">
+            <v-col cols="12" sm="5">
                 <b-autocomplete
                     v-model="businessInformation.country_id"
                     label="Country"
                     :items="countries"
                 ></b-autocomplete>
             </v-col>
-            <v-col cols="5">
+            <v-col cols="12" sm="5">
                 <b-text-field
                     v-model="businessInformation.primary_phone"
                     type="number"
                     label="Business Telephone Number"
                 ></b-text-field>
             </v-col>
-            <v-col cols="5">
+            <v-col cols="12" sm="5">
                 <b-text-field
                     v-model="businessInformation.secondary_phone"
                     type="number"
                     label="Business Telephone Number 2"
                 ></b-text-field>
             </v-col>
-            <v-col cols="5">
+            <v-col cols="12" sm="5">
                 <b-text-field
                     v-model="businessInformation.owner_primary_phone"
                     type="number"
                     label="Owner's Mobile Phone"
                 ></b-text-field>
             </v-col>
-            <v-col cols="5">
+            <v-col cols="12" sm="5">
                 <b-text-field
                     v-model="businessInformation.owner_fullname"
                     label="Owner's Fullname"
                 ></b-text-field>
             </v-col>
-            <v-col cols="5">
+            <v-col cols="12" sm="5">
                 <b-text-field
                     v-model="businessInformation.owner_email"
                     type="email"

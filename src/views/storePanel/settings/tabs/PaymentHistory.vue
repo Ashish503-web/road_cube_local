@@ -6,21 +6,25 @@
         </v-alert>
 
         <v-toolbar flat height="80">
-            <v-card-title>Transaction History</v-card-title>
+            <v-row class="d-flex align-center">
+                <v-col cols="12" sm="auto" class="py-0">
+                    <v-card-title>Transaction History</v-card-title>
+                </v-col>
 
-            <v-spacer></v-spacer>
-            <v-col cols="4">
-                <v-text-field
-                    label="Search"
-                    color="secondary"
-                    rounded
-                    outlined
-                    dense
-                    clearable
-                    hide-details
-                    :append-icon="icons.mdiMagnify"
-                ></v-text-field>
-            </v-col>
+                <v-spacer></v-spacer>
+                <v-col cols="12" sm="4" class="py-0">
+                    <v-text-field
+                            label="Search"
+                            color="secondary"
+                            rounded
+                            outlined
+                            dense
+                            clearable
+                            hide-details
+                            :append-icon="icons.mdiMagnify"
+                    ></v-text-field>
+                </v-col>
+            </v-row>
         </v-toolbar>
         <v-data-table
             :headers="headers"

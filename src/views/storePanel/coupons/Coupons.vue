@@ -1,12 +1,12 @@
 <template>
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
-            <v-tabs v-model="tab" show-arrows color="secondary" :ripple="false">
+            <v-tabs v-model="tab" :vertical="$vuetify.breakpoint.smAndDown" color="secondary" :ripple="false">
                 <v-tab
                     v-for="tab in tabs"
                     :key="tab"
                     v-text="tab"
-                    class="text-capitalize"
+                    class="text-capitalize text-left text-sm-center d-flex justify-start justify-sm-center px-3"
                     :ripple="false"
                 ></v-tab>
             </v-tabs>

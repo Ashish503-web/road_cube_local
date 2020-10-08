@@ -4,15 +4,15 @@
             <v-col cols="12">
                 <v-card outlined tile>
                     <v-row class="pb-3">
-                        <v-col>
-                            <v-card-title class="pb-0"
+                        <v-col cols="12" sm="6" md="6" lg="3">
+                            <v-card-title class="pb-0 justify-center"
                                 >Maroudas Optika</v-card-title
                             >
-                            <h4 class="subtitle-1 success--text pl-4">
+                            <h4 class="subtitle-1 success--text pl-4 text-center">
                                 online
                             </h4>
                         </v-col>
-                        <v-col>
+                        <v-col cols="12" sm="6" md="6" lg="3">
                             <v-card-title class="pb-0 justify-center"
                                 >80</v-card-title
                             >
@@ -26,7 +26,7 @@
                                 Customer
                             </v-card-title>
                         </v-col>
-                        <v-col>
+                        <v-col cols="12" sm="6" md="6" lg="3">
                             <v-card-title class="pb-0 justify-center"
                                 >1.748</v-card-title
                             >
@@ -40,7 +40,7 @@
                                 Transactions
                             </v-card-title>
                         </v-col>
-                        <v-col>
+                        <v-col cols="12" sm="6" md="6" lg="3">
                             <v-card-title class="pb-0 justify-center"
                                 >€11.118.056.779,71</v-card-title
                             >
@@ -58,7 +58,7 @@
                 </v-card>
             </v-col>
 
-            <v-col cols="3">
+            <v-col cols="12" sm="6" lg="3">
                 <v-card tile class="pa-5" outlined>
                     <v-row no-gutters justify="space-between" align="center">
                         <v-col cols="auto">
@@ -85,7 +85,7 @@
                 </v-card>
             </v-col>
 
-            <v-col cols="3">
+            <v-col cols="12" sm="6" lg="3">
                 <v-card tile class="pa-5" outlined>
                     <v-row no-gutters justify="space-between" align="center">
                         <v-col cols="auto">
@@ -112,7 +112,7 @@
                 </v-card>
             </v-col>
 
-            <v-col cols="3">
+            <v-col cols="12" sm="6" lg="3">
                 <v-card tile class="pa-5" outlined>
                     <v-row no-gutters justify="space-between" align="center">
                         <v-col cols="auto">
@@ -139,7 +139,7 @@
                 </v-card>
             </v-col>
 
-            <v-col cols="3">
+            <v-col cols="12" sm="6" lg="3">
                 <v-card tile class="pa-5" outlined>
                     <v-row no-gutters justify="space-between" align="center">
                         <v-col cols="auto">
@@ -166,7 +166,7 @@
                 </v-card>
             </v-col>
 
-            <v-col cols="6">
+            <v-col cols="12" sm="6">
                 <v-card tile class="pa-5" outlined>
                     <v-row no-gutters justify="space-between" align="center">
                         <v-col cols="auto">
@@ -193,7 +193,7 @@
                 </v-card>
             </v-col>
 
-            <v-col cols="6">
+            <v-col cols="12" sm="6">
                 <v-card tile class="pa-5" outlined>
                     <v-row no-gutters justify="space-between" align="center">
                         <v-col cols="auto">

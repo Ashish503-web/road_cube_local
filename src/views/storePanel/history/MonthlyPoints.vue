@@ -1,22 +1,26 @@
 <template>
     <v-tab-item>
         <v-toolbar flat height="80">
-            <a class="export-link" href @click.prevent>Export to CSV/Excel</a>
+           <v-row>
+               <v-col cols="12" sm="6" class="mt-3 mt-sm-0">
+                   <a class="export-link" href @click.prevent>Export to CSV/Excel</a>
+               </v-col>
 
-            <v-spacer></v-spacer>
+               <v-spacer></v-spacer>
 
-            <v-col cols="4">
-                <v-text-field
-                    label="Search"
-                    color="secondary"
-                    rounded
-                    outlined
-                    dense
-                    clearable
-                    hide-details
-                    :prepend-inner-icon="icons.mdiMagnify"
-                ></v-text-field>
-            </v-col>
+               <v-col cols="12" sm="4" class="py-0">
+                   <v-text-field
+                           label="Search"
+                           color="secondary"
+                           rounded
+                           outlined
+                           dense
+                           clearable
+                           hide-details
+                           :prepend-inner-icon="icons.mdiMagnify"
+                   ></v-text-field>
+               </v-col>
+           </v-row>
         </v-toolbar>
 
         <v-data-table
