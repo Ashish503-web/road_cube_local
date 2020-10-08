@@ -1,5 +1,10 @@
 <template>
-    <b-standard-card title="API Authentication">
+    <b-standard-card
+        title="API Authentication"
+        title-color="white"
+        height="auto"
+        class="mt-5"
+    >
         <b-textarea no-top-margin></b-textarea>
 
         <v-row no-gutters justify="space-between" align="center">

@@ -3,6 +3,6 @@ export default {
     name: "BusinessProfile",
     component: () =>
         import(
-            /* webpackChunkName: "businessProfile" */ "@/views/loyaltyPanel/BusinessProfile/BusinessProfile.vue"
-            )
-}
+            /* webpackChunkName: "businessProfile" */ "@/views/loyaltyPanel/BusinessProfile.vue"
+        )
+};

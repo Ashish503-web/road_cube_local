@@ -1,10 +1,10 @@
 <template>
     <v-tab-item class="pt-5">
         <v-row no-gutters>
-            <v-col cols="6" class="pr-2">
+            <v-col cols="6" class="pr-2 mt-5">
                 <Logo />
             </v-col>
-            <v-col cols="6" class="pl-2">
+            <v-col cols="6" class="pl-2 mt-5">
                 <PinDisplay />
             </v-col>
             <v-col cols="12" class="mt-12">

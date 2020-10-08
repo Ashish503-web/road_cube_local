@@ -2,7 +2,7 @@
     <b-standard-card
         title="Reward with presence in the store"
         activatable
-        semi-height
+        height="auto"
         :switcher.sync="rewardWithPresence"
         :loading="loading"
         :error-message="errorMessage"

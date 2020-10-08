@@ -1,7 +1,13 @@
 <template>
     <v-tab-item>
         <v-toolbar flat height="80">
-            <SearchField />
+            <v-spacer></v-spacer>
+            <v-col cols="4">
+                <b-search-field
+                    :selectedSearchType="selectedSearchType"
+                    :searchTypes="searchTypes"
+                ></b-search-field>
+            </v-col>
         </v-toolbar>
 
         <v-data-table
@@ -64,12 +70,11 @@
 </template>
 
 <script>
-import SearchField from "@/components/loyaltyPanel/SearchField";
 import UpdateAllCheckbox from "@/components/loyaltyPanel/branches/UpdateAllCheckbox";
 
 export default {
     name: "AdminPanelSettings",
-    components: { SearchField, UpdateAllCheckbox },
+    components: { UpdateAllCheckbox },
     data: () => ({
         headers: [
             { text: "Name", value: "name", sortable: false },

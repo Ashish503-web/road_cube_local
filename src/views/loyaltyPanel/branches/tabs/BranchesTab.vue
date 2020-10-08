@@ -25,10 +25,15 @@
             >
         </v-toolbar>
 
-        <SearchField
-            :selectedSearchType="selectedSearchType"
-            :searchTypes="searchTypes"
-        />
+        <v-toolbar flat>
+            <v-spacer></v-spacer>
+            <v-col cols="4">
+                <b-search-field
+                    :selectedSearchType="selectedSearchType"
+                    :searchTypes="searchTypes"
+                ></b-search-field>
+            </v-col>
+        </v-toolbar>
 
         <v-sheet outlined style="overflow: auto">
             <v-sheet width="1400px">
@@ -161,14 +166,12 @@ import { mdiPencilOutline, mdiOpenInNew, mdiClose } from "@mdi/js";
 import { mapMutations } from "vuex";
 import ShopForm from "@/components/loyaltyPanel/branches/ShopForm";
 import RightsForm from "@/components/loyaltyPanel/branches/RightsForm";
-import SearchField from "@/components/loyaltyPanel/SearchField";
 
 export default {
     name: "BranchesTab",
     components: {
         ShopForm,
-        RightsForm,
-        SearchField
+        RightsForm
     },
     data: () => ({
         icons: { mdiPencilOutline, mdiOpenInNew, mdiClose },
@@ -259,7 +262,7 @@ export default {
 };
 </script>
 <style scoped>
-    .toolbar-content{
-        padding: 0 !important;
-    }
+.toolbar-content {
+    padding: 0 !important;
+}
 </style>

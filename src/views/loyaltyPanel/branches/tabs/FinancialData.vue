@@ -25,10 +25,15 @@
             >
         </v-toolbar>
 
-        <SearchField
-            :selectedSearchType="selectedSearchType"
-            :searchTypes="searchTypes"
-        />
+        <v-toolbar flat>
+            <v-spacer></v-spacer>
+            <v-col cols="4">
+                <b-search-field
+                    :selectedSearchType="selectedSearchType"
+                    :searchTypes="searchTypes"
+                ></b-search-field>
+            </v-col>
+        </v-toolbar>
 
         <v-data-table
             :headers="headers"
@@ -60,11 +65,10 @@
 import { mapMutations } from "vuex";
 import ShopForm from "@/components/loyaltyPanel/branches/ShopForm";
 import RightsForm from "@/components/loyaltyPanel/branches/RightsForm";
-import SearchField from "@/components/loyaltyPanel/SearchField";
 
 export default {
     name: "FinancialData",
-    components: { ShopForm, RightsForm, SearchField },
+    components: { ShopForm, RightsForm },
     data: () => ({
         searchTypes: [
             "All Fields",

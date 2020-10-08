@@ -1,8 +1,8 @@
 <template>
-    <v-card outlined :height="semiHeight ? '48%' : '100%'">
+    <v-card outlined :height="height">
         <v-row no-gutters class="fill-height" align-content="space-between">
             <v-col cols="12">
-                <v-card-title v-if="activatable" class="grey lighten-3">
+                <v-card-title v-if="activatable" :class="titleColor">
                     <v-col class="pa-0">
                         {{ title }}
                     </v-col>
@@ -24,7 +24,7 @@
                     </v-col>
                 </v-card-title>
 
-                <v-card-title v-else class="grey lighten-3">
+                <v-card-title v-else :class="titleColor">
                     {{ title }}
                 </v-card-title>
                 <v-divider></v-divider>
@@ -33,7 +33,7 @@
             <v-col cols="12">
                 <v-form v-model="valid" @submit.prevent="$emit('submit')">
                     <v-card-text
-                        class="pt-5 text--secondary relative"
+                        class="pt-4 text--secondary relative"
                         :class="{ 'px-0': noBodyPadding }"
                     >
                         <slot></slot>
@@ -50,6 +50,17 @@
                 <v-divider></v-divider>
 
                 <v-card-actions class="pl-4">
+                    <v-spacer></v-spacer>
+                    <template>
+                        <v-btn
+                            v-if="cancelText"
+                            color="red"
+                            class="text-capitalize px-4"
+                            dark
+                            depressed
+                            >{{ cancelText }}</v-btn
+                        >
+                    </template>
                     <v-btn
                         color="secondary"
                         class="text-capitalize px-5"
@@ -69,10 +80,18 @@
 export default {
     name: "BStandardCard",
     props: {
-        "semi-height": Boolean,
+        height: {
+            type: String,
+            default: "100%"
+        },
         activatable: Boolean,
         switcher: Boolean,
         title: String,
+        titleColor: {
+            type: String,
+            default: "grey lighten-3"
+        },
+        cancelText: String,
         submitText: {
             type: String,
             default: "update details"

@@ -1,86 +1,104 @@
 <template>
-    <v-card>
-        <v-card-title>
-            <!--<v-col class="d-flex" cols="12" sm="2">
-                <v-select
-                    :items="pageItems"
-                    outlined
-                    v-model="pageItem"
-                ></v-select>
-            </v-col>-->
+    <v-tab-item>
+        <v-toolbar flat height="80">
             <v-spacer></v-spacer>
-            <SearchField
 
-            />
-        </v-card-title>
+            <v-col cols="4">
+                <b-search-field></b-search-field>
+            </v-col>
+        </v-toolbar>
         <v-data-table
             :headers="headers"
             :items="desserts"
-            :items-per-page="5"
-            class="elevation-1"
+            :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
+            class="b-outlined"
         >
             <template v-slot:item="row">
                 <tr>
                     <td>{{ row.item.name }}</td>
                     <td>
-                        <v-checkbox v-model="row.item.market1"></v-checkbox>
+                        <v-checkbox
+                            v-model="row.item.market1"
+                            color="secondary"
+                        ></v-checkbox>
                     </td>
                     <td>
-                        <v-checkbox v-model="row.item.market2"></v-checkbox>
+                        <v-checkbox
+                            v-model="row.item.market2"
+                            color="secondary"
+                        ></v-checkbox>
                     </td>
                     <td>
-                        <v-checkbox v-model="row.item.market3"></v-checkbox>
+                        <v-checkbox
+                            v-model="row.item.market3"
+                            color="secondary"
+                        ></v-checkbox>
                     </td>
                     <td>
-                        <v-checkbox v-model="row.item.market4"></v-checkbox>
+                        <v-checkbox
+                            v-model="row.item.market4"
+                            color="secondary"
+                        ></v-checkbox>
                     </td>
                     <td>
-                        <v-checkbox v-model="row.item.market5"></v-checkbox>
+                        <v-checkbox
+                            v-model="row.item.market5"
+                            color="secondary"
+                        ></v-checkbox>
                     </td>
                     <td>
-                        <v-checkbox v-model="row.item.market6"></v-checkbox>
+                        <v-checkbox
+                            v-model="row.item.market6"
+                            color="secondary"
+                        ></v-checkbox>
                     </td>
                     <td>
-                        <v-checkbox v-model="row.item.market7"></v-checkbox>
+                        <v-checkbox
+                            v-model="row.item.market7"
+                            color="secondary"
+                        ></v-checkbox>
                     </td>
                     <td>
-                        <v-checkbox v-model="row.item.market8"></v-checkbox>
+                        <v-checkbox
+                            v-model="row.item.market8"
+                            color="secondary"
+                        ></v-checkbox>
                     </td>
                     <td>
-                        <v-checkbox v-model="row.item.market9"></v-checkbox>
+                        <v-checkbox
+                            v-model="row.item.market9"
+                            color="secondary"
+                        ></v-checkbox>
                     </td>
                     <td>
-                        <v-checkbox v-model="row.item.market10"></v-checkbox>
+                        <v-checkbox
+                            v-model="row.item.market10"
+                            color="secondary"
+                        ></v-checkbox>
                     </td>
                     <td>
-                        <v-checkbox v-model="row.item.market11"></v-checkbox>
+                        <v-checkbox
+                            v-model="row.item.market11"
+                            color="secondary"
+                        ></v-checkbox>
                     </td>
                     <td>
-                        <v-checkbox v-model="row.item.market12"></v-checkbox>
+                        <v-checkbox
+                            v-model="row.item.market12"
+                            color="secondary"
+                        ></v-checkbox>
                     </td>
                 </tr>
             </template>
         </v-data-table>
-    </v-card>
+    </v-tab-item>
 </template>
-<script>
-import { mdiMagnify } from "@mdi/js";
-import SearchField from "@/components/loyaltyPanel/SearchField";
 
+<script>
 export default {
-    components:{
-        SearchField
-    },
+    name: "ProductsPerStore",
+
     data: () => ({
-        dense: false,
-        fixedHeader: true,
-        light: true,
-        search: "",
-        pageItems: [10, 20, 30, "All"],
-        pageItem: 10,
-        icons: {
-            mdiMagnify
-        },
         headers: [
             { text: "Name" },
             { text: "market1" },
