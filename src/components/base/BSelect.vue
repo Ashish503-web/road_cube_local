@@ -9,9 +9,9 @@
         item-color="secondary"
         outlined
         dense
-        clearable
         open-on-clear
         hide-details="auto"
+        :clearable="!noClearIcon"
         :disabled="disabled"
         :prepend-icon="icons[`${prependIcon}`]"
         :prepend-inner-icon="icons[`${prependInnerIcon}`]"
@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import { mdiPlus } from "@mdi/js";
+import { mdiPlus, mdiPercent } from "@mdi/js";
 
 export default {
     name: "BSelect",
@@ -39,11 +39,12 @@ export default {
         appendIcon: String,
         appendOuterIcon: String,
         noTopMargin: Boolean,
-        disabled: Boolean
+        disabled: Boolean,
+        noClearIcon: Boolean
     },
 
     data: () => ({
-        icons: { mdiPlus }
+        icons: { mdiPlus, mdiPercent }
     })
 };
 </script>

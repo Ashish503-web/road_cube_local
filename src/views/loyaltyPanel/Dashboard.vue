@@ -28,12 +28,12 @@
 </template>
 
 <script>
-import Title from "@/components/loyaltyPanel/Dashboard/Title";
-import Widget from "@/components/loyaltyPanel/Dashboard/Widget";
-import TransactionsWidget from "@/components/loyaltyPanel/Dashboard/TransactionsWidget";
-import TransactionsChart from "@/components/loyaltyPanel/Dashboard/TransactionsChart";
-import ClicksChart from "@/components/loyaltyPanel/Dashboard/ClicksChart";
-import NavigationChart from "@/components/loyaltyPanel/Dashboard/NavigationChart";
+import Title from "@/components/loyaltyPanel/dashboard/Title";
+import Widget from "@/components/loyaltyPanel/dashboard/Widget";
+import TransactionsWidget from "@/components/loyaltyPanel/dashboard/TransactionsWidget";
+import TransactionsChart from "@/components/loyaltyPanel/dashboard/TransactionsChart";
+import ClicksChart from "@/components/loyaltyPanel/dashboard/ClicksChart";
+import NavigationChart from "@/components/loyaltyPanel/dashboard/NavigationChart";
 
 import {
     mdiDatabase,

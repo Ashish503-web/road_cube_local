@@ -19,7 +19,7 @@
         <v-data-table
             :headers="headers"
             :items="products"
-            :footer-props="{ itemsPerPageOptions }"
+            :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
             :page.sync="page"
             :items-per-page.sync="perPage"
             :server-items-length="serverItemsLength"
@@ -77,7 +77,6 @@
             <b-card
                 type="delete"
                 title="Delete Product"
-                icon="mdiDelete"
                 submit-text="delete"
                 :loading="loading"
                 :error-message="errorMessage"
@@ -114,7 +113,6 @@ export default {
                 { text: "Coupon", value: "coupon" },
                 { text: "Actions", value: "actions" }
             ],
-            itemsPerPageOptions: [10, 20, 30, -1],
             page: +this.$route.query.page,
             perPage: +this.$route.query.perPage,
             mode: 0
@@ -197,7 +195,7 @@ export default {
         if (!this.$route.query.perPage) {
             this.$router.push({
                 query: {
-                    perPage: 10,
+                    perPage: 12,
                     ...this.$route.query
                 }
             });
@@ -218,3 +216,9 @@ export default {
     }
 };
 </script>
+
+<style>
+.v-data-footer {
+    padding: 12px 0;
+}
+</style>

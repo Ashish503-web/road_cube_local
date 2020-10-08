@@ -75,7 +75,10 @@ export default {
             }
         },
 
-        async create({ dispatch, commit, rootState }, { product, image }) {
+        async create(
+            { dispatch, commit, state, rootState },
+            { product, image }
+        ) {
             try {
                 delete product.product_id;
                 delete product.image;
@@ -95,8 +98,19 @@ export default {
                     });
                 } else {
                     commit("addItem", data.data.product);
+                    commit("setServerItemsLength", state.serverItemsLength + 1);
                     commit("setLoading", false);
                     commit("setDialog", false);
+                    commit(
+                        "setNotification",
+                        {
+                            show: true,
+                            type: "success",
+                            text: "You have successfully created product!"
+                        },
+
+                        { root: true }
+                    );
                 }
             } catch (ex) {
                 commit("setLoading", false);
@@ -126,6 +140,16 @@ export default {
                     commit("updateItem", data.data.product);
                     commit("setLoading", false);
                     commit("setDialog", false);
+                    commit(
+                        "setNotification",
+                        {
+                            show: true,
+                            type: "success",
+                            text: "You have successfully updated product!"
+                        },
+
+                        { root: true }
+                    );
                 }
             } catch (ex) {
                 commit("setLoading", false);
@@ -134,7 +158,7 @@ export default {
             }
         },
 
-        async remove({ commit, rootState }, id) {
+        async remove({ commit, state, rootState }, id) {
             try {
                 commit("setLoading", true);
 
@@ -143,9 +167,20 @@ export default {
                     rootState.storeId,
                     id
                 );
+                commit("setServerItemsLength", state.serverItemsLength - 1);
                 commit("setLoading", false);
                 commit("setDeleteDialog", false);
                 commit("removeItem", id);
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully deleted product!"
+                    },
+
+                    { root: true }
+                );
             } catch (ex) {
                 commit("setLoading", false);
                 commit("setErrorMessage", ex.response.data.message);
@@ -153,7 +188,7 @@ export default {
             }
         },
 
-        async uploadImage({ commit, rootState }, { item, image, mode }) {
+        async uploadImage({ commit, state, rootState }, { item, image, mode }) {
             try {
                 const fd = new FormData();
                 fd.append("image", image);
@@ -167,10 +202,26 @@ export default {
 
                 item.image = data.data.image;
 
-                if (mode === 1) commit("addItem", item);
-                else commit("updateItem", item);
+                if (mode === 1) {
+                    commit("addItem", item);
+                    commit("setServerItemsLength", state.serverItemsLength + 1);
+                } else {
+                    commit("updateItem", item);
+                }
                 commit("setLoading", false);
                 commit("setDialog", false);
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: `You have successfully ${
+                            mode === 1 ? "created" : "updated"
+                        } product!`
+                    },
+
+                    { root: true }
+                );
             } catch (ex) {
                 commit("setLoading", false);
                 commit("setErrorMessage", ex.response.data.message);

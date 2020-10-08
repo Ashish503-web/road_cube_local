@@ -38,8 +38,10 @@
                                     <template v-slot:activator="{ on }">
                                         <v-btn text v-on="on">
                                             <v-icon
-                                                    color="secondary"
-                                                    v-text="icons.mdiFormatListCheckbox"
+                                                color="secondary"
+                                                v-text="
+                                                    icons.mdiFormatListCheckbox
+                                                "
                                             ></v-icon>
                                         </v-btn>
                                     </template>
@@ -48,38 +50,43 @@
                                         <v-list-item href="#">
                                             <v-list-item-icon>
                                                 <v-icon
-                                                        color="green darken-3"
-                                                        v-text="icons.mdiMicrosoftExcel"
+                                                    color="green darken-3"
+                                                    v-text="
+                                                        icons.mdiMicrosoftExcel
+                                                    "
                                                 ></v-icon>
                                             </v-list-item-icon>
                                             <v-list-item-title
-                                            >Export to Excel</v-list-item-title
+                                                >Export to
+                                                Excel</v-list-item-title
                                             >
                                         </v-list-item>
 
                                         <v-list-item href="#">
                                             <v-list-item-icon>
                                                 <v-icon
-                                                        color="red darken-4"
-                                                        v-text="icons.mdiFilePdf"
+                                                    color="red darken-4"
+                                                    v-text="icons.mdiFilePdf"
                                                 ></v-icon>
                                             </v-list-item-icon>
                                             <v-list-item-title
-                                            >Export to PDF</v-list-item-title
+                                                >Export to
+                                                PDF</v-list-item-title
                                             >
                                         </v-list-item>
 
                                         <v-list-item href="#">
                                             <v-list-item-icon>
                                                 <v-icon
-                                                        color="blue darken-3"
-                                                        v-text="
-                                                icons.mdiFileDelimitedOutline
-                                            "
+                                                    color="blue darken-3"
+                                                    v-text="
+                                                        icons.mdiFileDelimitedOutline
+                                                    "
                                                 ></v-icon>
                                             </v-list-item-icon>
                                             <v-list-item-title
-                                            >Export to CSV</v-list-item-title
+                                                >Export to
+                                                CSV</v-list-item-title
                                             >
                                         </v-list-item>
                                     </v-list>
@@ -90,38 +97,43 @@
                                 <v-menu v-model="menu" offset-y>
                                     <template v-slot:activator="{ attrs }">
                                         <v-text-field
-                                                :label="
-                                            selectedSearchType === 'All Fields'
-                                                ? 'Search'
-                                                : selectedSearchType
-                                                ? 'Search by ' +
-                                                  selectedSearchType
-                                                : 'Search'
-                                        "
-                                                rounded
-                                                outlined
-                                                dense
-                                                clearable
-                                                hide-details
-                                                :aria-expanded="attrs['aria-expanded']"
-                                                :prepend-inner-icon="icons.mdiMagnify"
-                                                :append-icon="icons.mdiChevronDown"
-                                                @click:append="menu = true"
+                                            :label="
+                                                selectedSearchType ===
+                                                'All Fields'
+                                                    ? 'Search'
+                                                    : selectedSearchType
+                                                    ? 'Search by ' +
+                                                      selectedSearchType
+                                                    : 'Search'
+                                            "
+                                            rounded
+                                            outlined
+                                            dense
+                                            clearable
+                                            hide-details
+                                            :aria-expanded="
+                                                attrs['aria-expanded']
+                                            "
+                                            :prepend-inner-icon="
+                                                icons.mdiMagnify
+                                            "
+                                            :append-icon="icons.mdiChevronDown"
+                                            @click:append="menu = true"
                                         ></v-text-field>
                                     </template>
 
                                     <v-list dense>
                                         <v-list-item-group
-                                                v-model="selectedSearchType"
-                                                color="primary"
+                                            v-model="selectedSearchType"
+                                            color="primary"
                                         >
                                             <v-list-item
-                                                    v-for="searchType in searchTypes"
-                                                    :key="searchType"
-                                                    :value="searchType"
+                                                v-for="searchType in searchTypes"
+                                                :key="searchType"
+                                                :value="searchType"
                                             >
                                                 <v-list-item-title
-                                                        v-text="searchType"
+                                                    v-text="searchType"
                                                 >
                                                 </v-list-item-title>
                                             </v-list-item>

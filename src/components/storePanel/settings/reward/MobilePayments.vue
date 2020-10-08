@@ -2,7 +2,7 @@
     <b-standard-card
         title="Mobile payments"
         activatable
-        semi-height
+        height="auto"
         class="mt-5"
         :switcher.sync="mobilePayments"
         :loading="loading"

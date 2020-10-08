@@ -16,7 +16,7 @@
         <v-divider></v-divider>
 
         <v-form v-model="valid" @submit.prevent="$emit('submit')">
-            <v-card-text class="pt-5">
+            <v-card-text class="pt-4">
                 <slot></slot>
             </v-card-text>
 
