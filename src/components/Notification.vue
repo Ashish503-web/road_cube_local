@@ -16,7 +16,16 @@
             {{ notification.text }}
         </span>
         <template v-slot:action>
-            <v-btn icon @click="setNotification({ show: false })">
+            <v-btn
+                icon
+                @click="
+                    setNotification({
+                        show: false,
+                        type: notification.type,
+                        text: notification.text
+                    })
+                "
+            >
                 <v-icon v-text="icons.mdiClose"></v-icon>
             </v-btn>
         </template>

@@ -268,7 +268,7 @@ import {
     mdiAccountOutline,
     mdiWalletOutline,
     mdiWrenchOutline,
-    mdiLockOpenOutline,
+    mdiLockOpenOutline
 } from "@mdi/js";
 
 import USFlag from "../assets/flags/US-flag.jpeg";
@@ -294,7 +294,7 @@ export default {
                 mdiBellOutline,
                 mdiClockOutline,
                 mdiLogout,
-                mdiCogOutline,
+                mdiCogOutline
             },
             mini: false,
             drawer: false,
@@ -306,29 +306,29 @@ export default {
                         {
                             icon: mdiPlusThick,
                             title: "New Transaction",
-                            to: "/storePanel/new-transaction",
+                            to: "/storePanel/new-transaction"
                         },
                         {
                             icon: mdiCurrencyEur,
                             title: "Transactions",
-                            to: "/storePanel/transactions",
+                            to: "/storePanel/transactions"
                         },
                         {
                             icon: mdiGift,
                             title: "Redeem",
-                            to: "/storePanel/redeem",
+                            to: "/storePanel/redeem"
                         },
                         {
                             icon: mdiDatabaseSync,
                             title: "History",
-                            to: "/storePanel/history",
+                            to: "/storePanel/history"
                         },
                         {
                             icon: mdiTrophyVariant,
                             title: "Contests",
-                            to: "/storePanel/contests",
-                        },
-                    ],
+                            to: "/storePanel/contests"
+                        }
+                    ]
                 },
                 {
                     title: "SETTINGS",
@@ -336,26 +336,26 @@ export default {
                         {
                             icon: mdiPackageVariantClosed,
                             title: "Products",
-                            to: "/storePanel/products",
+                            to: "/storePanel/products"
                         },
                         {
                             icon: mdiTagMultiple,
                             title: "Coupons",
-                            to: "/storePanel/coupons",
+                            to: "/storePanel/coupons"
                         },
                         {
                             icon: mdiCog,
                             title: "Settings",
-                            to: "/storePanel/settings",
-                        },
-                    ],
-                },
+                            to: "/storePanel/settings"
+                        }
+                    ]
+                }
             ],
 
             lang: {
                 img: USFlag,
                 title: "English",
-                urlTitle: "en",
+                urlTitle: "en"
             },
 
             langs: [
@@ -363,21 +363,21 @@ export default {
                 { img: FranceFlag, title: "French", urlTitle: "fr" },
                 { img: SpainFlag, title: "Spanish", urlTitle: "sp" },
                 { img: ChinaFlag, title: "Chinese", urlTitle: "ch" },
-                { img: ArabicFlag, title: "Arabic", urlTitle: "ar" },
+                { img: ArabicFlag, title: "Arabic", urlTitle: "ar" }
             ],
 
             profileLinks: [
                 { icon: mdiAccountOutline, text: "Profile" },
                 { icon: mdiWalletOutline, text: "My Wallet" },
                 { icon: mdiWrenchOutline, text: "Settings" },
-                { icon: mdiLockOpenOutline, text: "Lock Screen" },
-            ],
+                { icon: mdiLockOpenOutline, text: "Lock Screen" }
+            ]
         };
     },
 
     computed: {
         logo() {
-            return this.$store.state.storePanel.settings.profile.logo.image;
+            return this.$store.state.storePanel.store.logo;
         },
 
         storeName() {
@@ -386,8 +386,8 @@ export default {
 
         containerHeight() {
             return this.mini ? "calc(100vh - 193px)" : "calc(100vh - 183px)";
-        },
-    },
+        }
+    }
 };
 </script>
 

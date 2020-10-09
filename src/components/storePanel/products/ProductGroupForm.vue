@@ -90,8 +90,13 @@
                 public
             </v-card-title>
             <v-container>
-                <v-row>
-                    <v-col v-for="(weekday, i) in weekdays" :key="weekday">
+                <v-row no-gutters>
+                    <v-col
+                        v-for="(weekday, i) in weekdays"
+                        :key="weekday"
+                        cols="3"
+                        class="pr-2"
+                    >
                         <v-checkbox
                             v-model="productGroup.availability_days"
                             color="secondary"
@@ -120,7 +125,7 @@
         >
             <template v-slot:label>
                 <h4 class="secondary--text">
-                    Published : {{ productGroup.published }}
+                    {{ productGroup.published ? "Published" : "Unpublished" }}
                 </h4>
             </template>
         </v-checkbox>
@@ -137,9 +142,7 @@ export default {
     },
     data: () => ({
         categories: [{ text: "category", value: 1 }],
-        showImageUpload: false,
         imageFile: null,
-        showWeekdays: false,
         weekdays: [
             "Monday",
             "Tuesday",
@@ -160,6 +163,27 @@ export default {
                 : "Update Product Group";
         },
 
+        showImageUpload: {
+            get() {
+                return this.$store.state.storePanel.productGroups
+                    .showImageUpload;
+            },
+
+            set(val) {
+                this.setShowImageUpload(val);
+            }
+        },
+
+        showWeekdays: {
+            get() {
+                return this.$store.state.storePanel.productGroups.showWeekdays;
+            },
+
+            set(val) {
+                this.setShowWeekdays(val);
+            }
+        },
+
         productGroup: {
             get() {
                 return this.$store.state.storePanel.productGroups.productGroup;
@@ -172,7 +196,11 @@ export default {
     },
 
     methods: {
-        ...mapMutations("storePanel/productGroups", ["setItem"]),
+        ...mapMutations("storePanel/productGroups", [
+            "setShowImageUpload",
+            "setShowWeekdays",
+            "setItem"
+        ]),
         ...mapActions("storePanel/productGroups", ["create", "update"]),
 
         onFileSelected(event) {

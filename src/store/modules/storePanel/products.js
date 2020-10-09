@@ -9,6 +9,8 @@ export default {
         loading: false,
         errorMessage: "",
         serverItemsLength: 0,
+        showImageUpload: false,
+        showWeekdays: false,
         products: [],
         product: new Product()
     }),
@@ -28,6 +30,14 @@ export default {
 
         setErrorMessage(state, payload) {
             state.errorMessage = payload;
+        },
+
+        setShowImageUpload(state, payload) {
+            state.showImageUpload = payload;
+        },
+
+        setShowWeekdays(state, payload) {
+            state.showWeekdays = payload;
         },
 
         setServerItemsLength(state, payload) {
@@ -61,6 +71,8 @@ export default {
     actions: {
         async getItems({ commit, rootState }, query) {
             try {
+                commit("setLoading", true);
+
                 const { data } = await Product.get(
                     rootState.storeToken,
                     rootState.storeId,
@@ -70,7 +82,9 @@ export default {
 
                 commit("setItems", products);
                 commit("setServerItemsLength", pagination.total);
+                commit("setLoading", false);
             } catch (ex) {
+                commit("setLoading", false);
                 console.error(ex.response.data);
             }
         },

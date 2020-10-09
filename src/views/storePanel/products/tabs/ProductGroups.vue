@@ -5,13 +5,7 @@
                 color="secondary"
                 class="text-capitalize"
                 depressed
-                @click="
-                    () => {
-                        productGroup = {};
-                        mode = 1;
-                        dialog = true;
-                    }
-                "
+                @click="open(1, {})"
                 >add product group</v-btn
             >
         </v-toolbar>
@@ -25,6 +19,15 @@
             :server-items-length="serverItemsLength"
             class="b-outlined"
         >
+            <template v-slot:no-data>
+                <v-progress-circular
+                    v-if="loading"
+                    color="secondary"
+                    indeterminate
+                ></v-progress-circular>
+                <span v-else>No data available</span>
+            </template>
+
             <template v-slot:item.actions="{ item }">
                 <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
@@ -32,13 +35,7 @@
                             color="yellow darken-3"
                             icon
                             v-on="on"
-                            @click="
-                                () => {
-                                    productGroup = item;
-                                    mode = 2;
-                                    dialog = true;
-                                }
-                            "
+                            @click="open(2, item)"
                         >
                             <v-icon v-text="icons.mdiPencilOutline"></v-icon>
                         </v-btn>
@@ -148,6 +145,27 @@ export default {
             }
         },
 
+        showImageUpload: {
+            get() {
+                return this.$store.state.storePanel.productGroups
+                    .showImageUpload;
+            },
+
+            set(val) {
+                this.setShowImageUpload(val);
+            }
+        },
+
+        showWeekdays: {
+            get() {
+                return this.$store.state.storePanel.productGroups.showWeekdays;
+            },
+
+            set(val) {
+                this.setShowWeekdays(val);
+            }
+        },
+
         productGroup: {
             get() {
                 return this.$store.state.storePanel.productGroups.productGroup;
@@ -173,9 +191,22 @@ export default {
         ...mapMutations("storePanel/productGroups", [
             "setDialog",
             "setDeleteDialog",
+            "setShowImageUpload",
+            "setShowWeekdays",
             "setItem"
         ]),
-        ...mapActions("storePanel/productGroups", ["getItems", "remove"])
+        ...mapActions("storePanel/productGroups", ["getItems", "remove"]),
+
+        open(mode, item) {
+            this.mode = mode;
+            this.productGroup = item;
+            if (this.productGroup.image) this.showImageUpload = true;
+            else this.showImageUpload = false;
+            if (this.productGroup.availability_days.length)
+                this.showWeekdays = true;
+            else this.showWeekdays = false;
+            this.dialog = true;
+        }
     },
 
     watch: {

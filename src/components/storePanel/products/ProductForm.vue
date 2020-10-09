@@ -107,6 +107,55 @@
         </v-card>
 
         <v-checkbox
+            v-model="showWeekdays"
+            color="secondary"
+            class="pt-0 mt-3"
+            hide-details="auto"
+        >
+            <template v-slot:label>
+                <h4 class="secondary--text">
+                    I want the product to be displayed on specific days
+                </h4>
+            </template>
+        </v-checkbox>
+
+        <v-card v-if="showWeekdays" outlined class="mt-3">
+            <v-card-title
+                class="subtitle-1 font-weight-medium"
+                style="word-break: normal"
+            >
+                Choose the days you want the product group to be displayed in
+                public
+            </v-card-title>
+            <v-container>
+                <v-row no-gutters>
+                    <v-col
+                        v-for="(weekday, i) in weekdays"
+                        :key="weekday"
+                        cols="3"
+                        class="pr-2"
+                    >
+                        <v-checkbox
+                            v-model="product.availability_days"
+                            color="secondary"
+                            class="mt-0"
+                            :label="weekday"
+                            :value="i"
+                            hide-details
+                        >
+                            <template v-slot:label>
+                                <h4
+                                    class="secondary--text"
+                                    v-text="weekday"
+                                ></h4>
+                            </template>
+                        </v-checkbox>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-card>
+
+        <v-checkbox
             v-model="product.published"
             color="secondary"
             class="pt-0 mt-3"
@@ -114,7 +163,7 @@
         >
             <template v-slot:label>
                 <h4 class="secondary--text">
-                    Published : {{ product.published }}
+                    {{ product.published ? "Published" : "Unpublished" }}
                 </h4>
             </template>
         </v-checkbox>
@@ -131,8 +180,16 @@ export default {
     },
     data: () => ({
         categories: [{ text: "category", value: 1 }],
-        showImageUpload: false,
-        imageFile: null
+        imageFile: null,
+        weekdays: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+        ]
     }),
 
     computed: {
@@ -142,6 +199,26 @@ export default {
             return this.mode === 1
                 ? "New Product or Service"
                 : "Update Product or Service";
+        },
+
+        showImageUpload: {
+            get() {
+                return this.$store.state.storePanel.products.showImageUpload;
+            },
+
+            set(val) {
+                this.setShowImageUpload(val);
+            }
+        },
+
+        showWeekdays: {
+            get() {
+                return this.$store.state.storePanel.products.showWeekdays;
+            },
+
+            set(val) {
+                this.setShowWeekdays(val);
+            }
         },
 
         product: {
@@ -156,7 +233,11 @@ export default {
     },
 
     methods: {
-        ...mapMutations("storePanel/products", ["setProduct"]),
+        ...mapMutations("storePanel/products", [
+            "setShowImageUpload",
+            "setShowWeekdays",
+            "setProduct"
+        ]),
         ...mapActions("storePanel/products", ["create", "update"]),
 
         onFileSelected(event) {

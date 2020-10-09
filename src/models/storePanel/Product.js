@@ -12,6 +12,7 @@ export default class Product {
         this.shipping_cost = item.shipping_cost || null;
         this.delivery_cost = item.delivery_cost || null;
         this.product_category_id = item.product_category_id || null;
+        this.availability_days = item.availability_days || [];
         this.image = item.image || "";
     }
 

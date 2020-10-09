@@ -26,14 +26,6 @@ export default {
             quickPayment: "",
             invoicing: "",
             redemption: ""
-        },
-        logo: {
-            image: defaultLogo,
-            imageFile: ""
-        },
-        map_logo: {
-            image: defaultLogo,
-            imageFile: ""
         }
     }),
 
@@ -48,24 +40,16 @@ export default {
 
         setErrorMessage(state, { value, type }) {
             state.errorMessage[type] = value;
-        },
-
-        setLogo(state, payload) {
-            state.logo = payload;
-        },
-
-        setMapLogo(state, payload) {
-            state.map_logo = payload;
         }
     },
 
     actions: {
-        async uploadLogo({ commit, state, rootState }) {
+        async uploadLogo({ commit, rootState }, imageFile) {
             try {
                 commit("setLoading", { value: true, type: "logo" });
 
                 const fd = new FormData();
-                fd.append("logo", state.logo.imageFile);
+                fd.append("logo", imageFile);
 
                 await Profile.uploadImage(
                     rootState.storeToken,
@@ -99,12 +83,12 @@ export default {
             }
         },
 
-        async uploadMapLogo({ commit, state, rootState }) {
+        async uploadMapLogo({ commit, rootState }, imageFile) {
             try {
                 commit("setLoading", { value: true, type: "mapLogo" });
 
                 const fd = new FormData();
-                fd.append("map_logo", state.map_logo.imageFile);
+                fd.append("map_logo", imageFile);
 
                 await Profile.uploadImage(
                     rootState.storeToken,
@@ -147,7 +131,7 @@ export default {
 
                 const timetable = [...rootState.storePanel.store.timetable];
 
-                timetable.forEach((day, i) => {
+                timetable.forEach(day => {
                     if (day.type === "regular") {
                         day.shifts.pop();
                     } else if (day.type === "24h" || day.type === "closed") {

@@ -42,7 +42,7 @@ export default {
                     item
                 );
 
-                commit("setSnackbar", true, { root: true });
+                commit("setLoading", { value: false, type });
                 commit(
                     "setNotification",
                     {

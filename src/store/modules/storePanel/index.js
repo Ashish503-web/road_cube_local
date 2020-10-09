@@ -5,7 +5,6 @@ import settings from "./settings";
 
 class Weekday {
     constructor(weekday = {}) {
-        this.name = weekday.name || "";
         this.open = false;
         if (weekday.day === 0) this.day = 0;
         else this.day = weekday.day || null;
@@ -35,6 +34,14 @@ export default {
         setStore(state, payload) {
             payload.timetable = payload.timetable.map(day => new Weekday(day));
             state.store = payload;
+        },
+
+        setLogo(state, payload) {
+            state.store.logo = payload;
+        },
+
+        setMapLogo(state, payload) {
+            state.store.map_logo = payload;
         },
 
         setQuickPayment(state, payload) {

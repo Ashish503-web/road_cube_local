@@ -9,6 +9,8 @@ export default {
         loading: false,
         errorMessage: "",
         serverItemsLength: 0,
+        showImageUpload: false,
+        showWeekdays: false,
         productGroups: [],
         productGroup: new ProductGroup()
     }),
@@ -32,6 +34,14 @@ export default {
 
         setServerItemsLength(state, payload) {
             state.serverItemsLength = payload;
+        },
+
+        setShowImageUpload(state, payload) {
+            state.showImageUpload = payload;
+        },
+
+        setShowWeekdays(state, payload) {
+            state.showWeekdays = payload;
         },
 
         setItems(state, payload) {
@@ -63,17 +73,20 @@ export default {
     actions: {
         async getItems({ commit, rootState }, query) {
             try {
+                commit("setLoading", true);
+
                 const { data } = await ProductGroup.get(
                     rootState.storeToken,
                     rootState.storeId,
                     query
                 );
-
                 const { group_products, pagination } = data.data;
 
                 commit("setItems", group_products);
                 commit("setServerItemsLength", pagination.total);
+                commit("setLoading", false);
             } catch (ex) {
+                commit("setLoading", false);
                 console.error(ex.response.data);
             }
         },

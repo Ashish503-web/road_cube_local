@@ -4,14 +4,14 @@
         submit-text="update logo"
         :loading="loading"
         :error-message="errorMessage"
-        @submit="uploadLogo"
+        @submit="uploadLogo(imageFile)"
     >
         You can upload here the logo of your business which will appear in the
         app and will be on the physical cards. If we think that it can be
         improved we will contact you before publishment.
         <v-row no-gutters align="center" style="margin-top: 4.6rem">
             <v-col cols="12" sm="5" class="pr-2">
-                <v-img :src="logo.image" width="64" class="mx-auto"></v-img>
+                <v-img :src="logo" width="64" class="mx-auto"></v-img>
             </v-col>
             <v-col cols="12" sm="7" class="pl-0 pl-sm-2">
                 Press the following button to choose image:
@@ -38,6 +38,7 @@ export default {
 
     data() {
         return {
+            imageFile: "",
             rules: [
                 v => {
                     if (v) {
@@ -74,7 +75,7 @@ export default {
 
         logo: {
             get() {
-                return this.$store.state.storePanel.settings.profile.logo;
+                return this.$store.state.storePanel.store.logo;
             },
 
             set(val) {
@@ -84,17 +85,15 @@ export default {
     },
 
     methods: {
-        ...mapMutations("storePanel/settings/profile", [
-            "setSuccess",
-            "setLogo"
-        ]),
+        ...mapMutations("storePanel", ["setLogo"]),
+        ...mapMutations("storePanel/settings/profile", ["setSuccess"]),
         ...mapActions("storePanel/settings/profile", ["uploadLogo"]),
 
         onFileSelected(event) {
-            this.logo.imageFile = event;
+            this.imageFile = event;
             const reader = new FileReader();
-            reader.readAsDataURL(this.logo.imageFile);
-            reader.onload = e => (this.logo.image = e.target.result);
+            reader.readAsDataURL(this.imageFile);
+            reader.onload = e => (this.logo = e.target.result);
         }
     }
 };

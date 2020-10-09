@@ -4,14 +4,14 @@
         submit-text="update logo"
         :loading="loading"
         :error-message="errorMessage"
-        @submit="uploadMapLogo"
+        @submit="uploadMapLogo(imageFile)"
     >
         <v-row no-gutters justify="space-between" class="flex-wrap-reverse">
             <v-col cols="12" sm="6">
                 Here you can change the display of the pin on the map:
-                <v-sheet width="84" class="relative mx-auto mx-sm-0" >
+                <v-sheet width="84" class="relative mx-auto mx-sm-0">
                     <v-img :src="bubble" width="84"></v-img>
-                    <v-img :src="mapLogo.image" class="map-new-pin"></v-img>
+                    <v-img :src="mapLogo" class="map-new-pin"></v-img>
                 </v-sheet>
                 Press the following button to choose image:
                 <v-file-input
@@ -47,6 +47,7 @@ export default {
     data() {
         return {
             bubble,
+            imageFile: "",
             rules: [
                 v => {
                     if (v) {
@@ -84,7 +85,7 @@ export default {
 
         mapLogo: {
             get() {
-                return this.$store.state.storePanel.settings.profile.map_logo;
+                return this.$store.state.storePanel.store.map_logo;
             },
 
             set(val) {
@@ -94,17 +95,15 @@ export default {
     },
 
     methods: {
-        ...mapMutations("storePanel/settings/profile", [
-            "setSuccess",
-            "setMapLogo"
-        ]),
+        ...mapMutations("storePanel", ["setMapLogo"]),
+        ...mapMutations("storePanel/settings/profile", ["setSuccess"]),
         ...mapActions("storePanel/settings/profile", ["uploadMapLogo"]),
 
         onFileSelected(event) {
-            this.mapLogo.imageFile = event;
+            this.imageFile = event;
             const reader = new FileReader();
-            reader.readAsDataURL(this.mapLogo.imageFile);
-            reader.onload = e => (this.mapLogo.image = e.target.result);
+            reader.readAsDataURL(this.imageFile);
+            reader.onload = e => (this.mapLogo = e.target.result);
         }
     }
 };

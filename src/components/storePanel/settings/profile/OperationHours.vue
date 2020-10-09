@@ -6,7 +6,7 @@
         :error-message="errorMessage"
         @submit="updateTimetable"
     >
-        <v-container v-for="weekday in timetable" :key="weekday.name">
+        <v-container v-for="weekday in timetable" :key="weekday.day">
             <v-row no-gutters justify="space-between" align="center">
                 <v-col class="subtitle-1 font-weight-bold">
                     <v-btn text @click="weekday.open = !weekday.open">
@@ -19,7 +19,7 @@
                         ></v-icon>
                     </v-btn>
 
-                    {{ weekday.name }}
+                    {{ weekdayNames[weekday.day] }}
                 </v-col>
 
                 <v-col cols="auto">
@@ -58,11 +58,11 @@
                                     placeholder="Start Time"
                                     readonly
                                     prepend-inner-icon="mdiClockOutline"
-                                    :class="weekday.name + 'Start'"
+                                    :class="weekdayNames[weekday.day] + 'Start'"
                                     :disabled="menu"
                                     @click="
                                         openMenu(
-                                            weekday.name + 'Start',
+                                            weekdayNames[weekday.day] + 'Start',
                                             weekday,
                                             0,
                                             0
@@ -77,11 +77,11 @@
                                     placeholder="End Time"
                                     readonly
                                     prepend-inner-icon="mdiClockOutline"
-                                    :class="weekday.name + 'End'"
+                                    :class="weekdayNames[weekday.day] + 'End'"
                                     :disabled="menu"
                                     @click="
                                         openMenu(
-                                            weekday.name + 'End',
+                                            weekdayNames[weekday.day] + 'End',
                                             weekday,
                                             0,
                                             1
@@ -100,11 +100,14 @@
                                     placeholder="Start Time"
                                     readonly
                                     prepend-inner-icon="mdiClockOutline"
-                                    :class="weekday.name + 'FirstStart'"
+                                    :class="
+                                        weekdayNames[weekday.day] + 'FirstStart'
+                                    "
                                     :disabled="menu"
                                     @click="
                                         openMenu(
-                                            weekday.name + 'FirstStart',
+                                            weekdayNames[weekday.day] +
+                                                'FirstStart',
                                             weekday,
                                             0,
                                             0
@@ -119,11 +122,14 @@
                                     placeholder="End Time"
                                     readonly
                                     prepend-inner-icon="mdiClockOutline"
-                                    :class="weekday.name + 'FirstEnd'"
+                                    :class="
+                                        weekdayNames[weekday.day] + 'FirstEnd'
+                                    "
                                     :disabled="menu"
                                     @click="
                                         openMenu(
-                                            weekday.name + 'FirstEnd',
+                                            weekdayNames[weekday.day] +
+                                                'FirstEnd',
                                             weekday,
                                             0,
                                             1
@@ -138,11 +144,15 @@
                                     placeholder="Start Time"
                                     readonly
                                     prepend-inner-icon="mdiClockOutline"
-                                    :class="weekday.name + 'SecondStart'"
+                                    :class="
+                                        weekdayNames[weekday.day] +
+                                            'SecondStart'
+                                    "
                                     :disabled="menu"
                                     @click="
                                         openMenu(
-                                            weekday.name + 'SecondStart',
+                                            weekdayNames[weekday.day] +
+                                                'SecondStart',
                                             weekday,
                                             1,
                                             0
@@ -157,11 +167,14 @@
                                     placeholder="End Time"
                                     readonly
                                     prepend-inner-icon="mdiClockOutline"
-                                    :class="weekday.name + 'SecondEnd'"
+                                    :class="
+                                        weekdayNames[weekday.day] + 'SecondEnd'
+                                    "
                                     :disabled="menu"
                                     @click="
                                         openMenu(
-                                            weekday.name + 'SecondEnd',
+                                            weekdayNames[weekday.day] +
+                                                'SecondEnd',
                                             weekday,
                                             1,
                                             1
@@ -214,16 +227,6 @@
 import { mdiChevronUp, mdiChevronDown, mdiClockOutline } from "@mdi/js";
 import { mapMutations, mapActions, mapGetters } from "vuex";
 
-class Weekday {
-    constructor(weekday = {}) {
-        this.name = weekday.name || "";
-        if (weekday.day === 0) this.day = 0;
-        else this.day = weekday.day || null;
-        this.type = weekday.type || "";
-        this.shifts = weekday.shifts || [[], []];
-    }
-}
-
 export default {
     name: "OperationHours",
 
@@ -244,6 +247,15 @@ export default {
             { text: "Split Hours", value: "break" },
             { text: "24 Hours", value: "24h" },
             { text: "Closed", value: "closed" }
+        ],
+        weekdayNames: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
         ]
     }),
 
