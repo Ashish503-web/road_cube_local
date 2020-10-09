@@ -385,7 +385,7 @@ export default {
         },
 
         containerHeight() {
-            return this.mini ? "calc(100vh - 193px)" : "calc(100vh - 183px)";
+            return this.mini ? "calc(100vh - 194px)" : "calc(100vh - 184px)";
         }
     }
 };
