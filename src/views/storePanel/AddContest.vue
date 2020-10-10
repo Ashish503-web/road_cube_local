@@ -7,8 +7,7 @@
             <v-row justify="space-between" class="pa-10">
                 <v-col cols="12" md="5" class="pr-0 pr-md-2 mb-2 mb-md-0">
                     <h3 class="mb-5">Contest details</h3>
-                    <div class="mb-6">
-                        <label class="font-weight-bold subtitle-2">Title</label>
+                    <div class="mb-8">
                         <b-text-field
                         type="text"
                         label="Title"
@@ -16,32 +15,34 @@
                     </div>
 
                     <div>
-                        <label class="font-weight-bold subtitle-2">Description</label>
-                        <v-textarea
+                        <b-textarea
                         auto-grow
                         outlined
                         rows="1"
                         row-height="15"
                         label="Description"
                         class="mt-2"
-                        ></v-textarea>
+                        ></b-textarea>
                     </div>
 
-                    <div class="mb-1">
-                        <label class="font-weight-bold subtitle-2">Type</label>
-                        <v-select
+                    <div class="mb-8 mt-8">
+                        <b-select
                         :items="items"
                         outlined
                         label="Type"
                         class="mt-2"
-                        ></v-select>
+                        dense
+                        ></b-select>
                     </div>
 
                     <div>
-                        <label class="font-weight-bold subtitle-2">Image</label>
                         <v-file-input
-                            accept="image/*"
+                            color="secondary"
+                            class="mt-1"
                             label="Image"
+                            outlined
+                            dense
+                            hide-details="auto"
                         ></v-file-input>
                     </div>
                     
@@ -49,21 +50,52 @@
                 <v-col cols="12" md="5" class="pr-0 pr-md-2 mb-2 mb-md-0">
                     <h3 class="mb-5">Winners Details</h3>
                     <div class="mb-8">
-                        <label class="font-weight-bold subtitle-2">Start Date - End Date</label>
-                        <b-text-field
-                        type="date"
-                        ></b-text-field>
+                        <v-menu offset-y>
+                            <template v-slot:activator="{ on }">
+                                <v-text-field
+                                    v-model="startEndDate"
+                                    label="Start Date - End Date"
+                                    color="secondary"
+                                    class="mt-0 mt-sm-3"
+                                    outlined
+                                    dense
+                                    hide-details
+                                    :append-icon="icons.mdiCalendarMonth"
+                                    v-on="on"
+                                ></v-text-field>
+                            </template>
+
+                            <v-date-picker
+                                v-model="startEndDate"
+                                color="secondary"
+                            ></v-date-picker>
+                        </v-menu>
                     </div>
 
                     <div class="mb-8">
-                        <label class="font-weight-bold subtitle-2">Winning Declaration Date</label>
-                        <b-text-field
-                        type="date"
-                        ></b-text-field>
+                        <v-menu offset-y>
+                            <template v-slot:activator="{ on }">
+                                <v-text-field
+                                    v-model="declarationDate"
+                                    label="Winning Declaration Date"
+                                    color="secondary"
+                                    class="mt-0 mt-sm-3"
+                                    outlined
+                                    dense
+                                    hide-details
+                                    :append-icon="icons.mdiCalendarMonth"
+                                    v-on="on"
+                                ></v-text-field>
+                            </template>
+
+                            <v-date-picker
+                                v-model="declarationDate"
+                                color="secondary"
+                            ></v-date-picker>
+                        </v-menu>
                     </div>
 
                     <div class="mb-8">
-                        <label class="font-weight-bold subtitle-2">No of Winner</label>
                         <b-text-field
                         type="text"
                         label="No of Winner"
@@ -71,15 +103,14 @@
                     </div>
 
                     <div>
-                        <label class="font-weight-bold subtitle-2">1st Winning Text</label>
-                        <v-textarea
+                        <b-textarea
                         auto-grow
                         outlined
                         rows="1"
                         row-height="15"
                         label="1st Winning Text"
                         class="mt-2"
-                        ></v-textarea>
+                        ></b-textarea>
                     </div>
                 </v-col>
 
@@ -101,16 +132,14 @@
 </template>
 
 <script>
-import {
-    mdiAlarm
-} from "@mdi/js";
+import { mdiCalendarMonth } from "@mdi/js";
 export default {
     name: "AddContest",
 
     data: () => ({
-        icons: {
-            mdiAlarm
-        }
+        icons: { mdiCalendarMonth },
+        startEndDate: '',
+        declarationDate: ''
     })
 };
 </script>
