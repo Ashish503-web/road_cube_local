@@ -3,6 +3,7 @@
         :title="title"
         :loading="loading"
         :error-message="errorMessage"
+        :reset-validation="resetValidation"
         @cancel="$emit('cancel')"
         @submit="
             mode === 1
@@ -14,11 +15,15 @@
             v-model="product.name"
             label="Product Name"
             no-top-margin
+            :success="success.name"
+            :rules="rules.name"
         ></b-text-field>
 
         <b-textarea
             v-model="product.description"
             label="Product Description"
+            :success="success.description"
+            :rules="rules.description"
         ></b-textarea>
 
         <v-row no-gutters>
@@ -33,6 +38,8 @@
                     type="number"
                     label="Selling Price"
                     append-icon="mdiCurrencyEur"
+                    :success="success.sellingPrice"
+                    :rules="rules.sellingPrice"
                 ></b-text-field>
             </v-col>
             <v-col cols="6" class="pl-2">
@@ -41,6 +48,8 @@
                     type="number"
                     label="Wholesale Price"
                     append-icon="mdiCurrencyEur"
+                    :success="success.wholesalePrice"
+                    :rules="rules.wholesalePrice"
                 ></b-text-field>
             </v-col>
             <v-col cols="12">
@@ -54,6 +63,8 @@
                     type="number"
                     label="Delivery Cost"
                     append-icon="mdiCurrencyEur"
+                    :success="success.deliveryCost"
+                    :rules="rules.deliveryCost"
                 ></b-text-field>
             </v-col>
             <v-col cols="6" class="pl-2">
@@ -62,6 +73,8 @@
                     type="number"
                     label="Shipping Cost"
                     append-icon="mdiCurrencyEur"
+                    :success="success.shippingCost"
+                    :rules="rules.shippingCost"
                 ></b-text-field>
             </v-col>
         </v-row>
@@ -70,6 +83,8 @@
             v-model="product.product_category_id"
             :items="categories"
             label="Select Category"
+            :success="success.category"
+            :rules="rules.category"
         ></b-select>
 
         <v-checkbox
@@ -178,22 +193,105 @@ export default {
     props: {
         mode: Number
     },
-    data: () => ({
-        categories: [{ text: "category", value: 1 }],
-        imageFile: null,
-        weekdays: [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday"
-        ]
-    }),
+    data() {
+        return {
+            categories: [{ text: "category", value: 1 }],
+            imageFile: null,
+            weekdays: [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday"
+            ],
+            success: {
+                name: false,
+                description: false,
+                sellingPrice: false,
+                wholesalePrice: false,
+                deliveryCost: false,
+                shippingCost: false,
+                category: false
+            },
+            rules: {
+                name: [
+                    v => {
+                        if (v) {
+                            this.success.name = true;
+                            return true;
+                        } else return "Name is required";
+                    }
+                ],
+                description: [
+                    v => {
+                        if (v) {
+                            this.success.description = true;
+                            return true;
+                        } else return "Description is required";
+                    }
+                ],
+                sellingPrice: [
+                    v => {
+                        if (v) {
+                            this.success.sellingPrice = true;
+                            return true;
+                        } else return "Selling Price is required";
+                    },
+                    v => v >= 0.1 || "Selling Price must be minimum 0.1"
+                ],
+                wholesalePrice: [
+                    v => {
+                        if (v >= 0.1) {
+                            this.success.wholesalePrice = true;
+                            return true;
+                        } else if (!v) {
+                            this.success.wholesalePrice = false;
+                            return true;
+                        } else return "Wholesale Price must be minimum 0.1";
+                    }
+                ],
+                deliveryCost: [
+                    v => {
+                        if (v >= 0.1) {
+                            this.success.deliveryCost = true;
+                            return true;
+                        } else if (!v) {
+                            this.success.deliveryCost = false;
+                            return true;
+                        } else return "Delivery Cost must be minimum 0.1";
+                    }
+                ],
+                shippingCost: [
+                    v => {
+                        if (v >= 0.1) {
+                            this.success.shippingCost = true;
+                            return true;
+                        } else if (!v) {
+                            this.success.shippingCost = false;
+                            return true;
+                        } else return "Shipping Cost must be minimum 0.1";
+                    }
+                ],
+                category: [
+                    v => {
+                        if (v) {
+                            this.success.category = true;
+                            return true;
+                        } else return "Category is required";
+                    }
+                ]
+            }
+        };
+    },
 
     computed: {
-        ...mapState("storePanel/products", ["loading", "errorMessage"]),
+        ...mapState("storePanel/products", [
+            "loading",
+            "errorMessage",
+            "resetValidation"
+        ]),
 
         title() {
             return this.mode === 1

@@ -15,7 +15,7 @@
 
         <v-divider></v-divider>
 
-        <v-form v-model="valid" @submit.prevent="$emit('submit')">
+        <v-form v-model="valid" :ref="title" @submit.prevent="$emit('submit')">
             <v-card-text class="pt-4">
                 <slot></slot>
             </v-card-text>
@@ -33,9 +33,10 @@
                     type="submit"
                     :color="type === 'delete' ? 'red' : 'secondary'"
                     class="px-5"
-                    dark
+                    :dark="type === 'delete'"
                     depressed
                     :loading="loading"
+                    :disabled="disabled"
                     >{{ submitText }}</v-btn
                 >
             </v-card-actions>
@@ -63,7 +64,8 @@ export default {
             default: "save"
         },
         loading: Boolean,
-        errorMessage: String
+        errorMessage: String,
+        resetValidation: Boolean
     },
 
     data: () => ({
@@ -81,11 +83,16 @@ export default {
             } else {
                 this.disabled = true;
             }
+        },
+
+        resetValidation(val) {
+            if (val) this.$refs[this.title].resetValidation();
         }
     },
 
     mounted() {
         this.$clearFocus();
+        this.$refs[this.title].resetValidation();
     }
 };
 </script>

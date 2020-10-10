@@ -12,17 +12,26 @@
         :readonly="readonly"
         :disabled="disabled"
         :placeholder="placeholder"
+        :success="success"
+        :rules="rules"
         :prepend-icon="icons[`${prependIcon}`]"
         :prepend-inner-icon="icons[`${prependInnerIcon}`]"
         :append-icon="icons[`${appendIcon}`]"
         :append-outer-icon="icons[`${appendOuterIcon}`]"
         @input="$emit('input', $event)"
         @click="$emit('click')"
+        @click:append="$emit('click-append')"
     ></v-text-field>
 </template>
 
 <script>
-import { mdiPlus, mdiCurrencyEur, mdiClockOutline, mdiPercent } from "@mdi/js";
+import {
+    mdiPlus,
+    mdiCurrencyEur,
+    mdiClockOutline,
+    mdiPercent,
+    mdiEye
+} from "@mdi/js";
 
 export default {
     name: "BTextField",
@@ -39,11 +48,13 @@ export default {
         noTopMargin: Boolean,
         readonly: Boolean,
         disabled: Boolean,
-        placeholder: String
+        placeholder: String,
+        success: Boolean,
+        rules: Array
     },
 
     data: () => ({
-        icons: { mdiPlus, mdiCurrencyEur, mdiClockOutline, mdiPercent }
+        icons: { mdiPlus, mdiCurrencyEur, mdiClockOutline, mdiPercent, mdiEye }
     })
 };
 </script>

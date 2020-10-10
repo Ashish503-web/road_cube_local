@@ -1,5 +1,4 @@
 import Profile from "@/models/storePanel/settings/Profile";
-import defaultLogo from "@/assets/store-logo.png";
 
 export default {
     namespaced: true,

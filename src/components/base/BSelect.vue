@@ -3,6 +3,9 @@
         :value="value"
         :label="label"
         :items="items"
+        :item-text="itemText"
+        :item-value="itemValue"
+        :return-object="returnObject"
         :class="noTopMargin ? 'mt-0' : 'mt-3'"
         menu-props="offsetY"
         color="secondary"
@@ -11,6 +14,8 @@
         dense
         open-on-clear
         hide-details="auto"
+        :success="success"
+        :rules="rules"
         :clearable="!noClearIcon"
         :disabled="disabled"
         :prepend-icon="icons[`${prependIcon}`]"
@@ -30,9 +35,12 @@ export default {
 
     props: {
         value: {
-            type: [String, Number]
+            type: [String, Number, Object]
         },
         items: Array,
+        itemText: String,
+        itemValue: String,
+        returnObject: Boolean,
         label: String,
         prependIcon: String,
         prependInnerIcon: String,
@@ -40,7 +48,9 @@ export default {
         appendOuterIcon: String,
         noTopMargin: Boolean,
         disabled: Boolean,
-        noClearIcon: Boolean
+        noClearIcon: Boolean,
+        success: Boolean,
+        rules: Array
     },
 
     data: () => ({

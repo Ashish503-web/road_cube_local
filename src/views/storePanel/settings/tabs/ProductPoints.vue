@@ -3,7 +3,10 @@
         <v-data-table
             :headers="productPointsHeaders"
             :items="productPoints"
-            :footer-props="{ itemsPerPageOptions }"
+            :footer-props="{
+                itemsPerPageOptions: [12],
+                showCurrentPage: true
+            }"
             :page.sync="page"
             :items-per-page.sync="perPage"
             :server-items-length="serverItemsLength"
@@ -72,11 +75,14 @@ export default {
                 { text: "Per Euro", value: 4 }
             ],
             productPointsHeaders: [
-                { text: "Product Name", value: "name" },
-                { text: "Points", value: "reward_points" },
-                { text: "Type", value: "reward_type_id" },
-                { text: "Point Subsidy", value: "reward_points_shared" },
-                { text: "Save", value: "save" }
+                { text: "Product Name", value: "name", width: "20%" },
+                { text: "Points", value: "reward_points", width: "15%" },
+                { text: "Type", value: "reward_type_id", width: "30%" },
+                {
+                    text: "Point Subsidy",
+                    value: "reward_points_shared"
+                },
+                { text: "Save", value: "save", width: "10%" }
             ],
             itemsPerPageOptions: [10, 20, 30, -1],
             page: +this.$route.query.page,
@@ -145,3 +151,9 @@ export default {
     }
 };
 </script>
+
+<style>
+.v-data-footer {
+    padding: 12px 0;
+}
+</style>

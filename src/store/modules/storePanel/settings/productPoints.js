@@ -24,6 +24,8 @@ export default {
 
                 const { products, pagination } = data.data;
 
+                console.log(data);
+
                 commit("setItems", products);
                 commit("setServerItemsLength", pagination.total, {
                     root: true

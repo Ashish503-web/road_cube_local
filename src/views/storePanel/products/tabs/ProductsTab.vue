@@ -189,6 +189,7 @@ export default {
         ...mapMutations("storePanel/products", [
             "setDialog",
             "setDeleteDialog",
+            "setResetValidation",
             "setShowImageUpload",
             "setShowWeekdays",
             "setItem"
@@ -202,6 +203,7 @@ export default {
             else this.showImageUpload = false;
             if (this.product.availability_days.length) this.showWeekdays = true;
             else this.showWeekdays = false;
+            this.setResetValidation(true);
             this.dialog = true;
         }
     },

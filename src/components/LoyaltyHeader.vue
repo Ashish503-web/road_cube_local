@@ -43,69 +43,6 @@
                 </v-list>
             </v-menu>
 
-            <!-- <v-menu offset-y transition="slide-y-transition" bottom>
-                <template v-slot:activator="{ on }">
-                    <v-btn text v-on="on">
-                        <v-badge color="red" content="3">
-                            <v-icon v-text="icons.mdiBellOutline"></v-icon>
-                        </v-badge>
-                    </v-btn>
-                </template>
-
-                <v-card width="400">
-                    <v-card-title class="subtitle-1">
-                        Notifications
-                        <v-spacer></v-spacer>
-                        <router-link class="text-caption" to="/loyaltypanel"
-                            >View all</router-link
-                        >
-                    </v-card-title>
-
-                    <v-divider></v-divider>
-
-                    <v-list subheader>
-                        <v-list-item-group>
-                            <v-list-item
-                                v-for="notification in notifications"
-                                :key="notification.title"
-                                three-line
-                            >
-                                <v-list-item-avatar
-                                    :color="notification.color"
-                                    size="32"
-                                >
-                                    <v-icon
-                                        v-if="notification.icon"
-                                        dark
-                                        size="20"
-                                        v-text="notification.icon"
-                                    ></v-icon>
-                                    <v-img
-                                        v-else
-                                        :src="notification.img"
-                                    ></v-img>
-                                </v-list-item-avatar>
-                                <v-list-item-content>
-                                    <v-list-item-title
-                                        v-text="notification.title"
-                                    ></v-list-item-title>
-                                    <v-list-item-subtitle
-                                        v-text="notification.text"
-                                    ></v-list-item-subtitle>
-                                    <small class="grey--text text--darken-1">
-                                        <v-icon
-                                            v-text="icons.mdiClockOutline"
-                                            small
-                                        ></v-icon>
-                                        {{ notification.timestamp }}
-                                    </small>
-                                </v-list-item-content>
-                            </v-list-item>
-                        </v-list-item-group>
-                    </v-list>
-                </v-card>
-            </v-menu> -->
-
             <v-menu offset-y bottom transition="slide-y-transition">
                 <template v-slot:activator="{ on }">
                     <v-btn

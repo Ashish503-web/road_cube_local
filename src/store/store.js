@@ -20,9 +20,9 @@ export default new Vuex.Store({
             text: ""
         },
         user: {
-            user_registration_identifier: "4WMH2H-H7K2-8ZRRA8-052814",
+            user_registration_identifier: "",
             mobile: "",
-            mobile_verification_code: "6328"
+            mobile_verification_code: ""
         }
     },
 

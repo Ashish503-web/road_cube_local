@@ -8,6 +8,8 @@
         dense
         clearable
         hide-details="auto"
+        :success="success"
+        :rules="rules"
         :prepend-icon="icons[`${prependIcon}`]"
         :prepend-inner-icon="icons[`${prependInnerIcon}`]"
         :append-icon="icons[`${appendIcon}`]"
@@ -30,7 +32,9 @@ export default {
         prependInnerIcon: String,
         appendIcon: String,
         appendOuterIcon: String,
-        noTopMargin: Boolean
+        noTopMargin: Boolean,
+        success: Boolean,
+        rules: Array
     },
 
     data: () => ({

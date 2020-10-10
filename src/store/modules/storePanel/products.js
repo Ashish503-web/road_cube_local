@@ -8,6 +8,7 @@ export default {
         deleteDialog: false,
         loading: false,
         errorMessage: "",
+        resetValidation: false,
         serverItemsLength: 0,
         showImageUpload: false,
         showWeekdays: false,
@@ -30,6 +31,10 @@ export default {
 
         setErrorMessage(state, payload) {
             state.errorMessage = payload;
+        },
+
+        setResetValidation(state, payload) {
+            state.resetValidation = payload;
         },
 
         setShowImageUpload(state, payload) {
