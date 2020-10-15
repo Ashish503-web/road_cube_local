@@ -2,6 +2,7 @@ import Store from "@/models/storePanel/Store.js";
 import products from "./products";
 import productGroups from "./productGroups";
 import settings from "./settings";
+import transactions from "./transactions";
 
 class Weekday {
     constructor(weekday = {}) {
@@ -21,6 +22,7 @@ class Weekday {
 export default {
     namespaced: true,
     modules: {
+        transactions,
         products,
         productGroups,
         settings
