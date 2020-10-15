@@ -48,6 +48,10 @@ export default {
             state.store.flags.general.quick_payment = payload;
         },
 
+        setOrderSettings(state, payload) {
+            state.store.order_settings = payload;
+        },
+
         setRedemption(state, payload) {
             state.store.company.redemption_type_id = payload;
         },
@@ -77,7 +81,7 @@ export default {
                     rootState.storeToken,
                     rootState.storeId
                 );
-                console.log(data.data);
+                console.log(data.data,'data55555');
                 commit("setStore", data.data);
             } catch (ex) {
                 console.error(ex.response.data);

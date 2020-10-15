@@ -221,6 +221,44 @@ export default {
             }
         },
 
+        async updateOrdersData({ commit, rootState }, body) {
+            try {
+                commit("setLoading", { value: true, type: "Orders" });
+                
+                await Profile.updateOrdersData(
+                    rootState.storeToken,
+                    rootState.storeId,
+                    body
+                );
+
+                commit("setLoading", { value: false, type: "Orders" });
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated Orders!"
+                    },
+
+                    { root: true }
+                );
+            } catch (ex) {
+                commit("setLoading", { value: false, type: "Orders" });
+                commit("setErrorMessage", {
+                    value: ex.response.data.message,
+                    type: "Orders"
+                });
+                setTimeout(
+                    () =>
+                        commit("setErrorMessage", {
+                            value: "",
+                            type: "Orders"
+                        }),
+                    5000
+                );
+            }
+        },
+
         async updateInvoicing({ commit, rootState }) {
             try {
                 commit("setLoading", { value: true, type: "invoicing" });
