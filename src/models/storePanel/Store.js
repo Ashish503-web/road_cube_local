@@ -10,6 +10,9 @@ export default class Product {
             general: {},
             reward: {}
         };
+        this.notify_customers = item.notify_customers || {};
+        this.category = item.category || {};
+        this.country = item.country || {};
         this.timetable = [];
     }
 

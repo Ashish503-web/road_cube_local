@@ -11,12 +11,14 @@
                 <b-text-field
                     v-model="invoicing.comp_name"
                     label="Legal Name"
+                    no-top-margin
                 ></b-text-field>
             </v-col>
             <v-col cols="12" sm="6" class="pl-0 pl-sm-2">
                 <b-text-field
                     v-model="invoicing.vat_number"
                     label="Tax Id"
+                    no-top-margin
                 ></b-text-field>
             </v-col>
             <v-col cols="12" sm="6" class="pr-0 pr-sm-2">

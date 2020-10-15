@@ -69,6 +69,52 @@ export default {
                     5000
                 );
             }
+        },
+
+        async updateScanReceipt(
+            { commit, rootState },
+            { scan_receipt, item, type }
+        ) {
+            try {
+                commit("setLoading", { value: true, type });
+
+                axios.defaults.headers.Authorization = `Bearer ${rootState.storeToken}`;
+                await axios.put(
+                    `${ApiEndpoint}${rootState.storeId}/flags/reward`,
+                    { scan_receipt }
+                );
+                await axios.put(
+                    `${ApiEndpoint}${rootState.storeId}/billing-details/receipt-information`,
+                    item
+                );
+
+                commit("setLoading", { value: false, type });
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text:
+                            "You have successfully updated reward information!"
+                    },
+
+                    { root: true }
+                );
+            } catch (ex) {
+                commit("setLoading", { value: false, type });
+                commit("setErrorMessage", {
+                    value: ex.response.data.message,
+                    type
+                });
+                setTimeout(
+                    () =>
+                        commit("setErrorMessage", {
+                            value: "",
+                            type
+                        }),
+                    5000
+                );
+            }
         }
     }
 };

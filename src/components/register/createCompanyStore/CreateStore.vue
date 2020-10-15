@@ -173,6 +173,7 @@
 </template>
 
 <script>
+import axios from "axios";
 import { mdiAccount, mdiLock, mdiLockOutline, mdiEye } from "@mdi/js";
 import validators from "./storeValidators";
 import { mapState, mapMutations, mapActions } from "vuex";
@@ -367,6 +368,13 @@ export default {
         this.$clearFocus();
         this.getGiftCategories();
         this.getStoreCategories();
+
+        // axios
+        //     .post(
+        //         `https://maps.googleapis.com/maps/api/js?key=AIzaSyBO7NVvj3D2unctftPpj-O0n3aoS0MbUEQ&libraries=places&callback=initMap`
+        //     )
+        //     .then(res => console.log(res))
+        //     .catch(err => console.error(err));
     }
 };
 </script>

@@ -11,7 +11,7 @@
                 item: {
                     send_points_by_card_or_phone:
                         sendPoints.send_points_by_card_or_phone,
-                    system_notification_id: sendPoints.system_notification_id,
+                    system_notification_id: systemNotificationId,
                     add_new_user_on_send_points:
                         sendPoints.add_new_user_on_send_points,
                     choose_product_on_send_points:
@@ -35,7 +35,7 @@
                 page
 
                 <b-select
-                    v-model="sendPoints.system_notification_id"
+                    v-model="systemNotificationId"
                     :items="systemNotifications"
                     :disabled="!sendPoints.send_points_by_card_or_phone"
                     label="How to notify a consumer of points"
@@ -89,7 +89,7 @@
 
 <script>
 import { mdiInformation } from "@mdi/js";
-import { mapActions } from "vuex";
+import { mapMutations, mapActions } from "vuex";
 
 export default {
     name: "SendPoints",
@@ -117,12 +117,24 @@ export default {
                 .sendPoints;
         },
 
+        systemNotificationId: {
+            get() {
+                return this.$store.state.storePanel.store.notify_customers
+                    .system_notification_id;
+            },
+
+            set(val) {
+                this.setSystemNotificationId(val);
+            }
+        },
+
         sendPoints() {
             return this.$store.state.storePanel.store.flags.reward;
         }
     },
 
     methods: {
+        ...mapMutations("storePanel", ["setSystemNotificationId"]),
         ...mapActions("storePanel/settings/reward", ["updateReward"])
     }
 };

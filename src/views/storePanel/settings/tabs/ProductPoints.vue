@@ -1,7 +1,7 @@
 <template>
     <v-tab-item class="pt-5">
         <v-data-table
-            :headers="productPointsHeaders"
+            :headers="headers"
             :items="productPoints"
             :footer-props="{
                 itemsPerPageOptions: [12],
@@ -28,7 +28,11 @@
                 <v-sheet>
                     <b-select
                         v-model="item.reward_type_id"
-                        :items="rewardTypes"
+                        :items="
+                            item.group_product
+                                ? groupRewardTypes
+                                : productRewardTypes
+                        "
                         class="mb-3"
                     ></b-select>
                 </v-sheet>
@@ -68,22 +72,17 @@ export default {
 
     data() {
         return {
-            rewardTypes: [
+            groupRewardTypes: [
+                { text: "Per Transaction", value: 1 },
+                { text: "Per Euro", value: 4 }
+            ],
+            productRewardTypes: [
                 { text: "Per Transaction", value: 1 },
                 { text: "Piece", value: 2 },
                 { text: "Liters", value: 3 },
                 { text: "Per Euro", value: 4 }
             ],
-            productPointsHeaders: [
-                { text: "Product Name", value: "name", width: "20%" },
-                { text: "Points", value: "reward_points", width: "15%" },
-                { text: "Type", value: "reward_type_id", width: "30%" },
-                {
-                    text: "Point Subsidy",
-                    value: "reward_points_shared"
-                },
-                { text: "Save", value: "save", width: "10%" }
-            ],
+            lang: "en",
             itemsPerPageOptions: [10, 20, 30, -1],
             page: +this.$route.query.page,
             perPage: +this.$route.query.perPage
@@ -93,6 +92,23 @@ export default {
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/settings/productPoints", ["productPoints"]),
+
+        headers() {
+            return [
+                {
+                    text: "Product Name",
+                    value: `name[${this.lang}]`,
+                    width: "20%"
+                },
+                { text: "Points", value: "reward_points", width: "15%" },
+                { text: "Type", value: "reward_type_id", width: "30%" },
+                {
+                    text: "Point Subsidy",
+                    value: "reward_points_shared"
+                },
+                { text: "Save", value: "save", width: "10%" }
+            ];
+        },
 
         query() {
             let query = "?";
