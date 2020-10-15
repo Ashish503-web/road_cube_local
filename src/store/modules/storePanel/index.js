@@ -3,6 +3,7 @@ import addContest from "./addContest";
 import products from "./products";
 import productGroups from "./productGroups";
 import settings from "./settings";
+import transactions from "./transactions";
 
 class Weekday {
     constructor(weekday = {}) {
@@ -23,6 +24,7 @@ export default {
     namespaced: true,
     modules: {
         addContest,
+        transactions,
         products,
         productGroups,
         settings
