@@ -26,10 +26,8 @@ export default {
             invoicing: "",
             redemption: ""
         },
-        resetSuccess: {
-            businessInformation: false
-        },
-        storeCategories: []
+        storeCategories: [],
+        countries: []
     }),
 
     mutations: {
@@ -47,6 +45,10 @@ export default {
 
         setStoreCategories(state, payload) {
             state.storeCategories = payload;
+        },
+
+        setCountries(state, payload) {
+            state.countries = payload;
         }
     },
 
@@ -239,32 +241,48 @@ export default {
             }
         },
 
-        async updateBusinessInformation({ commit, state, rootState }) {
+        async getCountries({ commit }) {
             try {
-                commit("setLoading", true);
+                const { data } = await Profile.getCountries();
+
+                commit("setCountries", data.data);
+            } catch (ex) {
+                console.error(ex.response.data.message);
+            }
+        },
+
+        async updateBusinessInformation({ commit, rootState }, { type, item }) {
+            try {
+                commit("setLoading", { value: true, type });
 
                 await Profile.updateBusinessInformation(
                     rootState.storeToken,
                     rootState.storeId,
-                    state.businessInformation
+                    item
                 );
 
-                commit("setLoading", false);
+                commit("setLoading", { value: false, type });
                 commit(
                     "setNotification",
                     {
                         show: true,
                         type: "success",
                         text:
-                            "You have successfully updated receipt information!"
+                            "You have successfully updated business information!"
                     },
 
                     { root: true }
                 );
             } catch (ex) {
-                commit("setLoading", false);
-                commit("setErrorMessage", ex.response.data.message);
-                setTimeout(() => commit("setErrorMessage", ""), 5000);
+                commit("setLoading", { value: false, type });
+                commit("setErrorMessage", {
+                    value: ex.response.data.message,
+                    type
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", { value: "", type }),
+                    5000
+                );
             }
         },
 

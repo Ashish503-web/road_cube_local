@@ -17,6 +17,7 @@
         <v-data-table
             :headers="headers"
             :footer-props="{ itemsPerPageOptions }"
+            class="b-outlined"
         ></v-data-table>
     </v-tab-item>
 </template>

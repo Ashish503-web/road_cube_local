@@ -6,10 +6,10 @@
         :loading="loading"
         :error-message="errorMessage"
         @submit="
-            updateReward({
+            updateScanReceipt({
                 type: 'scanReceipt',
+                scan_receipt: scanReceipt,
                 item: {
-                    scan_receipt: scanReceipt,
                     receipt_phone: billingDetails.receipt_phone,
                     receipt_vat_number: billingDetails.receipt_vat_number,
                     receipt_address: billingDetails.receipt_address,
@@ -107,7 +107,7 @@ export default {
 
     methods: {
         ...mapMutations("storePanel", ["setScanReceipt"]),
-        ...mapActions("storePanel/settings/reward", ["updateReward"])
+        ...mapActions("storePanel/settings/reward", ["updateScanReceipt"])
     },
 
     mounted() {

@@ -6,10 +6,13 @@
         :error-message="errorMessage"
         @submit="uploadLogo(imageFile)"
     >
-        You can upload here the logo of your business which will appear in the
-        app and will be on the physical cards. If we think that it can be
-        improved we will contact you before publishment.
-        <v-row no-gutters align="center" style="margin-top: 4.6rem">
+        <div style="height: 100px">
+            You can upload here the logo of your business which will appear in
+            the app and will be on the physical cards. If we think that it can
+            be improved we will contact you before publishment.
+        </div>
+
+        <v-row no-gutters align="center" style="height: 120px">
             <v-col cols="12" sm="5" class="pr-2">
                 <v-img :src="logo" width="64" class="mx-auto"></v-img>
             </v-col>

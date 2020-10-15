@@ -54,6 +54,10 @@ export default {
             state.store.redemption_type_id = payload;
         },
 
+        setSystemNotificationId(state, payload) {
+            state.store.notify_customers.system_notification_id = payload;
+        },
+
         setScanReceipt(state, payload) {
             state.store.flags.reward.scan_receipt = payload;
         },
@@ -80,11 +84,15 @@ export default {
         },
 
         setCategory(state, payload) {
-            state.store.category = payload;
+            state.store.category.store_category_id = payload;
+        },
+
+        setActivity(state, payload) {
+            state.store.billing_details.activity = payload;
         },
 
         setCountry(state, payload) {
-            state.store.country = payload;
+            state.store.country.country_id = payload;
         },
 
         setPrimaryPhone(state, payload) {
@@ -93,6 +101,18 @@ export default {
 
         setSecondaryPhone(state, payload) {
             state.store.secondary_phone = payload;
+        },
+
+        setMobile(state, payload) {
+            state.store.billing_details.mobile = payload;
+        },
+
+        setFullname(state, payload) {
+            state.store.billing_details.full_name = payload;
+        },
+
+        setEmail(state, payload) {
+            state.store.email = payload;
         }
     },
 

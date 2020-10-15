@@ -82,28 +82,28 @@ export default {
     props: {
         height: {
             type: String,
-            default: "100%",
+            default: "100%"
         },
         activatable: Boolean,
         switcher: Boolean,
         title: String,
         titleColor: {
             type: String,
-            default: "grey lighten-3",
+            default: "grey lighten-3"
         },
         cancelText: String,
         submitText: {
             type: String,
-            default: "update details",
+            default: "update details"
         },
         loading: Boolean,
         errorMessage: String,
-        noBodyPadding: Boolean,
+        noBodyPadding: Boolean
     },
 
     data: () => ({
         valid: false,
-        disabled: true,
+        disabled: true
     }),
 
     watch: {
@@ -113,8 +113,8 @@ export default {
             } else {
                 this.disabled = true;
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

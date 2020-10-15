@@ -6,13 +6,18 @@
         :error-message="errorMessage"
         @submit="uploadMapLogo(imageFile)"
     >
-        <v-row no-gutters justify="space-between" class="flex-wrap-reverse">
-            <v-col cols="12" sm="6">
-                Here you can change the display of the pin on the map:
-                <v-sheet width="84" class="relative mx-auto mx-sm-0">
+        <div style="height: 100px">
+            Here you can change the display of the pin on the map:
+        </div>
+        <v-row no-gutters align="center" style="height: 120px">
+            <v-col cols="12" sm="5" class="pr-2">
+                <v-sheet width="84" class="relative mx-auto">
                     <v-img :src="bubble" width="84"></v-img>
                     <v-img :src="mapLogo" class="map-new-pin"></v-img>
                 </v-sheet>
+            </v-col>
+
+            <v-col cols="12" sm="7" class="pl-0 pl-sm-2">
                 Press the following button to choose image:
                 <v-file-input
                     color="secondary"
@@ -24,14 +29,6 @@
                     :success="success"
                     @change="onFileSelected"
                 ></v-file-input>
-            </v-col>
-            <v-col cols="12" sm="6" class="mb-2">
-                <v-img
-                    src="@/assets/theMapLogo3.png"
-                    width="260"
-                    style="border: 2px solid gray"
-                    class="rounded-circle"
-                ></v-img>
             </v-col>
         </v-row>
     </b-standard-card>
