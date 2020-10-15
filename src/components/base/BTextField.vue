@@ -30,7 +30,7 @@ import {
     mdiCurrencyEur,
     mdiClockOutline,
     mdiPercent,
-    mdiEye
+    mdiCalendarMonth
 } from "@mdi/js";
 
 export default {
@@ -54,7 +54,13 @@ export default {
     },
 
     data: () => ({
-        icons: { mdiPlus, mdiCurrencyEur, mdiClockOutline, mdiPercent, mdiEye }
+        icons: {
+            mdiPlus,
+            mdiCurrencyEur,
+            mdiClockOutline,
+            mdiPercent,
+            mdiCalendarMonth
+        }
     })
 };
 </script>

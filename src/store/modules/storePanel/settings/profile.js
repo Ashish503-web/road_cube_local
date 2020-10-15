@@ -25,7 +25,11 @@ export default {
             quickPayment: "",
             invoicing: "",
             redemption: ""
-        }
+        },
+        resetSuccess: {
+            businessInformation: false
+        },
+        storeCategories: []
     }),
 
     mutations: {
@@ -39,6 +43,10 @@ export default {
 
         setErrorMessage(state, { value, type }) {
             state.errorMessage[type] = value;
+        },
+
+        setStoreCategories(state, payload) {
+            state.storeCategories = payload;
         }
     },
 
@@ -221,6 +229,45 @@ export default {
             }
         },
 
+        async getStoreCategories({ commit }) {
+            try {
+                const { data } = await Profile.getStoreCategories();
+
+                commit("setStoreCategories", data.data);
+            } catch (ex) {
+                console.error(ex.response.data.message);
+            }
+        },
+
+        async updateBusinessInformation({ commit, state, rootState }) {
+            try {
+                commit("setLoading", true);
+
+                await Profile.updateBusinessInformation(
+                    rootState.storeToken,
+                    rootState.storeId,
+                    state.businessInformation
+                );
+
+                commit("setLoading", false);
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text:
+                            "You have successfully updated receipt information!"
+                    },
+
+                    { root: true }
+                );
+            } catch (ex) {
+                commit("setLoading", false);
+                commit("setErrorMessage", ex.response.data.message);
+                setTimeout(() => commit("setErrorMessage", ""), 5000);
+            }
+        },
+
         async updateInvoicing({ commit, rootState }) {
             try {
                 commit("setLoading", { value: true, type: "invoicing" });
@@ -281,8 +328,7 @@ export default {
                     rootState.storeId,
                     {
                         redemption_type_id:
-                            rootState.storePanel.store.company
-                                .redemption_type_id
+                            rootState.storePanel.store.redemption_type_id
                     }
                 );
 
@@ -320,34 +366,5 @@ export default {
                 );
             }
         }
-
-        // async updateBusinessInformation({ commit, state, rootState }) {
-        //     try {
-        //         commit("setLoading", true);
-
-        //         await BusinessInformation.update(
-        //             rootState.storeToken,
-        //             rootState.storeId,
-        //             state.businessInformation
-        //         );
-
-        //         commit("setLoading", false);
-        //         commit(
-        //             "setNotification",
-        //             {
-        //                 show: true,
-        //                 type: "success",
-        //                 text:
-        //                     "You have successfully updated receipt information!"
-        //             },
-
-        //             { root: true }
-        //         );
-        //     } catch (ex) {
-        //         commit("setLoading", false);
-        //         commit("setErrorMessage", ex.response.data.message);
-        //         setTimeout(() => commit("setErrorMessage", ""), 5000);
-        //     }
-        // }
     }
 };

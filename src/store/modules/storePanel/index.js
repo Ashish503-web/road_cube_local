@@ -1,4 +1,5 @@
 import Store from "@/models/storePanel/Store.js";
+import addContest from "./addContest";
 import products from "./products";
 import productGroups from "./productGroups";
 import settings from "./settings";
@@ -21,6 +22,7 @@ class Weekday {
 export default {
     namespaced: true,
     modules: {
+        addContest,
         products,
         productGroups,
         settings
@@ -49,7 +51,7 @@ export default {
         },
 
         setRedemption(state, payload) {
-            state.store.company.redemption_type_id = payload;
+            state.store.redemption_type_id = payload;
         },
 
         setScanReceipt(state, payload) {
@@ -67,6 +69,30 @@ export default {
         setTimetable(state, payload) {
             payload = payload.map(day => new Weekday(day));
             state.store.timetable = payload;
+        },
+
+        setName(state, payload) {
+            state.store.name = payload;
+        },
+
+        setAddress(state, payload) {
+            state.store.address = payload;
+        },
+
+        setCategory(state, payload) {
+            state.store.category = payload;
+        },
+
+        setCountry(state, payload) {
+            state.store.country = payload;
+        },
+
+        setPrimaryPhone(state, payload) {
+            state.store.primary_phone = payload;
+        },
+
+        setSecondaryPhone(state, payload) {
+            state.store.secondary_phone = payload;
         }
     },
 

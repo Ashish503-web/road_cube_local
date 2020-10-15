@@ -1,50 +1,35 @@
 <template>
-    <v-container style="height: 100%">
-        <v-row class="fill-height" justify="center" align="center">
-            <v-card outlined width="500" tile>
-                <v-col class="secondary py-5">
-                    <router-link to="/">
-                        <v-img
-                            src="@/assets/loyalty-logo.png"
-                            width="50%"
-                            style="margin: auto"
-                        ></v-img>
-                    </router-link>
-                </v-col>
-
-                <v-stepper v-model="step" class="elevation-0">
-                    <v-stepper-header class="elevation-0">
-                        <fragment v-for="n in 4" :key="n">
-                            <v-stepper-step
-                                :step="n"
-                                :complete="step > n"
-                                :color="step > n ? 'success' : 'secondary'"
-                            ></v-stepper-step>
-
-                            <v-divider></v-divider>
-                        </fragment>
-                    </v-stepper-header>
-
-                    <v-stepper-items>
-                        <CreateAccount />
-
-                        <MobileCode />
-
-                        <CreateCompanyStore />
-
-                        <SuccessMessage />
-                    </v-stepper-items>
-                </v-stepper>
-            </v-card>
+    <v-container fluid class="b-container">
+        <v-row no-gutters class="fill-height" justify="center" align="center">
+            <v-col cols="9">
+                <v-card class="elevation-1 py-12">
+                    <v-row no-gutters justify="center" align="center">
+                        <v-col cols="6" class="pl-12 pr-2">
+                            <v-window v-model="step">
+                                <CreateAccount />
+                                <VerifyMobile />
+                                <CreateCompanyStore />
+                                <SuccessMessage />
+                            </v-window>
+                        </v-col>
+                        <v-col cols="5">
+                            <v-img
+                                src="@/assets/signup-image.jpg"
+                                width="300"
+                                class="mx-auto"
+                            ></v-img>
+                        </v-col>
+                    </v-row>
+                </v-card>
+            </v-col>
         </v-row>
     </v-container>
 </template>
 
 <script>
 import { mapMutations } from "vuex";
-import { Fragment } from "vue-fragment";
 import CreateAccount from "@/components/register/CreateAccount.vue";
-import MobileCode from "@/components/register/MobileCode.vue";
+import VerifyMobile from "@/components/register/VerifyMobile.vue";
 import CreateCompanyStore from "@/components/register/createCompanyStore";
 import SuccessMessage from "@/components/register/SuccessMessage.vue";
 
@@ -52,22 +37,11 @@ export default {
     name: "Register",
 
     components: {
-        Fragment,
         CreateAccount,
-        MobileCode,
+        VerifyMobile,
         CreateCompanyStore,
         SuccessMessage
     },
-
-    // beforeRouteEnter(to, from, next) {
-    //     next(vm => {
-    //         setTimeout(() => {
-    //             if (vm.$store.state.auth.user._id) {
-    //                 vm.$router.push("/");
-    //             }
-    //         }, 300);
-    //     });
-    // },
 
     data() {
         return {
@@ -104,6 +78,9 @@ export default {
 
     methods: {
         ...mapMutations("register", [
+            "setAppProvider",
+            "setSubscriptionPlan",
+            "setCountry",
             "setMobile",
             "setUserRegistrationIdentifier",
             "setMobileVerificationCode"
@@ -112,20 +89,40 @@ export default {
     },
 
     mounted() {
-        const registrationStep = localStorage.getItem("registrationStep");
-        this.step = registrationStep;
+        this.$clearFocus();
+        const registrationStep = +localStorage.getItem("registrationStep");
 
-        const userRegistrationIdentifier = localStorage.getItem(
-            "userRegistrationIdentifier"
-        );
-        const mobile = localStorage.getItem("mobile");
-        const mobileVerificationCode = localStorage.getItem(
-            "mobileVerificationCode"
-        );
+        if (registrationStep) {
+            this.step = registrationStep;
 
-        this.setMobile(mobile);
-        this.setUserRegistrationIdentifier(userRegistrationIdentifier);
-        this.setMobileVerificationCode(mobileVerificationCode);
+            const country = localStorage.getItem("country");
+            const mobile = localStorage.getItem("mobile");
+            const userRegistrationIdentifier = localStorage.getItem(
+                "userRegistrationIdentifier"
+            );
+            const mobileVerificationCode = localStorage.getItem(
+                "mobileVerificationCode"
+            );
+
+            this.setCountry(country);
+            this.setMobile(mobile);
+            this.setUserRegistrationIdentifier(userRegistrationIdentifier);
+            this.setMobileVerificationCode(mobileVerificationCode);
+        }
+
+        const app_provider_id = +localStorage.getItem("appProvider");
+        const store_id = +localStorage.getItem("providerStoreId");
+        const subscriptionPlan = +localStorage.getItem("subscriptionPlan");
+
+        this.setAppProvider({ app_provider_id, store_id });
+        this.setSubscriptionPlan(subscriptionPlan);
     }
 };
 </script>
+
+<style scoped>
+.b-container {
+    height: 100%;
+    background: #f8f8f8;
+}
+</style>

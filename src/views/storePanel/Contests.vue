@@ -2,24 +2,26 @@
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
             <v-toolbar flat height="90">
-                <v-row class="d-flex justify-center justify-sm-space-between align-center mx-auto">
+                <v-row
+                    class="d-flex justify-center justify-sm-space-between align-center mx-auto"
+                >
                     <v-btn
-                            color="secondary"
-                            class="d-flex justify-center text-none mx-auto mx-sm-0"
-                            depressed
-                            to="/storePanel/add-contest"
-                    >Add Contest/Survey</v-btn
+                        color="secondary"
+                        class="d-flex justify-center text-none mx-auto mx-sm-0"
+                        depressed
+                        to="/storePanel/add-contest"
+                        >Add Contest/Survey</v-btn
                     >
                     <v-col cols="12" sm="4">
                         <v-text-field
-                                label="Search"
-                                color="secondary"
-                                rounded
-                                outlined
-                                dense
-                                clearable
-                                hide-details
-                                :prepend-inner-icon="icons.mdiMagnify"
+                            label="Search"
+                            color="secondary"
+                            rounded
+                            outlined
+                            dense
+                            clearable
+                            hide-details
+                            :prepend-inner-icon="icons.mdiMagnify"
                         ></v-text-field>
                     </v-col>
                 </v-row>
@@ -29,6 +31,7 @@
                 :headers="headers"
                 :items="items"
                 :footer-props="{ itemsPerPageOptions }"
+                class="b-outlined"
             >
                 <template v-slot:item.winners="{ item }">
                     <router-link v-if="!item.inProgress" :to="item.winners"
@@ -51,7 +54,7 @@
                             </v-btn>
                         </template>
 
-                        <span>View Contest</span>
+                        <span class="font-weight-bold">View Contest</span>
                     </v-tooltip>
 
                     <v-tooltip color="secondary" top>
@@ -66,7 +69,7 @@
                             </v-btn>
                         </template>
 
-                        <span>View Participants</span>
+                        <span class="font-weight-bold">View Participants</span>
                     </v-tooltip>
 
                     <v-tooltip color="secondary" top>
@@ -76,7 +79,7 @@
                             </v-btn>
                         </template>
 
-                        <span>Delete</span>
+                        <span class="font-weight-bold">Delete</span>
                     </v-tooltip>
                 </template>
             </v-data-table>

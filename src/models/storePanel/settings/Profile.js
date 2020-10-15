@@ -36,4 +36,13 @@ export default class Invoice {
         axios.defaults.headers.Authorization = `Bearer ${token}`;
         return axios.put(`${ApiEndpoint}${storeId}/redemption-types`, item);
     };
+
+    static getStoreCategories = () => {
+        return axios.get(`https://api.roadcube.tk/v1/common/store-categories`);
+    };
+
+    static updateBusinessInformation = (token, storeId, item) => {
+        axios.defaults.headers.Authorization = `Bearer ${token}`;
+        return axios.put(`${ApiEndpoint}${storeId}`, item);
+    };
 }

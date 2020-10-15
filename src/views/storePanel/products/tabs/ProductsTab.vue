@@ -103,13 +103,7 @@ export default {
     data() {
         return {
             icons: { mdiPencilOutline, mdiClose },
-            headers: [
-                { text: "Product Name", value: "name" },
-                { text: "Product Description", value: "description" },
-                { text: "Selling Price", value: "retail_price" },
-                { text: "Coupon", value: "coupon" },
-                { text: "Actions", value: "actions" }
-            ],
+            lang: "en",
             page: +this.$route.query.page,
             perPage: +this.$route.query.perPage,
             mode: 0
@@ -123,6 +117,19 @@ export default {
             "products",
             "serverItemsLength"
         ]),
+
+        headers() {
+            return [
+                { text: "Product Name", value: `name[${this.lang}]` },
+                {
+                    text: "Product Description",
+                    value: `description[${this.lang}]`
+                },
+                { text: "Selling Price", value: "retail_price" },
+                { text: "Coupon", value: "coupon" },
+                { text: "Actions", value: "actions" }
+            ];
+        },
 
         dialog: {
             get() {
@@ -141,26 +148,6 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            }
-        },
-
-        showImageUpload: {
-            get() {
-                return this.$store.state.storePanel.products.showImageUpload;
-            },
-
-            set(val) {
-                this.setShowImageUpload(val);
-            }
-        },
-
-        showWeekdays: {
-            get() {
-                return this.$store.state.storePanel.products.showWeekdays;
-            },
-
-            set(val) {
-                this.setShowWeekdays(val);
             }
         },
 
@@ -189,6 +176,7 @@ export default {
         ...mapMutations("storePanel/products", [
             "setDialog",
             "setDeleteDialog",
+            "setResetSuccess",
             "setResetValidation",
             "setShowImageUpload",
             "setShowWeekdays",
@@ -199,16 +187,25 @@ export default {
         open(mode, item) {
             this.mode = mode;
             this.product = item;
-            if (this.product.image) this.showImageUpload = true;
-            else this.showImageUpload = false;
-            if (this.product.availability_days.length) this.showWeekdays = true;
-            else this.showWeekdays = false;
+            if (this.product.image) this.setShowImageUpload(true);
+            else this.setShowImageUpload(false);
+            if (this.product.availability_days.length)
+                this.setShowWeekdays(true);
+            else this.setShowWeekdays(false);
+            this.setResetSuccess(true);
             this.setResetValidation(true);
             this.dialog = true;
         }
     },
 
     watch: {
+        dialog(val) {
+            if (!val) {
+                this.setResetSuccess(false);
+                this.setResetValidation(false);
+            }
+        },
+
         $route() {
             this.getItems(this.query);
         },

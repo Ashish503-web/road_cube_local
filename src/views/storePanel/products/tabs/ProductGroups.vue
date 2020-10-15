@@ -109,11 +109,11 @@ export default {
                 { text: "Product Name", value: "name" },
                 { text: "Product Description", value: "description" },
                 { text: "Coupon", value: "coupon" },
-                { text: "Actions", value: "actions" }
+                { text: "Actions", value: "actions" },
             ],
             page: +this.$route.query.page,
             perPage: +this.$route.query.perPage,
-            mode: 0
+            mode: 0,
         };
     },
 
@@ -122,7 +122,7 @@ export default {
             "loading",
             "errorMessage",
             "productGroups",
-            "serverItemsLength"
+            "serverItemsLength",
         ]),
 
         dialog: {
@@ -132,7 +132,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         deleteDialog: {
@@ -142,28 +142,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            }
-        },
-
-        showImageUpload: {
-            get() {
-                return this.$store.state.storePanel.productGroups
-                    .showImageUpload;
             },
-
-            set(val) {
-                this.setShowImageUpload(val);
-            }
-        },
-
-        showWeekdays: {
-            get() {
-                return this.$store.state.storePanel.productGroups.showWeekdays;
-            },
-
-            set(val) {
-                this.setShowWeekdays(val);
-            }
         },
 
         productGroup: {
@@ -173,7 +152,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
+            },
         },
 
         query() {
@@ -184,32 +163,43 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
         ...mapMutations("storePanel/productGroups", [
             "setDialog",
             "setDeleteDialog",
+            "setResetSuccess",
+            "setResetValidation",
             "setShowImageUpload",
             "setShowWeekdays",
-            "setItem"
+            "setItem",
         ]),
         ...mapActions("storePanel/productGroups", ["getItems", "remove"]),
 
         open(mode, item) {
             this.mode = mode;
             this.productGroup = item;
-            if (this.productGroup.image) this.showImageUpload = true;
-            else this.showImageUpload = false;
+            if (this.productGroup.image) this.setShowImageUpload(true);
+            else this.setShowImageUpload(false);
             if (this.productGroup.availability_days.length)
-                this.showWeekdays = true;
-            else this.showWeekdays = false;
+                this.setShowWeekdays(true);
+            else this.setShowWeekdays(false);
+            this.setResetSuccess(true);
+            this.setResetValidation(true);
             this.dialog = true;
-        }
+        },
     },
 
     watch: {
+        dialog(val) {
+            if (!val) {
+                this.setResetSuccess(false);
+                this.setResetValidation(false);
+            }
+        },
+
         $route() {
             this.getItems(this.query);
         },
@@ -220,7 +210,7 @@ export default {
 
         perPage(perPage) {
             this.$router.push({ query: { ...this.$route.query, perPage } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -228,8 +218,8 @@ export default {
             this.$router.push({
                 query: {
                     perPage: 12,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
 
@@ -237,15 +227,15 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    }
+    },
 };
 </script>
 

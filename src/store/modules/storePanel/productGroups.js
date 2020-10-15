@@ -8,6 +8,8 @@ export default {
         deleteDialog: false,
         loading: false,
         errorMessage: "",
+        resetSuccess: false,
+        resetValidation: false,
         serverItemsLength: 0,
         showImageUpload: false,
         showWeekdays: false,
@@ -34,6 +36,14 @@ export default {
 
         setServerItemsLength(state, payload) {
             state.serverItemsLength = payload;
+        },
+
+        setResetSuccess(state, payload) {
+            state.resetSuccess = payload;
+        },
+
+        setResetValidation(state, payload) {
+            state.resetValidation = payload;
         },
 
         setShowImageUpload(state, payload) {

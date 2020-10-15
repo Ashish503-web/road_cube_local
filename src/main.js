@@ -13,6 +13,7 @@ Vue.use(VueMask);
 /**
  * mixins
  */
+
 import globalMixin from "./mixins/globalMixin";
 Vue.mixin(globalMixin);
 Vue.config.productionTip = false;
@@ -21,7 +22,7 @@ Vue.config.productionTip = false;
 
 Vue.prototype.$clearFocus = function() {
     let elems = document.getElementsByClassName(
-        "v-icon notranslate v-icon--disabled v-icon--link v-icon--svg theme--light"
+        "v-icon notranslate v-icon--link v-icon--svg theme--light"
     );
 
     elems.forEach(elem => (elem.tabIndex = -1));
@@ -34,7 +35,7 @@ import camelCase from "lodash/camelCase";
 
 const requireComponent = require.context(
     "./components/base",
-    false,
+    true,
     /B[A-Z]\w+\.(vue|js)$/
 );
 

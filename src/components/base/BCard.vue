@@ -15,7 +15,7 @@
 
         <v-divider></v-divider>
 
-        <v-form v-model="valid" :ref="title" @submit.prevent="$emit('submit')">
+        <v-form v-model="valid" ref="form" @submit.prevent="$emit('submit')">
             <v-card-text class="pt-4">
                 <slot></slot>
             </v-card-text>
@@ -86,13 +86,13 @@ export default {
         },
 
         resetValidation(val) {
-            if (val) this.$refs[this.title].resetValidation();
+            if (val) this.$refs.form.resetValidation();
         }
     },
 
     mounted() {
         this.$clearFocus();
-        this.$refs[this.title].resetValidation();
+        this.$refs.form.resetValidation();
     }
 };
 </script>

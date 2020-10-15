@@ -53,6 +53,6 @@ export default class Product {
     };
 
     static storeSignIn = item => {
-        return axios.post(`${ApiEndpoint}/users/login`);
+        return axios.post(`${ApiEndpoint}/users/login`, item);
     };
 }

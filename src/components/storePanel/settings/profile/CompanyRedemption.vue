@@ -40,19 +40,18 @@ export default {
 
         redemption: {
             get() {
-                return this.$store.state.storePanel.store.company
-                    .redemption_type_id;
+                return this.$store.state.storePanel.store.redemption_type_id;
             },
 
             set(val) {
                 this.setRedemption(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
         ...mapMutations("storePanel", ["setRedemption"]),
-        ...mapActions("storePanel/settings/profile", ["updateRedemption"]),
-    },
+        ...mapActions("storePanel/settings/profile", ["updateRedemption"])
+    }
 };
 </script>

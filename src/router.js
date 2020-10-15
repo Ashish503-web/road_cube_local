@@ -1,6 +1,5 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Home from "@/views/Home.vue";
 
 Vue.use(VueRouter);
 
@@ -49,7 +48,14 @@ const routes = [
     {
         path: "/",
         name: "Home",
-        component: Home
+        components: {
+            header: () =>
+                import(
+                    /* webpackChunkName: "header" */ "@/components/Header.vue"
+                ),
+            default: () =>
+                import(/* webpackChunkName: "home" */ "@/views/Home.vue")
+        }
     },
     {
         path: "/loyaltyPanel",
@@ -122,24 +128,48 @@ const routes = [
         ]
     },
     {
-        path: "/register",
-        name: "Register",
-        component: () =>
-            import(/* webpackChunkName: "register" */ "@/views/Register.vue")
+        path: "/app-providers",
+        name: "AppProviders",
+        components: {
+            header: () =>
+                import(
+                    /* webpackChunkName: "appProvidersHeader" */ "@/components/AppProvidersHeader.vue"
+                ),
+            default: () =>
+                import(
+                    /* webpackChunkName: "appProviders" */ "@/views/AppProviders.vue"
+                )
+        }
+    },
+    {
+        path: "/subscription-plans",
+        name: "SubscriptionPlans",
+        components: {
+            header: () =>
+                import(
+                    /* webpackChunkName: "appProvidersHeader" */ "@/components/AppProvidersHeader.vue"
+                ),
+            default: () =>
+                import(
+                    /* webpackChunkName: "appProviders" */ "@/views/SubscriptionPlans.vue"
+                )
+        }
+    },
+    {
+        path: "/create-account",
+        name: "CreateAccount",
+        components: {
+            default: () =>
+                import(
+                    /* webpackChunkName: "appProviders" */ "@/views/Register.vue"
+                )
+        }
     },
     {
         path: "/sign-in",
         name: "SignIn",
         component: () =>
             import(/* webpackChunkName: "signIn" */ "@/views/SignIn.vue")
-    },
-    {
-        path: "/example-backend-request",
-        name: "backendExample",
-        component: () =>
-            import(
-                /* webpackChunkName: "ExampleBackendRequest" */ "@/views/ExampleBackendRequest.vue"
-            )
     }
 ];
 

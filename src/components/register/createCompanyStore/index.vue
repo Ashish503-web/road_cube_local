@@ -1,5 +1,5 @@
 <template>
-    <v-stepper-content step="3" class="pa-0">
+    <v-window-item :value="3" class="pa-0">
         <v-tabs v-model="tab" color="secondary" centered>
             <!-- <v-tab class="text-capitalize">company</v-tab> -->
             <v-tab class="text-capitalize">store</v-tab>
@@ -9,7 +9,7 @@
             <!-- <CreateCompany /> -->
             <CreateStore />
         </v-tabs-items>
-    </v-stepper-content>
+    </v-window-item>
 </template>
 
 <script>
@@ -24,7 +24,7 @@ export default {
 
     data() {
         return {
-            tab: 1
+            tab: 0
         };
     }
 };

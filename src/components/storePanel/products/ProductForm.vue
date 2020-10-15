@@ -28,9 +28,7 @@
 
         <v-row no-gutters>
             <v-col cols="12">
-                <h4 class="secondary--text mt-3">
-                    Prices
-                </h4>
+                <h4 class="secondary--text mt-3">Prices</h4>
             </v-col>
             <v-col cols="6" class="pr-2">
                 <b-text-field
@@ -53,9 +51,7 @@
                 ></b-text-field>
             </v-col>
             <v-col cols="12">
-                <h4 class="secondary--text mt-3">
-                    Costs
-                </h4>
+                <h4 class="secondary--text mt-3">Costs</h4>
             </v-col>
             <v-col cols="6" class="pr-2">
                 <b-text-field
@@ -186,6 +182,7 @@
 </template>
 
 <script>
+import validators from "./productValidators";
 import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
@@ -193,6 +190,7 @@ export default {
     props: {
         mode: Number
     },
+    mixins: [validators],
     data() {
         return {
             categories: [{ text: "category", value: 1 }],
@@ -205,84 +203,7 @@ export default {
                 "Friday",
                 "Saturday",
                 "Sunday"
-            ],
-            success: {
-                name: false,
-                description: false,
-                sellingPrice: false,
-                wholesalePrice: false,
-                deliveryCost: false,
-                shippingCost: false,
-                category: false
-            },
-            rules: {
-                name: [
-                    v => {
-                        if (v) {
-                            this.success.name = true;
-                            return true;
-                        } else return "Name is required";
-                    }
-                ],
-                description: [
-                    v => {
-                        if (v) {
-                            this.success.description = true;
-                            return true;
-                        } else return "Description is required";
-                    }
-                ],
-                sellingPrice: [
-                    v => {
-                        if (v) {
-                            this.success.sellingPrice = true;
-                            return true;
-                        } else return "Selling Price is required";
-                    },
-                    v => v >= 0.1 || "Selling Price must be minimum 0.1"
-                ],
-                wholesalePrice: [
-                    v => {
-                        if (v >= 0.1) {
-                            this.success.wholesalePrice = true;
-                            return true;
-                        } else if (!v) {
-                            this.success.wholesalePrice = false;
-                            return true;
-                        } else return "Wholesale Price must be minimum 0.1";
-                    }
-                ],
-                deliveryCost: [
-                    v => {
-                        if (v >= 0.1) {
-                            this.success.deliveryCost = true;
-                            return true;
-                        } else if (!v) {
-                            this.success.deliveryCost = false;
-                            return true;
-                        } else return "Delivery Cost must be minimum 0.1";
-                    }
-                ],
-                shippingCost: [
-                    v => {
-                        if (v >= 0.1) {
-                            this.success.shippingCost = true;
-                            return true;
-                        } else if (!v) {
-                            this.success.shippingCost = false;
-                            return true;
-                        } else return "Shipping Cost must be minimum 0.1";
-                    }
-                ],
-                category: [
-                    v => {
-                        if (v) {
-                            this.success.category = true;
-                            return true;
-                        } else return "Category is required";
-                    }
-                ]
-            }
+            ]
         };
     },
 
@@ -290,6 +211,7 @@ export default {
         ...mapState("storePanel/products", [
             "loading",
             "errorMessage",
+            "resetSuccess",
             "resetValidation"
         ]),
 
@@ -344,6 +266,22 @@ export default {
                 const reader = new FileReader();
                 reader.readAsDataURL(this.imageFile);
                 reader.onload = e => (this.product.image = e.target.result);
+            }
+        }
+    },
+
+    watch: {
+        resetSuccess(val) {
+            if (val) {
+                this.success = {
+                    name: false,
+                    description: false,
+                    sellingPrice: false,
+                    wholesalePrice: false,
+                    deliveryCost: false,
+                    shippingCost: false,
+                    category: false
+                };
             }
         }
     }

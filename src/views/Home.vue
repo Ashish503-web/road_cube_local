@@ -1,8 +1,7 @@
 <template>
-    <v-container>
+    <v-container fluid>
         <v-row justify="center">
             <v-col cols="4">
-                <v-img src="../assets/logo.png"></v-img>
                 <v-btn color="primary" outlined block to="/loyaltyPanel"
                     >go to loyalty panel</v-btn
                 >
@@ -15,14 +14,7 @@
                     >go to store panel</v-btn
                 >
                 <v-btn
-                    color="primary"
-                    class="mt-3"
-                    outlined
-                    block
-                    to="/register"
-                    >register</v-btn
-                >
-                <v-btn
+                    id="features"
                     color="primary"
                     class="mt-3"
                     outlined
@@ -33,27 +25,19 @@
                     <v-icon class="ml-1" v-text="icons.mdiLogin"></v-icon>
                 </v-btn>
             </v-col>
-            <v-col cols="10">
-                <v-btn
-                    color="primary"
-                    x-large
-                    outlined
-                    block
-                    to="/example-backend-request"
-                >
-                    backend request functions examples</v-btn
-                >
-            </v-col>
         </v-row>
+
+        <SimplePricing />
     </v-container>
 </template>
 
 <script>
 import { mdiLogin } from "@mdi/js";
+import SimplePricing from "@/components/home/SimplePricing.vue";
 
 export default {
     name: "Home",
-
+    components: { SimplePricing },
     data: () => ({
         icons: { mdiLogin }
     })

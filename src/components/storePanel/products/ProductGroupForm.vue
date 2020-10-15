@@ -3,6 +3,7 @@
         :title="title"
         :loading="loading"
         :error-message="errorMessage"
+        :reset-validation="resetValidation"
         @cancel="$emit('cancel')"
         @submit="
             mode === 1
@@ -14,11 +15,15 @@
             v-model="productGroup.name"
             label="Product Group Name"
             no-top-margin
+            :success="success.name"
+            :rules="rules.name"
         ></b-text-field>
 
         <b-textarea
             v-model="productGroup.description"
             label="Product Group Description"
+            :success="success.description"
+            :rules="rules.description"
         ></b-textarea>
 
         <b-text-field
@@ -26,12 +31,16 @@
             type="number"
             label="Average Price"
             append-icon="mdiCurrencyEur"
+            :success="success.averagePrice"
+            :rules="rules.averagePrice"
         ></b-text-field>
 
         <b-select
             v-model="productGroup.product_category_id"
             :items="categories"
             label="Select Category"
+            :success="success.category"
+            :rules="rules.category"
         ></b-select>
 
         <v-checkbox
@@ -133,29 +142,38 @@
 </template>
 
 <script>
+import validators from "./productGroupValidators";
 import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
     name: "ProductGroup",
     props: {
-        mode: Number
+        mode: Number,
     },
-    data: () => ({
-        categories: [{ text: "category", value: 1 }],
-        imageFile: null,
-        weekdays: [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday"
-        ]
-    }),
+    mixins: [validators],
+    data() {
+        return {
+            categories: [{ text: "category", value: 1 }],
+            imageFile: null,
+            weekdays: [
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday",
+            ],
+        };
+    },
 
     computed: {
-        ...mapState("storePanel/productGroups", ["loading", "errorMessage"]),
+        ...mapState("storePanel/productGroups", [
+            "loading",
+            "errorMessage",
+            "resetSuccess",
+            "resetValidation",
+        ]),
 
         title() {
             return this.mode === 1
@@ -171,7 +189,7 @@ export default {
 
             set(val) {
                 this.setShowImageUpload(val);
-            }
+            },
         },
 
         showWeekdays: {
@@ -181,7 +199,7 @@ export default {
 
             set(val) {
                 this.setShowWeekdays(val);
-            }
+            },
         },
 
         productGroup: {
@@ -191,15 +209,15 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
         ...mapMutations("storePanel/productGroups", [
             "setShowImageUpload",
             "setShowWeekdays",
-            "setItem"
+            "setItem",
         ]),
         ...mapActions("storePanel/productGroups", ["create", "update"]),
 
@@ -208,10 +226,26 @@ export default {
                 this.imageFile = event;
                 const reader = new FileReader();
                 reader.readAsDataURL(this.imageFile);
-                reader.onload = e =>
+                reader.onload = (e) =>
                     (this.productGroup.image = e.target.result);
             }
-        }
-    }
+        },
+    },
+
+    watch: {
+        resetSuccess(val) {
+            if (val) {
+                this.success = {
+                    name: false,
+                    description: false,
+                    sellingPrice: false,
+                    wholesalePrice: false,
+                    deliveryCost: false,
+                    shippingCost: false,
+                    category: false,
+                };
+            }
+        },
+    },
 };
 </script>

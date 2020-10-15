@@ -96,7 +96,7 @@ import {
     mdiMicrosoftExcel,
     mdiFileDelimitedOutline,
     mdiCalendarSearch,
-    mdiMagnify
+    mdiMagnify,
 } from "@mdi/js";
 
 export default {
@@ -107,7 +107,7 @@ export default {
             mdiMicrosoftExcel,
             mdiFileDelimitedOutline,
             mdiCalendarSearch,
-            mdiMagnify
+            mdiMagnify,
         },
         range: [],
         headers: [
@@ -119,7 +119,7 @@ export default {
             { text: "Bank", value: "bank" },
             { text: "With subsidy", value: "with_subsidy" },
             { text: "Without subsidy", value: "without_subsidy" },
-            { text: "Payment", value: "payment" }
+            { text: "Payment", value: "payment" },
         ],
         items: [
             {
@@ -131,7 +131,7 @@ export default {
                 bank: "HSBC",
                 with_subsidy: "yes",
                 without_subsidy: "no",
-                payment: "USD"
+                payment: "USD",
             },
             {
                 date: "14.09.2020",
@@ -142,7 +142,7 @@ export default {
                 bank: "HSBC",
                 with_subsidy: "yes",
                 without_subsidy: "no",
-                payment: "USD"
+                payment: "USD",
             },
             {
                 date: "14.09.2020",
@@ -153,7 +153,7 @@ export default {
                 bank: "HSBC",
                 with_subsidy: "yes",
                 without_subsidy: "no",
-                payment: "USD"
+                payment: "USD",
             },
             {
                 date: "14.09.2020",
@@ -164,7 +164,7 @@ export default {
                 bank: "HSBC",
                 with_subsidy: "yes",
                 without_subsidy: "no",
-                payment: "USD"
+                payment: "USD",
             },
             {
                 date: "14.09.2020",
@@ -175,7 +175,7 @@ export default {
                 bank: "HSBC",
                 with_subsidy: "yes",
                 without_subsidy: "no",
-                payment: "USD"
+                payment: "USD",
             },
             {
                 date: "14.09.2020",
@@ -186,7 +186,7 @@ export default {
                 bank: "HSBC",
                 with_subsidy: "yes",
                 without_subsidy: "no",
-                payment: "USD"
+                payment: "USD",
             },
             {
                 date: "14.09.2020",
@@ -197,7 +197,7 @@ export default {
                 bank: "HSBC",
                 with_subsidy: "yes",
                 without_subsidy: "no",
-                payment: "USD"
+                payment: "USD",
             },
             {
                 date: "14.09.2020",
@@ -208,7 +208,7 @@ export default {
                 bank: "HSBC",
                 with_subsidy: "yes",
                 without_subsidy: "no",
-                payment: "USD"
+                payment: "USD",
             },
             {
                 date: "14.09.2020",
@@ -219,7 +219,7 @@ export default {
                 bank: "HSBC",
                 with_subsidy: "yes",
                 without_subsidy: "no",
-                payment: "USD"
+                payment: "USD",
             },
             {
                 date: "14.09.2020",
@@ -230,7 +230,7 @@ export default {
                 bank: "HSBC",
                 with_subsidy: "yes",
                 without_subsidy: "no",
-                payment: "USD"
+                payment: "USD",
             },
             {
                 date: "14.09.2020",
@@ -241,10 +241,10 @@ export default {
                 bank: "HSBC",
                 with_subsidy: "yes",
                 without_subsidy: "no",
-                payment: "USD"
-            }
+                payment: "USD",
+            },
         ],
-        itemsPerPageOptions: [10, 20, 30, -1]
-    })
+        itemsPerPageOptions: [10, 20, 30, -1],
+    }),
 };
 </script>

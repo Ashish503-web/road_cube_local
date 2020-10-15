@@ -44,7 +44,7 @@ export default {
 
     props: {
         searchTypes: Array,
-        selectedSearchType: String
+        selectedSearchType: String,
     },
 
     data: () => ({
@@ -52,14 +52,14 @@ export default {
         icons: {
             mdiMagnify,
             mdiChevronUp,
-            mdiChevronDown
-        }
+            mdiChevronDown,
+        },
     }),
 
     computed: {
         icon() {
             return this.menu ? "mdiChevronUp" : "mdiChevronDown";
-        }
-    }
+        },
+    },
 };
 </script>

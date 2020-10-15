@@ -1,5 +1,5 @@
 <template>
-    <v-stepper-content step="2" class="pa-0">
+    <v-window-item :value="2" class="pa-0">
         <v-card-title class="pt-0 justify-center">
             Enter Mobile Code
         </v-card-title>
@@ -21,6 +21,7 @@
                 color="secondary"
                 outlined
                 clearable
+                :prepend-inner-icon="icons.mdiCellphoneIphone"
                 :rules="codeRules"
                 :success="codeSuccess"
             ></v-text-field>
@@ -46,17 +47,19 @@
                 >
             </v-card-actions>
         </v-form>
-    </v-stepper-content>
+    </v-window-item>
 </template>
 
 <script>
+import { mdiCellphoneIphone } from "@mdi/js";
 import { mapState, mapActions, mapMutations } from "vuex";
 
 export default {
-    name: "MobileCode",
+    name: "VerifyMobile",
 
     data() {
         return {
+            icons: { mdiCellphoneIphone },
             valid: false,
             disabled: true,
             codeSuccess: false,

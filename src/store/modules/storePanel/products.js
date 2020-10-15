@@ -8,10 +8,11 @@ export default {
         deleteDialog: false,
         loading: false,
         errorMessage: "",
+        resetSuccess: false,
         resetValidation: false,
-        serverItemsLength: 0,
         showImageUpload: false,
         showWeekdays: false,
+        serverItemsLength: 0,
         products: [],
         product: new Product()
     }),
@@ -31,6 +32,10 @@ export default {
 
         setErrorMessage(state, payload) {
             state.errorMessage = payload;
+        },
+
+        setResetSuccess(state, payload) {
+            state.resetSuccess = payload;
         },
 
         setResetValidation(state, payload) {

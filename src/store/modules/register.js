@@ -4,32 +4,21 @@ export default {
     namespaced: true,
 
     state: () => ({
-        step: 1,
         loading: false,
         errorMessage: "",
-        countries: [
-            {
-                name: "Greece",
-                country_id: 1
-            },
-            {
-                name: "USA",
-                country_id: 2
-            },
-            {
-                name: "Italy",
-                country_id: 3
-            }
-        ],
+        appProviders: [],
+        appProvider: null,
+        providerStoreId: null,
+        subscriptionPlans: [],
+        subscriptionPlan: null,
+        step: 1,
+        countries: [],
         country: null,
-        mobile: "",
+        mobile: null,
+        tos: false,
         userRegistrationIdentifier: "",
         mobileVerificationCode: "",
         code: "",
-        appProviders: [],
-        appProvider: null,
-        subscriptionPlans: [],
-        subscriptionPlan: null,
         giftCategories: [],
         giftCategory: null,
         storeCategories: [],
@@ -47,16 +36,33 @@ export default {
     }),
 
     mutations: {
-        setStep(state, payload) {
-            state.step = payload;
-        },
-
         setLoading(state, payload) {
             state.loading = payload;
         },
 
         setErrorMessage(state, payload) {
             state.errorMessage = payload;
+        },
+
+        setAppProviders(state, payload) {
+            state.appProviders = payload;
+        },
+
+        setAppProvider(state, payload) {
+            state.appProvider = payload.app_provider_id;
+            state.providerStoreId = payload.store_id;
+        },
+
+        setSubscriptionPlans(state, payload) {
+            state.subscriptionPlans = payload;
+        },
+
+        setSubscriptionPlan(state, payload) {
+            state.subscriptionPlan = payload;
+        },
+
+        setStep(state, payload) {
+            state.step = payload;
         },
 
         setCountries(state, payload) {
@@ -71,6 +77,10 @@ export default {
             state.mobile = payload;
         },
 
+        setTos(state, payload) {
+            state.tos = payload;
+        },
+
         setUserRegistrationIdentifier(state, payload) {
             state.userRegistrationIdentifier = payload;
         },
@@ -81,22 +91,6 @@ export default {
 
         setCode(state, payload) {
             state.code = payload;
-        },
-
-        setAppProviders(state, payload) {
-            state.appProviders = payload;
-        },
-
-        setAppProvider(state, payload) {
-            state.appProvider = payload;
-        },
-
-        setSubscriptionPlans(state, payload) {
-            state.subscriptionPlans = payload;
-        },
-
-        setSubscriptionPlan(state, payload) {
-            state.subscriptionPlan = payload;
         },
 
         setGiftCategories(state, payload) {
@@ -157,6 +151,28 @@ export default {
     },
 
     actions: {
+        async getAppProviders({ commit }) {
+            try {
+                const { data } = await Register.getAppProviders();
+
+                commit("setAppProviders", data.data);
+            } catch (ex) {
+                console.error(ex);
+            }
+        },
+
+        async getSubscriptionPlans({ commit, state }) {
+            try {
+                const { data } = await Register.getSubscriptionPlans(
+                    state.providerStoreId
+                );
+
+                commit("setSubscriptionPlans", data.data);
+            } catch (ex) {
+                console.error(ex.response.data.message);
+            }
+        },
+
         async getCountries({ commit }) {
             try {
                 const { data } = await Register.getCountries();
@@ -174,10 +190,11 @@ export default {
                 const { data } = await Register.createAccount({
                     country_id: state.country,
                     mobile: state.mobile,
-                    tos: true
+                    tos: state.tos
                 });
 
-                localStorage.setItem("mobile", data.data.user.mobile);
+                localStorage.setItem("country", state.country);
+                localStorage.setItem("mobile", state.mobile);
                 localStorage.setItem(
                     "userRegistrationIdentifier",
                     data.data.user.user_registration_identifier
@@ -198,6 +215,7 @@ export default {
                     data.data.user.mobile_verification_code
                 );
                 commit("setLoading", false);
+                commit("setErrorMessage", "");
                 commit("setStep", state.step + 1);
             } catch (ex) {
                 commit("setLoading", false);
@@ -217,8 +235,10 @@ export default {
                 });
 
                 localStorage.setItem("registrationStep", 3);
+                localStorage.removeItem("mobileVerificationCode");
 
                 commit("setLoading", false);
+                commit("setErrorMessage", "");
                 commit("setStep", state.step + 1);
             } catch (ex) {
                 commit("setLoading", false);
@@ -227,32 +247,10 @@ export default {
             }
         },
 
-        async getAppProviders({ commit }) {
-            try {
-                const { data } = await Register.getAppProviders();
-
-                commit("setAppProviders", data.data);
-            } catch (ex) {
-                console.error(ex);
-            }
-        },
-
-        async getSubscriptionPlans({ commit, state }) {
-            try {
-                const { data } = await Register.getSubscriptionPlans(
-                    state.appProvider.store_id
-                );
-
-                // commit("setAppProviders", data.data);
-            } catch (ex) {
-                console.error(ex.response.data.message);
-            }
-        },
-
         async getGiftCategories({ commit, state }) {
             try {
                 const { data } = await Register.getGiftCategories(
-                    state.appProvider.store_id
+                    state.providerStoreId
                 );
 
                 commit("setGiftCategories", data.data);
@@ -275,7 +273,7 @@ export default {
             try {
                 commit("setLoading", true);
 
-                await Register.createStore({
+                const { data } = await Register.createStore({
                     store_details: {
                         name: state.name,
                         address: state.address,
@@ -304,23 +302,34 @@ export default {
                     }
                 });
 
-                // localStorage.setItem("storeId", res.data.data.store_id);
-                // this.setStoreId(res.data.data.store_id);
+                localStorage.setItem("storeId", data.data.store_id);
+                commit("setStoreId", data.data.store_id, { root: true });
 
-                const { data } = await Register.storeSignIn({
+                const signIn = await Register.storeSignIn({
                     app_provider_id: state.appProvider,
                     mobile: state.mobile,
                     password: state.password
                 });
 
-                localStorage.setItem("storeToken", data.data.access_token);
-                commit("setStoreToken", data.data.access_token);
+                localStorage.setItem("storeToken", signIn.data.access_token);
+                commit("setStoreToken", signIn.data.access_token, {
+                    root: true
+                });
+
+                localStorage.removeItem("registrationStep");
+                localStorage.removeItem("country");
+                localStorage.removeItem("mobile");
+                localStorage.removeItem("userRegistrationIdentifier");
+                localStorage.removeItem("subscriptionPlan");
+                localStorage.removeItem("providerStoreId");
+                localStorage.removeItem("appProvider");
 
                 commit(
                     "setSuccessMessage",
                     "You have successfully created a store"
                 );
                 commit("setLoading", false);
+                commit("setErrorMessage", "");
                 commit("setStep", state.step + 1);
             } catch (ex) {
                 commit("setLoading", false);

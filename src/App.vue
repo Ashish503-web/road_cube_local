@@ -25,21 +25,21 @@ export default {
             "setStoreId",
             "setStoreToken",
             "setCompanyId",
-            "setCompanyToken"
-        ])
+            "setCompanyToken",
+        ]),
     },
 
     mounted() {
         let storeId = localStorage.getItem("storeId");
-        let storeToken = localStorage.getItem("storeAccessToken");
+        let storeToken = localStorage.getItem("storeToken");
         let companyId = localStorage.getItem("companyId");
-        let companyToken = localStorage.getItem("companyAccessToken");
+        let companyToken = localStorage.getItem("companyToken");
 
         this.setStoreId(storeId);
         this.setStoreToken(storeToken);
         this.setCompanyId(companyId);
         this.setCompanyToken(companyToken);
-    }
+    },
 };
 </script>
 
