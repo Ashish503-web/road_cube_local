@@ -22,6 +22,11 @@ export default class Invoice {
         return axios.put(`${ApiEndpoint}${storeId}/flags`, item);
     };
 
+    static updateOrdersData = (token, storeId, item) => {
+        axios.defaults.headers.Authorization = `Bearer ${token}`;
+        return axios.put(`${ApiEndpoint}${storeId}/settings/orders`, item);
+    };
+
     static updateTimetable = (token, storeId, item) => {
         axios.defaults.headers.Authorization = `Bearer ${token}`;
         return axios.put(`${ApiEndpoint}${storeId}/timetable`, item);
