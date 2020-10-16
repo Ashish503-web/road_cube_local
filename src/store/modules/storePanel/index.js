@@ -34,6 +34,10 @@ export default {
         store: new Store()
     }),
 
+    getters: {
+        store: state => state.store
+    },
+
     mutations: {
         setStore(state, payload) {
             payload.timetable = payload.timetable.map(day => new Weekday(day));
