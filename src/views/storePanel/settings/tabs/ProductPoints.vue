@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item class="pt-5">
+    <v-tab-item :value="$route.path" class="pt-5">
         <v-data-table
             :headers="headers"
             :items="productPoints"
@@ -82,7 +82,7 @@ export default {
                 { text: "Liters", value: 3 },
                 { text: "Per Euro", value: 4 }
             ],
-            lang: "en",
+            lang: "el",
             itemsPerPageOptions: [10, 20, 30, -1],
             page: +this.$route.query.page,
             perPage: +this.$route.query.perPage

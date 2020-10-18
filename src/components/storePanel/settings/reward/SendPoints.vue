@@ -120,7 +120,9 @@ export default {
         systemNotificationId: {
             get() {
                 return this.$store.state.storePanel.store.notify_customers
-                    .system_notification_id;
+                    ? this.$store.state.storePanel.store.notify_customers
+                          .system_notification_id
+                    : null;
             },
 
             set(val) {

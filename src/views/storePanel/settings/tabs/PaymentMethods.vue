@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item class="pt-5">
+    <v-tab-item :value="$route.path" class="pt-5">
         <v-window v-model="step">
             <v-window-item :value="1">
                 <v-card outlined width="500" class="mx-auto">

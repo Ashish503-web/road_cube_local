@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item>
+    <v-tab-item :value="$route.path" class="pt-5">
         <v-card tile flat>
             <v-card-text>
                 Choose how each card will be cleared in your store.

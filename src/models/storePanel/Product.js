@@ -5,8 +5,16 @@ export default class Product {
     constructor(item = {}) {
         this.product_id = item.product_id || null;
         this.published = item.published || false;
-        this.name = item.name || "";
-        this.description = item.description || "";
+        this.name = item.name || {
+            el: "",
+            en: "",
+            it: ""
+        };
+        this.description = item.description || {
+            el: "",
+            en: "",
+            it: ""
+        };
         this.retail_price = item.retail_price || null;
         this.wholesale_price = item.wholesale_price || null;
         this.shipping_cost = item.shipping_cost || null;
@@ -14,6 +22,7 @@ export default class Product {
         this.product_category_id = item.product_category_id || null;
         this.availability_days = item.availability_days || [];
         this.image = item.image || "";
+        this.group_product = false;
     }
 
     static get = (token, storeId, query) => {

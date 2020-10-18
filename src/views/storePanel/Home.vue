@@ -8,14 +8,17 @@
                             <v-card-title class="pb-0 justify-center"
                                 >Maroudas Optika</v-card-title
                             >
-                            <h4 class="subtitle-1 success--text pl-4 text-center">
+                            <h4
+                                class="subtitle-1 success--text pl-4 text-center"
+                            >
                                 online
                             </h4>
                         </v-col>
                         <v-col cols="12" sm="6" md="6" lg="3">
-                            <v-card-title class="pb-0 justify-center"
-                                >{{ statistics.total_customers }}</v-card-title
-                            >
+                            <v-card-title class="pb-0 justify-center">{{
+                                statistics.total_customers
+                            }}</v-card-title>
+
                             <v-card-title
                                 class="pa-0 font-weight-light justify-center text--secondary"
                             >
@@ -27,9 +30,9 @@
                             </v-card-title>
                         </v-col>
                         <v-col cols="12" sm="6" md="6" lg="3">
-                            <v-card-title class="pb-0 justify-center"
-                                >{{ statistics.total_transactions }}</v-card-title
-                            >
+                            <v-card-title class="pb-0 justify-center">{{
+                                statistics.total_transactions
+                            }}</v-card-title>
                             <v-card-title
                                 class="pa-0 font-weight-light justify-center text--secondary"
                             >
@@ -44,6 +47,7 @@
                             <v-card-title class="pb-0 justify-center"
                                 >€ {{ statistics.total_income }}</v-card-title
                             >
+
                             <v-card-title
                                 class="pa-0 font-weight-light justify-center text--secondary"
                             >
@@ -75,6 +79,7 @@
                                 class="subtitle-1 font-weight-bold pa-0 justify-end"
                                 >{{ statistics.views.map_views }}</v-card-title
                             >
+
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
                             >
@@ -102,6 +107,7 @@
                                 class="subtitle-1 font-weight-bold pa-0 justify-end"
                                 >{{ statistics.views.visits }}</v-card-title
                             >
+
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
                             >
@@ -129,6 +135,7 @@
                                 class="subtitle-1 font-weight-bold pa-0 justify-end"
                                 >{{ statistics.views.nav_clicks }}</v-card-title
                             >
+
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
                             >
@@ -154,8 +161,11 @@
                         <v-col cols="auto">
                             <v-card-title
                                 class="subtitle-1 font-weight-bold pa-0 justify-end"
-                                >{{ statistics.views.phone_clicks }}</v-card-title
+                                >{{
+                                    statistics.views.phone_clicks
+                                }}</v-card-title
                             >
+
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
                             >
@@ -181,7 +191,13 @@
                         <v-col class="ml-4">
                             <v-card-title
                                 class="subtitle-1 font-weight-bold pa-0"
-                                >{{ statistics.last_twelve_hours_payments.length + " Transactions / " + transactionsCount12hours + " Total" }}</v-card-title
+                                >{{
+                                    statistics.last_twelve_hours_payments
+                                        .length +
+                                        " Transactions / " +
+                                        transactionsCount12hours +
+                                        " Total"
+                                }}</v-card-title
                             >
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
@@ -208,7 +224,12 @@
                         <v-col class="ml-4">
                             <v-card-title
                                 class="subtitle-1 font-weight-bold pa-0"
-                                >{{ statistics.last_week_payments.length + " Transactions / " + transactionsCountLastWeek + " Total" }}</v-card-title
+                                >{{
+                                    statistics.last_week_payments.length +
+                                        " Transactions / " +
+                                        transactionsCountLastWeek +
+                                        " Total"
+                                }}</v-card-title
                             >
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
@@ -258,7 +279,7 @@ import {
     mdiPhone,
     mdiWallet
 } from "@mdi/js";
-import { mapGetters } from 'vuex';
+import { mapGetters } from "vuex";
 
 const gradients = [
     ["#222"],
@@ -311,24 +332,24 @@ export default {
         }
     }),
 
-    mounted(){
-        let statistics = this.$store.state.storePanel.store.statistics
+    mounted() {
+        let statistics = this.$store.state.storePanel.store.statistics;
 
-        if(statistics != undefined){
-            let transactionsCount12hours = 0
-            let transactionsCountLastWeek = 0
+        if (statistics != undefined) {
+            let transactionsCount12hours = 0;
+            let transactionsCountLastWeek = 0;
 
             statistics.last_twelve_hours_payments.map(data => {
-                transactionsCount12hours += data.transaction_count
-            }) 
+                transactionsCount12hours += data.transaction_count;
+            });
 
             statistics.last_week_payments.map(data => {
-                transactionsCountLastWeek += data.transaction_count
-            })
+                transactionsCountLastWeek += data.transaction_count;
+            });
 
-            this.transactionsCount12hours = transactionsCount12hours
-            this.transactionsCountLastWeek = transactionsCountLastWeek
-            this.statistics = statistics
+            this.transactionsCount12hours = transactionsCount12hours;
+            this.transactionsCountLastWeek = transactionsCountLastWeek;
+            this.statistics = statistics;
         }
     },
 
@@ -338,23 +359,23 @@ export default {
 
     watch: {
         store: {
-            handler(newVal){
-                let statistics = newVal.statistics
-                if(statistics != undefined){
-                    let transactionsCount12hours = 0
-                    let transactionsCountLastWeek = 0
+            handler(newVal) {
+                let statistics = newVal.statistics;
+                if (statistics != undefined) {
+                    let transactionsCount12hours = 0;
+                    let transactionsCountLastWeek = 0;
 
                     statistics.last_twelve_hours_payments.map(data => {
-                        transactionsCount12hours += data.transaction_count
-                    }) 
+                        transactionsCount12hours += data.transaction_count;
+                    });
 
                     statistics.last_week_payments.map(data => {
-                        transactionsCountLastWeek += data.transaction_count
-                    })
+                        transactionsCountLastWeek += data.transaction_count;
+                    });
 
-                    this.transactionsCount12hours = transactionsCount12hours
-                    this.transactionsCountLastWeek = transactionsCountLastWeek
-                    this.statistics = statistics
+                    this.transactionsCount12hours = transactionsCount12hours;
+                    this.transactionsCountLastWeek = transactionsCountLastWeek;
+                    this.statistics = statistics;
                 }
             }
         }

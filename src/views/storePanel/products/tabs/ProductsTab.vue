@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item>
+    <v-tab-item :value="$route.path">
         <v-toolbar flat height="80">
             <v-btn
                 color="secondary"
@@ -99,11 +99,13 @@ import ProductForm from "@/components/storePanel/products/ProductForm.vue";
 
 export default {
     name: "ProductsTab",
+
     components: { ProductForm },
+
     data() {
         return {
             icons: { mdiPencilOutline, mdiClose },
-            lang: "en",
+            lang: "el",
             page: +this.$route.query.page,
             perPage: +this.$route.query.perPage,
             mode: 0
@@ -192,7 +194,7 @@ export default {
             if (this.product.availability_days.length)
                 this.setShowWeekdays(true);
             else this.setShowWeekdays(false);
-            this.setResetSuccess(true);
+            setTimeout(() => this.setResetSuccess(true), 300);
             this.setResetValidation(true);
             this.dialog = true;
         }

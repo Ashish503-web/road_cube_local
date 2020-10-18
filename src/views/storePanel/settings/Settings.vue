@@ -9,71 +9,51 @@
             >
                 <v-tab
                     v-for="tab in tabs"
-                    :key="tab"
-                    v-text="tab"
+                    :key="tab.name"
                     class="text-capitalize text-left text-md-center justify-start justify-md-center px-3"
+                    v-text="tab.name"
+                    :to="tab.to"
                 ></v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
-                <Profile />
-
-                <Reward :tab.sync="tab" />
-
-                <ProductPoints />
-
-                <Users />
-
-                <CleanerManagement />
-
-                <PaymentsDirection />
-
-                <Cards />
-
-                <PaymentHistory />
-
-                <PaymentMethods />
+                <router-view></router-view>
             </v-tabs-items>
         </v-sheet>
     </v-container>
 </template>
 
 <script>
-import Profile from "./tabs/Profile";
-import Reward from "./tabs/Reward";
-import ProductPoints from "./tabs/ProductPoints";
-import Users from "./tabs/Users";
-import CleanerManagement from "./tabs/CleanerManagement";
-import PaymentsDirection from "./tabs/PaymentsDirection";
-import Cards from "./tabs/Cards";
-import PaymentHistory from "./tabs/PaymentHistory";
-import PaymentMethods from "./tabs/PaymentMethods";
-
 export default {
     name: "Settings",
-    components: {
-        Profile,
-        Reward,
-        ProductPoints,
-        Users,
-        CleanerManagement,
-        PaymentsDirection,
-        Cards,
-        PaymentHistory,
-        PaymentMethods
-    },
+
     data: () => ({
-        tab: 0,
+        tab: "/storePanel/settings/profile",
         tabs: [
-            "profile",
-            "reward",
-            "product points",
-            "users",
-            "cleaner management",
-            "direction of payments",
-            "cards",
-            "payment history",
-            "payment methods"
+            { to: "/storePanel/settings/profile", name: "profile" },
+            { to: "/storePanel/settings/reward", name: "reward" },
+            {
+                to: "/storePanel/settings/product-points",
+                name: "product points"
+            },
+            { to: "/storePanel/settings/users", name: "users" },
+            {
+                to: "/storePanel/settings/cleaner-management",
+                name: "cleaner management"
+            },
+            {
+                to: "/storePanel/settings/payments-direction",
+                name: "direction of payments"
+            },
+            { to: "/storePanel/settings/cards", name: "cards" },
+            {
+                to: "/storePanel/settings/payment-history",
+                name: "payment history"
+            },
+            {
+                to: "/storePanel/settings/payment-methods",
+                name: "payment methods"
+            }
         ]
     })
 };

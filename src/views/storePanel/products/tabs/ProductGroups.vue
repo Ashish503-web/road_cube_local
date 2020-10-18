@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item>
+    <v-tab-item :value="$route.path">
         <v-toolbar flat height="80" class="pt-2">
             <v-btn
                 color="secondary"
@@ -105,15 +105,10 @@ export default {
     data() {
         return {
             icons: { mdiPencilOutline, mdiClose },
-            headers: [
-                { text: "Product Name", value: "name" },
-                { text: "Product Description", value: "description" },
-                { text: "Coupon", value: "coupon" },
-                { text: "Actions", value: "actions" },
-            ],
+            lang: "el",
             page: +this.$route.query.page,
             perPage: +this.$route.query.perPage,
-            mode: 0,
+            mode: 0
         };
     },
 
@@ -122,8 +117,21 @@ export default {
             "loading",
             "errorMessage",
             "productGroups",
-            "serverItemsLength",
+            "serverItemsLength"
         ]),
+
+        headers() {
+            return [
+                { text: "Product Name", value: `name[${this.lang}]` },
+                {
+                    text: "Product Description",
+                    value: `description[${this.lang}]`
+                },
+                { text: "Selling Price", value: "retail_price" },
+                { text: "Coupon", value: "coupon" },
+                { text: "Actions", value: "actions" }
+            ];
+        },
 
         dialog: {
             get() {
@@ -132,7 +140,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            },
+            }
         },
 
         deleteDialog: {
@@ -142,7 +150,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            },
+            }
         },
 
         productGroup: {
@@ -152,7 +160,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
+            }
         },
 
         query() {
@@ -163,7 +171,7 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        },
+        }
     },
 
     methods: {
@@ -174,7 +182,7 @@ export default {
             "setResetValidation",
             "setShowImageUpload",
             "setShowWeekdays",
-            "setItem",
+            "setItem"
         ]),
         ...mapActions("storePanel/productGroups", ["getItems", "remove"]),
 
@@ -186,10 +194,10 @@ export default {
             if (this.productGroup.availability_days.length)
                 this.setShowWeekdays(true);
             else this.setShowWeekdays(false);
-            this.setResetSuccess(true);
-            this.setResetValidation(true);
             this.dialog = true;
-        },
+            setTimeout(() => this.setResetSuccess(true), 300);
+            this.setResetValidation(true);
+        }
     },
 
     watch: {
@@ -210,7 +218,7 @@ export default {
 
         perPage(perPage) {
             this.$router.push({ query: { ...this.$route.query, perPage } });
-        },
+        }
     },
 
     beforeCreate() {
@@ -218,8 +226,8 @@ export default {
             this.$router.push({
                 query: {
                     perPage: 12,
-                    ...this.$route.query,
-                },
+                    ...this.$route.query
+                }
             });
         }
 
@@ -227,15 +235,15 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query,
-                },
+                    ...this.$route.query
+                }
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    },
+    }
 };
 </script>
 

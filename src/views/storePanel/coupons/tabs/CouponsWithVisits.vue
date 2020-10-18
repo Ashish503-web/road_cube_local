@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item>
+    <v-tab-item :value="$route.path">
         <v-card tile flat>
             <v-row no-gutters class="">
                 <v-col cols="12" sm="6" class="ml-0 ml-md-12 mt-5">
@@ -10,9 +10,9 @@
                         by GPS.
                     </v-card-subtitle>
                     <v-img
-                            class="mx-auto mx-sm-0"
-                            src="@/assets/checkin_image.jpg"
-                            width="280"
+                        class="mx-auto mx-sm-0"
+                        src="@/assets/checkin_image.jpg"
+                        width="280"
                     ></v-img>
                 </v-col>
 

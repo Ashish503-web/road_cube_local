@@ -22,7 +22,7 @@
                 color="secondary"
                 class="text-capitalize mb-3 mb-sm-0"
                 outlined
-                @click="$emit('appoint-cleaners')"
+                @click="$router.push('/storePanel/settings/cleaner-management')"
                 >appoint cleaners</v-btn
             >
 
@@ -31,7 +31,7 @@
                 color="secondary"
                 class="text-capitalize"
                 outlined
-                @click="$emit('payment-direction')"
+                @click="$router.push('/storePanel/settings/payment-direction')"
                 >set a payment direction</v-btn
             >
         </v-row>

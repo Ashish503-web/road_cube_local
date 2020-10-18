@@ -1,30 +1,45 @@
 <template>
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
-            <v-tabs v-model="tab" :vertical="$vuetify.breakpoint.smAndDown" color="black">
-                <v-tab class="text-capitalize text-left text-sm-center d-flex justify-start justify-sm-center px-3">redeem voucher</v-tab>
-                <v-tab class="text-capitalize text-left text-sm-center d-flex justify-start justify-sm-center px-3">coupons overview</v-tab>
-                <v-tab class="text-capitalize text-left text-sm-center d-flex justify-start justify-sm-center px-3">multiple coupons</v-tab>
+            <v-tabs
+                v-model="tab"
+                :vertical="$vuetify.breakpoint.smAndDown"
+                color="secondary"
+            >
+                <v-tab
+                    v-for="tab in tabs"
+                    :key="tab.name"
+                    v-text="tab.name"
+                    :to="tab.to"
+                    class="text-capitalize text-left text-sm-center d-flex justify-start justify-sm-center px-3"
+                    >redeem voucher</v-tab
+                >
             </v-tabs>
+
             <v-tabs-items v-model="tab">
-                <RedeemVoucher />
-                <CouponsOverview />
-                <MultipleCoupons />
+                <router-view></router-view>
             </v-tabs-items>
         </v-sheet>
     </v-container>
 </template>
 
 <script>
-import RedeemVoucher from "./RedeemVoucher";
-import CouponsOverview from "./CouponsOverview";
-import MultipleCoupons from "./MultipleCoupons";
-
 export default {
     name: "Redeem",
-    components: { RedeemVoucher, CouponsOverview, MultipleCoupons },
+
     data: () => ({
-        tab: 0
+        tab: "storePanel/redeem/redeem-voucher",
+        tabs: [
+            { to: "/storePanel/redeem/redeem-voucher", name: "Redeem Voucher" },
+            {
+                to: "/storePanel/redeem/coupons-overview",
+                name: "Coupons Overview"
+            },
+            {
+                to: "/storePanel/redeem/multiple-coupons",
+                name: "Multiple Coupons"
+            }
+        ]
     })
 };
 </script>

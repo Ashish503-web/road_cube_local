@@ -58,16 +58,20 @@
 
             <v-row no-gutters style="background: #EAEDF191" class="px-3 pt-3">
                 <v-col cols="auto">
-                    <v-tabs v-model="tab" color="black">
-                        <v-tab class="text-capitalize">pending</v-tab>
-                        <v-tab class="text-capitalize">paid</v-tab>
+                    <v-tabs v-model="tab" color="secondary">
+                        <v-tab
+                            v-for="tab in tabs"
+                            :key="tab.name"
+                            v-text="tab.name"
+                            :to="tab.to"
+                            class="text-capitalize"
+                        ></v-tab>
                     </v-tabs>
                 </v-col>
             </v-row>
 
             <v-tabs-items v-model="tab">
-                <Pending />
-                <Paid />
+                <router-view></router-view>
             </v-tabs-items>
         </v-sheet>
     </v-container>
@@ -80,12 +84,10 @@ import {
     mdiPrinter,
     mdiOpenInNew
 } from "@mdi/js";
-import Pending from "./Pending";
-import Paid from "./Paid";
 
 export default {
     name: "Transactions",
-    components: { Pending, Paid },
+
     data: () => ({
         icons: {
             mdiCellphoneIphone,
@@ -93,7 +95,12 @@ export default {
             mdiPrinter,
             mdiOpenInNew
         },
-        tab: 0
+        test: "",
+        tab: "storePanel/transactions/pending",
+        tabs: [
+            { to: "/storePanel/transactions/pending", name: "Pending" },
+            { to: "/storePanel/transactions/paid", name: "Paid" }
+        ]
     })
 };
 </script>

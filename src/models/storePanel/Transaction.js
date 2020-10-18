@@ -1,6 +1,5 @@
 import axios from "axios";
-const ApiEndpoint =
-    "https://api.roadcube.tk/v1/stores/";
+const ApiEndpoint = "https://api.roadcube.tk/v1/stores/";
 
 export default class Transaction {
     constructor(item = {}) {
@@ -8,8 +7,8 @@ export default class Transaction {
     }
 
     static get = (token, storeId, query) => {
-        axios.defaults.headers.Authorization = `Bearer ${token}`
-        return  axios.get(`${ApiEndpoint}${storeId}/transactions${query}`)
+        axios.defaults.headers.Authorization = `Bearer ${token}`;
+        return axios.get(`${ApiEndpoint}${storeId}/transactions${query}`);
     };
 
     static create = (token, storeId, item) => {

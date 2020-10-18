@@ -2,37 +2,43 @@
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
             <v-tabs
-                    :vertical="$vuetify.breakpoint.mdAndDown"
-                    v-model="tab"
-                    color="black">
-                <v-tab class="text-capitalize d-flex justify-md-center justify-start px-3">Stores</v-tab>
-                <v-tab class="text-capitalize d-flex justify-md-center justify-start px-3">Registration plans</v-tab>
-                <v-tab class="text-capitalize d-flex justify-md-center justify-start px-3">Payment methods</v-tab>
+                v-model="tab"
+                :vertical="$vuetify.breakpoint.mdAndDown"
+                color="secondary"
+            >
+                <v-tab
+                    v-for="tab in tabs"
+                    :key="tab.name"
+                    v-text="tab.name"
+                    :to="tab.to"
+                    class="text-capitalize d-flex justify-md-center justify-start px-3"
+                ></v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
-                <Stores />
-                <RegistrationPlans />
-                <PaymentMethods />
+                <router-view></router-view>
             </v-tabs-items>
         </v-sheet>
     </v-container>
 </template>
 
 <script>
-import Stores from "./tabs/Stores";
-import PaymentMethods from "./tabs/PaymentMethods";
-import RegistrationPlans from "./tabs/RegistrationPlans";
-
 export default {
     name: "Subscriptions",
-    components: {
-        Stores,
-        RegistrationPlans,
-        PaymentMethods
-    },
+
     data: () => ({
-        tab: 0
+        tab: "loyaltyPanel/subscriptions/stores",
+        tabs: [
+            { to: "/loyaltyPanel/subscriptions/stores", name: "stores" },
+            {
+                to: "/loyaltyPanel/subscriptions/registration-plans",
+                name: "registration plans"
+            },
+            {
+                to: "/loyaltyPanel/subscriptions/payment-methods",
+                name: "payment methods"
+            }
+        ]
     })
 };
 </script>

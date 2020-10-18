@@ -1,21 +1,12 @@
 import Vue from "vue";
 import App from "./App.vue";
-import router from "./router";
+import router from "./routes";
 import store from "./store/store";
 import vuetify from "./plugins/vuetify";
 import VueMask from "v-mask";
-/**
- * Axios
- */
-require("./axios");
+
 Vue.use(VueMask);
 
-/**
- * mixins
- */
-
-import globalMixin from "./mixins/globalMixin";
-Vue.mixin(globalMixin);
 Vue.config.productionTip = false;
 
 // removing focus from icons

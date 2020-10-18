@@ -39,8 +39,8 @@ import { mdiArrowRight } from "@mdi/js";
 export default {
     name: "Header",
     data: () => ({
-        icons: { mdiArrowRight },
-    }),
+        icons: { mdiArrowRight }
+    })
 };
 </script>
 

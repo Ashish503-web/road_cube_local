@@ -4,7 +4,12 @@
         submit-text="send invoice settings"
         :loading="loading"
         :error-message="errorMessage"
-        @submit="updateInvoicing"
+        @submit="
+            updateInvoicing({
+                type: 'invoicing',
+                item: invoicing
+            })
+        "
     >
         <v-row no-gutters>
             <v-col cols="12" sm="6" class="pr-0 pr-sm-2">
@@ -57,7 +62,8 @@ export default {
     name: "Invoicing",
 
     data: () => ({
-        countries: [{ text: "Greece 24%", value: 1 }]
+        countries: [{ text: "Greece 24%", value: 1 }],
+        invoicing: {}
     }),
 
     computed: {
@@ -69,15 +75,32 @@ export default {
         errorMessage() {
             return this.$store.state.storePanel.settings.profile.errorMessage
                 .invoicing;
-        },
-
-        invoicing() {
-            return this.$store.state.storePanel.store.billing_details;
         }
     },
 
     methods: {
         ...mapActions("storePanel/settings/profile", ["updateInvoicing"])
+    },
+
+    watch: {
+        ["$store.state.storePanel.store"]: {
+            immediate: true,
+            handler(val) {
+                this.invoicing = {
+                    comp_name: val.billing_details.comp_name,
+
+                    vat_number: val.billing_details.vat_number,
+
+                    city: val.billing_details.city,
+
+                    occupation: val.billing_details.occupation,
+
+                    tax_office: val.billing_details.tax_office,
+
+                    country_id: val.billing_details.country_id
+                };
+            }
+        }
     }
 };
 </script>

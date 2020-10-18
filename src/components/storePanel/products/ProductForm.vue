@@ -11,20 +11,34 @@
                 : update({ product, image: imageFile })
         "
     >
-        <b-text-field
-            v-model="product.name"
-            label="Product Name"
-            no-top-margin
-            :success="success.name"
-            :rules="rules.name"
-        ></b-text-field>
+        <v-row no-gutters>
+            <v-col cols="9" class="pr-2">
+                <b-text-field
+                    v-model="product.name[productLang]"
+                    label="Product Name"
+                    no-top-margin
+                    :success="success.name"
+                    :rules="rules.name"
+                ></b-text-field>
+            </v-col>
 
-        <b-textarea
-            v-model="product.description"
-            label="Product Description"
-            :success="success.description"
-            :rules="rules.description"
-        ></b-textarea>
+            <v-col cols="3" class="pl-2">
+                <b-lang-menu v-model="productLang"></b-lang-menu>
+            </v-col>
+
+            <v-col cols="9" class="pr-2">
+                <b-textarea
+                    v-model="product.description[descriptionLang]"
+                    label="Product Description"
+                    :success="success.description"
+                    :rules="rules.description"
+                ></b-textarea>
+            </v-col>
+
+            <v-col cols="3" class="pl-2 pt-3">
+                <b-lang-menu v-model="descriptionLang"></b-lang-menu>
+            </v-col>
+        </v-row>
 
         <v-row no-gutters>
             <v-col cols="12">
@@ -193,6 +207,8 @@ export default {
     mixins: [validators],
     data() {
         return {
+            productLang: "el",
+            descriptionLang: "el",
             categories: [{ text: "category", value: 1 }],
             imageFile: null,
             weekdays: [

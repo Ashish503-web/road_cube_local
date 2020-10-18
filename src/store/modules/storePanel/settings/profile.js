@@ -12,18 +12,20 @@ export default {
             logo: false,
             mapLogo: false,
             businessInformation: false,
+            invoicing: false,
             operationHours: false,
             quickPayment: false,
-            invoicing: false,
+            orders: false,
             redemption: false
         },
         errorMessage: {
             logo: "",
             mapLogo: "",
             businessInformation: "",
+            invoicing: "",
             operationHours: "",
             quickPayment: "",
-            invoicing: "",
+            orders: "",
             redemption: ""
         },
         storeCategories: [],
@@ -134,6 +136,64 @@ export default {
             }
         },
 
+        async getStoreCategories({ commit }) {
+            try {
+                const { data } = await Profile.getStoreCategories();
+
+                commit("setStoreCategories", data.data);
+            } catch (ex) {
+                console.error(ex.response.data.message);
+            }
+        },
+
+        async getCountries({ commit }) {
+            try {
+                const { data } = await Profile.getCountries();
+
+                commit("setCountries", data.data);
+            } catch (ex) {
+                console.error(ex.response.data.message);
+            }
+        },
+
+        async updateBusinessInformation({ commit, rootState }, { type, item }) {
+            try {
+                commit("setLoading", { value: true, type });
+
+                await Profile.updateBusinessInformation(
+                    rootState.storeToken,
+                    rootState.storeId,
+                    item
+                );
+
+                commit("storePanel/setBusinessInformation", item, {
+                    root: true
+                });
+                commit("setLoading", { value: false, type });
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text:
+                            "You have successfully updated business information!"
+                    },
+
+                    { root: true }
+                );
+            } catch (ex) {
+                commit("setLoading", { value: false, type });
+                commit("setErrorMessage", {
+                    value: ex.response.data.message,
+                    type
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", { value: "", type }),
+                    5000
+                );
+            }
+        },
+
         async updateTimetable({ commit, rootState }) {
             try {
                 commit("setLoading", { value: true, type: "operationHours" });
@@ -189,6 +249,42 @@ export default {
             }
         },
 
+        async updateInvoicing({ commit, rootState }, { type, item }) {
+            try {
+                commit("setLoading", { value: true, type });
+
+                await Profile.updateInvoicing(
+                    rootState.storeToken,
+                    rootState.storeId,
+                    item
+                );
+
+                commit("storePanel/setInvoicing", item, { root: true });
+                commit("setLoading", { value: false, type });
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text:
+                            "You have successfully updated invoicing information!"
+                    },
+
+                    { root: true }
+                );
+            } catch (ex) {
+                commit("setLoading", { value: false, type });
+                commit("setErrorMessage", {
+                    value: ex.response.data.message,
+                    type
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", { value: "", type }),
+                    5000
+                );
+            }
+        },
+
         async updateQuickPayment({ commit, rootState }) {
             try {
                 commit("setLoading", { value: true, type: "quickPayment" });
@@ -231,82 +327,24 @@ export default {
             }
         },
 
-        async updateOrdersData({ commit, rootState }, body) {
-            try {
-                commit("setLoading", { value: true, type: "Orders" });
-                
-                await Profile.updateOrdersData(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    body
-                );
-
-                commit("setLoading", { value: false, type: "Orders" });
-                commit(
-                    "setNotification",
-                    {
-                        show: true,
-                        type: "success",
-                        text: "You have successfully updated Orders!"
-                    },
-
-                    { root: true }
-                );
-            } catch (ex) {
-                commit("setLoading", { value: false, type: "Orders" });
-                commit("setErrorMessage", {
-                    value: ex.response.data.message,
-                    type: "Orders"
-                });
-                setTimeout(
-                    () =>
-                        commit("setErrorMessage", {
-                            value: "",
-                            type: "Orders"
-                        }),
-                    5000
-                );
-            }
-        },
-
-        async getStoreCategories({ commit }) {
-            try {
-                const { data } = await Profile.getStoreCategories();
-
-                commit("setStoreCategories", data.data);
-            } catch (ex) {
-                console.error(ex.response.data.message);
-            }
-        },
-
-        async getCountries({ commit }) {
-            try {
-                const { data } = await Profile.getCountries();
-
-                commit("setCountries", data.data);
-            } catch (ex) {
-                console.error(ex.response.data.message);
-            }
-        },
-
-        async updateBusinessInformation({ commit, rootState }, { type, item }) {
+        async updateOrders({ commit, rootState }, { type, item }) {
             try {
                 commit("setLoading", { value: true, type });
 
-                await Profile.updateBusinessInformation(
+                await Profile.updateOrders(
                     rootState.storeToken,
                     rootState.storeId,
                     item
                 );
 
+                commit("storePanel/setOrders", item, { root: true });
                 commit("setLoading", { value: false, type });
                 commit(
                     "setNotification",
                     {
                         show: true,
                         type: "success",
-                        text:
-                            "You have successfully updated business information!"
+                        text: "You have successfully updated orders!"
                     },
 
                     { root: true }
@@ -319,54 +357,6 @@ export default {
                 });
                 setTimeout(
                     () => commit("setErrorMessage", { value: "", type }),
-                    5000
-                );
-            }
-        },
-
-        async updateInvoicing({ commit, rootState }) {
-            try {
-                commit("setLoading", { value: true, type: "invoicing" });
-
-                const { billing_details } = rootState.storePanel.store;
-
-                await Profile.updateInvoicing(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    {
-                        comp_name: billing_details.comp_name,
-                        vat_number: billing_details.vat_number,
-                        city: billing_details.city,
-                        occupation: billing_details.occupation,
-                        tax_office: billing_details.tax_office,
-                        country_id: billing_details.country_id
-                    }
-                );
-
-                commit("setLoading", { value: false, type: "invoicing" });
-                commit(
-                    "setNotification",
-                    {
-                        show: true,
-                        type: "success",
-                        text:
-                            "You have successfully updated invoicing information!"
-                    },
-
-                    { root: true }
-                );
-            } catch (ex) {
-                commit("setLoading", { value: false, type: "invoicing" });
-                commit("setErrorMessage", {
-                    value: ex.response.data.message,
-                    type: "invoicing"
-                });
-                setTimeout(
-                    () =>
-                        commit("setErrorMessage", {
-                            value: "",
-                            type: "invoicing"
-                        }),
                     5000
                 );
             }

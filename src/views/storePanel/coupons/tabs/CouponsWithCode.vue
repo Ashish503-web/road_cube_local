@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item>
+    <v-tab-item :value="$route.path">
         <v-row no-gutters justify="space-between" class="pt-8 pa-5">
             <v-col cols="auto">
                 <v-btn
