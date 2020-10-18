@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item>
+    <v-tab-item :value="$route.path">
         <v-container class="pa-12 pb-3">
             <v-card outlined tile>
                 <v-data-table

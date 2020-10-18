@@ -106,9 +106,18 @@ export default {
             { productGroup, image }
         ) {
             try {
+                commit("setLoading", true);
+
                 delete productGroup.product_id;
                 delete productGroup.image;
-                commit("setLoading", true);
+                if (!productGroup.name.en)
+                    productGroup.name.en = productGroup.name.el;
+                if (!productGroup.name.it)
+                    productGroup.name.it = productGroup.name.el;
+                if (!productGroup.description.en)
+                    productGroup.description.en = productGroup.description.el;
+                if (!productGroup.description.it)
+                    productGroup.description.it = productGroup.description.el;
 
                 const { data } = await ProductGroup.create(
                     rootState.storeToken,
@@ -147,8 +156,17 @@ export default {
 
         async update({ dispatch, commit, rootState }, { productGroup, image }) {
             try {
-                delete productGroup.image;
                 commit("setLoading", true);
+
+                delete productGroup.image;
+                if (!productGroup.name.en)
+                    productGroup.name.en = productGroup.name.el;
+                if (!productGroup.name.it)
+                    productGroup.name.it = productGroup.name.el;
+                if (!productGroup.description.en)
+                    productGroup.description.en = productGroup.description.el;
+                if (!productGroup.description.it)
+                    productGroup.description.it = productGroup.description.el;
 
                 const { data } = await ProductGroup.update(
                     rootState.storeToken,

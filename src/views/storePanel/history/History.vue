@@ -1,31 +1,40 @@
 <template>
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
-            <v-row no-gutters>
-                <v-col cols="auto">
-                    <v-tabs v-model="tab" :vertical="$vuetify.breakpoint.smAndDown" color="black">
-                        <v-tab class="text-capitalize text-left text-sm-center d-flex justify-start justify-sm-center px-3">point analysis</v-tab>
-                        <v-tab class="text-capitalize text-left text-sm-center d-flex justify-start justify-sm-center px-3">monthly points</v-tab>
-                    </v-tabs>
-                </v-col>
-            </v-row>
+            <v-tabs
+                v-model="tab"
+                :vertical="$vuetify.breakpoint.smAndDown"
+                color="secondary"
+            >
+                <v-tab
+                    v-for="tab in tabs"
+                    :key="tab.name"
+                    class="text-capitalize text-left text-sm-center d-flex justify-start justify-sm-center px-3"
+                    v-text="tab.name"
+                    :to="tab.to"
+                ></v-tab>
+            </v-tabs>
+
             <v-tabs-items v-model="tab">
-                <PointAnalysis />
-                <MonthlyPoints />
+                <router-view></router-view>
             </v-tabs-items>
         </v-sheet>
     </v-container>
 </template>
 
 <script>
-import PointAnalysis from "./PointAnalysis";
-import MonthlyPoints from "./MonthlyPoints";
-
 export default {
     name: "History",
-    components: { PointAnalysis, MonthlyPoints },
+
     data: () => ({
-        tab: 0
+        tab: "storePanel/history/point-analysis",
+        tabs: [
+            {
+                to: "/storePanel/history/point-analysis",
+                name: "Point Analysis"
+            },
+            { to: "/storePanel/history/monthly-points", name: "Monthly Points" }
+        ]
     })
 };
 </script>

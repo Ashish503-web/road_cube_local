@@ -30,7 +30,7 @@ export default {
 
         removeItem(state, payload) {
             state.productCategories = state.productCategories.filter(
-                p => p.name.el !== payload
+                p => p.product_category_id !== payload
             );
         }
     },
@@ -59,16 +59,27 @@ export default {
             try {
                 commit("setLoading", true, { root: true });
 
-                state.productCategory.store_id = rootState.storeId;
-                delete state.productCategory.product_category_id;
+                let productCategory = { ...state.productCategory };
+                delete productCategory.product_category_id;
+                productCategory.store_id = rootState.storeId;
+                if (!productCategory.name.en)
+                    productCategory.name.en = productCategory.name.el;
+                if (!productCategory.name.it)
+                    productCategory.name.it = productCategory.name.el;
 
                 const { data } = await ProductCategory.create(
                     rootState.storeToken,
                     rootState.storeId,
-                    state.productCategory
+                    productCategory
                 );
 
                 commit("addItem", data.data.product_category);
+                commit("setItem", {});
+                commit(
+                    "setServerItemsLength",
+                    rootState.serverItemsLength + 1,
+                    { root: true }
+                );
                 commit("setLoading", false, { root: true });
                 commit(
                     "setNotification",
@@ -91,46 +102,61 @@ export default {
             }
         },
 
-        // async update({ dispatch, commit, rootState }, { product, image }) {
-        //     try {
-        //         delete product.image;
-        //         commit("setLoading", true);
+        async update({ dispatch, commit, rootState }, { product, image }) {
+            try {
+                delete product.image;
+                commit("setLoading", true);
 
-        //         const { data } = await ProductCategory.update(
-        //             rootState.storeToken,
-        //             rootState.storeId,
-        //             product
-        //         );
+                const { data } = await ProductCategory.update(
+                    rootState.storeToken,
+                    rootState.storeId,
+                    product
+                );
 
-        //         if (image) {
-        //             dispatch("uploadImage", {
-        //                 item: data.data.product,
-        //                 image,
-        //                 mode: 2
-        //             });
-        //         } else {
-        //             commit("updateItem", data.data.product);
-        //             commit("setLoading", false);
-        //             commit("setDialog", false);
-        //         }
-        //     } catch (ex) {
-        //         commit("setLoading", false);
-        //         commit("setErrorMessage", ex.response.data.message);
-        //         setTimeout(() => commit("setErrorMessage", ""), 5000);
-        //     }
-        // },
+                if (image) {
+                    dispatch("uploadImage", {
+                        item: data.data.product,
+                        image,
+                        mode: 2
+                    });
+                } else {
+                    commit("updateItem", data.data.product);
+                    commit("setLoading", false);
+                    commit("setDialog", false);
+                }
+            } catch (ex) {
+                commit("setLoading", false);
+                commit("setErrorMessage", ex.response.data.message);
+                setTimeout(() => commit("setErrorMessage", ""), 5000);
+            }
+        },
 
-        async remove({ commit, rootState }, payload) {
+        async remove({ commit, rootState }, id) {
             try {
                 commit("setLoading", true, { root: true });
 
                 await ProductCategory.delete(
                     rootState.storeToken,
                     rootState.storeId,
-                    payload.product_category_id
+                    id
+                );
+
+                commit("removeItem", id);
+                commit(
+                    "setServerItemsLength",
+                    rootState.serverItemsLength - 1,
+                    { root: true }
                 );
                 commit("setLoading", false, { root: true });
-                commit("removeItem", payload);
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully deleted product category!"
+                    },
+                    { root: true }
+                );
             } catch (ex) {
                 commit("setLoading", false, { root: true });
                 commit("setErrorMessage", ex.response.data.message, {

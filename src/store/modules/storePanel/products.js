@@ -100,13 +100,20 @@ export default {
         },
 
         async create(
-            { dispatch, commit, state, rootState },
+            { commit, dispatch, state, rootState },
             { product, image }
         ) {
             try {
+                commit("setLoading", true);
+
                 delete product.product_id;
                 delete product.image;
-                commit("setLoading", true);
+                if (!product.name.en) product.name.en = product.name.el;
+                if (!product.name.it) product.name.it = product.name.el;
+                if (!product.description.en)
+                    product.description.en = product.description.el;
+                if (!product.description.it)
+                    product.description.it = product.description.el;
 
                 const { data } = await Product.create(
                     rootState.storeToken,
@@ -143,10 +150,17 @@ export default {
             }
         },
 
-        async update({ dispatch, commit, rootState }, { product, image }) {
+        async update({ commit, dispatch, rootState }, { product, image }) {
             try {
-                delete product.image;
                 commit("setLoading", true);
+
+                delete product.image;
+                if (!product.name.en) product.name.en = product.name.el;
+                if (!product.name.it) product.name.it = product.name.el;
+                if (!product.description.en)
+                    product.description.en = product.description.el;
+                if (!product.description.it)
+                    product.description.it = product.description.el;
 
                 const { data } = await Product.update(
                     rootState.storeToken,

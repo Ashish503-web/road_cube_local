@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item class="pt-5">
+    <v-tab-item :value="$route.path" class="pt-5">
         <v-alert type="error" class="font-weight-bold">
             The date for the next payment has passed. Please update your
             subscription. Cost: 62.000,00 €
@@ -14,14 +14,14 @@
                 <v-spacer></v-spacer>
                 <v-col cols="12" sm="4" class="py-0">
                     <v-text-field
-                            label="Search"
-                            color="secondary"
-                            rounded
-                            outlined
-                            dense
-                            clearable
-                            hide-details
-                            :append-icon="icons.mdiMagnify"
+                        label="Search"
+                        color="secondary"
+                        rounded
+                        outlined
+                        dense
+                        clearable
+                        hide-details
+                        :append-icon="icons.mdiMagnify"
                     ></v-text-field>
                 </v-col>
             </v-row>

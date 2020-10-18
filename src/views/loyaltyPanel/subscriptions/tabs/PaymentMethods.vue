@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item>
+    <v-tab-item :value="$route.path">
         <v-container>
             <v-row class="mb-6 " no-gutters>
                 <v-col cols="12" class="pb-4 mb-3">
@@ -26,7 +26,13 @@
                 </v-col>
             </v-row>
             <v-row class="mb-6 " no-gutters>
-                <v-col cols="12" lg="2" md="3" sm="6" class="border_top_payment">
+                <v-col
+                    cols="12"
+                    lg="2"
+                    md="3"
+                    sm="6"
+                    class="border_top_payment"
+                >
                     <v-card
                         class="pa-2 grey lighten-5 text-center"
                         outlined

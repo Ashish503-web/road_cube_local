@@ -8,39 +8,37 @@
             >
                 <v-tab
                     v-for="tab in tabs"
-                    v-bind:key="tab"
+                    :key="tab.name"
+                    v-text="tab.name"
+                    :to="tab.to"
                     class="text-capitalize d-flex justify-md-center justify-start px-3"
-                    v-text="tab"
-                >
-                </v-tab>
+                ></v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
-                <ProductsTab />
-
-                <ProductsPerStore />
-
-                <ProductSeries />
+                <router-view></router-view>
             </v-tabs-items>
         </v-sheet>
     </v-container>
 </template>
 
 <script>
-import ProductsTab from "./tabs/ProductsTab";
-import ProductsPerStore from "./tabs/ProductsPerStore";
-import ProductSeries from "./tabs/ProductSeries";
-
 export default {
     name: "Products",
-    components: {
-        ProductsTab,
-        ProductsPerStore,
-        ProductSeries
-    },
+
     data: () => ({
-        tab: 0,
-        tabs: ["Products", "Products per Store", "Series of products"]
+        tab: "loyaltyPanel/products",
+        tabs: [
+            { to: "/loyaltyPanel/products", name: "products" },
+            {
+                to: "/loyaltyPanel/products/products-per-store",
+                name: "products per store"
+            },
+            {
+                to: "/loyaltyPanel/products/products-series",
+                name: "series of products"
+            }
+        ]
     })
 };
 </script>

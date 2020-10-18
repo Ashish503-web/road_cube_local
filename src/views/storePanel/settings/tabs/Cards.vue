@@ -1,9 +1,13 @@
 <template>
-    <v-tab-item class="pt-5">
+    <v-tab-item :value="$route.path" class="pt-5">
         <v-window v-model="step">
             <v-window-item :value="1">
                 <v-row no-gutters>
-                    <v-col cols="12" md="5" class="mr-0 mr-md-2 mb-3 mb-md-0 d-flex justify-center">
+                    <v-col
+                        cols="12"
+                        md="5"
+                        class="mr-0 mr-md-2 mb-3 mb-md-0 d-flex justify-center"
+                    >
                         <v-img
                             src="@/assets/card.png"
                             width="100%"

@@ -1,10 +1,19 @@
-export default {
-    path: "products",
-    name: "Products",
-    components: {
-        default: () =>
+export default [
+    {
+        path: "",
+        name: "Products",
+        component: () =>
             import(
-                /* webpackChunkName: "products" */ "@/views/storePanel/products/Products.vue"
+                /* webpackChunkName: "productsTab" */ "@/views/storePanel/products/tabs/ProductsTab.vue"
+            )
+    },
+
+    {
+        path: "product-groups",
+        name: "ProductGroups",
+        component: () =>
+            import(
+                /* webpackChunkName: "productGroups" */ "@/views/storePanel/products/tabs/ProductGroups.vue"
             )
     }
-};
+];

@@ -1,131 +1,153 @@
 <template>
-    <b-standard-card 
+    <b-standard-card
         title="Orders"
-        @submit="submitChanges">
-        <v-container>
-            <v-row
-                no-gutters
-                justify="space-between"
-                align="center"
-                class="px-4"
-            >
-                <v-col cols="12" sm="4" class="subtitle-2">
-                    Toogle Order option:
+        :loading="loading"
+        :error-message="errorMessage"
+        @submit="
+            updateOrders({
+                type: 'orders',
+                item: orders
+            })
+        "
+    >
+        <v-row no-gutters justify="space-between">
+            <v-col cols="12" sm="6" class="subtitle-2">
+                Toogle Order option:
+                <v-switch
+                    v-model="orders.enabled"
+                    :label="orders.enabled ? 'On' : 'Off'"
+                    color="secondary"
+                    class="mt-5 mb-2 pt-0"
+                    hide-details
+                ></v-switch>
+            </v-col>
+
+            <v-col cols="12" sm="5" class="subtitle-2">
+                Limit:
+                <b-text-field
+                    v-model="orders.order_range"
+                    label="Radius m2"
+                    :disabled="!orders.enabled"
+                ></b-text-field>
+            </v-col>
+
+            <template v-if="orders.enabled">
+                <v-col cols="12" sm="6" class="subtitle-2 mt-3">
+                    Validate minimum amount for delivery after discount :
                     <v-switch
-                        v-model="orderSettings.enabled"
-                        :label="orderSettings.enabled ? 'On' : 'Off'"
+                        v-model="
+                            orders.validate_min_delivery_price_after_discount
+                        "
+                        :label="
+                            orders.validate_min_delivery_price_after_discount
+                                ? 'On'
+                                : 'Off'
+                        "
                         color="secondary"
-                        class="mb-3 mt-5"
+                        class="mt-5 mb-2 pt-0"
+                        hide-details
                     ></v-switch>
                 </v-col>
 
-                <v-col cols="12" sm="4" class="subtitle-2">
-                    Limit:
-                    <v-text-field
-                        v-model="orderSettings.order_range"
-                        label="Radius m2"
-                        color="secondary"
-                        class="mt-4"
-                        outlined
-                        dense
-                        clearable
-                        :disabled="!orderSettings.enabled"
-                    ></v-text-field>
+                <v-col cols="12" sm="5" class="subtitle-2 mt-3">
+                    Minimum Amount for Delivery:
+                    <b-text-field
+                        v-model="orders.delivery_min_price"
+                        :disabled="
+                            !orders.validate_min_delivery_price_after_discount
+                        "
+                        type="number"
+                        label="Amount"
+                        append-icon="icons.mdiCurrencyEur"
+                    ></b-text-field>
                 </v-col>
 
-                <template v-if="orderSettings.enabled">
-                    <v-col cols="12" sm="6" class="subtitle-2">
-                        Validate minimum amount for delivery after discount :
-                        <v-switch
-                            v-model="orderSettings.validate_min_delivery_price_after_discount"
-                            :label="orderSettings.validate_min_delivery_price_after_discount ? 'On' : 'Off'"
-                            color="secondary"
-                            class="mb-3 mt-5"
-                        ></v-switch>
-                    </v-col>
+                <v-col cols="12" sm="6" class="subtitle-2 mt-3">
+                    Card payments:
+                    <v-switch
+                        v-model="orders.delivery_card_payment"
+                        :label="orders.delivery_card_payment ? 'On' : 'Off'"
+                        color="secondary"
+                        class="mt-0"
+                        hide-details
+                    ></v-switch>
 
-                    <v-col cols="12" sm="4" class="subtitle-2">
-                        Minimum Amount for Delivery:
-                        <v-text-field
-                            v-model="orderSettings.delivery_min_price"
-                            :disabled="!orderSettings.validate_min_delivery_price_after_discount"
-                            type="number"
-                            label="Amount"
-                            color="secondary"
-                            class="mt-4"
-                            outlined
-                            dense
-                            clearable
-                            :append-outer-icon="icons.mdiCurrencyEur"
-                        ></v-text-field>
-                    </v-col>
-
-                    <v-col cols="12" sm="4" class="subtitle-2">
-                        Card payments:
-                        <v-switch
-                            v-model="orderSettings.delivery_card_payment"
-                            :label="orderSettings.delivery_card_payment ? 'On' : 'Off'"
-                            color="secondary"
-                            class="mb-4"
-                        ></v-switch>
-                    </v-col>
-
-                    <v-col cols="12" sm="4" class="subtitle-2">
+                    <div class="mt-3">
                         Cash payments:
                         <v-switch
-                            v-model="orderSettings.delivery_cash_payment"
-                            :label="orderSettings.delivery_cash_payment ? 'On' : 'Off'"
+                            v-model="orders.delivery_cash_payment"
+                            :label="orders.delivery_cash_payment ? 'On' : 'Off'"
                             color="secondary"
-                            class="mb-4"
+                            class="mt-0"
+                            hide-details
                         ></v-switch>
-                    </v-col>
+                    </div>
+                </v-col>
 
-                    <v-col cols="12" sm="4" class="subtitle-2">
-                        Cash on delivery Fee:
-                        <v-text-field
-                            v-model="orderSettings.cash_on_delivery_fee"
-                            type="number"
-                            label="Amount"
-                            color="secondary"
-                            class="mt-4"
-                            outlined
-                            dense
-                            clearable
-                            :append-outer-icon="icons.mdiCurrencyEur"
-                        ></v-text-field>
-                    </v-col>
-                </template>
-            </v-row>
-        </v-container>
+                <v-col cols="12" sm="5" class="subtitle-2 mt-3">
+                    Cash on delivery Fee:
+                    <b-text-field
+                        v-model="orders.cash_on_delivery_fee"
+                        type="number"
+                        label="Amount"
+                        append-icon="mdiCurrencyEur"
+                    ></b-text-field>
+                </v-col>
+            </template>
+        </v-row>
     </b-standard-card>
 </template>
 
 <script>
-import { mdiCurrencyEur } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
     name: "Orders",
 
     data: () => ({
-        icons: {
-            mdiCurrencyEur
-        }
+        orders: {}
     }),
+
     computed: {
-        orderSettings: {
-            get() {
-                return this.$store.state.storePanel.store.order_settings;
-            },
+        loading() {
+            return this.$store.state.storePanel.settings.profile.loading.orders;
+        },
+
+        errorMessage() {
+            return this.$store.state.storePanel.settings.profile.errorMessage
+                .orders;
         }
     },
 
     methods: {
-        ...mapMutations("storePanel", ["setOrderSettings"]),
-        ...mapActions("storePanel/settings/profile", ["updateOrdersData"]),
-        submitChanges(){
-            this.setOrderSettings(this.orderSettings);
-            this.updateOrdersData(this.orderSettings)
+        ...mapActions("storePanel/settings/profile", ["updateOrders"])
+    },
+
+    watch: {
+        ["$store.state.storePanel.store"]: {
+            immediate: true,
+            handler(val) {
+                this.orders = {
+                    enabled: val.order_settings.enabled,
+
+                    order_range: val.order_settings.order_range,
+
+                    validate_min_delivery_price_after_discount:
+                        val.order_settings
+                            .validate_min_delivery_price_after_discount,
+
+                    delivery_min_price: val.order_settings.delivery_min_price,
+
+                    delivery_card_payment:
+                        val.order_settings.delivery_card_payment,
+
+                    delivery_cash_payment:
+                        val.order_settings.delivery_cash_payment,
+
+                    cash_on_delivery_fee:
+                        val.order_settings.cash_on_delivery_fee
+                };
+            }
         }
     }
 };

@@ -4,40 +4,38 @@
             <v-tabs
                 v-model="tab"
                 :vertical="$vuetify.breakpoint.smAndDown"
-                color="black"
+                color="secondary"
             >
                 <v-tab
+                    v-for="tab in tabs"
+                    :key="tab.name"
                     class="text-capitalize text-capitalize text-left text-sm-center d-flex justify-start justify-sm-center px-3"
+                    v-text="tab.name"
+                    :to="tab.to"
                     >products</v-tab
                 >
-                <v-tab
-                    class="text-capitalize text-capitalize text-left text-sm-center d-flex justify-start justify-sm-center px-3"
-                    >product groups</v-tab
-                >
             </v-tabs>
+
             <v-tabs-items v-model="tab">
-                <ProductsTab />
-                <ProductGroups />
+                <router-view></router-view>
             </v-tabs-items>
         </v-sheet>
     </v-container>
 </template>
 
 <script>
-import { mdiPercent, mdiMenuUp, mdiMenuDown } from "@mdi/js";
-import ProductsTab from "./tabs/ProductsTab";
-import ProductGroups from "./tabs/ProductGroups";
-
 export default {
     name: "StoreProducts",
-    components: { ProductsTab, ProductGroups },
+
     data: () => ({
-        icons: {
-            mdiPercent,
-            mdiMenuUp,
-            mdiMenuDown,
-        },
-        tab: 0,
-    }),
+        tab: "storePanel/products",
+        tabs: [
+            { to: "/storePanel/products", name: "Products" },
+            {
+                to: "/storePanel/products/product-groups",
+                name: "Product Groups"
+            }
+        ]
+    })
 };
 </script>

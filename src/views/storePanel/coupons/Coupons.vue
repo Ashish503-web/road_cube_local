@@ -1,57 +1,61 @@
 <template>
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
-            <v-tabs v-model="tab" :vertical="$vuetify.breakpoint.smAndDown" color="secondary" :ripple="false">
+            <v-tabs
+                v-model="tab"
+                :vertical="$vuetify.breakpoint.smAndDown"
+                color="secondary"
+                show-arrows
+            >
                 <v-tab
                     v-for="tab in tabs"
-                    :key="tab"
-                    v-text="tab"
+                    :key="tab.name"
+                    v-text="tab.name"
                     class="text-capitalize text-left text-sm-center d-flex justify-start justify-sm-center px-3"
-                    :ripple="false"
+                    :to="tab.to"
                 ></v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
-                <CouponsWithTransactions />
-
-                <CouponsWithCode />
-
-                <CouponsOnProducts />
-
-                <CouponsWithVisits />
-
-                <CouponsWithDiscount />
+                <router-view></router-view>
             </v-tabs-items>
         </v-sheet>
     </v-container>
 </template>
 
 <script>
-import CouponsWithTransactions from "./tabs/CouponsWithTransactions";
-import CouponsWithCode from "./tabs/CouponsWithCode";
-import CouponsOnProducts from "./tabs/CouponsOnProducts";
-import CouponsWithVisits from "./tabs/CouponsWithVisits";
-import CouponsWithDiscount from "./tabs/CouponsWithDiscount";
-
 export default {
     name: "Coupons",
-    components: {
-        CouponsWithTransactions,
-        CouponsWithCode,
-        CouponsOnProducts,
-        CouponsWithVisits,
-        CouponsWithDiscount,
-    },
+
     data: () => ({
-        tab: 0,
+        tab: "/storePanel/coupons/with-transactions",
         tabs: [
-            "coupons with transactions",
-            "coupons with code",
-            "coupons on products",
-            "coupons with visits",
-            "coupons with discount",
-        ],
-    }),
+            {
+                to: "/storePanel/coupons/with-transactions",
+                name: "coupons with transactions"
+            },
+
+            {
+                to: "/storePanel/coupons/with-code",
+                name: "coupons with code"
+            },
+
+            {
+                to: "/storePanel/coupons/on-products",
+                name: "coupons on products"
+            },
+
+            {
+                to: "/storePanel/coupons/with-visits",
+                name: "coupons with visits"
+            },
+
+            {
+                to: "/storePanel/coupons/with-discount",
+                name: "coupons with discount"
+            }
+        ]
+    })
 };
 </script>
 

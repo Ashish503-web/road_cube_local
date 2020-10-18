@@ -11,20 +11,34 @@
                 : update({ productGroup, image: imageFile })
         "
     >
-        <b-text-field
-            v-model="productGroup.name"
-            label="Product Group Name"
-            no-top-margin
-            :success="success.name"
-            :rules="rules.name"
-        ></b-text-field>
+        <v-row no-gutters>
+            <v-col cols="9" class="pr-2">
+                <b-text-field
+                    v-model="productGroup.name[groupLang]"
+                    label="Product Group Name"
+                    no-top-margin
+                    :success="success.name"
+                    :rules="rules.name"
+                ></b-text-field>
+            </v-col>
 
-        <b-textarea
-            v-model="productGroup.description"
-            label="Product Group Description"
-            :success="success.description"
-            :rules="rules.description"
-        ></b-textarea>
+            <v-col cols="3" class="pl-2">
+                <b-lang-menu v-model="groupLang"></b-lang-menu>
+            </v-col>
+
+            <v-col cols="9" class="pr-2">
+                <b-textarea
+                    v-model="productGroup.description[descriptionLang]"
+                    label="Product Group Description"
+                    :success="success.description"
+                    :rules="rules.description"
+                ></b-textarea>
+            </v-col>
+
+            <v-col cols="3" class="pl-2 pt-3">
+                <b-lang-menu v-model="descriptionLang"></b-lang-menu>
+            </v-col>
+        </v-row>
 
         <b-text-field
             v-model="productGroup.average_price"
@@ -148,11 +162,13 @@ import { mapState, mapMutations, mapActions } from "vuex";
 export default {
     name: "ProductGroup",
     props: {
-        mode: Number,
+        mode: Number
     },
     mixins: [validators],
     data() {
         return {
+            groupLang: "el",
+            descriptionLang: "el",
             categories: [{ text: "category", value: 1 }],
             imageFile: null,
             weekdays: [
@@ -162,8 +178,8 @@ export default {
                 "Thursday",
                 "Friday",
                 "Saturday",
-                "Sunday",
-            ],
+                "Sunday"
+            ]
         };
     },
 
@@ -172,7 +188,7 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation",
+            "resetValidation"
         ]),
 
         title() {
@@ -189,7 +205,7 @@ export default {
 
             set(val) {
                 this.setShowImageUpload(val);
-            },
+            }
         },
 
         showWeekdays: {
@@ -199,7 +215,7 @@ export default {
 
             set(val) {
                 this.setShowWeekdays(val);
-            },
+            }
         },
 
         productGroup: {
@@ -209,15 +225,15 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
         ...mapMutations("storePanel/productGroups", [
             "setShowImageUpload",
             "setShowWeekdays",
-            "setItem",
+            "setItem"
         ]),
         ...mapActions("storePanel/productGroups", ["create", "update"]),
 
@@ -226,10 +242,10 @@ export default {
                 this.imageFile = event;
                 const reader = new FileReader();
                 reader.readAsDataURL(this.imageFile);
-                reader.onload = (e) =>
+                reader.onload = e =>
                     (this.productGroup.image = e.target.result);
             }
-        },
+        }
     },
 
     watch: {
@@ -242,10 +258,10 @@ export default {
                     wholesalePrice: false,
                     deliveryCost: false,
                     shippingCost: false,
-                    category: false,
+                    category: false
                 };
             }
-        },
-    },
+        }
+    }
 };
 </script>

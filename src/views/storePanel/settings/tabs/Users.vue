@@ -1,29 +1,30 @@
 <template>
-    <v-tab-item>
+    <v-tab-item :value="$route.path" class="pt-5">
         <v-toolbar flat height="90">
-           <v-row class="d-flex align-center">
-               <cols cols="12" sm="auto">
-                   <v-btn
-                           color="secondary"
-                           class="text-capitalize ml-3 ml-sm-0"
-                           depressed
-                           @click="userDialog = true"
-                   >register user</v-btn>
-               </cols>
-               <v-spacer></v-spacer>
-               <v-col cols="12" sm="4" class="pb-0">
-                   <v-text-field
-                           label="Search"
-                           color="secondary"
-                           rounded
-                           outlined
-                           dense
-                           clearable
-                           hide-details
-                           :prepend-inner-icon="icons.mdiMagnify"
-                   ></v-text-field>
-               </v-col>
-           </v-row>
+            <v-row class="d-flex align-center">
+                <cols cols="12" sm="auto">
+                    <v-btn
+                        color="secondary"
+                        class="text-capitalize ml-3 ml-sm-0"
+                        depressed
+                        @click="userDialog = true"
+                        >register user</v-btn
+                    >
+                </cols>
+                <v-spacer></v-spacer>
+                <v-col cols="12" sm="4" class="pb-0">
+                    <v-text-field
+                        label="Search"
+                        color="secondary"
+                        rounded
+                        outlined
+                        dense
+                        clearable
+                        hide-details
+                        :prepend-inner-icon="icons.mdiMagnify"
+                    ></v-text-field>
+                </v-col>
+            </v-row>
         </v-toolbar>
 
         <v-data-table

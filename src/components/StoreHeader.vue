@@ -11,32 +11,7 @@
 
             <v-spacer></v-spacer>
 
-            <v-menu offset-y transition="slide-y-transition">
-                <template v-slot:activator="{ on }">
-                    <v-btn class="text-capitalize" text v-on="on">
-                        <img :src="lang.img" width="25" class="mr-1" />
-                        {{ lang.title }}
-                        <v-icon v-text="icons.mdiChevronDown"></v-icon>
-                    </v-btn>
-                </template>
-
-                <v-list dense>
-                    <v-list-item-group v-model="lang" color="secondary">
-                        <v-list-item
-                            v-for="lang in langs"
-                            :key="lang.title"
-                            :value="lang"
-                        >
-                            <v-list-item-action class="mr-1">
-                                <img :src="lang.img" width="25" />
-                            </v-list-item-action>
-                            <v-list-item-title
-                                v-text="lang.title"
-                            ></v-list-item-title>
-                        </v-list-item>
-                    </v-list-item-group>
-                </v-list>
-            </v-menu>
+            <b-lang-menu></b-lang-menu>
 
             <v-tooltip color="secondary" bottom>
                 <template v-slot:activator="{ on }">
@@ -208,13 +183,8 @@ import {
     mdiLockOpenOutline
 } from "@mdi/js";
 
-import USFlag from "../assets/flags/US-flag.jpeg";
-import FranceFlag from "../assets/flags/France-flag.jpeg";
-import SpainFlag from "../assets/flags/Spain-flag.jpeg";
-import ChinaFlag from "../assets/flags/China-flag.png";
-import ArabicFlag from "../assets/flags/Arabic-flag.png";
-import avatar3 from "../assets/avatars/avatar-3.jpg";
-import avatar4 from "../assets/avatars/avatar-4.jpg";
+import avatar3 from "@/assets/avatars/avatar-3.jpg";
+import avatar4 from "@/assets/avatars/avatar-4.jpg";
 
 export default {
     name: "StoreHeader",
@@ -248,17 +218,17 @@ export default {
                         {
                             icon: mdiCurrencyEur,
                             title: "Transactions",
-                            to: "/storePanel/transactions"
+                            to: "/storePanel/transactions/pending"
                         },
                         {
                             icon: mdiGift,
                             title: "Redeem",
-                            to: "/storePanel/redeem"
+                            to: "/storePanel/redeem/redeem-voucher"
                         },
                         {
                             icon: mdiDatabaseSync,
                             title: "History",
-                            to: "/storePanel/history"
+                            to: "/storePanel/history/point-analysis"
                         },
                         {
                             icon: mdiTrophyVariant,
@@ -278,29 +248,15 @@ export default {
                         {
                             icon: mdiTagMultiple,
                             title: "Coupons",
-                            to: "/storePanel/coupons"
+                            to: "/storePanel/coupons/with-transactions"
                         },
                         {
                             icon: mdiCog,
                             title: "Settings",
-                            to: "/storePanel/settings"
+                            to: "/storePanel/settings/profile"
                         }
                     ]
                 }
-            ],
-
-            lang: {
-                img: USFlag,
-                title: "English",
-                urlTitle: "en"
-            },
-
-            langs: [
-                { img: USFlag, title: "English", urlTitle: "en" },
-                { img: FranceFlag, title: "French", urlTitle: "fr" },
-                { img: SpainFlag, title: "Spanish", urlTitle: "sp" },
-                { img: ChinaFlag, title: "Chinese", urlTitle: "ch" },
-                { img: ArabicFlag, title: "Arabic", urlTitle: "ar" }
             ],
 
             profileLinks: [

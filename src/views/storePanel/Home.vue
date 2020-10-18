@@ -8,14 +8,17 @@
                             <v-card-title class="pb-0 justify-center"
                                 >Maroudas Optika</v-card-title
                             >
-                            <h4 class="subtitle-1 success--text pl-4 text-center">
+                            <h4
+                                class="subtitle-1 success--text pl-4 text-center"
+                            >
                                 online
                             </h4>
                         </v-col>
                         <v-col cols="12" sm="6" md="6" lg="3">
-                            <v-card-title class="pb-0 justify-center"
-                                >80</v-card-title
-                            >
+                            <v-card-title
+                                class="pb-0 justify-center"
+                                v-text="totalCustomers"
+                            ></v-card-title>
                             <v-card-title
                                 class="pa-0 font-weight-light justify-center text--secondary"
                             >
@@ -41,9 +44,9 @@
                             </v-card-title>
                         </v-col>
                         <v-col cols="12" sm="6" md="6" lg="3">
-                            <v-card-title class="pb-0 justify-center"
-                                >€11.118.056.779,71</v-card-title
-                            >
+                            <v-card-title class="pb-0 justify-center">{{
+                                totalIncome
+                            }}</v-card-title>
                             <v-card-title
                                 class="pa-0 font-weight-light justify-center text--secondary"
                             >
@@ -73,8 +76,8 @@
                         <v-col cols="auto">
                             <v-card-title
                                 class="subtitle-1 font-weight-bold pa-0 justify-end"
-                                >58734</v-card-title
-                            >
+                                v-text="views.map_views"
+                            ></v-card-title>
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
                             >
@@ -100,8 +103,8 @@
                         <v-col cols="auto">
                             <v-card-title
                                 class="subtitle-1 font-weight-bold pa-0 justify-end"
-                                >8244</v-card-title
-                            >
+                                v-text="views.visits"
+                            ></v-card-title>
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
                             >
@@ -127,8 +130,8 @@
                         <v-col cols="auto">
                             <v-card-title
                                 class="subtitle-1 font-weight-bold pa-0 justify-end"
-                                >21</v-card-title
-                            >
+                                v-text="views.nav_clicks"
+                            ></v-card-title>
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
                             >
@@ -154,8 +157,8 @@
                         <v-col cols="auto">
                             <v-card-title
                                 class="subtitle-1 font-weight-bold pa-0 justify-end"
-                                >11</v-card-title
-                            >
+                                v-text="views.phone_clicks"
+                            ></v-card-title>
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
                             >
@@ -293,6 +296,27 @@ export default {
         fill: false,
         type: "trend",
         autoLineWidth: false
-    })
+    }),
+
+    computed: {
+        totalCustomers() {
+            return this.$store.state.storePanel.store.statistics
+                .total_customers;
+        },
+
+        totalIncome() {
+            return new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "EUR",
+                minimumFractionDigits: 2
+            }).format(
+                this.$store.state.storePanel.store.statistics.total_income
+            );
+        },
+
+        views() {
+            return this.$store.state.storePanel.store.statistics.views;
+        }
+    }
 };
 </script>

@@ -1,58 +1,75 @@
 <template>
-    <b-standard-card title="Product categories" :error-message="errorMessage">
-        <v-form @submit.prevent>
-            <v-row no-gutters align="center">
-                <v-tabs v-model="tab" :vertical="$vuetify.breakpoint.smAndDown" color="secondary" class="mb-3">
-                    <v-tab class="text-capitalize text-left text-md-center d-flex justify-start justify-md-center px-3">Greek</v-tab>
-                    <v-tab class="text-capitalize text-left text-md-center d-flex justify-start justify-md-center px-3">English</v-tab>
-                    <v-tab class="text-capitalize text-left text-md-center d-flex justify-start justify-md-center px-3">Italian</v-tab>
-                </v-tabs>
-
-                <v-col cols="auto" class="mb-2">
-                    <v-tabs-items v-model="tab">
-                        <v-tab-item>
-                            <b-text-field
-                                v-model="productCategory.name[langs[tab]]"
-                                label="Enter Category Name in Greek"
-                                no-top-margin
-                            ></b-text-field>
-                        </v-tab-item>
-
-                        <v-tab-item>
-                            <b-text-field
-                                v-model="productCategory.name[langs[tab]]"
-                                label="Enter Category Name in English"
-                                no-top-margin
-                            ></b-text-field>
-                        </v-tab-item>
-
-                        <v-tab-item>
-                            <b-text-field
-                                v-model="productCategory.name[langs[tab]]"
-                                label="Enter Category Name in Italian"
-                                no-top-margin
-                            ></b-text-field>
-                        </v-tab-item>
-                    </v-tabs-items>
+    <b-standard-card
+        title="Product categories"
+        :loading="loading"
+        :error-message="errorMessage"
+    >
+        <v-form @submit.prevent="create">
+            <v-row no-gutters justify="space-between" align="center">
+                <v-col cols="6">
+                    <b-text-field
+                        v-model="productCategory.name[lang]"
+                        label="Category Name"
+                        no-top-margin
+                    ></b-text-field>
                 </v-col>
-                <v-col cols="auto" class="ml-3 mx-auto mb-2">
+                <v-col cols="4" class="text-center">
+                    <b-lang-menu v-model="lang"></b-lang-menu>
+                </v-col>
+                <v-col cols="auto">
                     <v-btn
                         type="submit"
                         color="secondary"
                         class="text-capitalize px-5"
                         depressed
                         :loading="loading"
-                        @click="create"
-                        >add</v-btn
+                        >save</v-btn
                     >
                 </v-col>
             </v-row>
         </v-form>
 
-        <v-row>
+        <v-data-table
+            :headers="headers"
+            :items="productCategories"
+            :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
+            :page.sync="page"
+            :items-per-page.sync="perPage"
+            :server-items-length="serverItemsLength"
+            class="b-outlined mt-3"
+        >
+            <template v-slot:item.actions="{ item }">
+                <v-tooltip color="secondary" top>
+                    <template v-slot:activator="{ on }">
+                        <v-btn color="yellow darken-3" icon v-on="on">
+                            <v-icon v-text="icons.mdiPencilOutline"></v-icon>
+                        </v-btn>
+                    </template>
+
+                    <span class="font-weight-bold">Update</span>
+                </v-tooltip>
+
+                <v-tooltip color="secondary" top>
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            color="red"
+                            icon
+                            v-on="on"
+                            @click="remove(item.product_category_id)"
+                        >
+                            <v-icon v-text="icons.mdiClose"></v-icon>
+                        </v-btn>
+                    </template>
+
+                    <span class="font-weight-bold">Delete</span>
+                </v-tooltip>
+            </template>
+        </v-data-table>
+
+        <!-- <v-row class="mt-2">
             <v-col
                 v-for="category in productCategories"
-                :key="category.name[langs[tab]]"
+                :key="category.name[lang]"
                 cols="auto"
             >
                 <v-card
@@ -65,45 +82,50 @@
                         content="5"
                         color="secondary"
                     ></v-badge>
-                    {{ category.name[langs[tab]] }}
+                    {{ category.name[lang] }}
                     <v-avatar
                         color="red"
                         size="20"
                         class="category-remove rounded-circle"
-                        @click="remove(category)"
+                        @click="remove(category.product_category_id)"
                     >
-                        <v-icon
-                            x-small
-                            dark
-                            v-text="icons.mdiCloseThick"
-                        ></v-icon>
+                        <v-icon x-small dark v-text="icons.mdiClose"></v-icon>
                     </v-avatar>
                 </v-card>
             </v-col>
-        </v-row>
+        </v-row> -->
     </b-standard-card>
 </template>
 
 <script>
-import { mdiCloseThick } from "@mdi/js";
+import { mdiPencilOutline, mdiClose } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
     name: "ProductCategories",
 
-    data: () => ({
-        icons: {
-            mdiCloseThick
-        },
-        tab: 0,
-        langs: ["el", "en", "it"]
-    }),
+    data() {
+        return {
+            icons: { mdiPencilOutline, mdiClose },
+            lang: "el",
+            updateMode: false,
+            page: +this.$route.query.page,
+            perPage: +this.$route.query.perPage
+        };
+    },
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/settings/productCategories", [
             "productCategories"
         ]),
+
+        headers() {
+            return [
+                { text: "Category Name", value: `name[${this.lang}]` },
+                { text: "Actions", value: "actions" }
+            ];
+        },
 
         productCategory: {
             get() {

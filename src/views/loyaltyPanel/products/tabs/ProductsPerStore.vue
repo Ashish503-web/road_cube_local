@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item>
+    <v-tab-item :value="$route.path">
         <v-toolbar flat height="80">
             <v-spacer></v-spacer>
 

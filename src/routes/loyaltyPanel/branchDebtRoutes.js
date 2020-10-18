@@ -1,8 +1,19 @@
-export default {
-    path: "branch-debt",
-    name: "BranchDebt",
-    component: () =>
-        import(
-            /* webpackChunkName: "branchDebt" */ "@/views/loyaltyPanel/branchDebt/BranchDebt.vue"
-        )
-};
+export default [
+    {
+        path: "monthly-invoicing",
+        name: "MonthlyInvoicing",
+        component: () =>
+            import(
+                /* webpackChunkName: "monthlyInvoicing" */ "@/views/loyaltyPanel/branchDebt/tabs/MonthlyInvoicing.vue"
+            )
+    },
+
+    {
+        path: "redemption-invoice",
+        name: "RedemptionInvoice",
+        component: () =>
+            import(
+                /* webpackChunkName: "redemptionInvoice" */ "@/views/loyaltyPanel/branchDebt/tabs/RedemptionInvoice.vue"
+            )
+    }
+];

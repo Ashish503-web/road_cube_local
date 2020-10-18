@@ -32,6 +32,8 @@ export default class ProductCategory {
 
     static delete = (token, storeId, id) => {
         axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.delete(`${ApiEndpoint}${storeId}/products/${id}`);
+        return axios.delete(
+            `${ApiEndpoint}${storeId}/product-categories/${id}`
+        );
     };
 }

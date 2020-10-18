@@ -1,9 +1,9 @@
 <template>
-    <v-tab-item class="pt-3">
+    <v-tab-item :value="$route.path" class="pt-3">
         <v-toolbar flat height="80">
             <v-spacer></v-spacer>
 
-            <v-col cols="12" sm="4" >
+            <v-col cols="12" sm="4">
                 <v-text-field
                     label="Search"
                     color="secondary"

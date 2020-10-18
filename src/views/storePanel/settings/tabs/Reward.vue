@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item class="pt-5">
+    <v-tab-item :value="$route.path" class="pt-5">
         <v-row no-gutters>
             <v-col cols="12" md="6" class="pr-0 pr-md-2 mb-3 mb-md-0">
                 <SendPoints />
@@ -15,10 +15,7 @@
 
             <v-col cols="12" md="6" class="pl-0 pl-md-2 mt-5">
                 <RewardWithPresence />
-                <MobilePayments
-                    @appoint-cleaners="$emit('update:tab', 4)"
-                    @payment-direction="$emit('update:tab', 5)"
-                />
+                <MobilePayments />
             </v-col>
         </v-row>
     </v-tab-item>

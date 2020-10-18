@@ -1,10 +1,19 @@
-export default   {
-    path: "gift-status",
-    name: "Gift Status",
-    components: {
-        default: () =>
+export default [
+    {
+        path: "pending",
+        name: "LoyaltyPending",
+        component: () =>
             import(
-                /* webpackChunkName: "giftStatus" */ "@/views/loyaltyPanel/GiftStatus.vue"
-                )
+                /* webpackChunkName: "pending" */ "@/views/loyaltyPanel/giftStatus/tabs/Pending.vue"
+            )
+    },
+
+    {
+        path: "paid",
+        name: "LoyaltyPaid",
+        component: () =>
+            import(
+                /* webpackChunkName: "paid" */ "@/views/loyaltyPanel/giftStatus/tabs/Paid.vue"
+            )
     }
-}
+];

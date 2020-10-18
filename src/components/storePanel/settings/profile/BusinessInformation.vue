@@ -6,30 +6,19 @@
         @submit="
             updateBusinessInformation({
                 type: 'businessInformation',
-                item: {
-                    name,
-                    address,
-                    store_category_id: category,
-                    activity,
-                    country_id: country,
-                    primary_phone: primaryPhone,
-                    secondary_phone: secondaryPhone,
-                    mobile,
-                    full_name: fullname,
-                    email
-                }
+                item: businessInformation
             })
         "
     >
         <v-row no-gutters justify="space-around" class="pt-6 pb-4">
             <v-col cols="12" sm="5">
                 <b-text-field
-                    v-model="name"
+                    v-model="businessInformation.name"
                     label="Business Name"
                 ></b-text-field>
 
                 <b-select
-                    v-model="category"
+                    v-model="businessInformation.store_category_id"
                     :items="storeCategories"
                     item-text="name.en"
                     item-value="store_category_id"
@@ -37,7 +26,7 @@
                 ></b-select>
 
                 <b-select
-                    v-model="country"
+                    v-model="businessInformation.country_id"
                     :items="countries"
                     item-text="name"
                     item-value="country_id"
@@ -45,42 +34,42 @@
                 ></b-select>
 
                 <b-text-field
-                    v-model="secondaryPhone"
+                    v-model="businessInformation.secondary_phone"
                     type="number"
                     label="Business Telephone Number 2"
                 ></b-text-field>
 
                 <b-text-field
-                    v-model="fullname"
+                    v-model="businessInformation.full_name"
                     label="Owner's Fullname"
                 ></b-text-field>
             </v-col>
 
             <v-col cols="12" sm="5">
                 <b-text-field
-                    v-model="address"
+                    v-model="businessInformation.address"
                     label="Business Address"
                 ></b-text-field>
 
                 <b-text-field
-                    v-model="activity"
+                    v-model="businessInformation.activity"
                     label="Business Activity"
                 ></b-text-field>
 
                 <b-text-field
-                    v-model="primaryPhone"
+                    v-model="businessInformation.primary_phone"
                     type="number"
                     label="Business Telephone Number"
                 ></b-text-field>
 
                 <b-text-field
-                    v-model="mobile"
+                    v-model="businessInformation.mobile"
                     type="number"
                     label="Owner's Mobile Phone"
                 ></b-text-field>
 
                 <b-text-field
-                    v-model="email"
+                    v-model="businessInformation.email"
                     type="email"
                     label="Email"
                 ></b-text-field>
@@ -94,10 +83,14 @@
 </template>
 
 <script>
-import { mapMutations, mapActions } from "vuex";
+import { mapActions } from "vuex";
 
 export default {
     name: "BusinessInformation",
+
+    data: () => ({
+        businessInformation: {}
+    }),
 
     computed: {
         loading() {
@@ -117,131 +110,44 @@ export default {
 
         countries() {
             return this.$store.state.storePanel.settings.profile.countries;
-        },
-
-        name: {
-            get() {
-                return this.$store.state.storePanel.store.name;
-            },
-
-            set(val) {
-                this.setName(val);
-            }
-        },
-
-        address: {
-            get() {
-                return this.$store.state.storePanel.store.address;
-            },
-
-            set(val) {
-                this.setAddress(val);
-            }
-        },
-
-        category: {
-            get() {
-                return this.$store.state.storePanel.store.category
-                    .store_category_id;
-            },
-
-            set(val) {
-                this.setCategory(val);
-            }
-        },
-
-        activity: {
-            get() {
-                return this.$store.state.storePanel.store.billing_details
-                    .activity;
-            },
-
-            set(val) {
-                this.setActivity(val);
-            }
-        },
-
-        country: {
-            get() {
-                return this.$store.state.storePanel.store.country.country_id;
-            },
-
-            set(val) {
-                this.setCountry(val);
-            }
-        },
-
-        primaryPhone: {
-            get() {
-                return this.$store.state.storePanel.store.primary_phone;
-            },
-
-            set(val) {
-                this.setPrimaryPhone(val);
-            }
-        },
-
-        secondaryPhone: {
-            get() {
-                return this.$store.state.storePanel.store.secondary_phone;
-            },
-
-            set(val) {
-                this.setSecondaryPhone(val);
-            }
-        },
-
-        mobile: {
-            get() {
-                return this.$store.state.storePanel.store.billing_details
-                    .mobile;
-            },
-
-            set(val) {
-                this.setMobile(val);
-            }
-        },
-
-        fullname: {
-            get() {
-                return this.$store.state.storePanel.store.billing_details
-                    .full_name;
-            },
-
-            set(val) {
-                this.setFullname(val);
-            }
-        },
-
-        email: {
-            get() {
-                return this.$store.state.storePanel.store.email;
-            },
-
-            set(val) {
-                this.setEmail(val);
-            }
         }
     },
 
     methods: {
-        ...mapMutations("storePanel", [
-            "setName",
-            "setAddress",
-            "setCategory",
-            "setActivity",
-            "setCountry",
-            "setPrimaryPhone",
-            "setSecondaryPhone",
-            "setMobile",
-            "setFullname",
-            "setEmail"
-        ]),
         ...mapActions("storePanel/settings/profile", [
             "getStoreCategories",
             "getCountries",
             "updateBusinessInformation"
         ])
+    },
+
+    watch: {
+        ["$store.state.storePanel.store"]: {
+            immediate: true,
+            handler(val) {
+                this.businessInformation = {
+                    name: val.name,
+
+                    address: val.address,
+
+                    store_category_id: val.category.store_category_id,
+
+                    activity: val.billing_details.activity,
+
+                    country_id: val.country.country_id,
+
+                    primary_phone: val.primary_phone,
+
+                    secondary_phone: val.secondary_phone,
+
+                    mobile: val.billing_details.mobile,
+
+                    full_name: val.billing_details.full_name,
+
+                    email: val.email
+                };
+            }
+        }
     },
 
     mounted() {

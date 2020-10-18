@@ -1,9 +1,10 @@
-import Store from "@/models/storePanel/Store.js";
+import transactions from "./transactions";
 import addContest from "./addContest";
 import products from "./products";
 import productGroups from "./productGroups";
 import settings from "./settings";
-import transactions from "./transactions";
+
+import Store from "@/models/storePanel/Store.js";
 
 class Weekday {
     constructor(weekday = {}) {
@@ -23,8 +24,8 @@ class Weekday {
 export default {
     namespaced: true,
     modules: {
-        addContest,
         transactions,
+        addContest,
         products,
         productGroups,
         settings
@@ -48,11 +49,38 @@ export default {
             state.store.map_logo = payload;
         },
 
+        setBusinessInformation(state, payload) {
+            state.store.name = payload.name;
+            state.store.address = payload.address;
+            state.store.category.store_category_id = payload.store_category_id;
+            state.store.billing_details.activity = payload.activity;
+            state.store.country.country_id = payload.country_id;
+            state.store.primary_phone = payload.primary_phone;
+            state.store.secondary_phone = payload.secondary_phone;
+            state.store.billing_details.mobile = payload.mobile;
+            state.store.billing_details.full_name = payload.full_name;
+            state.store.email = payload.email;
+        },
+
+        setTimetable(state, payload) {
+            payload = payload.map(day => new Weekday(day));
+            state.store.timetable = payload;
+        },
+
+        setInvoicing(state, payload) {
+            state.store.billing_details.comp_name = payload.comp_name;
+            state.store.billing_details.vat_number = payload.vat_number;
+            state.store.billing_details.city = payload.city;
+            state.store.billing_details.occupation = payload.occupation;
+            state.store.billing_details.tax_office = payload.tax_office;
+            state.store.billing_details.country_id = payload.country_id;
+        },
+
         setQuickPayment(state, payload) {
             state.store.flags.general.quick_payment = payload;
         },
 
-        setOrderSettings(state, payload) {
+        setOrders(state, payload) {
             state.store.order_settings = payload;
         },
 
@@ -74,51 +102,6 @@ export default {
 
         setMobilePayments(state, payload) {
             state.store.flags.reward.online_payments = payload;
-        },
-
-        setTimetable(state, payload) {
-            payload = payload.map(day => new Weekday(day));
-            state.store.timetable = payload;
-        },
-
-        setName(state, payload) {
-            state.store.name = payload;
-        },
-
-        setAddress(state, payload) {
-            state.store.address = payload;
-        },
-
-        setCategory(state, payload) {
-            state.store.category.store_category_id = payload;
-        },
-
-        setActivity(state, payload) {
-            state.store.billing_details.activity = payload;
-        },
-
-        setCountry(state, payload) {
-            state.store.country.country_id = payload;
-        },
-
-        setPrimaryPhone(state, payload) {
-            state.store.primary_phone = payload;
-        },
-
-        setSecondaryPhone(state, payload) {
-            state.store.secondary_phone = payload;
-        },
-
-        setMobile(state, payload) {
-            state.store.billing_details.mobile = payload;
-        },
-
-        setFullname(state, payload) {
-            state.store.billing_details.full_name = payload;
-        },
-
-        setEmail(state, payload) {
-            state.store.email = payload;
         }
     },
 
@@ -129,7 +112,7 @@ export default {
                     rootState.storeToken,
                     rootState.storeId
                 );
-                console.log(data.data,'data55555');
+                console.log(data.data);
                 commit("setStore", data.data);
             } catch (ex) {
                 console.error(ex.response.data);

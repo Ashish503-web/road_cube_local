@@ -1,7 +1,6 @@
 <template>
     <header>
         <v-app-bar app flat color="white">
-            <!--            <v-app-bar-nav-icon @click.stop="mini = !mini"></v-app-bar-nav-icon>-->
             <v-app-bar-nav-icon
                 @click.stop="
                     $vuetify.breakpoint.mdAndUp
@@ -12,36 +11,7 @@
 
             <v-spacer></v-spacer>
 
-            <v-menu offset-y transition="slide-y-transition" bottom>
-                <template v-slot:activator="{ on }">
-                    <v-btn
-                        class="text-capitalize secondary--text"
-                        text
-                        v-on="on"
-                    >
-                        <img :src="lang.img" width="25" class="mr-1" />
-                        {{ lang.title }}
-                        <v-icon v-text="icons.mdiChevronDown"></v-icon>
-                    </v-btn>
-                </template>
-
-                <v-list dense>
-                    <v-list-item-group v-model="lang" color="primary">
-                        <v-list-item
-                            v-for="lang in langs"
-                            :key="lang.title"
-                            :value="lang"
-                        >
-                            <v-list-item-action class="mr-1">
-                                <img :src="lang.img" width="25" />
-                            </v-list-item-action>
-                            <v-list-item-title
-                                v-text="lang.title"
-                            ></v-list-item-title>
-                        </v-list-item>
-                    </v-list-item-group>
-                </v-list>
-            </v-menu>
+            <b-lang-menu></b-lang-menu>
 
             <v-menu offset-y bottom transition="slide-y-transition">
                 <template v-slot:activator="{ on }">
@@ -227,11 +197,6 @@ import {
     mdiLockOpenOutline
 } from "@mdi/js";
 
-import USFlag from "../assets/flags/US-flag.jpeg";
-import FranceFlag from "../assets/flags/France-flag.jpeg";
-import SpainFlag from "../assets/flags/Spain-flag.jpeg";
-import ChinaFlag from "../assets/flags/China-flag.png";
-import ArabicFlag from "../assets/flags/Arabic-flag.png";
 import avatar3 from "../assets/avatars/avatar-3.jpg";
 import avatar4 from "../assets/avatars/avatar-4.jpg";
 
@@ -265,7 +230,7 @@ export default {
                         {
                             icon: mdiCashMultiple,
                             title: "Branch Debt",
-                            to: "/loyaltyPanel/branch-debt"
+                            to: "/loyaltyPanel/branch-debt/monthly-invoicing"
                         },
                         {
                             icon: mdiSourceBranch,
@@ -275,7 +240,7 @@ export default {
                         {
                             icon: mdiFileDocument,
                             title: "Subscriptions",
-                            to: "/loyaltyPanel/subscriptions"
+                            to: "/loyaltyPanel/subscriptions/stores"
                         },
                         {
                             icon: mdiCreditCardOutline,
@@ -320,7 +285,7 @@ export default {
                         {
                             icon: mdiGift,
                             title: "Gift Status",
-                            to: "/loyaltyPanel/gift-status"
+                            to: "/loyaltyPanel/gift-status/pending"
                         },
                         {
                             icon: mdiTrophyVariant,
@@ -391,99 +356,6 @@ export default {
                 }
             ],
 
-            megaMenuItems: [
-                {
-                    title: "UI Components",
-                    items: [
-                        "Lightbox",
-                        "Range Slider",
-                        "Sweet Alert",
-                        "Rating",
-                        "Forms",
-                        "Tables",
-                        "Charts"
-                    ]
-                },
-                {
-                    title: "Applications",
-                    items: [
-                        "Ecommerce",
-                        "Calendar",
-                        "Email",
-                        "Projects",
-                        "Tasks",
-                        "Contacts"
-                    ]
-                },
-                {
-                    title: "Extra Pages",
-                    items: [
-                        "Light Sidebar",
-                        "Compact Sidebar",
-                        "Horizontal Layout",
-                        "Maintenance",
-                        "Coming Soon",
-                        "Timeline",
-                        "FAQs"
-                    ]
-                },
-                {
-                    title: "UI Components 2",
-                    items: [
-                        "Lightbox",
-                        "Range Slider",
-                        "Sweet Alert",
-                        "Rating",
-                        "Forms",
-                        "Tables",
-                        "Charts"
-                    ]
-                }
-            ],
-            lang: {
-                img: USFlag,
-                title: "English",
-                urlTitle: "en"
-            },
-            langs: [
-                { img: USFlag, title: "English", urlTitle: "en" },
-                { img: FranceFlag, title: "French", urlTitle: "fr" },
-                { img: SpainFlag, title: "Spanish", urlTitle: "sp" },
-                { img: ChinaFlag, title: "Chinese", urlTitle: "ch" },
-                { img: ArabicFlag, title: "Arabic", urlTitle: "ar" }
-            ],
-            notifications: [
-                {
-                    img: "",
-                    icon: mdiCartOutline,
-                    color: "blue",
-                    title: "Your order is placed",
-                    text: "If several languages coalesce the grammar",
-                    timestamp: "3 min ago"
-                },
-                {
-                    img: avatar3,
-                    icon: "",
-                    title: "James Lemire",
-                    text: "It will seem like simplified English.",
-                    timestamp: "1 hours ago"
-                },
-                {
-                    img: "",
-                    icon: mdiCheckDecagram,
-                    color: "green",
-                    title: "Your item is shipped",
-                    text: "If several languages coalesce the grammar",
-                    timestamp: "3 min ago"
-                },
-                {
-                    img: avatar4,
-                    icon: "",
-                    title: "Salena Layfield",
-                    text: "As a skeptical Cambridge friend of mine occidental.",
-                    timestamp: "1 hours ago"
-                }
-            ],
             profileLinks: [
                 { icon: mdiAccountOutline, text: "Profile" },
                 { icon: mdiWalletOutline, text: "My Wallet" },
