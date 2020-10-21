@@ -5,16 +5,29 @@ export default {
 
     state: () => ({
         productCategories: [],
-        productCategory: new ProductCategory()
+        productCategory: new ProductCategory(),
+        selectedProductCategory: new ProductCategory()
     }),
 
     mutations: {
         setItems(state, payload) {
-            state.productCategories = payload;
+            state.productCategories = payload.map(c => {
+                c.expanded = false;
+                c.loading = false;
+                return c;
+            });
         },
 
         setItem(state, payload) {
             state.productCategory = new ProductCategory(payload);
+        },
+
+        setSelectedItem(state, payload) {
+            state.selectedProductCategory = payload;
+        },
+
+        setSelectedLoading(state, payload) {
+            state.selectedProductCategory.loading = payload;
         },
 
         addItem(state, payload) {
@@ -22,8 +35,10 @@ export default {
         },
 
         updateItem(state, payload) {
+            payload.expanded = false;
+            payload.loading = false;
             let index = state.productCategories.findIndex(
-                p => p.name.el === payload.name.el
+                p => p.product_category_id === payload.product_category_id
             );
             state.productCategories.splice(index, 1, payload);
         },
@@ -102,32 +117,45 @@ export default {
             }
         },
 
-        async update({ dispatch, commit, rootState }, { product, image }) {
+        async update({ commit, state, rootState }) {
             try {
-                delete product.image;
-                commit("setLoading", true);
+                commit("setSelectedLoading", true);
+
+                let productCategory = { ...state.selectedProductCategory };
+                delete productCategory.expanded;
+                delete productCategory.loading;
+                productCategory.store_id = rootState.storeId;
+
+                if (!productCategory.name.en)
+                    productCategory.name.en = productCategory.name.el;
+                if (!productCategory.name.it)
+                    productCategory.name.it = productCategory.name.el;
 
                 const { data } = await ProductCategory.update(
                     rootState.storeToken,
                     rootState.storeId,
-                    product
+                    productCategory
                 );
 
-                if (image) {
-                    dispatch("uploadImage", {
-                        item: data.data.product,
-                        image,
-                        mode: 2
-                    });
-                } else {
-                    commit("updateItem", data.data.product);
-                    commit("setLoading", false);
-                    commit("setDialog", false);
-                }
+                commit("updateItem", data.data.product_category);
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated product category!"
+                    },
+                    { root: true }
+                );
             } catch (ex) {
-                commit("setLoading", false);
-                commit("setErrorMessage", ex.response.data.message);
-                setTimeout(() => commit("setErrorMessage", ""), 5000);
+                commit("setSelectedLoading", false);
+                commit("setErrorMessage", ex.response.data.message, {
+                    root: true
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", "", { root: true }),
+                    5000
+                );
             }
         },
 

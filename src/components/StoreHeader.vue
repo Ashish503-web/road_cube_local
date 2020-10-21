@@ -139,7 +139,7 @@
                             ></span>
                         </v-tooltip>
 
-                        <v-list-item v-else :to="item.to" exact>
+                        <v-list-item v-else :to="item.to" :exact="item.exact">
                             <v-list-item-icon>
                                 <v-icon v-text="item.icon"></v-icon>
                             </v-list-item-icon>
@@ -180,7 +180,7 @@ import {
     mdiAccountOutline,
     mdiWalletOutline,
     mdiWrenchOutline,
-    mdiLockOpenOutline
+    mdiLockOpenOutline,
 } from "@mdi/js";
 
 import avatar3 from "@/assets/avatars/avatar-3.jpg";
@@ -201,7 +201,7 @@ export default {
                 mdiBellOutline,
                 mdiClockOutline,
                 mdiLogout,
-                mdiCogOutline
+                mdiCogOutline,
             },
             mini: false,
             drawer: false,
@@ -209,33 +209,43 @@ export default {
                 {
                     title: "USE",
                     children: [
-                        { icon: mdiChartBar, title: "Home", to: "/storePanel" },
+                        {
+                            icon: mdiChartBar,
+                            title: "Home",
+                            to: "/storePanel",
+                            exact: true,
+                        },
                         {
                             icon: mdiPlusThick,
                             title: "New Transaction",
-                            to: "/storePanel/new-transaction"
+                            to: "/storePanel/new-transaction",
+                            exact: false,
                         },
                         {
                             icon: mdiCurrencyEur,
                             title: "Transactions",
-                            to: "/storePanel/transactions/pending"
+                            to: "/storePanel/transactions",
+                            exact: false,
                         },
                         {
                             icon: mdiGift,
                             title: "Redeem",
-                            to: "/storePanel/redeem/redeem-voucher"
+                            to: "/storePanel/redeem",
+                            exact: false,
                         },
                         {
                             icon: mdiDatabaseSync,
                             title: "History",
-                            to: "/storePanel/history/point-analysis"
+                            to: "/storePanel/history",
+                            exact: false,
                         },
                         {
                             icon: mdiTrophyVariant,
                             title: "Contests",
-                            to: "/storePanel/contests"
-                        }
-                    ]
+                            to: "/storePanel/contests",
+                            exact: false,
+                        },
+                    ],
                 },
                 {
                     title: "SETTINGS",
@@ -243,28 +253,30 @@ export default {
                         {
                             icon: mdiPackageVariantClosed,
                             title: "Products",
-                            to: "/storePanel/products"
+                            to: "/storePanel/products",
                         },
                         {
                             icon: mdiTagMultiple,
                             title: "Coupons",
-                            to: "/storePanel/coupons/with-transactions"
+                            to: "/storePanel/coupons",
+                            exact: false,
                         },
                         {
                             icon: mdiCog,
                             title: "Settings",
-                            to: "/storePanel/settings/profile"
-                        }
-                    ]
-                }
+                            to: "/storePanel/settings",
+                            exact: false,
+                        },
+                    ],
+                },
             ],
 
             profileLinks: [
                 { icon: mdiAccountOutline, text: "Profile" },
                 { icon: mdiWalletOutline, text: "My Wallet" },
                 { icon: mdiWrenchOutline, text: "Settings" },
-                { icon: mdiLockOpenOutline, text: "Lock Screen" }
-            ]
+                { icon: mdiLockOpenOutline, text: "Lock Screen" },
+            ],
         };
     },
 
@@ -279,8 +291,8 @@ export default {
 
         containerHeight() {
             return this.mini ? "calc(100vh - 194px)" : "calc(100vh - 184px)";
-        }
-    }
+        },
+    },
 };
 </script>
 

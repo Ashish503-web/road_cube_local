@@ -44,6 +44,8 @@ export default {
                     query
                 );
 
+                console.log(data.data.store_bank_providers);
+
                 const { store_bank_providers } = data.data;
 
                 commit("setItems", store_bank_providers);

@@ -8,14 +8,16 @@
             class="mt-7"
             height="70"
             show-arrows
+            optional
         >
             <v-tab
                 v-for="provider in bankProviders"
                 :key="provider.store_bank_provider_id"
+                @click="bankProvider = provider"
             >
                 <v-img
                     :src="$store.state.storePanel.store.logo"
-                    width="60"
+                    width="70"
                 ></v-img>
             </v-tab>
         </v-tabs>
@@ -32,19 +34,54 @@
                         Fill in here the production details you will receive
                         after activation:
                         <br />
-                        <v-sheet width="70%">
+                        <v-card flat width="70%">
                             <b-text-field
+                                v-model="bankProvider.credentials.mid"
                                 label="mid"
                                 class="mt-5"
                             ></b-text-field>
                             <b-text-field
+                                v-model="bankProvider.credentials.key"
                                 label="pass"
                                 class="mt-5"
                             ></b-text-field>
-                        </v-sheet>
+
+                            <v-alert v-if="errorMessage" type="error">{{
+                                errorMessage
+                            }}</v-alert>
+
+                            <v-card-actions class="pt-5 px-0">
+                                <v-btn
+                                    color="secondary"
+                                    class="text-capitalize px-5"
+                                    depressed
+                                    :loading="loading"
+                                    @click="create"
+                                    >create</v-btn
+                                >
+                                <v-spacer></v-spacer>
+                                <v-btn
+                                    color="grey lighten-2"
+                                    class="text-capitalize px-5"
+                                    depressed
+                                    @click="tab = null"
+                                    >cancel</v-btn
+                                >
+                            </v-card-actions>
+                        </v-card>
                     </v-col>
-                    <v-col cols="6">
-                        <v-divider vertical></v-divider>
+                    <v-col cols="6" class="b-border-left">
+                        <v-sheet class="px-5">
+                            <v-img
+                                :src="$store.state.storePanel.store.logo"
+                                width="70"
+                            ></v-img>
+
+                            <h2
+                                class="subtitle-1"
+                                v-text="bankProvider.bank_provider.name[lang]"
+                            ></h2>
+                        </v-sheet>
                     </v-col>
                 </v-row>
             </v-tab-item>
@@ -60,14 +97,27 @@ export default {
 
     data() {
         return {
-            tab: "",
+            tab: null,
+            lang: "en",
             page: +this.$route.query.page,
-            perPage: +this.$route.query.perPage
+            perPage: +this.$route.query.perPage,
         };
     },
 
     computed: {
+        ...mapState(["loading", "errorMessage"]),
         ...mapState("storePanel/settings/cleanerManagement", ["bankProviders"]),
+
+        bankProvider: {
+            get() {
+                return this.$store.state.storePanel.settings.cleanerManagement
+                    .bankProvider;
+            },
+
+            set(val) {
+                this.setItem(val);
+            },
+        },
 
         query() {
             let query = "?";
@@ -77,11 +127,12 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
-        ...mapActions("storePanel/settings/cleanerManagement", ["getItems"])
+        ...mapMutations("storePanel/settings/cleanerManagement", ["setItem"]),
+        ...mapActions("storePanel/settings/cleanerManagement", ["getItems"]),
     },
 
     watch: {
@@ -95,7 +146,7 @@ export default {
 
         perPage(perPage) {
             this.$router.push({ query: { ...this.$route.query, perPage } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -103,8 +154,8 @@ export default {
             this.$router.push({
                 query: {
                     perPage: 12,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
 
@@ -112,14 +163,20 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    }
+    },
 };
 </script>
+
+<style scoped>
+.b-border-left {
+    border-left: 1px solid rgba(0, 0, 0, 0.12);
+}
+</style>

@@ -6,15 +6,19 @@
     >
         <v-form @submit.prevent="create">
             <v-row no-gutters justify="space-between" align="center">
-                <v-col cols="6">
+                <v-col class="pr-2">
                     <b-text-field
                         v-model="productCategory.name[lang]"
                         label="Category Name"
                         no-top-margin
-                    ></b-text-field>
-                </v-col>
-                <v-col cols="4" class="text-center">
-                    <b-lang-menu v-model="lang"></b-lang-menu>
+                    >
+                        <template v-slot:append>
+                            <b-lang-menu
+                                v-model="lang"
+                                type="inner"
+                            ></b-lang-menu>
+                        </template>
+                    </b-text-field>
                 </v-col>
                 <v-col cols="auto">
                     <v-btn
@@ -23,77 +27,111 @@
                         class="text-capitalize px-5"
                         depressed
                         :loading="loading"
-                        >save</v-btn
+                        >add</v-btn
                     >
                 </v-col>
             </v-row>
         </v-form>
 
-        <v-data-table
-            :headers="headers"
-            :items="productCategories"
-            :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
-            :page.sync="page"
-            :items-per-page.sync="perPage"
-            :server-items-length="serverItemsLength"
-            class="b-outlined mt-3"
-        >
-            <template v-slot:item.actions="{ item }">
-                <v-tooltip color="secondary" top>
-                    <template v-slot:activator="{ on }">
-                        <v-btn color="yellow darken-3" icon v-on="on">
-                            <v-icon v-text="icons.mdiPencilOutline"></v-icon>
-                        </v-btn>
-                    </template>
-
-                    <span class="font-weight-bold">Update</span>
-                </v-tooltip>
-
-                <v-tooltip color="secondary" top>
-                    <template v-slot:activator="{ on }">
-                        <v-btn
-                            color="red"
-                            icon
-                            v-on="on"
-                            @click="remove(item.product_category_id)"
-                        >
-                            <v-icon v-text="icons.mdiClose"></v-icon>
-                        </v-btn>
-                    </template>
-
-                    <span class="font-weight-bold">Delete</span>
-                </v-tooltip>
-            </template>
-        </v-data-table>
-
-        <!-- <v-row class="mt-2">
-            <v-col
-                v-for="category in productCategories"
-                :key="category.name[lang]"
-                cols="auto"
-            >
-                <v-card
-                    outlined
-                    width="300"
-                    class="subtitle-2 py-3 px-3 relative"
+        <v-sheet outlined class="mt-3">
+            <v-row no-gutters>
+                <v-col class="subtitle-2 text--secondary pa-3">
+                    Category Name</v-col
                 >
-                    <v-badge
-                        class="category-number"
-                        content="5"
-                        color="secondary"
-                    ></v-badge>
-                    {{ category.name[lang] }}
-                    <v-avatar
-                        color="red"
-                        size="20"
-                        class="category-remove rounded-circle"
-                        @click="remove(category.product_category_id)"
-                    >
-                        <v-icon x-small dark v-text="icons.mdiClose"></v-icon>
-                    </v-avatar>
-                </v-card>
-            </v-col>
-        </v-row> -->
+                <v-col cols="auto" class="subtitle-2 text--secondary py-3 px-6">
+                    Actions
+                </v-col>
+            </v-row>
+            <v-row
+                v-for="category in productCategories"
+                :key="category.product_category_id"
+                no-gutters
+                align="center"
+                class="b-border-top"
+            >
+                <v-col class="pa-3" v-text="category.name[lang]"></v-col>
+                <v-col cols="auto" class="px-3">
+                    <v-tooltip color="secondary" top>
+                        <template v-slot:activator="{ on }">
+                            <v-btn
+                                color="yellow darken-3"
+                                icon
+                                v-on="on"
+                                @click="
+                                    () => {
+                                        category.expanded = true;
+                                        selectedProductCategory = category;
+                                    }
+                                "
+                            >
+                                <v-icon
+                                    v-text="icons.mdiPencilOutline"
+                                ></v-icon>
+                            </v-btn>
+                        </template>
+
+                        <span class="font-weight-bold">Update</span>
+                    </v-tooltip>
+
+                    <v-tooltip color="secondary" top>
+                        <template v-slot:activator="{ on }">
+                            <v-btn
+                                color="red"
+                                icon
+                                v-on="on"
+                                @click="remove(category.product_category_id)"
+                            >
+                                <v-icon v-text="icons.mdiClose"></v-icon>
+                            </v-btn>
+                        </template>
+
+                        <span class="font-weight-bold">Delete</span>
+                    </v-tooltip>
+                </v-col>
+                <v-col v-if="category.expanded" cols="12">
+                    <v-card flat class="pa-3">
+                        <b-text-field
+                            v-model="selectedProductCategory.name[selectedLang]"
+                            label="Category Name"
+                            no-top-margin
+                        >
+                            <template v-slot:append>
+                                <b-lang-menu
+                                    v-model="selectedLang"
+                                    type="inner"
+                                ></b-lang-menu>
+                            </template>
+                        </b-text-field>
+
+                        <v-card-actions class="pa-0 pt-3">
+                            <v-spacer></v-spacer>
+                            <v-btn
+                                class="text-capitalize"
+                                height="32"
+                                text
+                                @click="
+                                    () => {
+                                        category.expanded = false;
+                                        selectedProductCategory = {};
+                                    }
+                                "
+                                >cancel</v-btn
+                            >
+                            <v-btn
+                                type="submit"
+                                color="secondary"
+                                class="text-capitalize"
+                                height="32"
+                                depressed
+                                :loading="selectedProductCategory.loading"
+                                @click="update"
+                                >save</v-btn
+                            >
+                        </v-card-actions>
+                    </v-card>
+                </v-col>
+            </v-row>
+        </v-sheet>
     </b-standard-card>
 </template>
 
@@ -108,24 +146,17 @@ export default {
         return {
             icons: { mdiPencilOutline, mdiClose },
             lang: "el",
-            updateMode: false,
+            selectedLang: "el",
             page: +this.$route.query.page,
-            perPage: +this.$route.query.perPage
+            perPage: +this.$route.query.perPage,
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/settings/productCategories", [
-            "productCategories"
+            "productCategories",
         ]),
-
-        headers() {
-            return [
-                { text: "Category Name", value: `name[${this.lang}]` },
-                { text: "Actions", value: "actions" }
-            ];
-        },
 
         productCategory: {
             get() {
@@ -135,7 +166,18 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
+            },
+        },
+
+        selectedProductCategory: {
+            get() {
+                return this.$store.state.storePanel.settings.productCategories
+                    .selectedProductCategory;
+            },
+
+            set(val) {
+                this.setSelectedItem(val);
+            },
         },
 
         query() {
@@ -146,17 +188,20 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
-        ...mapMutations("storePanel/settings/productCategories", ["setItem"]),
+        ...mapMutations("storePanel/settings/productCategories", [
+            "setItem",
+            "setSelectedItem",
+        ]),
         ...mapActions("storePanel/settings/productCategories", [
             "getItems",
             "create",
             "update",
-            "remove"
-        ])
+            "remove",
+        ]),
     },
 
     watch: {
@@ -170,7 +215,7 @@ export default {
 
         perPage(perPage) {
             this.$router.push({ query: { ...this.$route.query, perPage } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -178,8 +223,8 @@ export default {
             this.$router.push({
                 query: {
                     perPage: 10,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
 
@@ -187,29 +232,20 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    }
+    },
 };
 </script>
 
 <style scoped>
-.category-number {
-    position: absolute;
-    top: 7px;
-    left: -5px;
-}
-
-.category-remove {
-    position: absolute;
-    top: -9px;
-    right: -9px;
-    cursor: pointer;
+.b-border-top {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
 }
 </style>

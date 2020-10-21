@@ -18,7 +18,8 @@ export default {
             scanReceipt: "",
             rewardWithPresence: "",
             mobilePayments: ""
-        }
+        },
+        systemNotifications: []
     }),
 
     mutations: {
@@ -28,10 +29,26 @@ export default {
 
         setErrorMessage(state, { value, type }) {
             state.errorMessage[type] = value;
+        },
+
+        setSystemNotifications(state, payload) {
+            state.systemNotifications = payload;
         }
     },
 
     actions: {
+        async getSystemNotifications({ commit, rootState }) {
+            try {
+                const { data } = await axios.get(
+                    `https://api.roadcube.tk/v1/common/system-notifications`
+                );
+
+                commit("setSystemNotifications", data.data);
+            } catch (ex) {
+                console.error(ex.response.data);
+            }
+        },
+
         async updateReward({ commit, rootState }, { item, type }) {
             try {
                 commit("setLoading", { value: true, type });

@@ -21,7 +21,11 @@
         @input="$emit('input', $event)"
         @click="$emit('click')"
         @click:append="$emit('click-append')"
-    ></v-text-field>
+    >
+        <template v-slot:append>
+            <slot name="append"></slot>
+        </template>
+    </v-text-field>
 </template>
 
 <script>

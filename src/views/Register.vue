@@ -14,7 +14,7 @@
                         </v-col>
                         <v-col cols="5">
                             <v-img
-                                src="@/assets/signup-image.jpg"
+                                src="@/assets/register-image.png"
                                 width="300"
                                 class="mx-auto"
                             ></v-img>

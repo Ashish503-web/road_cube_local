@@ -10,8 +10,8 @@
             updateReward({
                 type: 'rewardWithPresence',
                 item: {
-                    open_checkin: rewardWithPresence
-                }
+                    open_checkin: rewardWithPresence,
+                },
             })
         "
     >
@@ -38,7 +38,7 @@ export default {
     name: "RewardWithPresence",
 
     data: () => ({
-        icons: { mdiInformation }
+        icons: { mdiInformation },
     }),
 
     computed: {
@@ -60,13 +60,13 @@ export default {
 
             set(val) {
                 this.setRewardWithPresence(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
         ...mapMutations("storePanel", ["setRewardWithPresence"]),
-        ...mapActions("storePanel/settings/reward", ["updateReward"])
-    }
+        ...mapActions("storePanel/settings/reward", ["updateReward"]),
+    },
 };
 </script>

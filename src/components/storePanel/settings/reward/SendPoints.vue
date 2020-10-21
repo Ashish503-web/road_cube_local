@@ -8,17 +8,7 @@
         @submit="
             updateReward({
                 type: 'sendPoints',
-                item: {
-                    send_points_by_card_or_phone:
-                        sendPoints.send_points_by_card_or_phone,
-                    system_notification_id: systemNotificationId,
-                    add_new_user_on_send_points:
-                        sendPoints.add_new_user_on_send_points,
-                    choose_product_on_send_points:
-                        sendPoints.choose_product_on_send_points,
-                    display_receipt_on_send_points:
-                        sendPoints.display_receipt_on_send_points
-                }
+                item: sendPoints,
             })
         "
     >
@@ -35,8 +25,10 @@
                 page
 
                 <b-select
-                    v-model="systemNotificationId"
+                    v-model="sendPoints.system_notification_id"
                     :items="systemNotifications"
+                    item-text="name"
+                    item-value="system_notification_id"
                     :disabled="!sendPoints.send_points_by_card_or_phone"
                     label="How to notify a consumer of points"
                 ></b-select>
@@ -96,17 +88,17 @@ export default {
 
     data: () => ({
         icons: {
-            mdiInformation
+            mdiInformation,
         },
-        systemNotifications: [
-            { text: "Sms 1/month", value: 1 },
-            { text: "Sms every time", value: 2 },
-            { text: "Push", value: 3 },
-            { text: "Email", value: 4 }
-        ]
+        sendPoints: {},
     }),
 
     computed: {
+        systemNotifications() {
+            return this.$store.state.storePanel.settings.reward
+                .systemNotifications;
+        },
+
         loading() {
             return this.$store.state.storePanel.settings.reward.loading
                 .sendPoints;
@@ -116,28 +108,41 @@ export default {
             return this.$store.state.storePanel.settings.reward.errorMessage
                 .sendPoints;
         },
-
-        systemNotificationId: {
-            get() {
-                return this.$store.state.storePanel.store.notify_customers
-                    ? this.$store.state.storePanel.store.notify_customers
-                          .system_notification_id
-                    : null;
-            },
-
-            set(val) {
-                this.setSystemNotificationId(val);
-            }
-        },
-
-        sendPoints() {
-            return this.$store.state.storePanel.store.flags.reward;
-        }
     },
 
     methods: {
-        ...mapMutations("storePanel", ["setSystemNotificationId"]),
-        ...mapActions("storePanel/settings/reward", ["updateReward"])
-    }
+        ...mapActions("storePanel/settings/reward", [
+            "getSystemNotifications",
+            "updateReward",
+        ]),
+    },
+
+    watch: {
+        ["$store.state.storePanel.store"]: {
+            immediate: true,
+            handler(val) {
+                this.sendPoints = {
+                    send_points_by_card_or_phone:
+                        val.flags.reward.send_points_by_card_or_phone,
+
+                    system_notification_id:
+                        val.notify_customers.system_notification_id,
+
+                    add_new_user_on_send_points:
+                        val.flags.reward.add_new_user_on_send_points,
+
+                    choose_product_on_send_points:
+                        val.flags.reward.choose_product_on_send_points,
+
+                    display_receipt_on_send_points:
+                        val.flags.reward.display_receipt_on_send_points,
+                };
+            },
+        },
+    },
+
+    mounted() {
+        this.getSystemNotifications();
+    },
 };
 </script>

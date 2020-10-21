@@ -56,7 +56,7 @@
                 </v-menu>
             </v-toolbar>
 
-            <v-row no-gutters style="background: #EAEDF191" class="px-3 pt-3">
+            <v-row no-gutters style="background: #eaedf191" class="px-3 pt-3">
                 <v-col cols="auto">
                     <v-tabs v-model="tab" color="secondary">
                         <v-tab
@@ -82,7 +82,7 @@ import {
     mdiCellphoneIphone,
     mdiFormatListCheckbox,
     mdiPrinter,
-    mdiOpenInNew
+    mdiOpenInNew,
 } from "@mdi/js";
 
 export default {
@@ -93,14 +93,25 @@ export default {
             mdiCellphoneIphone,
             mdiFormatListCheckbox,
             mdiPrinter,
-            mdiOpenInNew
+            mdiOpenInNew,
         },
         test: "",
         tab: "storePanel/transactions/pending",
         tabs: [
             { to: "/storePanel/transactions/pending", name: "Pending" },
-            { to: "/storePanel/transactions/paid", name: "Paid" }
-        ]
-    })
+            { to: "/storePanel/transactions/paid", name: "Paid" },
+        ],
+    }),
+
+    watch: {
+        $route: {
+            immediate: true,
+            handler(val) {
+                if (val.path === "/storePanel/transactions") {
+                    this.$router.push("/storePanel/transactions/pending");
+                }
+            },
+        },
+    },
 };
 </script>

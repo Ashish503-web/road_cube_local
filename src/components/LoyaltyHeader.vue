@@ -194,7 +194,7 @@ import {
     mdiAccountOutline,
     mdiWalletOutline,
     mdiWrenchOutline,
-    mdiLockOpenOutline
+    mdiLockOpenOutline,
 } from "@mdi/js";
 
 import avatar3 from "../assets/avatars/avatar-3.jpg";
@@ -213,7 +213,7 @@ export default {
                 mdiClockOutline,
                 mdiLogout,
                 mdiCogOutline,
-                mdiClose
+                mdiClose,
             },
             mini: false,
             leftDrawer: false,
@@ -225,54 +225,54 @@ export default {
                         {
                             icon: mdiChartBar,
                             title: "Dashboard",
-                            to: "/loyaltyPanel"
+                            to: "/loyaltyPanel",
                         },
                         {
                             icon: mdiCashMultiple,
                             title: "Branch Debt",
-                            to: "/loyaltyPanel/branch-debt/monthly-invoicing"
+                            to: "/loyaltyPanel/branch-debt/monthly-invoicing",
                         },
                         {
                             icon: mdiSourceBranch,
                             title: "Branches",
-                            to: "/loyaltyPanel/branches"
+                            to: "/loyaltyPanel/branches",
                         },
                         {
                             icon: mdiFileDocument,
                             title: "Subscriptions",
-                            to: "/loyaltyPanel/subscriptions/stores"
+                            to: "/loyaltyPanel/subscriptions/stores",
                         },
                         {
                             icon: mdiCreditCardOutline,
                             title: "Collaborators",
-                            to: "/loyaltyPanel/collaborators"
+                            to: "/loyaltyPanel/collaborators",
                         },
                         {
                             icon: mdiPackageVariantClosed,
                             title: "Products",
-                            to: "/loyaltyPanel/products"
+                            to: "/loyaltyPanel/products",
                         },
                         {
                             icon: mdiAccountBox,
                             title: "Customer",
-                            to: "/loyaltyPanel/customer"
+                            to: "/loyaltyPanel/customer",
                         },
                         {
                             icon: mdiAccount,
                             title: "User Rights",
-                            to: "/loyaltyPanel/user-rights"
+                            to: "/loyaltyPanel/user-rights",
                         },
                         {
                             icon: mdiOfficeBuilding,
                             title: "Business Profile",
-                            to: "/loyaltyPanel/business-profile"
+                            to: "/loyaltyPanel/business-profile",
                         },
                         {
                             icon: mdiFinance,
                             title: "Business Statistics",
-                            to: "/loyaltyPanel/business-statistics"
-                        }
-                    ]
+                            to: "/loyaltyPanel/business-statistics",
+                        },
+                    ],
                 },
                 {
                     title: "GIFT LIST",
@@ -280,24 +280,24 @@ export default {
                         {
                             icon: mdiViewList,
                             title: "Category Management",
-                            to: "/loyaltyPanel/category-management"
+                            to: "/loyaltyPanel/category-management",
                         },
                         {
                             icon: mdiGift,
                             title: "Gift Status",
-                            to: "/loyaltyPanel/gift-status/pending"
+                            to: "/loyaltyPanel/gift-status/pending",
                         },
                         {
                             icon: mdiTrophyVariant,
                             title: "Catalog Management",
-                            to: "/loyaltyPanel/catalog-management"
+                            to: "/loyaltyPanel/catalog-management",
                         },
                         {
                             icon: mdiPackageVariantClosed,
                             title: "Supplier Management",
-                            to: "/loyaltyPanel/supplier-management"
-                        }
-                    ]
+                            to: "/loyaltyPanel/supplier-management",
+                        },
+                    ],
                 },
                 {
                     title: "PROMO ACTIONS",
@@ -305,39 +305,39 @@ export default {
                         {
                             icon: mdiHelpCircle,
                             title: "1+1 / Sampling",
-                            to: "/loyaltyPanel/sampling"
+                            to: "/loyaltyPanel/sampling",
                         },
                         {
                             icon: mdiReceipt,
                             title: "Receipt Scanning",
-                            to: "/loyaltyPanel/receipt-scanning"
+                            to: "/loyaltyPanel/receipt-scanning",
                         },
                         {
                             icon: mdiMapMarker,
                             title: "Check In",
-                            to: "/loyaltyPanel/check-in"
+                            to: "/loyaltyPanel/check-in",
                         },
                         {
                             icon: mdiStore,
                             title: "Serial Shopping",
-                            to: "/loyaltyPanel/serial-shopping"
+                            to: "/loyaltyPanel/serial-shopping",
                         },
                         {
                             icon: mdiTrophyVariant,
                             title: "Contest & Survey",
-                            to: "/loyaltyPanel/contest-survey"
+                            to: "/loyaltyPanel/contest-survey",
                         },
                         {
                             icon: mdiFire,
                             title: "Roadcodes",
-                            to: "/loyaltyPanel/roadcodes"
+                            to: "/loyaltyPanel/roadcodes",
                         },
                         {
                             icon: mdiCreditCardOutline,
                             title: "Multiple Coupons",
-                            to: "/loyaltyPanel/multiple-coupons"
-                        }
-                    ]
+                            to: "/loyaltyPanel/multiple-coupons",
+                        },
+                    ],
                 },
                 {
                     title: "ATTRACT CUSTOMERS",
@@ -345,31 +345,31 @@ export default {
                         {
                             icon: mdiBullhorn,
                             title: "View Campaigns",
-                            to: "/loyaltyPanel/view-campaigns"
+                            to: "/loyaltyPanel/view-campaigns",
                         },
                         {
                             icon: mdiBullhorn,
                             title: "New Campaign",
-                            to: "/loyaltyPanel/new-campaign"
-                        }
-                    ]
-                }
+                            to: "/loyaltyPanel/new-campaign",
+                        },
+                    ],
+                },
             ],
 
             profileLinks: [
                 { icon: mdiAccountOutline, text: "Profile" },
                 { icon: mdiWalletOutline, text: "My Wallet" },
                 { icon: mdiWrenchOutline, text: "Settings" },
-                { icon: mdiLockOpenOutline, text: "Lock Screen" }
-            ]
+                { icon: mdiLockOpenOutline, text: "Lock Screen" },
+            ],
         };
     },
 
     computed: {
         containerHeight() {
             return this.mini ? "calc(100vh - 223px)" : "calc(100vh - 213px)";
-        }
-    }
+        },
+    },
 };
 </script>
 

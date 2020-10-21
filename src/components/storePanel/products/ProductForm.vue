@@ -11,34 +11,31 @@
                 : update({ product, image: imageFile })
         "
     >
-        <v-row no-gutters>
-            <v-col cols="9" class="pr-2">
-                <b-text-field
-                    v-model="product.name[productLang]"
-                    label="Product Name"
-                    no-top-margin
-                    :success="success.name"
-                    :rules="rules.name"
-                ></b-text-field>
-            </v-col>
+        <b-text-field
+            v-model="product.name[productLang]"
+            label="Product Name"
+            no-top-margin
+            :success="success.name"
+            :rules="rules.name"
+        >
+            <template v-slot:append>
+                <b-lang-menu v-model="productLang" type="inner"></b-lang-menu>
+            </template>
+        </b-text-field>
 
-            <v-col cols="3" class="pl-2">
-                <b-lang-menu v-model="productLang"></b-lang-menu>
-            </v-col>
-
-            <v-col cols="9" class="pr-2">
-                <b-textarea
-                    v-model="product.description[descriptionLang]"
-                    label="Product Description"
-                    :success="success.description"
-                    :rules="rules.description"
-                ></b-textarea>
-            </v-col>
-
-            <v-col cols="3" class="pl-2 pt-3">
-                <b-lang-menu v-model="descriptionLang"></b-lang-menu>
-            </v-col>
-        </v-row>
+        <b-textarea
+            v-model="product.description[descriptionLang]"
+            label="Product Description"
+            :success="success.description"
+            :rules="rules.description"
+        >
+            <template v-slot:append>
+                <b-lang-menu
+                    v-model="descriptionLang"
+                    type="inner"
+                ></b-lang-menu>
+            </template>
+        </b-textarea>
 
         <v-row no-gutters>
             <v-col cols="12">
@@ -92,6 +89,8 @@
         <b-select
             v-model="product.product_category_id"
             :items="categories"
+            :item-text="`name[${lang}]`"
+            item-value="product_category_id"
             label="Select Category"
             :success="success.category"
             :rules="rules.category"
@@ -199,6 +198,8 @@
 import validators from "./productValidators";
 import { mapState, mapMutations, mapActions } from "vuex";
 
+import greeceFlag from "@/assets/flags/Flag_of_Greece.svg";
+
 export default {
     name: "Product",
     props: {
@@ -207,9 +208,10 @@ export default {
     mixins: [validators],
     data() {
         return {
+            greeceFlag,
+            lang: "el",
             productLang: "el",
             descriptionLang: "el",
-            categories: [{ text: "category", value: 1 }],
             imageFile: null,
             weekdays: [
                 "Monday",
@@ -228,7 +230,8 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation"
+            "resetValidation",
+            "categories"
         ]),
 
         title() {
@@ -274,7 +277,11 @@ export default {
             "setShowWeekdays",
             "setProduct"
         ]),
-        ...mapActions("storePanel/products", ["create", "update"]),
+        ...mapActions("storePanel/products", [
+            "getCategories",
+            "create",
+            "update"
+        ]),
 
         onFileSelected(event) {
             if (event) {
@@ -300,6 +307,10 @@ export default {
                 };
             }
         }
+    },
+
+    mounted() {
+        this.getCategories();
     }
 };
 </script>

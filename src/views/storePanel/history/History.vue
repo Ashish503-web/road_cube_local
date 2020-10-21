@@ -31,11 +31,25 @@ export default {
         tabs: [
             {
                 to: "/storePanel/history/point-analysis",
-                name: "Point Analysis"
+                name: "Point Analysis",
             },
-            { to: "/storePanel/history/monthly-points", name: "Monthly Points" }
-        ]
-    })
+            {
+                to: "/storePanel/history/monthly-points",
+                name: "Monthly Points",
+            },
+        ],
+    }),
+
+    watch: {
+        $route: {
+            immediate: true,
+            handler(val) {
+                if (val.path === "/storePanel/history") {
+                    this.$router.push("/storePanel/history/point-analysis");
+                }
+            },
+        },
+    },
 };
 </script>
 

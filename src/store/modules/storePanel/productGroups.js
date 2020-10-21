@@ -13,6 +13,7 @@ export default {
         serverItemsLength: 0,
         showImageUpload: false,
         showWeekdays: false,
+        categories: [],
         productGroups: [],
         productGroup: new ProductGroup()
     }),
@@ -54,6 +55,10 @@ export default {
             state.showWeekdays = payload;
         },
 
+        setCategories(state, payload) {
+            state.categories = payload;
+        },
+
         setItems(state, payload) {
             state.productGroups = payload;
         },
@@ -81,6 +86,20 @@ export default {
     },
 
     actions: {
+        async getCategories({ commit, rootState }) {
+            try {
+                const { data } = await ProductGroup.getCategories(
+                    rootState.storeToken,
+                    rootState.storeId
+                );
+
+                const { product_categories } = data.data;
+                commit("setCategories", product_categories);
+            } catch (ex) {
+                console.error(ex.response.data);
+            }
+        },
+
         async getItems({ commit, rootState }, query) {
             try {
                 commit("setLoading", true);

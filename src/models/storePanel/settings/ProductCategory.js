@@ -25,7 +25,7 @@ export default class ProductCategory {
     static update = (token, storeId, item) => {
         axios.defaults.headers.Authorization = `Bearer ${token}`;
         return axios.put(
-            `${ApiEndpoint}${storeId}/products/${item.product_id}`,
+            `${ApiEndpoint}${storeId}/product-categories/${item.product_category_id}`,
             item
         );
     };

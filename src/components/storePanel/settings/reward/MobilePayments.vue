@@ -11,8 +11,8 @@
             updateReward({
                 type: 'mobilePayments',
                 item: {
-                    online_payments: mobilePayments
-                }
+                    online_payments: mobilePayments,
+                },
             })
         "
     >
@@ -31,7 +31,7 @@
                 color="secondary"
                 class="text-capitalize"
                 outlined
-                @click="$router.push('/storePanel/settings/payment-direction')"
+                @click="$router.push('/storePanel/settings/payments-direction')"
                 >set a payment direction</v-btn
             >
         </v-row>
@@ -65,13 +65,13 @@ export default {
 
             set(val) {
                 this.setMobilePayments(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
         ...mapMutations("storePanel", ["setMobilePayments"]),
-        ...mapActions("storePanel/settings/reward", ["updateReward"])
-    }
+        ...mapActions("storePanel/settings/reward", ["updateReward"]),
+    },
 };
 </script>

@@ -224,6 +224,34 @@ export default {
             }
         },
 
+        async resendCode({ commit, state }) {
+            try {
+                commit("setLoading", true);
+
+                const { data } = await Register.resendCode({
+                    user_registration_identifier:
+                        state.userRegistrationIdentifier
+                });
+
+                console.log(data);
+
+                // localStorage.setItem(
+                //     "mobileVerificationCode",
+                //     data.data.user.mobile_verification_code
+                // );
+                // commit(
+                //     "setMobileVerificationCode",
+                //     data.data.user.mobile_verification_code
+                // );
+
+                commit("setLoading", false);
+            } catch (ex) {
+                commit("setLoading", false);
+                commit("setErrorMessage", ex.response.data.message);
+                setTimeout(() => commit("setErrorMessage", ""), 5000);
+            }
+        },
+
         async verifyMobile({ commit, state }) {
             try {
                 commit("setLoading", true);

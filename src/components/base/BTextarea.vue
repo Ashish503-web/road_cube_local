@@ -16,7 +16,11 @@
         :append-outer-icon="icons[`${appendOuterIcon}`]"
         @input="$emit('input', $event)"
         @click="$emit('click')"
-    ></v-textarea>
+    >
+        <template v-slot:append>
+            <slot name="append"></slot>
+        </template>
+    </v-textarea>
 </template>
 
 <script>

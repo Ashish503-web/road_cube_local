@@ -24,6 +24,10 @@ export default class Product {
         return axios.post(`${ApiEndpoint}/users/registration/init`, item);
     };
 
+    static resendCode = item => {
+        return axios.post(`${ApiEndpoint}/users/resend-password`, item);
+    };
+
     static verifyMobile = item => {
         return axios.post(`${ApiEndpoint}/users/mobile/verification`, item);
     };

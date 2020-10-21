@@ -33,13 +33,24 @@ export default {
             { to: "/storePanel/redeem/redeem-voucher", name: "Redeem Voucher" },
             {
                 to: "/storePanel/redeem/coupons-overview",
-                name: "Coupons Overview"
+                name: "Coupons Overview",
             },
             {
                 to: "/storePanel/redeem/multiple-coupons",
-                name: "Multiple Coupons"
-            }
-        ]
-    })
+                name: "Multiple Coupons",
+            },
+        ],
+    }),
+
+    watch: {
+        $route: {
+            immediate: true,
+            handler(val) {
+                if (val.path === "/storePanel/redeem") {
+                    this.$router.push("/storePanel/redeem/redeem-voucher");
+                }
+            },
+        },
+    },
 };
 </script>

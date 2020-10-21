@@ -32,30 +32,41 @@ export default {
         tabs: [
             {
                 to: "/storePanel/coupons/with-transactions",
-                name: "coupons with transactions"
+                name: "coupons with transactions",
             },
 
             {
                 to: "/storePanel/coupons/with-code",
-                name: "coupons with code"
+                name: "coupons with code",
             },
 
             {
                 to: "/storePanel/coupons/on-products",
-                name: "coupons on products"
+                name: "coupons on products",
             },
 
             {
                 to: "/storePanel/coupons/with-visits",
-                name: "coupons with visits"
+                name: "coupons with visits",
             },
 
             {
                 to: "/storePanel/coupons/with-discount",
-                name: "coupons with discount"
-            }
-        ]
-    })
+                name: "coupons with discount",
+            },
+        ],
+    }),
+
+    watch: {
+        $route: {
+            immediate: true,
+            handler(val) {
+                if (val.path === "/storePanel/coupons") {
+                    this.$router.push("/storePanel/coupons/with-transactions");
+                }
+            },
+        },
+    },
 };
 </script>
 

@@ -1,7 +1,21 @@
 <template>
     <v-menu v-model="menu" offset-y transition="slide-y-transition">
         <template v-slot:activator="{ on }">
-            <v-btn class="text-capitalize" text v-on="on">
+            <v-row
+                v-if="type === 'inner'"
+                class="pt-0 pl-2"
+                no-gutters
+                align="center"
+                style="cursor: pointer"
+                v-on="on"
+            >
+                <img :src="lang.img" width="25" class="mr-1" />
+                <span class="subtitle-2">{{ lang.title }}</span>
+                <v-icon
+                    v-text="menu ? icons.mdiChevronUp : icons.mdiChevronDown"
+                ></v-icon>
+            </v-row>
+            <v-btn v-else class="text-capitalize" text v-on="on">
                 <img :src="lang.img" width="25" class="mr-1" />
                 {{ lang.title }}
                 <v-icon
@@ -16,6 +30,7 @@
                     v-for="lang in langs"
                     :key="lang.title"
                     :value="lang"
+                    :class="{ 'pl-2': type === 'inner' }"
                 >
                     <v-list-item-action class="mr-1">
                         <img :src="lang.img" width="25" />
@@ -37,6 +52,7 @@ import italyFlag from "@/assets/flags/Flag_of_Italy.svg";
 export default {
     name: "BLangMenu",
     props: {
+        type: String,
         value: {
             type: String,
             default: "el"

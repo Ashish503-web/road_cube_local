@@ -51,6 +51,52 @@
                             "
                         >
                         </v-text-field>
+
+                        <v-row no-gutters align="center">
+                            <v-col cols="auto">
+                                <v-checkbox
+                                    color="secondary"
+                                    class="mt-3 pt-0"
+                                    hide-details="auto"
+                                ></v-checkbox>
+                            </v-col>
+                            <v-col
+                                cols="11"
+                                class="mt-3 subtitle-1 font-weight-medium"
+                            >
+                                I accept
+                                <router-link
+                                    class="blue--text"
+                                    to="/terms-of-service"
+                                    >Terms of Services</router-link
+                                >
+                                and
+                                <router-link
+                                    class="blue--text"
+                                    to="/privacy-policy"
+                                    >Privacy Policy</router-link
+                                >
+                            </v-col>
+                            <v-col cols="auto">
+                                <v-checkbox
+                                    color="secondary"
+                                    class="mt-3 pt-0"
+                                    hide-details="auto"
+                                ></v-checkbox>
+                            </v-col>
+                            <v-col
+                                cols="11"
+                                class="mt-3 subtitle-1 font-weight-medium"
+                            >
+                                I accept
+                                <router-link
+                                    class="blue--text"
+                                    to="/direct-marketing"
+                                >
+                                    Direct Marketing
+                                </router-link>
+                            </v-col>
+                        </v-row>
                     </v-col>
 
                     <v-col cols="12">

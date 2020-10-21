@@ -17,6 +17,8 @@ export default {
     actions: {
         async getItems({ commit, rootState }, query) {
             try {
+                commit("setLoading", true, { root: true });
+
                 axios.defaults.headers.Authorization = `Bearer ${rootState.storeToken}`;
                 const { data } = await axios.get(
                     `${ApiEndpoint}/${rootState.storeId}/products/association${query}`
@@ -24,12 +26,11 @@ export default {
 
                 const { products, pagination } = data.data;
 
-                console.log(data);
-
                 commit("setItems", products);
                 commit("setServerItemsLength", pagination.total, {
                     root: true
                 });
+                commit("setLoading", false, { root: true });
             } catch (ex) {
                 console.error(ex.response.data);
             }

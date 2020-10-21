@@ -46,7 +46,7 @@
                                     <v-menu
                                         v-model="colorPickerMenu"
                                         offset-y
-                                        transition="scale-x-transition"
+                                        transition="scale-transition"
                                         :close-on-content-click="false"
                                     >
                                         <template

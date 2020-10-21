@@ -92,10 +92,6 @@ export default {
             state.store.redemption_type_id = payload;
         },
 
-        setSystemNotificationId(state, payload) {
-            state.store.notify_customers.system_notification_id = payload;
-        },
-
         setScanReceipt(state, payload) {
             state.store.flags.reward.scan_receipt = payload;
         },

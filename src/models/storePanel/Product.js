@@ -25,6 +25,11 @@ export default class Product {
         this.group_product = false;
     }
 
+    static getCategories = (token, storeId) => {
+        axios.defaults.headers.Authorization = `Bearer ${token}`;
+        return axios.get(`${ApiEndpoint}${storeId}/product-categories`);
+    };
+
     static get = (token, storeId, query) => {
         axios.defaults.headers.Authorization = `Bearer ${token}`;
         return axios.get(`${ApiEndpoint}${storeId}/products${query}`);

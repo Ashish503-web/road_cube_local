@@ -32,8 +32,10 @@
 
             <v-card-actions class="px-0">
                 Didn't receive code?
-                <router-link to="/register" class="blue--text mx-1"
-                    >Resend</router-link
+                <a
+                    class="blue--text b-underline mx-1"
+                    @click.prevent="resendCode"
+                    >Resend</a
                 >
                 <v-spacer></v-spacer>
                 <v-btn
@@ -99,7 +101,7 @@ export default {
 
     methods: {
         ...mapMutations("register", ["setCode"]),
-        ...mapActions("register", ["verifyMobile"])
+        ...mapActions("register", ["resendCode", "verifyMobile"])
     },
 
     watch: {
@@ -113,3 +115,9 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+.b-underline {
+    text-decoration: underline;
+}
+</style>

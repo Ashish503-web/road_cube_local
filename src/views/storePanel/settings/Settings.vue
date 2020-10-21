@@ -34,28 +34,39 @@ export default {
             { to: "/storePanel/settings/reward", name: "reward" },
             {
                 to: "/storePanel/settings/product-points",
-                name: "product points"
+                name: "product points",
             },
             { to: "/storePanel/settings/users", name: "users" },
             {
                 to: "/storePanel/settings/cleaner-management",
-                name: "cleaner management"
+                name: "cleaner management",
             },
             {
                 to: "/storePanel/settings/payments-direction",
-                name: "direction of payments"
+                name: "direction of payments",
             },
             { to: "/storePanel/settings/cards", name: "cards" },
             {
                 to: "/storePanel/settings/payment-history",
-                name: "payment history"
+                name: "payment history",
             },
             {
                 to: "/storePanel/settings/payment-methods",
-                name: "payment methods"
-            }
-        ]
-    })
+                name: "payment methods",
+            },
+        ],
+    }),
+
+    watch: {
+        $route: {
+            immediate: true,
+            handler(val) {
+                if (val.path === "/storePanel/settings") {
+                    this.$router.push("/storePanel/settings/profile");
+                }
+            },
+        },
+    },
 };
 </script>
 

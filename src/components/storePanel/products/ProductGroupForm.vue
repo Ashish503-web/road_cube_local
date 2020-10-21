@@ -11,34 +11,31 @@
                 : update({ productGroup, image: imageFile })
         "
     >
-        <v-row no-gutters>
-            <v-col cols="9" class="pr-2">
-                <b-text-field
-                    v-model="productGroup.name[groupLang]"
-                    label="Product Group Name"
-                    no-top-margin
-                    :success="success.name"
-                    :rules="rules.name"
-                ></b-text-field>
-            </v-col>
+        <b-text-field
+            v-model="productGroup.name[groupLang]"
+            label="Product Group Name"
+            no-top-margin
+            :success="success.name"
+            :rules="rules.name"
+        >
+            <template v-slot:append>
+                <b-lang-menu v-model="groupLang" type="inner"></b-lang-menu>
+            </template>
+        </b-text-field>
 
-            <v-col cols="3" class="pl-2">
-                <b-lang-menu v-model="groupLang"></b-lang-menu>
-            </v-col>
-
-            <v-col cols="9" class="pr-2">
-                <b-textarea
-                    v-model="productGroup.description[descriptionLang]"
-                    label="Product Group Description"
-                    :success="success.description"
-                    :rules="rules.description"
-                ></b-textarea>
-            </v-col>
-
-            <v-col cols="3" class="pl-2 pt-3">
-                <b-lang-menu v-model="descriptionLang"></b-lang-menu>
-            </v-col>
-        </v-row>
+        <b-textarea
+            v-model="productGroup.description[descriptionLang]"
+            label="Product Group Description"
+            :success="success.description"
+            :rules="rules.description"
+        >
+            <template v-slot:append>
+                <b-lang-menu
+                    v-model="descriptionLang"
+                    type="inner"
+                ></b-lang-menu>
+            </template>
+        </b-textarea>
 
         <b-text-field
             v-model="productGroup.average_price"
@@ -52,6 +49,8 @@
         <b-select
             v-model="productGroup.product_category_id"
             :items="categories"
+            :item-text="`name[${lang}]`"
+            item-value="product_category_id"
             label="Select Category"
             :success="success.category"
             :rules="rules.category"
@@ -167,9 +166,9 @@ export default {
     mixins: [validators],
     data() {
         return {
+            lang: "el",
             groupLang: "el",
             descriptionLang: "el",
-            categories: [{ text: "category", value: 1 }],
             imageFile: null,
             weekdays: [
                 "Monday",
@@ -188,7 +187,8 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation"
+            "resetValidation",
+            "categories"
         ]),
 
         title() {
@@ -235,7 +235,11 @@ export default {
             "setShowWeekdays",
             "setItem"
         ]),
-        ...mapActions("storePanel/productGroups", ["create", "update"]),
+        ...mapActions("storePanel/productGroups", [
+            "getCategories",
+            "create",
+            "update"
+        ]),
 
         onFileSelected(event) {
             if (event) {
@@ -262,6 +266,10 @@ export default {
                 };
             }
         }
+    },
+
+    mounted() {
+        this.getCategories();
     }
 };
 </script>

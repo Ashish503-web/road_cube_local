@@ -103,7 +103,7 @@
                     </v-sheet>
                 </v-col> -->
 
-                <v-col cols="12" md="11">
+                <v-col cols="12" md="11" class="mt-7">
                     <v-card-title class="pl-0">
                         Choose what the users will see
                     </v-card-title>
@@ -117,11 +117,25 @@
                                     cols="10"
                                 >
                                     <component
+                                        v-if="hasMask(element)"
                                         :is="element.name"
                                         v-model="element.value"
                                         v-mask="createMask(element.maxLength)"
                                         v-bind="element"
-                                        @update="openMenu(element)"
+                                        @move-up="moveElementUp(element, i)"
+                                        @move-down="moveElementDown(element, i)"
+                                        @update="openEditor(element, i)"
+                                        @remove="elements.splice(i, 1)"
+                                    ></component>
+
+                                    <component
+                                        v-else
+                                        :is="element.name"
+                                        v-model="element.value"
+                                        v-bind="element"
+                                        @move-up="moveElementUp(element, i)"
+                                        @move-down="moveElementDown(element, i)"
+                                        @update="openEditor(element, i)"
                                         @remove="elements.splice(i, 1)"
                                     ></component>
                                 </v-col>
@@ -136,9 +150,7 @@
                                     @click="addElement(element.value)"
                                 >
                                     <v-list-item-icon class="mr-3">
-                                        <v-icon
-                                            v-text="icons[element.icon]"
-                                        ></v-icon>
+                                        <v-icon v-text="element.icon"></v-icon>
                                     </v-list-item-icon>
                                     <v-list-item-title
                                         v-text="element.name"
@@ -152,8 +164,9 @@
 
             <v-dialog v-model="dialog" max-width="800">
                 <EditorMenu
-                    v-bind.sync="selectedElement"
+                    :edit-element="selectedElement"
                     @cancel="dialog = false"
+                    @submit="updateElement"
                 />
             </v-dialog>
         </v-sheet>
@@ -163,50 +176,48 @@
 <script>
 import {
     mdiArrowLeft,
-    mdiCheckBoxOutline,
+    mdiCardTextOutline,
+    mdiPound,
+    mdiLockOutline,
+    mdiEmailOutline,
+    mdiPaletteOutline,
     mdiCalendarMonth,
+    mdiClockOutline,
+    mdiCalendarClock,
+    mdiCheckBoxOutline,
     mdiUploadOutline,
     mdiAlphaHBoxOutline,
-    mdiPound,
     mdiRadioboxMarked,
     mdiFormSelect,
-    mdiCardTextOutline,
     mdiStarOutline,
-    mdiFaceOutline
+    mdiFaceOutline,
+    mdiLock
 } from "@mdi/js";
 
 import EditorMenu from "@/components/editor/EditorMenu.vue";
-import EditorTextField from "@/components/editor/EditorTextField.vue";
+import EditorInputElement from "@/components/editor/EditorInputElement.vue";
+import EditorColorPicker from "@/components/editor/EditorColorPicker.vue";
 
 class EditorElement {
     constructor(el = {}) {
-        this.name = el.name || "editor-text-field";
-        this.required = el.required || true;
+        this.name = el.name || "";
+        this.type = el.type || "";
+        this.required = el.required || false;
         this.label = el.label || "";
         this.helpText = el.helpText || "";
         this.access = el.access || [];
         this.value = el.value || "";
-        this.type = el.type || "Text";
         this.maxLength = el.maxLength || null;
     }
 }
 
 export default {
     name: "AddContest",
-    components: { EditorMenu, EditorTextField },
+    components: { EditorMenu, EditorInputElement, EditorColorPicker },
     data: () => ({
         icons: {
             mdiArrowLeft,
-            mdiCheckBoxOutline,
-            mdiCalendarMonth,
-            mdiUploadOutline,
-            mdiAlphaHBoxOutline,
-            mdiPound,
-            mdiRadioboxMarked,
-            mdiFormSelect,
-            mdiCardTextOutline,
-            mdiStarOutline,
-            mdiFaceOutline
+            mdiCalendarMonth
         },
         menu: false,
         winMenu: false,
@@ -214,29 +225,61 @@ export default {
         declarationDate: "",
         elementTypes: [
             {
-                icon: "mdiCheckBoxOutline",
-                name: "Checkbox Group",
-                value: "b-editor-checkbox"
-            },
-            { icon: "mdiCalendarMonth", name: "Date Field" },
-            { icon: "mdiUploadOutline", name: "File Upload" },
-            { icon: "mdiAlphaHBoxOutline", name: "Header" },
-            { icon: "mdiPound", name: "Number" },
-            { icon: "mdiRadioboxMarked", name: "Radio Group" },
-            { icon: "mdiFormSelect", name: "Select" },
-            {
-                icon: "mdiCardTextOutline",
+                icon: mdiCardTextOutline,
                 name: "Text Field",
-                value: {
-                    name: "editor-text-field"
-                }
+                value: { name: "editor-input-element", type: "Text Field" }
             },
-            { icon: "mdiStarOutline", name: "Star Rating" },
-            { icon: "mdiFaceOutline", name: "User Details" }
+            {
+                icon: mdiPound,
+                name: "Number Field",
+                value: { name: "editor-input-element", type: "Number Field" }
+            },
+            {
+                icon: mdiLockOutline,
+                name: "Password Field",
+                value: { name: "editor-input-element", type: "Password Field" }
+            },
+            {
+                icon: mdiEmailOutline,
+                name: "Email Field",
+                value: { name: "editor-input-element", type: "Email Field" }
+            },
+            {
+                icon: mdiCalendarMonth,
+                name: "Date Field",
+                value: { name: "editor-input-element", type: "Date Field" }
+            },
+            {
+                icon: mdiClockOutline,
+                name: "Time Field",
+                value: { name: "editor-input-element", type: "Time Field" }
+            },
+            {
+                icon: mdiCalendarClock,
+                name: "Date/Time Field",
+                value: { name: "editor-input-element", type: "Date/Time Field" }
+            },
+            {
+                icon: mdiPaletteOutline,
+                name: "Color Picker",
+                value: { name: "editor-color-picker", type: "Color Picker" }
+            },
+            {
+                icon: mdiCheckBoxOutline,
+                name: "Checkbox Group",
+                value: { name: "editor-checkbox" }
+            },
+            { icon: mdiUploadOutline, name: "File Upload" },
+            { icon: mdiAlphaHBoxOutline, name: "Header" },
+            { icon: mdiRadioboxMarked, name: "Radio Group" },
+            { icon: mdiFormSelect, name: "Select" },
+            { icon: mdiStarOutline, name: "Star Rating" },
+            { icon: mdiFaceOutline, name: "User Details" }
         ],
         elements: [],
         dialog: false,
-        selectedElement: {}
+        selectedElement: {},
+        index: null
     }),
 
     methods: {
@@ -244,9 +287,47 @@ export default {
             this.elements.push(new EditorElement(element));
         },
 
-        openMenu(element) {
+        moveElementUp(element, i) {
+            if (i === 0) {
+                this.elements.splice(i, 1);
+                this.elements.push(element);
+            } else {
+                this.elements.splice(i, 1);
+                this.elements.splice(i - 1, 0, element);
+            }
+        },
+
+        moveElementDown(element, i) {
+            if (i === this.elements.length - 1) {
+                this.elements.splice(i, 1);
+                this.elements.unshift(element);
+            } else {
+                this.elements.splice(i, 1);
+                this.elements.splice(i + 1, 0, element);
+            }
+        },
+
+        openEditor(element, i) {
             this.selectedElement = element;
+            this.index = i;
             this.dialog = true;
+        },
+
+        updateElement(element) {
+            this.elements.splice(this.index, 1, element);
+            this.dialog = false;
+        },
+
+        hasMask(element) {
+            if (
+                element.type === "Text Field" ||
+                element.type === "Number Field" ||
+                element.type === "Password Field" ||
+                element.type === "Email Field"
+            ) {
+                return true;
+            }
+            return false;
         },
 
         createMask(length) {

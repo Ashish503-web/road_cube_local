@@ -10,10 +10,18 @@
             :page.sync="page"
             :items-per-page.sync="perPage"
             :server-items-length="serverItemsLength"
-            :loading="loading"
             loader-height="2"
             class="b-outlined"
         >
+            <template v-slot:no-data>
+                <v-progress-circular
+                    v-if="loading"
+                    color="secondary"
+                    indeterminate
+                ></v-progress-circular>
+                <span v-else>No data available</span>
+            </template>
+
             <template v-slot:item.reward_points="{ item }">
                 <v-sheet>
                     <b-text-field
