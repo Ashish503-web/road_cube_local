@@ -1,55 +1,266 @@
 <template>
-    <div>
-        <v-app-bar app flat color="white">
-            <v-toolbar-title class="ml-12">
-                <v-img src="@/assets/logo-black.png" width="140"></v-img>
-            </v-toolbar-title>
+    <div id="header">
+        <v-app-bar app height="auto" elevate-on-scroll class="header">
+            <v-row no-gutters class="d-flex justify-space-between align-center container mx-auto py-0 px-2 px-sm-4 px-md-6 px-lg-10">
+                <v-col cols="auto">
+                    <v-toolbar-title>
+                        <v-img class="white-logo" src="@/assets/home/logo.png" width="140" height="20"></v-img>
+                        <v-img class="black-logo" style="display: none" src="@/assets/home/logo-sticky.png" width="140"
+                               height="23"></v-img>
+                    </v-toolbar-title>
+                </v-col>
+                <v-col cols="auto" :hidden="$vuetify.breakpoint.smAndDown">
+                    <v-toolbar-items class="d-flex align-center justify-center">
+                        <v-btn text href="#home" class="light-theme active">home</v-btn>
+                        <v-btn text href="#products" class="light-theme">why roadcube</v-btn>
+                        <v-btn text href="#about" class="light-theme">about</v-btn>
+                        <v-btn text href="#features" class="light-theme">features</v-btn>
+                        <v-btn text href="#quote" class="light-theme">quote</v-btn>
+                        <v-btn text href="#cta" class="light-theme">contact</v-btn>
+                        <v-btn
+                                class="text-capitalize pr-1 pl-0 ml-6 btn-hover"
+                                height="auto"
+                                rounded
+                        >
+                            <p class="ma-0" style="padding: 15px 70px 15px 20px; font-size: 17px">merchant login</p>
+                            <v-avatar size="38" class="icon-hover">
+                                <v-icon
+                                        size="24"
+                                        color="#fff"
+                                        v-text="icons.mdiArrowRight"
+                                        class="right-icon"
+                                ></v-icon>
+                                <v-icon
+                                        size="24"
+                                        color="#001266"
+                                        v-text="icons.mdiArrowRight"
+                                        class="right-icon"
+                                ></v-icon>
 
-            <v-spacer></v-spacer>
-
-            <v-btn text href="#features">home</v-btn>
-            <v-btn text>why roadcube</v-btn>
-            <v-btn text>about</v-btn>
-            <v-btn text>features</v-btn>
-            <v-btn text>quote</v-btn>
-            <v-btn text>contact</v-btn>
-            <v-btn
-                class="text-capitalize pr-1 mr-12"
-                height="50"
-                outlined
-                rounded
-                style="font-size: 1.1rem"
-            >
-                merchant login
-                <v-avatar color="#25ccf740" class="ml-3" size="38">
-                    <v-icon
-                        size="24"
-                        color="#001266"
-                        v-text="icons.mdiArrowRight"
-                    ></v-icon>
-                </v-avatar>
-            </v-btn>
+                            </v-avatar>
+                        </v-btn>
+                    </v-toolbar-items>
+                </v-col>
+                <v-col cols="auto" :hidden="$vuetify.breakpoint.mdAndUp">
+                    <v-dialog
+                            v-model="dialog"
+                            fullscreen
+                            hide-overlay
+                            transition="scale-transition"
+                    >
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-btn
+                                    color="transparent"
+                                    fab
+                                    depressed
+                                    small
+                                    v-bind="attrs"
+                                    v-on="on"
+                            >
+                                <v-icon v-text="icons.mdiMenu" x-large></v-icon>
+                            </v-btn>
+                        </template>
+                        <v-card>
+                            <v-toolbar
+                                    light
+                            >
+                                <v-toolbar-title>Roadcube</v-toolbar-title>
+                                <v-spacer></v-spacer>
+                                <v-toolbar-items>
+                                    <v-btn
+                                            color="secondary"
+                                            dark
+                                            text
+                                            @click="dialog = false"
+                                    >
+                                        <v-icon v-text="icons.mdiClose"></v-icon>
+                                    </v-btn>
+                                </v-toolbar-items>
+                            </v-toolbar>
+                            <v-list>
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-title>
+                                            Home
+                                        </v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+                                <v-divider></v-divider>
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-title>
+                                            Why RoadCube
+                                        </v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+                                <v-divider></v-divider>
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-title>
+                                            About
+                                        </v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+                                <v-divider></v-divider>
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-title>
+                                            Features
+                                        </v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+                                <v-divider></v-divider>
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-title>
+                                            Quote
+                                        </v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+                                <v-divider></v-divider>
+                                <v-list-item>
+                                    <v-list-item-content>
+                                        <v-list-item-title>
+                                            Contact
+                                        </v-list-item-title>
+                                    </v-list-item-content>
+                                </v-list-item>
+                            </v-list>
+                        </v-card>
+                    </v-dialog>
+                </v-col>
+            </v-row>
         </v-app-bar>
     </div>
 </template>
 
 <script>
-import { mdiArrowRight } from "@mdi/js";
 
-export default {
-    name: "Header",
-    data: () => ({
-        icons: { mdiArrowRight }
-    })
-};
+    import { mdiArrowRight, mdiClose, mdiMenu } from "@mdi/js";
+
+    export default {
+        name: "Header",
+        data: () => ({
+            dialog: false,
+            notifications: false,
+            sound: true,
+            widgets: false,
+            icons: { mdiArrowRight, mdiClose, mdiMenu }
+
+        })
+    };
+
+    window.onscroll = function() {
+        scrollFunction();
+    };
+
+    function scrollFunction() {
+        let btns = document.querySelectorAll(".light-theme");
+        if (document.body.scrollTop > 30 || document.documentElement.scrollTop > 30) {
+            document.querySelector(".header").classList.add("white-bg");
+            document.querySelector(".black-logo").style.display = "block";
+            document.querySelector(".white-logo").style.display = "none";
+            for (let i = 0; i < btns.length; i++) {
+                btns[i].classList.add("dark-theme");
+            }
+        } else {
+            document.querySelector(".header").classList.remove("white-bg");
+            document.querySelector(".black-logo").style.display = "none";
+            document.querySelector(".white-logo").style.display = "block";
+            for (let i = 0; i < btns.length; i++) {
+                btns[i].classList.remove("dark-theme");
+            }
+        }
+    }
+
 </script>
 
 <style scoped>
-.theme--light.v-btn:hover {
-    color: #007bff;
-}
 
-.theme--light.v-btn:hover::before {
-    opacity: 0 !important;
-}
+    .theme--light.v-btn:hover::before {
+        opacity: 0 !important;
+    }
+
+    .header {
+        background-color: transparent !important;
+        padding: 36px 0;
+        transition: all 100ms ease-in-out;
+    }
+
+    .white-bg {
+        background-color: white !important;
+        padding: 6px 0;
+    }
+
+    .light-theme {
+        color: white;
+        opacity: .5;
+    }
+
+    .light-theme:hover {
+        opacity: 1;
+    }
+
+    .light-theme.active {
+        opacity: 1;
+    }
+
+    .dark-theme {
+        color: black;
+        opacity: 1;
+    }
+
+    .dark-theme:hover {
+        color: #007bff;
+    }
+
+    .dark-theme.active {
+        color: #007bff;
+    }
+
+    /*Hovered btn*/
+    .btn-hover {
+        font-size: 1em;
+        background-color: white !important;
+        border-radius: 150px;
+        transition: all .3s ease;
+        overflow: hidden;
+        box-shadow: none;
+        border: 1px solid #e8eaee;
+    }
+
+    .btn-hover:hover {
+        border: 1px solid #142752;
+        background-color: #142752 !important;
+    }
+
+    .icon-hover {
+        position: absolute;
+        right: 0;
+        display: flex;
+        width: 40px !important;
+        height: 40px !important;
+        background-color: #c8f2fd !important;
+        transition: all .3s ease;
+        justify-items: center;
+        justify-content: flex-end;
+    }
+
+    .icon-hover .right-icon {
+        width: 40px !important;
+    }
+
+    .btn-hover:hover .icon-hover .right-icon {
+        transform: translateX(100%);
+    }
+
+    .btn-hover:hover .icon-hover {
+        background-color: #0089f3 !important;
+    }
+
+    .btn-hover:hover p {
+        color: white;
+    }
+
+    /*Hovered btn*/
 </style>
