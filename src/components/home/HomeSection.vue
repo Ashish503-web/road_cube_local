@@ -255,7 +255,9 @@ h1 {
 .video-close-btn::before {
     background-color: transparent !important;
 }
+
 /*Hovered btn*/
+
 .btn-hover {
     font-size: 1em;
     background-color: white !important;

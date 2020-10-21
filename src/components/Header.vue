@@ -209,6 +209,7 @@ window.onscroll = function () {
 
 function scrollFunction() {
     let btns = document.querySelectorAll(".light-theme");
+
     if (
         document.body.scrollTop > 10 ||
         document.documentElement.scrollTop > 10
@@ -235,7 +236,13 @@ a {
     text-decoration: none;
     text-transform: uppercase;
     font-weight: 600;
+}
 
+.theme--light.v-btn:hover::before {
+    opacity: 0 !important;
+}
+
+.header {
     background-color: transparent !important;
     padding: 36px 0;
     transition: all 100ms ease-in-out;
