@@ -32,17 +32,30 @@ export default {
         tabs: [
             {
                 to: "/loyaltyPanel/branch-debt/monthly-invoicing",
-                name: "Monthly Invoicing"
+                name: "Monthly Invoicing",
             },
             {
                 to: "/loyaltyPanel/branch-debt/redemption-invoice",
-                name: "Redemption Invoice"
-            }
+                name: "Redemption Invoice",
+            },
         ],
         page: 1,
         itemsPerPage: 10,
-        perPage: [10, 20, 30]
-    })
+        perPage: [10, 20, 30],
+    }),
+
+    watch: {
+        $route: {
+            immediate: true,
+            handler(val) {
+                if (val.path === "/loyaltyPanel/branch-debt") {
+                    this.$router.push(
+                        "/loyaltyPanel/branch-debt/monthly-invoicing"
+                    );
+                }
+            },
+        },
+    },
 };
 </script>
 

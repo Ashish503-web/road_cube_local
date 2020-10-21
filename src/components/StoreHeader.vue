@@ -123,7 +123,11 @@
                     <div v-for="item in navLink.children" :key="item.title">
                         <v-tooltip v-if="mini" color="secondary" right>
                             <template v-slot:activator="{ on }">
-                                <v-list-item :to="item.to" exact v-on="on">
+                                <v-list-item
+                                    :to="item.to"
+                                    :exact="item.exact"
+                                    v-on="on"
+                                >
                                     <v-list-item-icon>
                                         <v-icon v-text="item.icon"></v-icon>
                                     </v-list-item-icon>
@@ -219,31 +223,26 @@ export default {
                             icon: mdiPlusThick,
                             title: "New Transaction",
                             to: "/storePanel/new-transaction",
-                            exact: false,
                         },
                         {
                             icon: mdiCurrencyEur,
                             title: "Transactions",
                             to: "/storePanel/transactions",
-                            exact: false,
                         },
                         {
                             icon: mdiGift,
                             title: "Redeem",
                             to: "/storePanel/redeem",
-                            exact: false,
                         },
                         {
                             icon: mdiDatabaseSync,
                             title: "History",
                             to: "/storePanel/history",
-                            exact: false,
                         },
                         {
                             icon: mdiTrophyVariant,
                             title: "Contests",
                             to: "/storePanel/contests",
-                            exact: false,
                         },
                     ],
                 },
@@ -259,13 +258,11 @@ export default {
                             icon: mdiTagMultiple,
                             title: "Coupons",
                             to: "/storePanel/coupons",
-                            exact: false,
                         },
                         {
                             icon: mdiCog,
                             title: "Settings",
                             to: "/storePanel/settings",
-                            exact: false,
                         },
                     ],
                 },

@@ -171,7 +171,7 @@ export default {
     name: "BranchesTab",
     components: {
         ShopForm,
-        RightsForm
+        RightsForm,
     },
     data: () => ({
         icons: { mdiPencilOutline, mdiOpenInNew, mdiClose },
@@ -182,14 +182,14 @@ export default {
             "Banks",
             "Address",
             "Phone",
-            "Registration Date"
+            "Registration Date",
         ],
         selectedSearchType: "All Fields",
         headers: [
             { text: "Name", value: "name" },
             {
                 text: "Name of Shop(in app)",
-                value: "name_of_shop"
+                value: "name_of_shop",
             },
             { text: "Map", value: "map" },
             { text: "Payments", value: "payments" },
@@ -199,10 +199,10 @@ export default {
             { text: "Phone", value: "phone" },
             {
                 text: "Registration Date",
-                value: "registration_date"
+                value: "registration_date",
             },
             { text: "Active", value: "active" },
-            { text: "Actions", value: "actions" }
+            { text: "Actions", value: "actions" },
         ],
         items: [
             {
@@ -215,7 +215,7 @@ export default {
                 address: "Agias Glikerias 10",
                 phone: "545648989478",
                 registration_date: "2019/06/27",
-                active: "ON"
+                active: "ON",
             },
             {
                 name: "Vasilis",
@@ -227,7 +227,7 @@ export default {
                 address: "Agias Glikerias 10",
                 phone: "545648989478",
                 registration_date: "2019/06/27",
-                active: "ON"
+                active: "ON",
             },
             {
                 name: "Vasilis",
@@ -239,15 +239,15 @@ export default {
                 address: "Agias Glikerias 10",
                 phone: "545648989478",
                 registration_date: "2019/06/27",
-                active: "ON"
-            }
+                active: "ON",
+            },
         ],
         itemsPerPageOptions: [10, 20, 30, -1],
         mode: 0,
         shopDialog: false,
         rightsDialog: false,
         redirectDialog: false,
-        deleteDialog: false
+        deleteDialog: false,
     }),
 
     computed: {},
@@ -257,8 +257,8 @@ export default {
 
         myFunc() {
             alert(5);
-        }
-    }
+        },
+    },
 };
 </script>
 <style scoped>

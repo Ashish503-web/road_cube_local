@@ -1,7 +1,7 @@
 export default [
     {
-        path: "",
-        name: "LoyaltyProducts",
+        path: "products-tab",
+        name: "LoyaltyProductsTab",
         component: () =>
             import(
                 /* webpackChunkName: "productsTab" */ "@/views/loyaltyPanel/products/tabs/ProductsTab.vue"

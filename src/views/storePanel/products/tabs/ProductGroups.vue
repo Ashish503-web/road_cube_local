@@ -15,7 +15,6 @@
             :items="productGroups"
             :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
             :page.sync="page"
-            :items-per-page.sync="perPage"
             :server-items-length="serverItemsLength"
             class="b-outlined"
         >
@@ -107,8 +106,7 @@ export default {
             icons: { mdiPencilOutline, mdiClose },
             lang: "el",
             page: +this.$route.query.page,
-            perPage: +this.$route.query.perPage,
-            mode: 0
+            mode: 0,
         };
     },
 
@@ -117,7 +115,7 @@ export default {
             "loading",
             "errorMessage",
             "productGroups",
-            "serverItemsLength"
+            "serverItemsLength",
         ]),
 
         headers() {
@@ -125,11 +123,11 @@ export default {
                 { text: "Product Name", value: `name[${this.lang}]` },
                 {
                     text: "Product Description",
-                    value: `description[${this.lang}]`
+                    value: `description[${this.lang}]`,
                 },
                 { text: "Selling Price", value: "retail_price" },
                 { text: "Coupon", value: "coupon" },
-                { text: "Actions", value: "actions" }
+                { text: "Actions", value: "actions" },
             ];
         },
 
@@ -140,7 +138,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         deleteDialog: {
@@ -150,7 +148,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            }
+            },
         },
 
         productGroup: {
@@ -160,7 +158,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
+            },
         },
 
         query() {
@@ -171,7 +169,7 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
@@ -182,7 +180,7 @@ export default {
             "setResetValidation",
             "setShowImageUpload",
             "setShowWeekdays",
-            "setItem"
+            "setItem",
         ]),
         ...mapActions("storePanel/productGroups", ["getItems", "remove"]),
 
@@ -197,7 +195,7 @@ export default {
             this.dialog = true;
             setTimeout(() => this.setResetSuccess(true), 300);
             this.setResetValidation(true);
-        }
+        },
     },
 
     watch: {
@@ -208,8 +206,19 @@ export default {
             }
         },
 
-        $route() {
-            this.getItems(this.query);
+        $route: {
+            immediate: true,
+            handler(val) {
+                if (!val.query.page) {
+                    this.$router.push({
+                        query: {
+                            page: 1,
+                            ...this.$route.query,
+                        },
+                    });
+                }
+                this.getItems(this.query);
+            },
         },
 
         page(page) {
@@ -218,32 +227,8 @@ export default {
 
         perPage(perPage) {
             this.$router.push({ query: { ...this.$route.query, perPage } });
-        }
+        },
     },
-
-    beforeCreate() {
-        if (!this.$route.query.perPage) {
-            this.$router.push({
-                query: {
-                    perPage: 12,
-                    ...this.$route.query
-                }
-            });
-        }
-
-        if (!this.$route.query.page) {
-            this.$router.push({
-                query: {
-                    page: 1,
-                    ...this.$route.query
-                }
-            });
-        }
-    },
-
-    mounted() {
-        this.getItems(this.query);
-    }
 };
 </script>
 

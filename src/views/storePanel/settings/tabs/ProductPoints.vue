@@ -5,10 +5,9 @@
             :items="productPoints"
             :footer-props="{
                 itemsPerPageOptions: [12],
-                showCurrentPage: true
+                showCurrentPage: true,
             }"
             :page.sync="page"
-            :items-per-page.sync="perPage"
             :server-items-length="serverItemsLength"
             loader-height="2"
             class="b-outlined"
@@ -82,18 +81,16 @@ export default {
         return {
             groupRewardTypes: [
                 { text: "Per Transaction", value: 1 },
-                { text: "Per Euro", value: 4 }
+                { text: "Per Euro", value: 4 },
             ],
             productRewardTypes: [
                 { text: "Per Transaction", value: 1 },
                 { text: "Piece", value: 2 },
                 { text: "Liters", value: 3 },
-                { text: "Per Euro", value: 4 }
+                { text: "Per Euro", value: 4 },
             ],
             lang: "el",
-            itemsPerPageOptions: [10, 20, 30, -1],
             page: +this.$route.query.page,
-            perPage: +this.$route.query.perPage
         };
     },
 
@@ -106,15 +103,15 @@ export default {
                 {
                     text: "Product Name",
                     value: `name[${this.lang}]`,
-                    width: "20%"
+                    width: "20%",
                 },
                 { text: "Points", value: "reward_points", width: "15%" },
                 { text: "Type", value: "reward_type_id", width: "30%" },
                 {
                     text: "Point Subsidy",
-                    value: "reward_points_shared"
+                    value: "reward_points_shared",
                 },
-                { text: "Save", value: "save", width: "10%" }
+                { text: "Save", value: "save", width: "10%" },
             ];
         },
 
@@ -126,19 +123,30 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
         ...mapActions("storePanel/settings/productPoints", [
             "getItems",
-            "update"
-        ])
+            "update",
+        ]),
     },
 
     watch: {
-        $route() {
-            this.getItems(this.query);
+        $route: {
+            immediate: true,
+            handler(val) {
+                if (!val.query.page) {
+                    this.$router.push({
+                        query: {
+                            page: 1,
+                            ...this.$route.query,
+                        },
+                    });
+                }
+                this.getItems(this.query);
+            },
         },
 
         page(page) {
@@ -147,32 +155,8 @@ export default {
 
         perPage(perPage) {
             this.$router.push({ query: { ...this.$route.query, perPage } });
-        }
+        },
     },
-
-    beforeCreate() {
-        if (!this.$route.query.perPage) {
-            this.$router.push({
-                query: {
-                    perPage: 10,
-                    ...this.$route.query
-                }
-            });
-        }
-
-        if (!this.$route.query.page) {
-            this.$router.push({
-                query: {
-                    page: 1,
-                    ...this.$route.query
-                }
-            });
-        }
-    },
-
-    mounted() {
-        this.getItems(this.query);
-    }
 };
 </script>
 

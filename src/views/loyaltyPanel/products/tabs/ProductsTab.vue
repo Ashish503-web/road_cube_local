@@ -107,7 +107,7 @@ export default {
             "Description",
             "Selling Price",
             "Target Price",
-            "Wholesale Price"
+            "Wholesale Price",
         ],
         selectedSearchType: "All Fields",
         headers: [
@@ -116,16 +116,21 @@ export default {
                 align: "start",
                 sortable: true,
                 value: "name",
-                action: false
+                action: false,
             },
             {
                 text: "Product Description",
                 value: "description",
-                action: false
+                action: false,
             },
             { text: "Selling Price", value: "selling", action: false },
             { text: "Wholesale Price", value: "wholesale", action: false },
-            { text: "Actions", value: "actions", sortable: false, action: true }
+            {
+                text: "Actions",
+                value: "actions",
+                sortable: false,
+                action: true,
+            },
         ],
         items: [
             {
@@ -133,19 +138,19 @@ export default {
                 description: 159,
                 selling: 6.0,
                 wholesale: 24,
-                id: 1
+                id: 1,
             },
             {
                 name: "Ice cream sandwich",
                 description: 237,
                 selling: 9.0,
                 wholesale: 37,
-                id: 0
-            }
+                id: 0,
+            },
         ],
         mode: 1,
         dialog: false,
-        deleteDialog: false
-    })
+        deleteDialog: false,
+    }),
 };
 </script>

@@ -29,16 +29,27 @@ export default {
     data: () => ({
         tab: "loyaltyPanel/products",
         tabs: [
-            { to: "/loyaltyPanel/products", name: "products" },
+            { to: "/loyaltyPanel/products/products-tab", name: "products" },
             {
                 to: "/loyaltyPanel/products/products-per-store",
-                name: "products per store"
+                name: "products per store",
             },
             {
                 to: "/loyaltyPanel/products/products-series",
-                name: "series of products"
-            }
-        ]
-    })
+                name: "series of products",
+            },
+        ],
+    }),
+
+    watch: {
+        $route: {
+            immediate: true,
+            handler(val) {
+                if (val.path === "/loyaltyPanel/products") {
+                    this.$router.push("/loyaltyPanel/products/products-tab");
+                }
+            },
+        },
+    },
 };
 </script>

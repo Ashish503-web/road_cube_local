@@ -26,6 +26,7 @@ export default [
 
     {
         path: "branches",
+        name: "Branches",
         component: () =>
             import(
                 /* webpackChunkName: "branches" */ "@/views/loyaltyPanel/branches/Branches.vue"
@@ -54,6 +55,7 @@ export default [
 
     {
         path: "products",
+        name: "LoyaltyProducts",
         component: () =>
             import(
                 /* webpackChunkName: "products" */ "@/views/loyaltyPanel/products/Products.vue"
