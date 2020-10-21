@@ -101,6 +101,7 @@ export default [
 
     {
         path: "products",
+        name: "Products",
         component: () =>
             import(
                 /* webpackChunkName: "products" */ "@/views/storePanel/products/Products.vue"

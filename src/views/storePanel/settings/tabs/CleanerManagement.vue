@@ -100,7 +100,6 @@ export default {
             tab: null,
             lang: "en",
             page: +this.$route.query.page,
-            perPage: +this.$route.query.perPage,
         };
     },
 
@@ -136,8 +135,19 @@ export default {
     },
 
     watch: {
-        $route() {
-            this.getItems(this.query);
+        $route: {
+            immediate: true,
+            handler(val) {
+                if (!val.query.page) {
+                    this.$router.push({
+                        query: {
+                            page: 1,
+                            ...this.$route.query,
+                        },
+                    });
+                }
+                this.getItems(this.query);
+            },
         },
 
         page(page) {
@@ -147,30 +157,6 @@ export default {
         perPage(perPage) {
             this.$router.push({ query: { ...this.$route.query, perPage } });
         },
-    },
-
-    beforeCreate() {
-        if (!this.$route.query.perPage) {
-            this.$router.push({
-                query: {
-                    perPage: 12,
-                    ...this.$route.query,
-                },
-            });
-        }
-
-        if (!this.$route.query.page) {
-            this.$router.push({
-                query: {
-                    page: 1,
-                    ...this.$route.query,
-                },
-            });
-        }
-    },
-
-    mounted() {
-        this.getItems(this.query);
     },
 };
 </script>

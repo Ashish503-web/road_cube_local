@@ -1,7 +1,7 @@
 export default [
     {
-        path: "",
-        name: "Branches",
+        path: "branches-tab",
+        name: "BranchesTab",
         component: () =>
             import(
                 /* webpackChunkName: "branchesTab" */ "@/views/loyaltyPanel/branches/tabs/BranchesTab.vue"

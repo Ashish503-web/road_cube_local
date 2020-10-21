@@ -29,24 +29,35 @@ export default {
     data: () => ({
         tab: "loyaltyPanel/branches",
         tabs: [
-            { to: "/loyaltyPanel/branches", name: "branches" },
+            { to: "/loyaltyPanel/branches/branches-tab", name: "branches" },
             {
                 to: "/loyaltyPanel/branches/financial-data",
-                name: "financial data"
+                name: "financial data",
             },
             {
                 to: "/loyaltyPanel/branches/admin-panel-settings",
-                name: "Settings of Admin Panel"
+                name: "Settings of Admin Panel",
             },
             {
                 to: "/loyaltyPanel/branches/application-settings",
-                name: "Settings of Application"
+                name: "Settings of Application",
             },
             {
                 to: "/loyaltyPanel/branches/daily-transaction-limits",
-                name: "Daily Transaction Limits"
-            }
-        ]
-    })
+                name: "Daily Transaction Limits",
+            },
+        ],
+    }),
+
+    watch: {
+        $route: {
+            immediate: true,
+            handler(val) {
+                if (val.path === "/loyaltyPanel/branches") {
+                    this.$router.push("/loyaltyPanel/branches/branches-tab");
+                }
+            },
+        },
+    },
 };
 </script>

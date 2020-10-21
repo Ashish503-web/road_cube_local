@@ -19,7 +19,7 @@ export default [
 
     {
         path: "payment-methods",
-        name: "PaymentMethods",
+        name: "LoyaltyPaymentMethods",
         component: () =>
             import(
                 /* webpackChunkName: "paymentMethods" */ "@/views/loyaltyPanel/subscriptions/tabs/PaymentMethods.vue"

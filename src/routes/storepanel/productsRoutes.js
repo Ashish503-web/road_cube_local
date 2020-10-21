@@ -1,7 +1,7 @@
 export default [
     {
-        path: "",
-        name: "Products",
+        path: "products-tab",
+        name: "ProductsTab",
         component: () =>
             import(
                 /* webpackChunkName: "productsTab" */ "@/views/storePanel/products/tabs/ProductsTab.vue"

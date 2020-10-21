@@ -118,7 +118,11 @@
                     <div v-for="item in navLink.children" :key="item.title">
                         <v-tooltip v-if="mini" color="secondary" right>
                             <template v-slot:activator="{ on }">
-                                <v-list-item :to="item.to" exact v-on="on">
+                                <v-list-item
+                                    :to="item.to"
+                                    :exact="item.exact"
+                                    v-on="on"
+                                >
                                     <v-list-item-icon>
                                         <v-icon v-text="item.icon"></v-icon>
                                     </v-list-item-icon>
@@ -134,7 +138,7 @@
                             ></span>
                         </v-tooltip>
 
-                        <v-list-item v-else :to="item.to" exact>
+                        <v-list-item v-else :to="item.to" :exact="item.exact">
                             <v-list-item-icon>
                                 <v-icon v-text="item.icon"></v-icon>
                             </v-list-item-icon>
@@ -226,11 +230,12 @@ export default {
                             icon: mdiChartBar,
                             title: "Dashboard",
                             to: "/loyaltyPanel",
+                            exact: true,
                         },
                         {
                             icon: mdiCashMultiple,
                             title: "Branch Debt",
-                            to: "/loyaltyPanel/branch-debt/monthly-invoicing",
+                            to: "/loyaltyPanel/branch-debt",
                         },
                         {
                             icon: mdiSourceBranch,
@@ -240,7 +245,7 @@ export default {
                         {
                             icon: mdiFileDocument,
                             title: "Subscriptions",
-                            to: "/loyaltyPanel/subscriptions/stores",
+                            to: "/loyaltyPanel/subscriptions",
                         },
                         {
                             icon: mdiCreditCardOutline,
@@ -285,7 +290,7 @@ export default {
                         {
                             icon: mdiGift,
                             title: "Gift Status",
-                            to: "/loyaltyPanel/gift-status/pending",
+                            to: "/loyaltyPanel/gift-status",
                         },
                         {
                             icon: mdiTrophyVariant,

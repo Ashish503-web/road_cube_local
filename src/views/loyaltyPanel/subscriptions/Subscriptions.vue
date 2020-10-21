@@ -32,13 +32,24 @@ export default {
             { to: "/loyaltyPanel/subscriptions/stores", name: "stores" },
             {
                 to: "/loyaltyPanel/subscriptions/registration-plans",
-                name: "registration plans"
+                name: "registration plans",
             },
             {
                 to: "/loyaltyPanel/subscriptions/payment-methods",
-                name: "payment methods"
-            }
-        ]
-    })
+                name: "payment methods",
+            },
+        ],
+    }),
+
+    watch: {
+        $route: {
+            immediate: true,
+            handler(val) {
+                if (val.path === "/loyaltyPanel/subscriptions") {
+                    this.$router.push("/loyaltyPanel/subscriptions/stores");
+                }
+            },
+        },
+    },
 };
 </script>

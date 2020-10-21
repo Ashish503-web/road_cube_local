@@ -30,12 +30,23 @@ export default {
     data: () => ({
         tab: "storePanel/products",
         tabs: [
-            { to: "/storePanel/products", name: "Products" },
+            { to: "/storePanel/products/products-tab", name: "Products" },
             {
                 to: "/storePanel/products/product-groups",
-                name: "Product Groups"
-            }
-        ]
-    })
+                name: "Product Groups",
+            },
+        ],
+    }),
+
+    watch: {
+        $route: {
+            immediate: true,
+            handler(val) {
+                if (val.path === "/storePanel/products") {
+                    this.$router.push("/storePanel/products/products-tab");
+                }
+            },
+        },
+    },
 };
 </script>
