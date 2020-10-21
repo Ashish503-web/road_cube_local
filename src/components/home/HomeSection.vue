@@ -56,16 +56,12 @@
                                             <img src="../../assets/home/play-button-arrowhead.svg" class="play-btn"/>
                                         </a>
                                     </template>
-                                    <v-btn
-                                            @click="dialog=false"
-                                            color="transparent"
-                                            depressed
-                                            class="video-close-btn">
                                         <v-icon
+                                                class="video-close-btn"
+                                                @click="dialog=false"
                                                 color="white"
                                                 v-text="icons.mdiClose"
                                         ></v-icon>
-                                    </v-btn>
                                     <v-card class="video-dialog">
                                         <iframe width="100%" height="100%"
                                                 class="yvideo"

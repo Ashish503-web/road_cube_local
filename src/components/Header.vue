@@ -11,12 +11,12 @@
                 </v-col>
                 <v-col cols="auto" :hidden="$vuetify.breakpoint.smAndDown">
                     <v-toolbar-items class="d-flex align-center justify-center">
-                        <v-btn text href="#home" class="light-theme active">home</v-btn>
-                        <v-btn text href="#products" class="light-theme">why roadcube</v-btn>
-                        <v-btn text href="#about" class="light-theme">about</v-btn>
-                        <v-btn text href="#features" class="light-theme">features</v-btn>
-                        <v-btn text href="#quote" class="light-theme">quote</v-btn>
-                        <v-btn text href="#cta" class="light-theme">contact</v-btn>
+                        <a href="#home" class="light-theme active px-2">home</a>
+                        <a href="#products" class="light-theme px-2">why roadcube</a>
+                        <a href="#about" class="light-theme px-2">about</a>
+                        <a href="#features" class="light-theme px-2">features</a>
+                        <a href="#quote" class="light-theme px-2">quote</a>
+                        <a href="#cta" class="light-theme px-2">contact</a>
                         <v-btn
                                 class="text-capitalize pr-1 pl-0 ml-6 btn-hover"
                                 height="auto"
@@ -156,7 +156,7 @@
 
     function scrollFunction() {
         let btns = document.querySelectorAll(".light-theme");
-        if (document.body.scrollTop > 30 || document.documentElement.scrollTop > 30) {
+        if (document.body.scrollTop > 10 || document.documentElement.scrollTop > 10) {
             document.querySelector(".header").classList.add("white-bg");
             document.querySelector(".black-logo").style.display = "block";
             document.querySelector(".white-logo").style.display = "none";
@@ -176,6 +176,11 @@
 </script>
 
 <style scoped>
+    a{
+        text-decoration: none;
+        text-transform: uppercase;
+        font-weight: 600;
+    }
 
     .theme--light.v-btn:hover::before {
         opacity: 0 !important;

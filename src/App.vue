@@ -2,7 +2,7 @@
     <v-app>
         <router-view name="header"></router-view>
 
-        <v-main>
+        <v-main class="pa-0">
             <Notification />
             <router-view></router-view>
         </v-main>
