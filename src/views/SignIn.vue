@@ -62,6 +62,7 @@
                         }}</v-alert>
 
                         <v-card-actions class="px-0">
+                            <a class="text-decoration-none">Forgot your password?</a>
                             <v-spacer></v-spacer>
                             <v-btn
                                 type="submit"
@@ -103,10 +104,10 @@ export default {
             valid: false,
             disabled: true,
             loading: false,
-            mobileLogin: "",
+            mobileLogin: "6904242424",
             mobileSuccess: false,
             showPassword: false,
-            password: "",
+            password: "secret",
             passwordSuccess: false,
             mobileRules: [
                 (v) => {

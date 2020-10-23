@@ -31,7 +31,7 @@
                     <v-btn class="text-capitalize" text v-on="on">
                         <v-avatar size="32" class="mr-2">
                             <v-img
-                                src="../assets/avatars/avatar-1.jpg"
+                                src="../assets/avatars/user.png"
                             ></v-img> </v-avatar
                         >Henry
                         <v-icon v-text="icons.mdiChevronDown"></v-icon>
@@ -62,7 +62,7 @@
                                 ></v-icon>
                             </v-list-item-icon>
                             <v-list-item-title class="red--text"
-                                >Logout</v-list-item-title
+                                @click="storeLogout()">Logout</v-list-item-title
                             >
                         </v-list-item>
                     </v-list-item-group>
@@ -189,6 +189,7 @@ import {
 
 import avatar3 from "@/assets/avatars/avatar-3.jpg";
 import avatar4 from "@/assets/avatars/avatar-4.jpg";
+import axios from "axios";
 
 export default {
     name: "StoreHeader",
@@ -270,9 +271,7 @@ export default {
 
             profileLinks: [
                 { icon: mdiAccountOutline, text: "Profile" },
-                { icon: mdiWalletOutline, text: "My Wallet" },
                 { icon: mdiWrenchOutline, text: "Settings" },
-                { icon: mdiLockOpenOutline, text: "Lock Screen" },
             ],
         };
     },
@@ -290,6 +289,20 @@ export default {
             return this.mini ? "calc(100vh - 194px)" : "calc(100vh - 184px)";
         },
     },
+
+    methods: {
+        storeLogout() {
+            this.loading = true;
+
+            axios.post("https://api.roadcube.tk/v1/users/logout").then((res) => {
+                    this.loading = false;
+                    localStorage.removeItem("storeId");
+                    localStorage.removeItem("storeToken");
+                    this.$router.push("/");
+                })
+                
+        },
+    }
 };
 </script>
 
