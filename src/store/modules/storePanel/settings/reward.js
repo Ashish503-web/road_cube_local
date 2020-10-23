@@ -37,7 +37,7 @@ export default {
     },
 
     actions: {
-        async getSystemNotifications({ commit, rootState }) {
+        async getSystemNotifications({ commit }) {
             try {
                 const { data } = await axios.get(
                     `https://api.roadcube.tk/v1/common/system-notifications`

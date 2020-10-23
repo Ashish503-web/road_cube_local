@@ -29,9 +29,9 @@ export default {
                         if (v) {
                             this.success.averagePrice = true;
                             return true;
-                        } else return "Selling Price is required";
+                        } else return "Average Price is required";
                     },
-                    v => v >= 0.1 || "Selling Price must be minimum 0.1"
+                    v => v >= 0.1 || "Average Price must be minimum 0.1"
                 ],
                 category: [
                     v => {

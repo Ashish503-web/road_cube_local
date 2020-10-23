@@ -11,18 +11,17 @@ export default new Vuex.Store({
         storeToken: "",
         companyId: "",
         companyToken: "",
+        dialog: false,
+        deleteDialog: false,
         loading: false,
         errorMessage: "",
+        resetSuccess: false,
+        resetValidation: false,
         serverItemsLength: 0,
         notification: {
             show: false,
             type: "",
             text: ""
-        },
-        user: {
-            user_registration_identifier: "",
-            mobile: "",
-            mobile_verification_code: ""
         }
     },
 
@@ -43,8 +42,12 @@ export default new Vuex.Store({
             state.companyToken = payload;
         },
 
-        setUser(state, payload) {
-            state.user = payload;
+        setDialog(state, payload) {
+            state.dialog = payload;
+        },
+
+        setDeleteDialog(state, payload) {
+            state.deleteDialog = payload;
         },
 
         setLoading(state, payload) {
@@ -53,6 +56,14 @@ export default new Vuex.Store({
 
         setErrorMessage(state, payload) {
             state.errorMessage = payload;
+        },
+
+        setResetSuccess(state, payload) {
+            state.resetSuccess = payload;
+        },
+
+        setResetValidation(state, payload) {
+            state.resetValidation = payload;
         },
 
         setServerItemsLength(state, payload) {

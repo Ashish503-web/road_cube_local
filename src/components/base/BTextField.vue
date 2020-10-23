@@ -14,6 +14,8 @@
         :placeholder="placeholder"
         :success="success"
         :rules="rules"
+        :hint="hint"
+        :persistent-hint="persistentHint"
         :prepend-icon="icons[`${prependIcon}`]"
         :prepend-inner-icon="icons[`${prependInnerIcon}`]"
         :append-icon="icons[`${appendIcon}`]"
@@ -54,7 +56,9 @@ export default {
         disabled: Boolean,
         placeholder: String,
         success: Boolean,
-        rules: Array
+        rules: Array,
+        hint: String,
+        persistentHint: Boolean
     },
 
     data: () => ({

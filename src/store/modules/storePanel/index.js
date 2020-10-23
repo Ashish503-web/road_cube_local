@@ -2,6 +2,7 @@ import transactions from "./transactions";
 import addContest from "./addContest";
 import products from "./products";
 import productGroups from "./productGroups";
+import coupons from "./coupons";
 import settings from "./settings";
 
 import Store from "@/models/storePanel/Store.js";
@@ -28,6 +29,7 @@ export default {
         addContest,
         products,
         productGroups,
+        coupons,
         settings
     },
 

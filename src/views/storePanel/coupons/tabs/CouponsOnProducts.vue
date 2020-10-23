@@ -1,42 +1,47 @@
 <template>
     <v-tab-item :value="$route.path">
-        <v-toolbar flat height="100" class="pt-2 mb-3">
-            <v-row
-                class="d-flex justify-sm-space-between align-center justify-center"
+        <v-toolbar flat height="100">
+            <v-btn
+                color="secondary"
+                class="text-capitalize px-5"
+                depressed
+                @click="open(1, {})"
+                >add action</v-btn
             >
-                <v-col
-                    cols="12"
-                    sm="4"
-                    class="d-flex justify-center justify-sm-start"
-                >
-                    <v-btn
-                        color="secondary"
-                        class="text-capitalize mx-auto mx-sm-0"
-                        depressed
-                        @click="dialog = true"
-                        >add action</v-btn
-                    >
-                </v-col>
-                <v-col cols="12" sm="4">
-                    <v-text-field
-                        label="Search"
-                        color="secondary"
-                        rounded
-                        outlined
-                        dense
-                        clearable
-                        hide-details
-                        :prepend-inner-icon="icons.mdiMagnify"
-                    ></v-text-field>
-                </v-col>
-            </v-row>
+
+            <v-spacer></v-spacer>
+
+            <v-col cols="4">
+                <v-text-field
+                    label="Search"
+                    color="secondary"
+                    rounded
+                    outlined
+                    dense
+                    clearable
+                    hide-details
+                    :prepend-inner-icon="icons.mdiMagnify"
+                ></v-text-field>
+            </v-col>
         </v-toolbar>
 
         <v-data-table
-            :headers="couponsOnProductsHeaders"
+            :headers="headers"
             :items="couponsOnProducts"
-            :footer-props="{ itemsPerPageOptions }"
+            :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
+            :page.sync="page"
+            :server-items-length="serverItemsLength"
+            class="b-outlined"
         >
+            <template v-slot:no-data>
+                <v-progress-circular
+                    v-if="loading"
+                    color="secondary"
+                    indeterminate
+                ></v-progress-circular>
+                <span v-else>No data available</span>
+            </template>
+
             <template v-slot:item.actions="{ item }">
                 <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
@@ -44,23 +49,33 @@
                             color="yellow darken-3"
                             icon
                             v-on="on"
-                            @click="myFunc(item)"
+                            @click="open(2, item)"
                         >
                             <v-icon v-text="icons.mdiPencilOutline"></v-icon>
                         </v-btn>
                     </template>
 
-                    <span>Update</span>
+                    <span class="font-weight-bold">Update</span>
                 </v-tooltip>
 
                 <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
-                        <v-btn color="red" icon v-on="on" @click="myFunc(item)">
+                        <v-btn
+                            color="red"
+                            icon
+                            v-on="on"
+                            @click="
+                                () => {
+                                    couponOnProduct = item;
+                                    deleteDialog = true;
+                                }
+                            "
+                        >
                             <v-icon v-text="icons.mdiClose"></v-icon>
                         </v-btn>
                     </template>
 
-                    <span>Delete</span>
+                    <span class="font-weight-bold">Delete</span>
                 </v-tooltip>
             </template>
 
@@ -72,121 +87,189 @@
             </template>
         </v-data-table>
 
-        <v-dialog v-model="dialog" scrollable max-width="40%">
-            <v-card>
-                <v-card-title class="grey lighten-3">Add Action</v-card-title>
-                <v-divider></v-divider>
-                <v-card-text class="py-5">
-                    <v-card outlined class="px-5 mb-3">
-                        <v-radio-group v-model="product.type">
-                            <v-row no-gutters>
-                                <v-col cols="6">
-                                    <v-radio color="secondary">
-                                        <template v-slot:label>
-                                            <h4 class="subtitle-2">
-                                                action 1+1
-                                            </h4>
-                                        </template>
-                                    </v-radio>
-                                </v-col>
-                                <v-col cols="6">
-                                    <v-radio color="secondary">
-                                        <template v-slot:label>
-                                            <h4 class="subtitle-2">
-                                                sampling
-                                            </h4>
-                                        </template>
-                                    </v-radio>
-                                </v-col>
-                            </v-row>
-                        </v-radio-group> </v-card
-                    >To create a 1 + 1 Campaign you must declare 1 product for
-                    Buy and one to give it Free.Define products from the lists
-                    below
-                    <v-card outlined class="mt-3 py-5 px-2">
-                        <v-row no-gutters>
-                            <v-col cols="6" class="px-3">
-                                <v-select
-                                    menu-props="offsetY"
-                                    label="Product for sale"
-                                    outlined
-                                    dense
-                                    hide-details
-                                ></v-select>
-                            </v-col>
-                            <v-col cols="6" class="px-3">
-                                <v-select
-                                    menu-props="offsetY"
-                                    label="Product for gift"
-                                    outlined
-                                    dense
-                                    hide-details
-                                ></v-select>
-                            </v-col>
-                        </v-row>
-                    </v-card>
+        <v-dialog v-model="dialog" max-width="500">
+            <CouponOnProductForm :mode="mode" @cancel="dialog = false" />
+        </v-dialog>
 
-                    <v-card outlined class="mt-3 pa-5">
-                        <v-text-field
-                            type="number"
-                            label="Quantity"
-                            outlined
-                            dense
-                            clearable
-                            hide-details
-                        ></v-text-field>
-                        <template></template>
-                    </v-card>
-                </v-card-text>
-
-                <v-divider></v-divider>
-
-                <v-card-actions>
-                    <v-spacer></v-spacer>
-                    <v-btn text @click="dialog = false">close</v-btn>
-                    <v-btn color="primary" width="80">save</v-btn>
-                </v-card-actions>
-            </v-card>
+        <v-dialog v-model="deleteDialog" max-width="500">
+            <b-card
+                type="delete"
+                title="Delete Product"
+                submit-text="delete"
+                :loading="loading"
+                :error-message="errorMessage"
+                @cancel="deleteDialog = false"
+                @submit="remove"
+            >
+                <p>
+                    Are you sure you want to delete
+                    <span class="font-weight-bold text--primary">{{
+                        couponOnProduct.code
+                    }}</span
+                    >?
+                </p>
+            </b-card>
         </v-dialog>
     </v-tab-item>
 </template>
 
 <script>
-import { mdiClose, mdiMagnify, mdiPencilOutline, mdiFacebook } from "@mdi/js";
+import { mdiMagnify, mdiPencilOutline, mdiClose, mdiFacebook } from "@mdi/js";
+import { mapState, mapMutations, mapActions } from "vuex";
+import CouponOnProductForm from "@/components/storePanel/coupons/CouponOnProductForm.vue";
 
 export default {
     name: "CouponsOnProducts",
 
-    data: () => ({
-        icons: {
-            mdiClose,
-            mdiMagnify,
-            mdiPencilOutline,
-            mdiFacebook
-        },
-        couponsOnProductsHeaders: [
-            { text: "Type", value: "type" },
-            { text: "Product For Sale", value: "sale" },
-            { text: "Product For Gift", value: "gift" },
-            { text: "Quantity", value: "quantity" },
-            { text: "Actions", value: "actions" },
-            { text: "Social Media", value: "social" }
-        ],
-        couponsOnProducts: [
-            {
-                type: "1+1",
-                sale: "discount product",
-                gift: "discount product",
-                quantity: 5
+    components: { CouponOnProductForm },
+
+    data() {
+        return {
+            icons: {
+                mdiClose,
+                mdiMagnify,
+                mdiPencilOutline,
+                mdiFacebook
+            },
+            lang: "el",
+            page: +this.$route.query.page,
+            mode: 0
+        };
+    },
+
+    computed: {
+        ...mapState(["loading", "errorMessage", "serverItemsLength"]),
+        ...mapState("storePanel/coupons/couponsOnProducts", [
+            "couponsOnProducts"
+        ]),
+
+        query() {
+            let query = "?";
+
+            for (let key in this.$route.query) {
+                query += `${key}=${this.$route.query[key]}&`;
             }
-        ],
-        itemsPerPageOptions: [10, 20, 30, -1],
-        dialog: false,
-        product: {
-            type: "",
-            image: "",
-            imageFile: ""
+
+            return query.slice(0, query.length - 1);
+        },
+
+        headers() {
+            return [
+                { text: "Type", value: "code" },
+                {
+                    text: "Product For Sale",
+                    value: `product_buy_name[${this.lang}]`
+                },
+                {
+                    text: "Product For Gift",
+                    value: `product_free_name[${this.lang}]`
+                },
+                { text: "Quantity", value: "total_claimed" },
+                { text: "Actions", value: "actions" },
+                { text: "Social Media", value: "social" }
+            ];
+        },
+
+        dialog: {
+            get() {
+                return this.$store.state.dialog;
+            },
+
+            set(val) {
+                this.setDialog(val);
+            }
+        },
+
+        deleteDialog: {
+            get() {
+                return this.$store.state.deleteDialog;
+            },
+
+            set(val) {
+                this.setDeleteDialog(val);
+            }
+        },
+
+        couponOnProduct: {
+            get() {
+                return this.$store.state.storePanel.coupons.couponsOnProducts
+                    .couponOnProduct;
+            },
+
+            set(val) {
+                this.setItem(val);
+            }
         }
-    })
+    },
+
+    methods: {
+        ...mapMutations([
+            "setDialog",
+            "setDeleteDialog",
+            "setResetSuccess",
+            "setResetValidation"
+        ]),
+        ...mapMutations("storePanel/coupons/couponsOnProducts", ["setItem"]),
+        ...mapActions("storePanel/coupons/couponsOnProducts", [
+            "getProducts",
+            "getItems",
+            "remove"
+        ]),
+
+        open(mode, item) {
+            this.mode = mode;
+            this.couponOnProduct = item;
+            setTimeout(() => this.setResetSuccess(true), 300);
+            this.setResetValidation(true);
+            this.dialog = true;
+        }
+    },
+
+    watch: {
+        dialog(val) {
+            if (!val) {
+                this.setResetSuccess(false);
+                this.setResetValidation(false);
+            }
+        },
+
+        $route(val) {
+            if (!val.query.page) {
+                this.$router.push({
+                    query: {
+                        page: 1,
+                        ...this.$route.query
+                    }
+                });
+            }
+            this.getItems(this.query);
+        },
+
+        page(page) {
+            this.$router.push({ query: { ...this.$route.query, page } });
+        }
+    },
+
+    beforeCreate() {
+        if (!this.$route.query.page) {
+            this.$router.push({
+                query: {
+                    page: 1,
+                    ...this.$route.query
+                }
+            });
+        }
+    },
+
+    mounted() {
+        this.getItems(this.query);
+        this.getProducts();
+    }
 };
 </script>
+
+<style>
+.v-data-footer {
+    padding: 12px 0;
+}
+</style>

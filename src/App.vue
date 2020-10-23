@@ -2,7 +2,7 @@
     <v-app>
         <router-view name="header"></router-view>
 
-        <v-main class="pa-0">
+        <v-main :class="{ 'pa-0': $route.path === '/' }">
             <Notification />
             <router-view></router-view>
         </v-main>

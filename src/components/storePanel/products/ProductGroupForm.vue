@@ -6,9 +6,10 @@
         :reset-validation="resetValidation"
         @cancel="$emit('cancel')"
         @submit="
-            mode === 1
-                ? create({ productGroup, image: imageFile })
-                : update({ productGroup, image: imageFile })
+            () => {
+                mode === 1 ? create(imageFile) : update(imageFile);
+                imageFile = null;
+            }
         "
     >
         <b-text-field
@@ -41,7 +42,7 @@
             v-model="productGroup.average_price"
             type="number"
             label="Average Price"
-            append-icon="mdiCurrencyEur"
+            prepend-inner-icon="mdiCurrencyEur"
             :success="success.averagePrice"
             :rules="rules.averagePrice"
         ></b-text-field>
@@ -183,13 +184,13 @@ export default {
     },
 
     computed: {
-        ...mapState("storePanel/productGroups", [
+        ...mapState([
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation",
-            "categories"
+            "resetValidation"
         ]),
+        ...mapState("storePanel/productGroups", ["categories"]),
 
         title() {
             return this.mode === 1
@@ -218,22 +219,15 @@ export default {
             }
         },
 
-        productGroup: {
-            get() {
-                return this.$store.state.storePanel.productGroups.productGroup;
-            },
-
-            set(val) {
-                this.setItem(val);
-            }
+        productGroup() {
+            return this.$store.state.storePanel.productGroups.productGroup;
         }
     },
 
     methods: {
         ...mapMutations("storePanel/productGroups", [
             "setShowImageUpload",
-            "setShowWeekdays",
-            "setItem"
+            "setShowWeekdays"
         ]),
         ...mapActions("storePanel/productGroups", [
             "getCategories",
@@ -258,10 +252,7 @@ export default {
                 this.success = {
                     name: false,
                     description: false,
-                    sellingPrice: false,
-                    wholesalePrice: false,
-                    deliveryCost: false,
-                    shippingCost: false,
+                    averagePrice: false,
                     category: false
                 };
             }

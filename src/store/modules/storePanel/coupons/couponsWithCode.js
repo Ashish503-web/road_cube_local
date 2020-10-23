@@ -1,82 +1,54 @@
-import ProductGroup from "@/models/storePanel/ProductGroup";
+import CouponWithCode from "@/models/storePanel/coupons/CouponWithCode";
 
 export default {
     namespaced: true,
 
     state: () => ({
-        showImageUpload: false,
-        showWeekdays: false,
-        categories: [],
-        productGroups: [],
-        productGroup: new ProductGroup()
+        couponsWithCode: [],
+        couponWithCode: new CouponWithCode()
     }),
 
     mutations: {
-        setShowImageUpload(state, payload) {
-            state.showImageUpload = payload;
-        },
-
-        setShowWeekdays(state, payload) {
-            state.showWeekdays = payload;
-        },
-
-        setCategories(state, payload) {
-            state.categories = payload;
-        },
-
         setItems(state, payload) {
-            state.productGroups = payload;
+            state.couponsWithCode = payload;
         },
 
         setItem(state, payload) {
-            state.productGroup = new ProductGroup(payload);
+            state.couponWithCode = new CouponWithCode(payload);
         },
 
         addItem(state, payload) {
-            state.productGroups.unshift(payload);
+            state.couponsWithCode.unshift(payload);
         },
 
         updateItem(state, payload) {
-            let index = state.productGroups.findIndex(
-                p => p.product_id === payload.product_id
+            let index = state.couponsWithCode.findIndex(
+                c => c.coupon_id === payload.coupon_id
             );
-            state.productGroups.splice(index, 1, payload);
+            state.couponsWithCode.splice(index, 1, payload);
         },
 
         removeItem(state, id) {
-            state.productGroups = state.productGroups.filter(
-                p => p.product_id !== id
+            state.couponsWithCode = state.couponsWithCode.filter(
+                c => c.coupon_id !== id
             );
         }
     },
 
     actions: {
-        async getCategories({ commit, rootState }) {
-            try {
-                const { data } = await ProductGroup.getCategories(
-                    rootState.storeToken,
-                    rootState.storeId
-                );
-
-                const { product_categories } = data.data;
-                commit("setCategories", product_categories);
-            } catch (ex) {
-                console.error(ex.response.data);
-            }
-        },
-
         async getItems({ commit, rootState }, query) {
             try {
                 commit("setLoading", true, { root: true });
 
-                const { data } = await ProductGroup.get(
+                const { data } = await CouponWithCode.get(
                     rootState.storeToken,
                     rootState.storeId,
                     query
                 );
-                const { group_products, pagination } = data.data;
 
-                commit("setItems", group_products);
+                const { coupons, pagination } = data.data;
+
+                commit("setItems", coupons);
                 commit("setServerItemsLength", pagination.total, {
                     root: true
                 });
@@ -87,37 +59,28 @@ export default {
             }
         },
 
-        async create({ dispatch, commit, state, rootState }, image) {
+        async create({ commit, dispatch, state, rootState }, image) {
             try {
                 commit("setLoading", true, { root: true });
 
-                let productGroup = { ...state.productGroup };
+                let couponWithCode = { ...state.couponWithCode };
+                delete couponWithCode.coupon_id;
+                delete couponWithCode.image;
 
-                delete productGroup.product_id;
-                delete productGroup.image;
-                if (!productGroup.name.en)
-                    productGroup.name.en = productGroup.name.el;
-                if (!productGroup.name.it)
-                    productGroup.name.it = productGroup.name.el;
-                if (!productGroup.description.en)
-                    productGroup.description.en = productGroup.description.el;
-                if (!productGroup.description.it)
-                    productGroup.description.it = productGroup.description.el;
-
-                const { data } = await ProductGroup.create(
+                const { data } = await CouponWithCode.create(
                     rootState.storeToken,
                     rootState.storeId,
-                    productGroup
+                    couponWithCode
                 );
 
                 if (image) {
                     dispatch("uploadImage", {
-                        item: data.data.group_product,
+                        item: data.data.coupon,
                         image,
                         mode: 1
                     });
                 } else {
-                    commit("addItem", data.data.group_product);
+                    commit("addItem", data.data.coupon);
                     commit(
                         "setServerItemsLength",
                         rootState.serverItemsLength + 1,
@@ -130,7 +93,7 @@ export default {
                         {
                             show: true,
                             type: "success",
-                            text: "You have successfully created product group!"
+                            text: "You have successfully created new coupon!"
                         },
 
                         { root: true }
@@ -148,36 +111,27 @@ export default {
             }
         },
 
-        async update({ dispatch, commit, state, rootState }, image) {
+        async update({ commit, dispatch, state, rootState }, image) {
             try {
                 commit("setLoading", true, { root: true });
 
-                let productGroup = { ...state.productGroup };
+                let couponWithCode = { ...state.couponWithCode };
+                delete couponWithCode.image;
 
-                delete productGroup.image;
-                if (!productGroup.name.en)
-                    productGroup.name.en = productGroup.name.el;
-                if (!productGroup.name.it)
-                    productGroup.name.it = productGroup.name.el;
-                if (!productGroup.description.en)
-                    productGroup.description.en = productGroup.description.el;
-                if (!productGroup.description.it)
-                    productGroup.description.it = productGroup.description.el;
-
-                const { data } = await ProductGroup.update(
+                const { data } = await CouponWithCode.update(
                     rootState.storeToken,
                     rootState.storeId,
-                    productGroup
+                    couponWithCode
                 );
 
                 if (image) {
                     dispatch("uploadImage", {
-                        item: data.data.group_product,
+                        item: data.data.coupon,
                         image,
                         mode: 2
                     });
                 } else {
-                    commit("updateItem", data.data.group_product);
+                    commit("updateItem", data.data.coupon);
                     commit("setLoading", false, { root: true });
                     commit("setDialog", false, { root: true });
                     commit(
@@ -185,7 +139,7 @@ export default {
                         {
                             show: true,
                             type: "success",
-                            text: "You have successfully updated product group!"
+                            text: "You have successfully updated product!"
                         },
 
                         { root: true }
@@ -207,26 +161,24 @@ export default {
             try {
                 commit("setLoading", true, { root: true });
 
-                await ProductGroup.delete(
+                await CouponWithCode.delete(
                     rootState.storeToken,
                     rootState.storeId,
-                    state.productGroup.product_id
+                    state.couponWithCode.coupon_id
                 );
 
-                commit(
-                    "setServerItemsLength",
-                    rootState.serverItemsLength - 1,
-                    { root: true }
-                );
+                commit("setServerItemsLength", state.serverItemsLength - 1, {
+                    root: true
+                });
                 commit("setLoading", false, { root: true });
                 commit("setDeleteDialog", false, { root: true });
-                commit("removeItem", state.productGroup.product_id);
+                commit("removeItem", state.couponWithCode.coupon_id);
                 commit(
                     "setNotification",
                     {
                         show: true,
                         type: "success",
-                        text: "You have successfully deleted product group!"
+                        text: "You have successfully deleted product!"
                     },
 
                     { root: true }
@@ -248,10 +200,10 @@ export default {
                 const fd = new FormData();
                 fd.append("image", image);
 
-                const { data } = await ProductGroup.uploadImage(
+                const { data } = await CouponWithCode.uploadImage(
                     rootState.storeToken,
                     rootState.storeId,
-                    item.product_id,
+                    item.coupon_id,
                     fd
                 );
 
@@ -276,7 +228,7 @@ export default {
                         type: "success",
                         text: `You have successfully ${
                             mode === 1 ? "created" : "updated"
-                        } product group!`
+                        } product!`
                     },
 
                     { root: true }
