@@ -108,13 +108,12 @@ export default {
     },
 
     actions: {
-        async getStore({ commit, rootState }) {
+        async getStore({ commit }) {
             try {
-                const { data } = await Store.get(
-                    rootState.storeToken,
-                    rootState.storeId
-                );
+                const { data } = await Store.get();
+
                 console.log(data.data);
+
                 commit("setStore", data.data);
             } catch (ex) {
                 console.error(ex.response.data);

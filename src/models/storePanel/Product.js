@@ -1,5 +1,11 @@
 import axios from "axios";
-const ApiEndpoint = `https://api.roadcube.tk/v1/stores/`;
+
+axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
+    "accessToken"
+)}`;
+
+const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
+const storeId = localStorage.getItem("storeId");
 
 export default class Product {
     constructor(item = {}) {
@@ -25,39 +31,24 @@ export default class Product {
         this.group_product = false;
     }
 
-    static getCategories = (token, storeId) => {
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.get(`${ApiEndpoint}${storeId}/product-categories`);
-    };
+    static getCategories = () =>
+        axios.get(`${ApiEndpoint}/${storeId}/product-categories`);
 
-    static get = (token, storeId, query) => {
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.get(`${ApiEndpoint}${storeId}/products${query}`);
-    };
+    static get = query =>
+        axios.get(`${ApiEndpoint}/${storeId}/products${query}`);
 
-    static create = (token, storeId, item) => {
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.post(`${ApiEndpoint}${storeId}/products`, item);
-    };
+    static create = item =>
+        axios.post(`${ApiEndpoint}/${storeId}/products`, item);
 
-    static update = (token, storeId, item) => {
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.put(
-            `${ApiEndpoint}${storeId}/products/${item.product_id}`,
+    static update = item =>
+        axios.put(
+            `${ApiEndpoint}/${storeId}/products/${item.product_id}`,
             item
         );
-    };
 
-    static delete = (token, storeId, id) => {
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.delete(`${ApiEndpoint}${storeId}/products/${id}`);
-    };
+    static delete = id =>
+        axios.delete(`${ApiEndpoint}/${storeId}/products/${id}`);
 
-    static uploadImage = (token, storeId, id, image) => {
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.post(
-            `${ApiEndpoint}${storeId}/products/${id}/images`,
-            image
-        );
-    };
+    static uploadImage = (id, image) =>
+        axios.post(`${ApiEndpoint}${storeId}/products/${id}/images`, image);
 }

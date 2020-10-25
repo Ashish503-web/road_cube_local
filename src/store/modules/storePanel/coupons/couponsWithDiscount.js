@@ -36,17 +36,11 @@ export default {
     },
 
     actions: {
-        async getItems({ commit, rootState }, query) {
+        async getItems({ commit }, query) {
             try {
                 commit("setLoading", true, { root: true });
 
-                const { data } = await CouponWithDiscount.get(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    query
-                );
-
-                console.log(data);
+                const { data } = await CouponWithDiscount.get(query);
 
                 const { coupons, pagination } = data.data;
 
@@ -68,8 +62,6 @@ export default {
                 let couponOnProduct = { ...state.couponOnProduct };
 
                 const { data } = await CouponWithDiscount.create(
-                    rootState.storeToken,
-                    rootState.storeId,
                     couponOnProduct
                 );
 
@@ -113,8 +105,6 @@ export default {
                 commit("setLoading", true, { root: true });
 
                 await CouponWithDiscount.delete(
-                    rootState.storeToken,
-                    rootState.storeId,
                     state.couponWithDiscount.coupon_id
                 );
 

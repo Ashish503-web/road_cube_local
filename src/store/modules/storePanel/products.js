@@ -49,12 +49,9 @@ export default {
     },
 
     actions: {
-        async getCategories({ commit, rootState }) {
+        async getCategories({ commit }) {
             try {
-                const { data } = await Product.getCategories(
-                    rootState.storeToken,
-                    rootState.storeId
-                );
+                const { data } = await Product.getCategories();
 
                 const { product_categories } = data.data;
                 commit("setCategories", product_categories);
@@ -63,15 +60,11 @@ export default {
             }
         },
 
-        async getItems({ commit, rootState }, query) {
+        async getItems({ commit }, query) {
             try {
                 commit("setLoading", true, { root: true });
 
-                const { data } = await Product.get(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    query
-                );
+                const { data } = await Product.get(query);
                 const { products, pagination } = data.data;
 
                 commit("setItems", products);
@@ -99,11 +92,7 @@ export default {
                 if (!product.description.it)
                     product.description.it = product.description.el;
 
-                const { data } = await Product.create(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    product
-                );
+                const { data } = await Product.create(product);
 
                 if (image) {
                     dispatch("uploadImage", {
@@ -143,7 +132,7 @@ export default {
             }
         },
 
-        async update({ commit, dispatch, state, rootState }, image) {
+        async update({ commit, dispatch, state }, image) {
             try {
                 commit("setLoading", true, { root: true });
 
@@ -156,11 +145,7 @@ export default {
                 if (!product.description.it)
                     product.description.it = product.description.el;
 
-                const { data } = await Product.update(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    product
-                );
+                const { data } = await Product.update(product);
 
                 if (image) {
                     dispatch("uploadImage", {
@@ -199,11 +184,7 @@ export default {
             try {
                 commit("setLoading", true, { root: true });
 
-                await Product.delete(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    state.product.product_id
-                );
+                await Product.delete(state.product.product_id);
                 commit(
                     "setServerItemsLength",
                     rootState.serverItemsLength - 1,
@@ -239,12 +220,7 @@ export default {
                 const fd = new FormData();
                 fd.append("image", image);
 
-                const { data } = await Product.uploadImage(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    item.product_id,
-                    fd
-                );
+                const { data } = await Product.uploadImage(item.product_id, fd);
 
                 item.image = data.data.image;
 

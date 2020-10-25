@@ -30,10 +30,9 @@
                 <template v-slot:activator="{ on }">
                     <v-btn class="text-capitalize" text v-on="on">
                         <v-avatar size="32" class="mr-2">
-                            <v-img
-                                src="../assets/avatars/user.png"
-                            ></v-img> </v-avatar
-                        >Henry
+                            <v-img src="../assets/avatars/user.png"></v-img>
+                        </v-avatar>
+                        {{ user.full_name || "Hello, Sign In" }}
                         <v-icon v-text="icons.mdiChevronDown"></v-icon>
                     </v-btn>
                 </template>
@@ -61,8 +60,8 @@
                                     v-text="icons.mdiLogout"
                                 ></v-icon>
                             </v-list-item-icon>
-                            <v-list-item-title class="red--text"
-                                @click="storeLogout()">Logout</v-list-item-title
+                            <v-list-item-title class="red--text" @click="logout"
+                                >Logout</v-list-item-title
                             >
                         </v-list-item>
                     </v-list-item-group>
@@ -160,8 +159,6 @@
 
 <script>
 import {
-    mdiPower,
-    mdiWeb,
     mdiHelpCircleOutline,
     mdiChartBar,
     mdiPlusThick,
@@ -172,23 +169,16 @@ import {
     mdiPackageVariantClosed,
     mdiTagMultiple,
     mdiCog,
-    mdiMagnify,
     mdiChevronDown,
-    mdiViewGridPlusOutline,
-    mdiBellOutline,
-    mdiClockOutline,
     mdiLogout,
-    mdiCogOutline,
     mdiCartOutline,
     mdiCheckDecagram,
     mdiAccountOutline,
     mdiWalletOutline,
     mdiWrenchOutline,
-    mdiLockOpenOutline,
+    mdiLockOpenOutline
 } from "@mdi/js";
 
-import avatar3 from "@/assets/avatars/avatar-3.jpg";
-import avatar4 from "@/assets/avatars/avatar-4.jpg";
 import axios from "axios";
 
 export default {
@@ -197,16 +187,9 @@ export default {
     data() {
         return {
             icons: {
-                mdiPower,
-                mdiWeb,
                 mdiHelpCircleOutline,
-                mdiMagnify,
                 mdiChevronDown,
-                mdiViewGridPlusOutline,
-                mdiBellOutline,
-                mdiClockOutline,
-                mdiLogout,
-                mdiCogOutline,
+                mdiLogout
             },
             mini: false,
             drawer: false,
@@ -218,34 +201,34 @@ export default {
                             icon: mdiChartBar,
                             title: "Home",
                             to: "/storePanel",
-                            exact: true,
+                            exact: true
                         },
                         {
                             icon: mdiPlusThick,
                             title: "New Transaction",
-                            to: "/storePanel/new-transaction",
+                            to: "/storePanel/new-transaction"
                         },
                         {
                             icon: mdiCurrencyEur,
                             title: "Transactions",
-                            to: "/storePanel/transactions",
+                            to: "/storePanel/transactions"
                         },
                         {
                             icon: mdiGift,
                             title: "Redeem",
-                            to: "/storePanel/redeem",
+                            to: "/storePanel/redeem"
                         },
                         {
                             icon: mdiDatabaseSync,
                             title: "History",
-                            to: "/storePanel/history",
+                            to: "/storePanel/history"
                         },
                         {
                             icon: mdiTrophyVariant,
                             title: "Contests",
-                            to: "/storePanel/contests",
-                        },
-                    ],
+                            to: "/storePanel/contests"
+                        }
+                    ]
                 },
                 {
                     title: "SETTINGS",
@@ -253,30 +236,34 @@ export default {
                         {
                             icon: mdiPackageVariantClosed,
                             title: "Products",
-                            to: "/storePanel/products",
+                            to: "/storePanel/products"
                         },
                         {
                             icon: mdiTagMultiple,
                             title: "Coupons",
-                            to: "/storePanel/coupons",
+                            to: "/storePanel/coupons"
                         },
                         {
                             icon: mdiCog,
                             title: "Settings",
-                            to: "/storePanel/settings",
-                        },
-                    ],
-                },
+                            to: "/storePanel/settings"
+                        }
+                    ]
+                }
             ],
 
             profileLinks: [
                 { icon: mdiAccountOutline, text: "Profile" },
-                { icon: mdiWrenchOutline, text: "Settings" },
-            ],
+                { icon: mdiWrenchOutline, text: "Settings" }
+            ]
         };
     },
 
     computed: {
+        user() {
+            return this.$store.state.user;
+        },
+
         logo() {
             return this.$store.state.storePanel.store.logo;
         },
@@ -287,21 +274,23 @@ export default {
 
         containerHeight() {
             return this.mini ? "calc(100vh - 194px)" : "calc(100vh - 184px)";
-        },
+        }
     },
 
     methods: {
-        storeLogout() {
-            this.loading = true;
+        async logout() {
+            try {
+                const { data } = await axios.post(
+                    "https://api.roadcube.tk/v1/users/logout"
+                );
 
-            axios.post("https://api.roadcube.tk/v1/users/logout").then((res) => {
-                    this.loading = false;
-                    localStorage.removeItem("storeId");
-                    localStorage.removeItem("storeToken");
-                    this.$router.push("/");
-                })
-                
-        },
+                localStorage.removeItem("storeId");
+                localStorage.removeItem("accessToken");
+                this.$router.push("/");
+            } catch (ex) {
+                console.log(ex.response.data);
+            }
+        }
     }
 };
 </script>

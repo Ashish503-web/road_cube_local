@@ -1,4 +1,3 @@
-import transactionsRoutes from "./transactionsRoutes";
 import redeemRoutes from "./redeemRoutes";
 import historyRoutes from "./historyRoutes";
 import productsRoutes from "./productsRoutes";
@@ -29,9 +28,8 @@ export default [
         name: "Transactions",
         component: () =>
             import(
-                /* webpackChunkName: "transactions" */ "@/views/storePanel/transactions/Transactions.vue"
-            ),
-        children: transactionsRoutes
+                /* webpackChunkName: "transactions" */ "@/views/storePanel/Transactions.vue"
+            )
     },
 
     {

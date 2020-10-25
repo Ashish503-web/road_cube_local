@@ -34,9 +34,9 @@ export default {
         About,
         Products,
         Quickfeatures,
-        HomeSection
+        HomeSection,
     },
-    data: () => ({})
+    data: () => ({}),
 };
 </script>
 <style scoped>

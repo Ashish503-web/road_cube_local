@@ -1,11 +1,15 @@
 import axios from "axios";
-const ApiEndpoint = `https://api.roadcube.tk/v1/stores/`;
+
+axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
+    "accessToken"
+)}`;
+
+const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
+const storeId = localStorage.getItem("storeId");
 
 export default class PaymentRoutings {
-    static get = (token, storeId, query) => {
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.get(
-            `${ApiEndpoint}${storeId}/settings/payment-routings${query}`
+    static get = query =>
+        axios.get(
+            `${ApiEndpoint}/${storeId}/settings/payment-routings${query}`
         );
-    };
 }

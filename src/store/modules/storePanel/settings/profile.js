@@ -55,18 +55,14 @@ export default {
     },
 
     actions: {
-        async uploadLogo({ commit, rootState }, imageFile) {
+        async uploadLogo({ commit }, imageFile) {
             try {
                 commit("setLoading", { value: true, type: "logo" });
 
                 const fd = new FormData();
                 fd.append("logo", imageFile);
 
-                await Profile.uploadImage(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    fd
-                );
+                await Profile.uploadImage(fd);
 
                 commit("setSuccess", { value: false, type: "logo" });
                 commit("setLoading", { value: false, type: "logo" });
@@ -94,18 +90,14 @@ export default {
             }
         },
 
-        async uploadMapLogo({ commit, rootState }, imageFile) {
+        async uploadMapLogo({ commit }, imageFile) {
             try {
                 commit("setLoading", { value: true, type: "mapLogo" });
 
                 const fd = new FormData();
                 fd.append("map_logo", imageFile);
 
-                await Profile.uploadImage(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    fd
-                );
+                await Profile.uploadImage(fd);
 
                 commit("setSuccess", { value: false, type: "mapLogo" });
                 commit("setLoading", { value: false, type: "mapLogo" });
@@ -156,15 +148,11 @@ export default {
             }
         },
 
-        async updateBusinessInformation({ commit, rootState }, { type, item }) {
+        async updateBusinessInformation({ commit }, { type, item }) {
             try {
                 commit("setLoading", { value: true, type });
 
-                await Profile.updateBusinessInformation(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    item
-                );
+                await Profile.updateBusinessInformation(item);
 
                 commit("storePanel/setBusinessInformation", item, {
                     root: true
@@ -208,13 +196,7 @@ export default {
                     }
                 });
 
-                const {
-                    data
-                } = await Profile.updateTimetable(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    { timetable }
-                );
+                const { data } = await Profile.updateTimetable({ timetable });
 
                 commit("storePanel/setTimetable", data.data.timetable, {
                     root: true
@@ -249,15 +231,11 @@ export default {
             }
         },
 
-        async updateInvoicing({ commit, rootState }, { type, item }) {
+        async updateInvoicing({ commit }, { type, item }) {
             try {
                 commit("setLoading", { value: true, type });
 
-                await Profile.updateInvoicing(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    item
-                );
+                await Profile.updateInvoicing(item);
 
                 commit("storePanel/setInvoicing", item, { root: true });
                 commit("setLoading", { value: false, type });
@@ -289,15 +267,10 @@ export default {
             try {
                 commit("setLoading", { value: true, type: "quickPayment" });
 
-                await Profile.updateQuickPayment(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    {
-                        quick_payment:
-                            rootState.storePanel.store.flags.general
-                                .quick_payment
-                    }
-                );
+                await Profile.updateQuickPayment({
+                    quick_payment:
+                        rootState.storePanel.store.flags.general.quick_payment
+                });
 
                 commit("setLoading", { value: false, type: "quickPayment" });
                 commit(
@@ -327,15 +300,11 @@ export default {
             }
         },
 
-        async updateOrders({ commit, rootState }, { type, item }) {
+        async updateOrders({ commit }, { type, item }) {
             try {
                 commit("setLoading", { value: true, type });
 
-                await Profile.updateOrders(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    item
-                );
+                await Profile.updateOrders(item);
 
                 commit("storePanel/setOrders", item, { root: true });
                 commit("setLoading", { value: false, type });
@@ -369,14 +338,10 @@ export default {
                     type: "redemption"
                 });
 
-                await Profile.updateRedemption(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    {
-                        redemption_type_id:
-                            rootState.storePanel.store.redemption_type_id
-                    }
-                );
+                await Profile.updateRedemption({
+                    redemption_type_id:
+                        rootState.storePanel.store.redemption_type_id
+                });
 
                 commit("setLoading", {
                     value: false,

@@ -1,5 +1,11 @@
 import axios from "axios";
+
+axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
+    "accessToken"
+)}`;
+
 const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
+const storeId = localStorage.getItem("storeId");
 
 export default class CouponWithCode {
     constructor(item = {}) {
@@ -12,34 +18,24 @@ export default class CouponWithCode {
         this.image = item.image || "";
     }
 
-    static get = (token, storeId, query) => {
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.get(`${ApiEndpoint}/${storeId}/coupons/vouchers${query}`);
-    };
+    static get = query =>
+        axios.get(`${ApiEndpoint}/${storeId}/coupons/vouchers${query}`);
 
-    static create = (token, storeId, item) => {
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.post(`${ApiEndpoint}/${storeId}/coupons/vouchers`, item);
-    };
+    static create = item =>
+        axios.post(`${ApiEndpoint}/${storeId}/coupons/vouchers`, item);
 
-    static update = (token, storeId, item) => {
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.put(
+    static update = item =>
+        axios.put(
             `${ApiEndpoint}/${storeId}/coupons/vouchers/${item.coupon_id}`,
             item
         );
-    };
 
-    static delete = (token, storeId, id) => {
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.delete(`${ApiEndpoint}/${storeId}/coupons/vouchers/${id}`);
-    };
+    static delete = id =>
+        axios.delete(`${ApiEndpoint}/${storeId}/coupons/vouchers/${id}`);
 
-    static uploadImage = (token, storeId, id, image) => {
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.post(
+    static uploadImage = (id, image) =>
+        axios.post(
             `${ApiEndpoint}/${storeId}/coupons/vouchers/${id}/images`,
             image
         );
-    };
 }

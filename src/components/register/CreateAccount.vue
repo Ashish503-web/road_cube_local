@@ -42,7 +42,7 @@
                                     <img
                                         :src="item.flag"
                                         width="25"
-                                        style="vertical-align: middle;"
+                                        style="vertical-align: middle"
                                         class="mr-3"
                                     />
                                     {{ item.name }} ({{ item.code }})
@@ -121,22 +121,22 @@ export default {
             success: {
                 country: false,
                 mobile: false,
-                tos: false
+                tos: false,
             },
             rules: {
                 country: [
-                    v => {
+                    (v) => {
                         if (v) {
                             this.success.country = true;
                             return true;
                         } else {
                             return "Country is required";
                         }
-                    }
+                    },
                 ],
 
                 mobile: [
-                    v => {
+                    (v) => {
                         if (v) {
                             this.success.mobile = true;
                             return true;
@@ -144,22 +144,22 @@ export default {
                             return "Mobile Phone is required";
                         }
                     },
-                    v =>
+                    (v) =>
                         (v || "").length === 10 ||
-                        "Mobile Phone must be 10 characters long"
+                        "Mobile Phone must be 10 characters long",
                 ],
 
                 tos: [
-                    v => {
+                    (v) => {
                         if (v) {
                             this.success.tos = true;
                             return true;
                         } else {
                             return "You must accept terms of services to proceed";
                         }
-                    }
-                ]
-            }
+                    },
+                ],
+            },
         };
     },
 
@@ -173,7 +173,7 @@ export default {
 
             set(val) {
                 this.setCountry(val);
-            }
+            },
         },
 
         mobile: {
@@ -183,7 +183,7 @@ export default {
 
             set(val) {
                 this.setMobile(val);
-            }
+            },
         },
 
         tos: {
@@ -193,13 +193,13 @@ export default {
 
             set(val) {
                 this.setTos(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
         ...mapMutations("register", ["setCountry", "setMobile", "setTos"]),
-        ...mapActions("register", ["getCountries", "createAccount"])
+        ...mapActions("register", ["getCountries", "createAccount"]),
     },
 
     watch: {
@@ -209,11 +209,11 @@ export default {
             } else {
                 this.disabled = true;
             }
-        }
+        },
     },
 
     mounted() {
         this.getCountries();
-    }
+    },
 };
 </script>

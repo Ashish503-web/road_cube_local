@@ -39,6 +39,7 @@
                             class="text-capitalize pr-1 pl-0 ml-6 btn-hover"
                             height="auto"
                             rounded
+                            to="/sign-in"
                         >
                             <p
                                 class="ma-0"

@@ -2,6 +2,7 @@
     <v-select
         :value="value"
         :label="label"
+        :multiple="multiple"
         :items="items"
         :item-text="itemText"
         :item-value="itemValue"
@@ -16,6 +17,7 @@
         hide-details="auto"
         :success="success"
         :rules="rules"
+        :rounded="rounded"
         :clearable="!noClearIcon"
         :disabled="disabled"
         :prepend-icon="icons[`${prependIcon}`]"
@@ -35,20 +37,22 @@ export default {
 
     props: {
         value: {
-            type: [String, Number, Object]
+            type: [String, Number, Object, Array]
         },
+        label: String,
+        multiple: Boolean,
         items: Array,
         itemText: String,
         itemValue: String,
         returnObject: Boolean,
-        label: String,
         prependIcon: String,
         prependInnerIcon: String,
         appendIcon: String,
         appendOuterIcon: String,
         noTopMargin: Boolean,
-        disabled: Boolean,
         noClearIcon: Boolean,
+        rounded: Boolean,
+        disabled: Boolean,
         success: Boolean,
         rules: Array
     },

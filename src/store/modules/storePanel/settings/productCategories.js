@@ -51,13 +51,9 @@ export default {
     },
 
     actions: {
-        async getItems({ commit, rootState }, query) {
+        async getItems({ commit }, query) {
             try {
-                const { data } = await ProductCategory.get(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    query
-                );
+                const { data } = await ProductCategory.get(query);
 
                 const { product_categories, pagination } = data.data;
 
@@ -82,11 +78,7 @@ export default {
                 if (!productCategory.name.it)
                     productCategory.name.it = productCategory.name.el;
 
-                const { data } = await ProductCategory.create(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    productCategory
-                );
+                const { data } = await ProductCategory.create(productCategory);
 
                 commit("addItem", data.data.product_category);
                 commit("setItem", {});
@@ -131,11 +123,7 @@ export default {
                 if (!productCategory.name.it)
                     productCategory.name.it = productCategory.name.el;
 
-                const { data } = await ProductCategory.update(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    productCategory
-                );
+                const { data } = await ProductCategory.update(productCategory);
 
                 commit("updateItem", data.data.product_category);
                 commit(
@@ -163,11 +151,7 @@ export default {
             try {
                 commit("setLoading", true, { root: true });
 
-                await ProductCategory.delete(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    id
-                );
+                await ProductCategory.delete(id);
 
                 commit("removeItem", id);
                 commit(

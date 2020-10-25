@@ -5,15 +5,16 @@
                 <v-card outlined tile>
                     <v-row class="pb-3">
                         <v-col cols="12" sm="6" md="6" lg="3">
-                            <v-card-title class="pb-0 justify-center"
-                                >Maroudas Optika</v-card-title
-                            >
+                            <v-card-title class="pb-0 justify-center">{{
+                                statistics.name
+                            }}</v-card-title>
                             <h4
                                 class="subtitle-1 success--text pl-4 text-center"
                             >
                                 online
                             </h4>
                         </v-col>
+
                         <v-col cols="12" sm="6" md="6" lg="3">
                             <v-card-title class="pb-0 justify-center">{{
                                 statistics.total_customers
@@ -29,6 +30,7 @@
                                 Customer
                             </v-card-title>
                         </v-col>
+
                         <v-col cols="12" sm="6" md="6" lg="3">
                             <v-card-title class="pb-0 justify-center">{{
                                 statistics.total_transactions
@@ -43,10 +45,11 @@
                                 Transactions
                             </v-card-title>
                         </v-col>
+
                         <v-col cols="12" sm="6" md="6" lg="3">
-                            <v-card-title class="pb-0 justify-center"
-                                >€ {{ statistics.total_income }}</v-card-title
-                            >
+                            <v-card-title class="pb-0 justify-center">{{
+                                statistics.total_income
+                            }}</v-card-title>
 
                             <v-card-title
                                 class="pa-0 font-weight-light justify-center text--secondary"
@@ -195,7 +198,7 @@
                                     statistics.last_twelve_hours_payments
                                         .length +
                                         " Transactions / " +
-                                        transactionsCount12hours +
+                                        statistics.twelve_hours_total +
                                         " Total"
                                 }}</v-card-title
                             >
@@ -227,7 +230,7 @@
                                 >{{
                                     statistics.last_week_payments.length +
                                         " Transactions / " +
-                                        transactionsCountLastWeek +
+                                        statistics.last_week_total +
                                         " Total"
                                 }}</v-card-title
                             >
@@ -315,67 +318,59 @@ export default {
         fill: false,
         type: "trend",
         autoLineWidth: false,
-        transactionsCount12hours: 0,
-        transactionsCountLastWeek: 0,
-        statistics: {
-            last_twelve_hours_payments: [],
-            last_week_payments: [],
-            total_customers: 0,
-            total_income: 0,
-            total_transactions: 0,
-            views: {
-                map_views: 0,
-                nav_clicks: 0,
-                phone_clicks: 0,
-                visits: 0
-            }
-        }
+        statistics: {}
     }),
 
-    mounted() {
-        let statistics = this.$store.state.storePanel.store.statistics;
-
-        if (statistics != undefined) {
-            let transactionsCount12hours = 0;
-            let transactionsCountLastWeek = 0;
-
-            statistics.last_twelve_hours_payments.map(data => {
-                transactionsCount12hours += data.transaction_count;
-            });
-
-            statistics.last_week_payments.map(data => {
-                transactionsCountLastWeek += data.transaction_count;
-            });
-
-            this.transactionsCount12hours = transactionsCount12hours;
-            this.transactionsCountLastWeek = transactionsCountLastWeek;
-            this.statistics = statistics;
-        }
-    },
-
-    computed: {
-        ...mapGetters("storePanel", ["store"])
-    },
-
     watch: {
-        store: {
-            handler(newVal) {
-                let statistics = newVal.statistics;
-                if (statistics != undefined) {
-                    let transactionsCount12hours = 0;
-                    let transactionsCountLastWeek = 0;
+        ["$store.state.storePanel.store"]: {
+            immediate: true,
+            handler(val) {
+                this.statistics = { ...val.statistics };
 
-                    statistics.last_twelve_hours_payments.map(data => {
-                        transactionsCount12hours += data.transaction_count;
-                    });
+                this.statistics.name = val.name;
 
-                    statistics.last_week_payments.map(data => {
-                        transactionsCountLastWeek += data.transaction_count;
-                    });
+                this.statistics.total_income = new Intl.NumberFormat("en-US", {
+                    style: "currency",
+                    currency: "EUR",
+                    minimumFractionDigits: 2
+                }).format(this.statistics.total_income);
 
-                    this.transactionsCount12hours = transactionsCount12hours;
-                    this.transactionsCountLastWeek = transactionsCountLastWeek;
-                    this.statistics = statistics;
+                if (this.statistics.last_twelve_hours_payments.length) {
+                    this.statistics.twelve_hours_total = val.statistics.last_twelve_hours_payments.reduce(
+                        (accumulator, currentValue) => {
+                            accumulator.transaction_count =
+                                accumulator.transaction_count +
+                                currentValue.transaction_count;
+                            return accumulator;
+                        }
+                    ).transaction_count;
+                    this.statistics.twelve_hours_total = new Intl.NumberFormat(
+                        "en-US",
+                        {
+                            style: "currency",
+                            currency: "EUR",
+                            minimumFractionDigits: 2
+                        }
+                    ).format(this.statistics.twelve_hours_total);
+                }
+
+                if (this.statistics.last_week_payments.length) {
+                    this.statistics.last_week_total = val.statistics.last_week_payments.reduce(
+                        (accumulator, currentValue) => {
+                            accumulator.transaction_count =
+                                accumulator.transaction_count +
+                                currentValue.transaction_count;
+                            return accumulator;
+                        }
+                    ).transaction_count;
+                    this.statistics.last_week_total = new Intl.NumberFormat(
+                        "en-US",
+                        {
+                            style: "currency",
+                            currency: "EUR",
+                            minimumFractionDigits: 2
+                        }
+                    ).format(this.statistics.last_week_total);
                 }
             }
         }

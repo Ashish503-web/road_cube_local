@@ -51,29 +51,22 @@ export default {
     },
 
     actions: {
-        async getCategories({ commit, rootState }) {
+        async getCategories({ commit }) {
             try {
-                const { data } = await ProductGroup.getCategories(
-                    rootState.storeToken,
-                    rootState.storeId
-                );
+                const { data } = await ProductGroup.getCategories();
 
                 const { product_categories } = data.data;
                 commit("setCategories", product_categories);
             } catch (ex) {
-                console.error(ex.response.data);
+                console.error(ex.response.data.message);
             }
         },
 
-        async getItems({ commit, rootState }, query) {
+        async getItems({ commit }, query) {
             try {
                 commit("setLoading", true, { root: true });
 
-                const { data } = await ProductGroup.get(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    query
-                );
+                const { data } = await ProductGroup.get(query);
                 const { group_products, pagination } = data.data;
 
                 commit("setItems", group_products);
@@ -87,7 +80,7 @@ export default {
             }
         },
 
-        async create({ dispatch, commit, state, rootState }, image) {
+        async create({ commit, dispatch, state, rootState }, image) {
             try {
                 commit("setLoading", true, { root: true });
 
@@ -104,11 +97,7 @@ export default {
                 if (!productGroup.description.it)
                     productGroup.description.it = productGroup.description.el;
 
-                const { data } = await ProductGroup.create(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    productGroup
-                );
+                const { data } = await ProductGroup.create(productGroup);
 
                 if (image) {
                     dispatch("uploadImage", {
@@ -148,7 +137,7 @@ export default {
             }
         },
 
-        async update({ dispatch, commit, state, rootState }, image) {
+        async update({ dispatch, commit, state }, image) {
             try {
                 commit("setLoading", true, { root: true });
 
@@ -164,11 +153,7 @@ export default {
                 if (!productGroup.description.it)
                     productGroup.description.it = productGroup.description.el;
 
-                const { data } = await ProductGroup.update(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    productGroup
-                );
+                const { data } = await ProductGroup.update(productGroup);
 
                 if (image) {
                     dispatch("uploadImage", {
@@ -207,11 +192,7 @@ export default {
             try {
                 commit("setLoading", true, { root: true });
 
-                await ProductGroup.delete(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    state.productGroup.product_id
-                );
+                await ProductGroup.delete(state.productGroup.product_id);
 
                 commit(
                     "setServerItemsLength",
@@ -249,8 +230,6 @@ export default {
                 fd.append("image", image);
 
                 const { data } = await ProductGroup.uploadImage(
-                    rootState.storeToken,
-                    rootState.storeId,
                     item.product_id,
                     fd
                 );

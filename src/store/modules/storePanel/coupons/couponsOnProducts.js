@@ -41,12 +41,9 @@ export default {
     },
 
     actions: {
-        async getProducts({ commit, rootState }) {
+        async getProducts({ commit }) {
             try {
-                const { data } = await CouponOnProduct.getProducts(
-                    rootState.storeToken,
-                    rootState.storeId
-                );
+                const { data } = await CouponOnProduct.getProducts();
 
                 commit("setProducts", data.data.products);
             } catch (ex) {
@@ -54,15 +51,11 @@ export default {
             }
         },
 
-        async getItems({ commit, rootState }, query) {
+        async getItems({ commit }, query) {
             try {
                 commit("setLoading", true, { root: true });
 
-                const { data } = await CouponOnProduct.get(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    query
-                );
+                const { data } = await CouponOnProduct.get(query);
 
                 const { coupons, pagination } = data.data;
 
@@ -83,11 +76,7 @@ export default {
 
                 let couponOnProduct = { ...state.couponOnProduct };
 
-                const { data } = await CouponOnProduct.create(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    couponOnProduct
-                );
+                const { data } = await CouponOnProduct.create(couponOnProduct);
 
                 const { coupon } = data.data;
 
@@ -124,17 +113,13 @@ export default {
             }
         },
 
-        async update({ commit, state, rootState }) {
+        async update({ commit, state }) {
             try {
                 commit("setLoading", true, { root: true });
 
                 let couponOnProduct = { ...state.couponOnProduct };
 
-                const { data } = await CouponOnProduct.update(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    couponOnProduct
-                );
+                const { data } = await CouponOnProduct.update(couponOnProduct);
 
                 commit("updateItem", data.data.product);
                 commit("setLoading", false, { root: true });
@@ -165,11 +150,7 @@ export default {
             try {
                 commit("setLoading", true, { root: true });
 
-                await CouponOnProduct.delete(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    state.couponOnProduct.coupon_id
-                );
+                await CouponOnProduct.delete(state.couponOnProduct.coupon_id);
 
                 commit(
                     "setServerItemsLength",

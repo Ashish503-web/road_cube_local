@@ -36,15 +36,11 @@ export default {
     },
 
     actions: {
-        async getItems({ commit, rootState }, query) {
+        async getItems({ commit }, query) {
             try {
                 commit("setLoading", true, { root: true });
 
-                const { data } = await CouponWithCode.get(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    query
-                );
+                const { data } = await CouponWithCode.get(query);
 
                 const { coupons, pagination } = data.data;
 
@@ -67,11 +63,7 @@ export default {
                 delete couponWithCode.coupon_id;
                 delete couponWithCode.image;
 
-                const { data } = await CouponWithCode.create(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    couponWithCode
-                );
+                const { data } = await CouponWithCode.create(couponWithCode);
 
                 if (image) {
                     dispatch("uploadImage", {
@@ -111,18 +103,14 @@ export default {
             }
         },
 
-        async update({ commit, dispatch, state, rootState }, image) {
+        async update({ commit, dispatch, state }, image) {
             try {
                 commit("setLoading", true, { root: true });
 
                 let couponWithCode = { ...state.couponWithCode };
                 delete couponWithCode.image;
 
-                const { data } = await CouponWithCode.update(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    couponWithCode
-                );
+                const { data } = await CouponWithCode.update(couponWithCode);
 
                 if (image) {
                     dispatch("uploadImage", {
@@ -157,15 +145,11 @@ export default {
             }
         },
 
-        async remove({ commit, state, rootState }) {
+        async remove({ commit, state }) {
             try {
                 commit("setLoading", true, { root: true });
 
-                await CouponWithCode.delete(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    state.couponWithCode.coupon_id
-                );
+                await CouponWithCode.delete(state.couponWithCode.coupon_id);
 
                 commit("setServerItemsLength", state.serverItemsLength - 1, {
                     root: true
@@ -201,8 +185,6 @@ export default {
                 fd.append("image", image);
 
                 const { data } = await CouponWithCode.uploadImage(
-                    rootState.storeToken,
-                    rootState.storeId,
                     item.coupon_id,
                     fd
                 );
