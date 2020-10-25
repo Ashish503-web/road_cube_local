@@ -94,7 +94,7 @@
                 :items="transactions"
                 :footer-props="{
                     itemsPerPageOptions: [12],
-                    showCurrentPage: true
+                    showCurrentPage: true,
                 }"
                 :page.sync="page"
                 :server-items-length="serverItemsLength"
@@ -159,7 +159,7 @@ import {
     mdiPrinter,
     mdiOpenInNew,
     mdiPencilOutline,
-    mdiClose
+    mdiClose,
 } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 
@@ -174,7 +174,7 @@ export default {
                 mdiPrinter,
                 mdiOpenInNew,
                 mdiPencilOutline,
-                mdiClose
+                mdiClose,
             },
             headers: [
                 { text: "User", value: "user" },
@@ -182,12 +182,16 @@ export default {
                 { text: "Product", value: "product" },
                 { text: "Address", value: "address" },
                 { text: "Information", value: "information" },
-                { text: "Actions", value: "actions" }
+                { text: "Actions", value: "actions" },
             ],
             lang: "el",
             page: +this.$route.query.page,
-            transactionStatus: +this.$route.query["transaction-status-id[]"],
-            transactionType: +this.$route.query["transaction-type[]"]
+            transactionStatus: JSON.parse(
+                this.$route.query["transaction-status-id[]"]
+            ),
+            transactionType: JSON.parse(
+                this.$route.query["transaction-type[]"]
+            ),
         };
     },
 
@@ -196,7 +200,7 @@ export default {
         ...mapState("storePanel/transactions", [
             "transactionStatuses",
             "transactionTypes",
-            "transactions"
+            "transactions",
         ]),
 
         // headers() {
@@ -219,7 +223,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
+            },
         },
 
         query() {
@@ -230,7 +234,7 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
@@ -239,8 +243,8 @@ export default {
             "getTransactionStatuses",
             "getTransactionTypes",
             "getItems",
-            "remove"
-        ])
+            "remove",
+        ]),
     },
 
     watch: {
@@ -249,30 +253,28 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
 
-            if (!this.$route.query["transaction-status-id[]"]) {
+            if (!val.query["transaction-status-id[]"]) {
                 this.$router.push({
                     query: {
                         ...this.$route.query,
-                        "transaction-status-id[]": [1]
-                    }
+                        "transaction-status-id[]": JSON.stringify([1]),
+                    },
                 });
             }
 
-            if (!this.$route.query["transaction-type[]"]) {
+            if (!val.query["transaction-type[]"]) {
                 this.$router.push({
                     query: {
                         ...this.$route.query,
-                        "transaction-type[]": [1]
-                    }
+                        "transaction-type[]": JSON.stringify([1]),
+                    },
                 });
             }
-
-            console.log("Watch", this.$route.query);
 
             this.getItems(this.query);
         },
@@ -285,8 +287,8 @@ export default {
             this.$router.push({
                 query: {
                     ...this.$route.query,
-                    "transaction-status-id[]": JSON.stringify(status)
-                }
+                    "transaction-status-id[]": JSON.stringify(status),
+                },
             });
         },
 
@@ -294,10 +296,10 @@ export default {
             this.$router.push({
                 query: {
                     ...this.$route.query,
-                    "transaction-type[]": JSON.stringify(type)
-                }
+                    "transaction-type[]": JSON.stringify(type),
+                },
             });
-        }
+        },
     },
 
     beforeCreate() {
@@ -305,26 +307,46 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
 
-        if (!this.$route.query["transaction-status-id[]"]) {
+        if (this.$route.query["transaction-status-id[]"]) {
+            if (
+                !JSON.parse(this.$route.query["transaction-status-id[]"]).length
+            ) {
+                this.$router.push({
+                    query: {
+                        ...this.$route.query,
+                        "transaction-status-id[]": JSON.stringify([1]),
+                    },
+                });
+            }
+        } else {
             this.$router.push({
                 query: {
                     ...this.$route.query,
-                    "transaction-status-id[]": [1]
-                }
+                    "transaction-status-id[]": JSON.stringify([1]),
+                },
             });
         }
 
-        if (!this.$route.query["transaction-type[]"]) {
+        if (this.$route.query["transaction-type[]"]) {
+            if (!JSON.parse(this.$route.query["transaction-type[]"]).length) {
+                this.$router.push({
+                    query: {
+                        ...this.$route.query,
+                        "transaction-type[]": JSON.stringify([1]),
+                    },
+                });
+            }
+        } else {
             this.$router.push({
                 query: {
                     ...this.$route.query,
-                    "transaction-type[]": [1]
-                }
+                    "transaction-type[]": JSON.stringify([1]),
+                },
             });
         }
     },
@@ -333,7 +355,7 @@ export default {
         this.getItems(this.query);
         this.getTransactionStatuses();
         this.getTransactionTypes();
-    }
+    },
 };
 </script>
 
