@@ -24,7 +24,6 @@
                     </v-toolbar-title>
                 </v-col>
                 <v-col cols="auto" :hidden="$vuetify.breakpoint.smAndDown">
-<<<<<<< HEAD
                     <v-toolbar-items class="d-flex align-center justify-center navigation">
                         <a href="#home" class="light-theme px-4 nav-link">home</a>
                         <a href="#products" class="light-theme px-4 nav-link"
@@ -36,29 +35,15 @@
                         >
                         <a href="#quote" class="light-theme px-4 nav-link">quote</a>
                         <a href="#cta" class="light-theme px-4 nav-link">contact</a>
-=======
-                    <v-toolbar-items class="d-flex align-center justify-center">
-                        <a href="#home" class="light-theme active px-4">home</a>
-                        <a href="#products" class="light-theme px-4"
-                            >why roadcube</a
-                        >
-                        <a href="#about" class="light-theme px-4">about</a>
-                        <a href="#features" class="light-theme px-4"
-                            >features</a
-                        >
-                        <a href="#quote" class="light-theme px-4">quote</a>
-                        <a href="#cta" class="light-theme px-4">contact</a>
->>>>>>> 6e7891d52fe1493757bd7a261aeb74e7b66e4a72
                         <v-btn
-                                @click="$vuetify.goTo('#about', options)"
-                            class="text-capitalize pr-1 pl-0 ml-6 btn-hover"
-                            height="auto"
-                            rounded
-                            to="/sign-in"
+                                class="text-capitalize pr-1 pl-0 ml-6 btn-hover"
+                                height="auto"
+                                rounded
+                                to="/sign-in"
                         >
                             <p
-                                class="ma-0"
-                                style="
+                                    class="ma-0"
+                                    style="
                                     padding: 15px 70px 15px 20px;
                                     font-size: 17px;
                                 "
@@ -67,16 +52,16 @@
                             </p>
                             <v-avatar size="38" class="icon-hover">
                                 <v-icon
-                                    size="24"
-                                    color="#fff"
-                                    v-text="icons.mdiArrowRight"
-                                    class="right-icon"
+                                        size="24"
+                                        color="#fff"
+                                        v-text="icons.mdiArrowRight"
+                                        class="right-icon"
                                 ></v-icon>
                                 <v-icon
-                                    size="24"
-                                    color="#001266"
-                                    v-text="icons.mdiArrowRight"
-                                    class="right-icon"
+                                        size="24"
+                                        color="#001266"
+                                        v-text="icons.mdiArrowRight"
+                                        class="right-icon"
                                 ></v-icon>
                             </v-avatar>
                         </v-btn>
@@ -242,7 +227,6 @@ function scrollFunction() {
 
 <style scoped>
 a {
-    font-size: 14px;
     text-decoration: none;
     text-transform: uppercase;
     font-size: 14px;

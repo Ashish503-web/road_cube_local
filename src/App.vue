@@ -2,11 +2,8 @@
     <v-app>
         <router-view name="header"></router-view>
 
-<<<<<<< HEAD
-        <v-main :class="{'pa-0':$route.path==='/'}">
-=======
         <v-main :class="{ 'pa-0': $route.path === '/' }">
->>>>>>> 6e7891d52fe1493757bd7a261aeb74e7b66e4a72
+
             <Notification />
             <router-view></router-view>
         </v-main>
