@@ -4,7 +4,7 @@
             <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
             <v-row
                 no-gutters
-                class="d-flex justify-space-between align-center container mx-auto py-0 px-2 px-sm-4 px-md-6 px-lg-10"
+                class="d-flex justify-space-between align-center container mx-auto py-0 px-0 px-sm-4 px-md-6 px-lg-10"
             >
                 <v-col cols="auto">
                     <v-toolbar-title>
@@ -24,18 +24,19 @@
                     </v-toolbar-title>
                 </v-col>
                 <v-col cols="auto" :hidden="$vuetify.breakpoint.smAndDown">
-                    <v-toolbar-items class="d-flex align-center justify-center">
-                        <a href="#home" class="light-theme active px-2">home</a>
-                        <a href="#products" class="light-theme px-2"
+                    <v-toolbar-items class="d-flex align-center justify-center navigation">
+                        <a href="#home" class="light-theme px-4 nav-link">home</a>
+                        <a href="#products" class="light-theme px-4 nav-link"
                             >why roadcube</a
                         >
-                        <a href="#about" class="light-theme px-2">about</a>
-                        <a href="#features" class="light-theme px-2"
+                        <a href="#about" class="light-theme px-4 nav-link">about</a>
+                        <a href="#featuress" class="light-theme px-4 nav-link"
                             >features</a
                         >
-                        <a href="#quote" class="light-theme px-2">quote</a>
-                        <a href="#cta" class="light-theme px-2">contact</a>
+                        <a href="#quote" class="light-theme px-4 nav-link">quote</a>
+                        <a href="#cta" class="light-theme px-4 nav-link">contact</a>
                         <v-btn
+                                @click="$vuetify.goTo('#about', options)"
                             class="text-capitalize pr-1 pl-0 ml-6 btn-hover"
                             height="auto"
                             rounded
@@ -106,7 +107,7 @@
                                 <v-list-item>
                                     <v-list-item-content>
                                         <v-list-item-title>
-                                            Home
+                                            <a href="#home" @click="dialog = false">Home</a>
                                         </v-list-item-title>
                                     </v-list-item-content>
                                 </v-list-item>
@@ -114,7 +115,7 @@
                                 <v-list-item>
                                     <v-list-item-content>
                                         <v-list-item-title>
-                                            Why RoadCube
+                                            <a href="#products" @click="dialog = false">Why RoadCube</a>
                                         </v-list-item-title>
                                     </v-list-item-content>
                                 </v-list-item>
@@ -122,7 +123,7 @@
                                 <v-list-item>
                                     <v-list-item-content>
                                         <v-list-item-title>
-                                            About
+                                            <a href="#about" @click="dialog = false">About</a>
                                         </v-list-item-title>
                                     </v-list-item-content>
                                 </v-list-item>
@@ -130,7 +131,7 @@
                                 <v-list-item>
                                     <v-list-item-content>
                                         <v-list-item-title>
-                                            Features
+                                            <a href="#featuress" @click="dialog = false">Features</a>
                                         </v-list-item-title>
                                     </v-list-item-content>
                                 </v-list-item>
@@ -138,7 +139,7 @@
                                 <v-list-item>
                                     <v-list-item-content>
                                         <v-list-item-title>
-                                            Quote
+                                            <a href="#quote" @click="dialog = false">Quote</a>
                                         </v-list-item-title>
                                     </v-list-item-content>
                                 </v-list-item>
@@ -146,7 +147,7 @@
                                 <v-list-item>
                                     <v-list-item-content>
                                         <v-list-item-title>
-                                            Contact
+                                            <a href="#cta" @click="dialog = false">Contact</a>
                                         </v-list-item-title>
                                     </v-list-item-content>
                                 </v-list-item>
@@ -203,9 +204,13 @@ export default {
     }),
 };
 
+
 window.onscroll = function () {
-    scrollFunction();
+    if(document.getElementById('header') !== null) {
+        scrollFunction();
+    }
 };
+
 
 function scrollFunction() {
     let btns = document.querySelectorAll(".light-theme");
@@ -229,10 +234,12 @@ function scrollFunction() {
         }
     }
 }
+
 </script>
 
 <style scoped>
 a {
+    font-size: 14px;
     text-decoration: none;
     text-transform: uppercase;
     font-weight: 600;

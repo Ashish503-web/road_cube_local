@@ -2,7 +2,7 @@
     <v-app>
         <router-view name="header"></router-view>
 
-        <v-main class="pa-0">
+        <v-main :class="{'pa-0':$route.path==='/'}">
             <Notification />
             <router-view></router-view>
         </v-main>
@@ -61,4 +61,8 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
     -moz-appearance: textfield;
 }
+
+html, body{
+        scroll-behavior: smooth !important;
+    }
 </style>

@@ -1,6 +1,6 @@
 <template>
-    <div id="products" class="products">
-        <div class="product-tabs-wrapper" :hidden="$vuetify.breakpoint.mdAndDown">
+    <section id="products" class="products">
+        <div class="b-product-tabs-wrapper" :hidden="$vuetify.breakpoint.mdAndDown">
             <ul class="py-5 px-0 d-flex align-center justify-center">
                 <li class="py-1 px-5 nav-item">
                     <a href="#Tab1" class="py-2 px-2 px-md-4 d-flex align-center">
@@ -25,12 +25,12 @@
                 </li>
             </ul>
         </div>
-        <div class="scrollspy-tabs">
+        <div class="b-scrollspy-tabs">
             <LoyaltyWithoutBuilding id="Tab1"/>
             <SynergiesTool id="Tab2"/>
             <GetMoreClients id="Tab3"/>
         </div>
-    </div>
+    </section>
 </template>
 
 <script>
@@ -55,7 +55,7 @@
         padding-bottom: 100px;
     }
 
-    .product-tabs-wrapper {
+    .b-product-tabs-wrapper {
         background-color: white;
         position: sticky;
         z-index: 100;
@@ -63,17 +63,17 @@
         top: 71px;
     }
 
-    .product-tabs-wrapper ul {
+    .b-product-tabs-wrapper ul {
         list-style-type: none;
         border-top: 1px solid #e8eaee;
         border-bottom: 1px solid #e8eaee;
     }
 
-    .product-tabs-wrapper ul .nav-item {
+    .b-product-tabs-wrapper ul .nav-item {
         position: relative;
     }
 
-    .product-tabs-wrapper ul .nav-item::after {
+    .b-product-tabs-wrapper ul .nav-item::after {
         content: '';
         display: inline-block;
         position: absolute;
@@ -84,18 +84,18 @@
         background-color: #e8eaee;
     }
 
-    .product-tabs-wrapper ul .nav-item:last-child::after {
+    .b-product-tabs-wrapper ul .nav-item:last-child::after {
         content: '';
         display: none;
     }
 
-    .product-tabs-wrapper ul li a {
+    .b-product-tabs-wrapper ul li a {
         text-decoration: none;
         color: #142752;
     }
 
     @media (max-width: 769px) {
-        .product-tabs-wrapper ul .nav-item::after {
+        .b-product-tabs-wrapper ul .nav-item::after {
             content: '';
             display: none;
         }

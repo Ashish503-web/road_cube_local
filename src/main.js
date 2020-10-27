@@ -5,6 +5,9 @@ import store from "./store/store";
 import vuetify from "./plugins/vuetify";
 import VueMask from "v-mask";
 
+import AOS from 'aos';
+import 'aos/dist/aos.css'
+
 Vue.use(VueMask);
 
 Vue.config.productionTip = false;
@@ -46,6 +49,9 @@ requireComponent.keys().forEach(fileName => {
 });
 
 new Vue({
+    created() {
+      AOS.init();
+    },
     router,
     store,
     vuetify,
