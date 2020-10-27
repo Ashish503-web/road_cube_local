@@ -1,5 +1,11 @@
 import axios from "axios";
-const ApiEndpoint = `https://api.roadcube.tk/v1/stores/`;
+
+axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
+    "accessToken"
+)}`;
+
+const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
+const storeId = localStorage.getItem("storeId");
 
 export default {
     namespaced: true,
@@ -37,7 +43,7 @@ export default {
     },
 
     actions: {
-        async getSystemNotifications({ commit, rootState }) {
+        async getSystemNotifications({ commit }) {
             try {
                 const { data } = await axios.get(
                     `https://api.roadcube.tk/v1/common/system-notifications`
@@ -49,15 +55,11 @@ export default {
             }
         },
 
-        async updateReward({ commit, rootState }, { item, type }) {
+        async updateReward({ commit }, { item, type }) {
             try {
                 commit("setLoading", { value: true, type });
 
-                axios.defaults.headers.Authorization = `Bearer ${rootState.storeToken}`;
-                await axios.put(
-                    `${ApiEndpoint}${rootState.storeId}/flags/reward`,
-                    item
-                );
+                await axios.put(`${ApiEndpoint}/${storeId}/flags/reward`, item);
 
                 commit("setLoading", { value: false, type });
                 commit(
@@ -88,20 +90,16 @@ export default {
             }
         },
 
-        async updateScanReceipt(
-            { commit, rootState },
-            { scan_receipt, item, type }
-        ) {
+        async updateScanReceipt({ commit }, { scan_receipt, item, type }) {
             try {
                 commit("setLoading", { value: true, type });
 
-                axios.defaults.headers.Authorization = `Bearer ${rootState.storeToken}`;
+                await axios.put(`${ApiEndpoint}/${storeId}/flags/reward`, {
+                    scan_receipt
+                });
+
                 await axios.put(
-                    `${ApiEndpoint}${rootState.storeId}/flags/reward`,
-                    { scan_receipt }
-                );
-                await axios.put(
-                    `${ApiEndpoint}${rootState.storeId}/billing-details/receipt-information`,
+                    `${ApiEndpoint}/${storeId}/billing-details/receipt-information`,
                     item
                 );
 

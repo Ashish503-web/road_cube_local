@@ -147,14 +147,14 @@ export default {
             icons: { mdiPencilOutline, mdiClose },
             lang: "el",
             selectedLang: "el",
-            page: +this.$route.query.page,
+            page: +this.$route.query.page
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/settings/productCategories", [
-            "productCategories",
+            "productCategories"
         ]),
 
         productCategory: {
@@ -165,7 +165,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
+            }
         },
 
         selectedProductCategory: {
@@ -176,7 +176,7 @@ export default {
 
             set(val) {
                 this.setSelectedItem(val);
-            },
+            }
         },
 
         query() {
@@ -187,36 +187,33 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        },
+        }
     },
 
     methods: {
         ...mapMutations("storePanel/settings/productCategories", [
             "setItem",
-            "setSelectedItem",
+            "setSelectedItem"
         ]),
         ...mapActions("storePanel/settings/productCategories", [
             "getItems",
             "create",
             "update",
-            "remove",
-        ]),
+            "remove"
+        ])
     },
 
     watch: {
-        $route: {
-            immediate: true,
-            handler(val) {
-                if (!val.query.page) {
-                    this.$router.push({
-                        query: {
-                            page: 1,
-                            ...this.$route.query,
-                        },
-                    });
-                }
-                this.getItems(this.query);
-            },
+        $route(val) {
+            if (!val.query.page) {
+                this.$router.push({
+                    query: {
+                        page: 1,
+                        ...this.$route.query
+                    }
+                });
+            }
+            this.getItems(this.query);
         },
 
         page(page) {
@@ -225,8 +222,23 @@ export default {
 
         perPage(perPage) {
             this.$router.push({ query: { ...this.$route.query, perPage } });
-        },
+        }
     },
+
+    beforeCreate() {
+        if (!this.$route.query.page) {
+            this.$router.push({
+                query: {
+                    page: 1,
+                    ...this.$route.query
+                }
+            });
+        }
+    },
+
+    mounted() {
+        this.getItems(this.query);
+    }
 };
 </script>
 

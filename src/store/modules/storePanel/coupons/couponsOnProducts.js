@@ -1,68 +1,53 @@
-import Transaction from "@/models/storePanel/Transaction";
+import CouponOnProduct from "@/models/storePanel/coupons/CouponOnProduct";
 
 export default {
     namespaced: true,
 
     state: () => ({
-        transactionStatuses: [],
-        transactionTypes: [],
-        transactions: [],
-        transaction: new Transaction()
+        products: [],
+        couponsOnProducts: [],
+        couponOnProduct: new CouponOnProduct()
     }),
 
     mutations: {
-        setTransactionStatuses(state, payload) {
-            state.transactionStatuses = payload;
-        },
-
-        setTransactionTypes(state, payload) {
-            state.transactionTypes = payload;
+        setProducts(state, payload) {
+            state.products = payload;
         },
 
         setItems(state, payload) {
-            state.transactions = payload;
+            state.couponsOnProducts = payload;
         },
 
         setItem(state, payload) {
-            state.transaction = new Transaction(payload);
+            state.couponOnProduct = new CouponOnProduct(payload);
         },
 
         addItem(state, payload) {
-            state.transactions.unshift(payload);
+            state.couponsOnProducts.unshift(payload);
         },
 
         updateItem(state, payload) {
-            let index = state.transactions.findIndex(
-                p => p.product_id === payload.product_id
+            let index = state.couponsOnProducts.findIndex(
+                c => c.coupon_id === payload.coupon_id
             );
-            state.transactions.splice(index, 1, payload);
+            state.couponsOnProducts.splice(index, 1, payload);
         },
 
         removeItem(state, id) {
-            state.transactions = state.transactions.filter(
-                p => p.product_id !== id
+            state.couponsOnProducts = state.couponsOnProducts.filter(
+                c => c.coupon_id !== id
             );
         }
     },
 
     actions: {
-        async getTransactionStatuses({ commit }) {
+        async getProducts({ commit }) {
             try {
-                const { data } = await Transaction.getTransactionStatuses();
+                const { data } = await CouponOnProduct.getProducts();
 
-                commit("setTransactionStatuses", data.data);
+                commit("setProducts", data.data.products);
             } catch (ex) {
-                console.error(ex.response.data.message);
-            }
-        },
-
-        async getTransactionTypes({ commit }) {
-            try {
-                const { data } = await Transaction.getTransactionTypes();
-
-                commit("setTransactionTypes", data.data);
-            } catch (ex) {
-                console.error(ex.response.data.message);
+                console.log(ex.response.data.message);
             }
         },
 
@@ -70,18 +55,18 @@ export default {
             try {
                 commit("setLoading", true, { root: true });
 
-                const { data } = await Transaction.get(query);
+                const { data } = await CouponOnProduct.get(query);
 
-                const { transactions, pagination } = data.data;
+                const { coupons, pagination } = data.data;
 
-                commit("setItems", transactions);
+                commit("setItems", coupons);
                 commit("setServerItemsLength", pagination.total, {
                     root: true
                 });
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });
-                console.error(ex.response.data.message);
+                console.error(ex.response.data);
             }
         },
 
@@ -89,11 +74,16 @@ export default {
             try {
                 commit("setLoading", true, { root: true });
 
-                let transaction = { ...state.transaction };
+                let couponOnProduct = { ...state.couponOnProduct };
 
-                const { data } = await Transaction.create(transaction);
+                const { data } = await CouponOnProduct.create(couponOnProduct);
 
-                commit("addItem", data.data.product);
+                const { coupon } = data.data;
+
+                coupon.product_buy_name = coupon.product_buy.name;
+                coupon.product_free_name = coupon.product_free.name;
+
+                commit("addItem", coupon);
                 commit(
                     "setServerItemsLength",
                     rootState.serverItemsLength + 1,
@@ -106,7 +96,7 @@ export default {
                     {
                         show: true,
                         type: "success",
-                        text: "You have successfully created product!"
+                        text: "You have successfully created coupon on product!"
                     },
 
                     { root: true }
@@ -127,18 +117,11 @@ export default {
             try {
                 commit("setLoading", true, { root: true });
 
-                let product = { ...state.product };
-                delete product.image;
-                if (!product.name.en) product.name.en = product.name.el;
-                if (!product.name.it) product.name.it = product.name.el;
-                if (!product.description.en)
-                    product.description.en = product.description.el;
-                if (!product.description.it)
-                    product.description.it = product.description.el;
+                let couponOnProduct = { ...state.couponOnProduct };
 
-                const { data } = await Transaction.update(product);
+                const { data } = await CouponOnProduct.update(couponOnProduct);
 
-                commit("updateItem", data.data.product, { root: true });
+                commit("updateItem", data.data.product);
                 commit("setLoading", false, { root: true });
                 commit("setDialog", false, { root: true });
                 commit(
@@ -167,7 +150,8 @@ export default {
             try {
                 commit("setLoading", true, { root: true });
 
-                await Transaction.delete(state.product.product_id);
+                await CouponOnProduct.delete(state.couponOnProduct.coupon_id);
+
                 commit(
                     "setServerItemsLength",
                     rootState.serverItemsLength - 1,
@@ -175,7 +159,7 @@ export default {
                 );
                 commit("setLoading", false, { root: true });
                 commit("setDeleteDialog", false, { root: true });
-                commit("removeItem", state.product.product_id);
+                commit("removeItem", state.couponOnProduct.coupon_id);
                 commit(
                     "setNotification",
                     {

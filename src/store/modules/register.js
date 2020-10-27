@@ -339,8 +339,8 @@ export default {
                     password: state.password
                 });
 
-                localStorage.setItem("storeToken", signIn.data.access_token);
-                commit("setStoreToken", signIn.data.access_token, {
+                localStorage.setItem("accessToken", signIn.data.access_token);
+                commit("setAccessToken", signIn.data.access_token, {
                     root: true
                 });
 

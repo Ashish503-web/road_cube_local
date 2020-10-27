@@ -36,13 +36,9 @@ export default {
     },
 
     actions: {
-        async getItems({ commit, rootState }, query) {
+        async getItems({ commit }, query) {
             try {
-                const { data } = await BankProvider.get(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    query
-                );
+                const { data } = await BankProvider.get(query);
 
                 console.log(data.data.store_bank_providers);
 
@@ -66,11 +62,7 @@ export default {
                 if (!productCategory.name.it)
                     productCategory.name.it = productCategory.name.el;
 
-                const { data } = await BankProvider.create(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    productCategory
-                );
+                const { data } = await BankProvider.create(productCategory);
 
                 commit("addItem", data.data.product_category);
                 commit("setItem", {});
@@ -102,8 +94,6 @@ export default {
         //         commit("setLoading", true);
 
         //         const { data } = await ProductCategory.update(
-        //             rootState.storeToken,
-        //             rootState.storeId,
         //             product
         //         );
 
@@ -125,15 +115,11 @@ export default {
         //     }
         // },
 
-        async remove({ commit, rootState }, id) {
+        async remove({ commit }, id) {
             try {
                 commit("setLoading", true, { root: true });
 
-                await BankProvider.delete(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    id
-                );
+                await BankProvider.delete(id);
 
                 commit("removeItem", id);
                 commit("setLoading", false, { root: true });

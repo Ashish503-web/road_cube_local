@@ -77,12 +77,12 @@
                 :loading="loading"
                 :error-message="errorMessage"
                 @cancel="deleteDialog = false"
-                @submit="remove(product.product_id)"
+                @submit="remove"
             >
                 <p>
                     Are you sure you want to delete
                     <span class="font-weight-bold text--primary">{{
-                        product.name
+                        product.name[lang]
                     }}</span
                     >?
                 </p>
@@ -106,49 +106,45 @@ export default {
             icons: { mdiPencilOutline, mdiClose },
             lang: "el",
             page: +this.$route.query.page,
-            mode: 0,
+            mode: 0
         };
     },
 
     computed: {
-        ...mapState("storePanel/products", [
-            "loading",
-            "errorMessage",
-            "products",
-            "serverItemsLength",
-        ]),
+        ...mapState(["loading", "errorMessage", "serverItemsLength"]),
+        ...mapState("storePanel/products", ["products"]),
 
         headers() {
             return [
                 { text: "Product Name", value: `name[${this.lang}]` },
                 {
                     text: "Product Description",
-                    value: `description[${this.lang}]`,
+                    value: `description[${this.lang}]`
                 },
                 { text: "Selling Price", value: "retail_price" },
                 { text: "Coupon", value: "coupon" },
-                { text: "Actions", value: "actions" },
+                { text: "Actions", value: "actions" }
             ];
         },
 
         dialog: {
             get() {
-                return this.$store.state.storePanel.products.dialog;
+                return this.$store.state.dialog;
             },
 
             set(val) {
                 this.setDialog(val);
-            },
+            }
         },
 
         deleteDialog: {
             get() {
-                return this.$store.state.storePanel.products.deleteDialog;
+                return this.$store.state.deleteDialog;
             },
 
             set(val) {
                 this.setDeleteDialog(val);
-            },
+            }
         },
 
         product: {
@@ -158,7 +154,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
+            }
         },
 
         query() {
@@ -169,18 +165,20 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        },
+        }
     },
 
     methods: {
-        ...mapMutations("storePanel/products", [
+        ...mapMutations([
             "setDialog",
             "setDeleteDialog",
             "setResetSuccess",
-            "setResetValidation",
+            "setResetValidation"
+        ]),
+        ...mapMutations("storePanel/products", [
             "setShowImageUpload",
             "setShowWeekdays",
-            "setItem",
+            "setItem"
         ]),
         ...mapActions("storePanel/products", ["getItems", "remove"]),
 
@@ -195,7 +193,7 @@ export default {
             setTimeout(() => this.setResetSuccess(true), 300);
             this.setResetValidation(true);
             this.dialog = true;
-        },
+        }
     },
 
     watch: {
@@ -206,33 +204,37 @@ export default {
             }
         },
 
-        $route: {
-            immediate: true,
-            handler(val) {
-                if (!val.query.page) {
-                    this.$router.push({
-                        query: {
-                            page: 1,
-                            ...this.$route.query,
-                        },
-                    });
-                }
-                this.getItems(this.query);
-            },
+        $route(val) {
+            if (!val.query.page) {
+                this.$router.push({
+                    query: {
+                        page: 1,
+                        ...this.$route.query
+                    }
+                });
+            }
+            this.getItems(this.query);
         },
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        },
+        }
+    },
 
-        perPage(perPage) {
-            this.$router.push({ query: { ...this.$route.query, perPage } });
-        },
+    beforeCreate() {
+        if (!this.$route.query.page) {
+            this.$router.push({
+                query: {
+                    page: 1,
+                    ...this.$route.query
+                }
+            });
+        }
     },
 
     mounted() {
         this.getItems(this.query);
-    },
+    }
 };
 </script>
 

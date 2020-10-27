@@ -33,9 +33,9 @@ export default {
             { to: "/storePanel/products/products-tab", name: "Products" },
             {
                 to: "/storePanel/products/product-groups",
-                name: "Product Groups",
-            },
-        ],
+                name: "Product Groups"
+            }
+        ]
     }),
 
     watch: {
@@ -45,8 +45,8 @@ export default {
                 if (val.path === "/storePanel/products") {
                     this.$router.push("/storePanel/products/products-tab");
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>

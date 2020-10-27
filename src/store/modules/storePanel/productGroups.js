@@ -4,13 +4,6 @@ export default {
     namespaced: true,
 
     state: () => ({
-        dialog: false,
-        deleteDialog: false,
-        loading: false,
-        errorMessage: "",
-        resetSuccess: false,
-        resetValidation: false,
-        serverItemsLength: 0,
         showImageUpload: false,
         showWeekdays: false,
         categories: [],
@@ -19,34 +12,6 @@ export default {
     }),
 
     mutations: {
-        setDialog(state, payload) {
-            state.dialog = payload;
-        },
-
-        setDeleteDialog(state, payload) {
-            state.deleteDialog = payload;
-        },
-
-        setLoading(state, payload) {
-            state.loading = payload;
-        },
-
-        setErrorMessage(state, payload) {
-            state.errorMessage = payload;
-        },
-
-        setServerItemsLength(state, payload) {
-            state.serverItemsLength = payload;
-        },
-
-        setResetSuccess(state, payload) {
-            state.resetSuccess = payload;
-        },
-
-        setResetValidation(state, payload) {
-            state.resetValidation = payload;
-        },
-
         setShowImageUpload(state, payload) {
             state.showImageUpload = payload;
         },
@@ -86,46 +51,40 @@ export default {
     },
 
     actions: {
-        async getCategories({ commit, rootState }) {
+        async getCategories({ commit }) {
             try {
-                const { data } = await ProductGroup.getCategories(
-                    rootState.storeToken,
-                    rootState.storeId
-                );
+                const { data } = await ProductGroup.getCategories();
 
                 const { product_categories } = data.data;
                 commit("setCategories", product_categories);
             } catch (ex) {
-                console.error(ex.response.data);
+                console.error(ex.response.data.message);
             }
         },
 
-        async getItems({ commit, rootState }, query) {
+        async getItems({ commit }, query) {
             try {
-                commit("setLoading", true);
+                commit("setLoading", true, { root: true });
 
-                const { data } = await ProductGroup.get(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    query
-                );
+                const { data } = await ProductGroup.get(query);
                 const { group_products, pagination } = data.data;
 
                 commit("setItems", group_products);
-                commit("setServerItemsLength", pagination.total);
-                commit("setLoading", false);
+                commit("setServerItemsLength", pagination.total, {
+                    root: true
+                });
+                commit("setLoading", false, { root: true });
             } catch (ex) {
-                commit("setLoading", false);
+                commit("setLoading", false, { root: true });
                 console.error(ex.response.data);
             }
         },
 
-        async create(
-            { dispatch, commit, state, rootState },
-            { productGroup, image }
-        ) {
+        async create({ commit, dispatch, state, rootState }, image) {
             try {
-                commit("setLoading", true);
+                commit("setLoading", true, { root: true });
+
+                let productGroup = { ...state.productGroup };
 
                 delete productGroup.product_id;
                 delete productGroup.image;
@@ -138,11 +97,7 @@ export default {
                 if (!productGroup.description.it)
                     productGroup.description.it = productGroup.description.el;
 
-                const { data } = await ProductGroup.create(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    productGroup
-                );
+                const { data } = await ProductGroup.create(productGroup);
 
                 if (image) {
                     dispatch("uploadImage", {
@@ -152,9 +107,13 @@ export default {
                     });
                 } else {
                     commit("addItem", data.data.group_product);
-                    commit("setServerItemsLength", state.serverItemsLength + 1);
-                    commit("setLoading", false);
-                    commit("setDialog", false);
+                    commit(
+                        "setServerItemsLength",
+                        rootState.serverItemsLength + 1,
+                        { root: true }
+                    );
+                    commit("setLoading", false, { root: true });
+                    commit("setDialog", false, { root: true });
                     commit(
                         "setNotification",
                         {
@@ -167,15 +126,22 @@ export default {
                     );
                 }
             } catch (ex) {
-                commit("setLoading", false);
-                commit("setErrorMessage", ex.response.data.message);
-                setTimeout(() => commit("setErrorMessage", ""), 5000);
+                commit("setLoading", false, { root: true });
+                commit("setErrorMessage", ex.response.data.message, {
+                    root: true
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", "", { root: true }),
+                    5000
+                );
             }
         },
 
-        async update({ dispatch, commit, rootState }, { productGroup, image }) {
+        async update({ dispatch, commit, state }, image) {
             try {
-                commit("setLoading", true);
+                commit("setLoading", true, { root: true });
+
+                let productGroup = { ...state.productGroup };
 
                 delete productGroup.image;
                 if (!productGroup.name.en)
@@ -187,11 +153,7 @@ export default {
                 if (!productGroup.description.it)
                     productGroup.description.it = productGroup.description.el;
 
-                const { data } = await ProductGroup.update(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    productGroup
-                );
+                const { data } = await ProductGroup.update(productGroup);
 
                 if (image) {
                     dispatch("uploadImage", {
@@ -201,8 +163,8 @@ export default {
                     });
                 } else {
                     commit("updateItem", data.data.group_product);
-                    commit("setLoading", false);
-                    commit("setDialog", false);
+                    commit("setLoading", false, { root: true });
+                    commit("setDialog", false, { root: true });
                     commit(
                         "setNotification",
                         {
@@ -215,26 +177,31 @@ export default {
                     );
                 }
             } catch (ex) {
-                commit("setLoading", false);
-                commit("setErrorMessage", ex.response.data.message);
-                setTimeout(() => commit("setErrorMessage", ""), 5000);
+                commit("setLoading", false, { root: true });
+                commit("setErrorMessage", ex.response.data.message, {
+                    root: true
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", "", { root: true }),
+                    5000
+                );
             }
         },
 
-        async remove({ commit, state, rootState }, id) {
+        async remove({ commit, state, rootState }) {
             try {
-                commit("setLoading", true);
+                commit("setLoading", true, { root: true });
 
-                await ProductGroup.delete(
-                    rootState.storeToken,
-                    rootState.storeId,
-                    id
+                await ProductGroup.delete(state.productGroup.product_id);
+
+                commit(
+                    "setServerItemsLength",
+                    rootState.serverItemsLength - 1,
+                    { root: true }
                 );
-
-                commit("setServerItemsLength", state.serverItemsLength - 1);
-                commit("setLoading", false);
-                commit("setDeleteDialog", false);
-                commit("removeItem", id);
+                commit("setLoading", false, { root: true });
+                commit("setDeleteDialog", false, { root: true });
+                commit("removeItem", state.productGroup.product_id);
                 commit(
                     "setNotification",
                     {
@@ -246,20 +213,23 @@ export default {
                     { root: true }
                 );
             } catch (ex) {
-                commit("setLoading", false);
-                commit("setErrorMessage", ex.response.data.message);
-                setTimeout(() => commit("setErrorMessage", ""), 5000);
+                commit("setLoading", false, { root: true });
+                commit("setErrorMessage", ex.response.data.message, {
+                    root: true
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", "", { root: true }),
+                    5000
+                );
             }
         },
 
-        async uploadImage({ commit, state, rootState }, { item, image, mode }) {
+        async uploadImage({ commit, rootState }, { item, image, mode }) {
             try {
                 const fd = new FormData();
                 fd.append("image", image);
 
                 const { data } = await ProductGroup.uploadImage(
-                    rootState.storeToken,
-                    rootState.storeId,
                     item.product_id,
                     fd
                 );
@@ -268,12 +238,16 @@ export default {
 
                 if (mode === 1) {
                     commit("addItem", item);
-                    commit("setServerItemsLength", state.serverItemsLength + 1);
+                    commit(
+                        "setServerItemsLength",
+                        rootState.serverItemsLength + 1,
+                        { root: true }
+                    );
                 } else {
                     commit("updateItem", item);
                 }
-                commit("setLoading", false);
-                commit("setDialog", false);
+                commit("setLoading", false, { root: true });
+                commit("setDialog", false, { root: true });
                 commit(
                     "setNotification",
                     {
@@ -287,9 +261,14 @@ export default {
                     { root: true }
                 );
             } catch (ex) {
-                commit("setLoading", false);
-                commit("setErrorMessage", ex.response.data.message);
-                setTimeout(() => commit("setErrorMessage", ""), 5000);
+                commit("setLoading", false, { root: true });
+                commit("setErrorMessage", ex.response.data.message, {
+                    root: true
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", "", { root: true }),
+                    5000
+                );
             }
         }
     }

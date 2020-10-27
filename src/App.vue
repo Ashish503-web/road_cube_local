@@ -2,7 +2,11 @@
     <v-app>
         <router-view name="header"></router-view>
 
+<<<<<<< HEAD
         <v-main :class="{'pa-0':$route.path==='/'}">
+=======
+        <v-main :class="{ 'pa-0': $route.path === '/' }">
+>>>>>>> 6e7891d52fe1493757bd7a261aeb74e7b66e4a72
             <Notification />
             <router-view></router-view>
         </v-main>
@@ -10,7 +14,7 @@
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapMutations, mapActions } from "vuex";
 import Notification from "@/components/Notification.vue";
 
 export default {
@@ -21,24 +25,22 @@ export default {
     }),
 
     methods: {
-        ...mapMutations([
-            "setStoreId",
-            "setStoreToken",
-            "setCompanyId",
-            "setCompanyToken",
-        ]),
+        ...mapMutations(["setStoreId", "setAccessToken"]),
+        ...mapActions(["getUser"]),
     },
 
     mounted() {
-        let storeId = localStorage.getItem("storeId");
-        let storeToken = localStorage.getItem("storeToken");
-        let companyId = localStorage.getItem("companyId");
-        let companyToken = localStorage.getItem("companyToken");
+        const accessToken = localStorage.getItem("accessToken");
+        const storeId = localStorage.getItem("storeId");
 
-        this.setStoreId(storeId);
-        this.setStoreToken(storeToken);
-        this.setCompanyId(companyId);
-        this.setCompanyToken(companyToken);
+        if (accessToken) {
+            this.setAccessToken(accessToken);
+            this.getUser();
+        }
+
+        if (storeId) {
+            this.setStoreId(storeId);
+        }
     },
 };
 </script>

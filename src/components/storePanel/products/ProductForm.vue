@@ -6,9 +6,10 @@
         :reset-validation="resetValidation"
         @cancel="$emit('cancel')"
         @submit="
-            mode === 1
-                ? create({ product, image: imageFile })
-                : update({ product, image: imageFile })
+            () => {
+                mode === 1 ? create(imageFile) : update(imageFile);
+                imageFile = null;
+            }
         "
     >
         <b-text-field
@@ -46,7 +47,7 @@
                     v-model="product.retail_price"
                     type="number"
                     label="Selling Price"
-                    append-icon="mdiCurrencyEur"
+                    prepend-inner-icon="mdiCurrencyEur"
                     :success="success.sellingPrice"
                     :rules="rules.sellingPrice"
                 ></b-text-field>
@@ -56,7 +57,7 @@
                     v-model="product.wholesale_price"
                     type="number"
                     label="Wholesale Price"
-                    append-icon="mdiCurrencyEur"
+                    prepend-inner-icon="mdiCurrencyEur"
                     :success="success.wholesalePrice"
                     :rules="rules.wholesalePrice"
                 ></b-text-field>
@@ -69,7 +70,7 @@
                     v-model="product.delivery_cost"
                     type="number"
                     label="Delivery Cost"
-                    append-icon="mdiCurrencyEur"
+                    prepend-inner-icon="mdiCurrencyEur"
                     :success="success.deliveryCost"
                     :rules="rules.deliveryCost"
                 ></b-text-field>
@@ -79,7 +80,7 @@
                     v-model="product.shipping_cost"
                     type="number"
                     label="Shipping Cost"
-                    append-icon="mdiCurrencyEur"
+                    prepend-inner-icon="mdiCurrencyEur"
                     :success="success.shippingCost"
                     :rules="rules.shippingCost"
                 ></b-text-field>
@@ -198,8 +199,6 @@
 import validators from "./productValidators";
 import { mapState, mapMutations, mapActions } from "vuex";
 
-import greeceFlag from "@/assets/flags/Flag_of_Greece.svg";
-
 export default {
     name: "Product",
     props: {
@@ -208,7 +207,6 @@ export default {
     mixins: [validators],
     data() {
         return {
-            greeceFlag,
             lang: "el",
             productLang: "el",
             descriptionLang: "el",
@@ -226,13 +224,13 @@ export default {
     },
 
     computed: {
-        ...mapState("storePanel/products", [
+        ...mapState([
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation",
-            "categories"
+            "resetValidation"
         ]),
+        ...mapState("storePanel/products", ["categories"]),
 
         title() {
             return this.mode === 1
@@ -260,22 +258,15 @@ export default {
             }
         },
 
-        product: {
-            get() {
-                return this.$store.state.storePanel.products.product;
-            },
-
-            set(val) {
-                this.setProduct(val);
-            }
+        product() {
+            return this.$store.state.storePanel.products.product;
         }
     },
 
     methods: {
         ...mapMutations("storePanel/products", [
             "setShowImageUpload",
-            "setShowWeekdays",
-            "setProduct"
+            "setShowWeekdays"
         ]),
         ...mapActions("storePanel/products", [
             "getCategories",

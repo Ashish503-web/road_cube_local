@@ -1,5 +1,11 @@
 import axios from "axios";
-const ApiEndpoint = `https://api.roadcube.tk/v1/stores/`;
+
+axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
+    "accessToken"
+)}`;
+
+const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
+const storeId = localStorage.getItem("storeId");
 
 export default class Store {
     constructor(item = {}) {
@@ -17,17 +23,11 @@ export default class Store {
         this.timetable = [];
         this.statistics = item.statistics || {
             total_income: 0,
-            views: {}
+            views: {},
+            last_twelve_hours_payments: [],
+            last_week_payments: []
         };
     }
 
-    static get = (token, storeId) => {
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.get(`${ApiEndpoint}${storeId}`);
-    };
-
-    static create = (token, storeId, item) => {
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.post(`${ApiEndpoint}${storeId}/products`, item);
-    };
+    static get = () => axios.get(`${ApiEndpoint}/${storeId}`);
 }

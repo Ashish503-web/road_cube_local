@@ -24,6 +24,7 @@
                     </v-toolbar-title>
                 </v-col>
                 <v-col cols="auto" :hidden="$vuetify.breakpoint.smAndDown">
+<<<<<<< HEAD
                     <v-toolbar-items class="d-flex align-center justify-center navigation">
                         <a href="#home" class="light-theme px-4 nav-link">home</a>
                         <a href="#products" class="light-theme px-4 nav-link"
@@ -35,11 +36,25 @@
                         >
                         <a href="#quote" class="light-theme px-4 nav-link">quote</a>
                         <a href="#cta" class="light-theme px-4 nav-link">contact</a>
+=======
+                    <v-toolbar-items class="d-flex align-center justify-center">
+                        <a href="#home" class="light-theme active px-4">home</a>
+                        <a href="#products" class="light-theme px-4"
+                            >why roadcube</a
+                        >
+                        <a href="#about" class="light-theme px-4">about</a>
+                        <a href="#features" class="light-theme px-4"
+                            >features</a
+                        >
+                        <a href="#quote" class="light-theme px-4">quote</a>
+                        <a href="#cta" class="light-theme px-4">contact</a>
+>>>>>>> 6e7891d52fe1493757bd7a261aeb74e7b66e4a72
                         <v-btn
                                 @click="$vuetify.goTo('#about', options)"
                             class="text-capitalize pr-1 pl-0 ml-6 btn-hover"
                             height="auto"
                             rounded
+                            to="/sign-in"
                         >
                             <p
                                 class="ma-0"
@@ -159,32 +174,20 @@
         </v-app-bar>
 
         <v-navigation-drawer v-model="drawer" app>
-            <v-row justify="center">
-                <v-col cols="12">
-                    <v-btn color="primary" outlined block to="/loyaltyPanel"
-                        >go to loyalty panel</v-btn
-                    >
-                    <v-btn
-                        color="primary"
-                        class="mt-3"
-                        outlined
-                        block
-                        to="/storePanel"
-                        >go to store panel</v-btn
-                    >
-                    <v-btn
-                        id="features"
-                        color="primary"
-                        class="mt-3"
-                        outlined
-                        block
-                        to="/sign-in"
-                    >
+            <v-list nav dense>
+                <v-list-item to="/loyaltyPanel">
+                    <v-list-item-title>Loyalty Panel</v-list-item-title>
+                </v-list-item>
+                <v-list-item to="/storePanel">
+                    <v-list-item-title>Store Panel</v-list-item-title>
+                </v-list-item>
+                <v-list-item to="/sign-in">
+                    <v-list-item-title>
                         sign in
-                        <v-icon class="ml-1" v-text="icons.mdiLogin"></v-icon>
-                    </v-btn>
-                </v-col>
-            </v-row>
+                        <v-icon v-text="icons.mdiLogin"></v-icon>
+                    </v-list-item-title>
+                </v-list-item>
+            </v-list>
         </v-navigation-drawer>
     </div>
 </template>
@@ -242,6 +245,7 @@ a {
     font-size: 14px;
     text-decoration: none;
     text-transform: uppercase;
+    font-size: 14px;
     font-weight: 600;
 }
 

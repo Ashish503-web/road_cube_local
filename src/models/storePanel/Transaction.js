@@ -1,31 +1,35 @@
 import axios from "axios";
-const ApiEndpoint = "https://api.roadcube.tk/v1/stores/";
+
+axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
+    "accessToken"
+)}`;
+
+const ApiEndpoint = "https://api.roadcube.tk/v1";
+const storeId = localStorage.getItem("storeId");
 
 export default class Transaction {
     constructor(item = {}) {
         this.transaction_id = item.transaction_id || null;
     }
 
-    static get = (token, storeId, query) => {
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.get(`${ApiEndpoint}${storeId}/transactions${query}`);
-    };
+    static getTransactionStatuses = () =>
+        axios.get(`${ApiEndpoint}/common/transaction-statuses`);
 
-    static create = (token, storeId, item) => {
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.post(`${ApiEndpoint}${storeId}/transactions`, item);
-    };
+    static getTransactionTypes = () =>
+        axios.get(`${ApiEndpoint}/common/transaction-types`);
 
-    static update = (token, storeId, item) => {
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.put(
-            `${ApiEndpoint}${storeId}/transactions/${item.transaction_id}`,
+    static get = query =>
+        axios.get(`${ApiEndpoint}/stores/${storeId}/transactions${query}`);
+
+    static create = item =>
+        axios.post(`${ApiEndpoint}/stores/${storeId}/transactions`, item);
+
+    static update = item =>
+        axios.put(
+            `${ApiEndpoint}/stores/${storeId}/transactions/${item.transaction_id}`,
             item
         );
-    };
 
-    static delete = (token, storeId, id) => {
-        axios.defaults.headers.Authorization = `Bearer ${token}`;
-        return axios.delete(`${ApiEndpoint}${storeId}/transactions/${id}`);
-    };
+    static delete = id =>
+        axios.delete(`${ApiEndpoint}/stores/${storeId}/transactions/${id}`);
 }

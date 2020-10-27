@@ -1,73 +1,50 @@
-import Product from "@/models/storePanel/Product";
+import CouponWithCode from "@/models/storePanel/coupons/CouponWithCode";
 
 export default {
     namespaced: true,
 
     state: () => ({
-        showImageUpload: false,
-        showWeekdays: false,
-        categories: [],
-        products: [],
-        product: new Product()
+        couponsWithCode: [],
+        couponWithCode: new CouponWithCode()
     }),
 
     mutations: {
-        setShowImageUpload(state, payload) {
-            state.showImageUpload = payload;
-        },
-
-        setShowWeekdays(state, payload) {
-            state.showWeekdays = payload;
-        },
-
-        setCategories(state, payload) {
-            state.categories = payload;
-        },
-
         setItems(state, payload) {
-            state.products = payload;
+            state.couponsWithCode = payload;
         },
 
         setItem(state, payload) {
-            state.product = new Product(payload);
+            state.couponWithCode = new CouponWithCode(payload);
         },
 
         addItem(state, payload) {
-            state.products.unshift(payload);
+            state.couponsWithCode.unshift(payload);
         },
 
         updateItem(state, payload) {
-            let index = state.products.findIndex(
-                p => p.product_id === payload.product_id
+            let index = state.couponsWithCode.findIndex(
+                c => c.coupon_id === payload.coupon_id
             );
-            state.products.splice(index, 1, payload);
+            state.couponsWithCode.splice(index, 1, payload);
         },
 
         removeItem(state, id) {
-            state.products = state.products.filter(p => p.product_id !== id);
+            state.couponsWithCode = state.couponsWithCode.filter(
+                c => c.coupon_id !== id
+            );
         }
     },
 
     actions: {
-        async getCategories({ commit }) {
-            try {
-                const { data } = await Product.getCategories();
-
-                const { product_categories } = data.data;
-                commit("setCategories", product_categories);
-            } catch (ex) {
-                console.error(ex.response.data);
-            }
-        },
-
         async getItems({ commit }, query) {
             try {
                 commit("setLoading", true, { root: true });
 
-                const { data } = await Product.get(query);
-                const { products, pagination } = data.data;
+                const { data } = await CouponWithCode.get(query);
 
-                commit("setItems", products);
+                const { coupons, pagination } = data.data;
+
+                commit("setItems", coupons);
                 commit("setServerItemsLength", pagination.total, {
                     root: true
                 });
@@ -82,26 +59,20 @@ export default {
             try {
                 commit("setLoading", true, { root: true });
 
-                let product = { ...state.product };
-                delete product.product_id;
-                delete product.image;
-                if (!product.name.en) product.name.en = product.name.el;
-                if (!product.name.it) product.name.it = product.name.el;
-                if (!product.description.en)
-                    product.description.en = product.description.el;
-                if (!product.description.it)
-                    product.description.it = product.description.el;
+                let couponWithCode = { ...state.couponWithCode };
+                delete couponWithCode.coupon_id;
+                delete couponWithCode.image;
 
-                const { data } = await Product.create(product);
+                const { data } = await CouponWithCode.create(couponWithCode);
 
                 if (image) {
                     dispatch("uploadImage", {
-                        item: data.data.product,
+                        item: data.data.coupon,
                         image,
                         mode: 1
                     });
                 } else {
-                    commit("addItem", data.data.product);
+                    commit("addItem", data.data.coupon);
                     commit(
                         "setServerItemsLength",
                         rootState.serverItemsLength + 1,
@@ -114,7 +85,7 @@ export default {
                         {
                             show: true,
                             type: "success",
-                            text: "You have successfully created product!"
+                            text: "You have successfully created new coupon!"
                         },
 
                         { root: true }
@@ -136,25 +107,19 @@ export default {
             try {
                 commit("setLoading", true, { root: true });
 
-                let product = { ...state.product };
-                delete product.image;
-                if (!product.name.en) product.name.en = product.name.el;
-                if (!product.name.it) product.name.it = product.name.el;
-                if (!product.description.en)
-                    product.description.en = product.description.el;
-                if (!product.description.it)
-                    product.description.it = product.description.el;
+                let couponWithCode = { ...state.couponWithCode };
+                delete couponWithCode.image;
 
-                const { data } = await Product.update(product);
+                const { data } = await CouponWithCode.update(couponWithCode);
 
                 if (image) {
                     dispatch("uploadImage", {
-                        item: data.data.product,
+                        item: data.data.coupon,
                         image,
                         mode: 2
                     });
                 } else {
-                    commit("updateItem", data.data.product, { root: true });
+                    commit("updateItem", data.data.coupon);
                     commit("setLoading", false, { root: true });
                     commit("setDialog", false, { root: true });
                     commit(
@@ -180,19 +145,18 @@ export default {
             }
         },
 
-        async remove({ commit, state, rootState }) {
+        async remove({ commit, state }) {
             try {
                 commit("setLoading", true, { root: true });
 
-                await Product.delete(state.product.product_id);
-                commit(
-                    "setServerItemsLength",
-                    rootState.serverItemsLength - 1,
-                    { root: true }
-                );
+                await CouponWithCode.delete(state.couponWithCode.coupon_id);
+
+                commit("setServerItemsLength", state.serverItemsLength - 1, {
+                    root: true
+                });
                 commit("setLoading", false, { root: true });
                 commit("setDeleteDialog", false, { root: true });
-                commit("removeItem", state.product.product_id);
+                commit("removeItem", state.couponWithCode.coupon_id);
                 commit(
                     "setNotification",
                     {
@@ -220,7 +184,10 @@ export default {
                 const fd = new FormData();
                 fd.append("image", image);
 
-                const { data } = await Product.uploadImage(item.product_id, fd);
+                const { data } = await CouponWithCode.uploadImage(
+                    item.coupon_id,
+                    fd
+                );
 
                 item.image = data.data.image;
 
