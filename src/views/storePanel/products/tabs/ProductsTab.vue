@@ -1,13 +1,18 @@
 <template>
     <v-tab-item :value="$route.path">
         <v-toolbar flat height="80">
-            <v-btn
-                color="secondary"
-                class="text-capitalize"
-                depressed
-                @click="open(1, {})"
-                >add product</v-btn
-            >
+            <v-row class="px-4 py-3 flex justify-space-between" no-gutters>
+                <v-btn
+                    color="secondary"
+                    class="text-capitalize"
+                    depressed
+                    @click="open(1, {})"
+                    >add product</v-btn
+                >
+                <v-col cols="4">
+                    <b-search-field></b-search-field>
+                </v-col>
+            </v-row>
         </v-toolbar>
 
         <v-data-table
