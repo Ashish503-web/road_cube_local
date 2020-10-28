@@ -5,7 +5,6 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
 )}`;
 
 const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
-const storeId = localStorage.getItem("storeId");
 
 export default {
     namespaced: true,
@@ -59,7 +58,12 @@ export default {
             try {
                 commit("setLoading", { value: true, type });
 
-                await axios.put(`${ApiEndpoint}/${storeId}/flags/reward`, item);
+                await axios.put(
+                    `${ApiEndpoint}/${localStorage.getItem(
+                        "storeId"
+                    )}/flags/reward`,
+                    item
+                );
 
                 commit("setLoading", { value: false, type });
                 commit(
@@ -94,12 +98,19 @@ export default {
             try {
                 commit("setLoading", { value: true, type });
 
-                await axios.put(`${ApiEndpoint}/${storeId}/flags/reward`, {
-                    scan_receipt
-                });
+                await axios.put(
+                    `${ApiEndpoint}/${localStorage.getItem(
+                        "storeId"
+                    )}/flags/reward`,
+                    {
+                        scan_receipt
+                    }
+                );
 
                 await axios.put(
-                    `${ApiEndpoint}/${storeId}/billing-details/receipt-information`,
+                    `${ApiEndpoint}/${localStorage.getItem(
+                        "storeId"
+                    )}/billing-details/receipt-information`,
                     item
                 );
 

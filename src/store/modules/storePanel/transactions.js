@@ -4,6 +4,9 @@ export default {
     namespaced: true,
 
     state: () => ({
+        productsLoading: false,
+        products: [],
+        selectedProducts: [],
         transactionStatuses: [],
         transactionTypes: [],
         transactions: [],
@@ -11,16 +14,37 @@ export default {
     }),
 
     mutations: {
+        setProductsLoading(state, payload) {
+            state.productsLoading = payload;
+        },
+
+        setProducts(state, payload) {
+            state.products = payload;
+        },
+
+        setSelectedProducts(state, payload) {
+            state.selectedProducts = payload;
+        },
+
         setTransactionStatuses(state, payload) {
-            state.transactionStatuses = payload;
+            state.transactionStatuses = payload.map(s => {
+                s.selected = false;
+                return s;
+            });
         },
 
         setTransactionTypes(state, payload) {
-            state.transactionTypes = payload;
+            state.transactionTypes = payload.map(t => {
+                t.selected = false;
+                return t;
+            });
         },
 
         setItems(state, payload) {
-            state.transactions = payload;
+            state.transactions = payload.map(t => {
+                t.loading = false;
+                return t;
+            });
         },
 
         setItem(state, payload) {
@@ -46,6 +70,20 @@ export default {
     },
 
     actions: {
+        async getProducts({ commit }, query) {
+            try {
+                commit("setProductsLoading", true);
+
+                const { data } = await Transaction.getProducts(query);
+
+                commit("setProducts", data.data.products);
+                commit("setProductsLoading", false);
+            } catch (ex) {
+                commit("setProductsLoading", false);
+                console.error(ex.response.data.message);
+            }
+        },
+
         async getTransactionStatuses({ commit }) {
             try {
                 const { data } = await Transaction.getTransactionStatuses();
@@ -85,28 +123,24 @@ export default {
             }
         },
 
-        async create({ commit, state, rootState }) {
+        async create({ commit, state }) {
             try {
                 commit("setLoading", true, { root: true });
 
                 let transaction = { ...state.transaction };
 
-                const { data } = await Transaction.create(transaction);
+                await Transaction.create(transaction);
 
-                commit("addItem", data.data.product);
-                commit(
-                    "setServerItemsLength",
-                    rootState.serverItemsLength + 1,
-                    { root: true }
-                );
+                commit("setItem", {});
+                commit("setSelectedProducts", []);
+
                 commit("setLoading", false, { root: true });
-                commit("setDialog", false, { root: true });
                 commit(
                     "setNotification",
                     {
                         show: true,
                         type: "success",
-                        text: "You have successfully created product!"
+                        text: "You have successfully created transaction!"
                     },
 
                     { root: true }
@@ -119,6 +153,38 @@ export default {
                 setTimeout(
                     () => commit("setErrorMessage", "", { root: true }),
                     5000
+                );
+            }
+        },
+
+        async changeStatus({ commit }, transaction) {
+            try {
+                transaction.loading = true;
+
+                await Transaction.changeStatus(transaction);
+
+                transaction.loading = false;
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated transaction!"
+                    },
+
+                    { root: true }
+                );
+            } catch (ex) {
+                transaction.loading = false;
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "error",
+                        text: ex.response.data.message
+                    },
+
+                    { root: true }
                 );
             }
         },

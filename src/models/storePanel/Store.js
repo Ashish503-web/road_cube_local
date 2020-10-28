@@ -5,7 +5,6 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
 )}`;
 
 const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
-const storeId = localStorage.getItem("storeId");
 
 export default class Store {
     constructor(item = {}) {
@@ -29,5 +28,6 @@ export default class Store {
         };
     }
 
-    static get = () => axios.get(`${ApiEndpoint}/${storeId}`);
+    static get = () =>
+        axios.get(`${ApiEndpoint}/${localStorage.getItem("storeId")}`);
 }

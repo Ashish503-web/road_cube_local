@@ -5,7 +5,6 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
 )}`;
 
 const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
-const storeId = localStorage.getItem("storeId");
 
 export default class ProductCategory {
     constructor(item = {}) {
@@ -19,17 +18,32 @@ export default class ProductCategory {
     }
 
     static get = query =>
-        axios.get(`${ApiEndpoint}/${storeId}/product-categories${query}`);
+        axios.get(
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/product-categories${query}`
+        );
 
     static create = item =>
-        axios.post(`${ApiEndpoint}/${storeId}/product-categories`, item);
+        axios.post(
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/product-categories`,
+            item
+        );
 
     static update = item =>
         axios.put(
-            `${ApiEndpoint}/${storeId}/product-categories/${item.product_category_id}`,
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/product-categories/${item.product_category_id}`,
             item
         );
 
     static delete = id =>
-        axios.delete(`${ApiEndpoint}/${storeId}/product-categories/${id}`);
+        axios.delete(
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/product-categories/${id}`
+        );
 }

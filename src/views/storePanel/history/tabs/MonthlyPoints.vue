@@ -1,34 +1,36 @@
 <template>
     <v-tab-item :value="$route.path">
         <v-toolbar flat height="80">
-            <v-row>
-                <v-col cols="12" sm="6" class="mt-3 mt-sm-0">
-                    <a class="export-link" href @click.prevent
-                        >Export to CSV/Excel</a
-                    >
-                </v-col>
+            <v-col cols="12" sm="6">
+                <a class="export-link" href @click.prevent
+                    >Export to CSV/Excel</a
+                >
+            </v-col>
 
-                <v-spacer></v-spacer>
+            <v-spacer></v-spacer>
 
-                <v-col cols="12" sm="4" class="py-0">
-                    <v-text-field
-                        label="Search"
-                        color="secondary"
-                        rounded
-                        outlined
-                        dense
-                        clearable
-                        hide-details
-                        :prepend-inner-icon="icons.mdiMagnify"
-                    ></v-text-field>
-                </v-col>
-            </v-row>
+            <v-col cols="12" sm="4">
+                <b-search-field></b-search-field>
+            </v-col>
         </v-toolbar>
 
         <v-data-table
             :headers="headers"
-            :footer-props="{ itemsPerPageOptions }"
+            :items="monthlyPoints"
+            :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
+            :page.sync="page"
+            :server-items-length="serverItemsLength"
+            class="b-outlined"
         >
+            <template v-slot:no-data>
+                <v-progress-circular
+                    v-if="loading"
+                    color="secondary"
+                    indeterminate
+                ></v-progress-circular>
+                <span v-else>No data available</span>
+            </template>
+
             <template v-slot:item.edit="{ item }">
                 <v-btn color="yellow darken-3" icon @click="myFunc(item)">
                     <v-icon v-text="icons.mdiPencilOutline"></v-icon>
@@ -39,20 +41,75 @@
 </template>
 
 <script>
-import { mdiMagnify } from "@mdi/js";
+import { mapState, mapActions } from "vuex";
 
 export default {
     name: "MonthlyPoints",
 
-    data: () => ({
-        icons: { mdiMagnify },
-        headers: [
-            { text: "Date", value: "user" },
-            { text: "With Subsidy", value: "address" },
-            { text: "Without Subsidy", value: "information" },
-            { text: "Sum", value: "sum" }
-        ],
-        itemsPerPageOptions: [10, 25, 50, 100]
-    })
+    data() {
+        return {
+            headers: [
+                { text: "Date", value: "date" },
+                { text: "Funded", value: "funded" },
+                { text: "Non Funded", value: "non_funded" },
+                { text: "Total Points", value: "total_points" }
+            ],
+            lang: "el",
+            page: +this.$route.query.page
+        };
+    },
+
+    computed: {
+        ...mapState(["loading", "serverItemsLength"]),
+        ...mapState("storePanel/history", ["monthlyPoints"]),
+
+        query() {
+            let query = "?";
+
+            for (let key in this.$route.query) {
+                query += `${key}=${this.$route.query[key]}&`;
+            }
+
+            return query.slice(0, query.length - 1);
+        }
+    },
+
+    methods: {
+        ...mapActions("storePanel/history", ["getMonthlyPoints"])
+    },
+
+    watch: {
+        $route(val) {
+            if (!val.query.page) {
+                this.$router.push({
+                    query: {
+                        page: 1,
+                        ...this.$route.query
+                    }
+                });
+            }
+
+            this.getMonthlyPoints(this.query);
+        },
+
+        page(page) {
+            this.$router.push({ query: { ...this.$route.query, page } });
+        }
+    },
+
+    beforeCreate() {
+        if (!this.$route.query.page) {
+            this.$router.push({
+                query: {
+                    page: 1,
+                    ...this.$route.query
+                }
+            });
+        }
+    },
+
+    mounted() {
+        this.getMonthlyPoints(this.query);
+    }
 };
 </script>

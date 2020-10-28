@@ -5,7 +5,6 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
 )}`;
 
 const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
-const storeId = localStorage.getItem("storeId");
 
 export default class CouponWithCode {
     constructor(item = {}) {
@@ -19,23 +18,40 @@ export default class CouponWithCode {
     }
 
     static get = query =>
-        axios.get(`${ApiEndpoint}/${storeId}/coupons/vouchers${query}`);
+        axios.get(
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/coupons/vouchers${query}`
+        );
 
     static create = item =>
-        axios.post(`${ApiEndpoint}/${storeId}/coupons/vouchers`, item);
+        axios.post(
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/coupons/vouchers`,
+            item
+        );
 
     static update = item =>
         axios.put(
-            `${ApiEndpoint}/${storeId}/coupons/vouchers/${item.coupon_id}`,
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/coupons/vouchers/${item.coupon_id}`,
             item
         );
 
     static delete = id =>
-        axios.delete(`${ApiEndpoint}/${storeId}/coupons/vouchers/${id}`);
+        axios.delete(
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/coupons/vouchers/${id}`
+        );
 
     static uploadImage = (id, image) =>
         axios.post(
-            `${ApiEndpoint}/${storeId}/coupons/vouchers/${id}/images`,
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/coupons/vouchers/${id}/images`,
             image
         );
 }
