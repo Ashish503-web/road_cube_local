@@ -5,7 +5,6 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
 )}`;
 
 const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
-const storeId = localStorage.getItem("storeId");
 
 export default {
     namespaced: true,
@@ -26,7 +25,9 @@ export default {
                 commit("setLoading", true, { root: true });
 
                 const { data } = await axios.get(
-                    `${ApiEndpoint}/${storeId}/products/association${query}`
+                    `${ApiEndpoint}/${localStorage.getItem(
+                        "storeId"
+                    )}/products/association${query}`
                 );
 
                 const { products, pagination } = data.data;
@@ -46,7 +47,9 @@ export default {
                 commit("setLoading", true, { root: true });
 
                 await axios.put(
-                    `${ApiEndpoint}/${storeId}/products/${payload.product_id}/association`,
+                    `${ApiEndpoint}/${localStorage.getItem(
+                        "storeId"
+                    )}/products/${payload.product_id}/association`,
                     {
                         reward_points: payload.reward_points,
                         reward_type_id: payload.reward_type_id,

@@ -71,20 +71,20 @@ export default {
             store: null,
             success: false,
             rules: [
-                (v) => {
+                v => {
                     if (v) {
                         this.success = true;
                         return true;
                     } else {
                         return "Store is required";
                     }
-                },
-            ],
+                }
+            ]
         };
     },
 
     computed: {
-        ...mapState(["accessToken", "userStores"]),
+        ...mapState(["accessToken", "userStores"])
     },
 
     methods: {
@@ -119,7 +119,7 @@ export default {
                 this.errorMessage = ex.response.data.message;
                 setTimeout(() => (this.errorMessage = ""), 5000);
             }
-        },
+        }
     },
 
     mounted() {
@@ -133,7 +133,7 @@ export default {
             } else {
                 this.disabled = true;
             }
-        },
-    },
+        }
+    }
 };
 </script>

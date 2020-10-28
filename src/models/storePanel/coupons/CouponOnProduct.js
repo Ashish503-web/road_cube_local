@@ -5,7 +5,6 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
 )}`;
 
 const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
-const storeId = localStorage.getItem("storeId");
 
 export default class CouponOnProduct {
     constructor(item = {}) {
@@ -16,20 +15,36 @@ export default class CouponOnProduct {
         this.maximum = item.maximum || null;
     }
 
-    static getProducts = () => axios.get(`${ApiEndpoint}/${storeId}/products`);
+    static getProducts = () =>
+        axios.get(`${ApiEndpoint}/${localStorage.getItem("storeId")}/products`);
 
     static get = query =>
-        axios.get(`${ApiEndpoint}/${storeId}/coupons/products${query}`);
+        axios.get(
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/coupons/products${query}`
+        );
 
     static create = item =>
-        axios.post(`${ApiEndpoint}/${storeId}/coupons/products`, item);
+        axios.post(
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/coupons/products`,
+            item
+        );
 
     static update = item =>
         axios.put(
-            `${ApiEndpoint}/${storeId}/coupons/products/${item.product_id}`,
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/coupons/products/${item.product_id}`,
             item
         );
 
     static delete = id =>
-        axios.delete(`${ApiEndpoint}/${storeId}/coupons/products/${id}`);
+        axios.delete(
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/coupons/products/${id}`
+        );
 }

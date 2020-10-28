@@ -1,4 +1,5 @@
 import transactions from "./transactions";
+import history from "./history";
 import addContest from "./addContest";
 import products from "./products";
 import productGroups from "./productGroups";
@@ -26,6 +27,7 @@ export default {
     namespaced: true,
     modules: {
         transactions,
+        history,
         addContest,
         products,
         productGroups,

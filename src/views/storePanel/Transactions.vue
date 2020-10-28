@@ -55,32 +55,107 @@
                 </v-menu>
             </v-toolbar>
 
-            <v-row class="px-4 py-3" no-gutters>
-                <v-col cols="3">
-                    <b-select
-                        v-model="transactionStatus"
-                        :items="transactionStatuses"
-                        item-text="name"
-                        item-value="transaction_status_id"
-                        label="Filter by Status"
-                        no-top-margin
-                        multiple
-                        rounded
-                    ></b-select>
-                </v-col>
+            <v-row class="pr-4 py-3" no-gutters>
+                <v-menu
+                    v-model="menu.status"
+                    max-height="300"
+                    offset-y
+                    :close-on-content-click="false"
+                    nudge-bottom="2"
+                >
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            color="secondary"
+                            class="text-capitalize"
+                            text
+                            v-on="on"
+                        >
+                            filter by status
+                            <v-icon
+                                v-text="
+                                    menu.status
+                                        ? icons.mdiChevronUp
+                                        : icons.mdiChevronDown
+                                "
+                            ></v-icon>
+                        </v-btn>
+                    </template>
 
-                <v-col cols="3" class="ml-3">
-                    <b-select
-                        v-model="transactionType"
-                        :items="transactionTypes"
-                        item-text="name"
-                        item-value="transaction_type_id"
-                        label="Filter by Type"
-                        no-top-margin
-                        multiple
-                        rounded
-                    ></b-select>
-                </v-col>
+                    <v-list dense>
+                        <v-list-item
+                            v-for="status in transactionStatuses"
+                            :key="status.name"
+                            class="pl-3"
+                            :class="{ 'b-list-active': status.selected }"
+                            @click="statusSelect(status)"
+                        >
+                            <v-list-item-icon class="mr-2">
+                                <v-icon
+                                    :color="status.selected ? 'secondary' : ''"
+                                    v-text="
+                                        status.selected
+                                            ? icons.mdiCheckBoxOutline
+                                            : icons.mdiCheckboxBlankOutline
+                                    "
+                                ></v-icon>
+                            </v-list-item-icon>
+
+                            <v-list-item-title
+                                v-text="status.name"
+                            ></v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
+
+                <v-menu
+                    v-model="menu.type"
+                    max-height="300"
+                    offset-y
+                    :close-on-content-click="false"
+                    nudge-bottom="2"
+                >
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            color="secondary"
+                            class="text-capitalize"
+                            text
+                            v-on="on"
+                        >
+                            filter by type
+                            <v-icon
+                                v-text="
+                                    menu.type
+                                        ? icons.mdiChevronUp
+                                        : icons.mdiChevronDown
+                                "
+                            ></v-icon>
+                        </v-btn>
+                    </template>
+
+                    <v-list dense>
+                        <v-list-item
+                            v-for="type in transactionTypes"
+                            :key="type.name"
+                            class="pl-3"
+                            :class="{ 'b-list-active': type.selected }"
+                            @click="typeSelect(type)"
+                        >
+                            <v-list-item-icon class="mr-2">
+                                <v-icon
+                                    :color="type.selected ? 'secondary' : ''"
+                                    v-text="
+                                        type.selected
+                                            ? icons.mdiCheckBoxOutline
+                                            : icons.mdiCheckboxBlankOutline
+                                    "
+                                ></v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-title
+                                v-text="type.name"
+                            ></v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
 
                 <v-spacer></v-spacer>
 
@@ -89,65 +164,102 @@
                 </v-col>
             </v-row>
 
-            <v-data-table
-                :headers="headers"
-                :items="transactions"
-                :footer-props="{
-                    itemsPerPageOptions: [12],
-                    showCurrentPage: true,
-                }"
-                :page.sync="page"
-                :server-items-length="serverItemsLength"
-                class="b-outlined"
-            >
-                <template v-slot:no-data>
-                    <v-progress-circular
-                        v-if="loading"
+            <v-row no-gutters class="px-4 py-2">
+                <v-col cols="1" class="subtitle-1 font-weight-medium"
+                    >Statuses</v-col
+                >
+
+                <v-col cols="11">
+                    <v-chip
+                        v-for="(status, i) in selectedStatuses"
+                        :key="status.name"
                         color="secondary"
-                        indeterminate
-                    ></v-progress-circular>
-                    <span v-else>No data available</span>
-                </template>
+                        class="ml-2 mb-1 font-weight-medium"
+                        close
+                        @click:close="deleteStatus(status, i)"
+                        >{{ status.name }}</v-chip
+                    >
+                </v-col>
+            </v-row>
 
-                <template v-slot:item.actions="{ item }">
-                    <v-tooltip color="secondary" top>
-                        <template v-slot:activator="{ on }">
-                            <v-btn
-                                color="yellow darken-3"
-                                icon
-                                v-on="on"
-                                @click="open(2, item)"
-                            >
-                                <v-icon
-                                    v-text="icons.mdiPencilOutline"
-                                ></v-icon>
-                            </v-btn>
+            <v-row no-gutters class="px-4 py-2">
+                <v-col cols="1" class="subtitle-1 font-weight-medium"
+                    >Types</v-col
+                >
+
+                <v-col cols="11">
+                    <v-chip
+                        v-for="(type, i) in selectedTypes"
+                        :key="type.name"
+                        color="secondary"
+                        class="ml-2 mb-1 font-weight-medium"
+                        close
+                        @click:close="deleteType(type, i)"
+                        >{{ type.name }}</v-chip
+                    >
+                </v-col>
+            </v-row>
+
+            <v-sheet width="100%" style="overflow: auto">
+                <v-sheet min-width="1100">
+                    <v-data-table
+                        :headers="headers"
+                        :items="transactions"
+                        :footer-props="{
+                            itemsPerPageOptions: [12],
+                            showCurrentPage: true
+                        }"
+                        :page.sync="page"
+                        :server-items-length="serverItemsLength"
+                        disable-sort
+                        class="b-outlined"
+                    >
+                        <template v-slot:no-data>
+                            <v-progress-circular
+                                v-if="loading"
+                                color="secondary"
+                                indeterminate
+                            ></v-progress-circular>
+                            <span v-else>No data available</span>
                         </template>
 
-                        <span class="font-weight-bold">Update</span>
-                    </v-tooltip>
-
-                    <v-tooltip color="secondary" top>
-                        <template v-slot:activator="{ on }">
-                            <v-btn
-                                color="red"
-                                icon
-                                v-on="on"
-                                @click="
-                                    () => {
-                                        product = item;
-                                        deleteDialog = true;
-                                    }
-                                "
-                            >
-                                <v-icon v-text="icons.mdiClose"></v-icon>
-                            </v-btn>
+                        <template
+                            v-slot:item.transaction_status_name="{ item }"
+                        >
+                            <v-sheet>
+                                <b-select
+                                    v-model="item.transaction_status_id"
+                                    :items="transactionStatuses"
+                                    item-text="name"
+                                    item-value="transaction_status_id"
+                                    class="mb-3"
+                                ></b-select>
+                            </v-sheet>
                         </template>
 
-                        <span class="font-weight-bold">Delete</span>
-                    </v-tooltip>
-                </template>
-            </v-data-table>
+                        <template v-slot:item.actions="{ item }">
+                            <v-btn
+                                color="secondary"
+                                class="text-capitalize my-1 mr-1"
+                                depressed
+                                width="83"
+                                :loading="item.loading"
+                                @click="changeStatus(item)"
+                            >
+                                change
+                            </v-btn>
+
+                            <v-btn
+                                color="grey lighten-2"
+                                class="text-capitalize my-1"
+                                width="83"
+                                depressed
+                                >cancel</v-btn
+                            >
+                        </template>
+                    </v-data-table>
+                </v-sheet>
+            </v-sheet>
         </v-sheet>
     </v-container>
 </template>
@@ -158,9 +270,12 @@ import {
     mdiFormatListCheckbox,
     mdiPrinter,
     mdiOpenInNew,
-    mdiPencilOutline,
-    mdiClose,
+    mdiChevronUp,
+    mdiChevronDown,
+    mdiCheckboxBlankOutline,
+    mdiCheckBoxOutline
 } from "@mdi/js";
+
 import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
@@ -173,25 +288,29 @@ export default {
                 mdiFormatListCheckbox,
                 mdiPrinter,
                 mdiOpenInNew,
-                mdiPencilOutline,
-                mdiClose,
+                mdiChevronUp,
+                mdiChevronDown,
+                mdiCheckboxBlankOutline,
+                mdiCheckBoxOutline
+            },
+            menu: {
+                status: false,
+                type: false
             },
             headers: [
-                { text: "User", value: "user" },
-                { text: "Amount", value: "amount" },
-                { text: "Product", value: "product" },
-                { text: "Address", value: "address" },
-                { text: "Information", value: "information" },
-                { text: "Actions", value: "actions" },
+                { text: "User", value: "user_identity" },
+                { text: "Amount", value: "total_price" },
+                { text: "Points", value: "total_points" },
+                { text: "Status", value: "transaction_status_name" },
+                { text: "Type", value: "transaction_type_name" },
+                { text: "Receipt Number", value: "receipt_number" },
+                { text: "Date", value: "created_at" },
+                { text: "Actions", value: "actions" }
             ],
             lang: "el",
             page: +this.$route.query.page,
-            transactionStatus: JSON.parse(
-                this.$route.query["transaction-status-id[]"]
-            ),
-            transactionType: JSON.parse(
-                this.$route.query["transaction-type[]"]
-            ),
+            selectedStatuses: [],
+            selectedTypes: []
         };
     },
 
@@ -200,21 +319,8 @@ export default {
         ...mapState("storePanel/transactions", [
             "transactionStatuses",
             "transactionTypes",
-            "transactions",
+            "transactions"
         ]),
-
-        // headers() {
-        //     return [
-        //         { text: "Product Name", value: `name[${this.lang}]` },
-        //         {
-        //             text: "Product Description",
-        //             value: `description[${this.lang}]`
-        //         },
-        //         { text: "Selling Price", value: "retail_price" },
-        //         { text: "Coupon", value: "coupon" },
-        //         { text: "Actions", value: "actions" }
-        //     ];
-        // },
 
         transaction: {
             get() {
@@ -223,18 +329,19 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
+            }
         },
 
         query() {
             let query = "?";
 
             for (let key in this.$route.query) {
-                query += `${key}=${this.$route.query[key]}&`;
+                if (this.$route.query[key])
+                    query += `${key}=${this.$route.query[key]}&`;
             }
 
             return query.slice(0, query.length - 1);
-        },
+        }
     },
 
     methods: {
@@ -243,8 +350,49 @@ export default {
             "getTransactionStatuses",
             "getTransactionTypes",
             "getItems",
-            "remove",
+            "changeStatus",
+            "remove"
         ]),
+
+        statusSelect(item) {
+            item.selected = !item.selected;
+
+            let index = this.selectedStatuses.findIndex(
+                s => s.name === item.name
+            );
+
+            if (index === -1) {
+                this.selectedStatuses.push(item);
+            } else {
+                this.selectedStatuses.splice(index, 1);
+            }
+        },
+
+        deleteStatus(item, index) {
+            this.selectedStatuses.splice(index, 1);
+            this.transactionStatuses.find(
+                s => s.name === item.name
+            ).selected = false;
+        },
+
+        typeSelect(item) {
+            item.selected = !item.selected;
+
+            let index = this.selectedTypes.findIndex(t => t.name === item.name);
+
+            if (index === -1) {
+                this.selectedTypes.push(item);
+            } else {
+                this.selectedTypes.splice(index, 1);
+            }
+        },
+
+        deleteType(item, index) {
+            this.selectedTypes.splice(index, 1);
+            this.transactionTypes.find(
+                t => t.name === item.name
+            ).selected = false;
+        }
     },
 
     watch: {
@@ -253,26 +401,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query,
-                    },
-                });
-            }
-
-            if (!val.query["transaction-status-id[]"]) {
-                this.$router.push({
-                    query: {
-                        ...this.$route.query,
-                        "transaction-status-id[]": JSON.stringify([1]),
-                    },
-                });
-            }
-
-            if (!val.query["transaction-type[]"]) {
-                this.$router.push({
-                    query: {
-                        ...this.$route.query,
-                        "transaction-type[]": JSON.stringify([1]),
-                    },
+                        ...this.$route.query
+                    }
                 });
             }
 
@@ -283,23 +413,80 @@ export default {
             this.$router.push({ query: { ...this.$route.query, page } });
         },
 
-        transactionStatus(status) {
-            this.$router.push({
-                query: {
-                    ...this.$route.query,
-                    "transaction-status-id[]": JSON.stringify(status),
-                },
-            });
+        transactionStatuses(val) {
+            if (val.length) {
+                if (this.$route.query["transaction-status-id"]) {
+                    let statuses = this.$route.query[
+                        "transaction-status-id"
+                    ].split(",");
+
+                    statuses.forEach(s => {
+                        let status = val.find(
+                            t => t.transaction_status_id === +s
+                        );
+
+                        status.selected = true;
+
+                        this.selectedStatuses.push(status);
+                    });
+                }
+            }
         },
 
-        transactionType(type) {
-            this.$router.push({
-                query: {
-                    ...this.$route.query,
-                    "transaction-type[]": JSON.stringify(type),
-                },
-            });
+        transactionTypes(val) {
+            if (val.length) {
+                if (this.$route.query["transaction-type"]) {
+                    let types = this.$route.query["transaction-type"].split(
+                        ","
+                    );
+
+                    types.forEach(t => {
+                        let type = val.find(s => s.transaction_type_id === +t);
+
+                        type.selected = true;
+
+                        this.selectedTypes.push(type);
+                    });
+                }
+            }
         },
+
+        selectedStatuses(val) {
+            let str = "";
+
+            if (val.length) {
+                val.forEach(s => (str += `,${s.transaction_status_id}`));
+                str = str.slice(1);
+            } else {
+                str = undefined;
+            }
+
+            if (str !== this.$route.query["transaction-status-id"]) {
+                this.$router.push({
+                    query: {
+                        ...this.$route.query,
+                        "transaction-status-id": str
+                    }
+                });
+            }
+        },
+
+        selectedTypes(val) {
+            let str = "";
+
+            if (val.length) {
+                val.forEach(t => (str += `,${t.transaction_type_id}`));
+                str = str.slice(1);
+            } else {
+                str = undefined;
+            }
+
+            if (str !== this.$route.query["transaction-type"]) {
+                this.$router.push({
+                    query: { ...this.$route.query, "transaction-type": str }
+                });
+            }
+        }
     },
 
     beforeCreate() {
@@ -307,46 +494,8 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query,
-                },
-            });
-        }
-
-        if (this.$route.query["transaction-status-id[]"]) {
-            if (
-                !JSON.parse(this.$route.query["transaction-status-id[]"]).length
-            ) {
-                this.$router.push({
-                    query: {
-                        ...this.$route.query,
-                        "transaction-status-id[]": JSON.stringify([1]),
-                    },
-                });
-            }
-        } else {
-            this.$router.push({
-                query: {
-                    ...this.$route.query,
-                    "transaction-status-id[]": JSON.stringify([1]),
-                },
-            });
-        }
-
-        if (this.$route.query["transaction-type[]"]) {
-            if (!JSON.parse(this.$route.query["transaction-type[]"]).length) {
-                this.$router.push({
-                    query: {
-                        ...this.$route.query,
-                        "transaction-type[]": JSON.stringify([1]),
-                    },
-                });
-            }
-        } else {
-            this.$router.push({
-                query: {
-                    ...this.$route.query,
-                    "transaction-type[]": JSON.stringify([1]),
-                },
+                    ...this.$route.query
+                }
             });
         }
     },
@@ -355,12 +504,19 @@ export default {
         this.getItems(this.query);
         this.getTransactionStatuses();
         this.getTransactionTypes();
-    },
+    }
 };
 </script>
 
 <style>
 .v-data-footer {
     padding: 12px 0;
+}
+</style>
+
+<style scoped>
+.b-list-active {
+    background-color: rgba(42, 48, 66, 0.12);
+    color: rgb(42, 48, 66);
 }
 </style>

@@ -122,6 +122,7 @@ export default {
                     value: `description[${this.lang}]`
                 },
                 { text: "Selling Price", value: "retail_price" },
+                { text: "Points", value: "reward_points" },
                 { text: "Coupon", value: "coupon" },
                 { text: "Actions", value: "actions" }
             ];

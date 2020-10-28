@@ -5,23 +5,39 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
 )}`;
 
 const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
-const storeId = localStorage.getItem("storeId");
 
 export default class Profile {
     static uploadImage = image =>
-        axios.post(`${ApiEndpoint}/${storeId}/images`, image);
+        axios.post(
+            `${ApiEndpoint}/${localStorage.getItem("storeId")}/images`,
+            image
+        );
 
     static updateQuickPayment = item =>
-        axios.put(`${ApiEndpoint}/${storeId}/flags`, item);
+        axios.put(
+            `${ApiEndpoint}/${localStorage.getItem("storeId")}/flags`,
+            item
+        );
 
     static updateTimetable = item =>
-        axios.put(`${ApiEndpoint}/${storeId}/timetable`, item);
+        axios.put(
+            `${ApiEndpoint}/${localStorage.getItem("storeId")}/timetable`,
+            item
+        );
 
     static updateInvoicing = item =>
-        axios.put(`${ApiEndpoint}/${storeId}/billing-details`, item);
+        axios.put(
+            `${ApiEndpoint}/${localStorage.getItem("storeId")}/billing-details`,
+            item
+        );
 
     static updateRedemption = item =>
-        axios.put(`${ApiEndpoint}/${storeId}/redemption-types`, item);
+        axios.put(
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/redemption-types`,
+            item
+        );
 
     static getStoreCategories = () =>
         axios.get(`https://api.roadcube.tk/v1/common/store-categories`);
@@ -30,8 +46,11 @@ export default class Profile {
         axios.get(`https://api.roadcube.tk/v1/common/countries`);
 
     static updateBusinessInformation = item =>
-        axios.put(`${ApiEndpoint}/${storeId}`, item);
+        axios.put(`${ApiEndpoint}/${localStorage.getItem("storeId")}`, item);
 
     static updateOrders = item =>
-        axios.put(`${ApiEndpoint}/${storeId}/settings/orders`, item);
+        axios.put(
+            `${ApiEndpoint}/${localStorage.getItem("storeId")}/settings/orders`,
+            item
+        );
 }

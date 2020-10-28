@@ -72,7 +72,7 @@ export default {
 
                 let productCategory = { ...state.productCategory };
                 delete productCategory.product_category_id;
-                productCategory.store_id = rootState.storeId;
+                productCategory.store_id = localStorage.getItem("storeId");
                 if (!productCategory.name.en)
                     productCategory.name.en = productCategory.name.el;
                 if (!productCategory.name.it)
@@ -116,7 +116,7 @@ export default {
                 let productCategory = { ...state.selectedProductCategory };
                 delete productCategory.expanded;
                 delete productCategory.loading;
-                productCategory.store_id = rootState.storeId;
+                productCategory.store_id = localStorage.getItem("storeId");
 
                 if (!productCategory.name.en)
                     productCategory.name.en = productCategory.name.el;
