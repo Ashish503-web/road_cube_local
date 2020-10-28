@@ -55,7 +55,7 @@
                         }}</v-alert>
 
                         <v-card-actions class="px-0">
-                            <a class="text-decoration-none"
+                            <a class="text-decoration-none" @click="forgotPassword()"
                                 >Forgot your password?</a
                             >
                             <v-spacer></v-spacer>
@@ -165,6 +165,10 @@ export default {
                 setTimeout(() => (this.errorMessage = ""), 5000);
             }
         },
+
+        forgotPassword(){
+            this.$router.push("/password-recovery");
+        }
     },
 
     watch: {

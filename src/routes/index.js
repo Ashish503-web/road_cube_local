@@ -92,6 +92,12 @@ const routes = [
             import(/* webpackChunkName: "signIn" */ "@/views/SignIn.vue")
     },
     {
+        path: "/password-recovery",
+        name: "PasswordRecovery",
+        component: () =>
+            import(/* webpackChunkName: "passwordRecovery" */ "@/views/PasswordRecovery.vue")
+    },
+    {
         path: "/user-stores",
         name: "UserStores",
         component: () =>
