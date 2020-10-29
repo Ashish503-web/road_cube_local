@@ -149,7 +149,7 @@ import {
     mdiCheckboxBlankOutline,
     mdiCheckBoxOutline,
     mdiPencilOutline,
-    mdiClose
+    mdiClose,
 } from "@mdi/js";
 
 import { mapState, mapMutations, mapActions } from "vuex";
@@ -168,7 +168,7 @@ export default {
                 mdiCheckboxBlankOutline,
                 mdiCheckBoxOutline,
                 mdiPencilOutline,
-                mdiClose
+                mdiClose,
             },
             headers: [
                 { text: "User", value: "user" },
@@ -177,13 +177,13 @@ export default {
                 {
                     text: "Permissions",
                     value: "permissions_enabled",
-                    align: "center"
+                    align: "center",
                 },
-                { text: "Actions", value: "actions" }
+                { text: "Actions", value: "actions" },
             ],
             lang: "el",
             page: +this.$route.query.page,
-            mode: 0
+            mode: 0,
         };
     },
 
@@ -198,7 +198,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         deleteDialog: {
@@ -208,7 +208,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            }
+            },
         },
 
         user: {
@@ -218,7 +218,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
+            },
         },
 
         query() {
@@ -229,7 +229,7 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
@@ -237,7 +237,7 @@ export default {
             "setDialog",
             "setDeleteDialog",
             "setResetSuccess",
-            "setResetValidation"
+            "setResetValidation",
         ]),
         ...mapMutations("storePanel/settings/users", ["setItem"]),
         ...mapActions("storePanel/settings/users", [
@@ -245,7 +245,7 @@ export default {
             "getItems",
             "enablePermissions",
             "disablePermissions",
-            "remove"
+            "remove",
         ]),
 
         open(mode, item) {
@@ -254,7 +254,7 @@ export default {
             setTimeout(() => this.setResetSuccess(true), 300);
             this.setResetValidation(true);
             this.dialog = true;
-        }
+        },
     },
 
     watch: {
@@ -270,8 +270,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
             this.getItems(this.query);
@@ -279,7 +279,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -287,8 +287,8 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
@@ -296,7 +296,7 @@ export default {
     mounted() {
         this.getItems(this.query);
         this.getModeratorPermissions();
-    }
+    },
 };
 </script>
 

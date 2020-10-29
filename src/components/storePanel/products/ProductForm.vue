@@ -18,6 +18,7 @@
             no-top-margin
             :success="success.name"
             :rules="rules.name"
+            @cancel-success="success.name = false"
         >
             <template v-slot:append>
                 <b-lang-menu v-model="productLang" type="inner"></b-lang-menu>
@@ -29,6 +30,7 @@
             label="Product Description"
             :success="success.description"
             :rules="rules.description"
+            @cancel-success="success.description = false"
         >
             <template v-slot:append>
                 <b-lang-menu
@@ -50,6 +52,7 @@
                     prepend-inner-icon="mdiCurrencyEur"
                     :success="success.sellingPrice"
                     :rules="rules.sellingPrice"
+                    @cancel-success="success.sellingPrice = false"
                 ></b-text-field>
             </v-col>
             <v-col cols="6" class="pl-2">
@@ -60,6 +63,7 @@
                     prepend-inner-icon="mdiCurrencyEur"
                     :success="success.wholesalePrice"
                     :rules="rules.wholesalePrice"
+                    @cancel-success="success.wholesalePrice = false"
                 ></b-text-field>
             </v-col>
             <v-col cols="12">
@@ -73,6 +77,7 @@
                     prepend-inner-icon="mdiCurrencyEur"
                     :success="success.deliveryCost"
                     :rules="rules.deliveryCost"
+                    @cancel-success="success.deliveryCost = false"
                 ></b-text-field>
             </v-col>
             <v-col cols="6" class="pl-2">
@@ -83,6 +88,7 @@
                     prepend-inner-icon="mdiCurrencyEur"
                     :success="success.shippingCost"
                     :rules="rules.shippingCost"
+                    @cancel-success="success.shippingCost = false"
                 ></b-text-field>
             </v-col>
         </v-row>

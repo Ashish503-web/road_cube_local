@@ -18,6 +18,7 @@
             no-top-margin
             :success="success.name"
             :rules="rules.name"
+            @cancel-success="success.name = false"
         >
             <template v-slot:append>
                 <b-lang-menu v-model="groupLang" type="inner"></b-lang-menu>
@@ -29,6 +30,7 @@
             label="Product Group Description"
             :success="success.description"
             :rules="rules.description"
+            @cancel-success="success.description = false"
         >
             <template v-slot:append>
                 <b-lang-menu
@@ -45,6 +47,7 @@
             prepend-inner-icon="mdiCurrencyEur"
             :success="success.averagePrice"
             :rules="rules.averagePrice"
+            @cancel-success="success.averagePrice = false"
         ></b-text-field>
 
         <b-select
@@ -162,7 +165,7 @@ import { mapState, mapMutations, mapActions } from "vuex";
 export default {
     name: "ProductGroup",
     props: {
-        mode: Number
+        mode: Number,
     },
     mixins: [validators],
     data() {
@@ -178,8 +181,8 @@ export default {
                 "Thursday",
                 "Friday",
                 "Saturday",
-                "Sunday"
-            ]
+                "Sunday",
+            ],
         };
     },
 
@@ -188,7 +191,7 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation"
+            "resetValidation",
         ]),
         ...mapState("storePanel/productGroups", ["categories"]),
 
@@ -206,7 +209,7 @@ export default {
 
             set(val) {
                 this.setShowImageUpload(val);
-            }
+            },
         },
 
         showWeekdays: {
@@ -216,23 +219,23 @@ export default {
 
             set(val) {
                 this.setShowWeekdays(val);
-            }
+            },
         },
 
         productGroup() {
             return this.$store.state.storePanel.productGroups.productGroup;
-        }
+        },
     },
 
     methods: {
         ...mapMutations("storePanel/productGroups", [
             "setShowImageUpload",
-            "setShowWeekdays"
+            "setShowWeekdays",
         ]),
         ...mapActions("storePanel/productGroups", [
             "getCategories",
             "create",
-            "update"
+            "update",
         ]),
 
         onFileSelected(event) {
@@ -240,10 +243,10 @@ export default {
                 this.imageFile = event;
                 const reader = new FileReader();
                 reader.readAsDataURL(this.imageFile);
-                reader.onload = e =>
+                reader.onload = (e) =>
                     (this.productGroup.image = e.target.result);
             }
-        }
+        },
     },
 
     watch: {
@@ -253,14 +256,14 @@ export default {
                     name: false,
                     description: false,
                     averagePrice: false,
-                    category: false
+                    category: false,
                 };
             }
-        }
+        },
     },
 
     mounted() {
         this.getCategories();
-    }
+    },
 };
 </script>

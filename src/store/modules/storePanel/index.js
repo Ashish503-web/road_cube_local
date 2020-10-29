@@ -116,6 +116,7 @@ export default {
 
                 console.log(data.data);
 
+                localStorage.setItem("companyId", data.data.company.store_id);
                 commit("setStore", data.data);
             } catch (ex) {
                 console.error(ex.response.data);

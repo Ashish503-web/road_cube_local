@@ -37,7 +37,7 @@ export default {
 
     props: {
         value: {
-            type: [String, Number, Object, Array]
+            type: [String, Number, Object, Array],
         },
         label: String,
         multiple: Boolean,
@@ -54,11 +54,11 @@ export default {
         rounded: Boolean,
         disabled: Boolean,
         success: Boolean,
-        rules: Array
+        rules: Array,
     },
 
     data: () => ({
-        icons: { mdiPlus, mdiPercent }
-    })
+        icons: { mdiPlus, mdiPercent },
+    }),
 };
 </script>

@@ -33,6 +33,15 @@ export default [
     },
 
     {
+        path: "transaction/:id",
+        name: "Transaction",
+        component: () =>
+            import(
+                /* webpackChunkName: "transaction" */ "@/views/storePanel/TransactionProfile.vue"
+            )
+    },
+
+    {
         path: "redeem",
         name: "Redeem",
         component: () =>

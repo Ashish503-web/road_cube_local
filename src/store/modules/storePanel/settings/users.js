@@ -37,6 +37,8 @@ export default {
         },
 
         addItem(state, payload) {
+            payload.role = "Store Moderator";
+            payload.user = payload.mobile;
             state.users.unshift(payload);
         },
 
@@ -70,6 +72,7 @@ export default {
                 const { data } = await User.get();
 
                 const { users, pagination } = data.data;
+                console.log(users);
 
                 commit("setItems", users);
                 commit("setServerItemsLength", pagination.total, {
@@ -143,24 +146,23 @@ export default {
                 commit("setLoading", true, { root: true });
 
                 let user = { ...state.user };
-                // for (let key in user.permissions) {
-                //     let obj = user.permissions[key];
-                //     delete obj.open;
+                for (let key in user.permissions) {
+                    let obj = user.permissions[key];
+                    delete obj.open;
 
-                //     for (let prop in obj) {
-                //         if (prop === "open") delete obj.prop;
-                //         let subObj = obj[prop];
+                    for (let prop in obj) {
+                        let subObj = obj[prop];
 
-                //         for (let val in subObj) {
-                //             if (val === "open") delete subObj[val];
-                //         }
-                //     }
-                // }
+                        delete subObj.open;
+                    }
+                }
                 user.permissions = [user.permissions];
 
-                const data = await User.create(user);
+                const { data } = await User.create(user);
 
-                // commit("addItem", data.data.product);
+                console.log(data);
+
+                commit("addItem", data.data);
                 commit(
                     "setServerItemsLength",
                     rootState.serverItemsLength + 1,

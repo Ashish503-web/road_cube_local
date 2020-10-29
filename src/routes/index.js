@@ -95,7 +95,9 @@ const routes = [
         path: "/password-recovery",
         name: "PasswordRecovery",
         component: () =>
-            import(/* webpackChunkName: "passwordRecovery" */ "@/views/PasswordRecovery.vue")
+            import(
+                /* webpackChunkName: "passwordRecovery" */ "@/views/PasswordRecovery.vue"
+            )
     },
     {
         path: "/user-stores",

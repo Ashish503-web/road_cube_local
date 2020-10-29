@@ -36,8 +36,10 @@
                                 outlined
                                 dense
                                 clearable
+                                validate-on-blur
                                 :success="success.user"
                                 :rules="rules.user"
+                                @focus="success.user = false"
                             ></v-text-field>
                         </v-col>
 
@@ -49,8 +51,10 @@
                                 outlined
                                 dense
                                 clearable
+                                validate-on-blur
                                 :success="success.receipt"
                                 :rules="rules.receipt"
+                                @focus="success.receipt = false"
                             ></v-text-field>
                         </v-col>
                     </v-row>
@@ -79,12 +83,13 @@
                                 :success="success.product"
                                 :error="productError"
                                 :error-messages="productErrorMessage"
-                                @focus="
+                                @blur="
                                     () => {
                                         if (!transaction.products.length)
                                             productError = true;
                                     }
                                 "
+                                @focus="productError = false"
                                 @click:append="menu = !menu"
                             ></v-text-field>
                         </template>
@@ -134,48 +139,49 @@
                         outlined
                         class="px-3 my-2"
                     >
-                        <v-row no-gutters justify="space-between" class="py-3">
-                            <v-col cols="5" class="mt-2">
+                        <v-row
+                            no-gutters
+                            justify="space-between"
+                            align="center"
+                            class="py-5"
+                        >
+                            <v-col cols="5">
                                 {{ product.name[lang] }}
                             </v-col>
 
-                            <v-col cols="5" style="background: white">
-                                <b-text-field
-                                    v-if="product.reward_type_id === 4"
-                                    v-model="product.retail_price"
-                                    type="number"
-                                    label="Purchase Price"
-                                    no-top-margin
-                                    prepend-inner-icon="mdiCurrencyEur"
-                                    :success="success.purchasePrice"
-                                    :rules="rules.purchasePrice"
-                                ></b-text-field>
+                            <v-col cols="5">
+                                <v-sheet color="white" max-height="40">
+                                    <b-text-field
+                                        v-if="product.reward_type_id === 4"
+                                        v-model="product.retail_price"
+                                        type="number"
+                                        label="Purchase Price"
+                                        no-top-margin
+                                        prepend-inner-icon="mdiCurrencyEur"
+                                        :success="success.purchasePrice"
+                                        :rules="rules.purchasePrice"
+                                    ></b-text-field>
 
-                                <b-text-field
-                                    v-else
-                                    v-model="product.quantity"
-                                    type="number"
-                                    label="Quantity"
-                                    no-top-margin
-                                    :success="success.quantity"
-                                    :rules="rules.quantity"
-                                ></b-text-field>
+                                    <b-text-field
+                                        v-else
+                                        v-model="product.quantity"
+                                        type="number"
+                                        label="Quantity"
+                                        no-top-margin
+                                        :success="success.quantity"
+                                        :rules="rules.quantity"
+                                    ></b-text-field>
+                                </v-sheet>
                             </v-col>
 
-                            <v-col cols="auto" style="margin-top: 6px">
-                                <v-avatar size="28" color="red">
-                                    <v-btn
-                                        small
-                                        dark
-                                        icon
-                                        @click="productRemove(product, i)"
-                                    >
-                                        <v-icon
-                                            size="20"
-                                            v-text="icons.mdiClose"
-                                        ></v-icon>
-                                    </v-btn>
-                                </v-avatar>
+                            <v-col cols="auto">
+                                <v-btn
+                                    color="red"
+                                    icon
+                                    @click="productRemove(product, i)"
+                                >
+                                    <v-icon v-text="icons.mdiClose"></v-icon>
+                                </v-btn>
                             </v-col>
                         </v-row>
                     </v-card>

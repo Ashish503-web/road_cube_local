@@ -16,7 +16,11 @@
                 <v-col cols="6" class="pr-2">
                     <b-text-field
                         v-model="user.mobile"
-                        label="Username"
+                        v-mask="'##########'"
+                        label="Mobile"
+                        :success="success.mobile"
+                        :rules="rules.mobile"
+                        @cancel-success="success.mobile = false"
                     ></b-text-field>
                 </v-col>
                 <v-col cols="6" class="pl-2">
@@ -25,6 +29,9 @@
                         :type="showPassword ? 'text' : 'password'"
                         label="Password"
                         append-icon="mdiEye"
+                        :success="success.password"
+                        :rules="rules.password"
+                        @cancel-success="success.password = false"
                         @click-append="showPassword = !showPassword"
                     ></b-text-field>
                 </v-col>
@@ -159,15 +166,20 @@ import {
     mdiMenuRight,
     mdiMenuDown,
     mdiCheckboxBlankOutline,
-    mdiCheckBoxOutline
+    mdiCheckBoxOutline,
 } from "@mdi/js";
+
+import validators from "./userValidators";
 import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
     name: "UserForm",
+
     props: {
-        mode: Number
+        mode: Number,
     },
+
+    mixins: [validators],
 
     data() {
         return {
@@ -175,10 +187,10 @@ export default {
                 mdiMenuRight,
                 mdiMenuDown,
                 mdiCheckboxBlankOutline,
-                mdiCheckBoxOutline
+                mdiCheckBoxOutline,
             },
             lang: "el",
-            showPassword: false
+            showPassword: false,
         };
     },
 
@@ -187,7 +199,7 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation"
+            "resetValidation",
         ]),
         ...mapState("storePanel/settings/users", ["moderatorPermissions"]),
 
@@ -197,11 +209,11 @@ export default {
 
         user() {
             return this.$store.state.storePanel.settings.users.user;
-        }
+        },
     },
 
     methods: {
-        ...mapActions("storePanel/settings/users", ["create", "update"])
+        ...mapActions("storePanel/settings/users", ["create", "update"]),
     },
 
     watch: {
@@ -214,14 +226,14 @@ export default {
                     wholesalePrice: false,
                     deliveryCost: false,
                     shippingCost: false,
-                    category: false
+                    category: false,
                 };
             }
-        }
+        },
     },
 
     mounted() {
         console.log(this.user.permissions);
-    }
+    },
 };
 </script>
