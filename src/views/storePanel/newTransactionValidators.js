@@ -1,6 +1,7 @@
 export default {
     data() {
         return {
+            productError: false,
             success: {
                 user: false,
                 receipt: false,
@@ -23,14 +24,6 @@ export default {
                             this.success.receipt = true;
                             return true;
                         } else return "Receipt Number is required";
-                    }
-                ],
-                product: [
-                    v => {
-                        if (v.length) {
-                            this.success.product = true;
-                            return true;
-                        } else return "You must choose at least 1 product";
                     }
                 ],
                 purchasePrice: [
@@ -57,5 +50,12 @@ export default {
                 ]
             }
         };
+    },
+
+    computed: {
+        productErrorMessage() {
+            if (this.productError) return "You must choose at least 1 product";
+            else return "";
+        }
     }
 };

@@ -4,7 +4,7 @@
         :label="label"
         :type="type"
         :class="noTopMargin ? 'mt-0' : 'mt-3'"
-        color="secondary"
+        :color="color"
         outlined
         dense
         clearable
@@ -36,7 +36,8 @@ import {
     mdiCurrencyEur,
     mdiClockOutline,
     mdiPercent,
-    mdiCalendarMonth
+    mdiCalendarMonth,
+    mdiEye
 } from "@mdi/js";
 
 export default {
@@ -44,6 +45,10 @@ export default {
     props: {
         value: {
             type: [String, Number]
+        },
+        color: {
+            type: String,
+            default: "secondary"
         },
         type: String,
         label: String,
@@ -67,7 +72,8 @@ export default {
             mdiCurrencyEur,
             mdiClockOutline,
             mdiPercent,
-            mdiCalendarMonth
+            mdiCalendarMonth,
+            mdiEye
         }
     })
 };
