@@ -70,7 +70,11 @@
                             v-on="on"
                             @click="
                                 () => {
-                                    enablePermissions();
+                                    if (item.permissions_enabled) {
+                                        disablePermissions(item.user_id);
+                                    } else {
+                                        enablePermissions(item.user_id);
+                                    }
                                     item.permissions_enabled = !item.permissions_enabled;
                                 }
                             "
@@ -246,14 +250,9 @@ export default {
 
         open(mode, item) {
             this.mode = mode;
-            // this.user = item;
-            // if (this.product.image) this.setShowImageUpload(true);
-            // else this.setShowImageUpload(false);
-            // if (this.product.availability_days.length)
-            //     this.setShowWeekdays(true);
-            // else this.setShowWeekdays(false);
-            // setTimeout(() => this.setResetSuccess(true), 300);
-            // this.setResetValidation(true);
+            this.user = item;
+            setTimeout(() => this.setResetSuccess(true), 300);
+            this.setResetValidation(true);
             this.dialog = true;
         }
     },

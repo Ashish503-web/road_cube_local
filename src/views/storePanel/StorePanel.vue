@@ -9,12 +9,12 @@ export default {
     name: "StorePanel",
 
     methods: {
-        ...mapActions("storePanel", ["getStore"])
+        ...mapActions("storePanel", ["getStore"]),
     },
 
     mounted() {
         this.getStore();
-    }
+    },
 };
 </script>
 

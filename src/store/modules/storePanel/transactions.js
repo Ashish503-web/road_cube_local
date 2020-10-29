@@ -19,7 +19,10 @@ export default {
         },
 
         setProducts(state, payload) {
-            state.products = payload;
+            state.products = payload.map(p => {
+                p.selected = false;
+                return p;
+            });
         },
 
         setSelectedProducts(state, payload) {
