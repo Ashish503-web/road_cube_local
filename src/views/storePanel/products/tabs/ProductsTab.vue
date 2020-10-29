@@ -1,7 +1,7 @@
 <template>
     <v-tab-item :value="$route.path">
         <v-toolbar flat height="80">
-            <v-row class="px-4 py-3 flex justify-space-between" no-gutters>
+            <v-row class="px-4 py-3 flex justify-space-between align-center" no-gutters>
                 <v-btn
                     color="secondary"
                     class="text-capitalize"
@@ -10,7 +10,19 @@
                     >add product</v-btn
                 >
                 <v-col cols="4">
-                    <b-search-field></b-search-field>
+                    <v-text-field
+                            v-model="search"
+                            class="mt-1"
+                            label="Search"
+                            color="secondary"
+                            outlined
+                            clearable
+                            rounded
+                            dense
+                            hide-details
+                            :prepend-inner-icon="icons.mdiMagnify"
+                        >
+                        </v-text-field>
                 </v-col>
             </v-row>
         </v-toolbar>
@@ -97,9 +109,11 @@
 </template>
 
 <script>
-import { mdiPencilOutline, mdiClose } from "@mdi/js";
+import { mdiPencilOutline, mdiClose, mdiMagnify } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import ProductForm from "@/components/storePanel/products/ProductForm.vue";
+import debounce from "lodash/debounce";
+
 
 export default {
     name: "ProductsTab",
@@ -108,10 +122,11 @@ export default {
 
     data() {
         return {
-            icons: { mdiPencilOutline, mdiClose },
+            icons: { mdiPencilOutline, mdiClose, mdiMagnify },
             lang: "el",
             page: +this.$route.query.page,
-            mode: 0
+            mode: 0,
+            search: ""
         };
     },
 
@@ -179,7 +194,7 @@ export default {
             "setDialog",
             "setDeleteDialog",
             "setResetSuccess",
-            "setResetValidation"
+            "setResetValidation" 
         ]),
         ...mapMutations("storePanel/products", [
             "setShowImageUpload",
@@ -199,6 +214,10 @@ export default {
             setTimeout(() => this.setResetSuccess(true), 300);
             this.setResetValidation(true);
             this.dialog = true;
+        },
+
+        handleSearch() {
+            this.getItems(`?q=${this.search}`);
         }
     },
 
@@ -224,7 +243,17 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        }
+        },
+
+        search: function(val,oldVal){
+            if (val != oldVal) {
+                if(val == null){
+                    this.getItems(this.query);
+                }else{
+                    this.debouncedSearch();
+                }
+            }
+        },
     },
 
     beforeCreate() {
@@ -236,6 +265,10 @@ export default {
                 }
             });
         }
+    },
+
+    created() {
+        this.debouncedSearch = debounce(this.handleSearch, 500);
     },
 
     mounted() {

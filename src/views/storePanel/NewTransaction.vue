@@ -189,6 +189,7 @@ export default {
 
         handleSearch() {
             this.getProducts(`?q=${this.search}`);
+            console.log(this.search,'this.search')
         }
     },
 
