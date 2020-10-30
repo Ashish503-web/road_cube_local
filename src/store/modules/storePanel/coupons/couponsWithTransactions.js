@@ -4,16 +4,22 @@ export default {
     namespaced: true,
 
     state: () => ({
-        coupon: {}
+        coupon: {},
+        giftCategories: []
     }),
 
     getters: {
-        coupon: (state) => state.coupon
+        coupon: (state) => state.coupon,
+        giftCategories: (state) => state.giftCategories
     },
 
     mutations: {
         setCoupon(state, payload) {
             state.coupon = payload;
+        },
+
+        setGiftCategories(state, payload) {
+            state.giftCategories = payload;
         },
     },
 
@@ -39,12 +45,47 @@ export default {
 
                 const { data } = await CouponWithTransactions.getGiftCategories();
 
-                console.log(data,'Categories')
-                
+                commit("setGiftCategories", data.data);
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });
                 console.error(ex.response.data);
+            }
+        },
+
+        async create({ commit, state, rootState } , item) {
+            console.log(item,'item56465')
+            try {
+                commit("setLoading", true, { root: true });
+
+                const { data } = await CouponWithTransactions.create(
+                    item
+                );
+
+                const { coupon } = data.data.coupon;
+
+                commit("setCoupon", coupon);
+                commit("setLoading", false, { root: true });
+                commit("setDialog", false, { root: true });
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully created coupon on product!"
+                    },
+
+                    { root: true }
+                );
+            } catch (ex) {
+                commit("setLoading", false, { root: true });
+                commit("setErrorMessage", ex.response.data.message, {
+                    root: true
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", "", { root: true }),
+                    5000
+                );
             }
         },
 

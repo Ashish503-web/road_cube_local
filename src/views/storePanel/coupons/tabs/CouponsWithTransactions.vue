@@ -27,7 +27,7 @@
                     ></v-img>
                 </v-col>
 
-                <v-col v-if="coupon" cols="12" sm="6" class="px-3 pt-6">
+                <v-col v-if="!showAddCoupon" cols="12" sm="6" class="px-3 pt-6">
                     <v-text-field
                         v-model="sequence"
                         label="Reward user after"
@@ -80,12 +80,20 @@
                     </v-card-actions>
                 </v-col>
 
-                <v-col v-if="!coupon" cols="12" sm="6" class="px-3 pt-6">
+                <v-col v-if="showAddCoupon" cols="12" sm="6" class="px-3 pt-6">
+                    <b-select
+                        v-model="formData.gift_category_id"
+                        :items="giftCategories"
+                        :item-text="`name[${lang}]`"
+                        item-value="gift_category_id"
+                        label="Select Category"
+                    ></b-select>
                     <v-text-field
                         v-model="formData.goal_sequence"
                         label="Reward user after"
                         color="secondary"
                         type="number"
+                        class="mt-6"
                         outlined
                         dense
                     ></v-text-field>
@@ -152,7 +160,8 @@ export default {
 
     data() {
         return {
-            coupon: true,
+            showAddCoupon: true,
+            lang: "el",
             sequence: "",
             minimum_amount: "",
             max_days: "",
@@ -160,7 +169,7 @@ export default {
             gift_title: "",
             coupon_id: "",
             formData: {
-                gift_category_id: "2",
+                gift_category_id: "",
                 goal_sequence: "",
                 goal_minimum_amount: "",
                 goal_max_days: "",
@@ -172,18 +181,24 @@ export default {
     },
 
     computed: {
-        ...mapGetters("storePanel/coupons/couponsWithTransactions", ["coupon"]),
+        ...mapGetters("storePanel/coupons/couponsWithTransactions", [
+            "coupon",
+            "giftCategories"
+            ]),
     },
 
     watch: {
         coupon: function(val){
-            this.coupon_id = val.coupon_id
-            this.sequence = val.goal_sequence
-            this.minimum_amount = val.goal_minimum_amount
-            this.max_days = val.goal_max_days
-            this.code = val.code
-            this.gift_title = val.gift_title
-        }
+            if(val != undefined){
+                this.showAddCoupon = false
+                this.coupon_id = val.coupon_id
+                this.sequence = val.goal_sequence
+                this.minimum_amount = val.goal_minimum_amount
+                this.max_days = val.goal_max_days
+                this.code = val.code
+                this.gift_title = val.gift_title
+            }  
+        },
     },
 
     methods: {
