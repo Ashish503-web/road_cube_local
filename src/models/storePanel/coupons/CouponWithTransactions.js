@@ -18,6 +18,13 @@ export default class CouponWithTransactions {
             )}/coupons/goals`
         );
 
+    static getGiftCategories = () =>
+        axios.get(
+            `https://api.roadcube.tk/v1/common/companies/${localStorage.getItem(
+                "storeId"
+            )}/gift-categories`
+        );
+
     static delete = id =>
         axios.delete(
             `${ApiEndpoint}/${localStorage.getItem(

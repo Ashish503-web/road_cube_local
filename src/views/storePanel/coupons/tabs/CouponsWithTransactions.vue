@@ -27,7 +27,7 @@
                     ></v-img>
                 </v-col>
 
-                <v-col cols="12" sm="6" class="px-3 pt-6">
+                <v-col v-if="coupon" cols="12" sm="6" class="px-3 pt-6">
                     <v-text-field
                         v-model="sequence"
                         label="Reward user after"
@@ -79,6 +79,67 @@
                         >
                     </v-card-actions>
                 </v-col>
+
+                <v-col v-if="!coupon" cols="12" sm="6" class="px-3 pt-6">
+                    <v-text-field
+                        v-model="formData.goal_sequence"
+                        label="Reward user after"
+                        color="secondary"
+                        type="number"
+                        outlined
+                        dense
+                    ></v-text-field>
+                    <v-text-field
+                        v-model="formData.goal_minimum_amount"
+                        label="Minimum transaction limit in euro"
+                        color="secondary"
+                        type="number"
+                        outlined
+                        dense
+                    ></v-text-field>
+                    <v-text-field
+                        v-model="formData.goal_max_days"
+                        label="Maximum time between visits: (Days)"
+                        color="secondary"
+                        type="number"
+                        outlined
+                        dense
+                    ></v-text-field>
+                    <v-text-field
+                        v-model="formData.gift_title"
+                        label="Gift title"
+                        color="secondary"
+                        outlined
+                        dense
+                    ></v-text-field>
+                    <b-textarea
+                        v-model="formData.gift_description"
+                        label="Gift description"
+                        outlined
+                        dense
+                    ></b-textarea>
+                    <v-text-field
+                        v-model="formData.maximum"
+                        type="number"
+                        label="Maximum"
+                        color="secondary"
+                        class="mt-6"
+                        outlined
+                        dense
+                    ></v-text-field>
+
+                    <v-card-actions class="mt-12">
+                        <v-spacer></v-spacer>
+                        <v-btn
+                            color="success"
+                            class="text-capitalize px-5"
+                            depressed
+                            dark
+                            @click="createCoupon()"
+                            >Add</v-btn
+                        >
+                    </v-card-actions>
+                </v-col>
             </v-row>
         </v-card>
     </v-tab-item>
@@ -91,12 +152,22 @@ export default {
 
     data() {
         return {
+            coupon: true,
             sequence: "",
             minimum_amount: "",
             max_days: "",
             code: "",
             gift_title: "",
-            coupon_id: ""
+            coupon_id: "",
+            formData: {
+                gift_category_id: "2",
+                goal_sequence: "",
+                goal_minimum_amount: "",
+                goal_max_days: "",
+                gift_title: "",
+                gift_description: "",
+                maximum: ""
+            }
         };
     },
 
@@ -118,8 +189,14 @@ export default {
     methods: {
         ...mapActions("storePanel/coupons/couponsWithTransactions", [
             "getCoupon",
+            "getGiftCategories",
+            "create",
             "remove"
         ]),
+
+        createCoupon(){
+            this.create(this.formData)
+        },
 
         deleteCoupon(){
             this.remove(this.coupon_id)
@@ -128,6 +205,7 @@ export default {
 
     mounted(){
         this.getCoupon()
+        this.getGiftCategories()
     }
 };
 </script>

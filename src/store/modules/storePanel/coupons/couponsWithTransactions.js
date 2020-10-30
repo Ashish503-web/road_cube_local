@@ -18,14 +18,29 @@ export default {
     },
 
     actions: {
-        async getCoupon({ commit }, query) {
+        async getCoupon({ commit }) {
             try {
                 commit("setLoading", true, { root: true });
 
-                const { data } = await CouponWithTransactions.get(query);
+                const { data } = await CouponWithTransactions.get();
 
                 const coupon = data.data.coupon;
                 commit("setCoupon", coupon);
+                commit("setLoading", false, { root: true });
+            } catch (ex) {
+                commit("setLoading", false, { root: true });
+                console.error(ex.response.data);
+            }
+        },
+
+        async getGiftCategories({ commit }) {
+            try {
+                commit("setLoading", true, { root: true });
+
+                const { data } = await CouponWithTransactions.getGiftCategories();
+
+                console.log(data,'Categories')
+                
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });
