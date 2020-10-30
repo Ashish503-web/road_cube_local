@@ -8,6 +8,7 @@
         dense
         clearable
         hide-details="auto"
+        validate-on-blur
         :success="success"
         :rules="rules"
         :prepend-icon="icons[`${prependIcon}`]"
@@ -16,6 +17,7 @@
         :append-outer-icon="icons[`${appendOuterIcon}`]"
         @input="$emit('input', $event)"
         @click="$emit('click')"
+        @focus="$emit('cancel-success')"
     >
         <template v-slot:append>
             <slot name="append"></slot>
@@ -28,7 +30,7 @@ export default {
     name: "BTextarea",
     props: {
         value: {
-            type: [String, Number]
+            type: [String, Number],
         },
         type: String,
         label: String,
@@ -38,11 +40,11 @@ export default {
         appendOuterIcon: String,
         noTopMargin: Boolean,
         success: Boolean,
-        rules: Array
+        rules: Array,
     },
 
     data: () => ({
-        icons: {}
-    })
+        icons: {},
+    }),
 };
 </script>

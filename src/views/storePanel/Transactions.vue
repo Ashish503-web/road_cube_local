@@ -201,13 +201,13 @@
             </v-row>
 
             <v-sheet width="100%" style="overflow: auto">
-                <v-sheet min-width="1100">
+                <v-sheet min-width="1200">
                     <v-data-table
                         :headers="headers"
                         :items="transactions"
                         :footer-props="{
                             itemsPerPageOptions: [12],
-                            showCurrentPage: true
+                            showCurrentPage: true,
                         }"
                         :page.sync="page"
                         :server-items-length="serverItemsLength"
@@ -235,6 +235,17 @@
                                     class="mb-3"
                                 ></b-select>
                             </v-sheet>
+                        </template>
+
+                        <template v-slot:item.watch="{ item }">
+                            <v-btn
+                                icon
+                                :to="`/storePanel/transaction/${item.transaction_id}`"
+                            >
+                                <v-icon
+                                    v-text="icons.mdiTextBoxSearchOutline"
+                                ></v-icon>
+                            </v-btn>
                         </template>
 
                         <template v-slot:item.actions="{ item }">
@@ -273,7 +284,8 @@ import {
     mdiChevronUp,
     mdiChevronDown,
     mdiCheckboxBlankOutline,
-    mdiCheckBoxOutline
+    mdiCheckBoxOutline,
+    mdiTextBoxSearchOutline,
 } from "@mdi/js";
 
 import { mapState, mapMutations, mapActions } from "vuex";
@@ -291,11 +303,12 @@ export default {
                 mdiChevronUp,
                 mdiChevronDown,
                 mdiCheckboxBlankOutline,
-                mdiCheckBoxOutline
+                mdiCheckBoxOutline,
+                mdiTextBoxSearchOutline,
             },
             menu: {
                 status: false,
-                type: false
+                type: false,
             },
             headers: [
                 { text: "User", value: "user_identity" },
@@ -305,12 +318,13 @@ export default {
                 { text: "Type", value: "transaction_type_name" },
                 { text: "Receipt Number", value: "receipt_number" },
                 { text: "Date", value: "created_at" },
-                { text: "Actions", value: "actions" }
+                { text: "Watch", value: "watch" },
+                { text: "Actions", value: "actions" },
             ],
             lang: "el",
             page: +this.$route.query.page,
             selectedStatuses: [],
-            selectedTypes: []
+            selectedTypes: [],
         };
     },
 
@@ -319,7 +333,7 @@ export default {
         ...mapState("storePanel/transactions", [
             "transactionStatuses",
             "transactionTypes",
-            "transactions"
+            "transactions",
         ]),
 
         transaction: {
@@ -329,7 +343,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
+            },
         },
 
         query() {
@@ -341,7 +355,7 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
@@ -351,14 +365,14 @@ export default {
             "getTransactionTypes",
             "getItems",
             "changeStatus",
-            "remove"
+            "remove",
         ]),
 
         statusSelect(item) {
             item.selected = !item.selected;
 
             let index = this.selectedStatuses.findIndex(
-                s => s.name === item.name
+                (s) => s.name === item.name
             );
 
             if (index === -1) {
@@ -371,14 +385,16 @@ export default {
         deleteStatus(item, index) {
             this.selectedStatuses.splice(index, 1);
             this.transactionStatuses.find(
-                s => s.name === item.name
+                (s) => s.name === item.name
             ).selected = false;
         },
 
         typeSelect(item) {
             item.selected = !item.selected;
 
-            let index = this.selectedTypes.findIndex(t => t.name === item.name);
+            let index = this.selectedTypes.findIndex(
+                (t) => t.name === item.name
+            );
 
             if (index === -1) {
                 this.selectedTypes.push(item);
@@ -390,9 +406,9 @@ export default {
         deleteType(item, index) {
             this.selectedTypes.splice(index, 1);
             this.transactionTypes.find(
-                t => t.name === item.name
+                (t) => t.name === item.name
             ).selected = false;
-        }
+        },
     },
 
     watch: {
@@ -401,8 +417,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
 
@@ -420,9 +436,9 @@ export default {
                         "transaction-status-id"
                     ].split(",");
 
-                    statuses.forEach(s => {
+                    statuses.forEach((s) => {
                         let status = val.find(
-                            t => t.transaction_status_id === +s
+                            (t) => t.transaction_status_id === +s
                         );
 
                         status.selected = true;
@@ -440,8 +456,10 @@ export default {
                         ","
                     );
 
-                    types.forEach(t => {
-                        let type = val.find(s => s.transaction_type_id === +t);
+                    types.forEach((t) => {
+                        let type = val.find(
+                            (s) => s.transaction_type_id === +t
+                        );
 
                         type.selected = true;
 
@@ -455,7 +473,7 @@ export default {
             let str = "";
 
             if (val.length) {
-                val.forEach(s => (str += `,${s.transaction_status_id}`));
+                val.forEach((s) => (str += `,${s.transaction_status_id}`));
                 str = str.slice(1);
             } else {
                 str = undefined;
@@ -465,8 +483,8 @@ export default {
                 this.$router.push({
                     query: {
                         ...this.$route.query,
-                        "transaction-status-id": str
-                    }
+                        "transaction-status-id": str,
+                    },
                 });
             }
         },
@@ -475,7 +493,7 @@ export default {
             let str = "";
 
             if (val.length) {
-                val.forEach(t => (str += `,${t.transaction_type_id}`));
+                val.forEach((t) => (str += `,${t.transaction_type_id}`));
                 str = str.slice(1);
             } else {
                 str = undefined;
@@ -483,10 +501,10 @@ export default {
 
             if (str !== this.$route.query["transaction-type"]) {
                 this.$router.push({
-                    query: { ...this.$route.query, "transaction-type": str }
+                    query: { ...this.$route.query, "transaction-type": str },
                 });
             }
-        }
+        },
     },
 
     beforeCreate() {
@@ -494,8 +512,8 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
@@ -504,7 +522,7 @@ export default {
         this.getItems(this.query);
         this.getTransactionStatuses();
         this.getTransactionTypes();
-    }
+    },
 };
 </script>
 

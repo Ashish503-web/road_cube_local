@@ -176,7 +176,7 @@ import {
     mdiAccountOutline,
     mdiWalletOutline,
     mdiWrenchOutline,
-    mdiLockOpenOutline
+    mdiLockOpenOutline,
 } from "@mdi/js";
 
 import axios from "axios";
@@ -189,9 +189,9 @@ export default {
             icons: {
                 mdiHelpCircleOutline,
                 mdiChevronDown,
-                mdiLogout
+                mdiLogout,
             },
-            mini: false,
+            mini: true,
             drawer: false,
             navLinks: [
                 {
@@ -201,34 +201,34 @@ export default {
                             icon: mdiChartBar,
                             title: "Home",
                             to: "/storePanel",
-                            exact: true
+                            exact: true,
                         },
                         {
                             icon: mdiPlusThick,
                             title: "New Transaction",
-                            to: "/storePanel/new-transaction"
+                            to: "/storePanel/new-transaction",
                         },
                         {
                             icon: mdiCurrencyEur,
                             title: "Transactions",
-                            to: "/storePanel/transactions"
+                            to: "/storePanel/transactions",
                         },
                         {
                             icon: mdiGift,
                             title: "Redeem",
-                            to: "/storePanel/redeem"
+                            to: "/storePanel/redeem",
                         },
                         {
                             icon: mdiDatabaseSync,
                             title: "History",
-                            to: "/storePanel/history"
+                            to: "/storePanel/history",
                         },
                         {
                             icon: mdiTrophyVariant,
                             title: "Contests",
-                            to: "/storePanel/contests"
-                        }
-                    ]
+                            to: "/storePanel/contests",
+                        },
+                    ],
                 },
                 {
                     title: "SETTINGS",
@@ -236,26 +236,26 @@ export default {
                         {
                             icon: mdiPackageVariantClosed,
                             title: "Products",
-                            to: "/storePanel/products"
+                            to: "/storePanel/products",
                         },
                         {
                             icon: mdiTagMultiple,
                             title: "Coupons",
-                            to: "/storePanel/coupons"
+                            to: "/storePanel/coupons",
                         },
                         {
                             icon: mdiCog,
                             title: "Settings",
-                            to: "/storePanel/settings"
-                        }
-                    ]
-                }
+                            to: "/storePanel/settings",
+                        },
+                    ],
+                },
             ],
 
             profileLinks: [
                 { icon: mdiAccountOutline, text: "Profile" },
-                { icon: mdiWrenchOutline, text: "Settings" }
-            ]
+                { icon: mdiWrenchOutline, text: "Settings" },
+            ],
         };
     },
 
@@ -274,7 +274,7 @@ export default {
 
         containerHeight() {
             return this.mini ? "calc(100vh - 194px)" : "calc(100vh - 184px)";
-        }
+        },
     },
 
     methods: {
@@ -290,8 +290,8 @@ export default {
             } catch (ex) {
                 console.log(ex.response.data);
             }
-        }
-    }
+        },
+    },
 };
 </script>
 

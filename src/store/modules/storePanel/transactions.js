@@ -9,6 +9,7 @@ export default {
         selectedProducts: [],
         transactionStatuses: [],
         transactionTypes: [],
+        transactionProfile: {},
         transactions: [],
         transaction: new Transaction()
     }),
@@ -19,7 +20,10 @@ export default {
         },
 
         setProducts(state, payload) {
-            state.products = payload;
+            state.products = payload.map(p => {
+                p.selected = false;
+                return p;
+            });
         },
 
         setSelectedProducts(state, payload) {
@@ -45,6 +49,10 @@ export default {
                 t.loading = false;
                 return t;
             });
+        },
+
+        setTransactionProfile(state, payload) {
+            state.transactionProfile = payload;
         },
 
         setItem(state, payload) {
@@ -116,6 +124,20 @@ export default {
                 commit("setServerItemsLength", pagination.total, {
                     root: true
                 });
+                commit("setLoading", false, { root: true });
+            } catch (ex) {
+                commit("setLoading", false, { root: true });
+                console.error(ex.response.data.message);
+            }
+        },
+
+        async getItem({ commit }, id) {
+            try {
+                commit("setLoading", true, { root: true });
+
+                const { data } = await Transaction.getItem(id);
+
+                commit("setTransactionProfile", data.data);
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });

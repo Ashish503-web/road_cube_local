@@ -7,24 +7,41 @@
         @cancel="$emit('cancel')"
         @submit="
             () => {
-                mode === 1 ? create(imageFile) : update(imageFile);
-                imageFile = null;
+                mode === 1 ? create() : update();
             }
         "
     >
         <v-row no-gutters>
-            <v-col cols="6" class="pr-2">
-                <b-text-field label="Username"></b-text-field>
-            </v-col>
-            <v-col cols="6" class="pl-2">
-                <b-text-field label="Password"></b-text-field>
-            </v-col>
+            <template v-if="mode === 1">
+                <v-col cols="6" class="pr-2">
+                    <b-text-field
+                        v-model="user.mobile"
+                        v-mask="'##########'"
+                        label="Mobile"
+                        :success="success.mobile"
+                        :rules="rules.mobile"
+                        @cancel-success="success.mobile = false"
+                    ></b-text-field>
+                </v-col>
+                <v-col cols="6" class="pl-2">
+                    <b-text-field
+                        v-model="user.password"
+                        :type="showPassword ? 'text' : 'password'"
+                        label="Password"
+                        append-icon="mdiEye"
+                        :success="success.password"
+                        :rules="rules.password"
+                        @cancel-success="success.password = false"
+                        @click-append="showPassword = !showPassword"
+                    ></b-text-field>
+                </v-col>
+            </template>
             <v-col cols="12" class="subtitle-1 text--primary py-0 mt-2"
                 >Permissions</v-col
             >
 
             <v-col
-                v-for="(value, name) in moderatorPermissions"
+                v-for="(value, name) in user.permissions"
                 :key="name"
                 cols="12"
                 class="text-capitalize"
@@ -41,14 +58,12 @@
                             ></v-icon>
                         </v-btn>
                     </v-col>
-                    <v-col v-if="typeof value !== 'object'" cols="auto">
+                    <v-col v-else cols="auto">
                         <v-btn
                             :color="value ? 'secondary' : ''"
                             icon
                             @click="
-                                moderatorPermissions[
-                                    name
-                                ] = !moderatorPermissions[name]
+                                user.permissions[name] = !user.permissions[name]
                             "
                         >
                             <v-icon
@@ -74,7 +89,7 @@
                             no-gutters
                             align="center"
                         >
-                            <v-col cols="auto">
+                            <v-col v-if="typeof val === 'object'" cols="auto">
                                 <v-btn icon @click="val.open = !val.open">
                                     <v-icon
                                         v-text="
@@ -86,17 +101,26 @@
                                 </v-btn>
                             </v-col>
 
-                            <!-- <v-col cols="auto">
-                                <v-btn icon>
+                            <v-col v-else cols="auto">
+                                <v-btn
+                                    :color="val ? 'secondary' : ''"
+                                    icon
+                                    @click="value[name] = !value[name]"
+                                >
                                     <v-icon
-                                        v-text="icons.mdiCheckboxBlankOutline"
+                                        v-text="
+                                            val
+                                                ? icons.mdiCheckBoxOutline
+                                                : icons.mdiCheckboxBlankOutline
+                                        "
                                     ></v-icon>
                                 </v-btn>
-                            </v-col> -->
+                            </v-col>
 
                             <v-col>
                                 {{ name }}
                             </v-col>
+
                             <v-col
                                 v-for="(va, name) in val"
                                 :key="name"
@@ -142,15 +166,20 @@ import {
     mdiMenuRight,
     mdiMenuDown,
     mdiCheckboxBlankOutline,
-    mdiCheckBoxOutline
+    mdiCheckBoxOutline,
 } from "@mdi/js";
+
+import validators from "./userValidators";
 import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
     name: "UserForm",
+
     props: {
-        mode: Number
+        mode: Number,
     },
+
+    mixins: [validators],
 
     data() {
         return {
@@ -158,22 +187,10 @@ export default {
                 mdiMenuRight,
                 mdiMenuDown,
                 mdiCheckboxBlankOutline,
-                mdiCheckBoxOutline
+                mdiCheckBoxOutline,
             },
             lang: "el",
-            rights: [
-                "Dashboard",
-                "Sales",
-                "Points",
-                "Redeem Vouchers",
-                "Settings"
-            ],
-            rights2: [
-                "Products & Services",
-                "Point Management",
-                "Creating Coupons",
-                "Contest & Survey"
-            ]
+            showPassword: false,
         };
     },
 
@@ -182,7 +199,7 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation"
+            "resetValidation",
         ]),
         ...mapState("storePanel/settings/users", ["moderatorPermissions"]),
 
@@ -192,11 +209,11 @@ export default {
 
         user() {
             return this.$store.state.storePanel.settings.users.user;
-        }
+        },
     },
 
     methods: {
-        ...mapActions("storePanel/settings/users", ["create", "update"])
+        ...mapActions("storePanel/settings/users", ["create", "update"]),
     },
 
     watch: {
@@ -209,10 +226,14 @@ export default {
                     wholesalePrice: false,
                     deliveryCost: false,
                     shippingCost: false,
-                    category: false
+                    category: false,
                 };
             }
-        }
-    }
+        },
+    },
+
+    mounted() {
+        console.log(this.user.permissions);
+    },
 };
 </script>

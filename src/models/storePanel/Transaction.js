@@ -34,6 +34,13 @@ export default class Transaction {
             )}/transactions${query}`
         );
 
+    static getItem = id =>
+        axios.get(
+            `${ApiEndpoint}/stores/${localStorage.getItem(
+                "storeId"
+            )}/transactions/${id}`
+        );
+
     static create = item =>
         axios.post(
             `${ApiEndpoint}/stores/${localStorage.getItem(

@@ -1,131 +1,223 @@
 <template>
     <v-container fluid class="b-container">
-        <v-sheet height="calc(100vh - 88px)">
-            <v-row no-gutters class="pa-3 fill-height" justify="center">
-                <v-col cols="12">
-                    <v-card tile flat height="100%">
-                        <v-row no-gutters justify="center">
-                            <v-col cols="12" sm="8" md="6" lg="5">
-                                <v-card-title
-                                    class="text-h5 font-weight-bold pl-0 mt-5"
-                                >
-                                    <v-icon
-                                        class="text--primary ml-n1 mr-3"
-                                        large
-                                        v-text="icons.mdiPlusThick"
-                                    ></v-icon
-                                    >New Transaction
-                                </v-card-title>
+        <v-row class="fill-height" align="center">
+            <v-card tile flat width="600" class="mx-auto my-3 pa-5">
+                <v-card-title class="text-h5 font-weight-bold pa-0">
+                    <v-icon
+                        class="text--primary ml-n1 mr-3"
+                        large
+                        v-text="icons.mdiPlusThick"
+                    ></v-icon
+                    >New Transaction
+                    <v-spacer></v-spacer>
+                    <v-sheet
+                        color="rgba(234, 237, 241, 0.57)"
+                        outlined
+                        class="subtitle-2 pa-3"
+                    >
+                        <div>Total Amount: {{ totalAmount }}</div>
+                        <div>Total Points: {{ totalPoints }}</div>
+                    </v-sheet>
+                </v-card-title>
 
-                                <v-form
-                                    v-model="valid"
-                                    @submit.prevent="create"
+                <v-form
+                    v-model="valid"
+                    @submit.prevent="create"
+                    autocomplete="off"
+                >
+                    <v-row no-gutters class="mt-12">
+                        <v-col cols="6" class="pr-2">
+                            <v-text-field
+                                v-model="transaction.user"
+                                v-mask="'###############'"
+                                type="number"
+                                label="User (mobile or loyalty card number)"
+                                color="secondary"
+                                outlined
+                                dense
+                                clearable
+                                validate-on-blur
+                                :success="success.user"
+                                :rules="rules.user"
+                                @focus="success.user = false"
+                            ></v-text-field>
+                        </v-col>
+
+                        <v-col cols="6" class="pl-2">
+                            <v-text-field
+                                v-model="transaction.receipt_number"
+                                label="Receipt Number"
+                                color="secondary"
+                                outlined
+                                dense
+                                clearable
+                                validate-on-blur
+                                :success="success.receipt"
+                                :rules="rules.receipt"
+                                @focus="success.receipt = false"
+                            ></v-text-field>
+                        </v-col>
+                    </v-row>
+
+                    <v-menu
+                        v-model="menu"
+                        max-height="300"
+                        offset-y
+                        :close-on-content-click="false"
+                    >
+                        <template v-slot:activator="{ on }">
+                            <v-text-field
+                                v-model="search"
+                                label="Select Order Products"
+                                color="secondary"
+                                class="mt-5"
+                                outlined
+                                dense
+                                clearable
+                                v-on="on"
+                                hide-details="auto"
+                                :append-icon="
+                                    menu ? icons.mdiMenuUp : icons.mdiMenuDown
+                                "
+                                :loading="productsLoading"
+                                :success="success.product"
+                                :error="productError"
+                                :error-messages="productErrorMessage"
+                                @blur="
+                                    () => {
+                                        if (!transaction.products.length)
+                                            productError = true;
+                                    }
+                                "
+                                @focus="productError = false"
+                                @click:append="menu = !menu"
+                            ></v-text-field>
+                        </template>
+
+                        <v-list dense>
+                            <template v-if="products.length">
+                                <v-list-item
+                                    v-for="product in products"
+                                    :key="product.product_id"
+                                    class="pl-3"
+                                    :class="{
+                                        'b-list-active': product.selected,
+                                    }"
+                                    @click="productSelect(product)"
                                 >
-                                    <v-text-field
-                                        v-model="transaction.user"
-                                        v-mask="'###############'"
+                                    <v-list-item-icon class="mr-2">
+                                        <v-icon
+                                            :color="
+                                                product.selected
+                                                    ? 'secondary'
+                                                    : ''
+                                            "
+                                            v-text="
+                                                product.selected
+                                                    ? icons.mdiCheckBoxOutline
+                                                    : icons.mdiCheckboxBlankOutline
+                                            "
+                                        ></v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-title
+                                        v-text="product.name[lang]"
+                                    ></v-list-item-title>
+                                </v-list-item>
+                            </template>
+                            <v-list-item v-else>
+                                <v-list-item-title>
+                                    No data available
+                                </v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+
+                    <v-card
+                        v-for="(product, i) in transaction.products"
+                        :key="product.product_id"
+                        color="rgba(234, 237, 241, 0.57)"
+                        outlined
+                        class="px-3 my-2"
+                    >
+                        <v-row
+                            no-gutters
+                            justify="space-between"
+                            align="center"
+                            class="py-5"
+                        >
+                            <v-col cols="5">
+                                {{ product.name[lang] }}
+                            </v-col>
+
+                            <v-col cols="5">
+                                <v-sheet color="white" max-height="40">
+                                    <b-text-field
+                                        v-if="product.reward_type_id === 4"
+                                        v-model="product.retail_price"
                                         type="number"
-                                        label="User (mobile or loyalty card number)"
-                                        color="secondary"
-                                        class="mt-12"
-                                        outlined
-                                        dense
-                                        clearable
-                                        :success="success.user"
-                                        :rules="rules.user"
-                                    ></v-text-field>
+                                        label="Purchase Price"
+                                        no-top-margin
+                                        prepend-inner-icon="mdiCurrencyEur"
+                                        :success="success.purchasePrice"
+                                        :rules="rules.purchasePrice"
+                                    ></b-text-field>
 
-                                    <v-text-field
-                                        v-model="transaction.receipt_number"
-                                        label="Receipt Number"
-                                        color="secondary"
-                                        class="mt-5"
-                                        outlined
-                                        dense
-                                        clearable
-                                        :success="success.receipt"
-                                        :rules="rules.receipt"
-                                    ></v-text-field>
+                                    <b-text-field
+                                        v-else
+                                        v-model="product.quantity"
+                                        type="number"
+                                        label="Quantity"
+                                        no-top-margin
+                                        :success="success.quantity"
+                                        :rules="rules.quantity"
+                                    ></b-text-field>
+                                </v-sheet>
+                            </v-col>
 
-                                    <v-autocomplete
-                                        v-model="selectedProducts"
-                                        :search-input.sync="search"
-                                        :items="products"
-                                        :item-text="`name[${this.lang}]`"
-                                        multiple
-                                        return-object
-                                        label="Select Order Products"
-                                        color="secondary"
-                                        item-color="secondary"
-                                        class="mt-5"
-                                        outlined
-                                        dense
-                                        clearable
-                                        :loading="productsLoading"
-                                        :success="success.product"
-                                        :rules="rules.product"
-                                    ></v-autocomplete>
-
-                                    <v-row
-                                        v-for="product in transaction.products"
-                                        :key="product.product_id"
-                                        no-gutters
-                                    >
-                                        <v-col cols="6" class="mt-5">
-                                            {{ product.name[lang] }}
-                                        </v-col>
-
-                                        <v-col cols="6">
-                                            <b-text-field
-                                                v-if="
-                                                    product.reward_type_id === 4
-                                                "
-                                                v-model="product.retail_price"
-                                                type="number"
-                                                label="Purchase Price"
-                                                prepend-inner-icon="mdiCurrencyEur"
-                                                :success="success.purchasePrice"
-                                                :rules="rules.purchasePrice"
-                                            ></b-text-field>
-
-                                            <b-text-field
-                                                v-else
-                                                v-model="product.quantity"
-                                                type="number"
-                                                label="Quantity"
-                                                :success="success.quantity"
-                                                :rules="rules.quantity"
-                                            ></b-text-field>
-                                        </v-col>
-                                    </v-row>
-
-                                    <v-alert v-if="errorMessage" type="error">{{
-                                        errorMessage
-                                    }}</v-alert>
-
-                                    <v-btn
-                                        type="submit"
-                                        color="secondary"
-                                        depressed
-                                        class="mt-12"
-                                        block
-                                        large
-                                        :loading="loading"
-                                        :disabled="disabled"
-                                        >create order</v-btn
-                                    >
-                                </v-form>
+                            <v-col cols="auto">
+                                <v-btn
+                                    color="red"
+                                    icon
+                                    @click="productRemove(product, i)"
+                                >
+                                    <v-icon v-text="icons.mdiClose"></v-icon>
+                                </v-btn>
                             </v-col>
                         </v-row>
                     </v-card>
-                </v-col>
-            </v-row>
-        </v-sheet>
+
+                    <v-alert v-if="errorMessage" type="error">{{
+                        errorMessage
+                    }}</v-alert>
+
+                    <v-btn
+                        type="submit"
+                        color="secondary"
+                        depressed
+                        class="mt-12"
+                        block
+                        large
+                        :loading="loading"
+                        :disabled="disabled"
+                        >create order</v-btn
+                    >
+                </v-form>
+            </v-card>
+        </v-row>
     </v-container>
 </template>
 
 <script>
-import { mdiPlusThick, mdiCurrencyEur } from "@mdi/js";
+import {
+    mdiPlusThick,
+    mdiMenuUp,
+    mdiMenuDown,
+    mdiCheckBoxOutline,
+    mdiCheckboxBlankOutline,
+    mdiCurrencyEur,
+    mdiClose,
+} from "@mdi/js";
+
 import validators from "./newTransactionValidators";
 import { mapState, mapActions, mapMutations } from "vuex";
 import debounce from "lodash/debounce";
@@ -146,17 +238,43 @@ export default {
     data: () => ({
         icons: {
             mdiPlusThick,
-            mdiCurrencyEur
+            mdiMenuUp,
+            mdiMenuDown,
+            mdiCheckBoxOutline,
+            mdiCheckboxBlankOutline,
+            mdiCurrencyEur,
+            mdiClose,
         },
         valid: false,
         disabled: true,
         lang: "el",
-        search: ""
+        menu: false,
+        search: "",
     }),
 
     computed: {
         ...mapState(["loading", "errorMessage"]),
         ...mapState("storePanel/transactions", ["productsLoading", "products"]),
+
+        totalAmount() {
+            let amount = 0;
+
+            this.selectedProducts.forEach((p) => (amount += +p.retail_price));
+
+            return new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "EUR",
+                minimumFractionDigits: 2,
+            }).format(amount);
+        },
+
+        totalPoints() {
+            let point = 0;
+
+            this.selectedProducts.forEach((p) => (point += +p.reward_points));
+
+            return point;
+        },
 
         selectedProducts: {
             get() {
@@ -166,7 +284,7 @@ export default {
 
             set(val) {
                 this.setSelectedProducts(val);
-            }
+            },
         },
 
         transaction: {
@@ -176,27 +294,49 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
         ...mapMutations("storePanel/transactions", [
             "setItem",
-            "setSelectedProducts"
+            "setSelectedProducts",
         ]),
         ...mapActions("storePanel/transactions", ["getProducts", "create"]),
 
         handleSearch() {
             this.getProducts(`?q=${this.search}`);
-            console.log(this.search,'this.search')
-        }
+        },
+
+        productSelect(item) {
+            item.selected = !item.selected;
+
+            let index = this.selectedProducts.findIndex(
+                (p) => p.product_id === item.product_id
+            );
+
+            if (index === -1) {
+                this.selectedProducts.push(item);
+            } else {
+                this.selectedProducts.splice(index, 1);
+            }
+        },
+
+        productRemove(item, index) {
+            this.selectedProducts.splice(index, 1);
+            this.products.find(
+                (p) => p.product_id === item.product_id
+            ).selected = false;
+        },
     },
 
     watch: {
         valid(val) {
             if (val) {
-                this.disabled = false;
+                if (this.success.product) {
+                    this.disabled = false;
+                }
             } else {
                 this.disabled = true;
             }
@@ -209,14 +349,34 @@ export default {
         },
 
         selectedProducts(val) {
+            if (val.length) {
+                this.success.product = true;
+                this.productError = false;
+            } else {
+                this.success.product = false;
+                this.productError = true;
+            }
+
+            val.forEach((selected) => {
+                let product = this.transaction.products.find(
+                    (p) => p.product_id === selected.product_id
+                );
+
+                if (product) {
+                    selected.quantity = product.quantity;
+                    selected.retail_price = product.retail_price;
+                } else {
+                    if (selected.reward_type_id === 4)
+                        selected.retail_price = null;
+                }
+            });
+
             this.transaction.products = [];
 
-            val.forEach(p => {
-                if (p.reward_type_id === 4) p.retail_price = null;
-
+            val.forEach((p) => {
                 this.transaction.products.push(new TransactionProduct(p));
             });
-        }
+        },
     },
 
     created() {
@@ -225,11 +385,19 @@ export default {
 
     mounted() {
         this.$clearFocus();
+        this.getProducts(`?page=1`);
     },
 
     beforeDestroy() {
         this.selectedProducts = [];
         this.transaction = {};
-    }
+    },
 };
 </script>
+
+<style scoped>
+.b-list-active {
+    background-color: rgba(42, 48, 66, 0.12);
+    color: rgb(42, 48, 66);
+}
+</style>

@@ -37,6 +37,8 @@ export default {
         },
 
         addItem(state, payload) {
+            payload.role = "Store Moderator";
+            payload.user = payload.mobile;
             state.users.unshift(payload);
         },
 
@@ -56,7 +58,6 @@ export default {
         async getModeratorPermissions({ commit }) {
             try {
                 const { data } = await User.getModeratorPermissions();
-                console.log(data.data);
 
                 commit("setModeratorPermissions", data.data);
             } catch (ex) {
@@ -84,48 +85,101 @@ export default {
             }
         },
 
-        async create({ commit, dispatch, state, rootState }, image) {
+        async enablePermissions({ commit }, id) {
+            try {
+                await User.enablePermissions(id);
+
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully enabled permissions!"
+                    },
+
+                    { root: true }
+                );
+            } catch (ex) {
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "error",
+                        text: ex.response.data.message
+                    },
+
+                    { root: true }
+                );
+            }
+        },
+
+        async disablePermissions({ commit }, id) {
+            try {
+                await User.disablePermissions(id);
+
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully disabled permissions!"
+                    },
+
+                    { root: true }
+                );
+            } catch (ex) {
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "error",
+                        text: ex.response.data.message
+                    },
+
+                    { root: true }
+                );
+            }
+        },
+
+        async create({ commit, state, rootState }) {
             try {
                 commit("setLoading", true, { root: true });
 
-                let product = { ...state.product };
-                delete product.product_id;
-                delete product.image;
-                if (!product.name.en) product.name.en = product.name.el;
-                if (!product.name.it) product.name.it = product.name.el;
-                if (!product.description.en)
-                    product.description.en = product.description.el;
-                if (!product.description.it)
-                    product.description.it = product.description.el;
+                let user = { ...state.user };
+                for (let key in user.permissions) {
+                    let obj = user.permissions[key];
+                    delete obj.open;
 
-                const { data } = await User.create(product);
+                    for (let prop in obj) {
+                        let subObj = obj[prop];
 
-                if (image) {
-                    dispatch("uploadImage", {
-                        item: data.data.product,
-                        image,
-                        mode: 1
-                    });
-                } else {
-                    commit("addItem", data.data.product);
-                    commit(
-                        "setServerItemsLength",
-                        rootState.serverItemsLength + 1,
-                        { root: true }
-                    );
-                    commit("setLoading", false, { root: true });
-                    commit("setDialog", false, { root: true });
-                    commit(
-                        "setNotification",
-                        {
-                            show: true,
-                            type: "success",
-                            text: "You have successfully created product!"
-                        },
-
-                        { root: true }
-                    );
+                        delete subObj.open;
+                    }
                 }
+                user.permissions = [user.permissions];
+
+                const { data } = await User.create(user);
+
+                console.log(data);
+
+                commit("addItem", data.data);
+                commit(
+                    "setServerItemsLength",
+                    rootState.serverItemsLength + 1,
+                    { root: true }
+                );
+                commit("setLoading", false, { root: true });
+                commit("setDialog", false, { root: true });
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully created store moderator!"
+                    },
+
+                    { root: true }
+                );
             } catch (ex) {
                 commit("setLoading", false, { root: true });
                 commit("setErrorMessage", ex.response.data.message, {
@@ -138,60 +192,31 @@ export default {
             }
         },
 
-        async enablePermissions({ commit }, id) {
-            try {
-                const data = await User.enablePermissions(id);
-                console.log(data);
-            } catch (ex) {
-                console.error(ex.response.data);
-            }
-        },
-
-        async disablePermissions({ commit }, id) {
-            try {
-                const data = await User.disablePermissions(id);
-                console.log(data);
-            } catch (ex) {
-                console.error(ex.response.data);
-            }
-        },
-
-        async update({ commit, dispatch, state }, image) {
+        async update({ commit, state }) {
             try {
                 commit("setLoading", true, { root: true });
 
-                let product = { ...state.product };
-                delete product.image;
-                if (!product.name.en) product.name.en = product.name.el;
-                if (!product.name.it) product.name.it = product.name.el;
-                if (!product.description.en)
-                    product.description.en = product.description.el;
-                if (!product.description.it)
-                    product.description.it = product.description.el;
+                let user = { ...state.user };
+                user.permissions = [user.permissions];
 
-                const { data } = await User.update(product);
+                const { data } = await User.update(
+                    user.user_id,
+                    user.permissions
+                );
 
-                if (image) {
-                    dispatch("uploadImage", {
-                        item: data.data.product,
-                        image,
-                        mode: 2
-                    });
-                } else {
-                    commit("updateItem", data.data.product, { root: true });
-                    commit("setLoading", false, { root: true });
-                    commit("setDialog", false, { root: true });
-                    commit(
-                        "setNotification",
-                        {
-                            show: true,
-                            type: "success",
-                            text: "You have successfully updated product!"
-                        },
+                commit("updateItem", data.data.product, { root: true });
+                commit("setLoading", false, { root: true });
+                commit("setDialog", false, { root: true });
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated product!"
+                    },
 
-                        { root: true }
-                    );
-                }
+                    { root: true }
+                );
             } catch (ex) {
                 commit("setLoading", false, { root: true });
                 commit("setErrorMessage", ex.response.data.message, {

@@ -4,11 +4,12 @@
         :label="label"
         :type="type"
         :class="noTopMargin ? 'mt-0' : 'mt-3'"
-        color="secondary"
+        :color="color"
         outlined
         dense
         clearable
         hide-details="auto"
+        validate-on-blur
         :readonly="readonly"
         :disabled="disabled"
         :placeholder="placeholder"
@@ -23,6 +24,7 @@
         @input="$emit('input', $event)"
         @click="$emit('click')"
         @click:append="$emit('click-append')"
+        @focus="$emit('cancel-success')"
     >
         <template v-slot:append>
             <slot name="append"></slot>
@@ -36,14 +38,19 @@ import {
     mdiCurrencyEur,
     mdiClockOutline,
     mdiPercent,
-    mdiCalendarMonth
+    mdiCalendarMonth,
+    mdiEye,
 } from "@mdi/js";
 
 export default {
     name: "BTextField",
     props: {
         value: {
-            type: [String, Number]
+            type: [String, Number],
+        },
+        color: {
+            type: String,
+            default: "secondary",
         },
         type: String,
         label: String,
@@ -58,7 +65,7 @@ export default {
         success: Boolean,
         rules: Array,
         hint: String,
-        persistentHint: Boolean
+        persistentHint: Boolean,
     },
 
     data: () => ({
@@ -67,8 +74,9 @@ export default {
             mdiCurrencyEur,
             mdiClockOutline,
             mdiPercent,
-            mdiCalendarMonth
-        }
-    })
+            mdiCalendarMonth,
+            mdiEye,
+        },
+    }),
 };
 </script>
