@@ -39,31 +39,6 @@
             <template v-slot:item.permissions_enabled="{ item }">
                 <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
-                        <v-icon
-                            :color="
-                                item.permissions_enabled ? 'success' : 'red'
-                            "
-                            v-on="on"
-                            v-text="
-                                item.permissions_enabled
-                                    ? icons.mdiCheckBold
-                                    : icons.mdiMinusCircleOutline
-                            "
-                        ></v-icon>
-                    </template>
-
-                    <span
-                        class="font-weight-bold"
-                        v-text="
-                            item.permissions_enabled ? 'Enabled' : 'Disabled'
-                        "
-                    ></span>
-                </v-tooltip>
-            </template>
-
-            <template v-slot:item.actions="{ item }">
-                <v-tooltip color="secondary" top>
-                    <template v-slot:activator="{ on }">
                         <v-btn
                             :color="item.permissions_enabled ? 'secondary' : ''"
                             icon
@@ -97,6 +72,24 @@
                                 : 'Enable Permissions'
                         "
                     ></span>
+                </v-tooltip>
+            </template>
+
+            <template v-slot:item.actions="{ item }">
+                <v-tooltip color="secondary" top>
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            icon
+                            v-on="on"
+                            :to="`/storePanel/user-profile/${item.user_id}`"
+                        >
+                            <v-icon
+                                v-text="icons.mdiAccountSearchOutline"
+                            ></v-icon>
+                        </v-btn>
+                    </template>
+
+                    <span class="font-weight-bold">User Profile</span>
                 </v-tooltip>
 
                 <v-tooltip color="secondary" top>
@@ -148,6 +141,7 @@ import {
     mdiMinusCircleOutline,
     mdiCheckboxBlankOutline,
     mdiCheckBoxOutline,
+    mdiAccountSearchOutline,
     mdiPencilOutline,
     mdiClose,
 } from "@mdi/js";
@@ -167,6 +161,7 @@ export default {
                 mdiMinusCircleOutline,
                 mdiCheckboxBlankOutline,
                 mdiCheckBoxOutline,
+                mdiAccountSearchOutline,
                 mdiPencilOutline,
                 mdiClose,
             },

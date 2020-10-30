@@ -136,5 +136,14 @@ export default [
                 )
         },
         children: settingsRoutes
+    },
+
+    {
+        path: "user-profile/:id",
+        name: "UserProfile",
+        component: () =>
+            import(
+                /* webpackChunkName: "userProfile" */ "@/views/storePanel/UserProfile.vue"
+            )
     }
 ];

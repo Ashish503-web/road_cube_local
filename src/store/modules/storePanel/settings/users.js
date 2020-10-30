@@ -5,6 +5,7 @@ export default {
 
     state: () => ({
         moderatorPermissions: {},
+        userProfile: {},
         users: [],
         user: new User()
     }),
@@ -30,6 +31,10 @@ export default {
                 u.permissions_enabled = false;
                 return u;
             });
+        },
+
+        setUserProfile(state, payload) {
+            state.userProfile = payload;
         },
 
         setItem(state, payload) {
@@ -78,6 +83,24 @@ export default {
                 commit("setServerItemsLength", pagination.total, {
                     root: true
                 });
+                commit("setLoading", false, { root: true });
+            } catch (ex) {
+                commit("setLoading", false, { root: true });
+                console.error(ex.response.data);
+            }
+        },
+
+        async getItem({ commit }, id) {
+            try {
+                commit("setLoading", true, { root: true });
+
+                const { data } = await User.getItem(id);
+
+                const { user, permissions } = data.data;
+                user.permissions = permissions;
+                console.log(user);
+
+                commit("setUserProfile", user);
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });

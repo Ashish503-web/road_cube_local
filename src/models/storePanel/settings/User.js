@@ -115,6 +115,13 @@ export default class User {
             `${ApiEndpoint}/${localStorage.getItem("storeId")}/users/all`
         );
 
+    static getItem = id =>
+        axios.get(
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/users/${id}/profile`
+        );
+
     static enablePermissions = id =>
         axios.put(
             `${ApiEndpoint}/${localStorage.getItem(
