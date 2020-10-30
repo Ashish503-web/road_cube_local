@@ -14,9 +14,10 @@
                     dense
                     clearable
                     hide-details
+                    v-model="formData.voucher"
                 ></v-text-field>
             </v-col>
-            <v-btn color="secondary" class="text-capitalize ml-3" depressed>
+            <v-btn color="secondary" class="text-capitalize ml-3" depressed @click="sendRequest()">
                 <v-icon
                     class="mr-2"
                     size="20"
@@ -30,12 +31,29 @@
 
 <script>
 import { mdiArrowRight } from "@mdi/js";
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 
 export default {
     name: "RedeemVoucher",
 
     data: () => ({
-        icons: { mdiArrowRight }
-    })
+        icons: { mdiArrowRight },
+        formData: {
+            voucher: ""
+        }
+        
+    }),
+
+    methods: {
+        ...mapActions("storePanel/redeem/redeemVoucher", [
+            "create"
+        ]),
+
+        sendRequest(){
+            if(this.formData.voucher != ""){
+                this.create(this.formData)
+            }
+        }
+    }
 };
 </script>

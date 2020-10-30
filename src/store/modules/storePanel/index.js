@@ -4,6 +4,7 @@ import addContest from "./addContest";
 import products from "./products";
 import productGroups from "./productGroups";
 import coupons from "./coupons";
+import redeem from "./redeem";
 import settings from "./settings";
 
 import Store from "@/models/storePanel/Store.js";
@@ -32,6 +33,7 @@ export default {
         products,
         productGroups,
         coupons,
+        redeem,
         settings
     },
 
