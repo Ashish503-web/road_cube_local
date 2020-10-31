@@ -14,7 +14,7 @@
                     dense
                     clearable
                     hide-details
-                    v-model="formData.voucher"
+                    v-model="voucher"
                 ></v-text-field>
             </v-col>
             <v-btn color="secondary" class="text-capitalize ml-3" depressed @click="sendRequest()">
@@ -38,10 +38,7 @@ export default {
 
     data: () => ({
         icons: { mdiArrowRight },
-        formData: {
-            voucher: ""
-        }
-        
+        voucher: ""
     }),
 
     methods: {
@@ -50,8 +47,11 @@ export default {
         ]),
 
         sendRequest(){
-            if(this.formData.voucher != ""){
-                this.create(this.formData)
+            if(this.voucher != ""){
+                let formData = {
+                    "voucher": this.voucher
+                }
+                this.create(formData)
             }
         }
     }

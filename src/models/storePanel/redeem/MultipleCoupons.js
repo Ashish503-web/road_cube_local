@@ -4,18 +4,17 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
     "accessToken"
 )}`;
 
-const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
+const ApiEndpoint = `https://api.roadcube.tk/v1/companies`;
 
-export default class RedeemVoucher {
+export default class MultipleCoupons {
     constructor(item = {}) {
         this.coupon_id = item.coupon_id || null;
     }
 
-    static create = item =>
-        axios.post(
+    static get = () =>
+        axios.get(
             `${ApiEndpoint}/${localStorage.getItem(
-                "storeId"
-            )}/coupons/redeems`,
-            item
+                "companyId"
+            )}/coupons/multiple?order=gift_title,desc`
         );
 }

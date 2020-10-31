@@ -27,6 +27,7 @@
 
 <script>
 import { mdiMagnify } from "@mdi/js";
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 
 export default {
     name: "MultipleCoupons",
@@ -34,13 +35,31 @@ export default {
     data: () => ({
         icons: { mdiMagnify },
         headers: [
-            { text: "Voucher / Action", value: "user" },
-            { text: "Voucher", value: "amount" },
-            { text: "Coupon Code", value: "product" },
-            { text: "Coupon Value", value: "address" }
+            { text: "Code", value: "code" },
+            { text: "Gift Title", value: "gift_title" },
+            { text: "Gift Description", value: "gift_description" },
+            { text: "Maximum", value: "maximum" },
+            { text: "Price", value: "price" },
+            { text: "Expiration Date", value: "expiration_date" },
         ],
-        multipleCoupons: [],
         itemsPerPageOptions: [10, 25, 50, 100]
-    })
+    }),
+
+    computed: {
+        ...mapGetters("storePanel/redeem/multipleCoupons", [
+            "multipleCoupons"
+        ])
+    },
+
+    methods: {
+        ...mapActions("storePanel/redeem/multipleCoupons", [
+            "getItems"
+        ])
+    },
+
+    mounted(){
+        this.getItems()
+    }
+    
 };
 </script>
