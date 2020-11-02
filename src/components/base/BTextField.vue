@@ -39,18 +39,18 @@ import {
     mdiClockOutline,
     mdiPercent,
     mdiCalendarMonth,
-    mdiEye,
+    mdiEye
 } from "@mdi/js";
 
 export default {
     name: "BTextField",
     props: {
         value: {
-            type: [String, Number],
+            type: [String, Number]
         },
         color: {
             type: String,
-            default: "secondary",
+            default: "secondary"
         },
         type: String,
         label: String,
@@ -65,7 +65,7 @@ export default {
         success: Boolean,
         rules: Array,
         hint: String,
-        persistentHint: Boolean,
+        persistentHint: Boolean
     },
 
     data: () => ({
@@ -75,8 +75,8 @@ export default {
             mdiClockOutline,
             mdiPercent,
             mdiCalendarMonth,
-            mdiEye,
-        },
-    }),
+            mdiEye
+        }
+    })
 };
 </script>

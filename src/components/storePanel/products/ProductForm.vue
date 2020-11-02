@@ -208,7 +208,7 @@ import { mapState, mapMutations, mapActions } from "vuex";
 export default {
     name: "Product",
     props: {
-        mode: Number,
+        mode: Number
     },
     mixins: [validators],
     data() {
@@ -224,8 +224,8 @@ export default {
                 "Thursday",
                 "Friday",
                 "Saturday",
-                "Sunday",
-            ],
+                "Sunday"
+            ]
         };
     },
 
@@ -234,7 +234,7 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation",
+            "resetValidation"
         ]),
         ...mapState("storePanel/products", ["categories"]),
 
@@ -251,7 +251,7 @@ export default {
 
             set(val) {
                 this.setShowImageUpload(val);
-            },
+            }
         },
 
         showWeekdays: {
@@ -261,23 +261,23 @@ export default {
 
             set(val) {
                 this.setShowWeekdays(val);
-            },
+            }
         },
 
         product() {
             return this.$store.state.storePanel.products.product;
-        },
+        }
     },
 
     methods: {
         ...mapMutations("storePanel/products", [
             "setShowImageUpload",
-            "setShowWeekdays",
+            "setShowWeekdays"
         ]),
         ...mapActions("storePanel/products", [
             "getCategories",
             "create",
-            "update",
+            "update"
         ]),
 
         onFileSelected(event) {
@@ -285,9 +285,9 @@ export default {
                 this.imageFile = event;
                 const reader = new FileReader();
                 reader.readAsDataURL(this.imageFile);
-                reader.onload = (e) => (this.product.image = e.target.result);
+                reader.onload = e => (this.product.image = e.target.result);
             }
-        },
+        }
     },
 
     watch: {
@@ -300,14 +300,14 @@ export default {
                     wholesalePrice: false,
                     deliveryCost: false,
                     shippingCost: false,
-                    category: false,
+                    category: false
                 };
             }
-        },
+        }
     },
 
     mounted() {
         this.getCategories();
-    },
+    }
 };
 </script>

@@ -40,7 +40,7 @@ export default {
         CreateAccount,
         VerifyMobile,
         CreateCompanyStore,
-        SuccessMessage,
+        SuccessMessage
     },
 
     data() {
@@ -57,10 +57,10 @@ export default {
                 "Health, Care, Beauty",
                 "Department Stores",
                 "Others",
-                "Technology",
+                "Technology"
             ],
             region: "",
-            regions: ["Region 1", "Region 2", "Region 3"],
+            regions: ["Region 1", "Region 2", "Region 3"]
         };
     },
 
@@ -72,8 +72,8 @@ export default {
 
             set(val) {
                 this.setStep(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
@@ -83,9 +83,9 @@ export default {
             "setCountry",
             "setMobile",
             "setUserRegistrationIdentifier",
-            "setMobileVerificationCode",
+            "setMobileVerificationCode"
         ]),
-        ...mapMutations("register", ["setStep"]),
+        ...mapMutations("register", ["setStep"])
     },
 
     mounted() {
@@ -116,7 +116,7 @@ export default {
 
         this.setAppProvider({ app_provider_id, store_id });
         this.setSubscriptionPlan(subscriptionPlan);
-    },
+    }
 };
 </script>
 

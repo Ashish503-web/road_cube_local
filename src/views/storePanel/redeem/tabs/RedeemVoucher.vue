@@ -1,12 +1,8 @@
 <template>
     <v-tab-item :value="$route.path">
-        <v-card-text>
-            When the customer wins a discount or a gift our system will generate
-            a voucher which will have a code. This voucher will be sended in the
-            user account. Type the voucher code below
-        </v-card-text>
+        <v-card-text v-text="translations.info[lang]"></v-card-text>
         <v-card-title class="subtitle-1 font-weight-medium">
-            <v-col cols="auto">Coupon Code</v-col>
+            <v-col cols="auto" v-text="translations.couponCode[lang]"></v-col>
             <v-col cols="auto">
                 <v-text-field
                     color="secondary"
@@ -21,8 +17,8 @@
                     class="mr-2"
                     size="20"
                     v-text="icons.mdiArrowRight"
-                ></v-icon
-                >validation
+                ></v-icon>
+                {{ translations.validation[lang] }}
             </v-btn>
         </v-card-title>
     </v-tab-item>
@@ -30,12 +26,21 @@
 
 <script>
 import { mdiArrowRight } from "@mdi/js";
+import translations from "@/utils/translations/storePanel/redeemVoucher";
 
 export default {
     name: "RedeemVoucher",
 
+    mixins: [translations],
+
     data: () => ({
         icons: { mdiArrowRight }
-    })
+    }),
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        }
+    }
 };
 </script>

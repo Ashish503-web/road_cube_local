@@ -18,7 +18,11 @@
                     class="px-10"
                     outlined
                     tile
-                    :to="mode === 'company' ? '/loyaltyPanel' : '/storePanel'"
+                    :to="
+                        mode === 'company'
+                            ? `/${lang}/loyaltyPanel`
+                            : `/${lang}/storePanel`
+                    "
                     @click="setStep(1)"
                 >
                     continue to {{ mode }}
@@ -45,6 +49,10 @@ export default {
     }),
 
     computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
         successMessage() {
             return this.$store.state.register.successMessage;
         },

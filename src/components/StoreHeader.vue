@@ -11,7 +11,7 @@
 
             <v-spacer></v-spacer>
 
-            <b-lang-menu></b-lang-menu>
+            <b-lang-menu v-model="lang"></b-lang-menu>
 
             <v-tooltip color="secondary" bottom>
                 <template v-slot:activator="{ on }">
@@ -23,7 +23,7 @@
                     </v-btn>
                 </template>
 
-                <span>Help</span>
+                <span class="font-weight-bold">Help</span>
             </v-tooltip>
 
             <v-menu offset-y transition="slide-y-transition">
@@ -92,11 +92,26 @@
 
             <v-row class="pt-4 pb-3" no-gutters justify="center">
                 <v-sheet light class="pa-2 rounded-circle">
-                    <v-img :src="logo" width="50"></v-img>
+                    <v-skeleton-loader
+                        :loading="loading"
+                        type="image"
+                        width="50"
+                        height="50"
+                        class="rounded-circle"
+                    >
+                        <v-img :src="logo" width="50" height="50"></v-img>
+                    </v-skeleton-loader>
                 </v-sheet>
 
                 <v-col cols="12" class="text-center mt-3">
-                    <h1 class="subtitle-1 white--text">{{ storeName }}</h1>
+                    <v-skeleton-loader
+                        v-if="loading"
+                        type="heading"
+                        class="mx-5"
+                    ></v-skeleton-loader>
+                    <h1 v-else class="subtitle-1 white--text">
+                        {{ storeName }}
+                    </h1>
                 </v-col>
             </v-row>
 
@@ -108,18 +123,21 @@
             >
                 <v-list
                     v-for="navLink in navLinks"
-                    :key="navLink.title"
+                    :key="navLink.title['en']"
                     dense
                     nav
-                    :subheader="navLink.title !== 'MANAGE'"
+                    :subheader="navLink.title['en'] !== 'MANAGE'"
                 >
                     <v-subheader
                         class="text-caption"
                         :class="{ 'justify-center': mini }"
-                        v-text="navLink.title"
+                        v-text="navLink.title[lang]"
                     ></v-subheader>
 
-                    <div v-for="item in navLink.children" :key="item.title">
+                    <div
+                        v-for="item in navLink.children"
+                        :key="item.title['en']"
+                    >
                         <v-tooltip v-if="mini" color="secondary" right>
                             <template v-slot:activator="{ on }">
                                 <v-list-item
@@ -131,14 +149,14 @@
                                         <v-icon v-text="item.icon"></v-icon>
                                     </v-list-item-icon>
                                     <v-list-item-title
-                                        v-text="item.title"
+                                        v-text="item.title[lang]"
                                     ></v-list-item-title>
                                 </v-list-item>
                             </template>
 
                             <span
                                 class="font-weight-bold"
-                                v-text="item.title"
+                                v-text="item.title[lang]"
                             ></span>
                         </v-tooltip>
 
@@ -147,7 +165,7 @@
                                 <v-icon v-text="item.icon"></v-icon>
                             </v-list-item-icon>
                             <v-list-item-title
-                                v-text="item.title"
+                                v-text="item.title[lang]"
                             ></v-list-item-title>
                         </v-list-item>
                     </div>
@@ -160,106 +178,55 @@
 <script>
 import {
     mdiHelpCircleOutline,
-    mdiChartBar,
-    mdiPlusThick,
-    mdiCurrencyEur,
-    mdiGift,
-    mdiDatabaseSync,
-    mdiTrophyVariant,
-    mdiPackageVariantClosed,
-    mdiTagMultiple,
-    mdiCog,
     mdiChevronDown,
-    mdiLogout,
-    mdiCartOutline,
-    mdiCheckDecagram,
     mdiAccountOutline,
-    mdiWalletOutline,
     mdiWrenchOutline,
-    mdiLockOpenOutline,
+    mdiLogout
 } from "@mdi/js";
 
+import navLinks from "@/utils/storePanel/navLinks";
 import axios from "axios";
 
 export default {
     name: "StoreHeader",
+
+    mixins: [navLinks],
 
     data() {
         return {
             icons: {
                 mdiHelpCircleOutline,
                 mdiChevronDown,
-                mdiLogout,
+                mdiLogout
             },
-            mini: true,
+            mini: false,
             drawer: false,
-            navLinks: [
-                {
-                    title: "USE",
-                    children: [
-                        {
-                            icon: mdiChartBar,
-                            title: "Home",
-                            to: "/storePanel",
-                            exact: true,
-                        },
-                        {
-                            icon: mdiPlusThick,
-                            title: "New Transaction",
-                            to: "/storePanel/new-transaction",
-                        },
-                        {
-                            icon: mdiCurrencyEur,
-                            title: "Transactions",
-                            to: "/storePanel/transactions",
-                        },
-                        {
-                            icon: mdiGift,
-                            title: "Redeem",
-                            to: "/storePanel/redeem",
-                        },
-                        {
-                            icon: mdiDatabaseSync,
-                            title: "History",
-                            to: "/storePanel/history",
-                        },
-                        {
-                            icon: mdiTrophyVariant,
-                            title: "Contests",
-                            to: "/storePanel/contests",
-                        },
-                    ],
-                },
-                {
-                    title: "SETTINGS",
-                    children: [
-                        {
-                            icon: mdiPackageVariantClosed,
-                            title: "Products",
-                            to: "/storePanel/products",
-                        },
-                        {
-                            icon: mdiTagMultiple,
-                            title: "Coupons",
-                            to: "/storePanel/coupons",
-                        },
-                        {
-                            icon: mdiCog,
-                            title: "Settings",
-                            to: "/storePanel/settings",
-                        },
-                    ],
-                },
-            ],
 
             profileLinks: [
                 { icon: mdiAccountOutline, text: "Profile" },
-                { icon: mdiWrenchOutline, text: "Settings" },
-            ],
+                { icon: mdiWrenchOutline, text: "Settings" }
+            ]
         };
     },
 
     computed: {
+        lang: {
+            get() {
+                return this.$route.params.lang;
+            },
+
+            set(val) {
+                if (val !== this.$route.params.lang)
+                    this.$router.push(
+                        `/${val}/` + this.$route.fullPath.slice(4)
+                    );
+            }
+        },
+
+        loading() {
+            return this.$store.state.storePanel.loading;
+        },
+
         user() {
             return this.$store.state.user;
         },
@@ -274,7 +241,7 @@ export default {
 
         containerHeight() {
             return this.mini ? "calc(100vh - 194px)" : "calc(100vh - 184px)";
-        },
+        }
     },
 
     methods: {
@@ -286,14 +253,20 @@ export default {
 
                 localStorage.removeItem("storeId");
                 localStorage.removeItem("accessToken");
-                this.$router.push("/");
+                this.$router.push(`/${this.lang}/`);
             } catch (ex) {
                 console.log(ex.response.data);
             }
-        },
-    },
+        }
+    }
 };
 </script>
+
+<style>
+.v-skeleton-loader__heading {
+    width: 100% !important;
+}
+</style>
 
 <style scoped>
 .home-link:hover {

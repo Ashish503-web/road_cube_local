@@ -3,7 +3,7 @@
         <v-row class="fill-height" justify="center" align="center">
             <v-card outlined tile width="500">
                 <v-col class="secondary py-5">
-                    <router-link to="/">
+                    <router-link :to="`/${lang}/`">
                         <v-img
                             src="@/assets/loyalty-logo.png"
                             width="50%"
@@ -84,7 +84,11 @@ export default {
     },
 
     computed: {
-        ...mapState(["accessToken", "userStores"])
+        ...mapState(["accessToken", "userStores"]),
+
+        lang() {
+            return this.$route.params.lang;
+        }
     },
 
     methods: {
@@ -110,9 +114,9 @@ export default {
                 this.setStoreId(this.store.store_id);
 
                 if (this.store.role_id === 2 || this.store.role_id === 4) {
-                    this.$router.push("/loyaltyPanel");
+                    this.$router.push(`/${this.lang}/loyaltyPanel`);
                 } else {
-                    this.$router.push("/storePanel");
+                    this.$router.push(`/${this.lang}/storePanel`);
                 }
             } catch (ex) {
                 this.loading = false;

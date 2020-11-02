@@ -36,6 +36,7 @@ export default {
     },
 
     state: () => ({
+        loading: false,
         store: new Store()
     }),
 
@@ -44,6 +45,10 @@ export default {
     },
 
     mutations: {
+        setLoading(state, payload) {
+            state.loading = payload;
+        },
+
         setStore(state, payload) {
             payload.timetable = payload.timetable.map(day => new Weekday(day));
             state.store = payload;
@@ -112,12 +117,15 @@ export default {
     actions: {
         async getStore({ commit }) {
             try {
+                commit("setLoading", true);
+
                 const { data } = await Store.get();
 
                 console.log(data.data);
 
                 localStorage.setItem("companyId", data.data.company.store_id);
                 commit("setStore", data.data);
+                commit("setLoading", false);
             } catch (ex) {
                 console.error(ex.response.data);
             }

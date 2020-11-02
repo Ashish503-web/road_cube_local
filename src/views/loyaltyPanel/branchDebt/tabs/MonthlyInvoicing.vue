@@ -13,7 +13,7 @@
 
                 <v-list dense>
                     <v-list-item href="#">
-                        <v-list-item-icon>
+                        <v-list-item-icon class="mr-3">
                             <v-icon
                                 color="green darken-3"
                                 v-text="icons.mdiMicrosoftExcel"
@@ -23,7 +23,7 @@
                     </v-list-item>
 
                     <v-list-item href="#">
-                        <v-list-item-icon>
+                        <v-list-item-icon class="mr-3">
                             <v-icon
                                 color="blue darken-3"
                                 v-text="icons.mdiFileDelimitedOutline"

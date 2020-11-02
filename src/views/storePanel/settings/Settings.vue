@@ -27,46 +27,71 @@
 export default {
     name: "Settings",
 
-    data: () => ({
-        tab: "/storePanel/settings/profile",
-        tabs: [
-            { to: "/storePanel/settings/profile", name: "profile" },
-            { to: "/storePanel/settings/reward", name: "reward" },
-            {
-                to: "/storePanel/settings/product-points",
-                name: "product points",
-            },
-            { to: "/storePanel/settings/users", name: "users" },
-            {
-                to: "/storePanel/settings/cleaner-management",
-                name: "cleaner management",
-            },
-            {
-                to: "/storePanel/settings/payments-direction",
-                name: "direction of payments",
-            },
-            { to: "/storePanel/settings/cards", name: "cards" },
-            {
-                to: "/storePanel/settings/payment-history",
-                name: "payment history",
-            },
-            {
-                to: "/storePanel/settings/payment-methods",
-                name: "payment methods",
-            },
-        ],
-    }),
+    data() {
+        return {
+            tab: this.$route.path
+        };
+    },
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
+        tabs() {
+            return [
+                {
+                    to: `/${this.lang}/storePanel/settings/profile`,
+                    name: "profile"
+                },
+                {
+                    to: `/${this.lang}/storePanel/settings/reward`,
+                    name: "reward"
+                },
+                {
+                    to: `/${this.lang}/storePanel/settings/product-points`,
+                    name: "product points"
+                },
+                {
+                    to: `/${this.lang}/storePanel/settings/users`,
+                    name: "users"
+                },
+                {
+                    to: `/${this.lang}/storePanel/settings/cleaner-management`,
+                    name: "cleaner management"
+                },
+                {
+                    to: `/${this.lang}/storePanel/settings/payments-direction`,
+                    name: "direction of payments"
+                },
+                {
+                    to: `/${this.lang}/storePanel/settings/cards`,
+                    name: "cards"
+                },
+                {
+                    to: `/${this.lang}/storePanel/settings/payment-history`,
+                    name: "payment history"
+                },
+                {
+                    to: `/${this.lang}/storePanel/settings/payment-methods`,
+                    name: "payment methods"
+                }
+            ];
+        }
+    },
 
     watch: {
         $route: {
             immediate: true,
             handler(val) {
-                if (val.path === "/storePanel/settings") {
-                    this.$router.push("/storePanel/settings/profile");
+                if (val.path === `/${this.lang}/storePanel/settings`) {
+                    this.$router.push(
+                        `/${this.lang}/storePanel/settings/profile`
+                    );
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>
 

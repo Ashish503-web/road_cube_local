@@ -232,8 +232,8 @@ export default {
             icons: { mdiAccount, mdiLock, mdiLockOutline, mdiEye },
             show: {
                 password: false,
-                confirmPassword: false,
-            },
+                confirmPassword: false
+            }
         };
     },
 
@@ -242,7 +242,7 @@ export default {
             "loading",
             "errorMessage",
             "giftCategories",
-            "storeCategories",
+            "storeCategories"
         ]),
 
         appProvider: {
@@ -252,7 +252,7 @@ export default {
 
             set(val) {
                 this.setAppProvider(val);
-            },
+            }
         },
 
         subscriptionPlan: {
@@ -262,7 +262,7 @@ export default {
 
             set(val) {
                 this.setSubscriptionPlan(val);
-            },
+            }
         },
 
         giftCategory: {
@@ -272,7 +272,7 @@ export default {
 
             set(val) {
                 this.setGiftCategory(val);
-            },
+            }
         },
 
         storeCategory: {
@@ -282,7 +282,7 @@ export default {
 
             set(val) {
                 this.setStoreCategory(val);
-            },
+            }
         },
 
         name: {
@@ -292,7 +292,7 @@ export default {
 
             set(val) {
                 this.setName(val);
-            },
+            }
         },
 
         address: {
@@ -302,7 +302,7 @@ export default {
 
             set(val) {
                 this.setAddress(val);
-            },
+            }
         },
 
         zip: {
@@ -312,7 +312,7 @@ export default {
 
             set(val) {
                 this.setZip(val);
-            },
+            }
         },
 
         vatNumber: {
@@ -322,7 +322,7 @@ export default {
 
             set(val) {
                 this.setVatNumber(val);
-            },
+            }
         },
 
         email: {
@@ -332,7 +332,7 @@ export default {
 
             set(val) {
                 this.setEmail(val);
-            },
+            }
         },
 
         primaryPhone: {
@@ -342,7 +342,7 @@ export default {
 
             set(val) {
                 this.setPrimaryPhone(val);
-            },
+            }
         },
 
         fullname: {
@@ -352,7 +352,7 @@ export default {
 
             set(val) {
                 this.setFullname(val);
-            },
+            }
         },
 
         password: {
@@ -362,7 +362,7 @@ export default {
 
             set(val) {
                 this.setPassword(val);
-            },
+            }
         },
 
         confirmPassword: {
@@ -372,8 +372,8 @@ export default {
 
             set(val) {
                 this.setConfirmPassword(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
@@ -391,13 +391,13 @@ export default {
             "setPrimaryPhone",
             "setFullname",
             "setPassword",
-            "setConfirmPassword",
+            "setConfirmPassword"
         ]),
         ...mapActions("register", [
             "getGiftCategories",
             "getStoreCategories",
-            "createStore",
-        ]),
+            "createStore"
+        ])
     },
 
     watch: {
@@ -407,7 +407,7 @@ export default {
             } else {
                 this.disabled = true;
             }
-        },
+        }
     },
 
     mounted() {
@@ -421,6 +421,6 @@ export default {
         //     )
         //     .then(res => console.log(res))
         //     .catch(err => console.error(err));
-    },
+    }
 };
 </script>

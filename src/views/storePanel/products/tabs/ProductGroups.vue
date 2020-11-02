@@ -69,7 +69,7 @@
             <ProductGroupForm :mode="mode" @cancel="dialog = false" />
         </v-dialog>
 
-        <v-dialog v-model="deleteDialog" max-width="600">
+        <v-dialog v-model="deleteDialog" max-width="500">
             <b-card
                 type="delete"
                 title="Delete Product"
@@ -104,7 +104,6 @@ export default {
     data() {
         return {
             icons: { mdiPencilOutline, mdiClose },
-            lang: "el",
             page: +this.$route.query.page,
             mode: 0
         };
@@ -113,6 +112,10 @@ export default {
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/productGroups", ["productGroups"]),
+
+        lang() {
+            return this.$route.params.lang;
+        },
 
         headers() {
             return [

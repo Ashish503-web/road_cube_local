@@ -21,6 +21,7 @@
             :headers="headers"
             :items="multipleCoupons"
             :footer-props="{ itemsPerPageOptions }"
+            class="b-outlined"
         ></v-data-table>
     </v-tab-item>
 </template>

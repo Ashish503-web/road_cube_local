@@ -3,7 +3,7 @@
         <v-row class="fill-height" justify="center" align="center">
             <v-card outlined tile width="500">
                 <v-col class="secondary py-5">
-                    <router-link to="/">
+                    <router-link :to="`/${lang}/`">
                         <v-img
                             src="@/assets/loyalty-logo.png"
                             width="50%"
@@ -108,11 +108,11 @@ export default {
             showPassword: false,
             success: {
                 mobile: false,
-                password: false,
+                password: false
             },
             rules: {
                 mobile: [
-                    (v) => {
+                    v => {
                         if (v) {
                             this.success.mobile = true;
                             return true;
@@ -120,12 +120,12 @@ export default {
                             return "Mobile Phone is required";
                         }
                     },
-                    (v) =>
+                    v =>
                         (v || "").length === 10 ||
-                        "Mobile Phone must be 10 characters long",
+                        "Mobile Phone must be 10 characters long"
                 ],
                 password: [
-                    (v) => {
+                    v => {
                         if (v) {
                             this.success.password = true;
                             return true;
@@ -133,12 +133,18 @@ export default {
                             return "Password is required";
                         }
                     },
-                    (v) =>
+                    v =>
                         (v || "").length >= 5 ||
-                        "Password must be 6 characters long",
-                ],
-            },
+                        "Password must be 6 characters long"
+                ]
+            }
         };
+    },
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        }
     },
 
     methods: {
@@ -153,14 +159,14 @@ export default {
                     {
                         app_provider_id: 1,
                         mobile: this.mobile,
-                        password: this.password,
+                        password: this.password
                     }
                 );
 
                 localStorage.setItem("accessToken", data.access_token);
                 this.setAccessToken(data.access_token);
                 this.setUser(data.extra_data.user);
-                this.$router.push("/user-stores");
+                this.$router.push(`/${this.lang}/user-stores`);
             } catch (ex) {
                 this.loading = false;
                 this.errorMessage = ex.response.data.message;
@@ -170,7 +176,7 @@ export default {
 
         forgotPassword() {
             this.$router.push("/password-recovery");
-        },
+        }
     },
 
     watch: {
@@ -180,7 +186,7 @@ export default {
             } else {
                 this.disabled = true;
             }
-        },
-    },
+        }
+    }
 };
 </script>

@@ -26,30 +26,43 @@
 export default {
     name: "History",
 
-    data: () => ({
-        tab: "storePanel/history/point-analysis",
-        tabs: [
-            {
-                to: "/storePanel/history/point-analysis",
-                name: "Point Analysis",
-            },
-            {
-                to: "/storePanel/history/monthly-points",
-                name: "Monthly Points",
-            },
-        ],
-    }),
+    data() {
+        return {
+            tab: this.$route.path
+        };
+    },
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
+        tabs() {
+            return [
+                {
+                    to: `/${this.lang}/storePanel/history/point-analysis`,
+                    name: "Point Analysis"
+                },
+                {
+                    to: `/${this.lang}/storePanel/history/monthly-points`,
+                    name: "Monthly Points"
+                }
+            ];
+        }
+    },
 
     watch: {
         $route: {
             immediate: true,
             handler(val) {
-                if (val.path === "/storePanel/history") {
-                    this.$router.push("/storePanel/history/point-analysis");
+                if (val.path === `/${this.lang}/storePanel/history`) {
+                    this.$router.push(
+                        `/${this.lang}/storePanel/history/point-analysis`
+                    );
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>
 

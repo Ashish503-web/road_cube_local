@@ -26,30 +26,46 @@
 export default {
     name: "Products",
 
-    data: () => ({
-        tab: "loyaltyPanel/products",
-        tabs: [
-            { to: "/loyaltyPanel/products/products-tab", name: "products" },
-            {
-                to: "/loyaltyPanel/products/products-per-store",
-                name: "products per store",
-            },
-            {
-                to: "/loyaltyPanel/products/products-series",
-                name: "series of products",
-            },
-        ],
-    }),
+    data() {
+        return {
+            tab: this.$route.path
+        };
+    },
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
+        tabs() {
+            return [
+                {
+                    to: `/${this.lang}/loyaltyPanel/products/products-tab`,
+                    name: "products"
+                },
+                {
+                    to: `/${this.lang}/loyaltyPanel/products/products-per-store`,
+                    name: "products per store"
+                },
+                {
+                    to: `/${this.lang}/loyaltyPanel/products/products-series`,
+                    name: "series of products"
+                }
+            ];
+        }
+    },
 
     watch: {
         $route: {
             immediate: true,
             handler(val) {
-                if (val.path === "/loyaltyPanel/products") {
-                    this.$router.push("/loyaltyPanel/products/products-tab");
+                if (val.path === `/${this.lang}/loyaltyPanel/products`) {
+                    this.$router.push(
+                        `/${this.lang}/loyaltyPanel/products/products-tab`
+                    );
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>

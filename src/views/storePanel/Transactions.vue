@@ -8,7 +8,7 @@
                     color="secondary"
                     v-text="icons.mdiCellphoneIphone"
                 ></v-icon>
-                Mobile Payments
+                {{ translations.mobilePayments[lang] }}
                 <v-switch
                     color="secondary"
                     class="ml-3 mt-0 pt-0"
@@ -27,28 +27,27 @@
                     <v-list dense>
                         <v-list-item-group>
                             <v-list-item>
-                                <v-list-item-icon>
+                                <v-list-item-icon class="mr-3">
                                     <v-icon
                                         color="secondary"
                                         v-text="icons.mdiPrinter"
                                     ></v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-title
-                                    >Fund Closure</v-list-item-title
-                                >
+                                    v-text="translations.fundClosure[lang]"
+                                ></v-list-item-title>
                             </v-list-item>
 
                             <v-list-item>
-                                <v-list-item-icon>
+                                <v-list-item-icon class="mr-3">
                                     <v-icon
                                         color="secondary"
                                         v-text="icons.mdiOpenInNew"
                                     ></v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-title
-                                    >Download All
-                                    Transactions</v-list-item-title
-                                >
+                                    v-text="translations.download[lang]"
+                                ></v-list-item-title>
                             </v-list-item>
                         </v-list-item-group>
                     </v-list>
@@ -70,7 +69,7 @@
                             text
                             v-on="on"
                         >
-                            filter by status
+                            {{ translations.filterStatus[lang] }}
                             <v-icon
                                 v-text="
                                     menu.status
@@ -121,7 +120,7 @@
                             text
                             v-on="on"
                         >
-                            filter by type
+                            {{ translations.filterType[lang] }}
                             <v-icon
                                 v-text="
                                     menu.type
@@ -165,9 +164,11 @@
             </v-row>
 
             <v-row no-gutters class="px-4 py-2">
-                <v-col cols="1" class="subtitle-1 font-weight-medium"
-                    >Statuses</v-col
-                >
+                <v-col
+                    cols="1"
+                    class="subtitle-1 font-weight-medium"
+                    v-text="translations.statuses[lang]"
+                ></v-col>
 
                 <v-col cols="11">
                     <v-chip
@@ -183,9 +184,11 @@
             </v-row>
 
             <v-row no-gutters class="px-4 py-2">
-                <v-col cols="1" class="subtitle-1 font-weight-medium"
-                    >Types</v-col
-                >
+                <v-col
+                    cols="1"
+                    class="subtitle-1 font-weight-medium"
+                    v-text="translations.types[lang]"
+                ></v-col>
 
                 <v-col cols="11">
                     <v-chip
@@ -207,7 +210,7 @@
                         :items="transactions"
                         :footer-props="{
                             itemsPerPageOptions: [12],
-                            showCurrentPage: true,
+                            showCurrentPage: true
                         }"
                         :page.sync="page"
                         :server-items-length="serverItemsLength"
@@ -240,7 +243,9 @@
                         <template v-slot:item.watch="{ item }">
                             <v-btn
                                 icon
-                                :to="`/storePanel/transaction/${item.transaction_id}`"
+                                :to="
+                                    `/storePanel/transaction/${item.transaction_id}`
+                                "
                             >
                                 <v-icon
                                     v-text="icons.mdiTextBoxSearchOutline"
@@ -285,13 +290,16 @@ import {
     mdiChevronDown,
     mdiCheckboxBlankOutline,
     mdiCheckBoxOutline,
-    mdiTextBoxSearchOutline,
+    mdiTextBoxSearchOutline
 } from "@mdi/js";
 
+import translations from "@/utils/translations/storePanel/transactions";
 import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
     name: "Transactions",
+
+    mixins: [translations],
 
     data() {
         return {
@@ -304,27 +312,15 @@ export default {
                 mdiChevronDown,
                 mdiCheckboxBlankOutline,
                 mdiCheckBoxOutline,
-                mdiTextBoxSearchOutline,
+                mdiTextBoxSearchOutline
             },
             menu: {
                 status: false,
-                type: false,
+                type: false
             },
-            headers: [
-                { text: "User", value: "user_identity" },
-                { text: "Amount", value: "total_price" },
-                { text: "Points", value: "total_points" },
-                { text: "Status", value: "transaction_status_name" },
-                { text: "Type", value: "transaction_type_name" },
-                { text: "Receipt Number", value: "receipt_number" },
-                { text: "Date", value: "created_at" },
-                { text: "Watch", value: "watch" },
-                { text: "Actions", value: "actions" },
-            ],
-            lang: "el",
             page: +this.$route.query.page,
             selectedStatuses: [],
-            selectedTypes: [],
+            selectedTypes: []
         };
     },
 
@@ -333,17 +329,46 @@ export default {
         ...mapState("storePanel/transactions", [
             "transactionStatuses",
             "transactionTypes",
-            "transactions",
+            "transactions"
         ]),
 
-        transaction: {
-            get() {
-                return this.$store.state.storePanel.transactions.transaction;
-            },
+        lang() {
+            return this.$route.params.lang;
+        },
 
-            set(val) {
-                this.setItem(val);
-            },
+        headers() {
+            return [
+                {
+                    text: this.translations.user[this.lang],
+                    value: "user_identity"
+                },
+                {
+                    text: this.translations.amount[this.lang],
+                    value: "total_price"
+                },
+                {
+                    text: this.translations.points[this.lang],
+                    value: "total_points"
+                },
+                {
+                    text: this.translations.status[this.lang],
+                    value: "transaction_status_name"
+                },
+                {
+                    text: this.translations.type[this.lang],
+                    value: "transaction_type_name"
+                },
+                {
+                    text: this.translations.receiptNumber[this.lang],
+                    value: "receipt_number"
+                },
+                {
+                    text: this.translations.date[this.lang],
+                    value: "created_at"
+                },
+                { text: this.translations.watch[this.lang], value: "watch" },
+                { text: this.translations.actions[this.lang], value: "actions" }
+            ];
         },
 
         query() {
@@ -356,6 +381,16 @@ export default {
 
             return query.slice(0, query.length - 1);
         },
+
+        transaction: {
+            get() {
+                return this.$store.state.storePanel.transactions.transaction;
+            },
+
+            set(val) {
+                this.setItem(val);
+            }
+        }
     },
 
     methods: {
@@ -365,14 +400,14 @@ export default {
             "getTransactionTypes",
             "getItems",
             "changeStatus",
-            "remove",
+            "remove"
         ]),
 
         statusSelect(item) {
             item.selected = !item.selected;
 
             let index = this.selectedStatuses.findIndex(
-                (s) => s.name === item.name
+                s => s.name === item.name
             );
 
             if (index === -1) {
@@ -385,16 +420,14 @@ export default {
         deleteStatus(item, index) {
             this.selectedStatuses.splice(index, 1);
             this.transactionStatuses.find(
-                (s) => s.name === item.name
+                s => s.name === item.name
             ).selected = false;
         },
 
         typeSelect(item) {
             item.selected = !item.selected;
 
-            let index = this.selectedTypes.findIndex(
-                (t) => t.name === item.name
-            );
+            let index = this.selectedTypes.findIndex(t => t.name === item.name);
 
             if (index === -1) {
                 this.selectedTypes.push(item);
@@ -406,9 +439,9 @@ export default {
         deleteType(item, index) {
             this.selectedTypes.splice(index, 1);
             this.transactionTypes.find(
-                (t) => t.name === item.name
+                t => t.name === item.name
             ).selected = false;
-        },
+        }
     },
 
     watch: {
@@ -417,8 +450,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query,
-                    },
+                        ...this.$route.query
+                    }
                 });
             }
 
@@ -436,9 +469,9 @@ export default {
                         "transaction-status-id"
                     ].split(",");
 
-                    statuses.forEach((s) => {
+                    statuses.forEach(s => {
                         let status = val.find(
-                            (t) => t.transaction_status_id === +s
+                            t => t.transaction_status_id === +s
                         );
 
                         status.selected = true;
@@ -456,10 +489,8 @@ export default {
                         ","
                     );
 
-                    types.forEach((t) => {
-                        let type = val.find(
-                            (s) => s.transaction_type_id === +t
-                        );
+                    types.forEach(t => {
+                        let type = val.find(s => s.transaction_type_id === +t);
 
                         type.selected = true;
 
@@ -473,7 +504,7 @@ export default {
             let str = "";
 
             if (val.length) {
-                val.forEach((s) => (str += `,${s.transaction_status_id}`));
+                val.forEach(s => (str += `,${s.transaction_status_id}`));
                 str = str.slice(1);
             } else {
                 str = undefined;
@@ -483,8 +514,8 @@ export default {
                 this.$router.push({
                     query: {
                         ...this.$route.query,
-                        "transaction-status-id": str,
-                    },
+                        "transaction-status-id": str
+                    }
                 });
             }
         },
@@ -493,7 +524,7 @@ export default {
             let str = "";
 
             if (val.length) {
-                val.forEach((t) => (str += `,${t.transaction_type_id}`));
+                val.forEach(t => (str += `,${t.transaction_type_id}`));
                 str = str.slice(1);
             } else {
                 str = undefined;
@@ -501,10 +532,10 @@ export default {
 
             if (str !== this.$route.query["transaction-type"]) {
                 this.$router.push({
-                    query: { ...this.$route.query, "transaction-type": str },
+                    query: { ...this.$route.query, "transaction-type": str }
                 });
             }
-        },
+        }
     },
 
     beforeCreate() {
@@ -512,8 +543,8 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query,
-                },
+                    ...this.$route.query
+                }
             });
         }
     },
@@ -522,7 +553,7 @@ export default {
         this.getItems(this.query);
         this.getTransactionStatuses();
         this.getTransactionTypes();
-    },
+    }
 };
 </script>
 

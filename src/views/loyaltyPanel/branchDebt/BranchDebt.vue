@@ -27,35 +27,43 @@
 export default {
     name: "BranchDebt",
 
-    data: () => ({
-        tab: "loyaltyPanel/branch-debt/monthly-invoicing",
-        tabs: [
-            {
-                to: "/loyaltyPanel/branch-debt/monthly-invoicing",
-                name: "Monthly Invoicing",
-            },
-            {
-                to: "/loyaltyPanel/branch-debt/redemption-invoice",
-                name: "Redemption Invoice",
-            },
-        ],
-        page: 1,
-        itemsPerPage: 10,
-        perPage: [10, 20, 30],
-    }),
+    data() {
+        return {
+            tab: this.$route.path
+        };
+    },
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
+        tabs() {
+            return [
+                {
+                    to: `/${this.lang}/loyaltyPanel/branch-debt/monthly-invoicing`,
+                    name: "Monthly Invoicing"
+                },
+                {
+                    to: `/${this.lang}/loyaltyPanel/branch-debt/redemption-invoice`,
+                    name: "Redemption Invoice"
+                }
+            ];
+        }
+    },
 
     watch: {
         $route: {
             immediate: true,
             handler(val) {
-                if (val.path === "/loyaltyPanel/branch-debt") {
+                if (val.path === `/${this.lang}/loyaltyPanel/branch-debt`) {
                     this.$router.push(
-                        "/loyaltyPanel/branch-debt/monthly-invoicing"
+                        `/${this.lang}/loyaltyPanel/branch-debt/monthly-invoicing`
                     );
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>
 

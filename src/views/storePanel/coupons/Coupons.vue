@@ -27,46 +27,59 @@
 export default {
     name: "Coupons",
 
-    data: () => ({
-        tab: "/storePanel/coupons/with-transactions",
-        tabs: [
-            {
-                to: "/storePanel/coupons/with-transactions",
-                name: "coupons with transactions",
-            },
+    data() {
+        return {
+            tab: this.$route.path
+        };
+    },
 
-            {
-                to: "/storePanel/coupons/with-code",
-                name: "coupons with code",
-            },
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
 
-            {
-                to: "/storePanel/coupons/on-products",
-                name: "coupons on products",
-            },
+        tabs() {
+            return [
+                {
+                    to: `/${this.lang}/storePanel/coupons/with-transactions`,
+                    name: "coupons with transactions"
+                },
 
-            {
-                to: "/storePanel/coupons/with-visits",
-                name: "coupons with visits",
-            },
+                {
+                    to: `/${this.lang}/storePanel/coupons/with-code`,
+                    name: "coupons with code"
+                },
 
-            {
-                to: "/storePanel/coupons/with-discount",
-                name: "coupons with discount",
-            },
-        ],
-    }),
+                {
+                    to: `/${this.lang}/storePanel/coupons/on-products`,
+                    name: "coupons on products"
+                },
+
+                {
+                    to: `/${this.lang}/storePanel/coupons/with-visits`,
+                    name: "coupons with visits"
+                },
+
+                {
+                    to: `/${this.lang}/storePanel/coupons/with-discount`,
+                    name: "coupons with discount"
+                }
+            ];
+        }
+    },
 
     watch: {
         $route: {
             immediate: true,
             handler(val) {
-                if (val.path === "/storePanel/coupons") {
-                    this.$router.push("/storePanel/coupons/with-transactions");
+                if (val.path === `/${this.lang}/storePanel/coupons`) {
+                    this.$router.push(
+                        `/${this.lang}/storePanel/coupons/with-transactions`
+                    );
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>
 

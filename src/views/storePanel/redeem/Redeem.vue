@@ -8,12 +8,11 @@
             >
                 <v-tab
                     v-for="tab in tabs"
-                    :key="tab.name"
-                    v-text="tab.name"
+                    :key="tab.name['en']"
+                    v-text="tab.name[lang]"
                     :to="tab.to"
                     class="text-capitalize text-left text-sm-center d-flex justify-start justify-sm-center px-3"
-                    >redeem voucher</v-tab
-                >
+                ></v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">
@@ -27,30 +26,58 @@
 export default {
     name: "Redeem",
 
-    data: () => ({
-        tab: "storePanel/redeem/redeem-voucher",
-        tabs: [
-            { to: "/storePanel/redeem/redeem-voucher", name: "Redeem Voucher" },
-            {
-                to: "/storePanel/redeem/coupons-overview",
-                name: "Coupons Overview",
-            },
-            {
-                to: "/storePanel/redeem/multiple-coupons",
-                name: "Multiple Coupons",
-            },
-        ],
-    }),
+    data() {
+        return {
+            tab: this.$route.path
+        };
+    },
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
+        tabs() {
+            return [
+                {
+                    to: `/${this.lang}/storePanel/redeem/redeem-voucher`,
+                    name: {
+                        el: "",
+                        en: "Redeem Voucher",
+                        it: ""
+                    }
+                },
+                {
+                    to: `/${this.lang}/storePanel/redeem/coupons-overview`,
+                    name: {
+                        el: "",
+                        en: "Coupons Overview",
+                        it: ""
+                    }
+                },
+                {
+                    to: `/${this.lang}/storePanel/redeem/multiple-coupons`,
+                    name: {
+                        el: "",
+                        en: "Multiple Coupons",
+                        it: ""
+                    }
+                }
+            ];
+        }
+    },
 
     watch: {
         $route: {
             immediate: true,
             handler(val) {
-                if (val.path === "/storePanel/redeem") {
-                    this.$router.push("/storePanel/redeem/redeem-voucher");
+                if (val.path === `/${this.lang}/storePanel/redeem`) {
+                    this.$router.push(
+                        `/${this.lang}/storePanel/redeem/redeem-voucher`
+                    );
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>

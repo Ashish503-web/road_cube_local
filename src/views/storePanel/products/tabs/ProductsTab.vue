@@ -1,7 +1,10 @@
 <template>
     <v-tab-item :value="$route.path">
         <v-toolbar flat height="80">
-            <v-row class="px-4 py-3 flex justify-space-between align-center" no-gutters>
+            <v-row
+                class="px-4 py-3 flex justify-space-between align-center"
+                no-gutters
+            >
                 <v-btn
                     color="secondary"
                     class="text-capitalize"
@@ -11,18 +14,18 @@
                 >
                 <v-col cols="4">
                     <v-text-field
-                            v-model="search"
-                            class="mt-1"
-                            label="Search"
-                            color="secondary"
-                            outlined
-                            clearable
-                            rounded
-                            dense
-                            hide-details
-                            :prepend-inner-icon="icons.mdiMagnify"
-                        >
-                        </v-text-field>
+                        v-model="search"
+                        class="mt-1"
+                        label="Search"
+                        color="secondary"
+                        outlined
+                        clearable
+                        rounded
+                        dense
+                        hide-details
+                        :prepend-inner-icon="icons.mdiMagnify"
+                    >
+                    </v-text-field>
                 </v-col>
             </v-row>
         </v-toolbar>
@@ -86,7 +89,7 @@
             <ProductForm :mode="mode" @cancel="dialog = false" />
         </v-dialog>
 
-        <v-dialog v-model="deleteDialog" max-width="600">
+        <v-dialog v-model="deleteDialog" max-width="500">
             <b-card
                 type="delete"
                 title="Delete Product"
@@ -114,7 +117,6 @@ import { mapState, mapMutations, mapActions } from "vuex";
 import ProductForm from "@/components/storePanel/products/ProductForm.vue";
 import debounce from "lodash/debounce";
 
-
 export default {
     name: "ProductsTab",
 
@@ -123,7 +125,6 @@ export default {
     data() {
         return {
             icons: { mdiPencilOutline, mdiClose, mdiMagnify },
-            lang: "el",
             page: +this.$route.query.page,
             mode: 0,
             search: ""
@@ -133,6 +134,10 @@ export default {
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/products", ["products"]),
+
+        lang() {
+            return this.$route.params.lang;
+        },
 
         headers() {
             return [
@@ -194,7 +199,7 @@ export default {
             "setDialog",
             "setDeleteDialog",
             "setResetSuccess",
-            "setResetValidation" 
+            "setResetValidation"
         ]),
         ...mapMutations("storePanel/products", [
             "setShowImageUpload",
@@ -245,15 +250,15 @@ export default {
             this.$router.push({ query: { ...this.$route.query, page } });
         },
 
-        search: function(val,oldVal){
+        search: function(val, oldVal) {
             if (val != oldVal) {
-                if(val == null){
+                if (val == null) {
                     this.getItems(this.query);
-                }else{
+                } else {
                     this.debouncedSearch();
                 }
             }
-        },
+        }
     },
 
     beforeCreate() {

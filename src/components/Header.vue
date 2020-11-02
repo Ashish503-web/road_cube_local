@@ -24,26 +24,36 @@
                     </v-toolbar-title>
                 </v-col>
                 <v-col cols="auto" :hidden="$vuetify.breakpoint.smAndDown">
-                    <v-toolbar-items class="d-flex align-center justify-center navigation">
-                        <a href="#home" class="light-theme px-4 nav-link">home</a>
+                    <v-toolbar-items
+                        class="d-flex align-center justify-center navigation"
+                    >
+                        <a href="#home" class="light-theme px-4 nav-link"
+                            >home</a
+                        >
                         <a href="#products" class="light-theme px-4 nav-link"
                             >why roadcube</a
                         >
-                        <a href="#about" class="light-theme px-4 nav-link">about</a>
+                        <a href="#about" class="light-theme px-4 nav-link"
+                            >about</a
+                        >
                         <a href="#featuress" class="light-theme px-4 nav-link"
                             >features</a
                         >
-                        <a href="#quote" class="light-theme px-4 nav-link">quote</a>
-                        <a href="#cta" class="light-theme px-4 nav-link">contact</a>
+                        <a href="#quote" class="light-theme px-4 nav-link"
+                            >quote</a
+                        >
+                        <a href="#cta" class="light-theme px-4 nav-link"
+                            >contact</a
+                        >
                         <v-btn
-                                class="text-capitalize pr-1 pl-0 ml-6 btn-hover"
-                                height="auto"
-                                rounded
-                                to="/sign-in"
+                            class="text-capitalize pr-1 pl-0 ml-6 btn-hover"
+                            height="auto"
+                            rounded
+                            :to="`/${lang}/sign-in`"
                         >
                             <p
-                                    class="ma-0"
-                                    style="
+                                class="ma-0"
+                                style="
                                     padding: 15px 70px 15px 20px;
                                     font-size: 17px;
                                 "
@@ -52,16 +62,16 @@
                             </p>
                             <v-avatar size="38" class="icon-hover">
                                 <v-icon
-                                        size="24"
-                                        color="#fff"
-                                        v-text="icons.mdiArrowRight"
-                                        class="right-icon"
+                                    size="24"
+                                    color="#fff"
+                                    v-text="icons.mdiArrowRight"
+                                    class="right-icon"
                                 ></v-icon>
                                 <v-icon
-                                        size="24"
-                                        color="#001266"
-                                        v-text="icons.mdiArrowRight"
-                                        class="right-icon"
+                                    size="24"
+                                    color="#001266"
+                                    v-text="icons.mdiArrowRight"
+                                    class="right-icon"
                                 ></v-icon>
                             </v-avatar>
                         </v-btn>
@@ -107,7 +117,11 @@
                                 <v-list-item>
                                     <v-list-item-content>
                                         <v-list-item-title>
-                                            <a href="#home" @click="dialog = false">Home</a>
+                                            <a
+                                                href="#home"
+                                                @click="dialog = false"
+                                                >Home</a
+                                            >
                                         </v-list-item-title>
                                     </v-list-item-content>
                                 </v-list-item>
@@ -115,7 +129,11 @@
                                 <v-list-item>
                                     <v-list-item-content>
                                         <v-list-item-title>
-                                            <a href="#products" @click="dialog = false">Why RoadCube</a>
+                                            <a
+                                                href="#products"
+                                                @click="dialog = false"
+                                                >Why RoadCube</a
+                                            >
                                         </v-list-item-title>
                                     </v-list-item-content>
                                 </v-list-item>
@@ -123,7 +141,11 @@
                                 <v-list-item>
                                     <v-list-item-content>
                                         <v-list-item-title>
-                                            <a href="#about" @click="dialog = false">About</a>
+                                            <a
+                                                href="#about"
+                                                @click="dialog = false"
+                                                >About</a
+                                            >
                                         </v-list-item-title>
                                     </v-list-item-content>
                                 </v-list-item>
@@ -131,7 +153,11 @@
                                 <v-list-item>
                                     <v-list-item-content>
                                         <v-list-item-title>
-                                            <a href="#featuress" @click="dialog = false">Features</a>
+                                            <a
+                                                href="#featuress"
+                                                @click="dialog = false"
+                                                >Features</a
+                                            >
                                         </v-list-item-title>
                                     </v-list-item-content>
                                 </v-list-item>
@@ -139,7 +165,11 @@
                                 <v-list-item>
                                     <v-list-item-content>
                                         <v-list-item-title>
-                                            <a href="#quote" @click="dialog = false">Quote</a>
+                                            <a
+                                                href="#quote"
+                                                @click="dialog = false"
+                                                >Quote</a
+                                            >
                                         </v-list-item-title>
                                     </v-list-item-content>
                                 </v-list-item>
@@ -147,7 +177,11 @@
                                 <v-list-item>
                                     <v-list-item-content>
                                         <v-list-item-title>
-                                            <a href="#cta" @click="dialog = false">Contact</a>
+                                            <a
+                                                href="#cta"
+                                                @click="dialog = false"
+                                                >Contact</a
+                                            >
                                         </v-list-item-title>
                                     </v-list-item-content>
                                 </v-list-item>
@@ -160,13 +194,13 @@
 
         <v-navigation-drawer v-model="drawer" app>
             <v-list nav dense>
-                <v-list-item to="/loyaltyPanel">
+                <v-list-item :to="`/${lang}/loyaltyPanel`">
                     <v-list-item-title>Loyalty Panel</v-list-item-title>
                 </v-list-item>
-                <v-list-item to="/storePanel">
+                <v-list-item :to="`/${lang}/storePanel`">
                     <v-list-item-title>Store Panel</v-list-item-title>
                 </v-list-item>
-                <v-list-item to="/sign-in">
+                <v-list-item :to="`/${lang}/sign-in`">
                     <v-list-item-title>
                         sign in
                         <v-icon v-text="icons.mdiLogin"></v-icon>
@@ -182,23 +216,28 @@ import { mdiLogin, mdiArrowRight, mdiClose, mdiMenu } from "@mdi/js";
 
 export default {
     name: "Header",
+
     data: () => ({
         drawer: false,
         dialog: false,
         notifications: false,
         sound: true,
         widgets: false,
-        icons: { mdiLogin, mdiArrowRight, mdiClose, mdiMenu },
+        icons: { mdiLogin, mdiArrowRight, mdiClose, mdiMenu }
     }),
-};
 
-
-window.onscroll = function () {
-    if(document.getElementById('header') !== null) {
-        scrollFunction();
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        }
     }
 };
 
+window.onscroll = function() {
+    if (document.getElementById("header") !== null) {
+        scrollFunction();
+    }
+};
 
 function scrollFunction() {
     let btns = document.querySelectorAll(".light-theme");
@@ -222,7 +261,6 @@ function scrollFunction() {
         }
     }
 }
-
 </script>
 
 <style scoped>
