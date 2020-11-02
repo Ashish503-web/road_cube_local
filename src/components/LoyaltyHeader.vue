@@ -22,7 +22,7 @@
                     >
                         <v-avatar size="32" class="mr-2">
                             <v-img
-                                src="../assets/avatars/avatar-1.jpg"
+                                src="../assets/avatars/user.png"
                             ></v-img> </v-avatar
                         >Henry
                         <v-icon v-text="icons.mdiChevronDown"></v-icon>
@@ -52,7 +52,7 @@
                                     v-text="icons.mdiLogout"
                                 ></v-icon>
                             </v-list-item-icon>
-                            <v-list-item-title class="red--text"
+                            <v-list-item-title class="red--text" @click="logout"
                                 >Logout</v-list-item-title
                             >
                         </v-list-item>
@@ -189,6 +189,9 @@ import {
 } from "@mdi/js";
 
 import navLinks from "@/utils/loyaltyPanel/navLinks";
+import avatar3 from "../assets/avatars/avatar-3.jpg";
+import avatar4 from "../assets/avatars/avatar-4.jpg";
+import axios from "axios";
 
 export default {
     name: "LoyaltyHeader",
@@ -212,10 +215,9 @@ export default {
             rightDrawer: false,
             profileLinks: [
                 { icon: mdiAccountOutline, text: "Profile" },
-                { icon: mdiWalletOutline, text: "My Wallet" },
                 { icon: mdiWrenchOutline, text: "Settings" },
                 { icon: mdiLockOpenOutline, text: "Lock Screen" }
-            ]
+            ],
         };
     },
 
@@ -235,8 +237,25 @@ export default {
 
         containerHeight() {
             return this.mini ? "calc(100vh - 223px)" : "calc(100vh - 213px)";
-        }
-    }
+        },
+    },
+
+    methods: {
+        async logout() {
+            try {
+                const { data } = await axios.post(
+                    "https://api.roadcube.tk/v1/users/logout"
+                );
+
+                localStorage.removeItem("storeId");
+                localStorage.removeItem("companyId");
+                localStorage.removeItem("accessToken");
+                this.$router.push("/");
+            } catch (ex) {
+                console.log(ex.response.data);
+            }
+        },
+    },
 };
 </script>
 

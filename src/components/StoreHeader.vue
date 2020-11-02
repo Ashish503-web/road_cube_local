@@ -252,6 +252,7 @@ export default {
                 );
 
                 localStorage.removeItem("storeId");
+                localStorage.removeItem("companyId");
                 localStorage.removeItem("accessToken");
                 this.$router.push(`/${this.lang}/`);
             } catch (ex) {

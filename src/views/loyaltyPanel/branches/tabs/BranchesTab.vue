@@ -28,10 +28,17 @@
         <v-toolbar flat>
             <v-spacer></v-spacer>
             <v-col cols="4">
-                <b-search-field
-                    :selectedSearchType="selectedSearchType"
-                    :searchTypes="searchTypes"
-                ></b-search-field>
+                <v-text-field
+                    v-model="search"
+                    label="Search"
+                    color="secondary"
+                    rounded
+                    outlined
+                    dense
+                    clearable
+                    hide-details
+                    :prepend-inner-icon="icons.mdiMagnify"
+                ></v-text-field>
             </v-col>
         </v-toolbar>
 
@@ -162,10 +169,11 @@
 </template>
 
 <script>
-import { mdiPencilOutline, mdiOpenInNew, mdiClose } from "@mdi/js";
-import { mapMutations } from "vuex";
+import { mdiPencilOutline, mdiOpenInNew, mdiClose, mdiMagnify } from "@mdi/js";
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 import ShopForm from "@/components/loyaltyPanel/branches/ShopForm";
 import RightsForm from "@/components/loyaltyPanel/branches/RightsForm";
+import debounce from "lodash/debounce";
 
 export default {
     name: "BranchesTab",
@@ -174,7 +182,7 @@ export default {
         RightsForm,
     },
     data: () => ({
-        icons: { mdiPencilOutline, mdiOpenInNew, mdiClose },
+        icons: { mdiPencilOutline, mdiOpenInNew, mdiClose, mdiMagnify },
         searchTypes: [
             "All Fields",
             "Name",
@@ -189,14 +197,13 @@ export default {
             { text: "Name", value: "name" },
             {
                 text: "Name of Shop(in app)",
-                value: "name_of_shop",
+                value: "app_name",
             },
             { text: "Map", value: "map" },
-            { text: "Payments", value: "payments" },
-            { text: "Z", value: "z" },
-            { text: "Banks", value: "banks" },
+            { text: "Payments", value: "online_payment" },
+            { text: "Banks", value: "bank_providers" },
             { text: "Address", value: "address" },
-            { text: "Phone", value: "phone" },
+            { text: "Phone", value: "primary_phone" },
             {
                 text: "Registration Date",
                 value: "registration_date",
@@ -204,61 +211,78 @@ export default {
             { text: "Active", value: "active" },
             { text: "Actions", value: "actions" },
         ],
-        items: [
-            {
-                name: "Vasilis",
-                name_of_shop: "katerina1",
-                map: "OFF",
-                payments: "OFF",
-                z: "ON",
-                banks: "ethniki",
-                address: "Agias Glikerias 10",
-                phone: "545648989478",
-                registration_date: "2019/06/27",
-                active: "ON",
-            },
-            {
-                name: "Vasilis",
-                name_of_shop: "katerina1",
-                map: "OFF",
-                payments: "OFF",
-                z: "ON",
-                banks: "ethniki",
-                address: "Agias Glikerias 10",
-                phone: "545648989478",
-                registration_date: "2019/06/27",
-                active: "ON",
-            },
-            {
-                name: "Vasilis",
-                name_of_shop: "katerina1",
-                map: "OFF",
-                payments: "OFF",
-                z: "ON",
-                banks: "ethniki",
-                address: "Agias Glikerias 10",
-                phone: "545648989478",
-                registration_date: "2019/06/27",
-                active: "ON",
-            },
-        ],
+        items: [],
         itemsPerPageOptions: [10, 20, 30, -1],
         mode: 0,
         shopDialog: false,
         rightsDialog: false,
         redirectDialog: false,
         deleteDialog: false,
+        search: "",
+        query: ""
     }),
 
-    computed: {},
+    computed: {
+        ...mapGetters("loyaltyPanel/branches/branches", [
+            "branches"
+        ]),
+    },
 
-    methods: {
-        ...mapMutations("loyaltyPanel/branches", []),
+    watch: {
+        branches: function(val){
+            let branches = []
+            val.map(data => {
+                let item = {}
+                item.name = data.name
+                item.app_name = data.app_name
+                item.map = data.map
+                item.online_payment = data.online_payment ? "On" : "Off"
+                item.bank_providers = data.bank_providers && data.bank_providers[0] ? data.bank_providers[0] : ''
+                item.address = data.address
+                item.primary_phone = data.primary_phone
+                item.registration_date = data.registration_date
+                item.active = data.active ? "On" : "Off"
+                item.app_name = data.app_name
 
-        myFunc() {
-            alert(5);
+                branches.push(item)
+            })
+
+            this.items = branches
+        },
+
+        search: function(val,oldVal){
+            if (val != oldVal) {
+                if(val == null){
+                    this.getItems(this.query);
+                }else{
+                    this.debouncedSearch();
+                }
+            }
         },
     },
+
+    methods: {
+        ...mapActions("loyaltyPanel/branches/branches", [
+            "getItems"
+        ]),
+
+        myFunc(){
+
+        },
+
+        handleSearch() {
+            this.getItems(`?q=${this.search}`);
+        }
+    },
+
+    created() {
+        this.debouncedSearch = debounce(this.handleSearch, 500);
+    },
+
+    mounted(){
+        this.getItems(this.query)
+    }
+
 };
 </script>
 <style scoped>
