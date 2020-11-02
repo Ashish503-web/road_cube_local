@@ -20,7 +20,12 @@
             <template v-slot:item.actions="{ item }">
                 <v-tooltip v-if="!item.total_discount" color="secondary" top>
                     <template v-slot:activator="{ on }">
-                        <v-btn color="secondary" icon v-on="on" @click="open">
+                        <v-btn
+                            color="secondary"
+                            icon
+                            v-on="on"
+                            @click="open(item)"
+                        >
                             <v-icon size="28" v-text="icons.mdiPlus"></v-icon>
                         </v-btn>
                     </template>
@@ -92,7 +97,6 @@ export default {
                 mdiPlus,
                 mdiClose
             },
-
             lang: "el",
             page: +this.$route.query.page
         };
@@ -112,6 +116,7 @@ export default {
                 },
                 { text: "Discount", value: "total_discount" },
                 { text: "Points", value: "points" },
+                { text: "Date", value: "created_at" },
                 { text: "Actions", value: "actions" }
             ];
         },
@@ -125,23 +130,6 @@ export default {
 
             return query.slice(0, query.length - 1);
         },
-
-        // headers() {
-        //     return [
-        //         { text: "Type", value: "code" },
-        //         {
-        //             text: "Product For Sale",
-        //             value: `product_buy_name[${this.lang}]`
-        //         },
-        //         {
-        //             text: "Product For Gift",
-        //             value: `product_free_name[${this.lang}]`
-        //         },
-        //         { text: "Quantity", value: "total_claimed" },
-        //         { text: "Actions", value: "actions" },
-        //         { text: "Social Media", value: "social" }
-        //     ];
-        // },
 
         dialog: {
             get() {

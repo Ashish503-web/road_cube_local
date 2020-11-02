@@ -1,12 +1,8 @@
 <template>
     <v-tab-item :value="$route.path">
-        <v-card-text>
-            When the customer wins a discount or a gift our system will generate
-            a voucher which will have a code. This voucher will be sended in the
-            user account. Type the voucher code below
-        </v-card-text>
+        <v-card-text v-text="translations.info[lang]"></v-card-text>
         <v-card-title class="subtitle-1 font-weight-medium">
-            <v-col cols="auto">Coupon Code</v-col>
+            <v-col cols="auto" v-text="translations.couponCode[lang]"></v-col>
             <v-col cols="auto">
                 <v-text-field
                     color="secondary"
@@ -17,13 +13,18 @@
                     v-model="voucher"
                 ></v-text-field>
             </v-col>
-            <v-btn color="secondary" class="text-capitalize ml-3" depressed @click="sendRequest()">
+            <v-btn
+                color="secondary"
+                class="text-capitalize ml-3"
+                depressed
+                @click="sendRequest()"
+            >
                 <v-icon
                     class="mr-2"
                     size="20"
                     v-text="icons.mdiArrowRight"
-                ></v-icon
-                >validation
+                ></v-icon>
+                {{ translations.validation[lang] }}
             </v-btn>
         </v-card-title>
     </v-tab-item>
@@ -32,26 +33,33 @@
 <script>
 import { mdiArrowRight } from "@mdi/js";
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
+import translations from "@/utils/translations/storePanel/redeemVoucher";
 
 export default {
     name: "RedeemVoucher",
+
+    mixins: [translations],
 
     data: () => ({
         icons: { mdiArrowRight },
         voucher: ""
     }),
 
-    methods: {
-        ...mapActions("storePanel/redeem/redeemVoucher", [
-            "create"
-        ]),
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        }
+    },
 
-        sendRequest(){
-            if(this.voucher != ""){
+    methods: {
+        ...mapActions("storePanel/redeem/redeemVoucher", ["create"]),
+
+        sendRequest() {
+            if (this.voucher != "") {
                 let formData = {
-                    "voucher": this.voucher
-                }
-                this.create(formData)
+                    voucher: this.voucher
+                };
+                this.create(formData);
             }
         }
     }

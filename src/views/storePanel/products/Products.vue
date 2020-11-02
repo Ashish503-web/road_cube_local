@@ -27,23 +27,39 @@
 export default {
     name: "StoreProducts",
 
-    data: () => ({
-        tab: "storePanel/products",
-        tabs: [
-            { to: "/storePanel/products/products-tab", name: "Products" },
-            {
-                to: "/storePanel/products/product-groups",
-                name: "Product Groups"
-            }
-        ]
-    }),
+    data() {
+        return {
+            tab: this.$route.path
+        };
+    },
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
+        tabs() {
+            return [
+                {
+                    to: `/${this.lang}/storePanel/products/products-tab`,
+                    name: "Products"
+                },
+                {
+                    to: `/${this.lang}/storePanel/products/product-groups`,
+                    name: "Product Groups"
+                }
+            ];
+        }
+    },
 
     watch: {
         $route: {
             immediate: true,
             handler(val) {
-                if (val.path === "/storePanel/products") {
-                    this.$router.push("/storePanel/products/products-tab");
+                if (val.path === `/${this.lang}/storePanel/products`) {
+                    this.$router.push(
+                        `/${this.lang}/storePanel/products/products-tab`
+                    );
                 }
             }
         }

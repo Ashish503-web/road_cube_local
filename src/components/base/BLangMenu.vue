@@ -1,5 +1,10 @@
 <template>
-    <v-menu v-model="menu" offset-y transition="slide-y-transition">
+    <v-menu
+        v-model="menu"
+        :nudge-bottom="type === 'inner' ? 5 : 1"
+        offset-y
+        transition="slide-y-transition"
+    >
         <template v-slot:activator="{ on }">
             <v-row
                 v-if="type === 'inner'"
@@ -25,19 +30,23 @@
         </template>
 
         <v-list dense>
-            <v-list-item-group v-model="lang" color="secondary">
-                <v-list-item
-                    v-for="lang in langs"
-                    :key="lang.title"
-                    :value="lang"
-                    :class="{ 'pl-2': type === 'inner' }"
-                >
-                    <v-list-item-action class="mr-1">
-                        <img :src="lang.img" width="25" />
-                    </v-list-item-action>
-                    <v-list-item-title v-text="lang.title"></v-list-item-title>
-                </v-list-item>
-            </v-list-item-group>
+            <!-- <v-list-item-group color="secondary"> -->
+            <v-list-item
+                v-for="lang in langs"
+                :key="lang.title"
+                :value="lang"
+                :class="{
+                    'pl-2': type === 'inner',
+                    'b-active': lang.urlTitle === value
+                }"
+                @click="langSelect(lang)"
+            >
+                <v-list-item-action class="mr-1">
+                    <img :src="lang.img" width="25" />
+                </v-list-item-action>
+                <v-list-item-title v-text="lang.title"></v-list-item-title>
+            </v-list-item>
+            <!-- </v-list-item-group> -->
         </v-list>
     </v-menu>
 </template>
@@ -66,7 +75,6 @@ export default {
             title: "Greek",
             urlTitle: "el"
         },
-
         langs: [
             { img: greeceFlag, title: "Greek", urlTitle: "el" },
             { img: USFlag, title: "English", urlTitle: "en" },
@@ -74,11 +82,15 @@ export default {
         ]
     }),
 
-    watch: {
-        lang(val) {
-            this.$emit("input", val.urlTitle);
-        },
+    methods: {
+        langSelect(lang) {
+            if (lang !== this.lang) {
+                this.$emit("input", lang.urlTitle);
+            }
+        }
+    },
 
+    watch: {
         value: {
             immediate: true,
             handler(val) {
@@ -88,3 +100,9 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+.b-active {
+    background-color: rgba(42, 48, 66, 0.12);
+}
+</style>

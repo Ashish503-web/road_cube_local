@@ -197,6 +197,10 @@ export default {
     }),
 
     computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
         subscriptionPlans() {
             return this.$store.state.register.subscriptionPlans;
         }
@@ -208,7 +212,7 @@ export default {
 
         setSubscriptionPlan(planId) {
             localStorage.setItem("subscriptionPlan", planId);
-            this.$router.push("/create-account");
+            this.$router.push(`/${this.lang}/create-account`);
         }
     },
 

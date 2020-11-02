@@ -52,6 +52,14 @@ export default {
         },
 
         setTransactionProfile(state, payload) {
+            payload.transaction_items.forEach(
+                t =>
+                    (t.price = new Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: "EUR",
+                        minimumFractionDigits: 2
+                    }).format(t.price))
+            );
             state.transactionProfile = payload;
         },
 

@@ -10,9 +10,8 @@
                             }}</v-card-title>
                             <h4
                                 class="subtitle-1 success--text pl-4 text-center"
-                            >
-                                online
-                            </h4>
+                                v-text="online[lang]"
+                            ></h4>
                         </v-col>
 
                         <v-col cols="12" sm="6" md="6" lg="3">
@@ -27,7 +26,7 @@
                                     v-text="icons.mdiAccountGroup"
                                     class="mr-1"
                                 ></v-icon>
-                                Customer
+                                {{ customer[lang] }}
                             </v-card-title>
                         </v-col>
 
@@ -42,7 +41,7 @@
                                     v-text="icons.mdiDatabase"
                                     class="mr-1"
                                 ></v-icon>
-                                Transactions
+                                {{ transactions[lang] }}
                             </v-card-title>
                         </v-col>
 
@@ -58,7 +57,7 @@
                                     v-text="icons.mdiCurrencyEur"
                                     class="mr-1"
                                 ></v-icon>
-                                Total
+                                {{ total[lang] }}
                             </v-card-title>
                         </v-col>
                     </v-row>
@@ -85,9 +84,8 @@
 
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
-                            >
-                                Shows on Map
-                            </h4>
+                                v-text="showsOnMap[lang]"
+                            ></h4>
                         </v-col>
                     </v-row>
                 </v-card>
@@ -113,9 +111,8 @@
 
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
-                            >
-                                Clicks
-                            </h4>
+                                v-text="clicks[lang]"
+                            ></h4>
                         </v-col>
                     </v-row>
                 </v-card>
@@ -141,9 +138,8 @@
 
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
-                            >
-                                Click on Navigate
-                            </h4>
+                                v-text="clickOnNavigate[lang]"
+                            ></h4>
                         </v-col>
                     </v-row>
                 </v-card>
@@ -171,9 +167,8 @@
 
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
-                            >
-                                Phone Clicks
-                            </h4>
+                                v-text="phoneClicks[lang]"
+                            ></h4>
                         </v-col>
                     </v-row>
                 </v-card>
@@ -197,16 +192,15 @@
                                 >{{
                                     statistics.last_twelve_hours_payments
                                         .length +
-                                        " Transactions / " +
+                                        ` ${transactions[lang]} / ` +
                                         statistics.twelve_hours_total +
-                                        " Total"
+                                        ` ${total[lang]}`
                                 }}</v-card-title
                             >
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
-                            >
-                                Payments Last 12 Hours
-                            </h4>
+                                v-text="paymentsLast12Hours[lang]"
+                            ></h4>
                         </v-col>
                     </v-row>
                 </v-card>
@@ -229,16 +223,15 @@
                                 class="subtitle-1 font-weight-bold pa-0"
                                 >{{
                                     statistics.last_week_payments.length +
-                                        " Transactions / " +
+                                        ` ${transactions[lang]} / ` +
                                         statistics.last_week_total +
-                                        " Total"
+                                        ` ${total[lang]}`
                                 }}</v-card-title
                             >
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
-                            >
-                                Payments Last Week
-                            </h4>
+                                v-text="paymentsLastWeek[lang]"
+                            ></h4>
                         </v-col>
                     </v-row>
                 </v-card>
@@ -246,7 +239,7 @@
 
             <v-col cols="12">
                 <v-card tile outlined>
-                    <v-card-title>Transactions</v-card-title>
+                    <v-card-title v-text="transactions[lang]"></v-card-title>
                     <v-sheet
                         class="v-sheet--offset mx-auto"
                         max-width="calc(100% - 32px)"
@@ -282,7 +275,8 @@ import {
     mdiPhone,
     mdiWallet
 } from "@mdi/js";
-import { mapGetters } from "vuex";
+
+import translations from "@/utils/translations/storePanel/home";
 
 const gradients = [
     ["#222"],
@@ -295,6 +289,8 @@ const gradients = [
 
 export default {
     name: "StorePanelHome",
+
+    mixins: [translations],
 
     data: () => ({
         icons: {
@@ -320,6 +316,12 @@ export default {
         autoLineWidth: false,
         statistics: {}
     }),
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        }
+    },
 
     watch: {
         ["$store.state.storePanel.store"]: {

@@ -26,30 +26,46 @@
 export default {
     name: "Subscriptions",
 
-    data: () => ({
-        tab: "loyaltyPanel/subscriptions/stores",
-        tabs: [
-            { to: "/loyaltyPanel/subscriptions/stores", name: "stores" },
-            {
-                to: "/loyaltyPanel/subscriptions/registration-plans",
-                name: "registration plans",
-            },
-            {
-                to: "/loyaltyPanel/subscriptions/payment-methods",
-                name: "payment methods",
-            },
-        ],
-    }),
+    data() {
+        return {
+            tab: this.$route.path
+        };
+    },
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
+        tabs() {
+            return [
+                {
+                    to: `/${this.lang}/loyaltyPanel/subscriptions/stores`,
+                    name: "stores"
+                },
+                {
+                    to: `/${this.lang}/loyaltyPanel/subscriptions/registration-plans`,
+                    name: "registration plans"
+                },
+                {
+                    to: `/${this.lang}/loyaltyPanel/subscriptions/payment-methods`,
+                    name: "payment methods"
+                }
+            ];
+        }
+    },
 
     watch: {
         $route: {
             immediate: true,
             handler(val) {
-                if (val.path === "/loyaltyPanel/subscriptions") {
-                    this.$router.push("/loyaltyPanel/subscriptions/stores");
+                if (val.path === `/${this.lang}/loyaltyPanel/subscriptions`) {
+                    this.$router.push(
+                        `/${this.lang}/loyaltyPanel/subscriptions/stores`
+                    );
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>

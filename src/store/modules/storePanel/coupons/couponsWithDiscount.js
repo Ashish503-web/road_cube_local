@@ -43,6 +43,7 @@ export default {
                 const { data } = await CouponWithDiscount.get(query);
 
                 const { coupons, pagination } = data.data;
+                console.log(coupons);
 
                 commit("setItems", coupons);
                 commit("setServerItemsLength", pagination.total, {
@@ -51,7 +52,17 @@ export default {
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });
-                console.error(ex.response.data);
+                console.error(ex.response.data.message);
+            }
+        },
+
+        async getItem({ commit }, id) {
+            try {
+                const { data } = await CouponWithDiscount.getItem(id);
+
+                console.log(data);
+            } catch (ex) {
+                console.error(ex.response.data.message);
             }
         },
 

@@ -34,11 +34,23 @@ export default {
         About,
         Products,
         Quickfeatures,
-        HomeSection,
+        HomeSection
     },
+
     data: () => ({}),
+
+    beforeCreate() {
+        if (
+            this.$route.params.lang !== "el" &&
+            this.$route.params.lang !== "en" &&
+            this.$route.params.lang !== "it"
+        ) {
+            this.$router.push("/en" + this.$route.fullPath);
+        }
+    }
 };
 </script>
+
 <style scoped>
 .homePage {
     scroll-behavior: smooth;

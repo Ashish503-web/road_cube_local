@@ -21,6 +21,13 @@ export default class CouponWithDiscount {
             )}/coupons/discounts${query}`
         );
 
+    static getItem = id =>
+        axios.get(
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/coupons/discounts/${id}`
+        );
+
     static create = item =>
         axios.post(
             `${ApiEndpoint}/${localStorage.getItem(

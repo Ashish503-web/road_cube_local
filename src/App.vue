@@ -3,7 +3,6 @@
         <router-view name="header"></router-view>
 
         <v-main :class="{ 'pa-0': $route.path === '/' }">
-
             <Notification />
             <router-view></router-view>
         </v-main>
@@ -23,7 +22,7 @@ export default {
 
     methods: {
         ...mapMutations(["setStoreId", "setAccessToken"]),
-        ...mapActions(["getUser"]),
+        ...mapActions(["getUser"])
     },
 
     mounted() {
@@ -38,7 +37,7 @@ export default {
         if (storeId) {
             this.setStoreId(storeId);
         }
-    },
+    }
 };
 </script>
 
@@ -61,7 +60,8 @@ input[type="number"] {
     -moz-appearance: textfield;
 }
 
-html, body{
-        scroll-behavior: smooth !important;
-    }
+html,
+body {
+    scroll-behavior: smooth !important;
+}
 </style>

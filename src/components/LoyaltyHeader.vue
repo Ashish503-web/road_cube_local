@@ -11,7 +11,7 @@
 
             <v-spacer></v-spacer>
 
-            <b-lang-menu></b-lang-menu>
+            <b-lang-menu v-model="lang"></b-lang-menu>
 
             <v-menu offset-y bottom transition="slide-y-transition">
                 <template v-slot:activator="{ on }">
@@ -88,7 +88,11 @@
 
             <v-row class="pt-4 pb-3" no-gutters justify="center">
                 <v-sheet light class="pa-2 rounded-circle">
-                    <v-img src="../assets/logo.png" width="55"></v-img>
+                    <v-img
+                        src="../assets/logo.png"
+                        width="50"
+                        height="50"
+                    ></v-img>
                 </v-sheet>
 
                 <v-col cols="12" class="text-center mt-3">
@@ -104,18 +108,21 @@
             >
                 <v-list
                     v-for="navLink in navLinks"
-                    :key="navLink.title"
+                    :key="navLink.title['en']"
                     dense
                     nav
-                    :subheader="navLink.title !== 'MANAGE'"
+                    :subheader="navLink.title['en'] !== 'MANAGE'"
                 >
                     <v-subheader
                         class="text-caption"
                         :class="{ 'justify-center': mini }"
-                        v-text="navLink.title"
+                        v-text="navLink.title[lang]"
                     ></v-subheader>
 
-                    <div v-for="item in navLink.children" :key="item.title">
+                    <div
+                        v-for="item in navLink.children"
+                        :key="item.title['en']"
+                    >
                         <v-tooltip v-if="mini" color="secondary" right>
                             <template v-slot:activator="{ on }">
                                 <v-list-item
@@ -127,14 +134,14 @@
                                         <v-icon v-text="item.icon"></v-icon>
                                     </v-list-item-icon>
                                     <v-list-item-title
-                                        v-text="item.title"
+                                        v-text="item.title[lang]"
                                     ></v-list-item-title>
                                 </v-list-item>
                             </template>
 
                             <span
                                 class="font-weight-bold"
-                                v-text="item.title"
+                                v-text="item.title[lang]"
                             ></span>
                         </v-tooltip>
 
@@ -143,7 +150,7 @@
                                 <v-icon v-text="item.icon"></v-icon>
                             </v-list-item-icon>
                             <v-list-item-title
-                                v-text="item.title"
+                                v-text="item.title[lang]"
                             ></v-list-item-title>
                         </v-list-item>
                     </div>
@@ -174,38 +181,19 @@ import {
     mdiLogout,
     mdiCogOutline,
     mdiClose,
-    mdiCartOutline,
-    mdiCheckDecagram,
-    mdiChartBar,
-    mdiCashMultiple,
-    mdiSourceBranch,
-    mdiFileDocument,
-    mdiCreditCardOutline,
-    mdiPackageVariantClosed,
-    mdiAccountBox,
     mdiAccount,
-    mdiOfficeBuilding,
-    mdiFinance,
-    mdiViewList,
-    mdiGift,
-    mdiTrophyVariant,
-    mdiHelpCircle,
-    mdiReceipt,
-    mdiMapMarker,
-    mdiStore,
-    mdiFire,
-    mdiBullhorn,
     mdiAccountOutline,
     mdiWalletOutline,
     mdiWrenchOutline,
-    mdiLockOpenOutline,
+    mdiLockOpenOutline
 } from "@mdi/js";
 
-import avatar3 from "../assets/avatars/avatar-3.jpg";
-import avatar4 from "../assets/avatars/avatar-4.jpg";
+import navLinks from "@/utils/loyaltyPanel/navLinks";
 
 export default {
     name: "LoyaltyHeader",
+
+    mixins: [navLinks],
 
     data() {
         return {
@@ -217,164 +205,38 @@ export default {
                 mdiClockOutline,
                 mdiLogout,
                 mdiCogOutline,
-                mdiClose,
+                mdiClose
             },
             mini: false,
             leftDrawer: false,
             rightDrawer: false,
-            navLinks: [
-                {
-                    title: "MANAGE",
-                    children: [
-                        {
-                            icon: mdiChartBar,
-                            title: "Dashboard",
-                            to: "/loyaltyPanel",
-                            exact: true,
-                        },
-                        {
-                            icon: mdiCashMultiple,
-                            title: "Branch Debt",
-                            to: "/loyaltyPanel/branch-debt",
-                        },
-                        {
-                            icon: mdiSourceBranch,
-                            title: "Branches",
-                            to: "/loyaltyPanel/branches",
-                        },
-                        {
-                            icon: mdiFileDocument,
-                            title: "Subscriptions",
-                            to: "/loyaltyPanel/subscriptions",
-                        },
-                        {
-                            icon: mdiCreditCardOutline,
-                            title: "Collaborators",
-                            to: "/loyaltyPanel/collaborators",
-                        },
-                        {
-                            icon: mdiPackageVariantClosed,
-                            title: "Products",
-                            to: "/loyaltyPanel/products",
-                        },
-                        {
-                            icon: mdiAccountBox,
-                            title: "Customer",
-                            to: "/loyaltyPanel/customer",
-                        },
-                        {
-                            icon: mdiAccount,
-                            title: "User Rights",
-                            to: "/loyaltyPanel/user-rights",
-                        },
-                        {
-                            icon: mdiOfficeBuilding,
-                            title: "Business Profile",
-                            to: "/loyaltyPanel/business-profile",
-                        },
-                        {
-                            icon: mdiFinance,
-                            title: "Business Statistics",
-                            to: "/loyaltyPanel/business-statistics",
-                        },
-                    ],
-                },
-                {
-                    title: "GIFT LIST",
-                    children: [
-                        {
-                            icon: mdiViewList,
-                            title: "Category Management",
-                            to: "/loyaltyPanel/category-management",
-                        },
-                        {
-                            icon: mdiGift,
-                            title: "Gift Status",
-                            to: "/loyaltyPanel/gift-status",
-                        },
-                        {
-                            icon: mdiTrophyVariant,
-                            title: "Catalog Management",
-                            to: "/loyaltyPanel/catalog-management",
-                        },
-                        {
-                            icon: mdiPackageVariantClosed,
-                            title: "Supplier Management",
-                            to: "/loyaltyPanel/supplier-management",
-                        },
-                    ],
-                },
-                {
-                    title: "PROMO ACTIONS",
-                    children: [
-                        {
-                            icon: mdiHelpCircle,
-                            title: "1+1 / Sampling",
-                            to: "/loyaltyPanel/sampling",
-                        },
-                        {
-                            icon: mdiReceipt,
-                            title: "Receipt Scanning",
-                            to: "/loyaltyPanel/receipt-scanning",
-                        },
-                        {
-                            icon: mdiMapMarker,
-                            title: "Check In",
-                            to: "/loyaltyPanel/check-in",
-                        },
-                        {
-                            icon: mdiStore,
-                            title: "Serial Shopping",
-                            to: "/loyaltyPanel/serial-shopping",
-                        },
-                        {
-                            icon: mdiTrophyVariant,
-                            title: "Contest & Survey",
-                            to: "/loyaltyPanel/contest-survey",
-                        },
-                        {
-                            icon: mdiFire,
-                            title: "Roadcodes",
-                            to: "/loyaltyPanel/roadcodes",
-                        },
-                        {
-                            icon: mdiCreditCardOutline,
-                            title: "Multiple Coupons",
-                            to: "/loyaltyPanel/multiple-coupons",
-                        },
-                    ],
-                },
-                {
-                    title: "ATTRACT CUSTOMERS",
-                    children: [
-                        {
-                            icon: mdiBullhorn,
-                            title: "View Campaigns",
-                            to: "/loyaltyPanel/view-campaigns",
-                        },
-                        {
-                            icon: mdiBullhorn,
-                            title: "New Campaign",
-                            to: "/loyaltyPanel/new-campaign",
-                        },
-                    ],
-                },
-            ],
-
             profileLinks: [
                 { icon: mdiAccountOutline, text: "Profile" },
                 { icon: mdiWalletOutline, text: "My Wallet" },
                 { icon: mdiWrenchOutline, text: "Settings" },
-                { icon: mdiLockOpenOutline, text: "Lock Screen" },
-            ],
+                { icon: mdiLockOpenOutline, text: "Lock Screen" }
+            ]
         };
     },
 
     computed: {
+        lang: {
+            get() {
+                return this.$route.params.lang;
+            },
+
+            set(val) {
+                if (val !== this.$route.params.lang)
+                    this.$router.push(
+                        `/${val}/` + this.$route.fullPath.slice(4)
+                    );
+            }
+        },
+
         containerHeight() {
             return this.mini ? "calc(100vh - 223px)" : "calc(100vh - 213px)";
-        },
-    },
+        }
+    }
 };
 </script>
 

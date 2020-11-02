@@ -130,6 +130,10 @@ export default {
     }),
 
     computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
         appProviders() {
             return this.$store.state.register.appProviders;
         }
@@ -141,7 +145,7 @@ export default {
         setAppProvider(provider) {
             localStorage.setItem("appProvider", provider.app_provider_id);
             localStorage.setItem("providerStoreId", provider.store_id);
-            this.$router.push("/subscription-plans");
+            this.$router.push(`/${this.lang}/subscription-plans`);
         }
     },
 

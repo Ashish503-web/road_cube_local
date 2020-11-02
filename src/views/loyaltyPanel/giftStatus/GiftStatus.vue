@@ -25,28 +25,48 @@ import {
     mdiFilePdf,
     mdiFileDelimitedOutline,
     mdiMagnify,
-    mdiChevronDown,
+    mdiChevronDown
 } from "@mdi/js";
 
 export default {
     name: "GiftStatus",
-    data: () => ({
-        tab: "loyaltyPanel/gift-status/pending",
-        tabs: [
-            { to: "/loyaltyPanel/gift-status/pending", name: "pending" },
-            { to: "/loyaltyPanel/gift-status/paid", name: "paid" },
-        ],
-    }),
+
+    data() {
+        return {
+            tab: this.$route.path
+        };
+    },
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
+        tabs() {
+            return [
+                {
+                    to: `/${this.lang}/loyaltyPanel/gift-status/pending`,
+                    name: "pending"
+                },
+                {
+                    to: `/${this.lang}/loyaltyPanel/gift-status/paid`,
+                    name: "paid"
+                }
+            ];
+        }
+    },
 
     watch: {
         $route: {
             immediate: true,
             handler(val) {
-                if (val.path === "/loyaltyPanel/gift-status") {
-                    this.$router.push("/loyaltyPanel/gift-status/pending");
+                if (val.path === `/${this.lang}/loyaltyPanel/gift-status`) {
+                    this.$router.push(
+                        `/${this.lang}/loyaltyPanel/gift-status/pending`
+                    );
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>

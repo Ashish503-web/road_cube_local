@@ -7,16 +7,16 @@
                         class="text--primary ml-n1 mr-3"
                         large
                         v-text="icons.mdiPlusThick"
-                    ></v-icon
-                    >New Transaction
+                    ></v-icon>
+                    {{ newTransaction[lang] }}
                     <v-spacer></v-spacer>
                     <v-sheet
                         color="rgba(234, 237, 241, 0.57)"
                         outlined
                         class="subtitle-2 pa-3"
                     >
-                        <div>Total Amount: {{ totalAmount }}</div>
-                        <div>Total Points: {{ totalPoints }}</div>
+                        <div>{{ UITotalAmount[lang] }}: {{ totalAmount }}</div>
+                        <div>{{ UITotalPoints[lang] }}: {{ totalPoints }}</div>
                     </v-sheet>
                 </v-card-title>
 
@@ -31,7 +31,7 @@
                                 v-model="transaction.user"
                                 v-mask="'###############'"
                                 type="number"
-                                label="User (mobile or loyalty card number)"
+                                :label="user[lang]"
                                 color="secondary"
                                 outlined
                                 dense
@@ -46,7 +46,7 @@
                         <v-col cols="6" class="pl-2">
                             <v-text-field
                                 v-model="transaction.receipt_number"
-                                label="Receipt Number"
+                                :label="receiptNumber[lang]"
                                 color="secondary"
                                 outlined
                                 dense
@@ -68,7 +68,7 @@
                         <template v-slot:activator="{ on }">
                             <v-text-field
                                 v-model="search"
-                                label="Select Order Products"
+                                :label="orderProducts[lang]"
                                 color="secondary"
                                 class="mt-5"
                                 outlined
@@ -101,7 +101,7 @@
                                     :key="product.product_id"
                                     class="pl-3"
                                     :class="{
-                                        'b-list-active': product.selected,
+                                        'b-list-active': product.selected
                                     }"
                                     @click="productSelect(product)"
                                 >
@@ -158,8 +158,8 @@
                                         label="Purchase Price"
                                         no-top-margin
                                         prepend-inner-icon="mdiCurrencyEur"
-                                        :success="success.purchasePrice"
-                                        :rules="rules.purchasePrice"
+                                        :success="product.success"
+                                        :rules="product.rules"
                                     ></b-text-field>
 
                                     <b-text-field
@@ -168,8 +168,8 @@
                                         type="number"
                                         label="Quantity"
                                         no-top-margin
-                                        :success="success.quantity"
-                                        :rules="rules.quantity"
+                                        :success="product.success"
+                                        :rules="product.rules"
                                     ></b-text-field>
                                 </v-sheet>
                             </v-col>
@@ -199,8 +199,8 @@
                         large
                         :loading="loading"
                         :disabled="disabled"
-                        >create order</v-btn
-                    >
+                        v-text="createOrder[lang]"
+                    ></v-btn>
                 </v-form>
             </v-card>
         </v-row>
@@ -215,9 +215,10 @@ import {
     mdiCheckBoxOutline,
     mdiCheckboxBlankOutline,
     mdiCurrencyEur,
-    mdiClose,
+    mdiClose
 } from "@mdi/js";
 
+import translations from "@/utils/translations/storePanel/newTransaction";
 import validators from "./newTransactionValidators";
 import { mapState, mapActions, mapMutations } from "vuex";
 import debounce from "lodash/debounce";
@@ -229,12 +230,38 @@ class TransactionProduct {
         this.name = item.name || { el: "", en: "", it: "" };
         this.retail_price = item.retail_price || null;
         this.quantity = item.quantity || null;
+        this.success = false;
+        if (this.reward_type_id === 4) {
+            this.rules = [
+                v => {
+                    if (v >= 0.1) {
+                        this.success = true;
+                        return true;
+                    } else if (!v) {
+                        this.success = false;
+                        return "Purchase price is required";
+                    } else return "Purchase Price must be minimum 0.1";
+                }
+            ];
+        } else {
+            this.rules = [
+                v => {
+                    if (v >= 1) {
+                        this.success = true;
+                        return true;
+                    } else if (!v) {
+                        this.success = false;
+                        return "Quantity is required";
+                    } else return "Quantity must be minimum 1";
+                }
+            ];
+        }
     }
 }
 
 export default {
     name: "NewTransaction",
-    mixins: [validators],
+    mixins: [translations, validators],
     data: () => ({
         icons: {
             mdiPlusThick,
@@ -243,35 +270,38 @@ export default {
             mdiCheckBoxOutline,
             mdiCheckboxBlankOutline,
             mdiCurrencyEur,
-            mdiClose,
+            mdiClose
         },
         valid: false,
         disabled: true,
-        lang: "el",
         menu: false,
-        search: "",
+        search: ""
     }),
 
     computed: {
         ...mapState(["loading", "errorMessage"]),
         ...mapState("storePanel/transactions", ["productsLoading", "products"]),
 
+        lang() {
+            return this.$route.params.lang;
+        },
+
         totalAmount() {
             let amount = 0;
 
-            this.selectedProducts.forEach((p) => (amount += +p.retail_price));
+            this.selectedProducts.forEach(p => (amount += +p.retail_price));
 
             return new Intl.NumberFormat("en-US", {
                 style: "currency",
                 currency: "EUR",
-                minimumFractionDigits: 2,
+                minimumFractionDigits: 2
             }).format(amount);
         },
 
         totalPoints() {
             let point = 0;
 
-            this.selectedProducts.forEach((p) => (point += +p.reward_points));
+            this.selectedProducts.forEach(p => (point += +p.reward_points));
 
             return point;
         },
@@ -284,7 +314,7 @@ export default {
 
             set(val) {
                 this.setSelectedProducts(val);
-            },
+            }
         },
 
         transaction: {
@@ -294,14 +324,14 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
         ...mapMutations("storePanel/transactions", [
             "setItem",
-            "setSelectedProducts",
+            "setSelectedProducts"
         ]),
         ...mapActions("storePanel/transactions", ["getProducts", "create"]),
 
@@ -313,7 +343,7 @@ export default {
             item.selected = !item.selected;
 
             let index = this.selectedProducts.findIndex(
-                (p) => p.product_id === item.product_id
+                p => p.product_id === item.product_id
             );
 
             if (index === -1) {
@@ -326,9 +356,9 @@ export default {
         productRemove(item, index) {
             this.selectedProducts.splice(index, 1);
             this.products.find(
-                (p) => p.product_id === item.product_id
+                p => p.product_id === item.product_id
             ).selected = false;
-        },
+        }
     },
 
     watch: {
@@ -357,9 +387,9 @@ export default {
                 this.productError = true;
             }
 
-            val.forEach((selected) => {
+            val.forEach(selected => {
                 let product = this.transaction.products.find(
-                    (p) => p.product_id === selected.product_id
+                    p => p.product_id === selected.product_id
                 );
 
                 if (product) {
@@ -373,10 +403,10 @@ export default {
 
             this.transaction.products = [];
 
-            val.forEach((p) => {
+            val.forEach(p => {
                 this.transaction.products.push(new TransactionProduct(p));
             });
-        },
+        }
     },
 
     created() {
@@ -391,7 +421,7 @@ export default {
     beforeDestroy() {
         this.selectedProducts = [];
         this.transaction = {};
-    },
+    }
 };
 </script>
 

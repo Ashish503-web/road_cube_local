@@ -9,8 +9,8 @@ export default {
     }),
 
     getters: {
-        coupon: (state) => state.coupon,
-        giftCategories: (state) => state.giftCategories
+        coupon: state => state.coupon,
+        giftCategories: state => state.giftCategories
     },
 
     mutations: {
@@ -20,7 +20,7 @@ export default {
 
         setGiftCategories(state, payload) {
             state.giftCategories = payload;
-        },
+        }
     },
 
     actions: {
@@ -43,7 +43,9 @@ export default {
             try {
                 commit("setLoading", true, { root: true });
 
-                const { data } = await CouponWithTransactions.getGiftCategories();
+                const {
+                    data
+                } = await CouponWithTransactions.getGiftCategories();
 
                 commit("setGiftCategories", data.data);
                 commit("setLoading", false, { root: true });
@@ -53,14 +55,12 @@ export default {
             }
         },
 
-        async create({ commit, state, rootState } , item) {
-            console.log(item,'item56465')
+        async create({ commit, state, rootState }, item) {
+            console.log(item, "item56465");
             try {
                 commit("setLoading", true, { root: true });
 
-                const { data } = await CouponWithTransactions.create(
-                    item
-                );
+                const { data } = await CouponWithTransactions.create(item);
 
                 const { coupon } = data.data.coupon;
 
@@ -93,9 +93,7 @@ export default {
             try {
                 commit("setLoading", true, { root: true });
 
-                await CouponWithTransactions.delete(
-                    coupon_id
-                );
+                await CouponWithTransactions.delete(coupon_id);
 
                 commit(
                     "setServerItemsLength",

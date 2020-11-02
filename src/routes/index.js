@@ -9,6 +9,17 @@ import storePanelRoutes from "./storepanel";
 const routes = [
     {
         path: "/",
+        components: {
+            header: () =>
+                import(
+                    /* webpackChunkName: "header" */ "@/components/Header.vue"
+                ),
+            default: () =>
+                import(/* webpackChunkName: "home" */ "@/views/Home.vue")
+        }
+    },
+    {
+        path: "/:lang",
         name: "Home",
         components: {
             header: () =>
@@ -20,7 +31,7 @@ const routes = [
         }
     },
     {
-        path: "/loyaltyPanel",
+        path: "/:lang/loyaltyPanel",
         components: {
             header: () =>
                 import(
@@ -34,7 +45,7 @@ const routes = [
         children: loyaltyPanelRoutes
     },
     {
-        path: "/storePanel",
+        path: "/:lang/storePanel",
         components: {
             header: () =>
                 import(
@@ -48,7 +59,7 @@ const routes = [
         children: storePanelRoutes
     },
     {
-        path: "/app-providers",
+        path: "/:lang/app-providers",
         name: "AppProviders",
         components: {
             header: () =>
@@ -62,7 +73,7 @@ const routes = [
         }
     },
     {
-        path: "/subscription-plans",
+        path: "/:lang/subscription-plans",
         name: "SubscriptionPlans",
         components: {
             header: () =>
@@ -76,7 +87,7 @@ const routes = [
         }
     },
     {
-        path: "/create-account",
+        path: "/:lang/create-account",
         name: "CreateAccount",
         components: {
             default: () =>
@@ -86,13 +97,13 @@ const routes = [
         }
     },
     {
-        path: "/sign-in",
+        path: "/:lang/sign-in",
         name: "SignIn",
         component: () =>
             import(/* webpackChunkName: "signIn" */ "@/views/SignIn.vue")
     },
     {
-        path: "/password-recovery",
+        path: "/:lang/password-recovery",
         name: "PasswordRecovery",
         component: () =>
             import(
@@ -100,12 +111,18 @@ const routes = [
             )
     },
     {
-        path: "/user-stores",
+        path: "/:lang/user-stores",
         name: "UserStores",
         component: () =>
             import(
                 /* webpackChunkName: "userStores" */ "@/views/UserStores.vue"
             )
+    },
+    {
+        path: "*",
+        name: "NotFound",
+        component: () =>
+            import(/* webpackChunkName: "notFound" */ "@/views/NotFound.vue")
     }
 ];
 

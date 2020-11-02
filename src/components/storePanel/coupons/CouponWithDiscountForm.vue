@@ -65,10 +65,20 @@ export default {
     },
 
     methods: {
-        ...mapActions("storePanel/coupons/couponsWithDiscount", ["create"])
+        ...mapActions("storePanel/coupons/couponsWithDiscount", [
+            "getItem",
+            "create"
+        ])
     },
 
     watch: {
+        ["couponWithDiscount.coupon_id"]: {
+            immediate: true,
+            handler(val) {
+                this.getItem(val);
+            }
+        },
+
         resetSuccess(val) {
             if (val) {
                 this.success = {

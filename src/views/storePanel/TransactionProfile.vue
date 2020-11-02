@@ -91,14 +91,6 @@
                         outlined
                         class="pa-3 mb-3"
                     >
-                        Total Points: {{ transactionProfile.total_points }}
-                    </v-sheet>
-
-                    <v-sheet
-                        color="rgba(234, 237, 241, 0.57)"
-                        outlined
-                        class="pa-3 mb-3"
-                    >
                         Receipt Number: {{ transactionProfile.receipt_number }}
                     </v-sheet>
 
@@ -119,6 +111,22 @@
                         Status:
                         {{ transactionProfile.transaction_status_name }}
                     </v-sheet>
+
+                    <h3 class="subtitle-1 font-weight-bold mb-3">
+                        Transaction Items
+                    </h3>
+
+                    <v-data-table
+                        :headers="headers"
+                        :items="transactionProfile.transaction_items"
+                        :footer-props="{
+                            itemsPerPageOptions: [12],
+                            showCurrentPage: true,
+                        }"
+                        :server-items-length="serverItemsLength"
+                        disable-sort
+                        class="b-outlined"
+                    ></v-data-table>
                 </v-card-text>
             </v-card>
         </v-row>
@@ -134,9 +142,18 @@ export default {
 
     data: () => ({
         icons: { mdiArrowLeft, mdiTextBoxOutline },
+        lang: "el",
     }),
 
     computed: {
+        headers() {
+            return [
+                { text: "Product", value: `product_name[${this.lang}]` },
+                { text: "Price", value: "price" },
+                { text: "Points", value: "points" },
+            ];
+        },
+
         loading() {
             return this.$store.state.loading;
         },

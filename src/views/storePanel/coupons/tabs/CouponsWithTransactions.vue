@@ -9,7 +9,6 @@
                 >
                     <v-card-title>
                         <v-col class="pa-0">Coupons with transactions</v-col>
-                        <v-col cols="auto" class="pa-0"></v-col>
                     </v-card-title>
                     <v-card-subtitle>
                         <p class="ma-0">
@@ -61,7 +60,9 @@
                                     width="35"
                                 ></v-img>
                             </v-col>
-                            <v-col cols="auto" class="ml-2">{{ gift_title }}</v-col>
+                            <v-col cols="auto" class="ml-2">{{
+                                gift_title
+                            }}</v-col>
                             <v-spacer></v-spacer>
                             <v-col cols="auto">{{ code }}</v-col>
                         </v-row>
@@ -87,56 +88,38 @@
                         :item-text="`name[${lang}]`"
                         item-value="gift_category_id"
                         label="Select Category"
+                        no-top-margin
                     ></b-select>
-                    <v-text-field
+                    <b-text-field
                         v-model="formData.goal_sequence"
+                        type="number"
                         label="Reward user after"
-                        color="secondary"
-                        type="number"
-                        class="mt-6"
-                        outlined
-                        dense
-                    ></v-text-field>
-                    <v-text-field
+                    ></b-text-field>
+                    <b-text-field
                         v-model="formData.goal_minimum_amount"
+                        type="number"
                         label="Minimum transaction limit in euro"
-                        color="secondary"
-                        type="number"
-                        outlined
-                        dense
-                    ></v-text-field>
-                    <v-text-field
+                    ></b-text-field>
+                    <b-text-field
                         v-model="formData.goal_max_days"
-                        label="Maximum time between visits: (Days)"
-                        color="secondary"
                         type="number"
-                        outlined
-                        dense
-                    ></v-text-field>
-                    <v-text-field
+                        label="Maximum time between visits: (Days)"
+                    ></b-text-field>
+                    <b-text-field
                         v-model="formData.gift_title"
                         label="Gift title"
-                        color="secondary"
-                        outlined
-                        dense
-                    ></v-text-field>
+                    ></b-text-field>
                     <b-textarea
                         v-model="formData.gift_description"
                         label="Gift description"
-                        outlined
-                        dense
                     ></b-textarea>
-                    <v-text-field
+                    <b-text-field
                         v-model="formData.maximum"
                         type="number"
                         label="Maximum"
-                        color="secondary"
-                        class="mt-6"
-                        outlined
-                        dense
-                    ></v-text-field>
+                    ></b-text-field>
 
-                    <v-card-actions class="mt-12">
+                    <v-card-actions class="mt-3">
                         <v-spacer></v-spacer>
                         <v-btn
                             color="success"
@@ -184,21 +167,21 @@ export default {
         ...mapGetters("storePanel/coupons/couponsWithTransactions", [
             "coupon",
             "giftCategories"
-            ]),
+        ])
     },
 
     watch: {
-        coupon: function(val){
-            if(val != undefined){
-                this.showAddCoupon = false
-                this.coupon_id = val.coupon_id
-                this.sequence = val.goal_sequence
-                this.minimum_amount = val.goal_minimum_amount
-                this.max_days = val.goal_max_days
-                this.code = val.code
-                this.gift_title = val.gift_title
-            }  
-        },
+        coupon: function(val) {
+            if (val != undefined) {
+                this.showAddCoupon = false;
+                this.coupon_id = val.coupon_id;
+                this.sequence = val.goal_sequence;
+                this.minimum_amount = val.goal_minimum_amount;
+                this.max_days = val.goal_max_days;
+                this.code = val.code;
+                this.gift_title = val.gift_title;
+            }
+        }
     },
 
     methods: {
@@ -209,18 +192,18 @@ export default {
             "remove"
         ]),
 
-        createCoupon(){
-            this.create(this.formData)
+        createCoupon() {
+            this.create(this.formData);
         },
 
-        deleteCoupon(){
-            this.remove(this.coupon_id)
+        deleteCoupon() {
+            this.remove(this.coupon_id);
         }
     },
 
-    mounted(){
-        this.getCoupon()
-        this.getGiftCategories()
+    mounted() {
+        this.getCoupon();
+        this.getGiftCategories();
     }
 };
 </script>
