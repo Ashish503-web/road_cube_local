@@ -8,6 +8,10 @@ export default {
         bankProvider: new BankProvider()
     }),
 
+    getters: {
+        bankProviders: (state) => state.bankProviders
+    },
+
     mutations: {
         setItems(state, payload) {
             state.bankProviders = payload;
@@ -40,13 +44,40 @@ export default {
             try {
                 const { data } = await BankProvider.get(query);
 
-                console.log(data.data.store_bank_providers);
-
-                const { store_bank_providers } = data.data;
+                const store_bank_providers = data.data.bank_providers;
 
                 commit("setItems", store_bank_providers);
             } catch (ex) {
                 console.error(ex.response.data);
+            }
+        },
+
+        async createItem({ commit, state }, form) {
+            try {
+                commit("setLoading", true, { root: true });
+
+                const { data } = await BankProvider.createItem(form);
+
+                commit("setItem", {});
+                commit("setLoading", false, { root: true });
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully created product category!"
+                    },
+                    { root: true }
+                );
+            } catch (ex) {
+                commit("setLoading", false, { root: true });
+                commit("setErrorMessage", ex.response.data.message, {
+                    root: true
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", "", { root: true }),
+                    5000
+                );
             }
         },
 

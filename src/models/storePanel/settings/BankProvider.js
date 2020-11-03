@@ -22,9 +22,13 @@ export default class BankProvider {
 
     static get = query =>
         axios.get(
-            `${ApiEndpoint}/${localStorage.getItem(
-                "storeId"
-            )}/settings/bank-providers${query}`
+            `https://api.roadcube.tk/v1/admin/bank-providers`
+        );
+
+    static createItem = item =>
+        axios.post(
+            `${ApiEndpoint}/${localStorage.getItem("storeId")}/settings/bank-providers`,
+            item
         );
 
     static create = item =>

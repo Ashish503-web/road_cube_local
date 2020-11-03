@@ -56,7 +56,6 @@ export default {
         },
 
         async create({ commit, state, rootState }, item) {
-            console.log(item, "item56465");
             try {
                 commit("setLoading", true, { root: true });
 
@@ -89,7 +88,7 @@ export default {
             }
         },
 
-        async remove({ commit, state, rootState }, coupon_id) {
+        async remove({ commit, state, rootState, dispatch }, coupon_id) {
             try {
                 commit("setLoading", true, { root: true });
 
@@ -102,6 +101,7 @@ export default {
                 );
                 commit("setCoupon", {});
                 commit("setLoading", false, { root: true });
+                dispatch("getCoupon")
                 commit("setDeleteDialog", false, { root: true });
                 commit(
                     "setNotification",
