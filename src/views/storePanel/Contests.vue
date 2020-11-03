@@ -2,29 +2,28 @@
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
             <v-toolbar flat height="90">
-                <v-row
-                    class="d-flex justify-center justify-sm-space-between align-center mx-auto"
+                <v-btn
+                    color="secondary"
+                    class="d-flex justify-center text-none mx-auto mx-sm-0"
+                    depressed
+                    to="/storePanel/add-contest"
+                    >Add Contest/Survey</v-btn
                 >
-                    <v-btn
+
+                <v-spacer></v-spacer>
+
+                <v-col cols="12" sm="4">
+                    <v-text-field
+                        label="Search"
                         color="secondary"
-                        class="d-flex justify-center text-none mx-auto mx-sm-0"
-                        depressed
-                        to="/storePanel/add-contest"
-                        >Add Contest/Survey</v-btn
-                    >
-                    <v-col cols="12" sm="4">
-                        <v-text-field
-                            label="Search"
-                            color="secondary"
-                            rounded
-                            outlined
-                            dense
-                            clearable
-                            hide-details
-                            :prepend-inner-icon="icons.mdiMagnify"
-                        ></v-text-field>
-                    </v-col>
-                </v-row>
+                        rounded
+                        outlined
+                        dense
+                        clearable
+                        hide-details
+                        :prepend-inner-icon="icons.mdiMagnify"
+                    ></v-text-field>
+                </v-col>
             </v-toolbar>
 
             <v-data-table
@@ -94,7 +93,7 @@ import {
     mdiEyeOutline,
     mdiHelp,
     mdiClose,
-    mdiCloseThick
+    mdiCloseThick,
 } from "@mdi/js";
 
 export default {
@@ -107,7 +106,7 @@ export default {
             mdiEyeOutline,
             mdiHelp,
             mdiClose,
-            mdiCloseThick
+            mdiCloseThick,
         },
         tab: 0,
         itemsPerPageOptions: [10, 20, 30, -1],
@@ -118,7 +117,7 @@ export default {
             { text: "Type", value: "type" },
             { text: "Status", value: "status" },
             { text: "Winners", value: "winners" },
-            { text: "Actions", value: "actions" }
+            { text: "Actions", value: "actions" },
         ],
         items: [
             {
@@ -127,7 +126,7 @@ export default {
                 endDate: "2020-02-04 14:40:00",
                 type: "Contest",
                 status: "Inactive",
-                winners: "/storepanel/contest-winner"
+                winners: "/storepanel/contest-winner",
             },
             {
                 title: "aa",
@@ -136,9 +135,9 @@ export default {
                 type: "Contest",
                 status: "Active",
                 winners: "In Progress",
-                inProgress: true
-            }
-        ]
-    })
+                inProgress: true,
+            },
+        ],
+    }),
 };
 </script>

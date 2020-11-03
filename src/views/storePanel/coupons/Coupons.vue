@@ -9,8 +9,8 @@
             >
                 <v-tab
                     v-for="tab in tabs"
-                    :key="tab.name"
-                    v-text="tab.name"
+                    :key="tab.name['en']"
+                    v-text="tab.name[lang]"
                     class="text-capitalize text-left text-sm-center d-flex justify-start justify-sm-center px-3"
                     :to="tab.to"
                 ></v-tab>
@@ -29,7 +29,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.path
+            tab: this.$route.path,
         };
     },
 
@@ -41,31 +41,31 @@ export default {
         tabs() {
             return [
                 {
+                    name: { el: "", en: "coupons with transactions", it: "" },
                     to: `/${this.lang}/storePanel/coupons/with-transactions`,
-                    name: "coupons with transactions"
                 },
 
                 {
+                    name: { el: "", en: "coupons with code", it: "" },
                     to: `/${this.lang}/storePanel/coupons/with-code`,
-                    name: "coupons with code"
                 },
 
                 {
+                    name: { el: "", en: "coupons on products", it: "" },
                     to: `/${this.lang}/storePanel/coupons/on-products`,
-                    name: "coupons on products"
                 },
 
                 {
+                    name: { el: "", en: "coupons with visits", it: "" },
                     to: `/${this.lang}/storePanel/coupons/with-visits`,
-                    name: "coupons with visits"
                 },
 
                 {
+                    name: { el: "", en: "coupons with discount", it: "" },
                     to: `/${this.lang}/storePanel/coupons/with-discount`,
-                    name: "coupons with discount"
-                }
+                },
             ];
-        }
+        },
     },
 
     watch: {
@@ -77,9 +77,9 @@ export default {
                         `/${this.lang}/storePanel/coupons/with-transactions`
                     );
                 }
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>
 

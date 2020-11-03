@@ -5,9 +5,9 @@
                 color="secondary"
                 class="text-capitalize"
                 depressed
+                v-text="translations.addProductGroup[lang]"
                 @click="open(1, {})"
-                >add product group</v-btn
-            >
+            ></v-btn>
         </v-toolbar>
 
         <v-data-table
@@ -24,7 +24,7 @@
                     color="secondary"
                     indeterminate
                 ></v-progress-circular>
-                <span v-else>No data available</span>
+                <span v-else v-text="translations.noData[lang]"></span>
             </template>
 
             <template v-slot:item.actions="{ item }">
@@ -40,7 +40,10 @@
                         </v-btn>
                     </template>
 
-                    <span class="font-weight-bold">Update</span>
+                    <span
+                        class="font-weight-bold"
+                        v-text="translations.update[lang]"
+                    ></span>
                 </v-tooltip>
 
                 <v-tooltip color="secondary" top>
@@ -60,7 +63,10 @@
                         </v-btn>
                     </template>
 
-                    <span class="font-weight-bold">Delete</span>
+                    <span
+                        class="font-weight-bold"
+                        v-text="translations.delete[lang]"
+                    ></span>
                 </v-tooltip>
             </template>
         </v-data-table>
@@ -96,16 +102,20 @@
 import { mdiPencilOutline, mdiClose } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import ProductGroupForm from "@/components/storePanel/products/ProductGroupForm.vue";
+import translations from "@/utils/translations/storePanel/products";
 
 export default {
     name: "ProductGroups",
+
     components: { ProductGroupForm },
+
+    mixins: [translations],
 
     data() {
         return {
             icons: { mdiPencilOutline, mdiClose },
             page: +this.$route.query.page,
-            mode: 0
+            mode: 0,
         };
     },
 
@@ -119,14 +129,23 @@ export default {
 
         headers() {
             return [
-                { text: "Product Name", value: `name[${this.lang}]` },
                 {
-                    text: "Product Description",
-                    value: `description[${this.lang}]`
+                    text: this.translations.productName[this.lang],
+                    value: `name[${this.lang}]`,
                 },
-                { text: "Selling Price", value: "retail_price" },
-                { text: "Coupon", value: "coupon" },
-                { text: "Actions", value: "actions" }
+                {
+                    text: this.translations.productDescription[this.lang],
+                    value: `description[${this.lang}]`,
+                },
+                {
+                    text: this.translations.sellingPrice[this.lang],
+                    value: "retail_price",
+                },
+                { text: this.translations.coupon[this.lang], value: "coupon" },
+                {
+                    text: this.translations.actions[this.lang],
+                    value: "actions",
+                },
             ];
         },
 
@@ -137,7 +156,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         deleteDialog: {
@@ -147,7 +166,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            }
+            },
         },
 
         productGroup: {
@@ -157,7 +176,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
+            },
         },
 
         query() {
@@ -168,7 +187,7 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
@@ -176,12 +195,12 @@ export default {
             "setDialog",
             "setDeleteDialog",
             "setResetSuccess",
-            "setResetValidation"
+            "setResetValidation",
         ]),
         ...mapMutations("storePanel/productGroups", [
             "setShowImageUpload",
             "setShowWeekdays",
-            "setItem"
+            "setItem",
         ]),
         ...mapActions("storePanel/productGroups", ["getItems", "remove"]),
 
@@ -196,7 +215,7 @@ export default {
             this.dialog = true;
             setTimeout(() => this.setResetSuccess(true), 300);
             this.setResetValidation(true);
-        }
+        },
     },
 
     watch: {
@@ -212,8 +231,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
             this.getItems(this.query);
@@ -221,7 +240,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -229,15 +248,15 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    }
+    },
 };
 </script>
 

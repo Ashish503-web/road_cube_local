@@ -8,9 +8,9 @@
             >
                 <v-tab
                     v-for="tab in tabs"
-                    :key="tab.name"
+                    :key="tab.name['en']"
                     class="text-capitalize text-left text-sm-center d-flex justify-start justify-sm-center px-3"
-                    v-text="tab.name"
+                    v-text="tab.name[lang]"
                     :to="tab.to"
                 ></v-tab>
             </v-tabs>
@@ -28,7 +28,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.path
+            tab: this.$route.path,
         };
     },
 
@@ -40,15 +40,15 @@ export default {
         tabs() {
             return [
                 {
+                    name: { el: "", en: "Point Analysis", it: "" },
                     to: `/${this.lang}/storePanel/history/point-analysis`,
-                    name: "Point Analysis"
                 },
                 {
+                    name: { el: "", en: "Monthly Points", it: "" },
                     to: `/${this.lang}/storePanel/history/monthly-points`,
-                    name: "Monthly Points"
-                }
+                },
             ];
-        }
+        },
     },
 
     watch: {
@@ -60,9 +60,9 @@ export default {
                         `/${this.lang}/storePanel/history/point-analysis`
                     );
                 }
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>
 

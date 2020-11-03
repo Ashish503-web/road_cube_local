@@ -7,17 +7,14 @@
                     sm="6"
                     class="px-3 mx-auto mx-sm-0 text-center text-sm-left"
                 >
-                    <v-card-title>
-                        <v-col class="pa-0">Coupons with transactions</v-col>
+                    <v-card-title v-text="translations.title[lang]">
                     </v-card-title>
                     <v-card-subtitle>
-                        <p class="ma-0">
-                            Reward every x transactions with a coupon.
-                        </p>
-                        <p>
-                            Consumers who meet the conditions automatically
-                            receive the coupon.
-                        </p>
+                        <p
+                            class="ma-0"
+                            v-text="translations.subtitle1[lang]"
+                        ></p>
+                        <p v-text="translations.subtitle2[lang]"></p>
                     </v-card-subtitle>
                     <v-img
                         src="@/assets/serial_shopping.jpg"
@@ -29,7 +26,7 @@
                 <v-col v-if="!showAddCoupon" cols="12" sm="6" class="px-3 pt-6">
                     <v-text-field
                         v-model="sequence"
-                        label="Reward user after"
+                        :label="translations.rewardAfter[lang]"
                         color="secondary"
                         outlined
                         dense
@@ -37,7 +34,7 @@
                     ></v-text-field>
                     <v-text-field
                         v-model="minimum_amount"
-                        label="Minimum transaction limit in euro"
+                        :label="translations.minTransaction"
                         color="secondary"
                         outlined
                         dense
@@ -45,7 +42,7 @@
                     ></v-text-field>
                     <v-text-field
                         v-model="max_days"
-                        label="Maximum time between visits: (Days)"
+                        :label="translations.maxTime"
                         color="secondary"
                         outlined
                         dense
@@ -68,17 +65,17 @@
                         </v-row>
                     </v-card>
 
-                    <v-card-actions class="mt-12">
-                        <v-spacer></v-spacer>
+                    <div class="text-right mt-12">
                         <v-btn
                             color="red"
                             class="text-capitalize px-5"
                             depressed
                             dark
+                            style="font-size: 1rem"
+                            v-text="translations.delete[lang]"
                             @click="deleteDialog = true"
-                            >delete</v-btn
-                        >
-                    </v-card-actions>
+                        ></v-btn>
+                    </div>
                 </v-col>
 
                 <v-col v-if="showAddCoupon" cols="12" sm="6" class="px-3 pt-6">
@@ -87,49 +84,54 @@
                         :items="giftCategories"
                         :item-text="`name[${lang}]`"
                         item-value="gift_category_id"
-                        label="Select Category"
+                        :label="translations.selectCategory[lang]"
                         no-top-margin
                     ></b-select>
+
                     <b-text-field
                         v-model="formData.goal_sequence"
                         type="number"
-                        label="Reward user after"
+                        :label="translations.rewardAfter[lang]"
                     ></b-text-field>
+
                     <b-text-field
                         v-model="formData.goal_minimum_amount"
                         type="number"
-                        label="Minimum transaction limit in euro"
+                        :label="translations.minTransaction[lang]"
                     ></b-text-field>
+
                     <b-text-field
                         v-model="formData.goal_max_days"
                         type="number"
-                        label="Maximum time between visits: (Days)"
+                        :label="translations.maxTime[lang]"
                     ></b-text-field>
+
                     <b-text-field
                         v-model="formData.gift_title"
-                        label="Gift title"
+                        :label="translations.giftTitle[lang]"
                     ></b-text-field>
+
                     <b-textarea
                         v-model="formData.gift_description"
-                        label="Gift description"
+                        :label="translations.giftDescription[lang]"
                     ></b-textarea>
+
                     <b-text-field
                         v-model="formData.maximum"
                         type="number"
-                        label="Maximum"
+                        :label="translations.maximum[lang]"
                     ></b-text-field>
 
-                    <v-card-actions class="mt-3">
-                        <v-spacer></v-spacer>
+                    <div class="text-right mt-3">
                         <v-btn
-                            color="success"
+                            color="secondary"
                             class="text-capitalize px-5"
                             depressed
-                            dark
-                            @click="createCoupon()"
-                            >Add</v-btn
-                        >
-                    </v-card-actions>
+                            style="font-size: 1rem"
+                            v-text="translations.create[lang]"
+                            @click="createCoupon"
+                        ></v-btn>
+                    </div>
                 </v-col>
             </v-row>
         </v-card>
@@ -140,11 +142,9 @@
                 title="Delete Product"
                 submit-text="delete"
                 @cancel="deleteDialog = false"
-                @submit="deleteCoupon()"
+                @submit="deleteCoupon"
             >
-                <p>
-                    Are you sure?
-                </p>
+                <p>Are you sure?</p>
             </b-card>
         </v-dialog>
     </v-tab-item>
@@ -152,13 +152,16 @@
 
 <script>
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
+import translations from "@/utils/translations/storePanel/couponsWithTransactions";
+
 export default {
     name: "CouponsWithTransactions",
+
+    mixins: [translations],
 
     data() {
         return {
             showAddCoupon: true,
-            lang: "el",
             sequence: "",
             minimum_amount: "",
             max_days: "",
@@ -172,21 +175,25 @@ export default {
                 goal_max_days: "",
                 gift_title: "",
                 gift_description: "",
-                maximum: ""
+                maximum: "",
             },
-            deleteDialog: false
+            deleteDialog: false,
         };
     },
 
     computed: {
         ...mapGetters("storePanel/coupons/couponsWithTransactions", [
             "coupon",
-            "giftCategories"
-        ])
+            "giftCategories",
+        ]),
+
+        lang() {
+            return this.$route.params.lang;
+        },
     },
 
     watch: {
-        coupon: function(val) {
+        coupon: function (val) {
             if (val != undefined) {
                 this.showAddCoupon = false;
                 this.coupon_id = val.coupon_id;
@@ -196,7 +203,7 @@ export default {
                 this.code = val.code;
                 this.gift_title = val.gift_title;
             }
-        }
+        },
     },
 
     methods: {
@@ -204,7 +211,7 @@ export default {
             "getCoupon",
             "getGiftCategories",
             "create",
-            "remove"
+            "remove",
         ]),
 
         createCoupon() {
@@ -213,12 +220,12 @@ export default {
 
         deleteCoupon() {
             this.remove(this.coupon_id);
-        }
+        },
     },
 
     mounted() {
         this.getCoupon();
         this.getGiftCategories();
-    }
+    },
 };
 </script>

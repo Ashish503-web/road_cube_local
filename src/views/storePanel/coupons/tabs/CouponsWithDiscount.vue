@@ -43,7 +43,7 @@
                         </v-btn>
                     </template>
 
-                    <span class="font-weight-bold">Delete Discount</span>
+                    <span class="font-weight-bold">Delete</span>
                 </v-tooltip>
             </template>
         </v-data-table>
@@ -62,13 +62,13 @@
                 @cancel="deleteDialog = false"
                 @submit="remove"
             >
-                <p>
+                <div class="subtitle-1 font-weight-medium">
                     Are you sure you want to delete
                     <span class="font-weight-bold text--primary">{{
                         couponWithDiscount.discount_product_name[lang]
                     }}</span>
                     discount?
-                </p>
+                </div>
             </b-card>
         </v-dialog>
     </v-tab-item>

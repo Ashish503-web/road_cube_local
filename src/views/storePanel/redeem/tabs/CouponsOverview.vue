@@ -1,36 +1,7 @@
 <template>
     <v-tab-item :value="$route.path">
         <v-toolbar flat height="90">
-            <v-menu offset-y right>
-                <template v-slot:activator="{ on }">
-                    <v-btn text v-on="on">
-                        <v-icon
-                            color="secondary"
-                            v-text="icons.mdiFormatListCheckbox"
-                        ></v-icon>
-                    </v-btn>
-                </template>
-
-                <v-list dense>
-                    <v-list-item
-                        v-for="(link, i) in exportLinks"
-                        :key="link.text['en']"
-                        href="#"
-                    >
-                        <v-list-item-icon class="mr-3">
-                            <v-icon
-                                :color="
-                                    i === 0 ? 'green darken-3' : 'blue darken-3'
-                                "
-                                v-text="link.icon"
-                            ></v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-title
-                            v-text="link.text[lang]"
-                        ></v-list-item-title>
-                    </v-list-item>
-                </v-list>
-            </v-menu>
+            <ExportLinks />
 
             <v-spacer></v-spacer>
 
@@ -81,12 +52,15 @@ import {
     mdiFileDelimitedOutline,
     mdiPencilOutline,
 } from "@mdi/js";
-import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 import translations from "@/utils/translations/storePanel/couponsOverview";
+import ExportLinks from "@/components/general/ExportLinks.vue";
 
 export default {
     name: "CouponsOverview",
+
+    components: { ExportLinks },
 
     mixins: [translations],
 
@@ -127,12 +101,24 @@ export default {
 
         headers() {
             return [
-                { text: "Promo Type Name", value: "promo_type_name" },
-                { text: "Code", value: "code" },
-                { text: "Available", value: "available" },
-                { text: "Points", value: "points" },
-                { text: "Total Redeemed", value: "total_redeemed" },
-                { text: "Created at", value: "created_at" },
+                {
+                    text: this.translations.promoType[this.lang],
+                    value: "promo_type_name",
+                },
+                { text: this.translations.code[this.lang], value: "code" },
+                {
+                    text: this.translations.available[this.lang],
+                    value: "available",
+                },
+                { text: this.translations.points[this.lang], value: "points" },
+                {
+                    text: this.translations.totalRedeemed[this.lang],
+                    value: "total_redeemed",
+                },
+                {
+                    text: this.translations.date[this.lang],
+                    value: "created_at",
+                },
             ];
         },
     },

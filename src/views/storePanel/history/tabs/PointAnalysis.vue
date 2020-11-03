@@ -1,13 +1,11 @@
 <template>
     <v-tab-item :value="$route.path">
         <v-toolbar flat height="90">
-            <v-col cols="12" sm="6"
-                ><a class="export-link" href @click.prevent
-                    >Export to CSV/Excel</a
-                ></v-col
-            >
+            <ExportLinks />
+
             <v-spacer></v-spacer>
-            <v-col cols="12" sm="4">
+
+            <v-col cols="12" sm="4" class="pa-0">
                 <b-search-field></b-search-field>
             </v-col>
         </v-toolbar>
@@ -26,7 +24,7 @@
                     color="secondary"
                     indeterminate
                 ></v-progress-circular>
-                <span v-else>No data available</span>
+                <span v-else v-text="translations.noData[lang]"></span>
             </template>
 
             <template v-slot:item.edit="{ item }">
@@ -40,14 +38,19 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import ExportLinks from "@/components/general/ExportLinks.vue";
+import translations from "@/utils/translations/storePanel/history";
 
 export default {
     name: "PointAnalysis",
 
+    components: { ExportLinks },
+
+    mixins: [translations],
+
     data() {
         return {
-            lang: "el",
-            page: +this.$route.query.page
+            page: +this.$route.query.page,
         };
     },
 
@@ -55,11 +58,21 @@ export default {
         ...mapState(["loading", "serverItemsLength"]),
         ...mapState("storePanel/history", ["pointAnalysis"]),
 
+        lang() {
+            return this.$route.params.lang;
+        },
+
         headers() {
             return [
-                { text: "Date", value: "date" },
-                { text: "Product", value: `product_name[${this.lang}]` },
-                { text: "Total Points", value: "total_points" }
+                { text: this.translations.date[this.lang], value: "date" },
+                {
+                    text: this.translations.product[this.lang],
+                    value: `product_name[${this.lang}]`,
+                },
+                {
+                    text: this.translations.totalPoints[this.lang],
+                    value: "total_points",
+                },
             ];
         },
 
@@ -71,11 +84,11 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
-        ...mapActions("storePanel/history", ["getPointAnalysis"])
+        ...mapActions("storePanel/history", ["getPointAnalysis"]),
     },
 
     watch: {
@@ -84,8 +97,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
 
@@ -94,7 +107,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -102,14 +115,14 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getPointAnalysis(this.query);
-    }
+    },
 };
 </script>

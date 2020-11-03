@@ -11,7 +11,7 @@
 
 <script>
 import { mapMutations, mapActions } from "vuex";
-import Notification from "@/components/Notification.vue";
+import Notification from "@/components/general/Notification.vue";
 
 export default {
     name: "App",
@@ -22,7 +22,7 @@ export default {
 
     methods: {
         ...mapMutations(["setStoreId", "setAccessToken"]),
-        ...mapActions(["getUser"])
+        ...mapActions(["getUser"]),
     },
 
     mounted() {
@@ -37,7 +37,7 @@ export default {
         if (storeId) {
             this.setStoreId(storeId);
         }
-    }
+    },
 };
 </script>
 

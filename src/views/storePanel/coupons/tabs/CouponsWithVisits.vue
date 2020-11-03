@@ -1,29 +1,31 @@
 <template>
     <v-tab-item :value="$route.path">
-        <v-sheet>
-            <v-row no-gutters justify="center" class="py-5">
-                <v-col cols="12" sm="6">
-                    <v-card-title>Coupons with visits</v-card-title>
-                    <v-card-subtitle class="subtitle-2">
-                        Reward those who enter your store with a coupon. It only
-                        applies to users with an application and is recognized
-                        by GPS.
-                    </v-card-subtitle>
-                    <v-img
-                        class="mx-auto mx-sm-0"
-                        src="@/assets/checkin_image.jpg"
-                        width="280"
-                        height="280"
-                    ></v-img>
-                </v-col>
+        <v-row no-gutters justify="center">
+            <v-col cols="10">
+                <v-card-title>Coupons with visits</v-card-title>
+                <v-card-subtitle class="subtitle-2">
+                    Reward those who enter your store with a coupon. It only
+                    applies to users with an application and is recognized by
+                    GPS.
+                </v-card-subtitle>
 
-                <v-col cols="12" sm="5" class="mt-5">
-                    <v-row
-                        no-gutters
-                        class="fill-height"
-                        align-content="space-between"
-                    >
-                        <v-col cols="12">
+                <v-row
+                    no-gutters
+                    align="center"
+                    justify="center"
+                    class="py-5 px-3"
+                >
+                    <v-col cols="12" sm="6">
+                        <v-img
+                            class="mx-auto mx-sm-0"
+                            src="@/assets/checkin_image.jpg"
+                            width="280"
+                            height="280"
+                        ></v-img>
+                    </v-col>
+
+                    <v-col cols="12" sm="6">
+                        <v-skeleton-loader :loading="loading" type="image">
                             <v-card outlined class="pb-8">
                                 <v-card-title class="justify-center"
                                     >Gift Card</v-card-title
@@ -54,7 +56,7 @@
                                                     "
                                                     class="mr-1"
                                                 />
-                                                Coffee No giftware
+                                                {{ couponWithVisit.gift_title }}
                                             </v-col>
                                             <v-col
                                                 cols="6"
@@ -89,33 +91,38 @@
                                     </v-row>
                                 </v-card-text>
                             </v-card>
-                        </v-col>
+                        </v-skeleton-loader>
+                    </v-col>
+                </v-row>
 
-                        <v-col cols="12" class="text-right">
-                            <v-btn
-                                v-if="couponWithVisit.coupon_id"
-                                color="red"
-                                class="text-capitalize px-5"
-                                depressed
-                                dark
-                                style="font-size: 1rem"
-                                @click="deleteDialog = true"
-                                >delete</v-btn
-                            >
-                            <v-btn
-                                v-else
-                                color="secondary"
-                                class="text-capitalize px-5"
-                                depressed
-                                style="font-size: 1rem"
-                                @click="dialog = true"
-                                >create</v-btn
-                            >
-                        </v-col>
-                    </v-row>
-                </v-col>
-            </v-row>
-        </v-sheet>
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-skeleton-loader :loading="loading" type="button">
+                        <v-btn
+                            v-if="couponWithVisit.coupon_id"
+                            color="red"
+                            class="text-capitalize px-5"
+                            depressed
+                            dark
+                            style="font-size: 1rem"
+                            @click="deleteDialog = true"
+                            >delete</v-btn
+                        >
+                        <v-btn
+                            v-else
+                            color="secondary"
+                            class="text-capitalize px-5"
+                            depressed
+                            style="font-size: 1rem"
+                            @click="dialog = true"
+                            >create</v-btn
+                        >
+                    </v-skeleton-loader>
+                </v-card-actions>
+            </v-col>
+        </v-row>
 
         <v-dialog v-model="dialog" max-width="600">
             <CouponWithVisitForm @cancel="dialog = false" />
@@ -132,9 +139,9 @@
                 @submit="remove"
             >
                 <p>
-                    Are you sure you want to delete
+                    Are you sure you want to delete coupon
                     <span class="font-weight-bold text--primary">{{
-                        couponWithVisit
+                        couponWithVisit.code
                     }}</span
                     >?
                 </p>
@@ -154,7 +161,6 @@ export default {
 
     data() {
         return {
-            lang: "el",
             page: +this.$route.query.page,
             mode: 0,
         };
@@ -165,6 +171,10 @@ export default {
         ...mapState("storePanel/coupons/couponsWithVisits", [
             "couponWithVisit",
         ]),
+
+        lang() {
+            return this.$route.params.lang;
+        },
 
         dialog: {
             get() {
@@ -246,3 +256,9 @@ export default {
     },
 };
 </script>
+
+<style>
+.v-skeleton-loader__button {
+    width: 90px;
+}
+</style>
