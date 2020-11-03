@@ -4,12 +4,17 @@ export default {
     namespaced: true,
 
     state: () => ({
+        giftCategories: [],
         products: [],
         couponsOnProducts: [],
         couponOnProduct: new CouponOnProduct()
     }),
 
     mutations: {
+        setGiftCategories(state, payload) {
+            state.giftCategories = payload;
+        },
+
         setProducts(state, payload) {
             state.products = payload;
         },
@@ -41,6 +46,16 @@ export default {
     },
 
     actions: {
+        async getGiftCategories({ commit }) {
+            try {
+                const { data } = await CouponOnProduct.getGiftCategories();
+
+                commit("setGiftCategories", data.data);
+            } catch (ex) {
+                console.error(ex.response.data.message);
+            }
+        },
+
         async getProducts({ commit }) {
             try {
                 const { data } = await CouponOnProduct.getProducts();
@@ -75,6 +90,9 @@ export default {
                 commit("setLoading", true, { root: true });
 
                 let couponOnProduct = { ...state.couponOnProduct };
+                delete couponOnProduct.coupon_id;
+                if (couponOnProduct.action === "sample")
+                    delete couponOnProduct.product_buy_id;
 
                 const { data } = await CouponOnProduct.create(couponOnProduct);
 

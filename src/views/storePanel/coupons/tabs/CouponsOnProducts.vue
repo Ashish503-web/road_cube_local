@@ -129,19 +129,22 @@ export default {
                 mdiClose,
                 mdiMagnify,
                 mdiPencilOutline,
-                mdiFacebook
+                mdiFacebook,
             },
-            lang: "el",
             page: +this.$route.query.page,
-            mode: 0
+            mode: 0,
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/coupons/couponsOnProducts", [
-            "couponsOnProducts"
+            "couponsOnProducts",
         ]),
+
+        lang() {
+            return this.$route.params.lang;
+        },
 
         query() {
             let query = "?";
@@ -158,15 +161,15 @@ export default {
                 { text: "Type", value: "code" },
                 {
                     text: "Product For Sale",
-                    value: `product_buy_name[${this.lang}]`
+                    value: `product_buy_name[${this.lang}]`,
                 },
                 {
                     text: "Product For Gift",
-                    value: `product_free_name[${this.lang}]`
+                    value: `product_free_name[${this.lang}]`,
                 },
-                { text: "Quantity", value: "total_claimed" },
+                { text: "Quantity", value: "available" },
                 { text: "Actions", value: "actions" },
-                { text: "Social Media", value: "social" }
+                { text: "Social Media", value: "social" },
             ];
         },
 
@@ -177,7 +180,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         deleteDialog: {
@@ -187,7 +190,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            }
+            },
         },
 
         couponOnProduct: {
@@ -198,8 +201,8 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
@@ -207,13 +210,12 @@ export default {
             "setDialog",
             "setDeleteDialog",
             "setResetSuccess",
-            "setResetValidation"
+            "setResetValidation",
         ]),
         ...mapMutations("storePanel/coupons/couponsOnProducts", ["setItem"]),
         ...mapActions("storePanel/coupons/couponsOnProducts", [
-            "getProducts",
             "getItems",
-            "remove"
+            "remove",
         ]),
 
         open(mode, item) {
@@ -222,7 +224,7 @@ export default {
             setTimeout(() => this.setResetSuccess(true), 300);
             this.setResetValidation(true);
             this.dialog = true;
-        }
+        },
     },
 
     watch: {
@@ -238,8 +240,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
             this.getItems(this.query);
@@ -247,7 +249,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -255,16 +257,15 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-        this.getProducts();
-    }
+    },
 };
 </script>
 

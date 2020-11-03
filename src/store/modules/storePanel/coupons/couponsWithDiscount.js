@@ -4,11 +4,21 @@ export default {
     namespaced: true,
 
     state: () => ({
+        giftCategories: [],
+        products: [],
         couponsWithDiscount: [],
         couponWithDiscount: new CouponWithDiscount()
     }),
 
     mutations: {
+        setGiftCategories(state, payload) {
+            state.giftCategories = payload;
+        },
+
+        setProducts(state, payload) {
+            state.products = payload;
+        },
+
         setItems(state, payload) {
             state.couponsWithDiscount = payload;
         },
@@ -36,6 +46,26 @@ export default {
     },
 
     actions: {
+        async getGiftCategories({ commit }) {
+            try {
+                const { data } = await CouponWithDiscount.getGiftCategories();
+
+                commit("setGiftCategories", data.data);
+            } catch (ex) {
+                console.error(ex.response.data.message);
+            }
+        },
+
+        async getProducts({ commit }) {
+            try {
+                const { data } = await CouponWithDiscount.getProducts();
+
+                commit("setProducts", data.data.products);
+            } catch (ex) {
+                console.log(ex.response.data.message);
+            }
+        },
+
         async getItems({ commit }, query) {
             try {
                 commit("setLoading", true, { root: true });
@@ -56,32 +86,30 @@ export default {
             }
         },
 
-        async getItem({ commit }, id) {
-            try {
-                const { data } = await CouponWithDiscount.getItem(id);
-
-                console.log(data);
-            } catch (ex) {
-                console.error(ex.response.data.message);
-            }
-        },
-
         async create({ commit, state, rootState }) {
             try {
                 commit("setLoading", true, { root: true });
 
-                let couponOnProduct = { ...state.couponOnProduct };
+                let couponWithDiscount = { ...state.couponWithDiscount };
+
+                for (let prop in couponWithDiscount) {
+                    if (!couponWithDiscount[prop])
+                        delete couponWithDiscount[prop];
+                }
+                console.log(couponWithDiscount);
 
                 const { data } = await CouponWithDiscount.create(
-                    couponOnProduct
+                    couponWithDiscount
                 );
 
-                const { coupon } = data.data;
+                console.log(data);
 
-                coupon.product_buy_name = coupon.product_buy.name;
-                coupon.product_free_name = coupon.product_free.name;
+                // const { coupon } = data.data;
 
-                commit("addItem", coupon);
+                // coupon.product_buy_name = coupon.product_buy.name;
+                // coupon.product_free_name = coupon.product_free.name;
+
+                // commit("addItem", coupon);
                 commit(
                     "setServerItemsLength",
                     rootState.serverItemsLength + 1,

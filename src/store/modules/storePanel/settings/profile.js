@@ -4,10 +4,6 @@ export default {
     namespaced: true,
 
     state: () => ({
-        success: {
-            logo: false,
-            mapLogo: false
-        },
         loading: {
             logo: false,
             mapLogo: false,
@@ -28,21 +24,25 @@ export default {
             orders: "",
             redemption: ""
         },
+        resetSuccess: {
+            logo: false,
+            mapLogo: false
+        },
         storeCategories: [],
         countries: []
     }),
 
     mutations: {
-        setSuccess(state, { value, type }) {
-            state.success[type] = value;
-        },
-
         setLoading(state, { value, type }) {
             state.loading[type] = value;
         },
 
         setErrorMessage(state, { value, type }) {
             state.errorMessage[type] = value;
+        },
+
+        setResetSuccess(state, { value, type }) {
+            state.resetSuccess[type] = value;
         },
 
         setStoreCategories(state, payload) {
@@ -55,17 +55,18 @@ export default {
     },
 
     actions: {
-        async uploadLogo({ commit }, imageFile) {
+        async uploadLogo({ commit }, { type, imageFile }) {
             try {
-                commit("setLoading", { value: true, type: "logo" });
+                commit("setLoading", { value: true, type });
 
                 const fd = new FormData();
                 fd.append("logo", imageFile);
 
-                await Profile.uploadImage(fd);
+                const { data } = await Profile.uploadImage(fd);
 
-                commit("setSuccess", { value: false, type: "logo" });
-                commit("setLoading", { value: false, type: "logo" });
+                commit("storePanel/setLogo", data.data.logo, { root: true });
+                commit("setResetSuccess", { value: true, type });
+                commit("setLoading", { value: false, type });
                 commit(
                     "setNotification",
                     {
@@ -77,30 +78,32 @@ export default {
                     { root: true }
                 );
             } catch (ex) {
-                commit("setLoading", { value: false, type: "logo" });
+                commit("setLoading", { value: false, type });
                 commit("setErrorMessage", {
                     value: ex.response.data.message,
-                    type: "logo"
+                    type
                 });
                 setTimeout(
-                    () =>
-                        commit("setErrorMessage", { value: "", type: "logo" }),
+                    () => commit("setErrorMessage", { value: "", type }),
                     5000
                 );
             }
         },
 
-        async uploadMapLogo({ commit }, imageFile) {
+        async uploadMapLogo({ commit }, { type, imageFile }) {
             try {
-                commit("setLoading", { value: true, type: "mapLogo" });
+                commit("setLoading", { value: true, type });
 
                 const fd = new FormData();
                 fd.append("map_logo", imageFile);
 
-                await Profile.uploadImage(fd);
+                const { data } = await Profile.uploadImage(fd);
 
-                commit("setSuccess", { value: false, type: "mapLogo" });
-                commit("setLoading", { value: false, type: "mapLogo" });
+                commit("storePanel/setMapLogo", data.data.map_logo, {
+                    root: true
+                });
+                commit("setResetSuccess", { value: true, type });
+                commit("setLoading", { value: false, type });
                 commit(
                     "setNotification",
                     {
@@ -112,17 +115,13 @@ export default {
                     { root: true }
                 );
             } catch (ex) {
-                commit("setLoading", { value: false, type: "mapLogo" });
+                commit("setLoading", { value: false, type });
                 commit("setErrorMessage", {
                     value: ex.response.data.message,
-                    type: "mapLogo"
+                    type
                 });
                 setTimeout(
-                    () =>
-                        commit("setErrorMessage", {
-                            value: "",
-                            type: "mapLogo"
-                        }),
+                    () => commit("setErrorMessage", { value: "", type }),
                     5000
                 );
             }

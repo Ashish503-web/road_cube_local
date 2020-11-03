@@ -80,6 +80,11 @@ export default {
                 el: "",
                 en: "Actions",
                 it: ""
+            },
+            noData: {
+                el: "",
+                en: "No data available",
+                it: ""
             }
         }
     })

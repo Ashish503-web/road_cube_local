@@ -9,11 +9,10 @@
                 <v-tab
                     v-for="tab in tabs"
                     :key="tab.name"
-                    class="text-capitalize text-capitalize text-left text-sm-center d-flex justify-start justify-sm-center px-3"
                     v-text="tab.name"
                     :to="tab.to"
-                    >products</v-tab
-                >
+                    class="text-capitalize d-flex justify-start justify-md-center px-3"
+                ></v-tab>
             </v-tabs>
 
             <v-tabs-items v-model="tab">

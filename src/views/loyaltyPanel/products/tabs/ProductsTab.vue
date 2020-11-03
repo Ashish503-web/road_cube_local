@@ -1,32 +1,41 @@
 <template>
     <v-tab-item :value="$route.path">
-        <v-toolbar flat height="80">
-            <v-row
-                class="d-flex justify-space-between align-center flex-wrap mt-2"
+        <v-toolbar flat height="90">
+            <v-btn
+                color="secondary"
+                class="text-capitalize px-5"
+                depressed
+                @click="open(1, {})"
+                >add product</v-btn
             >
-                <v-btn
-                    color="secondary"
-                    class="text-capitalize"
-                    depressed
-                    @click="dialog = true"
-                    >New Product or Service</v-btn
-                >
 
-                <v-col cols="4">
-                    <b-search-field
-                        :selectedSearchType="selectedSearchType"
-                        :searchTypes="searchTypes"
-                    ></b-search-field>
-                </v-col>
-            </v-row>
+            <v-spacer></v-spacer>
+
+            <v-col cols="4" class="pa-0">
+                <b-search-field
+                    :selectedSearchType="selectedSearchType"
+                    :searchTypes="searchTypes"
+                ></b-search-field>
+            </v-col>
         </v-toolbar>
 
         <v-data-table
             :headers="headers"
-            :items="items"
+            :items="products"
             :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
+            :page.sync="page"
+            :server-items-length="serverItemsLength"
             class="b-outlined"
         >
+            <template v-slot:no-data>
+                <v-progress-circular
+                    v-if="loading"
+                    color="secondary"
+                    indeterminate
+                ></v-progress-circular>
+                <span v-else>No data available</span>
+            </template>
+
             <template v-slot:item.actions>
                 <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
@@ -34,7 +43,7 @@
                             color="yellow darken-3"
                             icon
                             v-on="on"
-                            @click="dialog = true"
+                            @click="open(2, item)"
                         >
                             <v-icon v-text="icons.mdiPencilOutline"></v-icon>
                         </v-btn>
@@ -49,7 +58,12 @@
                             color="red"
                             icon
                             v-on="on"
-                            @click="deleteDialog = true"
+                            @click="
+                                () => {
+                                    product = item;
+                                    deleteDialog = true;
+                                }
+                            "
                         >
                             <v-icon v-text="icons.mdiClose"></v-icon>
                         </v-btn>
@@ -60,21 +74,25 @@
             </template>
         </v-data-table>
 
-        <v-dialog v-model="dialog" max-width="700">
+        <v-dialog v-model="dialog" max-width="600">
             <ProductForm :mode="mode" @cancel="dialog = false" />
         </v-dialog>
 
-        <v-dialog v-model="deleteDialog" max-width="600">
+        <v-dialog v-model="deleteDialog" max-width="500">
             <b-card
                 type="delete"
                 title="Delete Product"
                 submit-text="delete"
+                :loading="loading"
+                :error-message="errorMessage"
                 @cancel="deleteDialog = false"
+                @submit="remove"
             >
                 <p>
                     Are you sure you want to delete
-                    <span class="font-weight-bold text--primary"
-                        >Product Name</span
+                    <span class="font-weight-bold text--primary">{{
+                        product.name[lang]
+                    }}</span
                     >?
                 </p>
                 <v-checkbox
@@ -95,62 +113,201 @@
 
 <script>
 import { mdiPencilOutline, mdiClose } from "@mdi/js";
+import { mapState, mapMutations, mapActions } from "vuex";
+import debounce from "lodash/debounce";
 import ProductForm from "@/components/loyaltyPanel/products/ProductForm.vue";
 
 export default {
     name: "ProductsTab",
+
     components: { ProductForm },
-    data: () => ({
-        icons: { mdiPencilOutline, mdiClose },
-        searchTypes: [
-            "Name",
-            "Description",
-            "Selling Price",
-            "Target Price",
-            "Wholesale Price",
-        ],
-        selectedSearchType: "All Fields",
-        headers: [
-            {
-                text: "Product Name",
-                align: "start",
-                sortable: true,
-                value: "name",
-                action: false,
+
+    data() {
+        return {
+            icons: { mdiPencilOutline, mdiClose },
+            searchTypes: [
+                "Name",
+                "Description",
+                "Selling Price",
+                "Target Price",
+                "Wholesale Price"
+            ],
+            selectedSearchType: "All Fields",
+            headers: [
+                {
+                    text: "Product Name",
+                    align: "start",
+                    sortable: true,
+                    value: "name",
+                    action: false
+                },
+                {
+                    text: "Product Description",
+                    value: "description",
+                    action: false
+                },
+                { text: "Selling Price", value: "selling", action: false },
+                { text: "Wholesale Price", value: "wholesale", action: false },
+                {
+                    text: "Actions",
+                    value: "actions",
+                    sortable: false,
+                    action: true
+                }
+            ],
+            page: +this.$route.query.page,
+            mode: 0,
+            search: ""
+        };
+    },
+
+    computed: {
+        ...mapState(["loading", "errorMessage", "serverItemsLength"]),
+        ...mapState("loyaltyPanel/products", ["products"]),
+
+        lang() {
+            return this.$route.params.lang;
+        },
+
+        // headers() {
+        //     return [
+        //         { text: "Product Name", value: `name[${this.lang}]` },
+        //         {
+        //             text: "Product Description",
+        //             value: `description[${this.lang}]`
+        //         },
+        //         { text: "Selling Price", value: "retail_price" },
+        //         { text: "Points", value: "reward_points" },
+        //         { text: "Coupon", value: "coupon" },
+        //         { text: "Actions", value: "actions" }
+        //     ];
+        // },
+
+        dialog: {
+            get() {
+                return this.$store.state.dialog;
             },
-            {
-                text: "Product Description",
-                value: "description",
-                action: false,
+
+            set(val) {
+                this.setDialog(val);
+            }
+        },
+
+        deleteDialog: {
+            get() {
+                return this.$store.state.deleteDialog;
             },
-            { text: "Selling Price", value: "selling", action: false },
-            { text: "Wholesale Price", value: "wholesale", action: false },
-            {
-                text: "Actions",
-                value: "actions",
-                sortable: false,
-                action: true,
+
+            set(val) {
+                this.setDeleteDialog(val);
+            }
+        },
+
+        product: {
+            get() {
+                return this.$store.state.loyaltyPanel.products.product;
             },
-        ],
-        items: [
-            {
-                name: "Selling Price",
-                description: 159,
-                selling: 6.0,
-                wholesale: 24,
-                id: 1,
-            },
-            {
-                name: "Ice cream sandwich",
-                description: 237,
-                selling: 9.0,
-                wholesale: 37,
-                id: 0,
-            },
-        ],
-        mode: 1,
-        dialog: false,
-        deleteDialog: false,
-    }),
+
+            set(val) {
+                this.setItem(val);
+            }
+        },
+
+        query() {
+            let query = "?";
+
+            for (let key in this.$route.query) {
+                query += `${key}=${this.$route.query[key]}&`;
+            }
+
+            return query.slice(0, query.length - 1);
+        }
+    },
+
+    methods: {
+        ...mapMutations([
+            "setDialog",
+            "setDeleteDialog",
+            "setResetSuccess",
+            "setResetValidation"
+        ]),
+        ...mapMutations("loyaltyPanel/products", [
+            "setShowImageUpload",
+            "setShowWeekdays",
+            "setItem"
+        ]),
+        ...mapActions("loyaltyPanel/products", ["getItems", "remove"]),
+
+        open(mode, item) {
+            this.mode = mode;
+            this.product = item;
+            if (this.product.image) this.setShowImageUpload(true);
+            else this.setShowImageUpload(false);
+            if (this.product.availability_days.length)
+                this.setShowWeekdays(true);
+            else this.setShowWeekdays(false);
+            setTimeout(() => this.setResetSuccess(true), 300);
+            this.setResetValidation(true);
+            this.dialog = true;
+        },
+
+        handleSearch() {
+            this.getItems(`?q=${this.search}`);
+        }
+    },
+
+    watch: {
+        dialog(val) {
+            if (!val) {
+                this.setResetSuccess(false);
+                this.setResetValidation(false);
+            }
+        },
+
+        $route(val) {
+            if (!val.query.page) {
+                this.$router.push({
+                    query: {
+                        page: 1,
+                        ...this.$route.query
+                    }
+                });
+            }
+            this.getItems(this.query);
+        },
+
+        page(page) {
+            this.$router.push({ query: { ...this.$route.query, page } });
+        },
+
+        search(val, oldVal) {
+            if (val != oldVal) {
+                if (val == null) {
+                    this.getItems(this.query);
+                } else {
+                    this.debouncedSearch();
+                }
+            }
+        }
+    },
+
+    beforeCreate() {
+        if (!this.$route.query.page) {
+            this.$router.push({
+                query: {
+                    page: 1,
+                    ...this.$route.query
+                }
+            });
+        }
+    },
+
+    created() {
+        this.debouncedSearch = debounce(this.handleSearch, 500);
+    },
+
+    mounted() {
+        this.getItems(this.query);
+    }
 };
 </script>

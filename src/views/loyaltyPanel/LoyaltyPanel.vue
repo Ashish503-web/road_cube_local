@@ -3,8 +3,18 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
-    name: "LoyaltyPanel"
+    name: "LoyaltyPanel",
+
+    methods: {
+        ...mapActions("loyaltyPanel", ["getCompany"])
+    },
+
+    mounted() {
+        if (!this.$store.state.loyaltyPanel.company.store_id) this.getCompany();
+    }
 };
 </script>
 

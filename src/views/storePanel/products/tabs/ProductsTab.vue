@@ -1,33 +1,31 @@
 <template>
     <v-tab-item :value="$route.path">
-        <v-toolbar flat height="80">
-            <v-row
-                class="px-4 py-3 flex justify-space-between align-center"
-                no-gutters
+        <v-toolbar flat height="90">
+            <v-btn
+                color="secondary"
+                class="text-capitalize px-5"
+                depressed
+                @click="open(1, {})"
+                >add product</v-btn
             >
-                <v-btn
+
+            <v-spacer></v-spacer>
+
+            <v-col cols="4" class="pa-0">
+                <v-text-field
+                    v-model="search"
+                    class="mt-1"
+                    label="Search"
                     color="secondary"
-                    class="text-capitalize"
-                    depressed
-                    @click="open(1, {})"
-                    >add product</v-btn
+                    outlined
+                    clearable
+                    rounded
+                    dense
+                    hide-details
+                    :prepend-inner-icon="icons.mdiMagnify"
                 >
-                <v-col cols="4">
-                    <v-text-field
-                        v-model="search"
-                        class="mt-1"
-                        label="Search"
-                        color="secondary"
-                        outlined
-                        clearable
-                        rounded
-                        dense
-                        hide-details
-                        :prepend-inner-icon="icons.mdiMagnify"
-                    >
-                    </v-text-field>
-                </v-col>
-            </v-row>
+                </v-text-field>
+            </v-col>
         </v-toolbar>
 
         <v-data-table
@@ -114,8 +112,8 @@
 <script>
 import { mdiPencilOutline, mdiClose, mdiMagnify } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
-import ProductForm from "@/components/storePanel/products/ProductForm.vue";
 import debounce from "lodash/debounce";
+import ProductForm from "@/components/storePanel/products/ProductForm.vue";
 
 export default {
     name: "ProductsTab",
@@ -250,7 +248,7 @@ export default {
             this.$router.push({ query: { ...this.$route.query, page } });
         },
 
-        search: function(val, oldVal) {
+        search(val, oldVal) {
             if (val != oldVal) {
                 if (val == null) {
                     this.getItems(this.query);

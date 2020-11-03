@@ -1,80 +1,140 @@
 <template>
-    <b-card :title="title" @cancel="$emit('cancel')">
+    <b-card
+        :title="title"
+        @cancel="$emit('cancel')"
+        @submit="
+            () => {
+                mode === 1 ? create(imageFile) : update(imageFile);
+                imageFile = null;
+            }
+        "
+    >
+        <b-text-field
+            v-model="product.name[productLang]"
+            label="Product Name"
+            no-top-margin
+            :success="success.name"
+            :rules="rules.name"
+            @cancel-success="success.name = false"
+        >
+            <template v-slot:append>
+                <b-lang-menu v-model="productLang" type="inner"></b-lang-menu>
+            </template>
+        </b-text-field>
+
+        <b-textarea
+            v-model="product.description[descriptionLang]"
+            label="Product Description"
+            :success="success.description"
+            :rules="rules.description"
+            @cancel-success="success.description = false"
+        >
+            <template v-slot:append>
+                <b-lang-menu
+                    v-model="descriptionLang"
+                    type="inner"
+                ></b-lang-menu>
+            </template>
+        </b-textarea>
+
         <v-row no-gutters>
             <v-col cols="12">
-                <h4 class="subtitle-1 font-weight-bold">
-                    Chooce how your product will be displayed:
-                </h4>
-                <v-radio-group
-                    v-model="displayOption"
-                    class="mt-3 pt-0"
-                    hide-details
-                >
-                    <v-radio
-                        v-for="option in displayOptions"
-                        :key="option.text"
-                        :value="option.value"
-                        color="secondary"
-                    >
-                        <template v-slot:label>
-                            <h4
-                                class="secondary--text"
-                                v-text="option.text"
-                            ></h4>
-                        </template>
-                    </v-radio>
-                </v-radio-group>
+                <h4 class="secondary--text mt-3">Prices</h4>
+            </v-col>
+            <v-col cols="6" class="pr-2">
+                <b-text-field
+                    v-model="product.retail_price"
+                    type="number"
+                    label="Selling Price"
+                    prepend-inner-icon="mdiCurrencyEur"
+                    :success="success.sellingPrice"
+                    :rules="rules.sellingPrice"
+                    @cancel-success="success.sellingPrice = false"
+                ></b-text-field>
+            </v-col>
+            <v-col cols="6" class="pl-2">
+                <b-text-field
+                    v-model="product.wholesale_price"
+                    type="number"
+                    label="Wholesale Price"
+                    prepend-inner-icon="mdiCurrencyEur"
+                    :success="success.wholesalePrice"
+                    :rules="rules.wholesalePrice"
+                    @cancel-success="success.wholesalePrice = false"
+                ></b-text-field>
+            </v-col>
+            <v-col cols="12">
+                <h4 class="secondary--text mt-3">Costs</h4>
+            </v-col>
+            <v-col cols="6" class="pr-2">
+                <b-text-field
+                    v-model="product.delivery_cost"
+                    type="number"
+                    label="Delivery Cost"
+                    prepend-inner-icon="mdiCurrencyEur"
+                    :success="success.deliveryCost"
+                    :rules="rules.deliveryCost"
+                    @cancel-success="success.deliveryCost = false"
+                ></b-text-field>
+            </v-col>
+            <v-col cols="6" class="pl-2">
+                <b-text-field
+                    v-model="product.shipping_cost"
+                    type="number"
+                    label="Shipping Cost"
+                    prepend-inner-icon="mdiCurrencyEur"
+                    :success="success.shippingCost"
+                    :rules="rules.shippingCost"
+                    @cancel-success="success.shippingCost = false"
+                ></b-text-field>
             </v-col>
 
-            <v-col cols="6" class="mt-5 pr-2">
-                <b-text-field label="Product Name"></b-text-field>
+            <v-col cols="6" class="pr-2">
+                <b-text-field
+                    v-model="product.reward_points"
+                    type="number"
+                    label="Points"
+                ></b-text-field>
+            </v-col>
 
-                <b-textarea label="Product Description"></b-textarea>
+            <v-col cols="6" class="pl-2">
+                <v-checkbox
+                    color="secondary"
+                    class="mt-5 pt-0"
+                    hide-details="auto"
+                >
+                    <template v-slot:label>
+                        <h4 class="secondary--text">Subsidized Points</h4>
+                    </template>
+                </v-checkbox>
+            </v-col>
 
-                <b-text-field label="Points" type="number"></b-text-field>
+            <v-col cols="6" class="pr-2">
+                <b-text-field
+                    v-model="product.product_identifier"
+                    label="Product Id"
+                    type="number"
+                ></b-text-field>
+            </v-col>
 
-                <b-text-field label="Product Id" type="number"></b-text-field>
-
+            <v-col cols="6" class="pl-2">
                 <b-select
+                    v-model="product.reward_type_id"
                     label="Percentage"
-                    :items="['Liters', 'Piece', 'Per Transaction', 'Per Euro']"
+                    :items="rewardTypes"
                 ></b-select>
             </v-col>
-
-            <v-col cols="6" class="mt-5 pl-2">
-                <template v-if="displayOption === 2">
-                    <b-text-field
-                        label="Target Price"
-                        type="number"
-                        append-icon="mdiCurrencyEur"
-                    ></b-text-field>
-                </template>
-
-                <template v-else>
-                    <b-text-field
-                        label="Selling Price"
-                        type="number"
-                        append-icon="mdiCurrencyEur"
-                    ></b-text-field>
-
-                    <b-text-field
-                        label="Wholesale Price"
-                        type="number"
-                        append-icon="mdiCurrencyEur"
-                    ></b-text-field>
-
-                    <v-checkbox
-                        color="secondary"
-                        class="mt-3 pt-0"
-                        hide-details="auto"
-                    >
-                        <template v-slot:label>
-                            <h4 class="secondary--text">Subsidized Points</h4>
-                        </template>
-                    </v-checkbox>
-                </template>
-            </v-col>
         </v-row>
+
+        <b-select
+            v-model="product.product_category_id"
+            :items="categories"
+            :item-text="`name[${lang}]`"
+            item-value="product_category_id"
+            label="Select Category"
+            :success="success.category"
+            :rules="rules.category"
+        ></b-select>
 
         <v-checkbox
             v-model="showImageUpload"
@@ -96,7 +156,7 @@
             </v-card-title>
             <v-row no-gutters justify="space-between" class="pa-5">
                 <v-col cols="6">
-                    <v-img></v-img>
+                    <v-img :src="product.image"></v-img>
                 </v-col>
                 <v-col cols="5" class="mr-3">
                     <v-file-input
@@ -111,7 +171,7 @@
         </v-card>
 
         <v-checkbox
-            v-model="showDisplayDays"
+            v-model="showWeekdays"
             color="secondary"
             class="pt-0 mt-3"
             hide-details="auto"
@@ -123,7 +183,61 @@
             </template>
         </v-checkbox>
 
-        <v-checkbox color="secondary" class="pt-0 mt-3" hide-details="auto">
+        <v-card v-if="showWeekdays" outlined class="mt-3">
+            <v-card-title
+                class="subtitle-1 font-weight-medium"
+                style="word-break: normal"
+            >
+                Choose the days you want the product group to be displayed in
+                public
+            </v-card-title>
+            <v-container>
+                <v-row no-gutters>
+                    <v-col
+                        v-for="(weekday, i) in weekdays"
+                        :key="weekday"
+                        cols="3"
+                        class="pr-2"
+                    >
+                        <v-checkbox
+                            v-model="product.availability_days"
+                            color="secondary"
+                            class="mt-0"
+                            :label="weekday"
+                            :value="i"
+                            hide-details
+                        >
+                            <template v-slot:label>
+                                <h4
+                                    class="secondary--text"
+                                    v-text="weekday"
+                                ></h4>
+                            </template>
+                        </v-checkbox>
+                    </v-col>
+                </v-row>
+            </v-container>
+        </v-card>
+
+        <v-checkbox
+            v-model="product.published"
+            color="secondary"
+            class="pt-0 mt-3"
+            hide-details="auto"
+        >
+            <template v-slot:label>
+                <h4 class="secondary--text">
+                    {{ product.published ? "Published" : "Unpublished" }}
+                </h4>
+            </template>
+        </v-checkbox>
+
+        <v-checkbox
+            v-model="product.add_to_stores"
+            color="secondary"
+            class="pt-0 mt-3"
+            hide-details="auto"
+        >
             <template v-slot:label>
                 <h4 class="secondary--text">
                     Add new product to existing companies
@@ -134,58 +248,93 @@
 </template>
 
 <script>
+import validators from "./productValidators";
 import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
     name: "Product",
+
     props: {
         mode: Number
     },
+
+    mixins: [validators],
+
     data: () => ({
-        displayOption: 1,
-        displayOptions: [
-            {
-                text: "The product and it's price will bevisible to the public",
-                value: 1
-            },
-            {
-                text:
-                    "The product will be visible to the public but its price will not (the price will be defined at the sales register)",
-                value: 2
-            },
-            {
-                text:
-                    "The product will be hidden (it will not be visible to the public)",
-                value: 3
-            }
+        productLang: "el",
+        descriptionLang: "el",
+        rewardTypes: [
+            { text: "Liters", value: 1 },
+            { text: "Piece", value: 2 },
+            { text: "Per Transaction", value: 3 },
+            { text: "Per Euro", value: 4 }
         ],
-        showImageUpload: false,
-        showDisplayDays: false
+        imageFile: null,
+        weekdays: [
+            "Monday",
+            "Tuesday",
+            "Wednesday",
+            "Thursday",
+            "Friday",
+            "Saturday",
+            "Sunday"
+        ]
     }),
 
     computed: {
-        // ...mapState("storePanel/products", ["loading", "errorMessage"]),
+        ...mapState([
+            "loading",
+            "errorMessage",
+            "resetSuccess",
+            "resetValidation"
+        ]),
+        ...mapState("loyaltyPanel/products", ["categories"]),
+
+        lang() {
+            return this.$route.params.lang;
+        },
 
         title() {
             return this.mode === 1
                 ? "New Product or Service"
                 : "Update Product or Service";
+        },
+
+        showImageUpload: {
+            get() {
+                return this.$store.state.loyaltyPanel.products.showImageUpload;
+            },
+
+            set(val) {
+                this.setShowImageUpload(val);
+            }
+        },
+
+        showWeekdays: {
+            get() {
+                return this.$store.state.loyaltyPanel.products.showWeekdays;
+            },
+
+            set(val) {
+                this.setShowWeekdays(val);
+            }
+        },
+
+        product() {
+            return this.$store.state.loyaltyPanel.products.product;
         }
-
-        // product: {
-        //     get() {
-        //         return this.$store.state.storePanel.products.product;
-        //     },
-
-        //     set(val) {
-        //         this.setProduct(val);
-        //     }
-        // }
     },
 
     methods: {
-        // ...mapMutations("storePanel/products", ["setProduct"]),
-        // ...mapActions("storePanel/products", ["create", "update"]),
+        ...mapMutations("loyaltyPanel/products", [
+            "setShowImageUpload",
+            "setShowWeekdays"
+        ]),
+        ...mapActions("loyaltyPanel/products", [
+            "getCategories",
+            "create",
+            "update"
+        ]),
 
         onFileSelected(event) {
             if (event) {
@@ -198,9 +347,23 @@ export default {
     },
 
     watch: {
-        displayOption(val) {
-            console.log(val);
+        resetSuccess(val) {
+            if (val) {
+                this.success = {
+                    name: false,
+                    description: false,
+                    sellingPrice: false,
+                    wholesalePrice: false,
+                    deliveryCost: false,
+                    shippingCost: false,
+                    category: false
+                };
+            }
         }
+    },
+
+    mounted() {
+        this.getCategories();
     }
 };
 </script>

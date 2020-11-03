@@ -30,9 +30,9 @@
                 <template v-slot:activator="{ on }">
                     <v-btn class="text-capitalize" text v-on="on">
                         <v-avatar size="32" class="mr-2">
-                            <v-img src="../assets/avatars/user.png"></v-img>
+                            <v-img :src="user.avatar"></v-img>
                         </v-avatar>
-                        {{ user.full_name || "Hello, Sign In" }}
+                        {{ user.full_name }}
                         <v-icon v-text="icons.mdiChevronDown"></v-icon>
                     </v-btn>
                 </template>
@@ -79,7 +79,7 @@
             :permanent="$vuetify.breakpoint.mdAndUp"
             dark
         >
-            <router-link to="/" class="d-block pa-3 home-link">
+            <router-link :to="`/${lang}/`" class="d-block pa-3 home-link">
                 <v-img
                     src="../assets/loyalty-logo.png"
                     class="mx-auto"
@@ -181,7 +181,7 @@ import {
     mdiChevronDown,
     mdiAccountOutline,
     mdiWrenchOutline,
-    mdiLogout
+    mdiLogout,
 } from "@mdi/js";
 
 import navLinks from "@/utils/storePanel/navLinks";
@@ -197,15 +197,15 @@ export default {
             icons: {
                 mdiHelpCircleOutline,
                 mdiChevronDown,
-                mdiLogout
+                mdiLogout,
             },
             mini: false,
             drawer: false,
 
             profileLinks: [
                 { icon: mdiAccountOutline, text: "Profile" },
-                { icon: mdiWrenchOutline, text: "Settings" }
-            ]
+                { icon: mdiWrenchOutline, text: "Settings" },
+            ],
         };
     },
 
@@ -220,7 +220,7 @@ export default {
                     this.$router.push(
                         `/${val}/` + this.$route.fullPath.slice(4)
                     );
-            }
+            },
         },
 
         loading() {
@@ -241,7 +241,7 @@ export default {
 
         containerHeight() {
             return this.mini ? "calc(100vh - 194px)" : "calc(100vh - 184px)";
-        }
+        },
     },
 
     methods: {
@@ -257,8 +257,8 @@ export default {
             } catch (ex) {
                 console.log(ex.response.data);
             }
-        }
-    }
+        },
+    },
 };
 </script>
 
