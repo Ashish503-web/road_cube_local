@@ -1,6 +1,6 @@
 <template>
     <v-tab-item :value="$route.path">
-        <v-card tile flat>
+        <v-sheet>
             <v-row no-gutters justify="center" class="py-5">
                 <v-col cols="12" sm="6">
                     <v-card-title>Coupons with visits</v-card-title>
@@ -18,106 +18,107 @@
                 </v-col>
 
                 <v-col cols="12" sm="5" class="mt-5">
-                    <v-card outlined class="pb-8">
-                        <v-card-title class="justify-center"
-                            >Gift Card</v-card-title
-                        >
-                        <v-card-subtitle class="text-center subtitle-2"
-                            >Set a voucher that the customer will win at
-                            checkin</v-card-subtitle
-                        >
+                    <v-row
+                        no-gutters
+                        class="fill-height"
+                        align-content="space-between"
+                    >
+                        <v-col cols="12">
+                            <v-card outlined class="pb-8">
+                                <v-card-title class="justify-center"
+                                    >Gift Card</v-card-title
+                                >
+                                <v-card-subtitle class="text-center subtitle-2"
+                                    >Set a voucher that the customer will win at
+                                    checkin</v-card-subtitle
+                                >
 
-                        <v-card-text class="pt-4">
-                            <v-row no-gutters justify="center" align="center">
-                                <template v-if="couponWithVisit.coupon_id">
-                                    <v-col
-                                        cols="6"
-                                        class="subtitle-2 text-center"
+                                <v-card-text class="pt-4">
+                                    <v-row
+                                        no-gutters
+                                        justify="center"
+                                        align="center"
                                     >
-                                        <img
-                                            :src="couponWithVisit.image"
-                                            width="35"
-                                            style="vertical-align: middle"
-                                            class="mr-1"
-                                        />
-                                        Coffee No giftware
-                                    </v-col>
-                                    <v-col
-                                        cols="6"
-                                        class="subtitle-2 text-center"
-                                    >
-                                        10 voucher
-                                    </v-col>
-                                </template>
-
-                                <template v-else>
-                                    <v-col
-                                        cols="6"
-                                        class="subtitle-2 text-center"
-                                    >
-                                        No giftware
-                                    </v-col>
-                                    <v-col
-                                        cols="6"
-                                        class="subtitle-2 text-center"
-                                    >
-                                        <v-btn
-                                            color="secondary"
-                                            class="text-capitalize px-5"
-                                            height="32"
-                                            depressed
-                                            @click="open(1)"
-                                            >add</v-btn
+                                        <template
+                                            v-if="couponWithVisit.coupon_id"
                                         >
-                                    </v-col>
-                                </template>
-
-                                <v-col cols="auto">
-                                    <v-checkbox
-                                        color="secondary"
-                                        hide-details="auto"
-                                        class="mt-3 pt-0"
-                                    >
-                                        <template v-slot:label>
-                                            <h4 class="subtitle-2">
-                                                Reward with presence in the
-                                                store
-                                            </h4>
+                                            <v-col
+                                                cols="6"
+                                                class="subtitle-2 text-center"
+                                            >
+                                                <img
+                                                    :src="couponWithVisit.image"
+                                                    width="35"
+                                                    style="
+                                                        vertical-align: middle;
+                                                    "
+                                                    class="mr-1"
+                                                />
+                                                Coffee No giftware
+                                            </v-col>
+                                            <v-col
+                                                cols="6"
+                                                class="subtitle-2 text-center"
+                                            >
+                                                10 voucher
+                                            </v-col>
                                         </template>
-                                    </v-checkbox>
-                                </v-col>
-                            </v-row>
-                        </v-card-text>
-                    </v-card>
+
+                                        <v-col
+                                            v-else
+                                            cols="6"
+                                            class="subtitle-1 text-center font-weight-bold"
+                                        >
+                                            No giftware
+                                        </v-col>
+
+                                        <v-col cols="auto">
+                                            <v-checkbox
+                                                color="secondary"
+                                                hide-details="auto"
+                                                class="mt-3 pt-0"
+                                            >
+                                                <template v-slot:label>
+                                                    <h4 class="subtitle-2">
+                                                        Reward with presence in
+                                                        the store
+                                                    </h4>
+                                                </template>
+                                            </v-checkbox>
+                                        </v-col>
+                                    </v-row>
+                                </v-card-text>
+                            </v-card>
+                        </v-col>
+
+                        <v-col cols="12" class="text-right">
+                            <v-btn
+                                v-if="couponWithVisit.coupon_id"
+                                color="red"
+                                class="text-capitalize px-5"
+                                depressed
+                                dark
+                                style="font-size: 1rem"
+                                @click="deleteDialog = true"
+                                >delete</v-btn
+                            >
+                            <v-btn
+                                v-else
+                                color="secondary"
+                                class="text-capitalize px-5"
+                                depressed
+                                style="font-size: 1rem"
+                                @click="dialog = true"
+                                >create</v-btn
+                            >
+                        </v-col>
+                    </v-row>
                 </v-col>
             </v-row>
-
-            <v-divider></v-divider>
-
-            <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn
-                    color="secondary"
-                    class="text-capitalize px-5"
-                    depressed
-                    style="font-size: 1rem"
-                    @click="open(2, couponWithVisit)"
-                    >update</v-btn
-                >
-                <v-btn
-                    color="red"
-                    class="text-capitalize px-5"
-                    depressed
-                    dark
-                    style="font-size: 1rem"
-                    @click="deleteDialog = true"
-                    >delete</v-btn
-                >
-            </v-card-actions>
-        </v-card>
+        </v-sheet>
 
         <v-dialog v-model="dialog" max-width="600">
-            <CouponWithVisitForm :mode="mode" @cancel="dialog = false" />
+            <CouponWithVisitForm @cancel="dialog = false" />
         </v-dialog>
 
         <v-dialog v-model="deleteDialog" max-width="500">
@@ -155,14 +156,14 @@ export default {
         return {
             lang: "el",
             page: +this.$route.query.page,
-            mode: 0
+            mode: 0,
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage"]),
         ...mapState("storePanel/coupons/couponsWithVisits", [
-            "couponWithVisit"
+            "couponWithVisit",
         ]),
 
         dialog: {
@@ -172,7 +173,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         deleteDialog: {
@@ -182,7 +183,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            }
+            },
         },
 
         query() {
@@ -193,7 +194,7 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
@@ -201,18 +202,13 @@ export default {
             "setDialog",
             "setDeleteDialog",
             "setResetSuccess",
-            "setResetValidation"
+            "setResetValidation",
         ]),
         ...mapMutations("storePanel/coupons/couponsWithVisits", ["setItem"]),
         ...mapActions("storePanel/coupons/couponsWithVisits", [
             "getItems",
-            "remove"
+            "remove",
         ]),
-
-        open(mode) {
-            this.mode = mode;
-            this.dialog = true;
-        }
     },
 
     watch: {
@@ -221,8 +217,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
 
@@ -231,7 +227,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -239,14 +235,14 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    }
+    },
 };
 </script>

@@ -35,8 +35,6 @@ export default {
 
                 const { data } = await CouponWithVisit.get(query);
 
-                console.log(data.data);
-
                 commit("setItem", data.data[0]);
                 commit("setLoading", false, { root: true });
             } catch (ex) {
@@ -55,8 +53,6 @@ export default {
 
                 const { data } = await CouponWithVisit.create(couponWithVisit);
 
-                console.log(data);
-
                 if (image) {
                     dispatch("uploadImage", {
                         item: data.data.coupon,
@@ -74,49 +70,6 @@ export default {
                             type: "success",
                             text:
                                 "You have successfully created new coupon with visit!"
-                        },
-
-                        { root: true }
-                    );
-                }
-            } catch (ex) {
-                commit("setLoading", false, { root: true });
-                commit("setErrorMessage", ex.response.data.message, {
-                    root: true
-                });
-                setTimeout(
-                    () => commit("setErrorMessage", "", { root: true }),
-                    5000
-                );
-            }
-        },
-
-        async update({ commit, dispatch, state }, image) {
-            try {
-                commit("setLoading", true, { root: true });
-
-                let couponWithVisit = { ...state.couponWithVisit };
-                delete couponWithVisit.image;
-
-                const { data } = await CouponWithVisit.update(couponWithVisit);
-
-                if (image) {
-                    dispatch("uploadImage", {
-                        item: data.data.coupon,
-                        image,
-                        mode: 2
-                    });
-                } else {
-                    commit("updateItem", data.data.coupon);
-                    commit("setLoading", false, { root: true });
-                    commit("setDialog", false, { root: true });
-                    commit(
-                        "setNotification",
-                        {
-                            show: true,
-                            type: "success",
-                            text:
-                                "You have successfully updated coupon with visit!"
                         },
 
                         { root: true }

@@ -3,14 +3,23 @@
         title="Pin Display"
         title-color="white"
         submit-text="update logo"
+        :loading="loading"
+        :error-message="errorMessage"
+        @submit="uploadMapLogo({ type: 'mapLogo', imageFile })"
     >
-        <v-row no-gutters justify="space-between">
-            <v-col cols="6">
-                Here you can change the display of the pin on the map:
-                <v-sheet width="84" class="relative">
+        <div style="height: 100px">
+            Here you can change the display of the pin on the map:
+        </div>
+
+        <v-row no-gutters align="center" style="height: 120px">
+            <v-col cols="12" sm="5" class="pr-2">
+                <v-sheet width="84" class="relative mx-auto">
                     <v-img :src="bubble" width="84"></v-img>
-                    <v-img :src="mapLogo.image" class="map-new-pin"></v-img>
+                    <v-img :src="mapLogo" class="map-new-pin"></v-img>
                 </v-sheet>
+            </v-col>
+
+            <v-col cols="12" sm="7" class="pl-0 pl-sm-2">
                 Press the following button to choose image:
                 <v-file-input
                     color="secondary"
@@ -22,14 +31,6 @@
                     :success="success"
                     @change="onFileSelected"
                 ></v-file-input>
-            </v-col>
-            <v-col cols="6">
-                <v-img
-                    src="@/assets/theMapLogo3.png"
-                    width="260"
-                    style="border: 2px solid gray"
-                    class="rounded-circle"
-                ></v-img>
             </v-col>
         </v-row>
     </b-standard-card>
@@ -45,6 +46,9 @@ export default {
     data() {
         return {
             bubble,
+            mapLogo: "",
+            imageFile: "",
+            success: false,
             rules: [
                 v => {
                     if (v) {
@@ -60,49 +64,47 @@ export default {
 
     computed: {
         loading() {
-            return this.$store.state.storePanel.settings.profile.loading
+            return this.$store.state.loyaltyPanel.businessProfile.loading
                 .mapLogo;
         },
 
         errorMessage() {
-            return this.$store.state.storePanel.settings.profile.errorMessage
+            return this.$store.state.loyaltyPanel.businessProfile.errorMessage
                 .mapLogo;
         },
 
-        success: {
-            get() {
-                return this.$store.state.storePanel.settings.profile.success
-                    .mapLogo;
-            },
-
-            set(val) {
-                this.setSuccess({ value: val, type: "mapLogo" });
-            }
-        },
-
-        mapLogo: {
-            get() {
-                return this.$store.state.storePanel.settings.profile.map_logo;
-            },
-
-            set(val) {
-                this.setMapLogo(val);
-            }
+        resetSuccess() {
+            return this.$store.state.loyaltyPanel.businessProfile.errorMessage
+                .resetSuccess;
         }
     },
 
     methods: {
-        ...mapMutations("storePanel/settings/profile", [
-            "setSuccess",
-            "setMapLogo"
-        ]),
-        ...mapActions("storePanel/settings/profile", ["uploadMapLogo"]),
+        ...mapMutations("loyaltyPanel/businessProfile", ["setResetSuccess"]),
+        ...mapActions("loyaltyPanel/businessProfile", ["uploadMapLogo"]),
 
         onFileSelected(event) {
-            this.mapLogo.imageFile = event;
+            this.imageFile = event;
             const reader = new FileReader();
-            reader.readAsDataURL(this.mapLogo.imageFile);
-            reader.onload = e => (this.mapLogo.image = e.target.result);
+            reader.readAsDataURL(this.imageFile);
+            reader.onload = e => (this.mapLogo = e.target.result);
+        }
+    },
+
+    watch: {
+        ["$store.state.loyaltyPanel.company"]: {
+            immediate: true,
+            handler(val) {
+                this.mapLogo = val.map_logo;
+            }
+        },
+
+        success(val) {
+            if (val) this.setResetSuccess({ type: "mapLogo", value: false });
+        },
+
+        resetSuccess(val) {
+            if (val) this.success = false;
         }
     }
 };

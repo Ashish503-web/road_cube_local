@@ -45,6 +45,15 @@
             :footer-props="{ itemsPerPageOptions }"
             class="b-outlined"
         >
+            <template v-slot:no-data>
+                <v-progress-circular
+                    v-if="loading"
+                    color="secondary"
+                    indeterminate
+                ></v-progress-circular>
+                <span v-else v-text="translations.noData[lang]"></span>
+            </template>
+
             <template v-slot:item.edit="{ item }">
                 <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
@@ -70,39 +79,47 @@ import {
     mdiFormatListCheckbox,
     mdiMicrosoftExcel,
     mdiFileDelimitedOutline,
-    mdiPencilOutline
+    mdiPencilOutline,
 } from "@mdi/js";
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
+
+import { mapState } from "vuex";
+import translations from "@/utils/translations/storePanel/couponsOverview";
 
 export default {
     name: "CouponsOverview",
 
-    data: () => ({
-        icons: {
-            mdiFormatListCheckbox,
-            mdiPencilOutline
-        },
-        exportLinks: [
-            {
-                text: { el: "", en: "Export to Excel", it: "" },
-                icon: mdiMicrosoftExcel
-            },
-            {
-                text: { el: "", en: "Export to CSV", it: "" },
-                icon: mdiFileDelimitedOutline
-            }
-        ],
-        itemsPerPageOptions: [10, 25, 50, 100]
-    }),
+    mixins: [translations],
 
-    mounted(){
-        this.getItems()
+    data() {
+        return {
+            icons: {
+                mdiFormatListCheckbox,
+                mdiPencilOutline,
+            },
+            exportLinks: [
+                {
+                    text: { el: "", en: "Export to Excel", it: "" },
+                    icon: mdiMicrosoftExcel,
+                },
+                {
+                    text: { el: "", en: "Export to CSV", it: "" },
+                    icon: mdiFileDelimitedOutline,
+                },
+            ],
+            itemsPerPageOptions: [10, 25, 50, 100],
+        };
+    },
+
+    mounted() {
+        this.getItems();
     },
 
     computed: {
+        ...mapState(["loading"]),
         ...mapGetters("storePanel/redeem/couponsOverview", [
             "coupons",
-            "pagination"
+            "pagination",
         ]),
 
         lang() {
@@ -116,25 +133,13 @@ export default {
                 { text: "Available", value: "available" },
                 { text: "Points", value: "points" },
                 { text: "Total Redeemed", value: "total_redeemed" },
-                { text: "Created at", value: "created_at" }
+                { text: "Created at", value: "created_at" },
             ];
-        }
+        },
     },
 
     methods: {
-        ...mapActions("storePanel/redeem/couponsOverview", [
-            "getItems"
-        ])
-    }
+        ...mapActions("storePanel/redeem/couponsOverview", ["getItems"]),
+    },
 };
 </script>
-
-<style scoped>
-.export-link {
-    text-decoration: none;
-}
-
-.export-link:hover {
-    text-decoration: underline;
-}
-</style>

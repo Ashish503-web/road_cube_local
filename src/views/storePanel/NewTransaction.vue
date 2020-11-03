@@ -8,15 +8,21 @@
                         large
                         v-text="icons.mdiPlusThick"
                     ></v-icon>
-                    {{ newTransaction[lang] }}
+                    {{ translations.newTransaction[lang] }}
                     <v-spacer></v-spacer>
                     <v-sheet
                         color="rgba(234, 237, 241, 0.57)"
                         outlined
                         class="subtitle-2 pa-3"
                     >
-                        <div>{{ UITotalAmount[lang] }}: {{ totalAmount }}</div>
-                        <div>{{ UITotalPoints[lang] }}: {{ totalPoints }}</div>
+                        <div>
+                            {{ translations.totalAmount[lang] }}:
+                            {{ totalAmount }}
+                        </div>
+                        <div>
+                            {{ translations.totalPoints[lang] }}:
+                            {{ totalPoints }}
+                        </div>
                     </v-sheet>
                 </v-card-title>
 
@@ -31,7 +37,7 @@
                                 v-model="transaction.user"
                                 v-mask="'###############'"
                                 type="number"
-                                :label="user[lang]"
+                                :label="translations.user[lang]"
                                 color="secondary"
                                 outlined
                                 dense
@@ -46,7 +52,7 @@
                         <v-col cols="6" class="pl-2">
                             <v-text-field
                                 v-model="transaction.receipt_number"
-                                :label="receiptNumber[lang]"
+                                :label="translations.receiptNumber[lang]"
                                 color="secondary"
                                 outlined
                                 dense
@@ -68,7 +74,7 @@
                         <template v-slot:activator="{ on }">
                             <v-text-field
                                 v-model="search"
-                                :label="orderProducts[lang]"
+                                :label="translations.orderProducts[lang]"
                                 color="secondary"
                                 class="mt-5"
                                 outlined
@@ -101,7 +107,7 @@
                                     :key="product.product_id"
                                     class="pl-3"
                                     :class="{
-                                        'b-list-active': product.selected
+                                        'b-list-active': product.selected,
                                     }"
                                     @click="productSelect(product)"
                                 >
@@ -199,7 +205,7 @@
                         large
                         :loading="loading"
                         :disabled="disabled"
-                        v-text="createOrder[lang]"
+                        v-text="translations.createOrder[lang]"
                     ></v-btn>
                 </v-form>
             </v-card>
@@ -215,7 +221,7 @@ import {
     mdiCheckBoxOutline,
     mdiCheckboxBlankOutline,
     mdiCurrencyEur,
-    mdiClose
+    mdiClose,
 } from "@mdi/js";
 
 import translations from "@/utils/translations/storePanel/newTransaction";
@@ -233,7 +239,7 @@ class TransactionProduct {
         this.success = false;
         if (this.reward_type_id === 4) {
             this.rules = [
-                v => {
+                (v) => {
                     if (v >= 0.1) {
                         this.success = true;
                         return true;
@@ -241,11 +247,11 @@ class TransactionProduct {
                         this.success = false;
                         return "Purchase price is required";
                     } else return "Purchase Price must be minimum 0.1";
-                }
+                },
             ];
         } else {
             this.rules = [
-                v => {
+                (v) => {
                     if (v >= 1) {
                         this.success = true;
                         return true;
@@ -253,7 +259,7 @@ class TransactionProduct {
                         this.success = false;
                         return "Quantity is required";
                     } else return "Quantity must be minimum 1";
-                }
+                },
             ];
         }
     }
@@ -270,12 +276,12 @@ export default {
             mdiCheckBoxOutline,
             mdiCheckboxBlankOutline,
             mdiCurrencyEur,
-            mdiClose
+            mdiClose,
         },
         valid: false,
         disabled: true,
         menu: false,
-        search: ""
+        search: "",
     }),
 
     computed: {
@@ -289,19 +295,19 @@ export default {
         totalAmount() {
             let amount = 0;
 
-            this.selectedProducts.forEach(p => (amount += +p.retail_price));
+            this.selectedProducts.forEach((p) => (amount += +p.retail_price));
 
             return new Intl.NumberFormat("en-US", {
                 style: "currency",
                 currency: "EUR",
-                minimumFractionDigits: 2
+                minimumFractionDigits: 2,
             }).format(amount);
         },
 
         totalPoints() {
             let point = 0;
 
-            this.selectedProducts.forEach(p => (point += +p.reward_points));
+            this.selectedProducts.forEach((p) => (point += +p.reward_points));
 
             return point;
         },
@@ -314,7 +320,7 @@ export default {
 
             set(val) {
                 this.setSelectedProducts(val);
-            }
+            },
         },
 
         transaction: {
@@ -324,14 +330,14 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
         ...mapMutations("storePanel/transactions", [
             "setItem",
-            "setSelectedProducts"
+            "setSelectedProducts",
         ]),
         ...mapActions("storePanel/transactions", ["getProducts", "create"]),
 
@@ -343,7 +349,7 @@ export default {
             item.selected = !item.selected;
 
             let index = this.selectedProducts.findIndex(
-                p => p.product_id === item.product_id
+                (p) => p.product_id === item.product_id
             );
 
             if (index === -1) {
@@ -356,9 +362,9 @@ export default {
         productRemove(item, index) {
             this.selectedProducts.splice(index, 1);
             this.products.find(
-                p => p.product_id === item.product_id
+                (p) => p.product_id === item.product_id
             ).selected = false;
-        }
+        },
     },
 
     watch: {
@@ -387,9 +393,9 @@ export default {
                 this.productError = true;
             }
 
-            val.forEach(selected => {
+            val.forEach((selected) => {
                 let product = this.transaction.products.find(
-                    p => p.product_id === selected.product_id
+                    (p) => p.product_id === selected.product_id
                 );
 
                 if (product) {
@@ -403,10 +409,10 @@ export default {
 
             this.transaction.products = [];
 
-            val.forEach(p => {
+            val.forEach((p) => {
                 this.transaction.products.push(new TransactionProduct(p));
             });
-        }
+        },
     },
 
     created() {
@@ -421,7 +427,7 @@ export default {
     beforeDestroy() {
         this.selectedProducts = [];
         this.transaction = {};
-    }
+    },
 };
 </script>
 

@@ -1,5 +1,13 @@
 <template>
-    <v-tab-item :value="$route.path" class="pt-10">
+    <v-tab-item :value="$route.path" class="pt-5">
+        <v-btn
+            color="secondary"
+            class="text-capitalize px-5 ml-5 mb-7"
+            depressed
+            @click="dialog = true"
+            >add discount</v-btn
+        >
+
         <v-data-table
             :headers="headers"
             :items="couponsWithDiscount"
@@ -18,22 +26,7 @@
             </template>
 
             <template v-slot:item.actions="{ item }">
-                <v-tooltip v-if="!item.total_discount" color="secondary" top>
-                    <template v-slot:activator="{ on }">
-                        <v-btn
-                            color="secondary"
-                            icon
-                            v-on="on"
-                            @click="open(item)"
-                        >
-                            <v-icon size="28" v-text="icons.mdiPlus"></v-icon>
-                        </v-btn>
-                    </template>
-
-                    <span class="font-weight-bold">Add Discount</span>
-                </v-tooltip>
-
-                <v-tooltip v-else color="secondary" top>
+                <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
                         <v-btn
                             color="red"
@@ -95,29 +88,29 @@ export default {
         return {
             icons: {
                 mdiPlus,
-                mdiClose
+                mdiClose,
             },
             lang: "el",
-            page: +this.$route.query.page
+            page: +this.$route.query.page,
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/coupons/couponsWithDiscount", [
-            "couponsWithDiscount"
+            "couponsWithDiscount",
         ]),
 
         headers() {
             return [
                 {
                     text: "Product Name",
-                    value: `discount_product_name[${this.lang}]`
+                    value: `discount_product_name[${this.lang}]`,
                 },
                 { text: "Discount", value: "total_discount" },
                 { text: "Points", value: "points" },
                 { text: "Date", value: "created_at" },
-                { text: "Actions", value: "actions" }
+                { text: "Actions", value: "actions" },
             ];
         },
 
@@ -138,7 +131,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         deleteDialog: {
@@ -148,7 +141,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            }
+            },
         },
 
         couponWithDiscount: {
@@ -159,8 +152,8 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
@@ -168,12 +161,12 @@ export default {
             "setDialog",
             "setDeleteDialog",
             "setResetSuccess",
-            "setResetValidation"
+            "setResetValidation",
         ]),
         ...mapMutations("storePanel/coupons/couponsWithDiscount", ["setItem"]),
         ...mapActions("storePanel/coupons/couponsWithDiscount", [
             "getItems",
-            "remove"
+            "remove",
         ]),
 
         open(item) {
@@ -181,7 +174,7 @@ export default {
             setTimeout(() => this.setResetSuccess(true), 300);
             this.setResetValidation(true);
             this.dialog = true;
-        }
+        },
     },
 
     watch: {
@@ -197,8 +190,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
             this.getItems(this.query);
@@ -206,7 +199,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -214,15 +207,15 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    }
+    },
 };
 </script>
 

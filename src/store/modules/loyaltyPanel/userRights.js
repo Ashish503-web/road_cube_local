@@ -8,14 +8,14 @@ export default {
     }),
 
     mutations: {
-        setMode(state, payload){
+        setMode(state, payload) {
             state.mode = payload;
         },
-        setUserDialog(state, payload){
+        setUserDialog(state, payload) {
             state.userDialog = payload;
         },
-        setDeleteDialog(state, payload){
-            state.deleteDialog = payload
+        setDeleteDialog(state, payload) {
+            state.deleteDialog = payload;
         }
     }
 };

@@ -23,15 +23,15 @@ export default {
     computed: {
         lang() {
             return this.$route.path.slice(0, 4);
-        }
+        },
     },
 
     beforeCreate() {
         const lang = this.$route.path.slice(0, 4);
 
         if (lang !== "/el/" && lang !== "/en/" && lang !== "/it/") {
-            this.$router.push("/en" + this.$route.fullPath);
+            this.$router.replace("/en" + this.$route.fullPath);
         }
-    }
+    },
 };
 </script>

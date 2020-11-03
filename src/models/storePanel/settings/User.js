@@ -6,101 +6,14 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
 
 const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
 
+import Permissions from "./Permissions";
+
 export default class User {
     constructor(item = {}) {
         this.mobile = item.mobile || "";
         this.password = item.password || "";
-        this.permissions = item.permissions || {
-            homepage: false,
-            transactions: {
-                open: false,
-                create: true,
-                pending: true,
-                paid: true,
-                open_digital_payments: true,
-                fund_closure: true,
-                download_transactions: true
-            },
-            redemption: {
-                open: false,
-                redeem_voucher: true,
-                coupons_overview: true,
-                multiple_coupons: true
-            },
-            history: {
-                open: false,
-                points_analysis: true,
-                monthly_points: true
-            },
-            contests: {
-                open: false,
-                create: true,
-                update: true,
-                delete: true,
-                participants: true
-            },
-            products: {
-                open: false,
-                create: true,
-                update: true,
-                delete: true,
-                order: true,
-                group: {
-                    open: false,
-                    create: true,
-                    update: true,
-                    delete: true
-                }
-            },
-            coupons: {
-                open: false,
-                goal: {
-                    open: false,
-                    create: true,
-                    delete: true
-                },
-                voucher: {
-                    open: false,
-                    create: true,
-                    update: true,
-                    delete: true
-                },
-                product: {
-                    open: false,
-                    create: true,
-                    update: true,
-                    delete: true
-                },
-                visit: {
-                    open: false,
-                    create: true,
-                    update: true,
-                    delete: true
-                },
-                discount: {
-                    open: false,
-                    create: true,
-                    update: true,
-                    delete: true
-                },
-                multiple: {
-                    open: false,
-                    create: true,
-                    update: true,
-                    delete: true
-                }
-            },
-            settings: {
-                open: false,
-                profile: false,
-                reward: true,
-                product_points: true,
-                cleaners: true,
-                payment_routing: true,
-                cards: true,
-                subscriptions: true
-            }
-        };
+        this.permissions =
+            new Permissions(item.permissions) || new Permissions();
     }
 
     static getModeratorPermissions = () =>

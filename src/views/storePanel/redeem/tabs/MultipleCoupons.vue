@@ -43,24 +43,19 @@ export default {
             { text: "Total Redeemed", value: "total_redeemed" },
             { text: "Created at", value: "created_at" },
         ],
-        itemsPerPageOptions: [10, 25, 50, 100]
+        itemsPerPageOptions: [10, 25, 50, 100],
     }),
 
     computed: {
-        ...mapGetters("storePanel/redeem/multipleCoupons", [
-            "multipleCoupons"
-        ])
+        ...mapGetters("storePanel/redeem/multipleCoupons", ["multipleCoupons"]),
     },
 
     methods: {
-        ...mapActions("storePanel/redeem/multipleCoupons", [
-            "getItems"
-        ])
+        ...mapActions("storePanel/redeem/multipleCoupons", ["getItems"]),
     },
 
-    mounted(){
-        this.getItems()
-    }
-    
+    mounted() {
+        this.getItems();
+    },
 };
 </script>

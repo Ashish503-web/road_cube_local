@@ -214,15 +214,21 @@ export default {
             "setResetSuccess",
             "setResetValidation",
         ]),
-        ...mapMutations("storePanel/coupons/couponsWithCode", ["setItem"]),
+        ...mapMutations("storePanel/coupons/couponsWithCode", [
+            "setShowImageUpload",
+            "setItem",
+        ]),
         ...mapActions("storePanel/coupons/couponsWithCode", [
             "getItems",
             "remove",
         ]),
 
         open(mode, item) {
+            console.log(item);
             this.mode = mode;
             this.couponWithCode = item;
+            if (this.couponWithCode.image) this.setShowImageUpload(true);
+            else this.setShowImageUpload(false);
             setTimeout(() => this.setResetSuccess(true), 300);
             this.setResetValidation(true);
             this.dialog = true;

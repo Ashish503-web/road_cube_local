@@ -10,7 +10,7 @@
                             }}</v-card-title>
                             <h4
                                 class="subtitle-1 success--text pl-4 text-center"
-                                v-text="online[lang]"
+                                v-text="translations.online[lang]"
                             ></h4>
                         </v-col>
 
@@ -26,7 +26,7 @@
                                     v-text="icons.mdiAccountGroup"
                                     class="mr-1"
                                 ></v-icon>
-                                {{ customer[lang] }}
+                                {{ translations.customer[lang] }}
                             </v-card-title>
                         </v-col>
 
@@ -41,7 +41,7 @@
                                     v-text="icons.mdiDatabase"
                                     class="mr-1"
                                 ></v-icon>
-                                {{ transactions[lang] }}
+                                {{ translations.transactions[lang] }}
                             </v-card-title>
                         </v-col>
 
@@ -57,7 +57,7 @@
                                     v-text="icons.mdiCurrencyEur"
                                     class="mr-1"
                                 ></v-icon>
-                                {{ total[lang] }}
+                                {{ translations.total[lang] }}
                             </v-card-title>
                         </v-col>
                     </v-row>
@@ -84,7 +84,7 @@
 
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
-                                v-text="showsOnMap[lang]"
+                                v-text="translations.showsOnMap[lang]"
                             ></h4>
                         </v-col>
                     </v-row>
@@ -111,7 +111,7 @@
 
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
-                                v-text="clicks[lang]"
+                                v-text="translations.clicks[lang]"
                             ></h4>
                         </v-col>
                     </v-row>
@@ -138,7 +138,7 @@
 
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
-                                v-text="clickOnNavigate[lang]"
+                                v-text="translations.clickOnNavigate[lang]"
                             ></h4>
                         </v-col>
                     </v-row>
@@ -167,7 +167,7 @@
 
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
-                                v-text="phoneClicks[lang]"
+                                v-text="translations.phoneClicks[lang]"
                             ></h4>
                         </v-col>
                     </v-row>
@@ -192,14 +192,14 @@
                                 >{{
                                     statistics.last_twelve_hours_payments
                                         .length +
-                                        ` ${transactions[lang]} / ` +
-                                        statistics.twelve_hours_total +
-                                        ` ${total[lang]}`
+                                    ` ${translations.transactions[lang]} / ` +
+                                    statistics.twelve_hours_total +
+                                    ` ${translations.total[lang]}`
                                 }}</v-card-title
                             >
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
-                                v-text="paymentsLast12Hours[lang]"
+                                v-text="translations.paymentsLast12Hours[lang]"
                             ></h4>
                         </v-col>
                     </v-row>
@@ -223,14 +223,14 @@
                                 class="subtitle-1 font-weight-bold pa-0"
                                 >{{
                                     statistics.last_week_payments.length +
-                                        ` ${transactions[lang]} / ` +
-                                        statistics.last_week_total +
-                                        ` ${total[lang]}`
+                                    ` ${translations.transactions[lang]} / ` +
+                                    statistics.last_week_total +
+                                    ` ${translations.total[lang]}`
                                 }}</v-card-title
                             >
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
-                                v-text="paymentsLastWeek[lang]"
+                                v-text="translations.paymentsLastWeek[lang]"
                             ></h4>
                         </v-col>
                     </v-row>
@@ -239,7 +239,9 @@
 
             <v-col cols="12">
                 <v-card tile outlined>
-                    <v-card-title v-text="transactions[lang]"></v-card-title>
+                    <v-card-title
+                        v-text="translations.transactions[lang]"
+                    ></v-card-title>
                     <v-sheet
                         class="v-sheet--offset mx-auto"
                         max-width="calc(100% - 32px)"
@@ -273,7 +275,7 @@ import {
     mdiCursorDefault,
     mdiCompassOutline,
     mdiPhone,
-    mdiWallet
+    mdiWallet,
 } from "@mdi/js";
 
 import translations from "@/utils/translations/storePanel/home";
@@ -284,7 +286,7 @@ const gradients = [
     ["red", "orange", "yellow"],
     ["purple", "violet"],
     ["#00c6ff", "#F0F", "#FF0"],
-    ["#f72047", "#ffd200", "#1feaea"]
+    ["#f72047", "#ffd200", "#1feaea"],
 ];
 
 export default {
@@ -301,7 +303,7 @@ export default {
             mdiCursorDefault,
             mdiCompassOutline,
             mdiPhone,
-            mdiWallet
+            mdiWallet,
         },
         width: 2,
         radius: 10,
@@ -314,13 +316,13 @@ export default {
         fill: false,
         type: "trend",
         autoLineWidth: false,
-        statistics: {}
+        statistics: {},
     }),
 
     computed: {
         lang() {
             return this.$route.params.lang;
-        }
+        },
     },
 
     watch: {
@@ -334,7 +336,7 @@ export default {
                 this.statistics.total_income = new Intl.NumberFormat("en-US", {
                     style: "currency",
                     currency: "EUR",
-                    minimumFractionDigits: 2
+                    minimumFractionDigits: 2,
                 }).format(this.statistics.total_income);
 
                 if (this.statistics.last_twelve_hours_payments.length) {
@@ -351,7 +353,7 @@ export default {
                         {
                             style: "currency",
                             currency: "EUR",
-                            minimumFractionDigits: 2
+                            minimumFractionDigits: 2,
                         }
                     ).format(this.statistics.twelve_hours_total);
                 }
@@ -370,12 +372,12 @@ export default {
                         {
                             style: "currency",
                             currency: "EUR",
-                            minimumFractionDigits: 2
+                            minimumFractionDigits: 2,
                         }
                     ).format(this.statistics.last_week_total);
                 }
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>

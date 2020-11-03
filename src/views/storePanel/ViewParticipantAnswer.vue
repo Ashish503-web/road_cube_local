@@ -100,20 +100,20 @@ export default {
     data: () => ({
         icons: {
             mdiArrowLeft,
-            mdiViewGrid
+            mdiViewGrid,
         },
         user: {
             gender: "Female",
             email: "Email",
-            phone: "Phone"
+            phone: "Phone",
         },
         checkbox: true,
         question: {
             date: "05-02-2020",
-            number: 2
+            number: 2,
         },
-        radioGroup: 3
-    })
+        radioGroup: 3,
+    }),
 };
 </script>
 

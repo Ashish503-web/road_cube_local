@@ -11,7 +11,7 @@
                     :key="tab.name"
                     v-text="tab.name"
                     :to="tab.to"
-                    class="text-capitalize d-flex justify-md-center justify-start px-3"
+                    class="text-capitalize d-flex justify-start justify-md-center px-3"
                 ></v-tab>
             </v-tabs>
 

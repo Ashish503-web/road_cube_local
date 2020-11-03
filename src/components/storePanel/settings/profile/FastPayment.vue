@@ -49,13 +49,13 @@ export default {
 
             set(val) {
                 this.setQuickPayment(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
         ...mapMutations("storePanel", ["setQuickPayment"]),
-        ...mapActions("storePanel/settings/profile", ["updateQuickPayment"]),
-    },
+        ...mapActions("storePanel/settings/profile", ["updateQuickPayment"])
+    }
 };
 </script>

@@ -4,11 +4,12 @@
         submit-text="update logo"
         :loading="loading"
         :error-message="errorMessage"
-        @submit="uploadMapLogo(imageFile)"
+        @submit="uploadMapLogo({ type: 'mapLogo', imageFile })"
     >
         <div style="height: 100px">
             Here you can change the display of the pin on the map:
         </div>
+
         <v-row no-gutters align="center" style="height: 120px">
             <v-col cols="12" sm="5" class="pr-2">
                 <v-sheet width="84" class="relative mx-auto">
@@ -44,7 +45,9 @@ export default {
     data() {
         return {
             bubble,
+            mapLogo: "",
             imageFile: "",
+            success: false,
             rules: [
                 v => {
                     if (v) {
@@ -69,31 +72,14 @@ export default {
                 .mapLogo;
         },
 
-        success: {
-            get() {
-                return this.$store.state.storePanel.settings.profile.success
-                    .mapLogo;
-            },
-
-            set(val) {
-                this.setSuccess({ value: val, type: "mapLogo" });
-            }
-        },
-
-        mapLogo: {
-            get() {
-                return this.$store.state.storePanel.store.map_logo;
-            },
-
-            set(val) {
-                this.setMapLogo(val);
-            }
+        resetSuccess() {
+            return this.$store.state.storePanel.settings.profile.resetSuccess
+                .mapLogo;
         }
     },
 
     methods: {
-        ...mapMutations("storePanel", ["setMapLogo"]),
-        ...mapMutations("storePanel/settings/profile", ["setSuccess"]),
+        ...mapMutations("storePanel/settings/profile", ["setResetSuccess"]),
         ...mapActions("storePanel/settings/profile", ["uploadMapLogo"]),
 
         onFileSelected(event) {
@@ -101,6 +87,23 @@ export default {
             const reader = new FileReader();
             reader.readAsDataURL(this.imageFile);
             reader.onload = e => (this.mapLogo = e.target.result);
+        }
+    },
+
+    watch: {
+        ["$store.state.storePanel.store"]: {
+            immediate: true,
+            handler(val) {
+                this.mapLogo = val.map_logo;
+            }
+        },
+
+        success(val) {
+            if (val) this.setResetSuccess({ type: "mapLogo", value: false });
+        },
+
+        resetSuccess(val) {
+            if (val) this.success = false;
         }
     }
 };

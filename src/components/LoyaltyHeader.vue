@@ -21,10 +21,9 @@
                         v-on="on"
                     >
                         <v-avatar size="32" class="mr-2">
-                            <v-img
-                                src="../assets/avatars/user.png"
-                            ></v-img> </v-avatar
-                        >Henry
+                            <v-img :src="user.avatar"></v-img>
+                        </v-avatar>
+                        {{ user.full_name }}
                         <v-icon v-text="icons.mdiChevronDown"></v-icon>
                     </v-btn>
                 </template>
@@ -75,7 +74,7 @@
             :permanent="$vuetify.breakpoint.mdAndUp"
             dark
         >
-            <router-link to="/" class="d-block pa-3 home-link">
+            <router-link :to="`/${lang}/`" class="d-block pa-3 home-link">
                 <v-img
                     src="../assets/loyalty-logo.png"
                     class="mx-auto"
@@ -88,15 +87,31 @@
 
             <v-row class="pt-4 pb-3" no-gutters justify="center">
                 <v-sheet light class="pa-2 rounded-circle">
-                    <v-img
-                        src="../assets/logo.png"
+                    <v-skeleton-loader
+                        :loading="loading"
+                        type="image"
                         width="50"
                         height="50"
-                    ></v-img>
+                        class="rounded-circle"
+                    >
+                        <v-img
+                            :src="logo"
+                            width="50"
+                            height="50"
+                            contain
+                        ></v-img>
+                    </v-skeleton-loader>
                 </v-sheet>
 
                 <v-col cols="12" class="text-center mt-3">
-                    <h1 class="subtitle-1 white--text">Loyalty Panel</h1>
+                    <v-skeleton-loader
+                        v-if="loading"
+                        type="heading"
+                        class="mx-5"
+                    ></v-skeleton-loader>
+                    <h1 v-else class="subtitle-1 white--text">
+                        {{ companyName }}
+                    </h1>
                 </v-col>
             </v-row>
 
@@ -185,7 +200,7 @@ import {
     mdiAccountOutline,
     mdiWalletOutline,
     mdiWrenchOutline,
-    mdiLockOpenOutline
+    mdiLockOpenOutline,
 } from "@mdi/js";
 
 import navLinks from "@/utils/loyaltyPanel/navLinks";
@@ -208,7 +223,7 @@ export default {
                 mdiClockOutline,
                 mdiLogout,
                 mdiCogOutline,
-                mdiClose
+                mdiClose,
             },
             mini: false,
             leftDrawer: false,
@@ -216,7 +231,6 @@ export default {
             profileLinks: [
                 { icon: mdiAccountOutline, text: "Profile" },
                 { icon: mdiWrenchOutline, text: "Settings" },
-                { icon: mdiLockOpenOutline, text: "Lock Screen" }
             ],
         };
     },
@@ -232,7 +246,23 @@ export default {
                     this.$router.push(
                         `/${val}/` + this.$route.fullPath.slice(4)
                     );
-            }
+            },
+        },
+
+        loading() {
+            return this.$store.state.loyaltyPanel.loading;
+        },
+
+        user() {
+            return this.$store.state.user;
+        },
+
+        logo() {
+            return this.$store.state.loyaltyPanel.company.logo;
+        },
+
+        companyName() {
+            return this.$store.state.loyaltyPanel.company.name;
         },
 
         containerHeight() {
@@ -258,6 +288,12 @@ export default {
     },
 };
 </script>
+
+<style>
+.v-skeleton-loader__heading {
+    width: 100% !important;
+}
+</style>
 
 <style scoped>
 .home-link:hover {

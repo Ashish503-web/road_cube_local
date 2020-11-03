@@ -4,7 +4,7 @@
         submit-text="update logo"
         :loading="loading"
         :error-message="errorMessage"
-        @submit="uploadLogo(imageFile)"
+        @submit="uploadLogo({ type: 'logo', imageFile })"
     >
         <div style="height: 100px">
             You can upload here the logo of your business which will appear in
@@ -41,7 +41,9 @@ export default {
 
     data() {
         return {
+            logo: "",
             imageFile: "",
+            success: false,
             rules: [
                 v => {
                     if (v) {
@@ -65,38 +67,40 @@ export default {
                 .logo;
         },
 
-        success: {
-            get() {
-                return this.$store.state.storePanel.settings.profile.success
-                    .logo;
-            },
-
-            set(val) {
-                this.setSuccess({ value: val, type: "logo" });
-            }
-        },
-
-        logo: {
-            get() {
-                return this.$store.state.storePanel.store.logo;
-            },
-
-            set(val) {
-                this.setLogo(val);
-            }
+        resetSuccess() {
+            return this.$store.state.storePanel.settings.profile.resetSuccess
+                .logo;
         }
     },
 
     methods: {
-        ...mapMutations("storePanel", ["setLogo"]),
-        ...mapMutations("storePanel/settings/profile", ["setSuccess"]),
+        ...mapMutations("storePanel/settings/profile", ["setResetSuccess"]),
         ...mapActions("storePanel/settings/profile", ["uploadLogo"]),
 
         onFileSelected(event) {
-            this.imageFile = event;
-            const reader = new FileReader();
-            reader.readAsDataURL(this.imageFile);
-            reader.onload = e => (this.logo = e.target.result);
+            if (event) {
+                this.imageFile = event;
+                const reader = new FileReader();
+                reader.readAsDataURL(this.imageFile);
+                reader.onload = e => (this.logo = e.target.result);
+            }
+        }
+    },
+
+    watch: {
+        ["$store.state.storePanel.store"]: {
+            immediate: true,
+            handler(val) {
+                this.logo = val.logo;
+            }
+        },
+
+        success(val) {
+            if (val) this.setResetSuccess({ type: "logo", value: false });
+        },
+
+        resetSuccess(val) {
+            if (val) this.success = false;
         }
     }
 };

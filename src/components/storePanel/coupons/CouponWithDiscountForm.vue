@@ -8,14 +8,58 @@
         @submit="create"
     >
         <b-select
-            v-model="couponWithDiscount.product_discount_id"
-            label="Discount"
-            :items="discountTypes"
+            v-model="couponWithDiscount.gift_category_id"
+            :items="giftCategories"
+            :item-text="`name[${lang}]`"
+            item-value="gift_category_id"
+            label="Gift Category"
+            no-top-margin
         ></b-select>
+
+        <b-select
+            v-model="couponWithDiscount.product_discount_id"
+            :items="products"
+            :item-text="`name[${lang}]`"
+            item-value="product_id"
+            label="Product"
+        ></b-select>
+
+        <v-sheet class="mt-3 pa-3 pt-2" outlined>
+            <h4 class="subtitle-1 font-weight-medium">Discount Type</h4>
+            <v-radio-group v-model="type" class="mt-3 pt-0" hide-details="auto">
+                <v-row no-gutters>
+                    <v-col
+                        v-for="type in discountTypes"
+                        :key="type.text"
+                        cols="auto"
+                        class="pr-5"
+                    >
+                        <v-radio color="secondary" :value="type.value">
+                            <template v-slot:label>
+                                <h4
+                                    class="font-weight-medium text--primary"
+                                    v-text="type.text"
+                                ></h4>
+                            </template>
+                        </v-radio>
+                    </v-col>
+                </v-row>
+            </v-radio-group>
+        </v-sheet>
+
         <b-text-field
+            v-if="type === 1"
+            v-model="couponWithDiscount.discount_percentage"
             label="Amount"
             type="number"
-            :prepend-inner-icon="innerIcon"
+            prepend-inner-icon="mdiPercent"
+        ></b-text-field>
+        <b-text-field
+            v-else
+            v-model="couponWithDiscount.discount_value"
+            label="Amount"
+            type="number"
+            prepend-inner-icon="mdiCurrencyEur"
         ></b-text-field>
     </b-card>
 </template>
@@ -28,10 +72,11 @@ export default {
 
     data() {
         return {
+            type: 1,
             discountTypes: [
                 { text: "Percentage", value: 1 },
-                { text: "Euro", value: 2 }
-            ]
+                { text: "Euro", value: 2 },
+            ],
         };
     },
 
@@ -40,8 +85,17 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation"
+            "resetValidation",
         ]),
+        ...mapState("storePanel/coupons/couponsWithDiscount", [
+            "giftCategories",
+            "products",
+            "couponWithDiscount",
+        ]),
+
+        lang() {
+            return this.$route.params.lang;
+        },
 
         innerIcon() {
             let icon = "";
@@ -57,28 +111,17 @@ export default {
 
             return icon;
         },
-
-        couponWithDiscount() {
-            return this.$store.state.storePanel.coupons.couponsWithDiscount
-                .couponWithDiscount;
-        }
     },
 
     methods: {
         ...mapActions("storePanel/coupons/couponsWithDiscount", [
-            "getItem",
-            "create"
-        ])
+            "getGiftCategories",
+            "getProducts",
+            "create",
+        ]),
     },
 
     watch: {
-        ["couponWithDiscount.coupon_id"]: {
-            immediate: true,
-            handler(val) {
-                this.getItem(val);
-            }
-        },
-
         resetSuccess(val) {
             if (val) {
                 this.success = {
@@ -88,10 +131,15 @@ export default {
                     wholesalePrice: false,
                     deliveryCost: false,
                     shippingCost: false,
-                    category: false
+                    category: false,
                 };
             }
-        }
-    }
+        },
+    },
+
+    mounted() {
+        this.getGiftCategories();
+        this.getProducts();
+    },
 };
 </script>

@@ -11,74 +11,39 @@ export default {
                 en: "Voucher",
                 it: ""
             },
-            download: {
-                el: "",
-                en: "Download All Transactions",
-                it: ""
-            },
-            filterStatus: {
-                el: "",
-                en: "Filter By Status",
-                it: ""
-            },
-            filterType: {
-                el: "",
-                en: "Filter By Type",
-                it: ""
-            },
-            statuses: {
-                el: "",
-                en: "Statuses",
-                it: ""
-            },
-            types: {
-                el: "",
-                en: "Types",
-                it: ""
-            },
-            user: {
-                el: "",
-                en: "User",
-                it: ""
-            },
-            amount: {
-                el: "",
-                en: "Amount",
-                it: ""
-            },
             points: {
                 el: "",
                 en: "Points",
                 it: ""
             },
-            status: {
+            acquired: {
                 el: "",
-                en: "Status",
+                en: "Acquired",
                 it: ""
             },
-            type: {
+            redeemed: {
                 el: "",
-                en: "Type",
+                en: "Redeemed",
                 it: ""
             },
-            receiptNumber: {
+            available: {
                 el: "",
-                en: "Receipt Number",
+                en: "Available",
                 it: ""
             },
-            date: {
+            edit: {
                 el: "",
-                en: "Date",
-                it: ""
-            },
-            watch: {
-                el: "",
-                en: "Watch",
+                en: "Edit",
                 it: ""
             },
             actions: {
                 el: "",
                 en: "Actions",
+                it: ""
+            },
+            noData: {
+                el: "",
+                en: "No data available",
                 it: ""
             }
         }
