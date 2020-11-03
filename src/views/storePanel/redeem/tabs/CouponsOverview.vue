@@ -81,9 +81,8 @@ import {
     mdiFileDelimitedOutline,
     mdiPencilOutline,
 } from "@mdi/js";
-import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
+import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
 
-import { mapState } from "vuex";
 import translations from "@/utils/translations/storePanel/couponsOverview";
 
 export default {
