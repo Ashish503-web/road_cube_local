@@ -72,6 +72,7 @@ import {
     mdiFileDelimitedOutline,
     mdiPencilOutline
 } from "@mdi/js";
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 
 export default {
     name: "CouponsOverview",
@@ -91,27 +92,39 @@ export default {
                 icon: mdiFileDelimitedOutline
             }
         ],
-        coupons: [{ user: "Edgar" }],
         itemsPerPageOptions: [10, 25, 50, 100]
     }),
 
+    mounted(){
+        this.getItems()
+    },
+
     computed: {
+        ...mapGetters("storePanel/redeem/couponsOverview", [
+            "coupons",
+            "pagination"
+        ]),
+
         lang() {
             return this.$route.params.lang;
         },
 
         headers() {
             return [
-                { text: "Voucher / Action", value: "user" },
-                { text: "Voucher", value: "amount" },
-                { text: "Points", value: "product" },
-                { text: "Acquired", value: "address" },
-                { text: "Redeemed", value: "information" },
-                { text: "Available", value: "actions" },
-                { text: "Edit", value: "edit" },
-                { text: "Available", value: "actions" }
+                { text: "Promo Type Name", value: "promo_type_name" },
+                { text: "Code", value: "code" },
+                { text: "Available", value: "available" },
+                { text: "Points", value: "points" },
+                { text: "Total Redeemed", value: "total_redeemed" },
+                { text: "Created at", value: "created_at" }
             ];
         }
+    },
+
+    methods: {
+        ...mapActions("storePanel/redeem/couponsOverview", [
+            "getItems"
+        ])
     }
 };
 </script>

@@ -6,7 +6,7 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
 
 const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
 
-export default class MultipleCoupons {
+export default class CouponsOverview {
     constructor(item = {}) {
         this.coupon_id = item.coupon_id || null;
     }

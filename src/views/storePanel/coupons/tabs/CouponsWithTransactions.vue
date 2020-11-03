@@ -75,7 +75,7 @@
                             class="text-capitalize px-5"
                             depressed
                             dark
-                            @click="deleteCoupon()"
+                            @click="deleteDialog = true"
                             >delete</v-btn
                         >
                     </v-card-actions>
@@ -133,6 +133,20 @@
                 </v-col>
             </v-row>
         </v-card>
+
+        <v-dialog v-model="deleteDialog" max-width="500">
+            <b-card
+                type="delete"
+                title="Delete Product"
+                submit-text="delete"
+                @cancel="deleteDialog = false"
+                @submit="deleteCoupon()"
+            >
+                <p>
+                    Are you sure you want to delete this coupon?
+                </p>
+            </b-card>
+        </v-dialog>
     </v-tab-item>
 </template>
 
@@ -159,7 +173,8 @@ export default {
                 gift_title: "",
                 gift_description: "",
                 maximum: ""
-            }
+            },
+            deleteDialog: false
         };
     },
 

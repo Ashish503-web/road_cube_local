@@ -36,12 +36,12 @@ export default {
     data: () => ({
         icons: { mdiMagnify },
         headers: [
+            { text: "Promo Type Name", value: "promo_type_name" },
             { text: "Code", value: "code" },
-            { text: "Gift Title", value: "gift_title" },
-            { text: "Gift Description", value: "gift_description" },
-            { text: "Maximum", value: "maximum" },
-            { text: "Price", value: "price" },
-            { text: "Expiration Date", value: "expiration_date" },
+            { text: "Available", value: "available" },
+            { text: "Points", value: "points" },
+            { text: "Total Redeemed", value: "total_redeemed" },
+            { text: "Created at", value: "created_at" },
         ],
         itemsPerPageOptions: [10, 25, 50, 100]
     }),

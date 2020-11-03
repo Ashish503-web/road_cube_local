@@ -23,8 +23,7 @@ export default {
                 commit("setLoading", true, { root: true });
 
                 const { data } = await MultipleCoupons.get();
-
-                const multipleCoupons = data.data.multiple_coupons;
+                const multipleCoupons = data.data.redeemed_coupons.data
                 commit("setMultipleCoupons", multipleCoupons);
                 commit("setLoading", false, { root: true });
             } catch (ex) {
