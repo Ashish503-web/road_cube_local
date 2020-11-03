@@ -11,22 +11,24 @@
                     color="secondary"
                     class="text-capitalize px-5"
                     depressed
+                    v-text="translations.addCoupon[lang]"
                     @click="open(1, {})"
-                    >add coupon</v-btn
-                >
+                ></v-btn>
             </v-col>
 
             <v-col cols="auto">
-                <v-alert type="info" dense class="mb-0 font-weight-medium">
-                    You can either share the coupon codes on facebook or give
-                    them to users with an application.
-                </v-alert>
+                <v-alert
+                    type="info"
+                    dense
+                    class="mb-0 font-weight-medium"
+                    v-text="translations.info[lang]"
+                ></v-alert>
             </v-col>
         </v-row>
 
         <v-toolbar flat>
             <v-spacer></v-spacer>
-            <v-col cols="12" sm="4">
+            <v-col cols="12" sm="4" class="pa-0 pr-1">
                 <v-text-field
                     label="Search"
                     color="secondary"
@@ -53,7 +55,7 @@
                     color="secondary"
                     indeterminate
                 ></v-progress-circular>
-                <span v-else>No data available</span>
+                <span v-else v-text="translations.noData[lang]"></span>
             </template>
 
             <template v-slot:item.actions="{ item }">
@@ -69,7 +71,10 @@
                         </v-btn>
                     </template>
 
-                    <span class="font-weight-bold">Update</span>
+                    <span
+                        class="font-weight-bold"
+                        v-text="translations.update[lang]"
+                    ></span>
                 </v-tooltip>
 
                 <v-tooltip color="secondary" top>
@@ -89,7 +94,10 @@
                         </v-btn>
                     </template>
 
-                    <span class="font-weight-bold">Delete</span>
+                    <span
+                        class="font-weight-bold"
+                        v-text="translations.delete[lang]"
+                    ></span>
                 </v-tooltip>
             </template>
 
@@ -131,11 +139,14 @@
 import { mdiClose, mdiMagnify, mdiPencilOutline, mdiFacebook } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import CouponWithCodeForm from "@/components/storePanel/coupons/CouponWithCodeForm.vue";
+import translations from "@/utils/translations/storePanel/couponsWithCode";
 
 export default {
     name: "CouponsWithCode",
 
     components: { CouponWithCodeForm },
+
+    mixins: [translations],
 
     data() {
         return {
@@ -155,7 +166,6 @@ export default {
                 { text: "Actions", value: "actions" },
                 { text: "Social Media", value: "social" },
             ],
-            lang: "el",
             page: +this.$route.query.page,
             mode: 0,
         };
@@ -164,6 +174,10 @@ export default {
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/coupons/couponsWithCode", ["couponsWithCode"]),
+
+        lang() {
+            return this.$route.params.lang;
+        },
 
         query() {
             let query = "?";

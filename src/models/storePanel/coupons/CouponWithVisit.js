@@ -9,6 +9,7 @@ const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
 export default class CouponWithCode {
     constructor(item = {}) {
         this.coupon_id = item.coupon_id || null;
+        this.code = item.code || null;
         this.gift_category_id = item.gift_category_id || null;
         this.gift_title = item.gift_title || "";
         this.gift_description = item.gift_description || "";

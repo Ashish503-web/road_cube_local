@@ -35,7 +35,7 @@ export default {
 
                 const { data } = await CouponWithVisit.get(query);
 
-                commit("setItem", data.data[0]);
+                commit("setItem", data.data.coupon);
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });
@@ -56,8 +56,7 @@ export default {
                 if (image) {
                     dispatch("uploadImage", {
                         item: data.data.coupon,
-                        image,
-                        mode: 1
+                        image
                     });
                 } else {
                     commit("setItem", data.data.coupon);
@@ -118,7 +117,7 @@ export default {
             }
         },
 
-        async uploadImage({ commit }, { item, image, mode }) {
+        async uploadImage({ commit }, { item, image }) {
             try {
                 const fd = new FormData();
                 fd.append("image", image);
@@ -139,9 +138,7 @@ export default {
                     {
                         show: true,
                         type: "success",
-                        text: `You have successfully ${
-                            mode === 1 ? "created" : "updated"
-                        } coupon with visit!`
+                        text: "You have successfully created coupon with visit!"
                     },
 
                     { root: true }

@@ -1,34 +1,29 @@
 export default {
     data: () => ({
         translations: {
-            promoType: {
-                el: "",
-                en: "Promo Type Name",
-                it: ""
-            },
-            code: {
-                el: "",
-                en: "Code",
-                it: ""
-            },
-            available: {
-                el: "",
-                en: "Available",
-                it: ""
-            },
-            points: {
-                el: "",
-                en: "Points",
-                it: ""
-            },
-            totalRedeemed: {
-                el: "",
-                en: "Total Redeemed",
-                it: ""
-            },
             date: {
                 el: "",
                 en: "Date",
+                it: ""
+            },
+            product: {
+                el: "",
+                en: "Product",
+                it: ""
+            },
+            totalPoints: {
+                el: "",
+                en: "Total Points",
+                it: ""
+            },
+            funded: {
+                el: "",
+                en: "Funded",
+                it: ""
+            },
+            nonFunded: {
+                el: "",
+                en: "Non Funded",
                 it: ""
             },
             noData: {

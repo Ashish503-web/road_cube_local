@@ -9,8 +9,8 @@ export default {
     }),
 
     getters: {
-        coupons: (state) => state.coupons,
-        pagination: (state) => state.pagination
+        coupons: state => state.coupons,
+        pagination: state => state.pagination
     },
 
     mutations: {
@@ -19,7 +19,7 @@ export default {
         },
         setPagination(state, payload) {
             state.pagination = payload;
-        },
+        }
     },
 
     actions: {
@@ -28,9 +28,8 @@ export default {
                 commit("setLoading", true, { root: true });
 
                 const { data } = await CouponsOverview.get();
-
-                const coupons = data.data.redeemed_coupons.data
-                const pagination = data.data.redeemed_coupons.pagination
+                const coupons = data.data.redeemed_coupons.data;
+                const pagination = data.data.redeemed_coupons.pagination;
 
                 commit("setCoupons", coupons);
                 commit("setPagination", pagination);
@@ -39,6 +38,6 @@ export default {
                 commit("setLoading", false, { root: true });
                 console.error(ex.response.data);
             }
-        },
+        }
     }
 };

@@ -23,12 +23,12 @@
 
         <b-text-field
             v-model="couponWithVisit.gift_title"
-            label="Title"
+            label="Gift Title"
         ></b-text-field>
 
         <b-textarea
             v-model="couponWithVisit.gift_description"
-            label="Description"
+            label="Gift Description"
         ></b-textarea>
 
         <b-text-field

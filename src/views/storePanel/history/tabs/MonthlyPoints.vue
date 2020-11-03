@@ -1,15 +1,11 @@
 <template>
     <v-tab-item :value="$route.path">
         <v-toolbar flat height="80">
-            <v-col cols="12" sm="6">
-                <a class="export-link" href @click.prevent
-                    >Export to CSV/Excel</a
-                >
-            </v-col>
+            <ExportLinks />
 
             <v-spacer></v-spacer>
 
-            <v-col cols="12" sm="4">
+            <v-col cols="12" sm="4" class="pa-0">
                 <b-search-field></b-search-field>
             </v-col>
         </v-toolbar>
@@ -42,26 +38,44 @@
 
 <script>
 import { mapState, mapActions } from "vuex";
+import ExportLinks from "@/components/general/ExportLinks.vue";
+import translations from "@/utils/translations/storePanel/history";
 
 export default {
     name: "MonthlyPoints",
 
+    components: { ExportLinks },
+
+    mixins: [translations],
+
     data() {
         return {
-            headers: [
-                { text: "Date", value: "date" },
-                { text: "Funded", value: "funded" },
-                { text: "Non Funded", value: "non_funded" },
-                { text: "Total Points", value: "total_points" }
-            ],
-            lang: "el",
-            page: +this.$route.query.page
+            page: +this.$route.query.page,
         };
     },
 
     computed: {
         ...mapState(["loading", "serverItemsLength"]),
         ...mapState("storePanel/history", ["monthlyPoints"]),
+
+        lang() {
+            return this.$route.params.lang;
+        },
+
+        headers() {
+            return [
+                { text: this.translations.date[this.lang], value: "date" },
+                { text: this.translations.funded[this.lang], value: "funded" },
+                {
+                    text: this.translations.nonFunded[this.lang],
+                    value: "non_funded",
+                },
+                {
+                    text: this.translations.totalPoints[this.lang],
+                    value: "total_points",
+                },
+            ];
+        },
 
         query() {
             let query = "?";
@@ -71,11 +85,11 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
-        ...mapActions("storePanel/history", ["getMonthlyPoints"])
+        ...mapActions("storePanel/history", ["getMonthlyPoints"]),
     },
 
     watch: {
@@ -84,8 +98,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
 
@@ -94,7 +108,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -102,14 +116,14 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getMonthlyPoints(this.query);
-    }
+    },
 };
 </script>

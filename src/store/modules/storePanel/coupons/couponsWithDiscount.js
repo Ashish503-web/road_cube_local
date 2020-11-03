@@ -73,7 +73,6 @@ export default {
                 const { data } = await CouponWithDiscount.get(query);
 
                 const { coupons, pagination } = data.data;
-                console.log(coupons);
 
                 commit("setItems", coupons);
                 commit("setServerItemsLength", pagination.total, {
@@ -92,24 +91,13 @@ export default {
 
                 let couponWithDiscount = { ...state.couponWithDiscount };
 
-                for (let prop in couponWithDiscount) {
-                    if (!couponWithDiscount[prop])
-                        delete couponWithDiscount[prop];
-                }
-                console.log(couponWithDiscount);
-
                 const { data } = await CouponWithDiscount.create(
                     couponWithDiscount
                 );
 
-                console.log(data);
+                const { coupon } = data.data;
 
-                // const { coupon } = data.data;
-
-                // coupon.product_buy_name = coupon.product_buy.name;
-                // coupon.product_free_name = coupon.product_free.name;
-
-                // commit("addItem", coupon);
+                commit("addItem", coupon);
                 commit(
                     "setServerItemsLength",
                     rootState.serverItemsLength + 1,

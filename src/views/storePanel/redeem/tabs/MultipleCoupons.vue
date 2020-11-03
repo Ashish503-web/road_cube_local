@@ -22,32 +22,64 @@
             :items="multipleCoupons"
             :footer-props="{ itemsPerPageOptions }"
             class="b-outlined"
-        ></v-data-table>
+        >
+            <template v-slot:no-data>
+                <v-progress-circular
+                    v-if="loading"
+                    color="secondary"
+                    indeterminate
+                ></v-progress-circular>
+                <span v-else v-text="translations.noData[lang]"></span>
+            </template>
+        </v-data-table>
     </v-tab-item>
 </template>
 
 <script>
 import { mdiMagnify } from "@mdi/js";
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
+import translations from "@/utils/translations/storePanel/couponsOverview";
 
 export default {
     name: "MultipleCoupons",
 
+    mixins: [translations],
+
     data: () => ({
         icons: { mdiMagnify },
-        headers: [
-            { text: "Promo Type Name", value: "promo_type_name" },
-            { text: "Code", value: "code" },
-            { text: "Available", value: "available" },
-            { text: "Points", value: "points" },
-            { text: "Total Redeemed", value: "total_redeemed" },
-            { text: "Created at", value: "created_at" },
-        ],
         itemsPerPageOptions: [10, 25, 50, 100],
     }),
 
     computed: {
+        ...mapState(["loading"]),
         ...mapGetters("storePanel/redeem/multipleCoupons", ["multipleCoupons"]),
+
+        lang() {
+            return this.$route.params.lang;
+        },
+
+        headers() {
+            return [
+                {
+                    text: this.translations.promoType[this.lang],
+                    value: "promo_type_name",
+                },
+                { text: this.translations.code[this.lang], value: "code" },
+                {
+                    text: this.translations.available[this.lang],
+                    value: "available",
+                },
+                { text: this.translations.points[this.lang], value: "points" },
+                {
+                    text: this.translations.totalRedeemed[this.lang],
+                    value: "total_redeemed",
+                },
+                {
+                    text: this.translations.date[this.lang],
+                    value: "created_at",
+                },
+            ];
+        },
     },
 
     methods: {

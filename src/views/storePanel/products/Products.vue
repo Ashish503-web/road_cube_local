@@ -8,8 +8,8 @@
             >
                 <v-tab
                     v-for="tab in tabs"
-                    :key="tab.name"
-                    v-text="tab.name"
+                    :key="tab.name['en']"
+                    v-text="tab.name[lang]"
                     :to="tab.to"
                     class="text-capitalize d-flex justify-start justify-md-center px-3"
                 ></v-tab>
@@ -28,7 +28,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.path
+            tab: this.$route.path,
         };
     },
 
@@ -40,15 +40,15 @@ export default {
         tabs() {
             return [
                 {
+                    name: { el: "", en: "Products", it: "" },
                     to: `/${this.lang}/storePanel/products/products-tab`,
-                    name: "Products"
                 },
                 {
+                    name: { el: "", en: "Product Groups", it: "" },
                     to: `/${this.lang}/storePanel/products/product-groups`,
-                    name: "Product Groups"
-                }
+                },
             ];
-        }
+        },
     },
 
     watch: {
@@ -60,8 +60,8 @@ export default {
                         `/${this.lang}/storePanel/products/products-tab`
                     );
                 }
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>

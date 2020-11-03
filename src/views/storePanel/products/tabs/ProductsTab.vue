@@ -5,9 +5,9 @@
                 color="secondary"
                 class="text-capitalize px-5"
                 depressed
+                v-text="translations.addProduct[lang]"
                 @click="open(1, {})"
-                >add product</v-btn
-            >
+            ></v-btn>
 
             <v-spacer></v-spacer>
 
@@ -42,7 +42,7 @@
                     color="secondary"
                     indeterminate
                 ></v-progress-circular>
-                <span v-else>No data available</span>
+                <span v-else v-text="translations.noData[lang]"></span>
             </template>
 
             <template v-slot:item.actions="{ item }">
@@ -58,7 +58,10 @@
                         </v-btn>
                     </template>
 
-                    <span class="font-weight-bold">Update</span>
+                    <span
+                        class="font-weight-bold"
+                        v-text="translations.update[lang]"
+                    ></span>
                 </v-tooltip>
 
                 <v-tooltip color="secondary" top>
@@ -78,7 +81,10 @@
                         </v-btn>
                     </template>
 
-                    <span class="font-weight-bold">Delete</span>
+                    <span
+                        class="font-weight-bold"
+                        v-text="translations.delete[lang]"
+                    ></span>
                 </v-tooltip>
             </template>
         </v-data-table>
@@ -114,18 +120,21 @@ import { mdiPencilOutline, mdiClose, mdiMagnify } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import debounce from "lodash/debounce";
 import ProductForm from "@/components/storePanel/products/ProductForm.vue";
+import translations from "@/utils/translations/storePanel/products";
 
 export default {
     name: "ProductsTab",
 
     components: { ProductForm },
 
+    mixins: [translations],
+
     data() {
         return {
             icons: { mdiPencilOutline, mdiClose, mdiMagnify },
             page: +this.$route.query.page,
             mode: 0,
-            search: ""
+            search: "",
         };
     },
 
@@ -139,15 +148,27 @@ export default {
 
         headers() {
             return [
-                { text: "Product Name", value: `name[${this.lang}]` },
                 {
-                    text: "Product Description",
-                    value: `description[${this.lang}]`
+                    text: this.translations.productName[this.lang],
+                    value: `name[${this.lang}]`,
                 },
-                { text: "Selling Price", value: "retail_price" },
-                { text: "Points", value: "reward_points" },
-                { text: "Coupon", value: "coupon" },
-                { text: "Actions", value: "actions" }
+                {
+                    text: this.translations.productDescription[this.lang],
+                    value: `description[${this.lang}]`,
+                },
+                {
+                    text: this.translations.sellingPrice[this.lang],
+                    value: "retail_price",
+                },
+                {
+                    text: this.translations.points[this.lang],
+                    value: "reward_points",
+                },
+                { text: this.translations.coupon[this.lang], value: "coupon" },
+                {
+                    text: this.translations.actions[this.lang],
+                    value: "actions",
+                },
             ];
         },
 
@@ -158,7 +179,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         deleteDialog: {
@@ -168,7 +189,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            }
+            },
         },
 
         product: {
@@ -178,7 +199,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
+            },
         },
 
         query() {
@@ -189,7 +210,7 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
@@ -197,12 +218,12 @@ export default {
             "setDialog",
             "setDeleteDialog",
             "setResetSuccess",
-            "setResetValidation"
+            "setResetValidation",
         ]),
         ...mapMutations("storePanel/products", [
             "setShowImageUpload",
             "setShowWeekdays",
-            "setItem"
+            "setItem",
         ]),
         ...mapActions("storePanel/products", ["getItems", "remove"]),
 
@@ -221,7 +242,7 @@ export default {
 
         handleSearch() {
             this.getItems(`?q=${this.search}`);
-        }
+        },
     },
 
     watch: {
@@ -237,8 +258,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
             this.getItems(this.query);
@@ -256,7 +277,7 @@ export default {
                     this.debouncedSearch();
                 }
             }
-        }
+        },
     },
 
     beforeCreate() {
@@ -264,8 +285,8 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
@@ -276,7 +297,7 @@ export default {
 
     mounted() {
         this.getItems(this.query);
-    }
+    },
 };
 </script>
 
