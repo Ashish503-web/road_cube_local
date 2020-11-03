@@ -18,7 +18,7 @@
                 <div class="flex flex-wrap">
                     <v-img
                     :src="$store.state.storePanel.store.logo"
-                    class="mb-2"
+                    class="mb-2 mx-auto"
                     width="70"
                     ></v-img>
                     <p>{{ provider.name[lang] }}</p>

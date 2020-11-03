@@ -1,8 +1,8 @@
-import branches from "./branches";
+import branchesTab from "./branchesTab";
 
 export default {
     namespaced: true,
     modules: {
-        branches
+        branchesTab
     }
 };

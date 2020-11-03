@@ -23,13 +23,11 @@ export default {
                 commit("setLoading", true, { root: true });
 
                 const { data } = await Branches.get(query);
-                console.log(data,'data4684468')
                 const branches = data.data.stores;
                 commit("setBranches", branches);
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });
-                console.error(ex.response.data);
             }
         }
     }
