@@ -6,19 +6,24 @@
             v-model="tab"
             color="secondary"
             class="mt-7"
-            height="70"
+            height="90"
             show-arrows
             optional
         >
             <v-tab
                 v-for="provider in bankProviders"
-                :key="provider.store_bank_provider_id"
+                :key="provider.bank_provider_id"
                 @click="bankProvider = provider"
             >
-                <v-img
+                <div class="flex flex-wrap">
+                    <v-img
                     :src="$store.state.storePanel.store.logo"
+                    class="mb-2"
                     width="70"
-                ></v-img>
+                    ></v-img>
+                    <p>{{ provider.name[lang] }}</p>
+                </div>
+                
             </v-tab>
         </v-tabs>
 
@@ -26,8 +31,8 @@
 
         <v-tabs-items v-model="tab">
             <v-tab-item
-                v-for="provider in bankProviders"
-                :key="provider.store_bank_provider_id"
+                v-for="(provider,ind) in bankProviders"
+                :key="provider.bank_provider_id"
             >
                 <v-row no-gutters>
                     <v-col cols="6">
@@ -36,15 +41,17 @@
                         <br />
                         <v-card flat width="70%">
                             <b-text-field
-                                v-model="bankProvider.credentials.mid"
-                                label="mid"
+                                v-for="(field,index) in provider.fields"
+                                :key="index"
+                                v-model="credentials[ind][field]"
+                                :label="field"
                                 class="mt-5"
                             ></b-text-field>
-                            <b-text-field
+                            <!-- <b-text-field
                                 v-model="bankProvider.credentials.key"
                                 label="pass"
                                 class="mt-5"
-                            ></b-text-field>
+                            ></b-text-field> -->
 
                             <v-alert v-if="errorMessage" type="error">{{
                                 errorMessage
@@ -56,7 +63,7 @@
                                     class="text-capitalize px-5"
                                     depressed
                                     :loading="loading"
-                                    @click="create"
+                                    @click="create(ind)"
                                     >create</v-btn
                                 >
                                 <v-spacer></v-spacer>
@@ -90,7 +97,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
+import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 
 export default {
     name: "CleanerManagement",
@@ -100,12 +107,13 @@ export default {
             tab: null,
             lang: "en",
             page: +this.$route.query.page,
+            credentials: []
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage"]),
-        ...mapState("storePanel/settings/cleanerManagement", ["bankProviders"]),
+        ...mapGetters("storePanel/settings/cleanerManagement", ["bankProviders"]),
 
         bankProvider: {
             get() {
@@ -131,7 +139,16 @@ export default {
 
     methods: {
         ...mapMutations("storePanel/settings/cleanerManagement", ["setItem"]),
-        ...mapActions("storePanel/settings/cleanerManagement", ["getItems"]),
+        ...mapActions("storePanel/settings/cleanerManagement", ["getItems","createItem"]),
+
+        create(index){
+            let formData = {
+                "bank_provider_id": this.bankProviders[index].bank_provider_id,
+                "credentials": this.credentials[index]
+            }
+
+            this.createItem(formData)
+        }
     },
 
     watch: {
@@ -148,6 +165,18 @@ export default {
                 }
                 this.getItems(this.query);
             },
+        },
+
+        bankProviders: function(val){
+            val.map(data => {
+                let fields = {}
+                if(data.fields && data.fields.length > 0){
+                    data.fields.map(item => {
+                        fields[item] = ""
+                    })
+                }
+                this.credentials.push(fields)
+            })
         },
 
         page(page) {

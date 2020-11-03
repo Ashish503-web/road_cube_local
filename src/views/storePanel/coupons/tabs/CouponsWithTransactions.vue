@@ -143,7 +143,7 @@
                 @submit="deleteCoupon()"
             >
                 <p>
-                    Are you sure you want to delete this coupon?
+                    Are you sure?
                 </p>
             </b-card>
         </v-dialog>
