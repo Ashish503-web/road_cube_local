@@ -137,7 +137,7 @@
                             v-on="on"
                             @click="
                                 () => {
-                                    deleteProdviderId = item.bank_provider.bank_provider_id;
+                                    deleteProviderId = item.bank_provider.bank_provider_id;
                                     deleteDialog = true;
                                 }
                             "
@@ -153,6 +153,18 @@
                 </v-tooltip>
             </template>
         </v-data-table>
+
+        <v-dialog v-model="deleteDialog" max-width="500">
+            <b-card
+                type="delete"
+                title="Delete Provider"
+                submit-text="delete"
+                @cancel="deleteDialog = false"
+                @submit="deleteProvider"
+            >
+                <p>Are you sure?</p>
+            </b-card>
+        </v-dialog>
     </v-tab-item>
 </template>
 
@@ -184,7 +196,8 @@ export default {
                     value: 'actions'
                 }
             ],
-            deleteProdviderId: ''
+            deleteProviderId: '',
+            deleteDialog: false
         };
     },
 
@@ -222,7 +235,9 @@ export default {
         ...mapActions("storePanel/settings/cleanerManagement", [
             "getItems",
             "getBankProviders",
-            "createItem"]),
+            "createItem",
+            "removeProvider"
+            ]),
 
         create(index){
             let formData = {
@@ -231,6 +246,11 @@ export default {
             }
 
             this.createItem(formData)
+        },
+
+        deleteProvider(){
+            this.removeProvider(this.deleteProviderId)
+            this.deleteDialog = false
         }
     },
 

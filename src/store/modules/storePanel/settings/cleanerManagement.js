@@ -164,6 +164,36 @@ export default {
         //     }
         // },
 
+        async removeProvider({ commit, dispatch }, id) {
+            try {
+                commit("setLoading", true, { root: true });
+
+                await BankProvider.removeProvider(id);
+
+                dispatch("getItems")
+                commit("setLoading", false, { root: true });
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully deleted Bank Provider!"
+                    },
+                    { root: true }
+                );
+            } catch (ex) {
+                commit("setLoading", false, { root: true });
+                commit("setErrorMessage", ex.response.data.message, {
+                    root: true
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", "", { root: true }),
+                    5000
+                );
+            }
+        },
+    
+
         async remove({ commit }, id) {
             try {
                 commit("setLoading", true, { root: true });
