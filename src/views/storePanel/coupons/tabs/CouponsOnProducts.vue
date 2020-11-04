@@ -5,23 +5,14 @@
                 color="secondary"
                 class="text-capitalize px-5"
                 depressed
+                v-text="translations.addAction[lang]"
                 @click="open(1, {})"
-                >add action</v-btn
-            >
+            ></v-btn>
 
             <v-spacer></v-spacer>
 
-            <v-col cols="4">
-                <v-text-field
-                    label="Search"
-                    color="secondary"
-                    rounded
-                    outlined
-                    dense
-                    clearable
-                    hide-details
-                    :prepend-inner-icon="icons.mdiMagnify"
-                ></v-text-field>
+            <v-col cols="4" class="pa-0">
+                <b-search-field></b-search-field>
             </v-col>
         </v-toolbar>
 
@@ -39,7 +30,7 @@
                     color="secondary"
                     indeterminate
                 ></v-progress-circular>
-                <span v-else>No data available</span>
+                <span v-else v-text="translations.noData[lang]"></span>
             </template>
 
             <template v-slot:item.actions="{ item }">
@@ -55,7 +46,10 @@
                         </v-btn>
                     </template>
 
-                    <span class="font-weight-bold">Update</span>
+                    <span
+                        class="font-weight-bold"
+                        v-text="translations.update[lang]"
+                    ></span>
                 </v-tooltip>
 
                 <v-tooltip color="secondary" top>
@@ -75,14 +69,17 @@
                         </v-btn>
                     </template>
 
-                    <span class="font-weight-bold">Delete</span>
+                    <span
+                        class="font-weight-bold"
+                        v-text="translations.delete[lang]"
+                    ></span>
                 </v-tooltip>
             </template>
 
             <template v-slot:item.social>
                 <v-btn color="blue darken-1" depressed dark small>
-                    <v-icon class="mr-1" v-text="icons.mdiFacebook"></v-icon
-                    >Share 0
+                    <v-icon class="mr-1" v-text="icons.mdiFacebook"></v-icon>
+                    {{ translations.share[lang] }} 0
                 </v-btn>
             </template>
         </v-data-table>
@@ -114,32 +111,34 @@
 </template>
 
 <script>
-import { mdiMagnify, mdiPencilOutline, mdiClose, mdiFacebook } from "@mdi/js";
+import { mdiPencilOutline, mdiClose, mdiFacebook } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import CouponOnProductForm from "@/components/storePanel/coupons/CouponOnProductForm.vue";
+import translations from "@/utils/translations/storePanel/couponsOnProducts";
 
 export default {
     name: "CouponsOnProducts",
 
     components: { CouponOnProductForm },
 
+    mixins: [translations],
+
     data() {
         return {
             icons: {
-                mdiClose,
-                mdiMagnify,
                 mdiPencilOutline,
-                mdiFacebook,
+                mdiClose,
+                mdiFacebook
             },
             page: +this.$route.query.page,
-            mode: 0,
+            mode: 0
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/coupons/couponsOnProducts", [
-            "couponsOnProducts",
+            "couponsOnProducts"
         ]),
 
         lang() {
@@ -158,18 +157,24 @@ export default {
 
         headers() {
             return [
-                { text: "Type", value: "code" },
+                { text: this.translations.type[this.lang], value: "code" },
                 {
-                    text: "Product For Sale",
-                    value: `product_buy_name[${this.lang}]`,
+                    text: this.translations.productForSale[this.lang],
+                    value: `product_buy_name[${this.lang}]`
                 },
                 {
-                    text: "Product For Gift",
-                    value: `product_free_name[${this.lang}]`,
+                    text: this.translations.productForGift[this.lang],
+                    value: `product_free_name[${this.lang}]`
                 },
-                { text: "Quantity", value: "available" },
-                { text: "Actions", value: "actions" },
-                { text: "Social Media", value: "social" },
+                {
+                    text: this.translations.quantity[this.lang],
+                    value: "available"
+                },
+                {
+                    text: this.translations.actions[this.lang],
+                    value: "actions"
+                },
+                { text: this.translations.social[this.lang], value: "social" }
             ];
         },
 
@@ -180,7 +185,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            },
+            }
         },
 
         deleteDialog: {
@@ -190,7 +195,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            },
+            }
         },
 
         couponOnProduct: {
@@ -201,8 +206,8 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
@@ -210,12 +215,12 @@ export default {
             "setDialog",
             "setDeleteDialog",
             "setResetSuccess",
-            "setResetValidation",
+            "setResetValidation"
         ]),
         ...mapMutations("storePanel/coupons/couponsOnProducts", ["setItem"]),
         ...mapActions("storePanel/coupons/couponsOnProducts", [
             "getItems",
-            "remove",
+            "remove"
         ]),
 
         open(mode, item) {
@@ -224,7 +229,7 @@ export default {
             setTimeout(() => this.setResetSuccess(true), 300);
             this.setResetValidation(true);
             this.dialog = true;
-        },
+        }
     },
 
     watch: {
@@ -240,8 +245,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query,
-                    },
+                        ...this.$route.query
+                    }
                 });
             }
             this.getItems(this.query);
@@ -249,7 +254,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        },
+        }
     },
 
     beforeCreate() {
@@ -257,15 +262,15 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query,
-                },
+                    ...this.$route.query
+                }
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    },
+    }
 };
 </script>
 

@@ -181,7 +181,7 @@ import {
     mdiChevronDown,
     mdiAccountOutline,
     mdiWrenchOutline,
-    mdiLogout,
+    mdiLogout
 } from "@mdi/js";
 
 import navLinks from "@/utils/storePanel/navLinks";
@@ -197,15 +197,15 @@ export default {
             icons: {
                 mdiHelpCircleOutline,
                 mdiChevronDown,
-                mdiLogout,
+                mdiLogout
             },
             mini: false,
             drawer: false,
 
             profileLinks: [
                 { icon: mdiAccountOutline, text: "Profile" },
-                { icon: mdiWrenchOutline, text: "Settings" },
-            ],
+                { icon: mdiWrenchOutline, text: "Settings" }
+            ]
         };
     },
 
@@ -220,7 +220,7 @@ export default {
                     this.$router.push(
                         `/${val}/` + this.$route.fullPath.slice(4)
                     );
-            },
+            }
         },
 
         loading() {
@@ -241,7 +241,7 @@ export default {
 
         containerHeight() {
             return this.mini ? "calc(100vh - 194px)" : "calc(100vh - 184px)";
-        },
+        }
     },
 
     methods: {
@@ -258,8 +258,8 @@ export default {
             } catch (ex) {
                 console.log(ex.response.data);
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

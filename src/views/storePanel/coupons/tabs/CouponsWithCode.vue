@@ -29,15 +29,7 @@
         <v-toolbar flat>
             <v-spacer></v-spacer>
             <v-col cols="12" sm="4" class="pa-0 pr-1">
-                <v-text-field
-                    label="Search"
-                    color="secondary"
-                    rounded
-                    outlined
-                    dense
-                    clearable
-                    :prepend-inner-icon="icons.mdiMagnify"
-                ></v-text-field>
+                <b-search-field></b-search-field>
             </v-col>
         </v-toolbar>
 
@@ -103,8 +95,8 @@
 
             <template v-slot:item.social>
                 <v-btn color="blue darken-1" depressed dark small>
-                    <v-icon class="mr-1" v-text="icons.mdiFacebook"></v-icon
-                    >Share 0
+                    <v-icon class="mr-1" v-text="icons.mdiFacebook"></v-icon>
+                    {{ translations.share[lang] }} 0
                 </v-btn>
             </template>
         </v-data-table>
@@ -123,20 +115,20 @@
                 @cancel="deleteDialog = false"
                 @submit="remove"
             >
-                <p>
+                <div class="subtitle-1 font-weight-medium py-3">
                     Are you sure you want to delete
                     <span class="font-weight-bold text--primary">{{
                         couponWithCode.code
                     }}</span
                     >?
-                </p>
+                </div>
             </b-card>
         </v-dialog>
     </v-tab-item>
 </template>
 
 <script>
-import { mdiClose, mdiMagnify, mdiPencilOutline, mdiFacebook } from "@mdi/js";
+import { mdiPencilOutline, mdiClose, mdiFacebook } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import CouponWithCodeForm from "@/components/storePanel/coupons/CouponWithCodeForm.vue";
 import translations from "@/utils/translations/storePanel/couponsWithCode";
@@ -151,21 +143,10 @@ export default {
     data() {
         return {
             icons: {
-                mdiMagnify,
                 mdiPencilOutline,
                 mdiClose,
                 mdiFacebook,
             },
-            headers: [
-                { text: "Code", value: "code" },
-                { text: "Voucher", value: "voucher" },
-                { text: "Points", value: "points" },
-                { text: "Acquired", value: "total_claimed" },
-                { text: "Redeemed", value: "total_redeemed" },
-                { text: "Available", value: "available" },
-                { text: "Actions", value: "actions" },
-                { text: "Social Media", value: "social" },
-            ],
             page: +this.$route.query.page,
             mode: 0,
         };
@@ -177,6 +158,34 @@ export default {
 
         lang() {
             return this.$route.params.lang;
+        },
+
+        headers() {
+            return [
+                { text: this.translations.code[this.lang], value: "code" },
+                {
+                    text: this.translations.voucher[this.lang],
+                    value: "voucher",
+                },
+                { text: this.translations.points[this.lang], value: "points" },
+                {
+                    text: this.translations.acquired[this.lang],
+                    value: "total_claimed",
+                },
+                {
+                    text: this.translations.redeemed[this.lang],
+                    value: "total_redeemed",
+                },
+                {
+                    text: this.translations.available[this.lang],
+                    value: "available",
+                },
+                {
+                    text: this.translations.actions[this.lang],
+                    value: "actions",
+                },
+                { text: this.translations.social[this.lang], value: "social" },
+            ];
         },
 
         query() {

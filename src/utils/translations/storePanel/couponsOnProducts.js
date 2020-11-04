@@ -1,45 +1,29 @@
 export default {
     data: () => ({
         translations: {
-            addCoupon: {
+            addAction: {
                 el: "",
-                en: "Add Coupon",
+                en: "Add Action",
                 it: ""
             },
-            info: {
+            type: {
                 el: "",
-                en:
-                    "You can either share the coupon codes on facebook or give them to users with an application.",
+                en: "Type",
                 it: ""
             },
-            code: {
+            productForSale: {
                 el: "",
-                en: "Code",
+                en: "Product For Sale",
                 it: ""
             },
-            voucher: {
+            productForGift: {
                 el: "",
-                en: "Voucher",
+                en: "Product For Gift",
                 it: ""
             },
-            points: {
+            quantity: {
                 el: "",
-                en: "Points",
-                it: ""
-            },
-            acquired: {
-                el: "",
-                en: "Acquired",
-                it: ""
-            },
-            redeemed: {
-                el: "",
-                en: "Redeemed",
-                it: ""
-            },
-            available: {
-                el: "",
-                en: "Available",
+                en: "Quantity",
                 it: ""
             },
             actions: {

@@ -4,6 +4,7 @@ import reward from "./reward";
 import productPoints from "./productPoints";
 import users from "./users";
 import cleanerManagement from "./cleanerManagement";
+import paymentsDirection from "./paymentsDirection";
 
 export default {
     namespaced: true,
@@ -13,6 +14,7 @@ export default {
         reward,
         productPoints,
         users,
-        cleanerManagement
+        cleanerManagement,
+        paymentsDirection
     }
 };

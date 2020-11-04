@@ -1,24 +1,34 @@
-import BankProvider from "@/models/storePanel/settings/BankProvider";
+import axios from "axios";
+
+axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
+    "accessToken"
+)}`;
+
+const ApiEndpoint = `https://api.roadcube.tk/v1`;
 
 export default {
     namespaced: true,
 
     state: () => ({
-        bankProviders: [],
-        bankProvider: new BankProvider()
+        allBankProviders: [],
+        storeBankProviders: []
     }),
 
-    getters: {
-        bankProviders: state => state.bankProviders
-    },
-
     mutations: {
+        setAllBankProviders(state, payload) {
+            state.allBankProviders = payload;
+        },
+
+        setStoreBankProviders(state, payload) {
+            state.storeBankProviders = payload;
+        },
+
         setItems(state, payload) {
             state.bankProviders = payload;
         },
 
         setItem(state, payload) {
-            state.bankProvider = new BankProvider(payload);
+            // state.bankProvider = new BankProvider(payload);
         },
 
         addItem(state, payload) {
@@ -40,44 +50,29 @@ export default {
     },
 
     actions: {
-        async getItems({ commit }, query) {
+        async getAllBankProviders({ commit }) {
             try {
-                const { data } = await BankProvider.get(query);
+                const { data } = await axios.get(
+                    `${ApiEndpoint}/admin/bank-providers`
+                );
 
-                const store_bank_providers = data.data.bank_providers;
-
-                commit("setItems", store_bank_providers);
+                commit("setAllBankProviders", data.data.bank_providers);
             } catch (ex) {
                 console.error(ex.response.data);
             }
         },
 
-        async createItem({ commit, state }, form) {
+        async getStoreBankProviders({ commit }) {
             try {
-                commit("setLoading", true, { root: true });
-
-                const { data } = await BankProvider.createItem(form);
-
-                commit("setItem", {});
-                commit("setLoading", false, { root: true });
-                commit(
-                    "setNotification",
-                    {
-                        show: true,
-                        type: "success",
-                        text: "You have successfully created product category!"
-                    },
-                    { root: true }
+                const { data } = await axios.get(
+                    `${ApiEndpoint}/stores/${localStorage.getItem(
+                        "storeId"
+                    )}/settings/bank-providers`
                 );
+
+                commit("setStoreBankProviders", data.data.store_bank_providers);
             } catch (ex) {
-                commit("setLoading", false, { root: true });
-                commit("setErrorMessage", ex.response.data.message, {
-                    root: true
-                });
-                setTimeout(
-                    () => commit("setErrorMessage", "", { root: true }),
-                    5000
-                );
+                console.error(ex.response.data);
             }
         },
 
@@ -93,9 +88,9 @@ export default {
                 if (!productCategory.name.it)
                     productCategory.name.it = productCategory.name.el;
 
-                const { data } = await BankProvider.create(productCategory);
+                // const { data } = await BankProvider.create(productCategory);
 
-                commit("addItem", data.data.product_category);
+                // commit("addItem", data.data.product_category);
                 commit("setItem", {});
                 commit("setLoading", false, { root: true });
                 commit(
@@ -119,38 +114,11 @@ export default {
             }
         },
 
-        // async update({ dispatch, commit, rootState }, { product, image }) {
-        //     try {
-        //         delete product.image;
-        //         commit("setLoading", true);
-
-        //         const { data } = await ProductCategory.update(
-        //             product
-        //         );
-
-        //         if (image) {
-        //             dispatch("uploadImage", {
-        //                 item: data.data.product,
-        //                 image,
-        //                 mode: 2
-        //             });
-        //         } else {
-        //             commit("updateItem", data.data.product);
-        //             commit("setLoading", false);
-        //             commit("setDialog", false);
-        //         }
-        //     } catch (ex) {
-        //         commit("setLoading", false);
-        //         commit("setErrorMessage", ex.response.data.message);
-        //         setTimeout(() => commit("setErrorMessage", ""), 5000);
-        //     }
-        // },
-
         async remove({ commit }, id) {
             try {
                 commit("setLoading", true, { root: true });
 
-                await BankProvider.delete(id);
+                // await BankProvider.delete(id);
 
                 commit("removeItem", id);
                 commit("setLoading", false, { root: true });
