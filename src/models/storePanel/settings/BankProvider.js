@@ -25,6 +25,11 @@ export default class BankProvider {
             `https://api.roadcube.tk/v1/admin/bank-providers`
         );
 
+    static getStoreProviders = () =>
+        axios.get(
+            `${ApiEndpoint}/${localStorage.getItem("storeId")}/settings/bank-providers`
+        );
+
     static createItem = item =>
         axios.post(
             `${ApiEndpoint}/${localStorage.getItem("storeId")}/settings/bank-providers`,

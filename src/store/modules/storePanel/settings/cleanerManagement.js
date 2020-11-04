@@ -5,16 +5,22 @@ export default {
 
     state: () => ({
         bankProviders: [],
+        storeBankProviders: [],
         bankProvider: new BankProvider()
     }),
 
     getters: {
-        bankProviders: (state) => state.bankProviders
+        bankProviders: (state) => state.bankProviders,
+        storeBankProviders: (state) => state.storeBankProviders
     },
 
     mutations: {
-        setItems(state, payload) {
+        setBankProviders(state, payload) {
             state.bankProviders = payload;
+        },
+        
+        setStoreBankProviders(state, payload) {
+            state.storeBankProviders = payload;
         },
 
         setItem(state, payload) {
@@ -40,13 +46,25 @@ export default {
     },
 
     actions: {
-        async getItems({ commit }, query) {
+        async getBankProviders({ commit }, query) {
             try {
                 const { data } = await BankProvider.get(query);
 
-                const store_bank_providers = data.data.bank_providers;
+                const bank_providers = data.data.bank_providers;
 
-                commit("setItems", store_bank_providers);
+                commit("setBankProviders", bank_providers);
+            } catch (ex) {
+                console.error(ex.response.data);
+            }
+        },
+
+        async getItems({ commit }, query) {
+            try {
+                const { data } = await BankProvider.getStoreProviders();
+
+                const store_bank_providers = data.data.store_bank_providers;
+
+                commit("setStoreBankProviders", store_bank_providers);
             } catch (ex) {
                 console.error(ex.response.data);
             }

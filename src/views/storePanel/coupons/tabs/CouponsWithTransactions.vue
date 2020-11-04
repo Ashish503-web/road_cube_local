@@ -34,7 +34,7 @@
                     ></v-text-field>
                     <v-text-field
                         v-model="minimum_amount"
-                        :label="translations.minTransaction"
+                        :label="translations.minTransaction[lang]"
                         color="secondary"
                         outlined
                         dense
@@ -42,7 +42,7 @@
                     ></v-text-field>
                     <v-text-field
                         v-model="max_days"
-                        :label="translations.maxTime"
+                        :label="translations.maxTime[lang]"
                         color="secondary"
                         outlined
                         dense
@@ -202,6 +202,15 @@ export default {
                 this.max_days = val.goal_max_days;
                 this.code = val.code;
                 this.gift_title = val.gift_title;
+            }else{
+                this.showAddCoupon = true;
+                this.formData.gift_category_id = '';
+                this.formData.goal_sequence = '';
+                this.formData.goal_minimum_amount = '';
+                this.formData.goal_max_days = '';
+                this.formData.gift_title = '';
+                this.formData.gift_description = '';
+                this.formData.maximum = '';
             }
         },
     },
@@ -220,6 +229,7 @@ export default {
 
         deleteCoupon() {
             this.remove(this.coupon_id);
+            this.deleteDialog = false
         },
     },
 

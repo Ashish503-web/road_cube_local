@@ -55,14 +55,15 @@ export default {
             }
         },
 
-        async create({ commit, state, rootState }, item) {
+        async create({ commit, state, rootState, dispatch }, item) {
             try {
                 commit("setLoading", true, { root: true });
 
                 const { data } = await CouponWithTransactions.create(item);
 
                 const { coupon } = data.data.coupon;
-
+                
+                dispatch("getCoupon")
                 commit("setCoupon", coupon);
                 commit("setLoading", false, { root: true });
                 commit("setDialog", false, { root: true });

@@ -93,11 +93,72 @@
                 </v-row>
             </v-tab-item>
         </v-tabs-items>
+
+        <v-data-table
+            :headers="headers"
+            :items="storeBankProviders"
+            :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
+            :page.sync="page"
+            class="b-outlined mt-6"
+        >
+            <template v-slot:no-data>
+                <v-progress-circular
+                    v-if="loading"
+                    color="secondary"
+                    indeterminate
+                ></v-progress-circular>
+                <span v-else>No Data</span>
+            </template>
+
+            <template v-slot:item.actions="{ item }">
+                <v-tooltip color="secondary" top>
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            color="yellow darken-3"
+                            icon
+                            v-on="on"
+                            @click="open(2, item)"
+                        >
+                            <v-icon v-text="icons.mdiPencilOutline"></v-icon>
+                        </v-btn>
+                    </template>
+
+                    <span
+                        class="font-weight-bold"
+                        v-text="'Update'"
+                    ></span>
+                </v-tooltip>
+
+                <v-tooltip color="secondary" top>
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            color="red"
+                            icon
+                            v-on="on"
+                            @click="
+                                () => {
+                                    deleteProdviderId = item.bank_provider.bank_provider_id;
+                                    deleteDialog = true;
+                                }
+                            "
+                        >
+                            <v-icon v-text="icons.mdiClose"></v-icon>
+                        </v-btn>
+                    </template>
+
+                    <span
+                        class="font-weight-bold"
+                        v-text="'Delete'"
+                    ></span>
+                </v-tooltip>
+            </template>
+        </v-data-table>
     </v-tab-item>
 </template>
 
 <script>
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
+import { mdiPencilOutline, mdiClose, mdiMagnify } from "@mdi/js";
 
 export default {
     name: "CleanerManagement",
@@ -107,13 +168,32 @@ export default {
             tab: null,
             lang: "en",
             page: +this.$route.query.page,
-            credentials: []
+            credentials: [],
+            icons: { mdiPencilOutline, mdiClose, mdiMagnify },
+            headers: [
+                {
+                    text: 'Bank Provider Name',
+                    value: 'bank_provider[name][en]'
+                },
+                {
+                    text: 'Created at',
+                    value: 'created_at'
+                },
+                {
+                    text: 'Actions',
+                    value: 'actions'
+                }
+            ],
+            deleteProdviderId: ''
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage"]),
-        ...mapGetters("storePanel/settings/cleanerManagement", ["bankProviders"]),
+        ...mapGetters("storePanel/settings/cleanerManagement", [
+            "bankProviders",
+            "storeBankProviders"
+            ]),
 
         bankProvider: {
             get() {
@@ -139,7 +219,10 @@ export default {
 
     methods: {
         ...mapMutations("storePanel/settings/cleanerManagement", ["setItem"]),
-        ...mapActions("storePanel/settings/cleanerManagement", ["getItems","createItem"]),
+        ...mapActions("storePanel/settings/cleanerManagement", [
+            "getItems",
+            "getBankProviders",
+            "createItem"]),
 
         create(index){
             let formData = {
@@ -149,6 +232,10 @@ export default {
 
             this.createItem(formData)
         }
+    },
+
+    mounted(){
+        this.getItems()
     },
 
     watch: {
@@ -163,7 +250,7 @@ export default {
                         },
                     });
                 }
-                this.getItems(this.query);
+                this.getBankProviders(this.query);
             },
         },
 
