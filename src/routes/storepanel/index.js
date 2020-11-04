@@ -61,50 +61,50 @@ export default [
         children: historyRoutes
     },
 
-    {
-        path: "contests",
-        name: "StoreContestAndSurvey",
-        component: () =>
-            import(
-                /* webpackChunkName: "contests" */ "@/views/storePanel/Contests.vue"
-            )
-    },
+    // {
+    //     path: "contests",
+    //     name: "StoreContestAndSurvey",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "contests" */ "@/views/storePanel/Contests.vue"
+    //         )
+    // },
 
-    {
-        path: "add-contest",
-        name: "AddContest",
-        component: () =>
-            import(
-                /* webpackChunkName: "viewContests" */ "@/views/storePanel/AddContest.vue"
-            )
-    },
+    // {
+    //     path: "add-contest",
+    //     name: "AddContest",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "viewContests" */ "@/views/storePanel/AddContest.vue"
+    //         )
+    // },
 
-    {
-        path: "view-contest",
-        name: "StoreViewContest",
-        component: () =>
-            import(
-                /* webpackChunkName: "viewContests" */ "@/views/storePanel/ViewContest.vue"
-            )
-    },
+    // {
+    //     path: "view-contest",
+    //     name: "StoreViewContest",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "viewContests" */ "@/views/storePanel/ViewContest.vue"
+    //         )
+    // },
 
-    {
-        path: "view-participants",
-        name: "StoreViewParticipants",
-        component: () =>
-            import(
-                /* webpackChunkName: "viewParticipants" */ "@/views/storePanel/ViewParticipants.vue"
-            )
-    },
+    // {
+    //     path: "view-participants",
+    //     name: "StoreViewParticipants",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "viewParticipants" */ "@/views/storePanel/ViewParticipants.vue"
+    //         )
+    // },
 
-    {
-        path: "view-participant-answer",
-        name: "StoreViewParticipantAnswer",
-        component: () =>
-            import(
-                /* webpackChunkName: "viewParticipantAnswer" */ "@/views/storePanel/ViewParticipantAnswer.vue"
-            )
-    },
+    // {
+    //     path: "view-participant-answer",
+    //     name: "StoreViewParticipantAnswer",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "viewParticipantAnswer" */ "@/views/storePanel/ViewParticipantAnswer.vue"
+    //         )
+    // },
 
     {
         path: "products",

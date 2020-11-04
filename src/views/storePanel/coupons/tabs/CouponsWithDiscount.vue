@@ -88,29 +88,29 @@ export default {
         return {
             icons: {
                 mdiPlus,
-                mdiClose,
+                mdiClose
             },
             lang: "el",
-            page: +this.$route.query.page,
+            page: +this.$route.query.page
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/coupons/couponsWithDiscount", [
-            "couponsWithDiscount",
+            "couponsWithDiscount"
         ]),
 
         headers() {
             return [
                 {
                     text: "Product Name",
-                    value: `discount_product_name[${this.lang}]`,
+                    value: `discount_product_name[${this.lang}]`
                 },
                 { text: "Discount", value: "total_discount" },
                 { text: "Points", value: "points" },
                 { text: "Date", value: "created_at" },
-                { text: "Actions", value: "actions" },
+                { text: "Actions", value: "actions" }
             ];
         },
 
@@ -131,7 +131,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            },
+            }
         },
 
         deleteDialog: {
@@ -141,7 +141,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            },
+            }
         },
 
         couponWithDiscount: {
@@ -152,8 +152,8 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
@@ -161,12 +161,12 @@ export default {
             "setDialog",
             "setDeleteDialog",
             "setResetSuccess",
-            "setResetValidation",
+            "setResetValidation"
         ]),
         ...mapMutations("storePanel/coupons/couponsWithDiscount", ["setItem"]),
         ...mapActions("storePanel/coupons/couponsWithDiscount", [
             "getItems",
-            "remove",
+            "remove"
         ]),
 
         open(item) {
@@ -174,7 +174,7 @@ export default {
             setTimeout(() => this.setResetSuccess(true), 300);
             this.setResetValidation(true);
             this.dialog = true;
-        },
+        }
     },
 
     watch: {
@@ -190,8 +190,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query,
-                    },
+                        ...this.$route.query
+                    }
                 });
             }
             this.getItems(this.query);
@@ -199,7 +199,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        },
+        }
     },
 
     beforeCreate() {
@@ -207,15 +207,15 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query,
-                },
+                    ...this.$route.query
+                }
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    },
+    }
 };
 </script>
 

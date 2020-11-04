@@ -64,10 +64,10 @@ export default {
                     to: `/${this.lang}/storePanel/settings/payments-direction`,
                     name: "direction of payments"
                 },
-                {
-                    to: `/${this.lang}/storePanel/settings/cards`,
-                    name: "cards"
-                },
+                // {
+                //     to: `/${this.lang}/storePanel/settings/cards`,
+                //     name: "cards"
+                // },
                 {
                     to: `/${this.lang}/storePanel/settings/payment-history`,
                     name: "payment history"

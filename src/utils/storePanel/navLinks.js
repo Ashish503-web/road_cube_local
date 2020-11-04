@@ -66,16 +66,16 @@ export default {
                                 it: ""
                             },
                             to: `/${this.lang}/storePanel/history`
-                        },
-                        {
-                            icon: mdiTrophyVariant,
-                            title: {
-                                el: "",
-                                en: "Contests",
-                                it: ""
-                            },
-                            to: `/${this.lang}/storePanel/contests`
                         }
+                        // {
+                        //     icon: mdiTrophyVariant,
+                        //     title: {
+                        //         el: "",
+                        //         en: "Contests",
+                        //         it: ""
+                        //     },
+                        //     to: `/${this.lang}/storePanel/contests`
+                        // }
                     ]
                 },
                 {

@@ -75,8 +75,8 @@ export default {
             type: 1,
             discountTypes: [
                 { text: "Percentage", value: 1 },
-                { text: "Euro", value: 2 },
-            ],
+                { text: "Euro", value: 2 }
+            ]
         };
     },
 
@@ -85,12 +85,12 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation",
+            "resetValidation"
         ]),
         ...mapState("storePanel/coupons/couponsWithDiscount", [
             "giftCategories",
             "products",
-            "couponWithDiscount",
+            "couponWithDiscount"
         ]),
 
         lang() {
@@ -110,18 +110,24 @@ export default {
             }
 
             return icon;
-        },
+        }
     },
 
     methods: {
         ...mapActions("storePanel/coupons/couponsWithDiscount", [
             "getGiftCategories",
             "getProducts",
-            "create",
-        ]),
+            "create"
+        ])
     },
 
     watch: {
+        type(val) {
+            if (val === 1) this.couponWithDiscount.discount_value = null;
+            else if (val === 2)
+                this.couponWithDiscount.discount_percentage = null;
+        },
+
         resetSuccess(val) {
             if (val) {
                 this.success = {
@@ -131,15 +137,15 @@ export default {
                     wholesalePrice: false,
                     deliveryCost: false,
                     shippingCost: false,
-                    category: false,
+                    category: false
                 };
             }
-        },
+        }
     },
 
     mounted() {
         this.getGiftCategories();
         this.getProducts();
-    },
+    }
 };
 </script>
