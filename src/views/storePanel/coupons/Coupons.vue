@@ -29,7 +29,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.path,
+            tab: this.$route.path
         };
     },
 
@@ -42,30 +42,30 @@ export default {
             return [
                 {
                     name: { el: "", en: "coupons with transactions", it: "" },
-                    to: `/${this.lang}/storePanel/coupons/with-transactions`,
+                    to: `/${this.lang}/storePanel/coupons/with-transactions`
                 },
 
                 {
                     name: { el: "", en: "coupons with code", it: "" },
-                    to: `/${this.lang}/storePanel/coupons/with-code`,
+                    to: `/${this.lang}/storePanel/coupons/with-code`
                 },
 
                 {
                     name: { el: "", en: "coupons on products", it: "" },
-                    to: `/${this.lang}/storePanel/coupons/on-products`,
+                    to: `/${this.lang}/storePanel/coupons/on-products`
                 },
 
-                {
-                    name: { el: "", en: "coupons with visits", it: "" },
-                    to: `/${this.lang}/storePanel/coupons/with-visits`,
-                },
+                // {
+                //     name: { el: "", en: "coupons with visits", it: "" },
+                //     to: `/${this.lang}/storePanel/coupons/with-visits`
+                // },
 
                 {
                     name: { el: "", en: "coupons with discount", it: "" },
-                    to: `/${this.lang}/storePanel/coupons/with-discount`,
-                },
+                    to: `/${this.lang}/storePanel/coupons/with-discount`
+                }
             ];
-        },
+        }
     },
 
     watch: {
@@ -77,9 +77,9 @@ export default {
                         `/${this.lang}/storePanel/coupons/with-transactions`
                     );
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>
 

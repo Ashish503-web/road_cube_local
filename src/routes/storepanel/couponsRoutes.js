@@ -26,14 +26,14 @@ export default [
             )
     },
 
-    {
-        path: "with-visits",
-        name: "WithVisits",
-        component: () =>
-            import(
-                /* webpackChunkName: "withVisits" */ "@/views/storePanel/coupons/tabs/CouponsWithVisits.vue"
-            )
-    },
+    // {
+    //     path: "with-visits",
+    //     name: "WithVisits",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "withVisits" */ "@/views/storePanel/coupons/tabs/CouponsWithVisits.vue"
+    //         )
+    // },
 
     {
         path: "with-discount",

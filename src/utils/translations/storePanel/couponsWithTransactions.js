@@ -6,15 +6,15 @@ export default {
                 en: "Coupons with transactions",
                 it: ""
             },
-            subtitle1: {
-                el: "",
-                en: "Reward every x transactions with a coupon.",
-                it: ""
-            },
-            subtitle2: {
+            subtitle: {
                 el: "",
                 en:
-                    "Consumers who meet the conditions automatically receive the coupon.",
+                    "Reward your clients with a coupon when they do a certain amount of transactions at your stores",
+                it: ""
+            },
+            conditions: {
+                el: "",
+                en: "Set the conditions for the user to get the coupon",
                 it: ""
             },
             rewardAfter: {
@@ -37,9 +37,10 @@ export default {
                 en: "Delete",
                 it: ""
             },
-            selectCategory: {
+            setCoupon: {
                 el: "",
-                en: "Select Category",
+                en:
+                    "Set the coupon that the user will get if he meets the conditions",
                 it: ""
             },
             giftTitle: {
@@ -55,6 +56,11 @@ export default {
             maximum: {
                 el: "",
                 en: "Maximum",
+                it: ""
+            },
+            selectCategory: {
+                el: "",
+                en: "Select Category",
                 it: ""
             },
             create: {

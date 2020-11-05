@@ -7,14 +7,16 @@
                     sm="6"
                     class="px-3 mx-auto mx-sm-0 text-center text-sm-left"
                 >
-                    <v-card-title v-text="translations.title[lang]">
+                    <v-card-title
+                        class="subtitle-1 font-weight-bold"
+                        v-text="translations.title[lang]"
+                    >
                     </v-card-title>
                     <v-card-subtitle>
                         <p
                             class="ma-0"
-                            v-text="translations.subtitle1[lang]"
+                            v-text="translations.subtitle[lang]"
                         ></p>
-                        <p v-text="translations.subtitle2[lang]"></p>
                     </v-card-subtitle>
                     <v-img
                         src="@/assets/serial_shopping.jpg"
@@ -78,20 +80,16 @@
                     </div>
                 </v-col>
 
-                <v-col v-if="showAddCoupon" cols="12" sm="6" class="px-3 pt-6">
-                    <b-select
-                        v-model="formData.gift_category_id"
-                        :items="giftCategories"
-                        :item-text="`name[${lang}]`"
-                        item-value="gift_category_id"
-                        :label="translations.selectCategory[lang]"
-                        no-top-margin
-                    ></b-select>
+                <v-col v-if="showAddCoupon" cols="12" sm="6" class="px-3 pt-5">
+                    <h4
+                        class="mb-4"
+                        v-text="translations.conditions[lang]"
+                    ></h4>
 
                     <b-text-field
                         v-model="formData.goal_sequence"
-                        type="number"
                         :label="translations.rewardAfter[lang]"
+                        type="number"
                     ></b-text-field>
 
                     <b-text-field
@@ -105,6 +103,8 @@
                         type="number"
                         :label="translations.maxTime[lang]"
                     ></b-text-field>
+
+                    <h4 class="my-4" v-text="translations.setCoupon[lang]"></h4>
 
                     <b-text-field
                         v-model="formData.gift_title"
@@ -122,12 +122,19 @@
                         :label="translations.maximum[lang]"
                     ></b-text-field>
 
+                    <b-select
+                        v-model="formData.gift_category_id"
+                        :items="giftCategories"
+                        :item-text="`name[${lang}]`"
+                        item-value="gift_category_id"
+                        :label="translations.selectCategory[lang]"
+                    ></b-select>
+
                     <div class="text-right mt-3">
                         <v-btn
                             color="secondary"
                             class="text-capitalize px-5"
                             depressed
-                            style="font-size: 1rem"
                             v-text="translations.create[lang]"
                             @click="createCoupon"
                         ></v-btn>

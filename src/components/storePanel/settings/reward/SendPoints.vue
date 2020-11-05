@@ -8,7 +8,7 @@
         @submit="
             updateReward({
                 type: 'sendPoints',
-                item: sendPoints,
+                item: sendPoints
             })
         "
     >
@@ -88,9 +88,9 @@ export default {
 
     data: () => ({
         icons: {
-            mdiInformation,
+            mdiInformation
         },
-        sendPoints: {},
+        sendPoints: {}
     }),
 
     computed: {
@@ -107,14 +107,14 @@ export default {
         errorMessage() {
             return this.$store.state.storePanel.settings.reward.errorMessage
                 .sendPoints;
-        },
+        }
     },
 
     methods: {
         ...mapActions("storePanel/settings/reward", [
             "getSystemNotifications",
-            "updateReward",
-        ]),
+            "updateReward"
+        ])
     },
 
     watch: {
@@ -135,14 +135,14 @@ export default {
                         val.flags.reward.choose_product_on_send_points,
 
                     display_receipt_on_send_points:
-                        val.flags.reward.display_receipt_on_send_points,
+                        val.flags.reward.display_receipt_on_send_points
                 };
-            },
-        },
+            }
+        }
     },
 
     mounted() {
         this.getSystemNotifications();
-    },
+    }
 };
 </script>

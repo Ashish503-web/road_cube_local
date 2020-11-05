@@ -12,6 +12,11 @@ import {
 
 export default {
     computed: {
+        hideNewTransaction() {
+            return !this.$store.state.storePanel.store.flags.reward
+                .send_points_by_card_or_phone;
+        },
+
         navLinks() {
             return [
                 {
@@ -38,7 +43,8 @@ export default {
                                 en: "New Transaction",
                                 it: ""
                             },
-                            to: `/${this.lang}/storePanel/new-transaction`
+                            to: `/${this.lang}/storePanel/new-transaction`,
+                            hide: this.hideNewTransaction
                         },
                         {
                             icon: mdiCurrencyEur,
@@ -79,7 +85,7 @@ export default {
                     ]
                 },
                 {
-                    title: "SETTINGS",
+                    title: { el: "", en: "SETTINGS", it: "" },
                     children: [
                         {
                             icon: mdiPackageVariantClosed,

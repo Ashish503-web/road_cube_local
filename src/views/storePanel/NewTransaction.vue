@@ -32,7 +32,7 @@
                     autocomplete="off"
                 >
                     <v-row no-gutters class="mt-12">
-                        <v-col cols="6" class="pr-2">
+                        <v-col :cols="showReceipt ? 6 : 12" class="pr-2">
                             <v-text-field
                                 v-model="transaction.user"
                                 v-mask="'###############'"
@@ -51,6 +51,7 @@
 
                         <v-col cols="6" class="pl-2">
                             <v-text-field
+                                v-if="showReceipt"
                                 v-model="transaction.receipt_number"
                                 :label="translations.receiptNumber[lang]"
                                 color="secondary"
@@ -107,7 +108,7 @@
                                     :key="product.product_id"
                                     class="pl-3"
                                     :class="{
-                                        'b-list-active': product.selected,
+                                        'b-list-active': product.selected
                                     }"
                                     @click="productSelect(product)"
                                 >
@@ -221,7 +222,7 @@ import {
     mdiCheckBoxOutline,
     mdiCheckboxBlankOutline,
     mdiCurrencyEur,
-    mdiClose,
+    mdiClose
 } from "@mdi/js";
 
 import translations from "@/utils/translations/storePanel/newTransaction";
@@ -239,7 +240,7 @@ class TransactionProduct {
         this.success = false;
         if (this.reward_type_id === 4) {
             this.rules = [
-                (v) => {
+                v => {
                     if (v >= 0.1) {
                         this.success = true;
                         return true;
@@ -247,11 +248,11 @@ class TransactionProduct {
                         this.success = false;
                         return "Purchase price is required";
                     } else return "Purchase Price must be minimum 0.1";
-                },
+                }
             ];
         } else {
             this.rules = [
-                (v) => {
+                v => {
                     if (v >= 1) {
                         this.success = true;
                         return true;
@@ -259,7 +260,7 @@ class TransactionProduct {
                         this.success = false;
                         return "Quantity is required";
                     } else return "Quantity must be minimum 1";
-                },
+                }
             ];
         }
     }
@@ -276,12 +277,12 @@ export default {
             mdiCheckBoxOutline,
             mdiCheckboxBlankOutline,
             mdiCurrencyEur,
-            mdiClose,
+            mdiClose
         },
         valid: false,
         disabled: true,
         menu: false,
-        search: "",
+        search: ""
     }),
 
     computed: {
@@ -295,21 +296,26 @@ export default {
         totalAmount() {
             let amount = 0;
 
-            this.selectedProducts.forEach((p) => (amount += +p.retail_price));
+            this.selectedProducts.forEach(p => (amount += +p.retail_price));
 
             return new Intl.NumberFormat("en-US", {
                 style: "currency",
                 currency: "EUR",
-                minimumFractionDigits: 2,
+                minimumFractionDigits: 2
             }).format(amount);
         },
 
         totalPoints() {
             let point = 0;
 
-            this.selectedProducts.forEach((p) => (point += +p.reward_points));
+            this.selectedProducts.forEach(p => (point += +p.reward_points));
 
             return point;
+        },
+
+        showReceipt() {
+            return this.$store.state.storePanel.store.flags.reward
+                .display_receipt_on_send_points;
         },
 
         selectedProducts: {
@@ -320,7 +326,7 @@ export default {
 
             set(val) {
                 this.setSelectedProducts(val);
-            },
+            }
         },
 
         transaction: {
@@ -330,14 +336,14 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
         ...mapMutations("storePanel/transactions", [
             "setItem",
-            "setSelectedProducts",
+            "setSelectedProducts"
         ]),
         ...mapActions("storePanel/transactions", ["getProducts", "create"]),
 
@@ -349,7 +355,7 @@ export default {
             item.selected = !item.selected;
 
             let index = this.selectedProducts.findIndex(
-                (p) => p.product_id === item.product_id
+                p => p.product_id === item.product_id
             );
 
             if (index === -1) {
@@ -362,9 +368,9 @@ export default {
         productRemove(item, index) {
             this.selectedProducts.splice(index, 1);
             this.products.find(
-                (p) => p.product_id === item.product_id
+                p => p.product_id === item.product_id
             ).selected = false;
-        },
+        }
     },
 
     watch: {
@@ -393,9 +399,9 @@ export default {
                 this.productError = true;
             }
 
-            val.forEach((selected) => {
+            val.forEach(selected => {
                 let product = this.transaction.products.find(
-                    (p) => p.product_id === selected.product_id
+                    p => p.product_id === selected.product_id
                 );
 
                 if (product) {
@@ -409,10 +415,10 @@ export default {
 
             this.transaction.products = [];
 
-            val.forEach((p) => {
+            val.forEach(p => {
                 this.transaction.products.push(new TransactionProduct(p));
             });
-        },
+        }
     },
 
     created() {
@@ -427,7 +433,7 @@ export default {
     beforeDestroy() {
         this.selectedProducts = [];
         this.transaction = {};
-    },
+    }
 };
 </script>
 

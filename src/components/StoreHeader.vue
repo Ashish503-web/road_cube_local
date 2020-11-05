@@ -141,6 +141,7 @@
                         <v-tooltip v-if="mini" color="secondary" right>
                             <template v-slot:activator="{ on }">
                                 <v-list-item
+                                    v-if="!item.hide"
                                     :to="item.to"
                                     :exact="item.exact"
                                     v-on="on"
@@ -160,7 +161,11 @@
                             ></span>
                         </v-tooltip>
 
-                        <v-list-item v-else :to="item.to" :exact="item.exact">
+                        <v-list-item
+                            v-else-if="!item.hide"
+                            :to="item.to"
+                            :exact="item.exact"
+                        >
                             <v-list-item-icon>
                                 <v-icon v-text="item.icon"></v-icon>
                             </v-list-item-icon>

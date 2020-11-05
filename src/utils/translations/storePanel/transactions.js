@@ -26,16 +26,6 @@ export default {
                 en: "Filter By Type",
                 it: ""
             },
-            statuses: {
-                el: "",
-                en: "Statuses",
-                it: ""
-            },
-            types: {
-                el: "",
-                en: "Types",
-                it: ""
-            },
             user: {
                 el: "",
                 en: "User",

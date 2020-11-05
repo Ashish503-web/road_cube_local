@@ -65,6 +65,10 @@ export default {
                     item
                 );
 
+                if (type === "sendPoints") {
+                    commit("storePanel/setSendPoints", item, { root: true });
+                }
+
                 commit("setLoading", { value: false, type });
                 commit(
                     "setNotification",

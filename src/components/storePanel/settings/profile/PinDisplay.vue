@@ -1,14 +1,12 @@
 <template>
     <b-standard-card
-        title="Pin Display"
-        submit-text="update logo"
+        :title="translations.title[lang]"
+        :submit-text="translations.submitText[lang]"
         :loading="loading"
         :error-message="errorMessage"
         @submit="uploadMapLogo({ type: 'mapLogo', imageFile })"
     >
-        <div style="height: 100px">
-            Here you can change the display of the pin on the map:
-        </div>
+        <div style="height: 100px" v-text="translations.info[lang]"></div>
 
         <v-row no-gutters align="center" style="height: 120px">
             <v-col cols="12" sm="5" class="pr-2">
@@ -19,7 +17,7 @@
             </v-col>
 
             <v-col cols="12" sm="7" class="pl-0 pl-sm-2">
-                Press the following button to choose image:
+                {{ translations.uploadText[lang] }}
                 <v-file-input
                     color="secondary"
                     class="mt-1"
@@ -38,9 +36,12 @@
 <script>
 import bubble from "@/assets/new_bubble_image.png";
 import { mapMutations, mapActions } from "vuex";
+import translations from "@/utils/translations/storePanel/settings/pinDisplay";
 
 export default {
     name: "PinDisplay",
+
+    mixins: [translations],
 
     data() {
         return {
@@ -62,6 +63,10 @@ export default {
     },
 
     computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
         loading() {
             return this.$store.state.storePanel.settings.profile.loading
                 .mapLogo;

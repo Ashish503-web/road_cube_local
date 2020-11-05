@@ -3,38 +3,40 @@ export default {
         translations: {
             title: {
                 el: "",
-                en: "Coupons on Products",
+                en: "Coupons with discount",
                 it: ""
             },
             info: {
                 el: "",
-                en:
-                    "Create 1+1 or sampling actions for your products with special coupons for your clients",
+                en: `Let your customer get your products with discount when they
+                    have certain amount of points from transactions to your
+                    store. Set for each product the percentage of the discount
+                    that suits you based on your margins.`,
                 it: ""
             },
-            addAction: {
+            addDiscountCoupons: {
                 el: "",
-                en: "Add Action",
+                en: "Add Discount Coupons",
                 it: ""
             },
-            type: {
+            product: {
                 el: "",
-                en: "Type",
+                en: "Product Name",
                 it: ""
             },
-            productForSale: {
+            discount: {
                 el: "",
-                en: "Product For Sale",
+                en: "Discount",
                 it: ""
             },
-            productForGift: {
+            points: {
                 el: "",
-                en: "Product For Gift",
+                en: "Points",
                 it: ""
             },
-            quantity: {
+            date: {
                 el: "",
-                en: "Quantity",
+                en: "Date",
                 it: ""
             },
             actions: {
@@ -42,29 +44,14 @@ export default {
                 en: "Actions",
                 it: ""
             },
-            social: {
-                el: "",
-                en: "Social Media",
-                it: ""
-            },
             noData: {
                 el: "",
                 en: "No data available",
                 it: ""
             },
-            update: {
-                el: "",
-                en: "Update",
-                it: ""
-            },
             delete: {
                 el: "",
                 en: "Delete",
-                it: ""
-            },
-            share: {
-                el: "",
-                en: "Share",
                 it: ""
             }
         }
