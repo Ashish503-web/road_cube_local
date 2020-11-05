@@ -50,6 +50,11 @@ export default class BankProvider {
             item
         );
 
+    static updateProvider = item =>
+        axios.put(
+            `${ApiEndpoint}/${localStorage.getItem("storeId")}/settings/bank-providers`,item
+        );
+
     static removeProvider = id =>
         axios.delete(
             `${ApiEndpoint}/${localStorage.getItem("storeId")}/settings/bank-providers/${id}`

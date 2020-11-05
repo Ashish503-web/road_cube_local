@@ -137,32 +137,25 @@ export default {
             }
         },
 
-        // async update({ dispatch, commit, rootState }, { product, image }) {
-        //     try {
-        //         delete product.image;
-        //         commit("setLoading", true);
+        async updateProvider({ dispatch, commit, rootState }, form ) {
+            try {
+                commit("setLoading", true);
 
-        //         const { data } = await ProductCategory.update(
-        //             product
-        //         );
+                const { data } = await BankProvider.updateProvider(
+                    form
+                );
 
-        //         if (image) {
-        //             dispatch("uploadImage", {
-        //                 item: data.data.product,
-        //                 image,
-        //                 mode: 2
-        //             });
-        //         } else {
-        //             commit("updateItem", data.data.product);
-        //             commit("setLoading", false);
-        //             commit("setDialog", false);
-        //         }
-        //     } catch (ex) {
-        //         commit("setLoading", false);
-        //         commit("setErrorMessage", ex.response.data.message);
-        //         setTimeout(() => commit("setErrorMessage", ""), 5000);
-        //     }
-        // },
+                
+                dispatch("getItems") 
+                commit("setLoading", false);
+                commit("setDialog", false);
+                
+            } catch (ex) {
+                commit("setLoading", false);
+                commit("setErrorMessage", ex.response.data.message);
+                setTimeout(() => commit("setErrorMessage", ""), 5000);
+            }
+        },
 
         async removeProvider({ commit, dispatch }, id) {
             try {
