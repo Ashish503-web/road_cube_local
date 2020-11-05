@@ -22,7 +22,7 @@ export default {
 
     methods: {
         ...mapMutations(["setStoreId", "setAccessToken"]),
-        ...mapActions(["getUser"]),
+        ...mapActions(["getUser"])
     },
 
     mounted() {
@@ -37,7 +37,7 @@ export default {
         if (storeId) {
             this.setStoreId(storeId);
         }
-    },
+    }
 };
 </script>
 

@@ -19,6 +19,11 @@ export default {
 </script>
 
 <style>
+.v-label {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
 .b-container {
     background-color: rgba(234, 237, 241, 0.57);
     min-height: calc(100vh - 64px);

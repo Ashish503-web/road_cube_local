@@ -175,25 +175,25 @@ export default {
                 goal_max_days: "",
                 gift_title: "",
                 gift_description: "",
-                maximum: "",
+                maximum: ""
             },
-            deleteDialog: false,
+            deleteDialog: false
         };
     },
 
     computed: {
         ...mapGetters("storePanel/coupons/couponsWithTransactions", [
             "coupon",
-            "giftCategories",
+            "giftCategories"
         ]),
 
         lang() {
             return this.$route.params.lang;
-        },
+        }
     },
 
     watch: {
-        coupon: function (val) {
+        coupon: function(val) {
             if (val != undefined) {
                 this.showAddCoupon = false;
                 this.coupon_id = val.coupon_id;
@@ -202,17 +202,17 @@ export default {
                 this.max_days = val.goal_max_days;
                 this.code = val.code;
                 this.gift_title = val.gift_title;
-            }else{
+            } else {
                 this.showAddCoupon = true;
-                this.formData.gift_category_id = '';
-                this.formData.goal_sequence = '';
-                this.formData.goal_minimum_amount = '';
-                this.formData.goal_max_days = '';
-                this.formData.gift_title = '';
-                this.formData.gift_description = '';
-                this.formData.maximum = '';
+                this.formData.gift_category_id = "";
+                this.formData.goal_sequence = "";
+                this.formData.goal_minimum_amount = "";
+                this.formData.goal_max_days = "";
+                this.formData.gift_title = "";
+                this.formData.gift_description = "";
+                this.formData.maximum = "";
             }
-        },
+        }
     },
 
     methods: {
@@ -220,7 +220,7 @@ export default {
             "getCoupon",
             "getGiftCategories",
             "create",
-            "remove",
+            "remove"
         ]),
 
         createCoupon() {
@@ -229,13 +229,13 @@ export default {
 
         deleteCoupon() {
             this.remove(this.coupon_id);
-            this.deleteDialog = false
-        },
+            this.deleteDialog = false;
+        }
     },
 
     mounted() {
         this.getCoupon();
         this.getGiftCategories();
-    },
+    }
 };
 </script>
