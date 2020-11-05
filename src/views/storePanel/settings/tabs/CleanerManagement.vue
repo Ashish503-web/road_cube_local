@@ -13,7 +13,7 @@
             <v-tab
                 v-for="provider in bankProviders"
                 :key="provider.bank_provider_id"
-                @click="bankProvider = provider"
+                @click="openProviderPopup(provider)"
             >
                 <div class="flex flex-wrap">
                     <v-img
@@ -28,71 +28,6 @@
         </v-tabs>
 
         <v-divider class="mb-7"></v-divider>
-
-        <v-tabs-items v-model="tab">
-            <v-tab-item
-                v-for="(provider,ind) in bankProviders"
-                :key="provider.bank_provider_id"
-            >
-                <v-row no-gutters>
-                    <v-col cols="6">
-                        Fill in here the production details you will receive
-                        after activation:
-                        <br />
-                        <v-card flat width="70%">
-                            <b-text-field
-                                v-for="(field,index) in provider.fields"
-                                :key="index"
-                                v-model="credentials[ind][field]"
-                                :label="field"
-                                class="mt-5"
-                            ></b-text-field>
-                            <!-- <b-text-field
-                                v-model="bankProvider.credentials.key"
-                                label="pass"
-                                class="mt-5"
-                            ></b-text-field> -->
-
-                            <v-alert v-if="errorMessage" type="error">{{
-                                errorMessage
-                            }}</v-alert>
-
-                            <v-card-actions class="pt-5 px-0">
-                                <v-btn
-                                    color="secondary"
-                                    class="text-capitalize px-5"
-                                    depressed
-                                    :loading="loading"
-                                    @click="create(ind)"
-                                    >create</v-btn
-                                >
-                                <v-spacer></v-spacer>
-                                <v-btn
-                                    color="grey lighten-2"
-                                    class="text-capitalize px-5"
-                                    depressed
-                                    @click="tab = null"
-                                    >cancel</v-btn
-                                >
-                            </v-card-actions>
-                        </v-card>
-                    </v-col>
-                    <v-col cols="6" class="b-border-left">
-                        <v-sheet class="px-5">
-                            <v-img
-                                :src="$store.state.storePanel.store.logo"
-                                width="70"
-                            ></v-img>
-
-                            <h2
-                                class="subtitle-1"
-                                v-text="bankProvider.bank_provider.name[lang]"
-                            ></h2>
-                        </v-sheet>
-                    </v-col>
-                </v-row>
-            </v-tab-item>
-        </v-tabs-items>
 
         <v-data-table
             :headers="headers"
@@ -154,6 +89,24 @@
             </template>
         </v-data-table>
 
+        <v-dialog v-model="createDialog" max-width="500">
+            <b-card
+                type="create"
+                title="Create Provider"
+                submit-text="create"
+                @cancel="createDialog = false"
+                @submit="create"
+            >
+                <b-text-field
+                    v-for="(field,index) in createProvider.fields"
+                    :key="index"
+                    v-model="credentials[field]"
+                    :label="field"
+                    class="mt-5"
+                ></b-text-field>
+            </b-card>
+        </v-dialog>
+
         <v-dialog v-model="updateDialog" max-width="500">
             <b-card
                 type="update"
@@ -198,7 +151,7 @@ export default {
             tab: null,
             lang: "en",
             page: +this.$route.query.page,
-            credentials: [],
+            credentials: {},
             icons: { mdiPencilOutline, mdiClose, mdiMagnify },
             headers: [
                 {
@@ -214,6 +167,8 @@ export default {
                     value: 'actions'
                 }
             ],
+            createDialog: false,
+            createProvider: {},
             updateDialog: false,
             editProvider: {},
             deleteProviderId: '',
@@ -262,16 +217,35 @@ export default {
 
         create(index){
             let formData = {
-                "bank_provider_id": this.bankProviders[index].bank_provider_id,
-                "credentials": this.credentials[index]
+                "bank_provider_id": this.createProvider.bank_provider_id,
+                "credentials": this.credentials
             }
 
             this.createItem(formData)
+            this.createDialog = false;
+            this.credentials = {}
         },
 
         open(item){
             this.editProvider = item;
             this.updateDialog = true;
+        },
+
+        openProviderPopup(item){
+            let storedIds = []
+            this.storeBankProviders.map(data => {
+                storedIds.push(data.bank_provider.bank_provider_id)
+            })
+            if(!storedIds.includes(item.bank_provider_id)){
+                 this.createDialog = true;
+                 this.createProvider = item;
+            }else{
+                let result = this.storeBankProviders.filter(data => {
+                    return data.bank_provider.bank_provider_id == item.bank_provider_id
+                })
+                this.editProvider = result[0];
+                this.updateDialog = true;
+            }
         },
 
         update(){
@@ -307,18 +281,6 @@ export default {
                 }
                 this.getBankProviders(this.query);
             },
-        },
-
-        bankProviders: function(val){
-            val.map(data => {
-                let fields = {}
-                if(data.fields && data.fields.length > 0){
-                    data.fields.map(item => {
-                        fields[item] = ""
-                    })
-                }
-                this.credentials.push(fields)
-            })
         },
 
         page(page) {

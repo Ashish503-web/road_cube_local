@@ -70,13 +70,13 @@ export default {
             }
         },
 
-        async createItem({ commit, state }, form) {
+        async createItem({ commit, state, dispatch }, form) {
             try {
                 commit("setLoading", true, { root: true });
 
                 const { data } = await BankProvider.createItem(form);
 
-                commit("setItem", {});
+                dispatch("getItems")
                 commit("setLoading", false, { root: true });
                 commit(
                     "setNotification",
@@ -145,7 +145,6 @@ export default {
                     form
                 );
 
-                
                 dispatch("getItems") 
                 commit("setLoading", false);
                 commit("setDialog", false);
