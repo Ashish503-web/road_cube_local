@@ -117,7 +117,7 @@
                             color="yellow darken-3"
                             icon
                             v-on="on"
-                            @click="open(2, item)"
+                            @click="open(item)"
                         >
                             <v-icon v-text="icons.mdiPencilOutline"></v-icon>
                         </v-btn>
@@ -153,6 +153,24 @@
                 </v-tooltip>
             </template>
         </v-data-table>
+
+        <v-dialog v-model="updateDialog" max-width="500">
+            <b-card
+                type="update"
+                title="Update Provider"
+                submit-text="update"
+                @cancel="updateDialog = false"
+                @submit="update"
+            >
+                <b-text-field
+                    v-for="(field,index) in editProvider.credentials ? Object.keys(editProvider.credentials) : []"
+                    :key="index"
+                    v-model="editProvider.credentials[field]"
+                    :label="field"
+                    class="mt-5"
+                ></b-text-field>
+            </b-card>
+        </v-dialog>
 
         <v-dialog v-model="deleteDialog" max-width="500">
             <b-card
@@ -196,6 +214,8 @@ export default {
                     value: 'actions'
                 }
             ],
+            updateDialog: false,
+            editProvider: {},
             deleteProviderId: '',
             deleteDialog: false
         };
@@ -236,6 +256,7 @@ export default {
             "getItems",
             "getBankProviders",
             "createItem",
+            "updateProvider",
             "removeProvider"
             ]),
 
@@ -246,6 +267,20 @@ export default {
             }
 
             this.createItem(formData)
+        },
+
+        open(item){
+            this.editProvider = item;
+            this.updateDialog = true;
+        },
+
+        update(){
+            let editForm = {
+               "store_bank_provider_id": this.editProvider.store_bank_provider_id,
+                "credentials": this.editProvider.credentials 
+            }
+            this.updateProvider(editForm)
+            this.updateDialog = false;
         },
 
         deleteProvider(){
