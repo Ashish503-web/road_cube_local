@@ -3,7 +3,7 @@ export default {
         translations: {
             title: {
                 el: "",
-                en: "Coupons with transactions",
+                en: "Coupons With Transactions",
                 it: ""
             },
             subtitle: {

@@ -10,10 +10,12 @@
                 ></v-icon>
                 {{ translations.mobilePayments[lang] }}
                 <v-switch
-                    v-model="mobilePayments"
+                    v-model="online_payments"
                     color="secondary"
                     class="ml-3 mt-0 pt-0"
                     hide-details
+                    :loading="mobileLoading"
+                    @change="updateMobilePayments({ online_payments })"
                 ></v-switch>
 
                 <v-menu offset-y left>
@@ -39,12 +41,6 @@
                                 ></v-list-item-title>
                             </v-list-item>
 
-                            <!-- <v-list-item
-                                :href="
-                                    `https://api.roadcube.tk/v1/stores/${getStoreId()}/transactions/excel/download`
-                                "
-                                download
-                            > -->
                             <v-list-item @click="downloadAllTransactions">
                                 <v-list-item-icon class="mr-3">
                                     <v-icon
@@ -198,85 +194,66 @@
                 </v-col>
             </v-row>
 
-            <v-sheet width="100%" style="overflow: auto">
-                <v-sheet min-width="1200">
-                    <v-data-table
-                        :headers="headers"
-                        :items="transactions"
-                        :footer-props="{
-                            itemsPerPageOptions: [12],
-                            showCurrentPage: true
-                        }"
-                        :page.sync="page"
-                        :server-items-length="serverItemsLength"
-                        disable-sort
-                        class="b-outlined"
+            <v-data-table
+                :headers="headers"
+                :items="transactions"
+                :footer-props="{
+                    itemsPerPageOptions: [12],
+                    showCurrentPage: true
+                }"
+                :page.sync="page"
+                :server-items-length="serverItemsLength"
+                disable-sort
+                class="b-outlined"
+            >
+                <template v-slot:no-data>
+                    <v-progress-circular
+                        v-if="loading"
+                        color="secondary"
+                        indeterminate
+                    ></v-progress-circular>
+                    <span v-else v-text="translations.noData[lang]"></span>
+                </template>
+
+                <template v-slot:item.transaction_status_name="{ item }">
+                    <v-sheet>
+                        <b-select
+                            v-model="item.transaction_status_id"
+                            :items="transactionStatuses"
+                            :loading="item.loading"
+                            item-text="name"
+                            item-value="transaction_status_id"
+                            class="mb-3"
+                            @change="changeStatus(item)"
+                        ></b-select>
+                    </v-sheet>
+                </template>
+
+                <template v-slot:item.watch="{ item }">
+                    <v-btn
+                        icon
+                        @click="
+                            () => {
+                                transactionId = item.transaction_id;
+                                dialog = true;
+                            }
+                        "
                     >
-                        <template v-slot:no-data>
-                            <v-progress-circular
-                                v-if="loading"
-                                color="secondary"
-                                indeterminate
-                            ></v-progress-circular>
-                            <span
-                                v-else
-                                v-text="translations.noData[lang]"
-                            ></span>
-                        </template>
+                        <v-icon v-text="icons.mdiTextBoxSearchOutline"></v-icon>
+                    </v-btn>
+                </template>
 
-                        <template
-                            v-slot:item.transaction_status_name="{ item }"
-                        >
-                            <v-sheet>
-                                <b-select
-                                    v-model="item.transaction_status_id"
-                                    :items="transactionStatuses"
-                                    item-text="name"
-                                    item-value="transaction_status_id"
-                                    class="mb-3"
-                                ></b-select>
-                            </v-sheet>
-                        </template>
-
-                        <template v-slot:item.watch="{ item }">
-                            <v-btn
-                                icon
-                                @click="
-                                    () => {
-                                        transactionId = item.transaction_id;
-                                        dialog = true;
-                                    }
-                                "
-                            >
-                                <v-icon
-                                    v-text="icons.mdiTextBoxSearchOutline"
-                                ></v-icon>
-                            </v-btn>
-                        </template>
-
-                        <template v-slot:item.actions="{ item }">
-                            <v-btn
-                                color="secondary"
-                                class="text-capitalize my-1 mr-1"
-                                depressed
-                                width="83"
-                                :loading="item.loading"
-                                @click="changeStatus(item)"
-                            >
-                                change
-                            </v-btn>
-
-                            <v-btn
-                                color="grey lighten-2"
-                                class="text-capitalize my-1"
-                                width="83"
-                                depressed
-                                >cancel</v-btn
-                            >
-                        </template>
-                    </v-data-table>
-                </v-sheet>
-            </v-sheet>
+                <template v-slot:item.actions="{ item }">
+                    <v-btn
+                        color="grey lighten-2"
+                        class="text-capitalize my-1"
+                        width="83"
+                        depressed
+                        @click="myFunc(item)"
+                        >cancel</v-btn
+                    >
+                </template>
+            </v-data-table>
 
             <v-dialog v-model="dialog" max-width="600">
                 <transaction-profile
@@ -326,6 +303,7 @@ export default {
                 mdiCheckBoxOutline,
                 mdiTextBoxSearchOutline
             },
+            online_payments: null,
             menu: {
                 status: false,
                 type: false
@@ -341,6 +319,7 @@ export default {
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/transactions", [
+            "mobileLoading",
             "transactionStatuses",
             "transactionTypes",
             "transactions"
@@ -366,15 +345,8 @@ export default {
                 },
                 {
                     text: this.translations.status[this.lang],
-                    value: "transaction_status_name"
-                },
-                {
-                    text: this.translations.type[this.lang],
-                    value: "transaction_type_name"
-                },
-                {
-                    text: this.translations.receiptNumber[this.lang],
-                    value: "receipt_number"
+                    value: "transaction_status_name",
+                    width: "30%"
                 },
                 {
                     text: this.translations.date[this.lang],
@@ -399,17 +371,6 @@ export default {
             return query.slice(0, query.length - 1);
         },
 
-        mobilePayments: {
-            get() {
-                return this.$store.state.storePanel.store.flags.reward
-                    .online_payments;
-            },
-
-            set(val) {
-                this.setMobilePayments(val);
-            }
-        },
-
         transaction: {
             get() {
                 return this.$store.state.storePanel.transactions.transaction;
@@ -429,6 +390,7 @@ export default {
             "getTransactionTypes",
             "getItems",
             "changeStatus",
+            "updateMobilePayments",
             "remove"
         ]),
 
@@ -549,6 +511,13 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
+        },
+
+        ["$store.state.storePanel.store"]: {
+            immediate: true,
+            handler(val) {
+                this.online_payments = val.flags.reward.online_payments;
+            }
         },
 
         transactionStatuses(val) {

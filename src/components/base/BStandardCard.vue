@@ -2,7 +2,11 @@
     <v-card outlined :height="height">
         <v-row no-gutters class="fill-height" align-content="space-between">
             <v-col cols="12">
-                <v-card-title v-if="activatable" :class="titleColor">
+                <v-card-title
+                    v-if="activatable"
+                    :class="titleColor"
+                    class="subtitle-1 font-weight-bold"
+                >
                     <v-col class="pa-0">
                         {{ title }}
                     </v-col>
@@ -24,7 +28,11 @@
                     </v-col>
                 </v-card-title>
 
-                <v-card-title v-else :class="titleColor">
+                <v-card-title
+                    v-else
+                    :class="titleColor"
+                    class="subtitle-1 font-weight-bold"
+                >
                     {{ title }}
                 </v-card-title>
                 <v-divider></v-divider>
@@ -68,7 +76,7 @@
                         :disabled="disabled"
                         :loading="loading"
                         @click="$emit('submit')"
-                        >{{ submitText }}</v-btn
+                        >{{ submitText[lang] }}</v-btn
                     >
                 </v-card-actions>
             </v-col>
@@ -82,29 +90,35 @@ export default {
     props: {
         height: {
             type: String,
-            default: "100%",
+            default: "100%"
         },
         activatable: Boolean,
         switcher: Boolean,
         title: String,
         titleColor: {
             type: String,
-            default: "grey lighten-3",
+            default: "grey lighten-3"
         },
         cancelText: String,
         submitText: {
-            type: String,
-            default: "update details",
+            type: Object,
+            default: () => ({ el: "", en: "update details", it: "" })
         },
         loading: Boolean,
         errorMessage: String,
-        noBodyPadding: Boolean,
+        noBodyPadding: Boolean
     },
 
     data: () => ({
         valid: false,
-        disabled: true,
+        disabled: true
     }),
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        }
+    },
 
     watch: {
         valid(val) {
@@ -113,8 +127,8 @@ export default {
             } else {
                 this.disabled = true;
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

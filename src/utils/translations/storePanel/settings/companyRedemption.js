@@ -3,17 +3,17 @@ export default {
         translations: {
             title: {
                 el: "",
-                en: "Pin Display",
+                en: "Choose redemption for the company",
                 it: ""
             },
-            info: {
+            directRedemption: {
                 el: "",
-                en: "Here you can change the display of the pin on the map:",
+                en: "Direct Redemption (redemption ON)",
                 it: ""
             },
-            uploadText: {
+            codeRedemption: {
                 el: "",
-                en: "Press the following button to choose image:",
+                en: "Code (redemption OFF)",
                 it: ""
             }
         }

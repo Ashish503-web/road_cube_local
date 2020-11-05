@@ -1,17 +1,36 @@
 <template>
-    <b-standard-card title="Change Password" submit-text="verification">
+    <b-standard-card
+        :title="translations.title[lang]"
+        :submit-text="{ el: '', en: 'verification', it: '' }"
+    >
         <b-text-field
             type="password"
-            label="Password"
+            :label="translations.password[lang]"
             no-top-margin
         ></b-text-field>
-        <b-text-field type="password" label="New Password"></b-text-field>
-        <b-text-field type="password" label="Confirm Password"></b-text-field>
+        <b-text-field
+            type="password"
+            :label="translations.newPassword[lang]"
+        ></b-text-field>
+        <b-text-field
+            type="password"
+            :label="translations.confirmPassword[lang]"
+        ></b-text-field>
     </b-standard-card>
 </template>
 
 <script>
+import translations from "@/utils/translations/storePanel/settings/changePassword";
+
 export default {
-    name: "ChangePassword"
+    name: "ChangePassword",
+
+    mixins: [translations],
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        }
+    }
 };
 </script>

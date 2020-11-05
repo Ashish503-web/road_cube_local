@@ -1,7 +1,7 @@
 <template>
     <b-standard-card
         :title="translations.title[lang]"
-        :submit-text="translations.submitText[lang]"
+        :submit-text="{ el: '', en: 'Update Logo', it: '' }"
         :loading="loading"
         :error-message="errorMessage"
         @submit="uploadLogo({ type: 'logo', imageFile })"

@@ -3,17 +3,22 @@ export default {
         translations: {
             title: {
                 el: "",
-                en: "Pin Display",
+                en: "Fast Payment",
                 it: ""
             },
-            info: {
+            toggle: {
                 el: "",
-                en: "Here you can change the display of the pin on the map:",
+                en: "Toggle Fast Payment Option",
                 it: ""
             },
-            uploadText: {
+            on: {
                 el: "",
-                en: "Press the following button to choose image:",
+                en: "On",
+                it: ""
+            },
+            off: {
+                el: "",
+                en: "Off",
                 it: ""
             }
         }

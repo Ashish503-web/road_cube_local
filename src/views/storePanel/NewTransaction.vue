@@ -28,10 +28,10 @@
 
                 <v-form
                     v-model="valid"
-                    @submit.prevent="create"
                     autocomplete="off"
+                    @submit.prevent="create"
                 >
-                    <v-row no-gutters class="mt-12">
+                    <v-row no-gutters class="mt-7">
                         <v-col :cols="showReceipt ? 6 : 12" class="pr-2">
                             <v-text-field
                                 v-model="transaction.user"
@@ -77,7 +77,6 @@
                                 v-model="search"
                                 :label="translations.orderProducts[lang]"
                                 color="secondary"
-                                class="mt-5"
                                 outlined
                                 dense
                                 clearable
@@ -201,13 +200,13 @@
                         type="submit"
                         color="secondary"
                         depressed
-                        class="mt-12"
+                        class="mt-7"
                         block
                         large
                         :loading="loading"
                         :disabled="disabled"
-                        v-text="translations.createOrder[lang]"
-                    ></v-btn>
+                        >{{ translations.createOrder[lang] }}</v-btn
+                    >
                 </v-form>
             </v-card>
         </v-row>
@@ -286,7 +285,12 @@ export default {
     }),
 
     computed: {
-        ...mapState(["loading", "errorMessage"]),
+        ...mapState([
+            "loading",
+            "errorMessage",
+            "resetSuccess",
+            "resetValidation"
+        ]),
         ...mapState("storePanel/transactions", ["productsLoading", "products"]),
 
         lang() {
@@ -341,6 +345,7 @@ export default {
     },
 
     methods: {
+        ...mapMutations(["setResetSuccess", "setResetValidation"]),
         ...mapMutations("storePanel/transactions", [
             "setItem",
             "setSelectedProducts"
@@ -386,6 +391,7 @@ export default {
 
         search(val) {
             if (val) {
+                this.menu = true;
                 this.debouncedSearch();
             }
         },
@@ -418,6 +424,26 @@ export default {
             val.forEach(p => {
                 this.transaction.products.push(new TransactionProduct(p));
             });
+        },
+
+        resetValidation(val) {
+            if (val) {
+                this.productError = false;
+                this.setResetValidation(false);
+            }
+        },
+
+        resetSuccess(val) {
+            if (val) {
+                this.success = {
+                    user: false,
+                    receipt: false,
+                    product: false,
+                    purchasePrice: false,
+                    quantity: false
+                };
+                this.setResetSuccess(false);
+            }
         }
     },
 

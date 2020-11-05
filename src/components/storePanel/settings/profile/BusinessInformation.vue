@@ -1,6 +1,6 @@
 <template>
     <b-standard-card
-        title="Business Information"
+        :title="translations.title[lang]"
         :loading="loading"
         :error-message="errorMessage"
         @submit="
@@ -14,7 +14,7 @@
             <v-col cols="12" sm="5">
                 <b-text-field
                     v-model="businessInformation.name"
-                    label="Business Name"
+                    :label="translations.name[lang]"
                 ></b-text-field>
 
                 <b-select
@@ -22,7 +22,7 @@
                     :items="storeCategories"
                     item-text="name.en"
                     item-value="store_category_id"
-                    label="Basic Business Category"
+                    :label="translations.category[lang]"
                 ></b-select>
 
                 <b-select
@@ -30,53 +30,57 @@
                     :items="countries"
                     item-text="name"
                     item-value="country_id"
-                    label="Country"
+                    :label="translations.country[lang]"
                 ></b-select>
 
                 <b-text-field
                     v-model="businessInformation.secondary_phone"
                     type="number"
-                    label="Business Telephone Number 2"
+                    :label="translations.telephone2[lang]"
                 ></b-text-field>
 
                 <b-text-field
                     v-model="businessInformation.full_name"
-                    label="Owner's Fullname"
+                    :label="translations.fullname[lang]"
                 ></b-text-field>
             </v-col>
 
             <v-col cols="12" sm="5">
                 <b-text-field
                     v-model="businessInformation.address"
-                    label="Business Address"
+                    :label="translations.address[lang]"
                 ></b-text-field>
 
                 <b-text-field
                     v-model="businessInformation.activity"
-                    label="Business Activity"
+                    :label="translations.activity[lang]"
                 ></b-text-field>
 
                 <b-text-field
                     v-model="businessInformation.primary_phone"
                     type="number"
-                    label="Business Telephone Number"
+                    :label="translations.telephone[lang]"
                 ></b-text-field>
 
                 <b-text-field
                     v-model="businessInformation.mobile"
                     type="number"
-                    label="Owner's Mobile Phone"
+                    :label="translations.ownersPhone[lang]"
                 ></b-text-field>
 
                 <b-text-field
                     v-model="businessInformation.email"
                     type="email"
-                    label="Email"
+                    :label="translations.email[lang]"
                 ></b-text-field>
             </v-col>
 
             <v-col cols="11" class="mt-3">
-                <a href="#" class="subtitle-1">View on Google Maps</a>
+                <a
+                    href="#"
+                    class="subtitle-2"
+                    v-text="translations.googleMaps[lang]"
+                ></a>
             </v-col>
         </v-row>
     </b-standard-card>
@@ -84,15 +88,22 @@
 
 <script>
 import { mapActions } from "vuex";
+import translations from "@/utils/translations/storePanel/settings/businessInformation";
 
 export default {
     name: "BusinessInformation",
+
+    mixins: [translations],
 
     data: () => ({
         businessInformation: {}
     }),
 
     computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
         loading() {
             return this.$store.state.storePanel.settings.profile.loading
                 .businessInformation;

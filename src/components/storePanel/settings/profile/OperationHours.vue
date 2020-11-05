@@ -1,6 +1,6 @@
 <template>
     <b-standard-card
-        title="Hours of Operations"
+        :title="translations.title[lang]"
         no-body-padding
         :loading="loading"
         :error-message="errorMessage"
@@ -8,7 +8,7 @@
     >
         <v-container v-for="weekday in timetable" :key="weekday.day">
             <v-row no-gutters justify="space-between" align="center">
-                <v-col class="subtitle-1 font-weight-bold">
+                <v-col class="subtitle-2 font-weight-bold">
                     <v-btn text @click="weekday.open = !weekday.open">
                         <v-icon
                             v-text="
@@ -19,7 +19,7 @@
                         ></v-icon>
                     </v-btn>
 
-                    {{ weekdayNames[weekday.day] }}
+                    {{ weekdayNames[weekday.day][lang] }}
                 </v-col>
 
                 <v-col cols="auto">
@@ -31,17 +31,27 @@
                         <v-row no-gutters>
                             <v-col
                                 v-for="type in operationTypes"
-                                :key="type.text"
+                                :key="type.text['en']"
                                 cols="auto"
                                 class="ma-1"
                             >
                                 <v-radio
-                                    :label="type.text"
+                                    :label="type.text[lang]"
                                     :value="type.value"
                                     :color="
-                                        type.text === 'Closed'
+                                        type.text['en'] === 'Closed'
                                             ? 'red'
                                             : 'secondary'
+                                    "
+                                    @click="
+                                        () => {
+                                            if (
+                                                type.value === 'regular' ||
+                                                type.value === 'break'
+                                            ) {
+                                                weekday.open = true;
+                                            }
+                                        }
                                     "
                                 ></v-radio>
                             </v-col>
@@ -55,14 +65,18 @@
                             <v-col cols="12" sm="6" class="pa-3 pt-0">
                                 <b-text-field
                                     v-model="weekday.shifts[0][0]"
-                                    placeholder="Start Time"
+                                    :placeholder="translations.start[lang]"
                                     readonly
                                     prepend-inner-icon="mdiClockOutline"
-                                    :class="weekdayNames[weekday.day] + 'Start'"
+                                    :class="
+                                        weekdayNames[weekday.day]['en'] +
+                                            'Start'
+                                    "
                                     :disabled="menu"
                                     @click="
                                         openMenu(
-                                            weekdayNames[weekday.day] + 'Start',
+                                            weekdayNames[weekday.day]['en'] +
+                                                'Start',
                                             weekday,
                                             0,
                                             0
@@ -74,14 +88,17 @@
                             <v-col cols="12" sm="6" class="pa-3 pt-0">
                                 <b-text-field
                                     v-model="weekday.shifts[0][1]"
-                                    placeholder="End Time"
+                                    :placeholder="translations.end[lang]"
                                     readonly
                                     prepend-inner-icon="mdiClockOutline"
-                                    :class="weekdayNames[weekday.day] + 'End'"
+                                    :class="
+                                        weekdayNames[weekday.day]['en'] + 'End'
+                                    "
                                     :disabled="menu"
                                     @click="
                                         openMenu(
-                                            weekdayNames[weekday.day] + 'End',
+                                            weekdayNames[weekday.day]['en'] +
+                                                'End',
                                             weekday,
                                             0,
                                             1
@@ -97,16 +114,17 @@
                             <v-col cols="3" class="pa-3 pt-0">
                                 <b-text-field
                                     v-model="weekday.shifts[0][0]"
-                                    placeholder="Start Time"
+                                    :placeholder="translations.start[lang]"
                                     readonly
                                     prepend-inner-icon="mdiClockOutline"
                                     :class="
-                                        weekdayNames[weekday.day] + 'FirstStart'
+                                        weekdayNames[weekday.day]['en'] +
+                                            'FirstStart'
                                     "
                                     :disabled="menu"
                                     @click="
                                         openMenu(
-                                            weekdayNames[weekday.day] +
+                                            weekdayNames[weekday.day]['en'] +
                                                 'FirstStart',
                                             weekday,
                                             0,
@@ -119,16 +137,17 @@
                             <v-col cols="3" class="pa-3 pt-0">
                                 <b-text-field
                                     v-model="weekday.shifts[0][1]"
-                                    placeholder="End Time"
+                                    :placeholder="translations.end[lang]"
                                     readonly
                                     prepend-inner-icon="mdiClockOutline"
                                     :class="
-                                        weekdayNames[weekday.day] + 'FirstEnd'
+                                        weekdayNames[weekday.day]['en'] +
+                                            'FirstEnd'
                                     "
                                     :disabled="menu"
                                     @click="
                                         openMenu(
-                                            weekdayNames[weekday.day] +
+                                            weekdayNames[weekday.day]['en'] +
                                                 'FirstEnd',
                                             weekday,
                                             0,
@@ -141,17 +160,17 @@
                             <v-col cols="3" class="pa-3 pt-0">
                                 <b-text-field
                                     v-model="weekday.shifts[1][0]"
-                                    placeholder="Start Time"
+                                    :placeholder="translations.start[lang]"
                                     readonly
                                     prepend-inner-icon="mdiClockOutline"
                                     :class="
-                                        weekdayNames[weekday.day] +
+                                        weekdayNames[weekday.day]['en'] +
                                             'SecondStart'
                                     "
                                     :disabled="menu"
                                     @click="
                                         openMenu(
-                                            weekdayNames[weekday.day] +
+                                            weekdayNames[weekday.day]['en'] +
                                                 'SecondStart',
                                             weekday,
                                             1,
@@ -164,16 +183,17 @@
                             <v-col cols="3" class="pa-3 pt-0">
                                 <b-text-field
                                     v-model="weekday.shifts[1][1]"
-                                    placeholder="End Time"
+                                    :placeholder="translations.end[lang]"
                                     readonly
                                     prepend-inner-icon="mdiClockOutline"
                                     :class="
-                                        weekdayNames[weekday.day] + 'SecondEnd'
+                                        weekdayNames[weekday.day]['en'] +
+                                            'SecondEnd'
                                     "
                                     :disabled="menu"
                                     @click="
                                         openMenu(
-                                            weekdayNames[weekday.day] +
+                                            weekdayNames[weekday.day]['en'] +
                                                 'SecondEnd',
                                             weekday,
                                             1,
@@ -210,13 +230,17 @@
 
                 <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn text @click="menu = false">cancel</v-btn>
+                    <v-btn
+                        text
+                        @click="menu = false"
+                        v-text="translations.cancel[lang]"
+                    ></v-btn>
                     <v-btn
                         color="secondary"
                         :disabled="!timePicker"
+                        v-text="translations.accept[lang]"
                         @click="saveTime"
-                        >accept</v-btn
-                    >
+                    ></v-btn>
                 </v-card-actions>
             </v-card>
         </v-menu>
@@ -226,9 +250,12 @@
 <script>
 import { mdiChevronUp, mdiChevronDown, mdiClockOutline } from "@mdi/js";
 import { mapMutations, mapActions, mapGetters } from "vuex";
+import translations from "@/utils/translations/storePanel/settings/operationHours";
 
 export default {
     name: "OperationHours",
+
+    mixins: [translations],
 
     data: () => ({
         icons: {
@@ -243,23 +270,27 @@ export default {
         array: null,
         index: null,
         operationTypes: [
-            { text: "Regular", value: "regular" },
-            { text: "Split Hours", value: "break" },
-            { text: "24 Hours", value: "24h" },
-            { text: "Closed", value: "closed" }
+            { text: { el: "", en: "Regular", it: "" }, value: "regular" },
+            { text: { el: "", en: "Split Hours", it: "" }, value: "break" },
+            { text: { el: "", en: "24 Hours", it: "" }, value: "24h" },
+            { text: { el: "", en: "Closed", it: "" }, value: "closed" }
         ],
         weekdayNames: [
-            "Monday",
-            "Tuesday",
-            "Wednesday",
-            "Thursday",
-            "Friday",
-            "Saturday",
-            "Sunday"
+            { el: "", en: "Monday", it: "" },
+            { el: "", en: "Tuesday", it: "" },
+            { el: "", en: "Wednesday", it: "" },
+            { el: "", en: "Thursday", it: "" },
+            { el: "", en: "Friday", it: "" },
+            { el: "", en: "Saturday", it: "" },
+            { el: "", en: "Sunday", it: "" }
         ]
     }),
 
     computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
         loading() {
             return this.$store.state.storePanel.settings.profile.loading
                 .operationHours;

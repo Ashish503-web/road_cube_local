@@ -1,18 +1,22 @@
 <template>
     <b-standard-card
-        title="Fast Payment"
+        :title="translations.title[lang]"
         :loading="loading"
         :error-message="errorMessage"
         @submit="updateQuickPayment"
     >
         <v-row no-gutters justify="center">
             <v-col cols="auto" class="subtitle-2">
-                Toogle Fast Payment option:
+                {{ translations.toggle[lang] }}:
             </v-col>
             <v-col cols="auto" class="subtitle-2 ml-3">
                 <v-switch
                     v-model="quickPayment"
-                    :label="quickPayment ? 'On' : 'Off'"
+                    :label="
+                        quickPayment
+                            ? translations.on[lang]
+                            : translations.off[lang]
+                    "
                     color="secondary"
                     hide-details="auto"
                     class="mt-0 pt-0"
@@ -24,13 +28,20 @@
 
 <script>
 import { mapMutations, mapActions } from "vuex";
+import translations from "@/utils/translations/storePanel/settings/fastPayment";
 
 export default {
     name: "FastPayment",
 
+    mixins: [translations],
+
     data: () => ({}),
 
     computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
         loading() {
             return this.$store.state.storePanel.settings.profile.loading
                 .quickPayment;

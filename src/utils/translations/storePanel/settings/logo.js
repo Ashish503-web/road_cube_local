@@ -6,11 +6,6 @@ export default {
                 en: "Logo",
                 it: ""
             },
-            submitText: {
-                el: "",
-                en: "Update Logo",
-                it: ""
-            },
             info: {
                 el: "",
                 en: `You can upload here the logo of your business which will appear in

@@ -1,9 +1,11 @@
 import Transaction from "@/models/storePanel/Transaction";
+import moment from "moment";
 
 export default {
     namespaced: true,
 
     state: () => ({
+        mobileLoading: false,
         productsLoading: false,
         products: [],
         selectedProducts: [],
@@ -15,6 +17,10 @@ export default {
     }),
 
     mutations: {
+        setMobileLoading(state, payload) {
+            state.mobileLoading = payload;
+        },
+
         setProductsLoading(state, payload) {
             state.productsLoading = payload;
         },
@@ -47,6 +53,7 @@ export default {
         setItems(state, payload) {
             state.transactions = payload.map(t => {
                 t.loading = false;
+                t.created_at = moment(t.created_at).format("YYYY.MM.DD");
                 return t;
             });
         },
@@ -163,7 +170,9 @@ export default {
 
                 commit("setItem", {});
                 commit("setSelectedProducts", []);
-
+                commit("setResetValidation", true, { root: true });
+                commit("setResetSuccess", true, { root: true });
+                commit("setProducts", state.products);
                 commit("setLoading", false, { root: true });
                 commit(
                     "setNotification",
@@ -206,6 +215,41 @@ export default {
                 );
             } catch (ex) {
                 transaction.loading = false;
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "error",
+                        text: ex.response.data.message
+                    },
+
+                    { root: true }
+                );
+            }
+        },
+
+        async updateMobilePayments({ commit }, item) {
+            try {
+                commit("setMobileLoading", true);
+
+                await Transaction.updateMobilePayments(item);
+
+                commit("storePanel/setMobilePayments", item.online_payments, {
+                    root: true
+                });
+                commit("setMobileLoading", false);
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated mobile payments!"
+                    },
+
+                    { root: true }
+                );
+            } catch (ex) {
+                commit("setMobileLoading", false);
                 commit(
                     "setNotification",
                     {
