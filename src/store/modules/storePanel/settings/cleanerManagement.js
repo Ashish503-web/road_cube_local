@@ -1,4 +1,5 @@
 import BankProvider from "@/models/storePanel/settings/BankProvider";
+import moment from "moment";
 
 export default {
     namespaced: true,
@@ -20,7 +21,10 @@ export default {
         },
 
         setStoreBankProviders(state, payload) {
-            state.storeBankProviders = payload;
+            state.storeBankProviders = payload.map(p => {
+                p.created_at = moment(p.created_at).format("YYYY.MM.DD");
+                return p;
+            });
         },
 
         setItem(state, payload) {
@@ -76,7 +80,7 @@ export default {
 
                 const { data } = await BankProvider.createItem(form);
 
-                dispatch("getItems")
+                dispatch("getItems");
                 commit("setLoading", false, { root: true });
                 commit("setDialog", false, { root: true });
                 commit(
@@ -138,15 +142,13 @@ export default {
             }
         },
 
-        async updateProvider({ dispatch, commit, rootState }, form ) {
+        async updateProvider({ dispatch, commit, rootState }, form) {
             try {
                 commit("setLoading", true, { root: true });
 
-                const { data } = await BankProvider.updateProvider(
-                    form
-                );
+                const { data } = await BankProvider.updateProvider(form);
 
-                dispatch("getItems") 
+                dispatch("getItems");
                 commit("setLoading", false, { root: true });
                 commit("setUpdateDialog", false, { root: true });
                 commit("setDialog", false);
@@ -159,7 +161,6 @@ export default {
                     },
                     { root: true }
                 );
-                
             } catch (ex) {
                 commit("setLoading", false);
                 commit("setErrorMessage", ex.response.data.message);
@@ -173,7 +174,7 @@ export default {
 
                 await BankProvider.removeProvider(id);
 
-                dispatch("getItems")
+                dispatch("getItems");
                 commit("setLoading", false, { root: true });
                 commit("setDeleteDialog", false, { root: true });
                 commit(
@@ -196,7 +197,6 @@ export default {
                 );
             }
         },
-    
 
         async remove({ commit }, id) {
             try {

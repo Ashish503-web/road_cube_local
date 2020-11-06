@@ -19,16 +19,37 @@
             @cancel-success="success.giftCategory = false"
         ></b-select>
 
-        <b-select
-            v-model="couponWithDiscount.product_discount_id"
-            :items="products"
-            :item-text="`name[${lang}]`"
-            item-value="product_id"
-            label="Product"
-            :success="success.product"
-            :rules="rules.product"
-            @cancel-success="success.product = false"
-        ></b-select>
+        <v-row no-gutters align="center">
+            <v-col cols="8" class="pr-2">
+                <b-select
+                    v-model="couponWithDiscount.product_discount_id"
+                    :items="products"
+                    :item-text="`name[${lang}]`"
+                    item-value="product_id"
+                    label="Product"
+                    :success="success.product"
+                    :rules="rules.product"
+                    @cancel-success="success.product = false"
+                ></b-select>
+            </v-col>
+
+            <v-col cols="4" class="mt-3 pl-2">
+                <v-sheet
+                    color="rgba(234, 237, 241, 0.57)"
+                    outlined
+                    class="subtitle-2 pa-3"
+                >
+                    Product Price:
+                    {{
+                        new Intl.NumberFormat("en-US", {
+                            style: "currency",
+                            currency: "EUR",
+                            minimumFractionDigits: 2
+                        }).format(retailPrice)
+                    }}
+                </v-sheet>
+            </v-col>
+        </v-row>
 
         <v-sheet class="mt-3 pa-3 pt-2" outlined>
             <h4 class="subtitle-1 font-weight-medium">Discount Type</h4>

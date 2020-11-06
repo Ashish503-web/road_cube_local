@@ -1,7 +1,7 @@
 <template>
     <v-tab-item :value="$route.path" class="pt-10 px-12">
         Set up one or more mobile payments for your business.
-        
+
         <v-tabs
             v-model="tab"
             color="secondary"
@@ -17,15 +17,14 @@
             >
                 <div class="flex flex-wrap">
                     <v-img
-                    :src="$store.state.storePanel.store.logo"
-                    class="mb-2 mx-auto"
-                    width="80"
-                    height="60"
-                    contain
+                        :src="$store.state.storePanel.store.logo"
+                        class="mb-2 mx-auto"
+                        width="80"
+                        height="60"
+                        contain
                     ></v-img>
                     <p>{{ provider.name[lang] }}</p>
                 </div>
-                
             </v-tab>
         </v-tabs>
 
@@ -60,10 +59,7 @@
                         </v-btn>
                     </template>
 
-                    <span
-                        class="font-weight-bold"
-                        v-text="'Update'"
-                    ></span>
+                    <span class="font-weight-bold" v-text="'Update'"></span>
                 </v-tooltip>
 
                 <v-tooltip color="secondary" top>
@@ -74,7 +70,8 @@
                             v-on="on"
                             @click="
                                 () => {
-                                    deleteProviderId = item.bank_provider.bank_provider_id;
+                                    deleteProviderId =
+                                        item.bank_provider.bank_provider_id;
                                     deleteDialog = true;
                                 }
                             "
@@ -83,10 +80,7 @@
                         </v-btn>
                     </template>
 
-                    <span
-                        class="font-weight-bold"
-                        v-text="'Delete'"
-                    ></span>
+                    <span class="font-weight-bold" v-text="'Delete'"></span>
                 </v-tooltip>
             </template>
         </v-data-table>
@@ -101,7 +95,7 @@
                 :loading="loading"
             >
                 <b-text-field
-                    v-for="(field,index) in createProvider.fields"
+                    v-for="(field, index) in createProvider.fields"
                     :key="index"
                     v-model="credentials[field]"
                     :label="field"
@@ -120,7 +114,9 @@
                 :loading="loading"
             >
                 <b-text-field
-                    v-for="(field,index) in editProvider.credentials ? Object.keys(editProvider.credentials) : []"
+                    v-for="(field, index) in editProvider.credentials
+                        ? Object.keys(editProvider.credentials)
+                        : []"
                     :key="index"
                     v-model="editProvider.credentials[field]"
                     :label="field"
@@ -160,21 +156,21 @@ export default {
             icons: { mdiPencilOutline, mdiClose, mdiMagnify },
             headers: [
                 {
-                    text: 'Bank Provider Name',
-                    value: 'bank_provider[name][en]'
+                    text: "Bank Provider Name",
+                    value: "bank_provider.name[en]"
                 },
                 {
-                    text: 'Created at',
-                    value: 'created_at'
+                    text: "Created at",
+                    value: "created_at"
                 },
                 {
-                    text: 'Actions',
-                    value: 'actions'
+                    text: "Actions",
+                    value: "actions"
                 }
             ],
             createProvider: {},
             editProvider: {},
-            deleteProviderId: ''
+            deleteProviderId: ""
         };
     },
 
@@ -183,7 +179,7 @@ export default {
         ...mapGetters("storePanel/settings/cleanerManagement", [
             "bankProviders",
             "storeBankProviders"
-            ]),
+        ]),
 
         bankProvider: {
             get() {
@@ -193,7 +189,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
+            }
         },
 
         query() {
@@ -213,7 +209,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            },
+            }
         },
 
         updateDialog: {
@@ -223,7 +219,7 @@ export default {
 
             set(val) {
                 this.setUpdateDialog(val);
-            },
+            }
         },
 
         deleteDialog: {
@@ -233,16 +229,12 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
-        ...mapMutations([
-            "setDialog",
-            "setUpdateDialog",
-            "setDeleteDialog"
-        ]),
+        ...mapMutations(["setDialog", "setUpdateDialog", "setDeleteDialog"]),
         ...mapMutations("storePanel/settings/cleanerManagement", ["setItem"]),
         ...mapActions("storePanel/settings/cleanerManagement", [
             "getItems",
@@ -250,55 +242,59 @@ export default {
             "createItem",
             "updateProvider",
             "removeProvider"
-            ]),
+        ]),
 
-        create(index){
+        create(index) {
             let formData = {
-                "bank_provider_id": this.createProvider.bank_provider_id,
-                "credentials": this.credentials
-            }
+                bank_provider_id: this.createProvider.bank_provider_id,
+                credentials: this.credentials
+            };
 
-            this.createItem(formData)
-            this.credentials = {}
+            this.createItem(formData);
+            this.credentials = {};
         },
 
-        open(item){
+        open(item) {
             this.editProvider = item;
             this.updateDialog = true;
         },
 
-        openProviderPopup(item){
-            let storedIds = []
+        openProviderPopup(item) {
+            let storedIds = [];
             this.storeBankProviders.map(data => {
-                storedIds.push(data.bank_provider.bank_provider_id)
-            })
-            if(!storedIds.includes(item.bank_provider_id)){
-                 this.dialog = true;
-                 this.createProvider = item;
-            }else{
+                storedIds.push(data.bank_provider.bank_provider_id);
+            });
+            if (!storedIds.includes(item.bank_provider_id)) {
+                this.dialog = true;
+                this.createProvider = item;
+            } else {
                 let result = this.storeBankProviders.filter(data => {
-                    return data.bank_provider.bank_provider_id == item.bank_provider_id
-                })
+                    return (
+                        data.bank_provider.bank_provider_id ==
+                        item.bank_provider_id
+                    );
+                });
                 this.editProvider = result[0];
                 this.updateDialog = true;
             }
         },
 
-        update(){
+        update() {
             let editForm = {
-               "store_bank_provider_id": this.editProvider.store_bank_provider_id,
-                "credentials": this.editProvider.credentials 
-            }
-            this.updateProvider(editForm)
+                store_bank_provider_id: this.editProvider
+                    .store_bank_provider_id,
+                credentials: this.editProvider.credentials
+            };
+            this.updateProvider(editForm);
         },
 
-        deleteProvider(){
-            this.removeProvider(this.deleteProviderId)
+        deleteProvider() {
+            this.removeProvider(this.deleteProviderId);
         }
     },
 
-    mounted(){
-        this.getItems()
+    mounted() {
+        this.getItems();
     },
 
     beforeCreate() {
@@ -306,8 +302,8 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query,
-                },
+                    ...this.$route.query
+                }
             });
         }
     },
@@ -320,12 +316,12 @@ export default {
                     this.$router.push({
                         query: {
                             page: 1,
-                            ...this.$route.query,
-                        },
+                            ...this.$route.query
+                        }
                     });
                 }
                 this.getBankProviders(this.query);
-            },
+            }
         },
 
         page(page) {
@@ -335,7 +331,7 @@ export default {
         perPage(perPage) {
             this.$router.push({ query: { ...this.$route.query, perPage } });
         }
-    },
+    }
 };
 </script>
 
