@@ -24,7 +24,7 @@
             class="text-capitalize px-5 ml-5 mt-4 mb-7"
             depressed
             v-text="translations.addDiscountCoupons[lang]"
-            @click="dialog = true"
+            @click="open"
         ></v-btn>
 
         <v-data-table

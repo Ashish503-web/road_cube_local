@@ -3,12 +3,13 @@
         :title="translations.title[lang]"
         :loading="loading"
         :error-message="errorMessage"
+        hide-default-footer
     >
         <v-form @submit.prevent="create">
             <v-row no-gutters justify="space-between" align="center">
                 <v-col class="pr-2">
                     <b-text-field
-                        v-model="productCategory.name[lang]"
+                        v-model="productCategory.name[categoryLang]"
                         :label="translations.name[lang]"
                         no-top-margin
                     >
@@ -85,7 +86,12 @@
                                 color="red"
                                 icon
                                 v-on="on"
-                                @click="remove(category.product_category_id)"
+                                @click="
+                                    () => {
+                                        selectedProductCategory = category;
+                                        deleteDialog = true;
+                                    }
+                                "
                             >
                                 <v-icon v-text="icons.mdiClose"></v-icon>
                             </v-btn>
@@ -97,6 +103,7 @@
                         ></span>
                     </v-tooltip>
                 </v-col>
+
                 <v-col v-if="category.expanded" cols="12">
                     <v-card flat class="pa-3">
                         <b-text-field
@@ -140,6 +147,27 @@
                     </v-card>
                 </v-col>
             </v-row>
+            <v-dialog v-model="deleteDialog" max-width="500">
+                <b-card
+                    type="delete"
+                    title="Delete Product Category"
+                    submit-text="delete"
+                    :loading="selectedProductCategory.loading"
+                    :error-message="errorMessage"
+                    @cancel="deleteDialog = false"
+                    @submit="
+                        remove(selectedProductCategory.product_category_id)
+                    "
+                >
+                    <div class="subtitle-1 font-weight-medium py-3">
+                        Are you sure you want to delete
+                        <span class="font-weight-bold text--primary">{{
+                            selectedProductCategory.name[lang]
+                        }}</span
+                        >?
+                    </div>
+                </b-card>
+            </v-dialog>
         </v-sheet>
     </b-standard-card>
 </template>
@@ -171,6 +199,16 @@ export default {
 
         lang() {
             return this.$route.params.lang;
+        },
+
+        deleteDialog: {
+            get() {
+                return this.$store.state.deleteDialog;
+            },
+
+            set(val) {
+                this.setDeleteDialog(val);
+            }
         },
 
         productCategory: {
@@ -207,6 +245,7 @@ export default {
     },
 
     methods: {
+        ...mapMutations(["setDeleteDialog"]),
         ...mapMutations("storePanel/settings/productCategories", [
             "setItem",
             "setSelectedItem"

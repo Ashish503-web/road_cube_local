@@ -55,9 +55,9 @@
                     errorMessage
                 }}</v-alert>
 
-                <v-divider></v-divider>
+                <v-divider v-if="!hideDefaultFooter"></v-divider>
 
-                <v-card-actions class="pl-4">
+                <v-card-actions v-if="!hideDefaultFooter" class="pl-4">
                     <v-spacer></v-spacer>
                     <template>
                         <v-btn
@@ -106,7 +106,8 @@ export default {
         },
         loading: Boolean,
         errorMessage: String,
-        noBodyPadding: Boolean
+        noBodyPadding: Boolean,
+        hideDefaultFooter: Boolean
     },
 
     data: () => ({

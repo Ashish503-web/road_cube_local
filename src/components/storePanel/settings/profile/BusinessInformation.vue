@@ -141,7 +141,7 @@ export default {
 
                     address: val.address,
 
-                    store_category_id: val.category.store_category_id,
+                    // store_category_id: val.category.store_category_id,
 
                     activity: val.billing_details.activity,
 

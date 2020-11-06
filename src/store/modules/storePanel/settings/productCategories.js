@@ -23,7 +23,9 @@ export default {
         },
 
         setSelectedItem(state, payload) {
-            state.selectedProductCategory = payload;
+            let obj = new ProductCategory(payload);
+            obj.loading = false;
+            state.selectedProductCategory = obj;
         },
 
         setSelectedLoading(state, payload) {
@@ -109,7 +111,7 @@ export default {
             }
         },
 
-        async update({ commit, state, rootState }) {
+        async update({ commit, state }) {
             try {
                 commit("setSelectedLoading", true);
 
@@ -149,7 +151,7 @@ export default {
 
         async remove({ commit, rootState }, id) {
             try {
-                commit("setLoading", true, { root: true });
+                commit("setSelectedLoading", true);
 
                 await ProductCategory.delete(id);
 
@@ -159,7 +161,8 @@ export default {
                     rootState.serverItemsLength - 1,
                     { root: true }
                 );
-                commit("setLoading", false, { root: true });
+                commit("setSelectedLoading", false);
+                commit("setDeleteDialog", false, { root: true });
                 commit(
                     "setNotification",
                     {
@@ -170,7 +173,7 @@ export default {
                     { root: true }
                 );
             } catch (ex) {
-                commit("setLoading", false, { root: true });
+                commit("setSelectedLoading", false);
                 commit("setErrorMessage", ex.response.data.message, {
                     root: true
                 });

@@ -33,7 +33,7 @@
                     label="How to notify a consumer of points"
                 ></b-select>
 
-                <v-checkbox
+                <!-- <v-checkbox
                     v-model="sendPoints.add_new_user_on_send_points"
                     :disabled="!sendPoints.send_points_by_card_or_phone"
                     color="secondary"
@@ -45,13 +45,13 @@
                             Ability to add a user to "Send points"
                         </h4>
                     </template>
-                </v-checkbox>
+                </v-checkbox> -->
 
                 <v-checkbox
                     v-model="sendPoints.choose_product_on_send_points"
                     :disabled="!sendPoints.send_points_by_card_or_phone"
                     color="secondary"
-                    class="pt-0 mt-1"
+                    class="pt-0 mt-3"
                     hide-details
                 >
                     <template v-slot:label>
@@ -128,8 +128,8 @@ export default {
                     system_notification_id:
                         val.notify_customers.system_notification_id,
 
-                    add_new_user_on_send_points:
-                        val.flags.reward.add_new_user_on_send_points,
+                    // add_new_user_on_send_points:
+                    //     val.flags.reward.add_new_user_on_send_points,
 
                     choose_product_on_send_points:
                         val.flags.reward.choose_product_on_send_points,
@@ -137,6 +137,13 @@ export default {
                     display_receipt_on_send_points:
                         val.flags.reward.display_receipt_on_send_points
                 };
+            }
+        },
+
+        ["sendPoints.send_points_by_card_or_phone"](val) {
+            if (val) {
+                if (!this.sendPoints.system_notification_id)
+                    this.sendPoints.system_notification_id = 3;
             }
         }
     },

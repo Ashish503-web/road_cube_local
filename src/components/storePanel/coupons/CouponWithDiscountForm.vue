@@ -14,6 +14,9 @@
             item-value="gift_category_id"
             label="Gift Category"
             no-top-margin
+            :success="success.giftCategory"
+            :rules="rules.giftCategory"
+            @cancel-success="success.giftCategory = false"
         ></b-select>
 
         <b-select
@@ -22,6 +25,9 @@
             :item-text="`name[${lang}]`"
             item-value="product_id"
             label="Product"
+            :success="success.product"
+            :rules="rules.product"
+            @cancel-success="success.product = false"
         ></b-select>
 
         <v-sheet class="mt-3 pa-3 pt-2" outlined>
@@ -53,6 +59,9 @@
             label="Amount"
             type="number"
             prepend-inner-icon="mdiPercent"
+            :success="success.discountPercentage"
+            :rules="rules.discountPercentage"
+            @cancel-success="success.discountPercentage = false"
         ></b-text-field>
         <b-text-field
             v-else
@@ -60,15 +69,21 @@
             label="Amount"
             type="number"
             prepend-inner-icon="mdiCurrencyEur"
+            :success="success.discountValue"
+            :rules="rules.discountValue"
+            @cancel-success="success.discountValue = false"
         ></b-text-field>
     </b-card>
 </template>
 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
+import validators from "./discountValidators";
 
 export default {
     name: "CouponWithDiscountForm",
+
+    mixins: [validators],
 
     data() {
         return {
@@ -76,7 +91,8 @@ export default {
             discountTypes: [
                 { text: "Percentage", value: 1 },
                 { text: "Euro", value: 2 }
-            ]
+            ],
+            retailPrice: null
         };
     },
 
@@ -122,6 +138,11 @@ export default {
     },
 
     watch: {
+        ["couponWithDiscount.product_discount_id"](val) {
+            this.retailPrice = +this.products.find(p => p.product_id === val)
+                .retail_price;
+        },
+
         type(val) {
             if (val === 1) this.couponWithDiscount.discount_value = null;
             else if (val === 2)
@@ -131,13 +152,10 @@ export default {
         resetSuccess(val) {
             if (val) {
                 this.success = {
-                    name: false,
-                    description: false,
-                    sellingPrice: false,
-                    wholesalePrice: false,
-                    deliveryCost: false,
-                    shippingCost: false,
-                    category: false
+                    giftCategory: false,
+                    product: false,
+                    discountPercentage: false,
+                    discountValue: false
                 };
             }
         }
