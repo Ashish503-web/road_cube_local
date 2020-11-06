@@ -17,7 +17,7 @@
             >
                 <div class="flex flex-wrap">
                     <v-img
-                    :src="$store.state.storePanel.store.logo"
+                    :src="provider.logo"
                     class="mb-2 mx-auto"
                     width="80"
                     height="60"
