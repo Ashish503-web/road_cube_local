@@ -15,15 +15,14 @@
                 <b-text-field
                     v-model="businessInformation.name"
                     :label="translations.name[lang]"
+                    no-top-margin
                 ></b-text-field>
 
-                <b-select
-                    v-model="businessInformation.store_category_id"
-                    :items="storeCategories"
-                    item-text="name.en"
-                    item-value="store_category_id"
-                    :label="translations.category[lang]"
-                ></b-select>
+                <b-text-field
+                    v-model="businessInformation.primary_phone"
+                    type="number"
+                    :label="translations.telephone[lang]"
+                ></b-text-field>
 
                 <b-select
                     v-model="businessInformation.country_id"
@@ -49,17 +48,23 @@
                 <b-text-field
                     v-model="businessInformation.address"
                     :label="translations.address[lang]"
+                    no-top-margin
                 ></b-text-field>
+
+                <v-btn
+                    :href="
+                        `http://maps.google.com/?q=${businessInformation.address}`
+                    "
+                    target="_blank"
+                    class="text-capitalize mt-3"
+                    block
+                    outlined
+                    >{{ translations.googleMaps[lang] }}</v-btn
+                >
 
                 <b-text-field
                     v-model="businessInformation.activity"
                     :label="translations.activity[lang]"
-                ></b-text-field>
-
-                <b-text-field
-                    v-model="businessInformation.primary_phone"
-                    type="number"
-                    :label="translations.telephone[lang]"
                 ></b-text-field>
 
                 <b-text-field
@@ -73,14 +78,6 @@
                     type="email"
                     :label="translations.email[lang]"
                 ></b-text-field>
-            </v-col>
-
-            <v-col cols="11" class="mt-3">
-                <a
-                    href="#"
-                    class="subtitle-2"
-                    v-text="translations.googleMaps[lang]"
-                ></a>
             </v-col>
         </v-row>
     </b-standard-card>
@@ -140,8 +137,6 @@ export default {
                     name: val.name,
 
                     address: val.address,
-
-                    // store_category_id: val.category.store_category_id,
 
                     activity: val.billing_details.activity,
 

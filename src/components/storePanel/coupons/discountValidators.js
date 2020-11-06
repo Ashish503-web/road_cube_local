@@ -44,7 +44,9 @@ export default {
                     v => v >= 0.1 || "Discount value must be minimum 0.1",
                     v =>
                         v < this.retailPrice ||
-                        "Discount value must be less than product price"
+                        "Discount value must be less than " +
+                            this.retailPrice +
+                            " euro"
                 ]
             }
         };

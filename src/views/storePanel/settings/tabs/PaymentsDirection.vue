@@ -23,10 +23,10 @@
                 >
                     <v-col cols="6" class="pa-3">
                         <v-img
-                            :src="$store.state.storePanel.store.logo"
+                            :src="provider.logo"
                             width="50"
                             height="50"
-                            class="mx-auto"
+                            class="mx-auto mb-3"
                         ></v-img>
                         {{ provider.name[lang] }}
                     </v-col>
@@ -42,7 +42,7 @@
                         >
                             <v-col cols="auto">
                                 <v-img
-                                    :src="$store.state.storePanel.store.logo"
+                                    :src="provider.bankProvider.logo"
                                     width="50"
                                     height="50"
                                     class="mx-auto"
