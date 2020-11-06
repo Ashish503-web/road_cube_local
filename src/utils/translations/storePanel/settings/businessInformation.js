@@ -1,69 +1,64 @@
 export default {
     data: () => ({
         translations: {
-            mobilePayments: {
+            title: {
                 el: "",
-                en: "Mobile Payments",
+                en: "Business Information",
                 it: ""
             },
-            fundClosure: {
+            name: {
                 el: "",
-                en: "Fund Closure",
+                en: "Business Name",
                 it: ""
             },
-            download: {
+            category: {
                 el: "",
-                en: "Download All Transactions",
+                en: "Basic Business Category",
                 it: ""
             },
-            filterStatus: {
+            country: {
                 el: "",
-                en: "Filter By Status",
+                en: "Country",
                 it: ""
             },
-            filterType: {
+            telephone2: {
                 el: "",
-                en: "Filter By Type",
+                en: "Business Telephone Number 2",
                 it: ""
             },
-            user: {
+            fullname: {
                 el: "",
-                en: "User",
+                en: "Owner's Fullname",
                 it: ""
             },
-            amount: {
+            address: {
                 el: "",
-                en: "Amount",
+                en: "Business Address",
                 it: ""
             },
-            points: {
+            activity: {
                 el: "",
-                en: "Points",
+                en: "Business Activity",
                 it: ""
             },
-            status: {
+            telephone: {
                 el: "",
-                en: "Status",
+                en: "Business Telephone Number",
                 it: ""
             },
-            date: {
+            ownersPhone: {
                 el: "",
-                en: "Date",
+                en: "Owner's Mobile Phone",
                 it: ""
             },
-            watch: {
+            email: {
                 el: "",
-                en: "Watch",
+                en: "Email",
                 it: ""
             },
-            actions: {
+            googleMaps: {
                 el: "",
-                en: "Actions",
-                it: ""
-            },
-            noData: {
-                el: "",
-                en: "No data available",
+                en: "View on Google Maps",
                 it: ""
             }
         }

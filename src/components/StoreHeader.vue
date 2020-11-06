@@ -38,33 +38,17 @@
                 </template>
 
                 <v-list dense>
-                    <v-list-item-group color="secondary">
-                        <v-list-item
-                            v-for="link in profileLinks"
-                            :key="link.title"
+                    <v-list-item color="red" @click="logout">
+                        <v-list-item-icon class="mr-3">
+                            <v-icon
+                                color="red"
+                                v-text="icons.mdiLogout"
+                            ></v-icon>
+                        </v-list-item-icon>
+                        <v-list-item-title class="red--text"
+                            >Logout</v-list-item-title
                         >
-                            <v-list-item-icon class="mr-3">
-                                <v-icon v-text="link.icon"></v-icon>
-                            </v-list-item-icon>
-                            <v-list-item-title
-                                v-text="link.text"
-                            ></v-list-item-title>
-                        </v-list-item>
-
-                        <v-divider class="my-1"></v-divider>
-
-                        <v-list-item color="red">
-                            <v-list-item-icon class="mr-3">
-                                <v-icon
-                                    color="red"
-                                    v-text="icons.mdiLogout"
-                                ></v-icon>
-                            </v-list-item-icon>
-                            <v-list-item-title class="red--text" @click="logout"
-                                >Logout</v-list-item-title
-                            >
-                        </v-list-item>
-                    </v-list-item-group>
+                    </v-list-item>
                 </v-list>
             </v-menu>
         </v-app-bar>
@@ -141,6 +125,7 @@
                         <v-tooltip v-if="mini" color="secondary" right>
                             <template v-slot:activator="{ on }">
                                 <v-list-item
+                                    v-if="!item.hide"
                                     :to="item.to"
                                     :exact="item.exact"
                                     v-on="on"
@@ -160,7 +145,11 @@
                             ></span>
                         </v-tooltip>
 
-                        <v-list-item v-else :to="item.to" :exact="item.exact">
+                        <v-list-item
+                            v-else-if="!item.hide"
+                            :to="item.to"
+                            :exact="item.exact"
+                        >
                             <v-list-item-icon>
                                 <v-icon v-text="item.icon"></v-icon>
                             </v-list-item-icon>
@@ -200,12 +189,7 @@ export default {
                 mdiLogout
             },
             mini: false,
-            drawer: false,
-
-            profileLinks: [
-                { icon: mdiAccountOutline, text: "Profile" },
-                { icon: mdiWrenchOutline, text: "Settings" }
-            ]
+            drawer: false
         };
     },
 
@@ -256,6 +240,7 @@ export default {
                 localStorage.removeItem("accessToken");
                 this.$router.push(`/${this.lang}/`);
             } catch (ex) {
+                this.$router.push(`/${this.lang}/`);
                 console.log(ex.response.data);
             }
         }

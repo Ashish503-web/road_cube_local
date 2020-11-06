@@ -1,5 +1,24 @@
 <template>
     <v-tab-item :value="$route.path">
+        <v-row no-gutters align="center" class="pt-7 pb-2 px-5">
+            <v-col cols="auto">
+                <v-img
+                    src="@/assets/coupon-on-products.png"
+                    width="60"
+                    height="60"
+                ></v-img>
+            </v-col>
+
+            <v-col class="pl-2">
+                <h4 v-text="translations.title[lang]"></h4>
+                <div
+                    style="font-size: 0.875rem"
+                    class="font-weight-medium"
+                    v-text="translations.info[lang]"
+                ></div>
+            </v-col>
+        </v-row>
+
         <v-toolbar flat height="100">
             <v-btn
                 color="secondary"

@@ -134,7 +134,7 @@ export default {
             icons: { mdiPencilOutline, mdiClose, mdiMagnify },
             page: +this.$route.query.page,
             mode: 0,
-            search: "",
+            search: ""
         };
     },
 
@@ -150,25 +150,25 @@ export default {
             return [
                 {
                     text: this.translations.productName[this.lang],
-                    value: `name[${this.lang}]`,
+                    value: `name[${this.lang}]`
                 },
                 {
                     text: this.translations.productDescription[this.lang],
-                    value: `description[${this.lang}]`,
+                    value: `description[${this.lang}]`
                 },
                 {
                     text: this.translations.sellingPrice[this.lang],
-                    value: "retail_price",
+                    value: "retail_price"
                 },
                 {
                     text: this.translations.points[this.lang],
-                    value: "reward_points",
+                    value: "reward_points"
                 },
                 { text: this.translations.coupon[this.lang], value: "coupon" },
                 {
                     text: this.translations.actions[this.lang],
-                    value: "actions",
-                },
+                    value: "actions"
+                }
             ];
         },
 
@@ -179,7 +179,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            },
+            }
         },
 
         deleteDialog: {
@@ -189,7 +189,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            },
+            }
         },
 
         product: {
@@ -199,7 +199,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
+            }
         },
 
         query() {
@@ -210,7 +210,7 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        },
+        }
     },
 
     methods: {
@@ -218,12 +218,12 @@ export default {
             "setDialog",
             "setDeleteDialog",
             "setResetSuccess",
-            "setResetValidation",
+            "setResetValidation"
         ]),
         ...mapMutations("storePanel/products", [
             "setShowImageUpload",
             "setShowWeekdays",
-            "setItem",
+            "setItem"
         ]),
         ...mapActions("storePanel/products", ["getItems", "remove"]),
 
@@ -242,7 +242,7 @@ export default {
 
         handleSearch() {
             this.getItems(`?q=${this.search}`);
-        },
+        }
     },
 
     watch: {
@@ -258,8 +258,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query,
-                    },
+                        ...this.$route.query
+                    }
                 });
             }
             this.getItems(this.query);
@@ -277,7 +277,7 @@ export default {
                     this.debouncedSearch();
                 }
             }
-        },
+        }
     },
 
     beforeCreate() {
@@ -285,8 +285,8 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query,
-                },
+                    ...this.$route.query
+                }
             });
         }
     },
@@ -297,7 +297,7 @@ export default {
 
     mounted() {
         this.getItems(this.query);
-    },
+    }
 };
 </script>
 

@@ -1,15 +1,21 @@
 export default {
     data: () => ({
         translations: {
-            addCoupon: {
+            title: {
                 el: "",
-                en: "Add Coupon",
+                en: "Create your codes",
                 it: ""
             },
             info: {
                 el: "",
-                en:
-                    "You can either share the coupon codes on facebook or give them to users with an application.",
+                en: `You can create your own codes or catch phrases to share 
+                    points and coupons to your clients with TV ads, social media ads or even flyers. 
+                    When your clients will type the codes they get rewarded with point or points + coupons`,
+                it: ""
+            },
+            create: {
+                el: "",
+                en: "Create New Code",
                 it: ""
             },
             code: {

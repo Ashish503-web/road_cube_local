@@ -15,6 +15,7 @@
         dense
         open-on-clear
         hide-details="auto"
+        :loading="loading"
         :success="success"
         :rules="rules"
         :rounded="rounded"
@@ -25,6 +26,7 @@
         :append-icon="icons[`${appendIcon}`]"
         :append-outer-icon="icons[`${appendOuterIcon}`]"
         @input="$emit('input', $event)"
+        @change="$emit('change')"
         @click="$emit('click')"
     ></v-select>
 </template>
@@ -37,7 +39,7 @@ export default {
 
     props: {
         value: {
-            type: [String, Number, Object, Array],
+            type: [String, Number, Object, Array]
         },
         label: String,
         multiple: Boolean,
@@ -55,10 +57,11 @@ export default {
         disabled: Boolean,
         success: Boolean,
         rules: Array,
+        loading: Boolean
     },
 
     data: () => ({
-        icons: { mdiPlus, mdiPercent },
-    }),
+        icons: { mdiPlus, mdiPercent }
+    })
 };
 </script>

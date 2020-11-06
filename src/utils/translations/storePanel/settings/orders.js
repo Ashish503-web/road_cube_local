@@ -1,34 +1,44 @@
 export default {
     data: () => ({
         translations: {
-            mobilePayments: {
+            title: {
                 el: "",
-                en: "Mobile Payments",
+                en: "Orders",
                 it: ""
             },
-            fundClosure: {
+            toggle: {
                 el: "",
-                en: "Fund Closure",
+                en: "Toggle Order Option",
                 it: ""
             },
-            download: {
+            on: {
                 el: "",
-                en: "Download All Transactions",
+                en: "On",
                 it: ""
             },
-            filterStatus: {
+            off: {
                 el: "",
-                en: "Filter By Status",
+                en: "Off",
                 it: ""
             },
-            filterType: {
+            limit: {
                 el: "",
-                en: "Filter By Type",
+                en: "Limit",
                 it: ""
             },
-            user: {
+            radius: {
                 el: "",
-                en: "User",
+                en: "Radius m2",
+                it: ""
+            },
+            validate: {
+                el: "",
+                en: "Validate minimum amount for delivery after discount",
+                it: ""
+            },
+            min: {
+                el: "",
+                en: "Minimum Amount for Delivery",
                 it: ""
             },
             amount: {
@@ -36,34 +46,19 @@ export default {
                 en: "Amount",
                 it: ""
             },
-            points: {
+            cardPayments: {
                 el: "",
-                en: "Points",
+                en: "Card payments",
                 it: ""
             },
-            status: {
+            cashPayments: {
                 el: "",
-                en: "Status",
+                en: "Cash Payments",
                 it: ""
             },
-            date: {
+            cashDelivery: {
                 el: "",
-                en: "Date",
-                it: ""
-            },
-            watch: {
-                el: "",
-                en: "Watch",
-                it: ""
-            },
-            actions: {
-                el: "",
-                en: "Actions",
-                it: ""
-            },
-            noData: {
-                el: "",
-                en: "No data available",
+                en: "Cash on delivery Fee",
                 it: ""
             }
         }

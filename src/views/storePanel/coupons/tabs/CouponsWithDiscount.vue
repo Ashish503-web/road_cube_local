@@ -1,12 +1,31 @@
 <template>
-    <v-tab-item :value="$route.path" class="pt-5">
+    <v-tab-item :value="$route.path">
+        <v-row no-gutters align="center" class="pt-7 pb-5 px-5">
+            <v-col cols="auto">
+                <v-img
+                    src="@/assets/coupon-with-discount.png"
+                    width="60"
+                    height="60"
+                ></v-img>
+            </v-col>
+
+            <v-col class="pl-2">
+                <h4 v-text="translations.title[lang]"></h4>
+                <div
+                    style="font-size: 0.875rem"
+                    class="font-weight-medium"
+                    v-text="translations.info[lang]"
+                ></div>
+            </v-col>
+        </v-row>
+
         <v-btn
             color="secondary"
-            class="text-capitalize px-5 ml-5 mb-7"
+            class="text-capitalize px-5 ml-5 mt-4 mb-7"
             depressed
+            v-text="translations.addDiscountCoupons[lang]"
             @click="dialog = true"
-            >add discount</v-btn
-        >
+        ></v-btn>
 
         <v-data-table
             :headers="headers"
@@ -22,7 +41,7 @@
                     color="secondary"
                     indeterminate
                 ></v-progress-circular>
-                <span v-else>No data available</span>
+                <span v-else v-text="translations.noData[lang]"></span>
             </template>
 
             <template v-slot:item.actions="{ item }">
@@ -43,7 +62,10 @@
                         </v-btn>
                     </template>
 
-                    <span class="font-weight-bold">Delete</span>
+                    <span
+                        class="font-weight-bold"
+                        v-text="translations.delete[lang]"
+                    ></span>
                 </v-tooltip>
             </template>
         </v-data-table>
@@ -78,11 +100,14 @@
 import { mdiPlus, mdiClose } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import CouponWithDiscountForm from "@/components/storePanel/coupons/CouponWithDiscountForm.vue";
+import translations from "@/utils/translations/storePanel/couponsWithDiscount";
 
 export default {
     name: "CouponsWithDiscount",
 
     components: { CouponWithDiscountForm },
+
+    mixins: [translations],
 
     data() {
         return {
@@ -90,7 +115,6 @@ export default {
                 mdiPlus,
                 mdiClose
             },
-            lang: "el",
             page: +this.$route.query.page
         };
     },
@@ -101,16 +125,26 @@ export default {
             "couponsWithDiscount"
         ]),
 
+        lang() {
+            return this.$route.params.lang;
+        },
+
         headers() {
             return [
                 {
-                    text: "Product Name",
+                    text: this.translations.product[this.lang],
                     value: `discount_product_name[${this.lang}]`
                 },
-                { text: "Discount", value: "total_discount" },
-                { text: "Points", value: "points" },
-                { text: "Date", value: "created_at" },
-                { text: "Actions", value: "actions" }
+                {
+                    text: this.translations.discount[this.lang],
+                    value: "total_discount"
+                },
+                { text: this.translations.points[this.lang], value: "points" },
+                {
+                    text: this.translations.date[this.lang],
+                    value: "created_at"
+                },
+                { text: this.translations.actions[this.lang], value: "actions" }
             ];
         },
 

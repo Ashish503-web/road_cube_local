@@ -49,6 +49,14 @@ export default class Transaction {
             item
         );
 
+    static updateMobilePayments = item =>
+        axios.put(
+            `${ApiEndpoint}/stores/${localStorage.getItem(
+                "storeId"
+            )}/flags/reward`,
+            item
+        );
+
     static changeStatus = item =>
         axios.put(
             `${ApiEndpoint}/stores/${localStorage.getItem(

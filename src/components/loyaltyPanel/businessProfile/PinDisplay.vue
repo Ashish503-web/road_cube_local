@@ -114,7 +114,7 @@ export default {
 .map-new-pin {
     width: 50px;
     position: absolute;
-    top: 50%;
+    top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
 }

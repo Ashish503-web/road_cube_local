@@ -1,6 +1,17 @@
 export default {
     data: () => ({
         translations: {
+            title: {
+                el: "",
+                en: "Coupons on Products",
+                it: ""
+            },
+            info: {
+                el: "",
+                en:
+                    "Create 1+1 or sampling actions for your products with special coupons for your clients",
+                it: ""
+            },
             addAction: {
                 el: "",
                 en: "Add Action",

@@ -1,6 +1,6 @@
 <template>
     <b-standard-card
-        title="Product categories"
+        :title="translations.title[lang]"
         :loading="loading"
         :error-message="errorMessage"
     >
@@ -9,12 +9,12 @@
                 <v-col class="pr-2">
                     <b-text-field
                         v-model="productCategory.name[lang]"
-                        label="Category Name"
+                        :label="translations.name[lang]"
                         no-top-margin
                     >
                         <template v-slot:append>
                             <b-lang-menu
-                                v-model="lang"
+                                v-model="categoryLang"
                                 type="inner"
                             ></b-lang-menu>
                         </template>
@@ -27,7 +27,7 @@
                         class="text-capitalize px-5"
                         depressed
                         :loading="loading"
-                        >add</v-btn
+                        >{{ translations.add[lang] }}</v-btn
                     >
                 </v-col>
             </v-row>
@@ -35,12 +35,15 @@
 
         <v-sheet outlined class="mt-3">
             <v-row no-gutters>
-                <v-col class="subtitle-2 text--secondary pa-3">
-                    Category Name</v-col
-                >
-                <v-col cols="auto" class="subtitle-2 text--secondary py-3 px-6">
-                    Actions
-                </v-col>
+                <v-col
+                    class="subtitle-2 text--secondary pa-3"
+                    v-text="translations.name[lang]"
+                ></v-col>
+                <v-col
+                    cols="auto"
+                    class="subtitle-2 text--secondary py-3 px-6"
+                    v-text="translations.actions[lang]"
+                ></v-col>
             </v-row>
             <v-row
                 v-for="category in productCategories"
@@ -70,7 +73,10 @@
                             </v-btn>
                         </template>
 
-                        <span class="font-weight-bold">Update</span>
+                        <span
+                            class="font-weight-bold"
+                            v-text="translations.update[lang]"
+                        ></span>
                     </v-tooltip>
 
                     <v-tooltip color="secondary" top>
@@ -85,7 +91,10 @@
                             </v-btn>
                         </template>
 
-                        <span class="font-weight-bold">Delete</span>
+                        <span
+                            class="font-weight-bold"
+                            v-text="translations.delete[lang]"
+                        ></span>
                     </v-tooltip>
                 </v-col>
                 <v-col v-if="category.expanded" cols="12">
@@ -138,14 +147,17 @@
 <script>
 import { mdiPencilOutline, mdiClose } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
+import translations from "@/utils/translations/storePanel/settings/productCategories";
 
 export default {
     name: "ProductCategories",
 
+    mixins: [translations],
+
     data() {
         return {
             icons: { mdiPencilOutline, mdiClose },
-            lang: "el",
+            categoryLang: "el",
             selectedLang: "el",
             page: +this.$route.query.page
         };
@@ -156,6 +168,10 @@ export default {
         ...mapState("storePanel/settings/productCategories", [
             "productCategories"
         ]),
+
+        lang() {
+            return this.$route.params.lang;
+        },
 
         productCategory: {
             get() {

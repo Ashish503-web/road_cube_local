@@ -9,9 +9,9 @@
             >
                 <v-tab
                     v-for="tab in tabs"
-                    :key="tab.name"
+                    :key="tab.name['en']"
                     class="text-capitalize text-left text-md-center justify-start justify-md-center px-3"
-                    v-text="tab.name"
+                    v-text="tab.name[lang]"
                     :to="tab.to"
                 ></v-tab>
             </v-tabs>
@@ -41,40 +41,40 @@ export default {
         tabs() {
             return [
                 {
-                    to: `/${this.lang}/storePanel/settings/profile`,
-                    name: "profile"
+                    name: { el: "", en: "profile", it: "" },
+                    to: `/${this.lang}/storePanel/settings/profile`
                 },
                 {
-                    to: `/${this.lang}/storePanel/settings/reward`,
-                    name: "reward"
+                    name: { el: "", en: "reward", it: "" },
+                    to: `/${this.lang}/storePanel/settings/reward`
                 },
                 {
-                    to: `/${this.lang}/storePanel/settings/product-points`,
-                    name: "product points"
+                    name: { el: "", en: "product points", it: "" },
+                    to: `/${this.lang}/storePanel/settings/product-points`
                 },
                 {
-                    to: `/${this.lang}/storePanel/settings/users`,
-                    name: "users"
+                    name: { el: "", en: "users", it: "" },
+                    to: `/${this.lang}/storePanel/settings/users`
                 },
                 {
-                    to: `/${this.lang}/storePanel/settings/cleaner-management`,
-                    name: "cleaner management"
+                    name: { el: "", en: "cleaner management", it: "" },
+                    to: `/${this.lang}/storePanel/settings/cleaner-management`
                 },
                 {
-                    to: `/${this.lang}/storePanel/settings/payments-direction`,
-                    name: "direction of payments"
+                    name: { el: "", en: "direction of payments", it: "" },
+                    to: `/${this.lang}/storePanel/settings/payments-direction`
                 },
                 // {
-                //     to: `/${this.lang}/storePanel/settings/cards`,
-                //     name: "cards"
+                //     name: { el: "", en: "cards", it: "" },
+                //     to: `/${this.lang}/storePanel/settings/cards`
                 // },
                 {
-                    to: `/${this.lang}/storePanel/settings/payment-history`,
-                    name: "payment history"
+                    name: { el: "", en: "payment history", it: "" },
+                    to: `/${this.lang}/storePanel/settings/payment-history`
                 },
                 {
-                    to: `/${this.lang}/storePanel/settings/payment-methods`,
-                    name: "payment methods"
+                    name: { el: "", en: "payment methods", it: "" },
+                    to: `/${this.lang}/storePanel/settings/payment-methods`
                 }
             ];
         }

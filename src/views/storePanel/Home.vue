@@ -5,11 +5,11 @@
                 <v-card outlined tile>
                     <v-row class="pb-3">
                         <v-col cols="12" sm="6" md="6" lg="3">
-                            <v-card-title class="pb-0 justify-center">{{
+                            <v-card-title class="ml-7 pb-0">{{
                                 statistics.name
                             }}</v-card-title>
                             <h4
-                                class="subtitle-1 success--text pl-4 text-center"
+                                class="subtitle-1 success--text pl-11"
                                 v-text="translations.online[lang]"
                             ></h4>
                         </v-col>
@@ -192,9 +192,9 @@
                                 >{{
                                     statistics.last_twelve_hours_payments
                                         .length +
-                                    ` ${translations.transactions[lang]} / ` +
-                                    statistics.twelve_hours_total +
-                                    ` ${translations.total[lang]}`
+                                        ` ${translations.transactions[lang]} / ` +
+                                        statistics.twelve_hours_total +
+                                        ` ${translations.total[lang]}`
                                 }}</v-card-title
                             >
                             <h4
@@ -223,9 +223,9 @@
                                 class="subtitle-1 font-weight-bold pa-0"
                                 >{{
                                     statistics.last_week_payments.length +
-                                    ` ${translations.transactions[lang]} / ` +
-                                    statistics.last_week_total +
-                                    ` ${translations.total[lang]}`
+                                        ` ${translations.transactions[lang]} / ` +
+                                        statistics.last_week_total +
+                                        ` ${translations.total[lang]}`
                                 }}</v-card-title
                             >
                             <h4
@@ -275,7 +275,7 @@ import {
     mdiCursorDefault,
     mdiCompassOutline,
     mdiPhone,
-    mdiWallet,
+    mdiWallet
 } from "@mdi/js";
 
 import translations from "@/utils/translations/storePanel/home";
@@ -286,7 +286,7 @@ const gradients = [
     ["red", "orange", "yellow"],
     ["purple", "violet"],
     ["#00c6ff", "#F0F", "#FF0"],
-    ["#f72047", "#ffd200", "#1feaea"],
+    ["#f72047", "#ffd200", "#1feaea"]
 ];
 
 export default {
@@ -303,7 +303,7 @@ export default {
             mdiCursorDefault,
             mdiCompassOutline,
             mdiPhone,
-            mdiWallet,
+            mdiWallet
         },
         width: 2,
         radius: 10,
@@ -316,13 +316,13 @@ export default {
         fill: false,
         type: "trend",
         autoLineWidth: false,
-        statistics: {},
+        statistics: {}
     }),
 
     computed: {
         lang() {
             return this.$route.params.lang;
-        },
+        }
     },
 
     watch: {
@@ -336,7 +336,7 @@ export default {
                 this.statistics.total_income = new Intl.NumberFormat("en-US", {
                     style: "currency",
                     currency: "EUR",
-                    minimumFractionDigits: 2,
+                    minimumFractionDigits: 2
                 }).format(this.statistics.total_income);
 
                 if (this.statistics.last_twelve_hours_payments.length) {
@@ -353,7 +353,7 @@ export default {
                         {
                             style: "currency",
                             currency: "EUR",
-                            minimumFractionDigits: 2,
+                            minimumFractionDigits: 2
                         }
                     ).format(this.statistics.twelve_hours_total);
                 }
@@ -372,12 +372,12 @@ export default {
                         {
                             style: "currency",
                             currency: "EUR",
-                            minimumFractionDigits: 2,
+                            minimumFractionDigits: 2
                         }
                     ).format(this.statistics.last_week_total);
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>

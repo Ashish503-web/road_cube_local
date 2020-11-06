@@ -1,39 +1,32 @@
 export default {
     data: () => ({
         translations: {
-            mobilePayments: {
+            title: {
                 el: "",
-                en: "Mobile Payments",
+                en: "Coupons with discount",
                 it: ""
             },
-            fundClosure: {
+            info: {
                 el: "",
-                en: "Fund Closure",
+                en: `Let your customer get your products with discount when they
+                    have certain amount of points from transactions to your
+                    store. Set for each product the percentage of the discount
+                    that suits you based on your margins.`,
                 it: ""
             },
-            download: {
+            addDiscountCoupons: {
                 el: "",
-                en: "Download All Transactions",
+                en: "Add Discount Coupons",
                 it: ""
             },
-            filterStatus: {
+            product: {
                 el: "",
-                en: "Filter By Status",
+                en: "Product Name",
                 it: ""
             },
-            filterType: {
+            discount: {
                 el: "",
-                en: "Filter By Type",
-                it: ""
-            },
-            user: {
-                el: "",
-                en: "User",
-                it: ""
-            },
-            amount: {
-                el: "",
-                en: "Amount",
+                en: "Discount",
                 it: ""
             },
             points: {
@@ -41,19 +34,9 @@ export default {
                 en: "Points",
                 it: ""
             },
-            status: {
-                el: "",
-                en: "Status",
-                it: ""
-            },
             date: {
                 el: "",
                 en: "Date",
-                it: ""
-            },
-            watch: {
-                el: "",
-                en: "Watch",
                 it: ""
             },
             actions: {
@@ -64,6 +47,11 @@ export default {
             noData: {
                 el: "",
                 en: "No data available",
+                it: ""
+            },
+            delete: {
+                el: "",
+                en: "Delete",
                 it: ""
             }
         }

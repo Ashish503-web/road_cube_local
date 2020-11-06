@@ -103,6 +103,19 @@ export default {
             state.store.redemption_type_id = payload;
         },
 
+        setSendPoints(state, payload) {
+            state.store.flags.reward.send_points_by_card_or_phone =
+                payload.send_points_by_card_or_phone;
+            state.store.notify_customers.system_notification_id =
+                payload.system_notification_id;
+            state.store.flags.reward.add_new_user_on_send_points =
+                payload.add_new_user_on_send_points;
+            state.store.flags.reward.choose_product_on_send_points =
+                payload.choose_product_on_send_points;
+            state.store.flags.reward.display_receipt_on_send_points =
+                payload.display_receipt_on_send_points;
+        },
+
         setScanReceipt(state, payload) {
             state.store.flags.reward.scan_receipt = payload;
         },

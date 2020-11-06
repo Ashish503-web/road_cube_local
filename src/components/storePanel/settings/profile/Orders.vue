@@ -1,6 +1,6 @@
 <template>
     <b-standard-card
-        title="Orders"
+        :title="translations.title[lang]"
         :loading="loading"
         :error-message="errorMessage"
         @submit="
@@ -12,10 +12,14 @@
     >
         <v-row no-gutters justify="space-between">
             <v-col cols="12" sm="6" class="subtitle-2">
-                Toogle Order option:
+                {{ translations.toggle[lang] }}:
                 <v-switch
                     v-model="orders.enabled"
-                    :label="orders.enabled ? 'On' : 'Off'"
+                    :label="
+                        orders.enabled
+                            ? translations.on[lang]
+                            : translations.off[lang]
+                    "
                     color="secondary"
                     class="mt-5 mb-2 pt-0"
                     hide-details
@@ -23,25 +27,25 @@
             </v-col>
 
             <v-col cols="12" sm="5" class="subtitle-2">
-                Limit:
+                {{ translations.limit[lang] }}:
                 <b-text-field
                     v-model="orders.order_range"
-                    label="Radius m2"
+                    :label="translations.radius[lang]"
                     :disabled="!orders.enabled"
                 ></b-text-field>
             </v-col>
 
             <template v-if="orders.enabled">
                 <v-col cols="12" sm="6" class="subtitle-2 mt-3">
-                    Validate minimum amount for delivery after discount :
+                    {{ translations.validate[lang] }}:
                     <v-switch
                         v-model="
                             orders.validate_min_delivery_price_after_discount
                         "
                         :label="
                             orders.validate_min_delivery_price_after_discount
-                                ? 'On'
-                                : 'Off'
+                                ? translations.on[lang]
+                                : translations.off[lang]
                         "
                         color="secondary"
                         class="mt-5 mb-2 pt-0"
@@ -50,33 +54,41 @@
                 </v-col>
 
                 <v-col cols="12" sm="5" class="subtitle-2 mt-3">
-                    Minimum Amount for Delivery:
+                    {{ translations.min[lang] }}:
                     <b-text-field
                         v-model="orders.delivery_min_price"
                         :disabled="
                             !orders.validate_min_delivery_price_after_discount
                         "
                         type="number"
-                        label="Amount"
+                        :label="translations.amount[lang]"
                         append-icon="icons.mdiCurrencyEur"
                     ></b-text-field>
                 </v-col>
 
                 <v-col cols="12" sm="6" class="subtitle-2 mt-3">
-                    Card payments:
+                    {{ translations.cardPayments[lang] }}:
                     <v-switch
                         v-model="orders.delivery_card_payment"
-                        :label="orders.delivery_card_payment ? 'On' : 'Off'"
+                        :label="
+                            orders.delivery_card_payment
+                                ? translations.on[lang]
+                                : translations.off[lang]
+                        "
                         color="secondary"
                         class="mt-0"
                         hide-details
                     ></v-switch>
 
                     <div class="mt-3">
-                        Cash payments:
+                        {{ translations.cashPayments[lang] }}:
                         <v-switch
                             v-model="orders.delivery_cash_payment"
-                            :label="orders.delivery_cash_payment ? 'On' : 'Off'"
+                            :label="
+                                orders.delivery_cash_payment
+                                    ? translations.on[lang]
+                                    : translations.off[lang]
+                            "
                             color="secondary"
                             class="mt-0"
                             hide-details
@@ -85,11 +97,11 @@
                 </v-col>
 
                 <v-col cols="12" sm="5" class="subtitle-2 mt-3">
-                    Cash on delivery Fee:
+                    {{ translations.cashDelivery[lang] }}:
                     <b-text-field
                         v-model="orders.cash_on_delivery_fee"
                         type="number"
-                        label="Amount"
+                        :label="translations.amount[lang]"
                         append-icon="mdiCurrencyEur"
                     ></b-text-field>
                 </v-col>
@@ -100,15 +112,22 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
+import translations from "@/utils/translations/storePanel/settings/orders";
 
 export default {
     name: "Orders",
+
+    mixins: [translations],
 
     data: () => ({
         orders: {}
     }),
 
     computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
         loading() {
             return this.$store.state.storePanel.settings.profile.loading.orders;
         },

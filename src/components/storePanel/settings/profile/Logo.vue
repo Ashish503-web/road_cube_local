@@ -1,23 +1,19 @@
 <template>
     <b-standard-card
-        title="Logo"
-        submit-text="update logo"
+        :title="translations.title[lang]"
+        :submit-text="{ el: '', en: 'Update Logo', it: '' }"
         :loading="loading"
         :error-message="errorMessage"
         @submit="uploadLogo({ type: 'logo', imageFile })"
     >
-        <div style="height: 100px">
-            You can upload here the logo of your business which will appear in
-            the app and will be on the physical cards. If we think that it can
-            be improved we will contact you before publishment.
-        </div>
+        <div style="height: 100px" v-text="translations.info[lang]"></div>
 
         <v-row no-gutters align="center" style="height: 120px">
             <v-col cols="12" sm="5" class="pr-2">
                 <v-img :src="logo" width="64" class="mx-auto"></v-img>
             </v-col>
             <v-col cols="12" sm="7" class="pl-0 pl-sm-2">
-                Press the following button to choose image:
+                {{ translations.uploadText[lang] }}
                 <v-file-input
                     color="secondary"
                     class="mt-1"
@@ -35,9 +31,12 @@
 
 <script>
 import { mapMutations, mapActions } from "vuex";
+import translations from "@/utils/translations/storePanel/settings/logo";
 
 export default {
     name: "Logo",
+
+    mixins: [translations],
 
     data() {
         return {
@@ -58,6 +57,10 @@ export default {
     },
 
     computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
         loading() {
             return this.$store.state.storePanel.settings.profile.loading.logo;
         },
