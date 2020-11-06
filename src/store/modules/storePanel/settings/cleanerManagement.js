@@ -84,7 +84,7 @@ export default {
                     {
                         show: true,
                         type: "success",
-                        text: "You have successfully created product category!"
+                        text: "You have successfully created Bank Provider!"
                     },
                     { root: true }
                 );
@@ -150,6 +150,15 @@ export default {
                 commit("setLoading", false, { root: true });
                 commit("setUpdateDialog", false, { root: true });
                 commit("setDialog", false);
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated Bank Provider!"
+                    },
+                    { root: true }
+                );
                 
             } catch (ex) {
                 commit("setLoading", false);
