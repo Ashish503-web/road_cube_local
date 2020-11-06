@@ -78,6 +78,7 @@ export default {
 
                 dispatch("getItems")
                 commit("setLoading", false, { root: true });
+                commit("setDialog", false, { root: true });
                 commit(
                     "setNotification",
                     {
@@ -139,14 +140,15 @@ export default {
 
         async updateProvider({ dispatch, commit, rootState }, form ) {
             try {
-                commit("setLoading", true);
+                commit("setLoading", true, { root: true });
 
                 const { data } = await BankProvider.updateProvider(
                     form
                 );
 
                 dispatch("getItems") 
-                commit("setLoading", false);
+                commit("setLoading", false, { root: true });
+                commit("setUpdateDialog", false, { root: true });
                 commit("setDialog", false);
                 
             } catch (ex) {
@@ -164,6 +166,7 @@ export default {
 
                 dispatch("getItems")
                 commit("setLoading", false, { root: true });
+                commit("setDeleteDialog", false, { root: true });
                 commit(
                     "setNotification",
                     {

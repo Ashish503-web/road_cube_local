@@ -1,12 +1,12 @@
 <template>
     <v-tab-item :value="$route.path" class="pt-10 px-12">
         Set up one or more mobile payments for your business.
-
+        
         <v-tabs
             v-model="tab"
             color="secondary"
             class="mt-7"
-            height="90"
+            height="110"
             show-arrows
             optional
         >
@@ -19,7 +19,9 @@
                     <v-img
                     :src="$store.state.storePanel.store.logo"
                     class="mb-2 mx-auto"
-                    width="70"
+                    width="80"
+                    height="60"
+                    contain
                     ></v-img>
                     <p>{{ provider.name[lang] }}</p>
                 </div>
@@ -89,13 +91,14 @@
             </template>
         </v-data-table>
 
-        <v-dialog v-model="createDialog" max-width="500">
+        <v-dialog v-model="dialog" max-width="500">
             <b-card
                 type="create"
                 title="Create Provider"
                 submit-text="create"
-                @cancel="createDialog = false"
+                @cancel="dialog = false"
                 @submit="create"
+                :loading="loading"
             >
                 <b-text-field
                     v-for="(field,index) in createProvider.fields"
@@ -114,6 +117,7 @@
                 submit-text="update"
                 @cancel="updateDialog = false"
                 @submit="update"
+                :loading="loading"
             >
                 <b-text-field
                     v-for="(field,index) in editProvider.credentials ? Object.keys(editProvider.credentials) : []"
@@ -132,6 +136,7 @@
                 submit-text="delete"
                 @cancel="deleteDialog = false"
                 @submit="deleteProvider"
+                :loading="loading"
             >
                 <p>Are you sure?</p>
             </b-card>
@@ -167,12 +172,9 @@ export default {
                     value: 'actions'
                 }
             ],
-            createDialog: false,
             createProvider: {},
-            updateDialog: false,
             editProvider: {},
-            deleteProviderId: '',
-            deleteDialog: false
+            deleteProviderId: ''
         };
     },
 
@@ -203,9 +205,44 @@ export default {
 
             return query.slice(0, query.length - 1);
         },
+
+        dialog: {
+            get() {
+                return this.$store.state.dialog;
+            },
+
+            set(val) {
+                this.setDialog(val);
+            },
+        },
+
+        updateDialog: {
+            get() {
+                return this.$store.state.updateDialog;
+            },
+
+            set(val) {
+                this.setUpdateDialog(val);
+            },
+        },
+
+        deleteDialog: {
+            get() {
+                return this.$store.state.deleteDialog;
+            },
+
+            set(val) {
+                this.setDeleteDialog(val);
+            },
+        },
     },
 
     methods: {
+        ...mapMutations([
+            "setDialog",
+            "setUpdateDialog",
+            "setDeleteDialog"
+        ]),
         ...mapMutations("storePanel/settings/cleanerManagement", ["setItem"]),
         ...mapActions("storePanel/settings/cleanerManagement", [
             "getItems",
@@ -222,7 +259,6 @@ export default {
             }
 
             this.createItem(formData)
-            this.createDialog = false;
             this.credentials = {}
         },
 
@@ -237,7 +273,7 @@ export default {
                 storedIds.push(data.bank_provider.bank_provider_id)
             })
             if(!storedIds.includes(item.bank_provider_id)){
-                 this.createDialog = true;
+                 this.dialog = true;
                  this.createProvider = item;
             }else{
                 let result = this.storeBankProviders.filter(data => {
@@ -254,17 +290,26 @@ export default {
                 "credentials": this.editProvider.credentials 
             }
             this.updateProvider(editForm)
-            this.updateDialog = false;
         },
 
         deleteProvider(){
             this.removeProvider(this.deleteProviderId)
-            this.deleteDialog = false
         }
     },
 
     mounted(){
         this.getItems()
+    },
+
+    beforeCreate() {
+        if (!this.$route.query.page) {
+            this.$router.push({
+                query: {
+                    page: 1,
+                    ...this.$route.query,
+                },
+            });
+        }
     },
 
     watch: {
@@ -289,7 +334,7 @@ export default {
 
         perPage(perPage) {
             this.$router.push({ query: { ...this.$route.query, perPage } });
-        },
+        }
     },
 };
 </script>

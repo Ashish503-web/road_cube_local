@@ -13,6 +13,7 @@ export default new Vuex.Store({
         user: {},
         userStores: [],
         dialog: false,
+        updateDialog: false,
         deleteDialog: false,
         loading: false,
         errorMessage: "",
@@ -45,6 +46,10 @@ export default new Vuex.Store({
 
         setDialog(state, payload) {
             state.dialog = payload;
+        },
+
+        setUpdateDialog(state, payload) {
+            state.updateDialog = payload;
         },
 
         setDeleteDialog(state, payload) {
