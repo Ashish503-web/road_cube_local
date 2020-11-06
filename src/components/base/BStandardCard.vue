@@ -39,7 +39,11 @@
             </v-col>
 
             <v-col cols="12">
-                <v-form v-model="valid" @submit.prevent="$emit('submit')">
+                <v-form
+                    v-model="valid"
+                    ref="form"
+                    @submit.prevent="$emit('submit')"
+                >
                     <v-card-text
                         class="pt-4 text--secondary relative"
                         :class="{ 'px-0': noBodyPadding }"

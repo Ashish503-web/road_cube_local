@@ -9,7 +9,7 @@
         dense
         clearable
         hide-details="auto"
-        validate-on-blur
+        :validate-on-blur="validateOnBlur"
         :readonly="readonly"
         :disabled="disabled"
         :placeholder="placeholder"
@@ -39,7 +39,9 @@ import {
     mdiClockOutline,
     mdiPercent,
     mdiCalendarMonth,
-    mdiEye
+    mdiEye,
+    mdiLock,
+    mdiLockOutline
 } from "@mdi/js";
 
 export default {
@@ -65,7 +67,11 @@ export default {
         success: Boolean,
         rules: Array,
         hint: String,
-        persistentHint: Boolean
+        persistentHint: Boolean,
+        validateOnBlur: {
+            type: Boolean,
+            default: true
+        }
     },
 
     data: () => ({
@@ -75,7 +81,9 @@ export default {
             mdiClockOutline,
             mdiPercent,
             mdiCalendarMonth,
-            mdiEye
+            mdiEye,
+            mdiLock,
+            mdiLockOutline
         }
     })
 };

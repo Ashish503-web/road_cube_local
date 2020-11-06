@@ -16,12 +16,21 @@
                     v-model="businessInformation.name"
                     :label="translations.name[lang]"
                     no-top-margin
+                    :validate-on-blur="false"
+                    :success="success.name"
+                    :rules="rules.name"
+                    @cancel-success="success.name = false"
                 ></b-text-field>
 
                 <b-text-field
                     v-model="businessInformation.primary_phone"
+                    v-mask="'##########'"
                     type="number"
                     :label="translations.telephone[lang]"
+                    :validate-on-blur="false"
+                    :success="success.primaryPhone"
+                    :rules="rules.primaryPhone"
+                    @cancel-success="success.primaryPhone = false"
                 ></b-text-field>
 
                 <b-select
@@ -30,17 +39,28 @@
                     item-text="name"
                     item-value="country_id"
                     :label="translations.country[lang]"
+                    :success="success.country"
+                    :rules="rules.country"
                 ></b-select>
 
                 <b-text-field
                     v-model="businessInformation.secondary_phone"
+                    v-mask="'##########'"
                     type="number"
                     :label="translations.telephone2[lang]"
+                    :validate-on-blur="false"
+                    :success="success.secondaryPhone"
+                    :rules="rules.secondaryPhone"
+                    @cancel-success="success.secondaryPhone = false"
                 ></b-text-field>
 
                 <b-text-field
                     v-model="businessInformation.full_name"
                     :label="translations.fullname[lang]"
+                    :validate-on-blur="false"
+                    :success="success.fullname"
+                    :rules="rules.fullname"
+                    @cancel-success="success.fullname = false"
                 ></b-text-field>
             </v-col>
 
@@ -49,6 +69,10 @@
                     v-model="businessInformation.address"
                     :label="translations.address[lang]"
                     no-top-margin
+                    :validate-on-blur="false"
+                    :success="success.address"
+                    :rules="rules.address"
+                    @cancel-success="success.address = false"
                 ></b-text-field>
 
                 <v-btn
@@ -57,26 +81,47 @@
                     "
                     target="_blank"
                     class="text-capitalize mt-3"
+                    height="40"
                     block
                     outlined
-                    >{{ translations.googleMaps[lang] }}</v-btn
                 >
+                    <img
+                        src="@/assets/google-maps.png"
+                        alt="google maps"
+                        width="30"
+                        height="30"
+                    />
+                    {{ translations.googleMaps[lang] }}
+                </v-btn>
 
                 <b-text-field
                     v-model="businessInformation.activity"
                     :label="translations.activity[lang]"
+                    :validate-on-blur="false"
+                    :success="success.activity"
+                    :rules="rules.activity"
+                    @cancel-success="success.activity = false"
                 ></b-text-field>
 
                 <b-text-field
                     v-model="businessInformation.mobile"
+                    v-mask="'##########'"
                     type="number"
                     :label="translations.ownersPhone[lang]"
+                    :validate-on-blur="false"
+                    :success="success.mobile"
+                    :rules="rules.mobile"
+                    @cancel-success="success.mobile = false"
                 ></b-text-field>
 
                 <b-text-field
                     v-model="businessInformation.email"
                     type="email"
                     :label="translations.email[lang]"
+                    :validate-on-blur="false"
+                    :success="success.email"
+                    :rules="rules.email"
+                    @cancel-success="success.email = false"
                 ></b-text-field>
             </v-col>
         </v-row>
@@ -86,14 +131,16 @@
 <script>
 import { mapActions } from "vuex";
 import translations from "@/utils/translations/storePanel/settings/businessInformation";
+import validators from "./businessInformationValidators";
 
 export default {
     name: "BusinessInformation",
 
-    mixins: [translations],
+    mixins: [translations, validators],
 
     data: () => ({
-        businessInformation: {}
+        businessInformation: {},
+        validate: false
     }),
 
     computed: {
@@ -111,11 +158,6 @@ export default {
                 .businessInformation;
         },
 
-        storeCategories() {
-            return this.$store.state.storePanel.settings.profile
-                .storeCategories;
-        },
-
         countries() {
             return this.$store.state.storePanel.settings.profile.countries;
         }
@@ -123,7 +165,6 @@ export default {
 
     methods: {
         ...mapActions("storePanel/settings/profile", [
-            "getStoreCategories",
             "getCountries",
             "updateBusinessInformation"
         ])
@@ -152,12 +193,25 @@ export default {
 
                     email: val.email
                 };
+
+                setTimeout(() => {
+                    this.success = {
+                        name: false,
+                        primaryPhone: false,
+                        country: false,
+                        secondaryPhone: false,
+                        fullname: false,
+                        address: false,
+                        activity: false,
+                        mobile: false,
+                        email: false
+                    };
+                }, 300);
             }
         }
     },
 
     mounted() {
-        this.getStoreCategories();
         this.getCountries();
     }
 };

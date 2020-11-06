@@ -12,6 +12,7 @@ export default {
             operationHours: false,
             quickPayment: false,
             orders: false,
+            changePassword: false,
             redemption: false
         },
         errorMessage: {
@@ -22,13 +23,13 @@ export default {
             operationHours: "",
             quickPayment: "",
             orders: "",
+            changePassword: "",
             redemption: ""
         },
         resetSuccess: {
             logo: false,
             mapLogo: false
         },
-        storeCategories: [],
         countries: []
     }),
 
@@ -43,10 +44,6 @@ export default {
 
         setResetSuccess(state, { value, type }) {
             state.resetSuccess[type] = value;
-        },
-
-        setStoreCategories(state, payload) {
-            state.storeCategories = payload;
         },
 
         setCountries(state, payload) {
@@ -124,16 +121,6 @@ export default {
                     () => commit("setErrorMessage", { value: "", type }),
                     5000
                 );
-            }
-        },
-
-        async getStoreCategories({ commit }) {
-            try {
-                const { data } = await Profile.getStoreCategories();
-
-                commit("setStoreCategories", data.data);
-            } catch (ex) {
-                console.error(ex.response.data.message);
             }
         },
 
@@ -313,6 +300,36 @@ export default {
                         show: true,
                         type: "success",
                         text: "You have successfully updated orders!"
+                    },
+
+                    { root: true }
+                );
+            } catch (ex) {
+                commit("setLoading", { value: false, type });
+                commit("setErrorMessage", {
+                    value: ex.response.data.message,
+                    type
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", { value: "", type }),
+                    5000
+                );
+            }
+        },
+
+        async updatePassword({ commit }, { type, item }) {
+            try {
+                commit("setLoading", { value: true, type });
+
+                await Profile.updatePassword(item);
+
+                commit("setLoading", { value: false, type });
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated password!"
                     },
 
                     { root: true }

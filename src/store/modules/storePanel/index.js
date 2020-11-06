@@ -67,7 +67,6 @@ export default {
         setBusinessInformation(state, payload) {
             state.store.name = payload.name;
             state.store.address = payload.address;
-            state.store.category.store_category_id = payload.store_category_id;
             state.store.billing_details.activity = payload.activity;
             state.store.country.country_id = payload.country_id;
             state.store.primary_phone = payload.primary_phone;

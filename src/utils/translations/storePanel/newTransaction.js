@@ -13,7 +13,7 @@ export default {
             },
             totalPoints: {
                 el: "",
-                en: "Total Points",
+                en: "Points Won",
                 it: ""
             },
             user: {

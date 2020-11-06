@@ -133,7 +133,7 @@ export default {
                         }
                     },
                     v =>
-                        (v || "").length >= 5 ||
+                        (v || "").length >= 6 ||
                         "Password must be 6 characters long"
                 ],
                 confirmPassword: [
