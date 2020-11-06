@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { mdiPlus, mdiPercent } from "@mdi/js";
+import { mdiPlus, mdiPercent, mdiCheck, mdiTimelapse, mdiFlagOutline } from "@mdi/js";
 
 export default {
     name: "BSelect",
@@ -61,7 +61,7 @@ export default {
     },
 
     data: () => ({
-        icons: { mdiPlus, mdiPercent }
+        icons: { mdiPlus, mdiPercent, mdiCheck, mdiTimelapse, mdiFlagOutline }
     })
 };
 </script>

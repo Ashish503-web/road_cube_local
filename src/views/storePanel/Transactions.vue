@@ -4,11 +4,19 @@
             <v-toolbar flat height="80">
                 <v-spacer class="d-none d-sm-block"></v-spacer>
 
-                <v-icon
+                <div 
+                class="text-center"
+                style="cursor: pointer"
+                @click="settingsDialog = true">
+                    <v-icon
                     color="secondary"
-                    v-text="icons.mdiCellphoneIphone"
-                ></v-icon>
-                {{ translations.mobilePayments[lang] }}
+                    v-text="icons.mdiCog"
+                    x-large
+                    ></v-icon>
+                    <p>Settings</p>
+                </div>
+                
+                <!-- {{ translations.mobilePayments[lang] }}
                 <v-switch
                     v-model="online_payments"
                     color="secondary"
@@ -54,7 +62,7 @@
                             </v-list-item>
                         </v-list-item-group>
                     </v-list>
-                </v-menu>
+                </v-menu> -->
             </v-toolbar>
 
             <v-row class="pr-4 py-3" no-gutters>
@@ -166,7 +174,7 @@
                 </v-col>
             </v-row>
 
-            <v-row no-gutters class="px-2 py-2">
+            <v-row v-if="selectedStatuses.length > 0" no-gutters class="px-2 py-2">
                 <v-col cols="12">
                     <v-chip
                         v-for="(status, i) in selectedStatuses"
@@ -180,7 +188,7 @@
                 </v-col>
             </v-row>
 
-            <v-row no-gutters class="px-2 py-2">
+            <v-row v-if="selectedTypes.length > 0" no-gutters class="px-2 py-2">
                 <v-col cols="12">
                     <v-chip
                         v-for="(type, i) in selectedTypes"
@@ -224,14 +232,16 @@
                             item-text="name"
                             item-value="transaction_status_id"
                             class="mb-3"
+                            :prependInnerIcon="item.transaction_status_id == '1' ? 'mdiTimelapse' : item.transaction_status_id == 2 ? 'mdiFlagOutline' : 'mdiCheck'"
                             @change="changeStatus(item)"
                         ></b-select>
                     </v-sheet>
                 </template>
 
                 <template v-slot:item.watch="{ item }">
-                    <v-btn
-                        icon
+                    <div
+                        class="d-flex align-center"
+                        style="cursor: pointer"
                         @click="
                             () => {
                                 transactionId = item.transaction_id;
@@ -239,8 +249,9 @@
                             }
                         "
                     >
-                        <v-icon v-text="icons.mdiTextBoxSearchOutline"></v-icon>
-                    </v-btn>
+                        <v-icon v-text="icons.mdiEye"></v-icon>
+                        <p class="ml-2 mb-0 text-decoration-underline">Show details</p>
+                    </div>
                 </template>
 
                 <template v-slot:item.actions="{ item }">
@@ -250,7 +261,7 @@
                         width="83"
                         depressed
                         @click="myFunc(item)"
-                        >cancel</v-btn
+                        >Refund</v-btn
                     >
                 </template>
             </v-data-table>
@@ -260,6 +271,65 @@
                     :transaction-id="transactionId"
                     @cancel="dialog = false"
                 ></transaction-profile>
+            </v-dialog>
+
+            <v-dialog v-model="settingsDialog" max-width="600">
+                <v-card>
+                    <v-card-title class="flex justify-center">
+                        Settings Panel
+                    </v-card-title>
+                    <v-divider class="mb-3"></v-divider>
+                    <v-card-text>
+                        <v-row justify="space-around" no-gutters>
+                            <v-col cols="2" class="d-flex">
+                                <v-row justify="center" align="center" no-gutters>
+                                    <v-icon
+                                    color="secondary"
+                                    v-text="icons.mdiCellphoneIphone"
+                                    x-large
+                                    ></v-icon>
+                                </v-row>
+                            </v-col>
+                            <v-col cols="5">
+                                <p class="font-weight-black">Mobile Payments</p>
+                                <p>Impress your clients with mobile payments to your store</p>
+                            </v-col>
+                            <v-col cols="5" class="d-flex">
+                                <v-row justify="center" align="center" no-gutters>
+                                    <v-switch
+                                        v-model="online_payments"
+                                        :label="online_payments ? 'On' : 'Off'"
+                                        color="secondary"
+                                        class="ml-3 mt-0 pt-0"
+                                        hide-details
+                                        :loading="mobileLoading"
+                                        @change="updateMobilePayments({ online_payments })"
+                                    ></v-switch>
+                                </v-row>
+                            </v-col>
+                        </v-row>
+
+                        <v-row justify="space-around" class="mt-5" no-gutters>
+                            <v-col cols="6" class="d-flex justify-center">
+                                <p 
+                                class="text-decoration-underline font-weight-medium"
+                                style="cursor: pointer"
+                                @click="downloadAllTransactions" >
+                                    {{ translations.download[lang] }}
+                                </p>
+                            </v-col>
+
+                            <v-col cols="6" class="d-flex justify-center">
+                                <p 
+                                class="text-decoration-underline font-weight-medium"
+                                style="cursor: pointer">
+                                    {{ translations.fundClosure[lang] }}
+                                </p>
+                            </v-col>
+                        </v-row>
+                    </v-card-text>
+                    
+                </v-card>
             </v-dialog>
         </v-sheet>
     </v-container>
@@ -275,7 +345,9 @@ import {
     mdiChevronDown,
     mdiCheckboxBlankOutline,
     mdiCheckBoxOutline,
-    mdiTextBoxSearchOutline
+    mdiTextBoxSearchOutline,
+    mdiCog,
+    mdiEye
 } from "@mdi/js";
 
 import TransactionProfile from "./TransactionProfile.vue";
@@ -301,7 +373,9 @@ export default {
                 mdiChevronDown,
                 mdiCheckboxBlankOutline,
                 mdiCheckBoxOutline,
-                mdiTextBoxSearchOutline
+                mdiTextBoxSearchOutline,
+                mdiCog,
+                mdiEye
             },
             online_payments: null,
             menu: {
@@ -312,7 +386,8 @@ export default {
             selectedStatuses: [],
             selectedTypes: [],
             dialog: false,
-            transactionId: null
+            transactionId: null,
+            settingsDialog: false
         };
     },
 
@@ -344,15 +419,18 @@ export default {
                     value: "total_points"
                 },
                 {
-                    text: this.translations.status[this.lang],
-                    value: "transaction_status_name",
-                    width: "30%"
-                },
-                {
                     text: this.translations.date[this.lang],
                     value: "created_at"
                 },
-                { text: this.translations.watch[this.lang], value: "watch" },
+                { 
+                    text: this.translations.watch[this.lang],
+                    value: "watch"
+                },
+                {
+                    text: this.translations.status[this.lang],
+                    value: "transaction_status_name",
+                    width: "25%"
+                },
                 {
                     text: this.translations.actions[this.lang],
                     value: "actions"

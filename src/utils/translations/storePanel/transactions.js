@@ -8,12 +8,12 @@ export default {
             },
             fundClosure: {
                 el: "",
-                en: "Fund Closure",
+                en: "Export Latest Transactions",
                 it: ""
             },
             download: {
                 el: "",
-                en: "Download All Transactions",
+                en: "Export All Transactions",
                 it: ""
             },
             filterStatus: {
@@ -53,7 +53,7 @@ export default {
             },
             watch: {
                 el: "",
-                en: "Watch",
+                en: "Show details",
                 it: ""
             },
             actions: {
