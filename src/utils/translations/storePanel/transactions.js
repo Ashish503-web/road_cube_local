@@ -1,19 +1,26 @@
 export default {
     data: () => ({
         translations: {
-            mobilePayments: {
+            title: {
                 el: "",
-                en: "Mobile Payments",
+                en: "Payments & Orders",
                 it: ""
             },
-            fundClosure: {
+            info: {
                 el: "",
-                en: "Export Latest Transactions",
+                en: `All the payments and orders of your store are collected
+                     in 1 place. Manage your online payments or online
+                     ordersfrom 1 place, verify or refund easily`,
                 it: ""
             },
             download: {
                 el: "",
                 en: "Export All Transactions",
+                it: ""
+            },
+            fundClosure: {
+                el: "",
+                en: "Export Latest Transactions",
                 it: ""
             },
             filterStatus: {
@@ -41,14 +48,14 @@ export default {
                 en: "Points",
                 it: ""
             },
-            status: {
-                el: "",
-                en: "Status",
-                it: ""
-            },
             date: {
                 el: "",
                 en: "Date",
+                it: ""
+            },
+            status: {
+                el: "",
+                en: "Status",
                 it: ""
             },
             watch: {

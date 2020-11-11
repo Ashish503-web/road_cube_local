@@ -5,7 +5,7 @@
             :items="productPoints"
             :footer-props="{
                 itemsPerPageOptions: [12],
-                showCurrentPage: true
+                showCurrentPage: true,
             }"
             :page.sync="page"
             :server-items-length="serverItemsLength"
@@ -81,16 +81,16 @@ export default {
         return {
             groupRewardTypes: [
                 { text: "Per Transaction", value: 1 },
-                { text: "Per Euro", value: 4 }
+                { text: "Per Euro", value: 2 },
             ],
             productRewardTypes: [
                 { text: "Per Transaction", value: 1 },
-                { text: "Piece", value: 2 },
-                { text: "Liters", value: 3 },
-                { text: "Per Euro", value: 4 }
+                { text: "Per Euro", value: 2 },
+                { text: "Piece", value: 3 },
+                { text: "Liters", value: 4 },
             ],
             lang: "el",
-            page: +this.$route.query.page
+            page: +this.$route.query.page,
         };
     },
 
@@ -103,15 +103,15 @@ export default {
                 {
                     text: "Product Name",
                     value: `name[${this.lang}]`,
-                    width: "20%"
+                    width: "20%",
                 },
                 { text: "Points", value: "reward_points", width: "15%" },
                 { text: "Type", value: "reward_type_id", width: "30%" },
                 {
                     text: "Point Subsidy",
-                    value: "reward_points_shared"
+                    value: "reward_points_shared",
                 },
-                { text: "Save", value: "save", width: "10%" }
+                { text: "Save", value: "save", width: "10%" },
             ];
         },
 
@@ -123,14 +123,14 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
         ...mapActions("storePanel/settings/productPoints", [
             "getItems",
-            "update"
-        ])
+            "update",
+        ]),
     },
 
     watch: {
@@ -139,8 +139,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
             this.getItems(this.query);
@@ -152,7 +152,7 @@ export default {
 
         perPage(perPage) {
             this.$router.push({ query: { ...this.$route.query, perPage } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -160,15 +160,15 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    }
+    },
 };
 </script>
 

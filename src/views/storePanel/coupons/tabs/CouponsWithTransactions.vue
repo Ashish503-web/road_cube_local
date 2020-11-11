@@ -1,166 +1,280 @@
 <template>
     <v-tab-item :value="$route.path">
-        <v-card tile flat>
-            <v-row no-gutters justify="space-around" class="mt-5">
-                <v-col
-                    cols="12"
-                    sm="6"
-                    class="px-3 mx-auto mx-sm-0 text-center text-sm-left"
-                >
-                    <v-card-title
-                        class="subtitle-2"
-                        v-text="translations.title[lang]"
-                    >
-                    </v-card-title>
-                    <v-card-subtitle>
-                        <p
-                            class="ma-0"
-                            v-text="translations.subtitle[lang]"
-                        ></p>
-                    </v-card-subtitle>
-                    <v-img
-                        src="@/assets/serial_shopping.jpg"
-                        width="280"
-                        class="mx-auto mx-sm-0"
-                    ></v-img>
-                </v-col>
+        <v-row no-gutters align="center" class="pt-7 pb-5 px-10">
+            <v-col cols="auto">
+                <v-img src="@/assets/people.png" width="60" height="60"></v-img>
+            </v-col>
 
-                <v-col v-if="!showAddCoupon" cols="12" sm="5" class="px-5 pt-6">
-                    <v-text-field
-                        v-model="sequence"
-                        :label="translations.rewardAfter[lang]"
-                        color="secondary"
-                        outlined
-                        dense
-                        disabled
-                    ></v-text-field>
-                    <v-text-field
-                        v-model="minimum_amount"
-                        :label="translations.minTransaction[lang]"
-                        color="secondary"
-                        outlined
-                        dense
-                        disabled
-                    ></v-text-field>
-                    <v-text-field
-                        v-model="max_days"
-                        :label="translations.maxTime[lang]"
-                        color="secondary"
-                        outlined
-                        dense
-                        disabled
-                    ></v-text-field>
+            <v-col cols="6" class="ml-5 pl-3">
+                <h4 class="subtitle-2" v-text="translations.title[lang]"></h4>
+                <div
+                    style="font-size: 0.875rem"
+                    class="text--secondary"
+                    v-text="translations.info[lang]"
+                ></div>
+            </v-col>
+        </v-row>
 
-                    <v-card outlined class="pa-3">
-                        <v-row no-gutters align="center">
+        <v-row v-if="loading" no-gutters class="mt-5 px-8">
+            <v-col cols="6" class="pr-8">
+                <v-skeleton-loader type="heading"></v-skeleton-loader>
+                <v-skeleton-loader
+                    type="image"
+                    class="mt-3"
+                ></v-skeleton-loader>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-skeleton-loader type="button"></v-skeleton-loader>
+                </v-card-actions>
+            </v-col>
+
+            <v-col cols="6" class="pl-8">
+                <v-skeleton-loader type="heading"></v-skeleton-loader>
+                <v-skeleton-loader
+                    type="image"
+                    class="mt-3"
+                ></v-skeleton-loader>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <v-skeleton-loader type="button"></v-skeleton-loader>
+                </v-card-actions>
+            </v-col>
+        </v-row>
+
+        <template v-else>
+            <v-row
+                v-if="couponWithTransaction.coupon_id"
+                no-gutters
+                class="mt-5 px-8"
+            >
+                <v-col cols="6" class="pr-8">
+                    <v-card outlined>
+                        <v-card-title
+                            class="subtitle-1 font-weight-bold"
+                            v-text="translations.yourSettings[lang]"
+                        ></v-card-title>
+
+                        <v-list subheader dense>
+                            <v-list-item
+                                v-for="setting in settings"
+                                :key="setting.text"
+                            >
+                                <v-list-item-icon class="mr-3">
+                                    <v-icon
+                                        class="text--primary"
+                                        v-text="setting.icon"
+                                    ></v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-title
+                                    style="white-space: normal"
+                                    v-text="setting.text"
+                                ></v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-card>
+
+                    <v-card outlined class="mt-5">
+                        <v-card-title
+                            class="subtitle-1 font-weight-bold"
+                            v-text="translations.reward[lang]"
+                        ></v-card-title>
+
+                        <v-row
+                            no-gutters
+                            align="center"
+                            class="pa-4 pt-0 subtitle-2"
+                        >
                             <v-col cols="auto">
                                 <v-img
-                                    src="@/assets/imageSerial.png"
-                                    width="35"
+                                    :src="couponWithTransaction.image"
+                                    width="60"
+                                    height="50"
                                 ></v-img>
                             </v-col>
-                            <v-col cols="auto" class="ml-2">{{
-                                gift_title
+
+                            <v-col class="pl-3"
+                                >{{ couponWithTransaction.gift_title }}
+                            </v-col>
+
+                            <v-col cols="2" class="text-center">{{
+                                couponWithTransaction.maximum || "- left"
                             }}</v-col>
-                            <v-spacer></v-spacer>
-                            <v-col cols="auto">{{ code }}</v-col>
                         </v-row>
                     </v-card>
 
-                    <div class="text-right mt-12">
+                    <div class="text-right mt-4">
                         <v-btn
-                            color="red"
-                            class="text-capitalize px-5"
+                            color="red accent-4"
+                            class="text-capitalize white--text px-10"
                             depressed
-                            dark
-                            style="font-size: 1rem"
                             v-text="translations.delete[lang]"
                             @click="deleteDialog = true"
                         ></v-btn>
                     </div>
                 </v-col>
 
-                <v-col v-if="showAddCoupon" cols="12" sm="5" class="px-5 pt-5">
-                    <h4
-                        class="mb-4 subtitle-2"
-                        v-text="translations.conditions[lang]"
-                    ></h4>
+                <v-col cols="6" class="pl-8">
+                    <v-card flat>
+                        <v-card-title
+                            class="subtitle-1 font-weight-bold pa-0"
+                            v-text="translations.customersFollowing[lang]"
+                        ></v-card-title>
+                        <hr />
 
-                    <b-text-field
-                        v-model="formData.goal_sequence"
-                        :label="translations.rewardAfter[lang]"
-                        type="number"
-                    ></b-text-field>
-
-                    <b-text-field
-                        v-model="formData.goal_minimum_amount"
-                        type="number"
-                        :label="translations.minTransaction[lang]"
-                    ></b-text-field>
-
-                    <b-text-field
-                        v-model="formData.goal_max_days"
-                        type="number"
-                        :label="translations.maxTime[lang]"
-                    ></b-text-field>
-
-                    <h4
-                        class="my-4 subtitle-2"
-                        v-text="translations.setCoupon[lang]"
-                    ></h4>
-
-                    <b-text-field
-                        v-model="formData.gift_title"
-                        :label="translations.giftTitle[lang]"
-                    ></b-text-field>
-
-                    <b-textarea
-                        v-model="formData.gift_description"
-                        :label="translations.giftDescription[lang]"
-                    ></b-textarea>
-
-                    <b-text-field
-                        v-model="formData.maximum"
-                        type="number"
-                        :label="translations.maximum[lang]"
-                    ></b-text-field>
-
-                    <b-select
-                        v-model="formData.gift_category_id"
-                        :items="giftCategories"
-                        :item-text="`name[${lang}]`"
-                        item-value="gift_category_id"
-                        :label="translations.selectCategory[lang]"
-                    ></b-select>
-
-                    <div class="text-right mt-3">
-                        <v-btn
-                            color="secondary"
-                            class="text-capitalize px-5"
-                            depressed
-                            v-text="translations.create[lang]"
-                            @click="createCoupon"
-                        ></v-btn>
-                    </div>
+                        <div class="mt-4" style="font-size: 0.875rem">
+                            No customers are following right now
+                        </div>
+                    </v-card>
                 </v-col>
             </v-row>
-        </v-card>
+
+            <v-row
+                v-else
+                no-gutters
+                class="mt-5 px-8"
+                style="position: relative"
+            >
+                <v-col cols="6" class="pr-8">
+                    <v-card outlined>
+                        <v-card-title
+                            class="subtitle-1 font-weight-bold"
+                            v-text="translations.firstCardTitle[lang]"
+                        ></v-card-title>
+                        <v-card-subtitle
+                            class="pb-0"
+                            v-text="translations.firstCardSubtitle[lang]"
+                        ></v-card-subtitle>
+
+                        <v-card-text>
+                            <b-text-field
+                                v-model="couponWithTransaction.goal_sequence"
+                                :label="translations.numberOfVisits[lang]"
+                                type="number"
+                            ></b-text-field>
+
+                            <b-text-field
+                                v-model="
+                                    couponWithTransaction.goal_minimum_amount
+                                "
+                                type="number"
+                                :label="translations.minTransaction[lang]"
+                            ></b-text-field>
+
+                            <b-text-field
+                                v-model="couponWithTransaction.goal_max_days"
+                                type="number"
+                                :label="translations.maxDays[lang]"
+                            ></b-text-field>
+                        </v-card-text>
+                    </v-card>
+                </v-col>
+
+                <v-icon
+                    class="b-floating-arrow"
+                    x-large
+                    v-text="icons.mdiArrowRightCircleOutline"
+                ></v-icon>
+
+                <v-col cols="6" class="pl-8">
+                    <v-card outlined>
+                        <v-card-title
+                            class="subtitle-1 font-weight-bold"
+                            v-text="translations.secondCardTitle[lang]"
+                        ></v-card-title>
+                        <v-card-subtitle
+                            class="pb-0"
+                            v-text="translations.secondCardSubtitle[lang]"
+                        ></v-card-subtitle>
+
+                        <v-card-text>
+                            <b-text-field
+                                v-model="couponWithTransaction.gift_title"
+                                :label="translations.giftTitle[lang]"
+                            ></b-text-field>
+
+                            <b-textarea
+                                v-model="couponWithTransaction.gift_description"
+                                :label="translations.giftDescription[lang]"
+                            ></b-textarea>
+
+                            <b-text-field
+                                v-model="couponWithTransaction.maximum"
+                                type="number"
+                                :label="translations.maximum[lang]"
+                            ></b-text-field>
+
+                            <b-select
+                                v-model="couponWithTransaction.gift_category_id"
+                                :items="giftCategories"
+                                :item-text="`name[${lang}]`"
+                                item-value="gift_category_id"
+                                :label="translations.selectCategory[lang]"
+                            ></b-select>
+
+                            <v-row no-gutters>
+                                <v-col cols="5" class="pa-5">
+                                    <v-img
+                                        :src="couponWithTransaction.image"
+                                    ></v-img>
+                                </v-col>
+                                <v-col cols="7">
+                                    <v-file-input
+                                        label="Upload Voucher Image"
+                                        color="secondary"
+                                        class="mt-5"
+                                        outlined
+                                        dense
+                                        hide-details
+                                        @change="onFileSelected"
+                                    ></v-file-input>
+                                </v-col>
+                            </v-row>
+
+                            <div class="text-right mt-4">
+                                <v-btn
+                                    color="secondary"
+                                    class="text-capitalize px-5"
+                                    depressed
+                                    v-text="translations.create[lang]"
+                                    @click="
+                                        () => {
+                                            create(imageFile);
+                                            imageFile = null;
+                                        }
+                                    "
+                                ></v-btn>
+                            </div>
+                        </v-card-text>
+                    </v-card>
+                </v-col>
+            </v-row>
+        </template>
 
         <v-dialog v-model="deleteDialog" max-width="500">
             <b-card
                 type="delete"
-                title="Delete Product"
+                title="Delete Coupon With Transaction"
+                :loading="loading"
+                :error-message="errorMessage"
                 submit-text="delete"
                 @cancel="deleteDialog = false"
-                @submit="deleteCoupon"
+                @submit="remove"
             >
-                <p>Are you sure?</p>
+                <div class="subtitle-1 font-weight-medium py-3">
+                    Are you sure?
+                </div>
             </b-card>
         </v-dialog>
     </v-tab-item>
 </template>
 
 <script>
+import {
+    mdiStoreOutline,
+    mdiCashMultiple,
+    mdiClockOutline,
+    mdiArrowRightCircleOutline,
+} from "@mdi/js";
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 import translations from "@/utils/translations/storePanel/couponsWithTransactions";
 
@@ -169,83 +283,84 @@ export default {
 
     mixins: [translations],
 
-    data() {
-        return {
-            showAddCoupon: true,
-            sequence: "",
-            minimum_amount: "",
-            max_days: "",
-            code: "",
-            gift_title: "",
-            coupon_id: "",
-            formData: {
-                gift_category_id: "",
-                goal_sequence: "",
-                goal_minimum_amount: "",
-                goal_max_days: "",
-                gift_title: "",
-                gift_description: "",
-                maximum: ""
-            },
-            deleteDialog: false
-        };
-    },
+    data: () => ({
+        icons: { mdiArrowRightCircleOutline },
+        imageFile: null,
+    }),
 
     computed: {
-        ...mapGetters("storePanel/coupons/couponsWithTransactions", [
-            "coupon",
-            "giftCategories"
+        ...mapState(["loading", "errorMessage"]),
+        ...mapState("storePanel/coupons/couponsWithTransactions", [
+            "couponWithTransaction",
+            "giftCategories",
         ]),
 
         lang() {
             return this.$route.params.lang;
-        }
-    },
+        },
 
-    watch: {
-        coupon: function(val) {
-            if (val != undefined) {
-                this.showAddCoupon = false;
-                this.coupon_id = val.coupon_id;
-                this.sequence = val.goal_sequence;
-                this.minimum_amount = val.goal_minimum_amount;
-                this.max_days = val.goal_max_days;
-                this.code = val.code;
-                this.gift_title = val.gift_title;
-            } else {
-                this.showAddCoupon = true;
-                this.formData.gift_category_id = "";
-                this.formData.goal_sequence = "";
-                this.formData.goal_minimum_amount = "";
-                this.formData.goal_max_days = "";
-                this.formData.gift_title = "";
-                this.formData.gift_description = "";
-                this.formData.maximum = "";
-            }
-        }
+        deleteDialog: {
+            get() {
+                return this.$store.state.deleteDialog;
+            },
+
+            set(val) {
+                this.setDeleteDialog(val);
+            },
+        },
+
+        settings() {
+            return [
+                {
+                    icon: mdiStoreOutline,
+                    text: `Customer must come ${this.couponWithTransaction.goal_sequence} times to your store`,
+                },
+                {
+                    icon: mdiCashMultiple,
+                    text: `Customer must spend at least ${this.couponWithTransaction.goal_minimum_amount} 
+                            euros in each visit`,
+                },
+                {
+                    icon: mdiClockOutline,
+                    text: `Each customer visit should not be later than 
+                    ${this.couponWithTransaction.goal_max_days} days from the last visit`,
+                },
+            ];
+        },
     },
 
     methods: {
+        ...mapMutations(["setDeleteDialog"]),
         ...mapActions("storePanel/coupons/couponsWithTransactions", [
-            "getCoupon",
+            "getItem",
             "getGiftCategories",
             "create",
-            "remove"
+            "remove",
         ]),
 
-        createCoupon() {
-            this.create(this.formData);
+        onFileSelected(event) {
+            if (event) {
+                this.imageFile = event;
+                const reader = new FileReader();
+                reader.readAsDataURL(this.imageFile);
+                reader.onload = (e) =>
+                    (this.couponWithTransaction.image = e.target.result);
+            }
         },
-
-        deleteCoupon() {
-            this.remove(this.coupon_id);
-            this.deleteDialog = false;
-        }
     },
 
     mounted() {
-        this.getCoupon();
+        this.getItem();
         this.getGiftCategories();
-    }
+    },
 };
 </script>
+
+<style scoped>
+.b-floating-arrow {
+    position: absolute;
+    top: 23%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+</style>

@@ -1,15 +1,16 @@
 <template>
     <v-card>
         <v-card-title
+            class="subtitle-1 font-weight-bold"
             :class="{
                 red: type === 'delete',
-                'white--text': type === 'delete'
+                'white--text': type === 'delete',
             }"
         >
             {{ title }}
             <v-spacer></v-spacer>
             <v-btn icon :dark="type === 'delete'" @click="$emit('cancel')">
-                <v-icon size="28" v-text="icons.mdiClose"></v-icon>
+                <v-icon v-text="icons.mdiClose"></v-icon>
             </v-btn>
         </v-card-title>
 
@@ -28,11 +29,18 @@
 
             <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn text @click="$emit('cancel')">{{ cancelText }}</v-btn>
+                <v-btn
+                    text
+                    class="text-capitalize"
+                    style="font-size: 0.9rem"
+                    @click="$emit('cancel')"
+                    >{{ cancelText }}</v-btn
+                >
                 <v-btn
                     type="submit"
                     :color="type === 'delete' ? 'red' : 'secondary'"
-                    class="px-5"
+                    class="text-capitalize px-5"
+                    style="font-size: 0.9rem"
                     :dark="type === 'delete'"
                     depressed
                     :loading="loading"
@@ -52,28 +60,28 @@ export default {
     props: {
         type: {
             type: String,
-            default: "default"
+            default: "default",
         },
         title: String,
         cancelText: {
             type: String,
-            default: "cancel"
+            default: "cancel",
         },
         submitText: {
             type: String,
-            default: "save"
+            default: "save",
         },
         loading: Boolean,
         errorMessage: String,
-        resetValidation: Boolean
+        resetValidation: Boolean,
     },
 
     data: () => ({
         icons: {
-            mdiClose
+            mdiClose,
         },
         valid: false,
-        disabled: true
+        disabled: true,
     }),
 
     watch: {
@@ -87,12 +95,12 @@ export default {
 
         resetValidation(val) {
             if (val) this.$refs.form.resetValidation();
-        }
+        },
     },
 
     mounted() {
         this.$clearFocus();
         this.$refs.form.resetValidation();
-    }
+    },
 };
 </script>

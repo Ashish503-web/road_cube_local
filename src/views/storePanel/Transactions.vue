@@ -1,71 +1,40 @@
 <template>
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
-            <v-toolbar flat height="80">
-                <v-spacer class="d-none d-sm-block"></v-spacer>
+            <v-row no-gutters align="center" class="pa-4">
+                <v-col cols="auto">
+                    <v-img
+                        src="@/assets/transactions.png"
+                        width="60"
+                        height="60"
+                    ></v-img>
+                </v-col>
 
-                <div 
-                class="text-center"
-                style="cursor: pointer"
-                @click="settingsDialog = true">
-                    <v-icon
-                    color="secondary"
-                    v-text="icons.mdiCog"
-                    x-large
-                    ></v-icon>
-                    <p>Settings</p>
-                </div>
-                
-                <!-- {{ translations.mobilePayments[lang] }}
-                <v-switch
-                    v-model="online_payments"
-                    color="secondary"
-                    class="ml-3 mt-0 pt-0"
-                    hide-details
-                    :loading="mobileLoading"
-                    @change="updateMobilePayments({ online_payments })"
-                ></v-switch>
+                <v-col cols="7" class="pl-3">
+                    <h4 v-text="translations.title[lang]"></h4>
+                    <div
+                        style="font-size: 0.875rem"
+                        class="font-weight-medium"
+                        v-text="translations.info[lang]"
+                    ></div>
+                </v-col>
 
-                <v-menu offset-y left>
-                    <template v-slot:activator="{ on }">
-                        <v-btn color="secondary" text v-on="on">
-                            <v-icon
-                                v-text="icons.mdiFormatListCheckbox"
-                            ></v-icon>
-                        </v-btn>
-                    </template>
+                <v-spacer></v-spacer>
 
-                    <v-list dense>
-                        <v-list-item-group>
-                            <v-list-item>
-                                <v-list-item-icon class="mr-3">
-                                    <v-icon
-                                        color="secondary"
-                                        v-text="icons.mdiPrinter"
-                                    ></v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-title
-                                    v-text="translations.fundClosure[lang]"
-                                ></v-list-item-title>
-                            </v-list-item>
+                <v-col cols="auto" class="text-center pa-0">
+                    <v-avatar
+                        size="40"
+                        style="cursor: pointer"
+                        @click="settingsDialog = true"
+                    >
+                        <v-img src="@/assets/cog.png"></v-img>
+                    </v-avatar>
 
-                            <v-list-item @click="downloadAllTransactions">
-                                <v-list-item-icon class="mr-3">
-                                    <v-icon
-                                        color="secondary"
-                                        v-text="icons.mdiOpenInNew"
-                                    ></v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-title
-                                    v-text="translations.download[lang]"
-                                ></v-list-item-title>
-                            </v-list-item>
-                        </v-list-item-group>
-                    </v-list>
-                </v-menu> -->
-            </v-toolbar>
+                    <div style="font-size: 0.875rem" class="mt-1">Settings</div>
+                </v-col>
+            </v-row>
 
-            <v-row class="pr-4 py-3" no-gutters>
+            <v-row class="pr-4 pb-3 pt-7" no-gutters>
                 <v-menu
                     v-model="menu.status"
                     max-height="300"
@@ -169,12 +138,16 @@
 
                 <v-spacer></v-spacer>
 
-                <v-col cols="4">
+                <v-col cols="4" class="pl-12">
                     <b-search-field></b-search-field>
                 </v-col>
             </v-row>
 
-            <v-row v-if="selectedStatuses.length > 0" no-gutters class="px-2 py-2">
+            <v-row
+                v-if="selectedStatuses.length > 0"
+                no-gutters
+                class="px-2 py-2"
+            >
                 <v-col cols="12">
                     <v-chip
                         v-for="(status, i) in selectedStatuses"
@@ -207,7 +180,7 @@
                 :items="transactions"
                 :footer-props="{
                     itemsPerPageOptions: [12],
-                    showCurrentPage: true
+                    showCurrentPage: true,
                 }"
                 :page.sync="page"
                 :server-items-length="serverItemsLength"
@@ -223,21 +196,6 @@
                     <span v-else v-text="translations.noData[lang]"></span>
                 </template>
 
-                <template v-slot:item.transaction_status_name="{ item }">
-                    <v-sheet>
-                        <b-select
-                            v-model="item.transaction_status_id"
-                            :items="transactionStatuses"
-                            :loading="item.loading"
-                            item-text="name"
-                            item-value="transaction_status_id"
-                            class="mb-3"
-                            :prependInnerIcon="item.transaction_status_id == '1' ? 'mdiTimelapse' : item.transaction_status_id == 2 ? 'mdiFlagOutline' : 'mdiCheck'"
-                            @change="changeStatus(item)"
-                        ></b-select>
-                    </v-sheet>
-                </template>
-
                 <template v-slot:item.watch="{ item }">
                     <div
                         class="d-flex align-center"
@@ -249,15 +207,59 @@
                             }
                         "
                     >
-                        <v-icon v-text="icons.mdiEye"></v-icon>
-                        <p class="ml-2 mb-0 text-decoration-underline">Show details</p>
+                        <img src="@/assets/eye.png" alt="eye" width="24" />
+                        <div class="ml-2 text-decoration-underline">
+                            Show details
+                        </div>
                     </div>
+                </template>
+
+                <template v-slot:item.transaction_status_name="{ item }">
+                    <v-sheet
+                        v-if="item.transaction_status_id === 3"
+                        color="grey lighten-2"
+                        class="green--text text--darken-2 subtitle-2 rounded"
+                        style="padding: 6px 12px"
+                        width="110"
+                    >
+                        <v-icon
+                            color="green lighten-2"
+                            v-text="icons.mdiCheckBold"
+                        ></v-icon>
+                        Verified
+                    </v-sheet>
+                    <v-sheet v-else>
+                        <b-select
+                            v-model="item.transaction_status_id"
+                            :items="transactionStatuses"
+                            :loading="item.loading"
+                            item-text="name"
+                            item-value="transaction_status_id"
+                            class="mb-3"
+                            @change="changeStatus(item)"
+                        >
+                            <template v-slot:prepend-inner>
+                                <div
+                                    v-if="item.transaction_status_id === 1"
+                                    class="pt-1 mr-1"
+                                >
+                                    <img src="@/assets/clock.png" width="20" />
+                                </div>
+                                <div
+                                    v-else-if="item.transaction_status_id === 2"
+                                    class="pt-1 mr-1"
+                                >
+                                    <img src="@/assets/flag.png" width="20" />
+                                </div>
+                            </template>
+                        </b-select>
+                    </v-sheet>
                 </template>
 
                 <template v-slot:item.actions="{ item }">
                     <v-btn
                         color="grey lighten-2"
-                        class="text-capitalize my-1"
+                        class="text-capitalize my-1 red--text"
                         width="83"
                         depressed
                         @click="myFunc(item)"
@@ -273,62 +275,86 @@
                 ></transaction-profile>
             </v-dialog>
 
-            <v-dialog v-model="settingsDialog" max-width="600">
+            <v-dialog v-model="settingsDialog" max-width="500">
                 <v-card>
-                    <v-card-title class="flex justify-center">
-                        Settings Panel
+                    <v-card-title>
+                        <v-col class="pa-0 text-center ml-6">
+                            Settings Panel
+                        </v-col>
+                        <v-btn
+                            color="secondary"
+                            icon
+                            @click="settingsDialog = false"
+                        >
+                            <v-icon size="28" v-text="icons.mdiClose"></v-icon>
+                        </v-btn>
                     </v-card-title>
-                    <v-divider class="mb-3"></v-divider>
-                    <v-card-text>
-                        <v-row justify="space-around" no-gutters>
-                            <v-col cols="2" class="d-flex">
-                                <v-row justify="center" align="center" no-gutters>
-                                    <v-icon
-                                    color="secondary"
-                                    v-text="icons.mdiCellphoneIphone"
-                                    x-large
-                                    ></v-icon>
-                                </v-row>
+
+                    <v-divider></v-divider>
+
+                    <v-card-text class="pt-4">
+                        <v-row no-gutters justify="space-around" align="center">
+                            <v-col cols="auto">
+                                <v-img
+                                    src="@/assets/mobile.png"
+                                    width="70"
+                                    height="70"
+                                ></v-img>
                             </v-col>
-                            <v-col cols="5">
-                                <p class="font-weight-black">Mobile Payments</p>
-                                <p>Impress your clients with mobile payments to your store</p>
+                            <v-col cols="7">
+                                <div
+                                    class="subtitle-1 font-weight-bold text--primary"
+                                >
+                                    Mobile Payments
+                                </div>
+                                Impress your clients with mobile payments to
+                                your store
                             </v-col>
-                            <v-col cols="5" class="d-flex">
-                                <v-row justify="center" align="center" no-gutters>
+                            <v-col cols="2" class="text-center">
+                                <v-row no-gutters justify="center" class="mb-3">
                                     <v-switch
                                         v-model="online_payments"
-                                        :label="online_payments ? 'On' : 'Off'"
                                         color="secondary"
-                                        class="ml-3 mt-0 pt-0"
+                                        class="mt-0 pt-0"
                                         hide-details
                                         :loading="mobileLoading"
-                                        @change="updateMobilePayments({ online_payments })"
+                                        @change="
+                                            updateMobilePayments({
+                                                online_payments,
+                                            })
+                                        "
                                     ></v-switch>
                                 </v-row>
+
+                                <span
+                                    :class="
+                                        online_payments
+                                            ? 'success--text'
+                                            : 'red--text'
+                                    "
+                                    v-text="online_payments ? 'ON' : 'OFF'"
+                                ></span>
                             </v-col>
                         </v-row>
 
                         <v-row justify="space-around" class="mt-5" no-gutters>
-                            <v-col cols="6" class="d-flex justify-center">
-                                <p 
-                                class="text-decoration-underline font-weight-medium"
-                                style="cursor: pointer"
-                                @click="downloadAllTransactions" >
+                            <v-col cols="auto">
+                                <a
+                                    href="#"
+                                    class="text--primary"
+                                    @click="downloadAllTransactions"
+                                >
                                     {{ translations.download[lang] }}
-                                </p>
+                                </a>
                             </v-col>
 
-                            <v-col cols="6" class="d-flex justify-center">
-                                <p 
-                                class="text-decoration-underline font-weight-medium"
-                                style="cursor: pointer">
-                                    {{ translations.fundClosure[lang] }}
-                                </p>
+                            <v-col cols="auto">
+                                <a href="#" class="text--primary">{{
+                                    translations.fundClosure[lang]
+                                }}</a>
                             </v-col>
                         </v-row>
                     </v-card-text>
-                    
                 </v-card>
             </v-dialog>
         </v-sheet>
@@ -337,23 +363,18 @@
 
 <script>
 import {
-    mdiCellphoneIphone,
-    mdiFormatListCheckbox,
-    mdiPrinter,
-    mdiOpenInNew,
+    mdiClose,
     mdiChevronUp,
     mdiChevronDown,
     mdiCheckboxBlankOutline,
     mdiCheckBoxOutline,
-    mdiTextBoxSearchOutline,
-    mdiCog,
-    mdiEye
+    mdiCheckBold,
 } from "@mdi/js";
 
-import TransactionProfile from "./TransactionProfile.vue";
-import translations from "@/utils/translations/storePanel/transactions";
 import { mapState, mapMutations, mapActions } from "vuex";
 import axios from "axios";
+import TransactionProfile from "@/components/storePanel/transactions/TransactionProfile.vue";
+import translations from "@/utils/translations/storePanel/transactions";
 
 export default {
     name: "Transactions",
@@ -365,29 +386,24 @@ export default {
     data() {
         return {
             icons: {
-                mdiCellphoneIphone,
-                mdiFormatListCheckbox,
-                mdiPrinter,
-                mdiOpenInNew,
+                mdiClose,
                 mdiChevronUp,
                 mdiChevronDown,
                 mdiCheckboxBlankOutline,
                 mdiCheckBoxOutline,
-                mdiTextBoxSearchOutline,
-                mdiCog,
-                mdiEye
+                mdiCheckBold,
             },
             online_payments: null,
             menu: {
                 status: false,
-                type: false
+                type: false,
             },
             page: +this.$route.query.page,
             selectedStatuses: [],
             selectedTypes: [],
             dialog: false,
             transactionId: null,
-            settingsDialog: false
+            settingsDialog: false,
         };
     },
 
@@ -397,7 +413,7 @@ export default {
             "mobileLoading",
             "transactionStatuses",
             "transactionTypes",
-            "transactions"
+            "transactions",
         ]),
 
         lang() {
@@ -408,33 +424,33 @@ export default {
             return [
                 {
                     text: this.translations.user[this.lang],
-                    value: "user_identity"
+                    value: "user_identity",
                 },
                 {
                     text: this.translations.amount[this.lang],
-                    value: "total_price"
+                    value: "total_price",
                 },
                 {
                     text: this.translations.points[this.lang],
-                    value: "total_points"
+                    value: "total_points",
                 },
                 {
                     text: this.translations.date[this.lang],
-                    value: "created_at"
+                    value: "created_at",
                 },
-                { 
+                {
                     text: this.translations.watch[this.lang],
-                    value: "watch"
+                    value: "watch",
                 },
                 {
                     text: this.translations.status[this.lang],
                     value: "transaction_status_name",
-                    width: "25%"
+                    width: "20%",
                 },
                 {
                     text: this.translations.actions[this.lang],
-                    value: "actions"
-                }
+                    value: "actions",
+                },
             ];
         },
 
@@ -456,8 +472,8 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
@@ -469,14 +485,14 @@ export default {
             "getItems",
             "changeStatus",
             "updateMobilePayments",
-            "remove"
+            "remove",
         ]),
 
         statusSelect(item) {
             item.selected = !item.selected;
 
             let index = this.selectedStatuses.findIndex(
-                s => s.name === item.name
+                (s) => s.name === item.name
             );
 
             if (index === -1) {
@@ -489,14 +505,16 @@ export default {
         deleteStatus(item, index) {
             this.selectedStatuses.splice(index, 1);
             this.transactionStatuses.find(
-                s => s.name === item.name
+                (s) => s.name === item.name
             ).selected = false;
         },
 
         typeSelect(item) {
             item.selected = !item.selected;
 
-            let index = this.selectedTypes.findIndex(t => t.name === item.name);
+            let index = this.selectedTypes.findIndex(
+                (t) => t.name === item.name
+            );
 
             if (index === -1) {
                 this.selectedTypes.push(item);
@@ -508,7 +526,7 @@ export default {
         deleteType(item, index) {
             this.selectedTypes.splice(index, 1);
             this.transactionTypes.find(
-                t => t.name === item.name
+                (t) => t.name === item.name
             ).selected = false;
         },
 
@@ -538,7 +556,7 @@ export default {
                             "storeId"
                         )}/transactions/excel/status`
                     )
-                    .then(res => console.log(res));
+                    .then((res) => console.log(res));
 
                 // axios
                 //     .get(
@@ -561,7 +579,7 @@ export default {
             } catch (ex) {
                 console.error(ex.response.data.message);
             }
-        }
+        },
 
         // fundClosure() {
         //     axios.get(
@@ -579,8 +597,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
 
@@ -595,7 +613,7 @@ export default {
             immediate: true,
             handler(val) {
                 this.online_payments = val.flags.reward.online_payments;
-            }
+            },
         },
 
         transactionStatuses(val) {
@@ -605,9 +623,9 @@ export default {
                         "transaction-status-id"
                     ].split(",");
 
-                    statuses.forEach(s => {
+                    statuses.forEach((s) => {
                         let status = val.find(
-                            t => t.transaction_status_id === +s
+                            (t) => t.transaction_status_id === +s
                         );
 
                         status.selected = true;
@@ -625,8 +643,10 @@ export default {
                         ","
                     );
 
-                    types.forEach(t => {
-                        let type = val.find(s => s.transaction_type_id === +t);
+                    types.forEach((t) => {
+                        let type = val.find(
+                            (s) => s.transaction_type_id === +t
+                        );
 
                         type.selected = true;
 
@@ -640,7 +660,7 @@ export default {
             let str = "";
 
             if (val.length) {
-                val.forEach(s => (str += `,${s.transaction_status_id}`));
+                val.forEach((s) => (str += `,${s.transaction_status_id}`));
                 str = str.slice(1);
             } else {
                 str = undefined;
@@ -650,8 +670,8 @@ export default {
                 this.$router.push({
                     query: {
                         ...this.$route.query,
-                        "transaction-status-id": str
-                    }
+                        "transaction-status-id": str,
+                    },
                 });
             }
         },
@@ -660,7 +680,7 @@ export default {
             let str = "";
 
             if (val.length) {
-                val.forEach(t => (str += `,${t.transaction_type_id}`));
+                val.forEach((t) => (str += `,${t.transaction_type_id}`));
                 str = str.slice(1);
             } else {
                 str = undefined;
@@ -668,10 +688,10 @@ export default {
 
             if (str !== this.$route.query["transaction-type"]) {
                 this.$router.push({
-                    query: { ...this.$route.query, "transaction-type": str }
+                    query: { ...this.$route.query, "transaction-type": str },
                 });
             }
-        }
+        },
     },
 
     beforeCreate() {
@@ -679,8 +699,8 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
@@ -689,7 +709,7 @@ export default {
         this.getItems(this.query);
         this.getTransactionStatuses();
         this.getTransactionTypes();
-    }
+    },
 };
 </script>
 

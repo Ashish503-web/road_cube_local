@@ -1,4 +1,5 @@
 import User from "@/models/storePanel/settings/User";
+import moment from "moment";
 
 export default {
     namespaced: true,
@@ -28,7 +29,8 @@ export default {
 
         setItems(state, payload) {
             state.users = payload.map(u => {
-                u.permissions_enabled = false;
+                if (!u.permissions.length) u.permissions_enabled = false;
+                u.created_at = moment(u.created_at).format("YYYY.MM.DD");
                 return u;
             });
         },
@@ -44,6 +46,9 @@ export default {
         addItem(state, payload) {
             payload.role = "Store Moderator";
             payload.user = payload.mobile;
+            payload.created_at = moment(payload.created_at).format(
+                "YYYY.MM.DD"
+            );
             state.users.unshift(payload);
         },
 
@@ -98,69 +103,12 @@ export default {
 
                 const { user, permissions } = data.data;
                 user.permissions = permissions;
-                console.log(user);
 
                 commit("setUserProfile", user);
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });
                 console.error(ex.response.data);
-            }
-        },
-
-        async enablePermissions({ commit }, id) {
-            try {
-                await User.enablePermissions(id);
-
-                commit(
-                    "setNotification",
-                    {
-                        show: true,
-                        type: "success",
-                        text: "You have successfully enabled permissions!"
-                    },
-
-                    { root: true }
-                );
-            } catch (ex) {
-                commit(
-                    "setNotification",
-                    {
-                        show: true,
-                        type: "error",
-                        text: ex.response.data.message
-                    },
-
-                    { root: true }
-                );
-            }
-        },
-
-        async disablePermissions({ commit }, id) {
-            try {
-                await User.disablePermissions(id);
-
-                commit(
-                    "setNotification",
-                    {
-                        show: true,
-                        type: "success",
-                        text: "You have successfully disabled permissions!"
-                    },
-
-                    { root: true }
-                );
-            } catch (ex) {
-                commit(
-                    "setNotification",
-                    {
-                        show: true,
-                        type: "error",
-                        text: ex.response.data.message
-                    },
-
-                    { root: true }
-                );
             }
         },
 
@@ -236,41 +184,6 @@ export default {
                         show: true,
                         type: "success",
                         text: "You have successfully updated product!"
-                    },
-
-                    { root: true }
-                );
-            } catch (ex) {
-                commit("setLoading", false, { root: true });
-                commit("setErrorMessage", ex.response.data.message, {
-                    root: true
-                });
-                setTimeout(
-                    () => commit("setErrorMessage", "", { root: true }),
-                    5000
-                );
-            }
-        },
-
-        async remove({ commit, state, rootState }) {
-            try {
-                commit("setLoading", true, { root: true });
-
-                await User.delete(state.product.product_id);
-                commit(
-                    "setServerItemsLength",
-                    rootState.serverItemsLength - 1,
-                    { root: true }
-                );
-                commit("setLoading", false, { root: true });
-                commit("setDeleteDialog", false, { root: true });
-                commit("removeItem", state.product.product_id);
-                commit(
-                    "setNotification",
-                    {
-                        show: true,
-                        type: "success",
-                        text: "You have successfully deleted product!"
                     },
 
                     { root: true }

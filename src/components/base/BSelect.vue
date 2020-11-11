@@ -28,11 +28,15 @@
         @input="$emit('input', $event)"
         @change="$emit('change')"
         @click="$emit('click')"
-    ></v-select>
+    >
+        <template v-slot:prepend-inner>
+            <slot name="prepend-inner"></slot>
+        </template>
+    </v-select>
 </template>
 
 <script>
-import { mdiPlus, mdiPercent, mdiCheck, mdiTimelapse, mdiFlagOutline } from "@mdi/js";
+import { mdiPlus, mdiPercent } from "@mdi/js";
 
 export default {
     name: "BSelect",
@@ -61,7 +65,10 @@ export default {
     },
 
     data: () => ({
-        icons: { mdiPlus, mdiPercent, mdiCheck, mdiTimelapse, mdiFlagOutline }
+        icons: {
+            mdiPlus,
+            mdiPercent
+        }
     })
 };
 </script>

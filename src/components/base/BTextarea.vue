@@ -30,7 +30,7 @@ export default {
     name: "BTextarea",
     props: {
         value: {
-            type: [String, Number],
+            type: [String, Number]
         },
         type: String,
         label: String,
@@ -40,11 +40,11 @@ export default {
         appendOuterIcon: String,
         noTopMargin: Boolean,
         success: Boolean,
-        rules: Array,
+        rules: Array
     },
 
     data: () => ({
-        icons: {},
-    }),
+        icons: {}
+    })
 };
 </script>

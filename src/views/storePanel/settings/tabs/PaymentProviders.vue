@@ -43,7 +43,7 @@
                     color="secondary"
                     indeterminate
                 ></v-progress-circular>
-                <span v-else>No Data</span>
+                <span v-else>No data available</span>
             </template>
 
             <template v-slot:item.actions="{ item }">
@@ -71,7 +71,7 @@
                             @click="
                                 () => {
                                     deleteProviderId =
-                                        item.bank_provider.bank_provider_id;
+                                        item.store_bank_provider_id;
                                     deleteDialog = true;
                                 }
                             "
@@ -145,7 +145,7 @@ import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 import { mdiPencilOutline, mdiClose, mdiMagnify } from "@mdi/js";
 
 export default {
-    name: "CleanerManagement",
+    name: "PaymentProviders",
 
     data() {
         return {
@@ -157,28 +157,28 @@ export default {
             headers: [
                 {
                     text: "Bank Provider Name",
-                    value: "bank_provider.name[en]"
+                    value: "bank_provider.name[en]",
                 },
                 {
                     text: "Created at",
-                    value: "created_at"
+                    value: "created_at",
                 },
                 {
                     text: "Actions",
-                    value: "actions"
-                }
+                    value: "actions",
+                },
             ],
             createProvider: {},
             editProvider: {},
-            deleteProviderId: ""
+            deleteProviderId: "",
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage"]),
-        ...mapGetters("storePanel/settings/cleanerManagement", [
+        ...mapGetters("storePanel/settings/paymentProviders", [
             "bankProviders",
-            "storeBankProviders"
+            "storeBankProviders",
         ]),
 
         bankProvider: {
@@ -189,7 +189,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
+            },
         },
 
         query() {
@@ -209,7 +209,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         updateDialog: {
@@ -219,7 +219,7 @@ export default {
 
             set(val) {
                 this.setUpdateDialog(val);
-            }
+            },
         },
 
         deleteDialog: {
@@ -229,25 +229,25 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
         ...mapMutations(["setDialog", "setUpdateDialog", "setDeleteDialog"]),
-        ...mapMutations("storePanel/settings/cleanerManagement", ["setItem"]),
-        ...mapActions("storePanel/settings/cleanerManagement", [
+        ...mapMutations("storePanel/settings/paymentProviders", ["setItem"]),
+        ...mapActions("storePanel/settings/paymentProviders", [
             "getItems",
             "getBankProviders",
             "createItem",
             "updateProvider",
-            "removeProvider"
+            "removeProvider",
         ]),
 
         create(index) {
             let formData = {
                 bank_provider_id: this.createProvider.bank_provider_id,
-                credentials: this.credentials
+                credentials: this.credentials,
             };
 
             this.createItem(formData);
@@ -261,14 +261,14 @@ export default {
 
         openProviderPopup(item) {
             let storedIds = [];
-            this.storeBankProviders.map(data => {
+            this.storeBankProviders.map((data) => {
                 storedIds.push(data.bank_provider.bank_provider_id);
             });
             if (!storedIds.includes(item.bank_provider_id)) {
                 this.dialog = true;
                 this.createProvider = item;
             } else {
-                let result = this.storeBankProviders.filter(data => {
+                let result = this.storeBankProviders.filter((data) => {
                     return (
                         data.bank_provider.bank_provider_id ==
                         item.bank_provider_id
@@ -283,14 +283,14 @@ export default {
             let editForm = {
                 store_bank_provider_id: this.editProvider
                     .store_bank_provider_id,
-                credentials: this.editProvider.credentials
+                credentials: this.editProvider.credentials,
             };
             this.updateProvider(editForm);
         },
 
         deleteProvider() {
             this.removeProvider(this.deleteProviderId);
-        }
+        },
     },
 
     mounted() {
@@ -302,8 +302,8 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
@@ -316,12 +316,12 @@ export default {
                     this.$router.push({
                         query: {
                             page: 1,
-                            ...this.$route.query
-                        }
+                            ...this.$route.query,
+                        },
                     });
                 }
                 this.getBankProviders(this.query);
-            }
+            },
         },
 
         page(page) {
@@ -330,8 +330,8 @@ export default {
 
         perPage(perPage) {
             this.$router.push({ query: { ...this.$route.query, perPage } });
-        }
-    }
+        },
+    },
 };
 </script>
 

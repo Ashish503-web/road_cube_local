@@ -20,19 +20,21 @@ export default class BankProvider {
         this.credentials = item.credentials || { mid: "", key: "" };
     }
 
-    static get = query =>
-        axios.get(
-            `https://api.roadcube.tk/v1/admin/bank-providers`
-        );
+    static get = () =>
+        axios.get(`https://api.roadcube.tk/v1/admin/bank-providers`);
 
     static getStoreProviders = () =>
         axios.get(
-            `${ApiEndpoint}/${localStorage.getItem("storeId")}/settings/bank-providers`
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/settings/bank-providers`
         );
 
     static createItem = item =>
         axios.post(
-            `${ApiEndpoint}/${localStorage.getItem("storeId")}/settings/bank-providers`,
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/settings/bank-providers`,
             item
         );
 
@@ -52,12 +54,17 @@ export default class BankProvider {
 
     static updateProvider = item =>
         axios.put(
-            `${ApiEndpoint}/${localStorage.getItem("storeId")}/settings/bank-providers`,item
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/settings/bank-providers`,
+            item
         );
 
     static removeProvider = id =>
         axios.delete(
-            `${ApiEndpoint}/${localStorage.getItem("storeId")}/settings/bank-providers/${id}`
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/settings/bank-providers/${id}`
         );
 
     static delete = id =>

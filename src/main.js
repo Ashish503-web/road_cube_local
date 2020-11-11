@@ -4,11 +4,16 @@ import router from "./routes";
 import store from "./store/store";
 import vuetify from "./plugins/vuetify";
 import VueMask from "v-mask";
+import VueRx from "vue-rx";
+import VuejsClipper from "vuejs-clipper/dist/vuejs-clipper.umd";
+import "vuejs-clipper/dist/vuejs-clipper.css";
+
+Vue.use(VueMask);
+Vue.use(VueRx);
+Vue.use(VuejsClipper);
 
 import AOS from "aos";
 import "aos/dist/aos.css";
-
-Vue.use(VueMask);
 
 Vue.config.productionTip = false;
 

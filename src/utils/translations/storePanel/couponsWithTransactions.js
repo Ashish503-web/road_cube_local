@@ -6,41 +6,46 @@ export default {
                 en: "Coupons With Transactions",
                 it: ""
             },
-            subtitle: {
+            info: {
                 el: "",
                 en:
                     "Reward your clients with a coupon when they do a certain amount of transactions at your stores",
                 it: ""
             },
-            conditions: {
+            firstCardTitle: {
                 el: "",
-                en: "Set the conditions for the user to get the coupon",
+                en: "Clients Goal",
                 it: ""
             },
-            rewardAfter: {
+            firstCardSubtitle: {
                 el: "",
-                en: "Reward user after",
+                en:
+                    "Ask for a certain amount of visits with a certain amount of visits:",
+                it: ""
+            },
+            numberOfVisits: {
+                el: "",
+                en: "Number of visits",
                 it: ""
             },
             minTransaction: {
                 el: "",
-                en: "Minimum transaction limit in euro",
+                en: "Minimum transaction value",
                 it: ""
             },
-            maxTime: {
+            maxDays: {
                 el: "",
-                en: "Maximum time between visits: (Days)",
+                en: "Maximum days between visits",
                 it: ""
             },
-            delete: {
+            secondCardTitle: {
                 el: "",
-                en: "Delete",
+                en: "Coupon for reward",
                 it: ""
             },
-            setCoupon: {
+            secondCardSubtitle: {
                 el: "",
-                en:
-                    "Set the coupon that the user will get if he meets the conditions",
+                en: "Give a coupon with a gift from your store:",
                 it: ""
             },
             giftTitle: {
@@ -66,6 +71,26 @@ export default {
             create: {
                 el: "",
                 en: "Create",
+                it: ""
+            },
+            yourSettings: {
+                el: "",
+                en: "Your Settings:",
+                it: ""
+            },
+            reward: {
+                el: "",
+                en: "The Reward:",
+                it: ""
+            },
+            customersFollowing: {
+                el: "",
+                en: "Customers Following Your Reward:",
+                it: ""
+            },
+            delete: {
+                el: "",
+                en: "Delete",
                 it: ""
             }
         }

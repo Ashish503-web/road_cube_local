@@ -31,11 +31,6 @@ export default {
                 en: "Points",
                 it: ""
             },
-            coupon: {
-                el: "",
-                en: "Coupon",
-                it: ""
-            },
             actions: {
                 el: "",
                 en: "Actions",

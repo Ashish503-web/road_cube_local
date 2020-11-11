@@ -9,7 +9,7 @@
                 ></v-img>
             </v-col>
 
-            <v-col class="pl-2">
+            <v-col class="pl-3">
                 <h4 v-text="translations.title[lang]"></h4>
                 <div
                     style="font-size: 0.875rem"

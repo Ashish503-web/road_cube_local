@@ -1,38 +1,27 @@
-import axios from "axios";
-
-axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
-    "accessToken"
-)}`;
-
-const ApiEndpoint = `https://api.roadcube.tk/v1`;
+import Payment from "@/models/storePanel/settings/Payment";
 
 export default {
     namespaced: true,
 
     state: () => ({
-        allBankProviders: [],
-        storeBankProviders: []
+        payments: [],
+        payment: new Payment()
     }),
 
     mutations: {
         setAllBankProviders(state, payload) {
-            state.allBankProviders = payload;
+            state.allBankProviders = payload.map(b => {
+                b.bankProvider = state.storeBankProviders[0].bank_provider;
+                return b;
+            });
         },
 
         setStoreBankProviders(state, payload) {
             state.storeBankProviders = payload;
         },
 
-        setItems(state, payload) {
-            state.bankProviders = payload;
-        },
-
         setItem(state, payload) {
-            // state.bankProvider = new BankProvider(payload);
-        },
-
-        addItem(state, payload) {
-            state.bankProviders.unshift(payload);
+            state.paymentProcessing = new Payment(payload);
         },
 
         updateItem(state, payload) {
@@ -50,29 +39,15 @@ export default {
     },
 
     actions: {
-        async getAllBankProviders({ commit }) {
+        async getItems({ commit }) {
             try {
-                const { data } = await axios.get(
-                    `${ApiEndpoint}/admin/bank-providers`
-                );
+                const data = await Payment.get();
 
-                commit("setAllBankProviders", data.data.bank_providers);
+                console.log(data);
+
+                // commit("setStoreBankProviders", data.data.store_bank_providers);
             } catch (ex) {
-                console.error(ex.response.data);
-            }
-        },
-
-        async getStoreBankProviders({ commit }) {
-            try {
-                const { data } = await axios.get(
-                    `${ApiEndpoint}/stores/${localStorage.getItem(
-                        "storeId"
-                    )}/settings/bank-providers`
-                );
-
-                commit("setStoreBankProviders", data.data.store_bank_providers);
-            } catch (ex) {
-                console.error(ex.response.data);
+                console.error(ex.response.data.message);
             }
         },
 
@@ -80,19 +55,12 @@ export default {
             try {
                 commit("setLoading", true, { root: true });
 
-                let productCategory = { ...state.productCategory };
-                delete productCategory.product_category_id;
-                productCategory.store_id = localStorage.getItem("storeId");
-                if (!productCategory.name.en)
-                    productCategory.name.en = productCategory.name.el;
-                if (!productCategory.name.it)
-                    productCategory.name.it = productCategory.name.el;
+                let paymentProcessing = { ...state.paymentProcessing };
 
-                // const { data } = await BankProvider.create(productCategory);
+                await Payment.create(paymentProcessing);
 
-                // commit("addItem", data.data.product_category);
-                commit("setItem", {});
                 commit("setLoading", false, { root: true });
+                commit("setDialog", false, { root: true });
                 commit(
                     "setNotification",
                     {
@@ -118,7 +86,7 @@ export default {
             try {
                 commit("setLoading", true, { root: true });
 
-                // await BankProvider.delete(id);
+                // await Payment.delete(id);
 
                 commit("removeItem", id);
                 commit("setLoading", false, { root: true });

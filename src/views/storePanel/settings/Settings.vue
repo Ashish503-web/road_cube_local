@@ -57,12 +57,12 @@ export default {
                     to: `/${this.lang}/storePanel/settings/users`
                 },
                 {
-                    name: { el: "", en: "cleaner management", it: "" },
-                    to: `/${this.lang}/storePanel/settings/cleaner-management`
+                    name: { el: "", en: "payment providers", it: "" },
+                    to: `/${this.lang}/storePanel/settings/payment-providers`
                 },
                 {
-                    name: { el: "", en: "direction of payments", it: "" },
-                    to: `/${this.lang}/storePanel/settings/payments-direction`
+                    name: { el: "", en: "payment processing", it: "" },
+                    to: `/${this.lang}/storePanel/settings/payment-processing`
                 },
                 // {
                 //     name: { el: "", en: "cards", it: "" },

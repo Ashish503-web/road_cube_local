@@ -113,16 +113,16 @@ export default {
         return {
             icons: {
                 mdiPlus,
-                mdiClose
+                mdiClose,
             },
-            page: +this.$route.query.page
+            page: +this.$route.query.page,
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/coupons/couponsWithDiscount", [
-            "couponsWithDiscount"
+            "couponsWithDiscount",
         ]),
 
         lang() {
@@ -133,18 +133,21 @@ export default {
             return [
                 {
                     text: this.translations.product[this.lang],
-                    value: `discount_product_name[${this.lang}]`
+                    value: `discount_product_name[${this.lang}]`,
                 },
                 {
                     text: this.translations.discount[this.lang],
-                    value: "total_discount"
+                    value: "total_discount",
                 },
                 { text: this.translations.points[this.lang], value: "points" },
                 {
                     text: this.translations.date[this.lang],
-                    value: "created_at"
+                    value: "created_at",
                 },
-                { text: this.translations.actions[this.lang], value: "actions" }
+                {
+                    text: this.translations.actions[this.lang],
+                    value: "actions",
+                },
             ];
         },
 
@@ -165,7 +168,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         deleteDialog: {
@@ -175,7 +178,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            }
+            },
         },
 
         couponWithDiscount: {
@@ -186,8 +189,8 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
@@ -195,12 +198,12 @@ export default {
             "setDialog",
             "setDeleteDialog",
             "setResetSuccess",
-            "setResetValidation"
+            "setResetValidation",
         ]),
         ...mapMutations("storePanel/coupons/couponsWithDiscount", ["setItem"]),
         ...mapActions("storePanel/coupons/couponsWithDiscount", [
             "getItems",
-            "remove"
+            "remove",
         ]),
 
         open(item) {
@@ -208,7 +211,7 @@ export default {
             setTimeout(() => this.setResetSuccess(true), 300);
             this.setResetValidation(true);
             this.dialog = true;
-        }
+        },
     },
 
     watch: {
@@ -224,8 +227,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
             this.getItems(this.query);
@@ -233,7 +236,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -241,15 +244,15 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    }
+    },
 };
 </script>
 

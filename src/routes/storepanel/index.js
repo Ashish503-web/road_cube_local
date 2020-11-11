@@ -33,15 +33,6 @@ export default [
     },
 
     {
-        path: "transaction/:id",
-        name: "Transaction",
-        component: () =>
-            import(
-                /* webpackChunkName: "transaction" */ "@/views/storePanel/TransactionProfile.vue"
-            )
-    },
-
-    {
         path: "redeem",
         name: "Redeem",
         component: () =>
@@ -136,14 +127,5 @@ export default [
                 )
         },
         children: settingsRoutes
-    },
-
-    {
-        path: "user-profile/:id",
-        name: "UserProfile",
-        component: () =>
-            import(
-                /* webpackChunkName: "userProfile" */ "@/views/storePanel/UserProfile.vue"
-            )
     }
 ];
