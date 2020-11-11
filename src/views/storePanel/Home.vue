@@ -191,10 +191,11 @@
                                 class="subtitle-1 font-weight-bold pa-0"
                                 >{{
                                     statistics.last_twelve_hours_payments
-                                        .length +
-                                        ` ${translations.transactions[lang]} / ` +
-                                        statistics.twelve_hours_total +
-                                        ` ${translations.total[lang]}`
+                                        .total_transactions +
+                                    ` ${translations.transactions[lang]} / ` +
+                                    statistics.last_twelve_hours_payments
+                                        .total_price +
+                                    ` ${translations.total[lang]}`
                                 }}</v-card-title
                             >
                             <h4
@@ -222,10 +223,11 @@
                             <v-card-title
                                 class="subtitle-1 font-weight-bold pa-0"
                                 >{{
-                                    statistics.last_week_payments.length +
-                                        ` ${translations.transactions[lang]} / ` +
-                                        statistics.last_week_total +
-                                        ` ${translations.total[lang]}`
+                                    statistics.last_week_payments
+                                        .total_transactions +
+                                    ` ${translations.transactions[lang]} / ` +
+                                    statistics.last_week_payments.total_price +
+                                    ` ${translations.total[lang]}`
                                 }}</v-card-title
                             >
                             <h4
@@ -275,7 +277,7 @@ import {
     mdiCursorDefault,
     mdiCompassOutline,
     mdiPhone,
-    mdiWallet
+    mdiWallet,
 } from "@mdi/js";
 
 import translations from "@/utils/translations/storePanel/home";
@@ -286,7 +288,7 @@ const gradients = [
     ["red", "orange", "yellow"],
     ["purple", "violet"],
     ["#00c6ff", "#F0F", "#FF0"],
-    ["#f72047", "#ffd200", "#1feaea"]
+    ["#f72047", "#ffd200", "#1feaea"],
 ];
 
 export default {
@@ -303,7 +305,7 @@ export default {
             mdiCursorDefault,
             mdiCompassOutline,
             mdiPhone,
-            mdiWallet
+            mdiWallet,
         },
         width: 2,
         radius: 10,
@@ -316,13 +318,13 @@ export default {
         fill: false,
         type: "trend",
         autoLineWidth: false,
-        statistics: {}
+        statistics: {},
     }),
 
     computed: {
         lang() {
             return this.$route.params.lang;
-        }
+        },
     },
 
     watch: {
@@ -331,53 +333,35 @@ export default {
             handler(val) {
                 this.statistics = { ...val.statistics };
 
-                this.statistics.name = val.name;
+                this.statistics.name = val.app_name;
 
                 this.statistics.total_income = new Intl.NumberFormat("en-US", {
                     style: "currency",
                     currency: "EUR",
-                    minimumFractionDigits: 2
+                    minimumFractionDigits: 2,
                 }).format(this.statistics.total_income);
 
-                if (this.statistics.last_twelve_hours_payments.length) {
-                    this.statistics.twelve_hours_total = val.statistics.last_twelve_hours_payments.reduce(
-                        (accumulator, currentValue) => {
-                            accumulator.transaction_count =
-                                accumulator.transaction_count +
-                                currentValue.transaction_count;
-                            return accumulator;
-                        }
-                    ).transaction_count;
-                    this.statistics.twelve_hours_total = new Intl.NumberFormat(
-                        "en-US",
-                        {
-                            style: "currency",
-                            currency: "EUR",
-                            minimumFractionDigits: 2
-                        }
-                    ).format(this.statistics.twelve_hours_total);
-                }
+                this.statistics.last_twelve_hours_payments.total_price = new Intl.NumberFormat(
+                    "en-US",
+                    {
+                        style: "currency",
+                        currency: "EUR",
+                        minimumFractionDigits: 2,
+                    }
+                ).format(
+                    this.statistics.last_twelve_hours_payments.total_price
+                );
 
-                if (this.statistics.last_week_payments.length) {
-                    this.statistics.last_week_total = val.statistics.last_week_payments.reduce(
-                        (accumulator, currentValue) => {
-                            accumulator.transaction_count =
-                                accumulator.transaction_count +
-                                currentValue.transaction_count;
-                            return accumulator;
-                        }
-                    ).transaction_count;
-                    this.statistics.last_week_total = new Intl.NumberFormat(
-                        "en-US",
-                        {
-                            style: "currency",
-                            currency: "EUR",
-                            minimumFractionDigits: 2
-                        }
-                    ).format(this.statistics.last_week_total);
-                }
-            }
-        }
-    }
+                this.statistics.last_week_payments.total_price = new Intl.NumberFormat(
+                    "en-US",
+                    {
+                        style: "currency",
+                        currency: "EUR",
+                        minimumFractionDigits: 2,
+                    }
+                ).format(this.statistics.last_week_payments.total_price);
+            },
+        },
+    },
 };
 </script>

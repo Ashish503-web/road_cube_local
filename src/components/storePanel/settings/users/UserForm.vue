@@ -220,13 +220,8 @@ export default {
         resetSuccess(val) {
             if (val) {
                 this.success = {
-                    name: false,
-                    description: false,
-                    sellingPrice: false,
-                    wholesalePrice: false,
-                    deliveryCost: false,
-                    shippingCost: false,
-                    category: false,
+                    mobile: false,
+                    password: false,
                 };
             }
         },

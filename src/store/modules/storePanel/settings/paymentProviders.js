@@ -67,7 +67,7 @@ export default {
                 const { data } = await BankProvider.getStoreProviders();
 
                 const store_bank_providers = data.data.store_bank_providers;
-
+                console.log(store_bank_providers);
                 commit("setStoreBankProviders", store_bank_providers);
             } catch (ex) {
                 console.error(ex.response.data);

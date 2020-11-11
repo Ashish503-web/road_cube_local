@@ -25,7 +25,14 @@ export default {
         },
 
         setItems(state, payload) {
-            state.products = payload;
+            state.products = payload.map(p => {
+                p.retail_price = new Intl.NumberFormat("en-US", {
+                    style: "currency",
+                    currency: "EUR",
+                    minimumFractionDigits: 2
+                }).format(p.retail_price);
+                return p;
+            });
         },
 
         setItem(state, payload) {
@@ -33,6 +40,11 @@ export default {
         },
 
         addItem(state, payload) {
+            payload.retail_price = new Intl.NumberFormat("en-US", {
+                style: "currency",
+                currency: "EUR",
+                minimumFractionDigits: 2
+            }).format(payload.retail_price);
             state.products.unshift(payload);
         },
 

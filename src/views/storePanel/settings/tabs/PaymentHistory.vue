@@ -30,19 +30,21 @@
             :headers="headers"
             :items="transactions"
             :footer-props="{ itemsPerPageOptions }"
+            class="b-outlined"
         ></v-data-table>
     </v-tab-item>
 </template>
 
 <script>
 import { mdiMagnify } from "@mdi/js";
+import { mapActions } from "vuex";
 
 export default {
     name: "PaymentHistory",
 
     data: () => ({
         icons: {
-            mdiMagnify
+            mdiMagnify,
         },
         tab: 0,
         itemsPerPageOptions: [10, 25, 50, 100],
@@ -50,17 +52,25 @@ export default {
             { text: "Date", value: "date" },
             { text: "Description", value: "description" },
             { text: "Payment Through", value: "paymentThrough" },
-            { text: "Amount", value: "amount" }
+            { text: "Amount", value: "amount" },
         ],
         transactions: [
             {
                 date: "19-05-2020",
                 description: "Payment: Online",
                 paymentThrough: "Card: **********3434",
-                amount: "37,20 €"
-            }
-        ]
-    })
+                amount: "37,20 €",
+            },
+        ],
+    }),
+
+    methods: {
+        ...mapActions("storePanel/settings/paymentHistory", ["getItems"]),
+    },
+
+    mounted() {
+        this.getItems();
+    },
 };
 </script>
 

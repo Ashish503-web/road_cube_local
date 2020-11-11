@@ -1,21 +1,17 @@
-import CouponWithTransactions from "@/models/storePanel/coupons/CouponWithTransactions";
+import CouponWithTransaction from "@/models/storePanel/coupons/CouponWithTransaction";
 
 export default {
     namespaced: true,
 
     state: () => ({
-        coupon: {},
-        giftCategories: []
+        giftCategories: [],
+        couponWithTransaction: new CouponWithTransaction()
     }),
 
-    getters: {
-        coupon: state => state.coupon,
-        giftCategories: state => state.giftCategories
-    },
-
     mutations: {
-        setCoupon(state, payload) {
-            state.coupon = payload;
+        setItem(state, payload) {
+            console.log(payload);
+            state.couponWithTransaction = new CouponWithTransaction(payload);
         },
 
         setGiftCategories(state, payload) {
@@ -24,30 +20,25 @@ export default {
     },
 
     actions: {
-        async getCoupon({ commit }) {
-            try {
-                commit("setLoading", true, { root: true });
-
-                const { data } = await CouponWithTransactions.get();
-
-                const coupon = data.data.coupon;
-                commit("setCoupon", coupon);
-                commit("setLoading", false, { root: true });
-            } catch (ex) {
-                commit("setLoading", false, { root: true });
-                console.error(ex.response.data);
-            }
-        },
-
         async getGiftCategories({ commit }) {
             try {
-                commit("setLoading", true, { root: true });
-
                 const {
                     data
-                } = await CouponWithTransactions.getGiftCategories();
+                } = await CouponWithTransaction.getGiftCategories();
 
                 commit("setGiftCategories", data.data);
+            } catch (ex) {
+                console.error(ex.response.data);
+            }
+        },
+
+        async getItem({ commit }) {
+            try {
+                commit("setLoading", true, { root: true });
+
+                const { data } = await CouponWithTransaction.getItem();
+
+                commit("setItem", data.data.coupon);
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });
@@ -55,16 +46,100 @@ export default {
             }
         },
 
-        async create({ commit, state, rootState, dispatch }, item) {
+        async create({ commit, dispatch, state }, image) {
             try {
                 commit("setLoading", true, { root: true });
 
-                const { data } = await CouponWithTransactions.create(item);
+                let couponWithTransaction = { ...state.couponWithTransaction };
+                delete couponWithTransaction.coupon_id;
+                delete couponWithTransaction.image;
 
-                const { coupon } = data.data.coupon;
-                
-                dispatch("getCoupon")
-                commit("setCoupon", coupon);
+                const { data } = await CouponWithTransaction.create(
+                    couponWithTransaction
+                );
+
+                if (image) {
+                    dispatch("uploadImage", {
+                        item: data.data.coupon,
+                        image
+                    });
+                } else {
+                    commit("setItem", data.data.coupon);
+                    commit("setLoading", false, { root: true });
+                    commit(
+                        "setNotification",
+                        {
+                            show: true,
+                            type: "success",
+                            text:
+                                "You have successfully created coupon with transaction!"
+                        },
+
+                        { root: true }
+                    );
+                }
+            } catch (ex) {
+                commit("setLoading", false, { root: true });
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "error",
+                        text: ex.response.data.message
+                    },
+
+                    { root: true }
+                );
+            }
+        },
+
+        async remove({ commit, state }) {
+            try {
+                commit("setLoading", true, { root: true });
+
+                await CouponWithTransaction.delete(
+                    state.couponWithTransaction.coupon_id
+                );
+
+                commit("setItem", {});
+                commit("setDeleteDialog", false, { root: true });
+                commit("setLoading", false, { root: true });
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text:
+                            "You have successfully deleted coupon with transaction!"
+                    },
+
+                    { root: true }
+                );
+            } catch (ex) {
+                commit("setLoading", false, { root: true });
+                commit("setErrorMessage", ex.response.data.message, {
+                    root: true
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", "", { root: true }),
+                    5000
+                );
+            }
+        },
+
+        async uploadImage({ commit }, { item, image }) {
+            try {
+                const fd = new FormData();
+                fd.append("image", image);
+
+                const { data } = await CouponWithTransaction.uploadImage(
+                    item.coupon_id,
+                    fd
+                );
+
+                item.image = data.data.image;
+
+                commit("setItem", item);
                 commit("setLoading", false, { root: true });
                 commit("setDialog", false, { root: true });
                 commit(
@@ -72,56 +147,23 @@ export default {
                     {
                         show: true,
                         type: "success",
-                        text: "You have successfully created coupon on product!"
+                        text:
+                            "You have successfully created coupon with transaction!"
                     },
 
                     { root: true }
                 );
             } catch (ex) {
                 commit("setLoading", false, { root: true });
-                commit("setErrorMessage", ex.response.data.message, {
-                    root: true
-                });
-                setTimeout(
-                    () => commit("setErrorMessage", "", { root: true }),
-                    5000
-                );
-            }
-        },
-
-        async remove({ commit, state, rootState, dispatch }, coupon_id) {
-            try {
-                commit("setLoading", true, { root: true });
-
-                await CouponWithTransactions.delete(coupon_id);
-
-                commit(
-                    "setServerItemsLength",
-                    rootState.serverItemsLength - 1,
-                    { root: true }
-                );
-                commit("setCoupon", {});
-                commit("setLoading", false, { root: true });
-                dispatch("getCoupon")
-                commit("setDeleteDialog", false, { root: true });
                 commit(
                     "setNotification",
                     {
                         show: true,
-                        type: "success",
-                        text: "You have successfully deleted product!"
+                        type: "error",
+                        text: ex.response.data.message
                     },
 
                     { root: true }
-                );
-            } catch (ex) {
-                commit("setLoading", false, { root: true });
-                commit("setErrorMessage", ex.response.data.message, {
-                    root: true
-                });
-                setTimeout(
-                    () => commit("setErrorMessage", "", { root: true }),
-                    5000
                 );
             }
         }

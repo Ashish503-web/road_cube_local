@@ -200,7 +200,7 @@ import {
     mdiAccountOutline,
     mdiWalletOutline,
     mdiWrenchOutline,
-    mdiLockOpenOutline,
+    mdiLockOpenOutline
 } from "@mdi/js";
 
 import navLinks from "@/utils/loyaltyPanel/navLinks";
@@ -223,15 +223,15 @@ export default {
                 mdiClockOutline,
                 mdiLogout,
                 mdiCogOutline,
-                mdiClose,
+                mdiClose
             },
             mini: false,
             leftDrawer: false,
             rightDrawer: false,
             profileLinks: [
                 { icon: mdiAccountOutline, text: "Profile" },
-                { icon: mdiWrenchOutline, text: "Settings" },
-            ],
+                { icon: mdiWrenchOutline, text: "Settings" }
+            ]
         };
     },
 
@@ -246,7 +246,7 @@ export default {
                     this.$router.push(
                         `/${val}/` + this.$route.fullPath.slice(4)
                     );
-            },
+            }
         },
 
         loading() {
@@ -267,7 +267,7 @@ export default {
 
         containerHeight() {
             return this.mini ? "calc(100vh - 223px)" : "calc(100vh - 213px)";
-        },
+        }
     },
 
     methods: {
@@ -284,8 +284,8 @@ export default {
             } catch (ex) {
                 console.log(ex.response.data);
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

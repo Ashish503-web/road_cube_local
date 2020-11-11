@@ -36,20 +36,20 @@ export default [
     },
 
     {
-        path: "cleaner-management",
-        name: "Cleanermanagement",
+        path: "payment-providers",
+        name: "PaymentProviders",
         component: () =>
             import(
-                /* webpackChunkName: "cleanerManagement" */ "@/views/storePanel/settings/tabs/CleanerManagement.vue"
+                /* webpackChunkName: "cleanerManagement" */ "@/views/storePanel/settings/tabs/PaymentProviders.vue"
             )
     },
 
     {
-        path: "payments-direction",
-        name: "PaymentsDirection",
+        path: "payment-processing",
+        name: "PaymentProcessing",
         component: () =>
             import(
-                /* webpackChunkName: "paymentsDirection" */ "@/views/storePanel/settings/tabs/PaymentsDirection.vue"
+                /* webpackChunkName: "paymentsDirection" */ "@/views/storePanel/settings/tabs/PaymentProcessing.vue"
             )
     },
 

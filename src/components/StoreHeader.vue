@@ -83,7 +83,12 @@
                         height="50"
                         class="rounded-circle"
                     >
-                        <v-img :src="logo" width="50" height="50"></v-img>
+                        <v-img
+                            :src="logo"
+                            width="50"
+                            height="50"
+                            class="rounded-circle"
+                        ></v-img>
                     </v-skeleton-loader>
                 </v-sheet>
 

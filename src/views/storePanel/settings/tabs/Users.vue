@@ -37,42 +37,30 @@
             </template>
 
             <template v-slot:item.permissions_enabled="{ item }">
-                <v-tooltip color="secondary" top>
-                    <template v-slot:activator="{ on }">
-                        <v-btn
-                            :color="item.permissions_enabled ? 'secondary' : ''"
-                            icon
-                            v-on="on"
-                            @click="
-                                () => {
-                                    if (item.permissions_enabled) {
-                                        disablePermissions(item.user_id);
-                                    } else {
-                                        enablePermissions(item.user_id);
-                                    }
-                                    item.permissions_enabled = !item.permissions_enabled;
-                                }
-                            "
-                        >
-                            <v-icon
-                                v-text="
-                                    item.permissions_enabled
-                                        ? icons.mdiCheckBoxOutline
-                                        : icons.mdiCheckboxBlankOutline
-                                "
-                            ></v-icon>
-                        </v-btn>
-                    </template>
-
-                    <span
-                        class="font-weight-bold"
-                        v-text="
-                            item.permissions_enabled
-                                ? 'Disable Permissions'
-                                : 'Enable Permissions'
-                        "
-                    ></span>
-                </v-tooltip>
+                <v-sheet
+                    v-if="item.permissions_enabled"
+                    width="180"
+                    style="border: 1px solid green"
+                    class="rounded green--text pa-1"
+                >
+                    <v-icon
+                        color="green"
+                        v-text="icons.mdiMinusCircleOutline"
+                    ></v-icon>
+                    Permissions Enabled
+                </v-sheet>
+                <v-sheet
+                    v-else
+                    width="180"
+                    style="border: 1px solid red"
+                    class="rounded red--text pa-1"
+                >
+                    <v-icon
+                        color="red"
+                        v-text="icons.mdiMinusCircleOutline"
+                    ></v-icon>
+                    Permissions Disabled
+                </v-sheet>
             </template>
 
             <template v-slot:item.actions="{ item }">
@@ -81,7 +69,12 @@
                         <v-btn
                             icon
                             v-on="on"
-                            :to="`/storePanel/user-profile/${item.user_id}`"
+                            @click="
+                                () => {
+                                    userId = item.user_id;
+                                    profileDialog = true;
+                                }
+                            "
                         >
                             <v-icon
                                 v-text="icons.mdiAccountSearchOutline"
@@ -106,64 +99,50 @@
 
                     <span class="font-weight-bold">Update Permissions</span>
                 </v-tooltip>
-
-                <v-tooltip color="secondary" top>
-                    <template v-slot:activator="{ on }">
-                        <v-btn
-                            color="red"
-                            icon
-                            v-on="on"
-                            @click="
-                                () => {
-                                    user = item;
-                                    deleteDialog = true;
-                                }
-                            "
-                        >
-                            <v-icon v-text="icons.mdiClose"></v-icon>
-                        </v-btn>
-                    </template>
-
-                    <span class="font-weight-bold">Delete</span>
-                </v-tooltip>
             </template>
         </v-data-table>
 
         <v-dialog v-model="dialog" max-width="500">
             <UserForm :mode="mode" @cancel="dialog = false" />
         </v-dialog>
+
+        <v-dialog v-model="profileDialog" max-width="500">
+            <user-profile
+                :user-id="userId"
+                @cancel="profileDialog = false"
+            ></user-profile>
+        </v-dialog>
     </v-tab-item>
 </template>
 
 <script>
 import {
-    mdiCheckBold,
-    mdiMinusCircleOutline,
     mdiCheckboxBlankOutline,
     mdiCheckBoxOutline,
+    mdiCheckCircleOutline,
+    mdiMinusCircleOutline,
     mdiAccountSearchOutline,
     mdiPencilOutline,
-    mdiClose,
 } from "@mdi/js";
 
 import { mapState, mapMutations, mapActions } from "vuex";
 import UserForm from "@/components/storePanel/settings/users/UserForm.vue";
+import UserProfile from "@/components/storePanel/settings/users/UserProfile.vue";
 
 export default {
     name: "Users",
 
-    components: { UserForm },
+    components: { UserForm, UserProfile },
 
     data() {
         return {
             icons: {
-                mdiCheckBold,
-                mdiMinusCircleOutline,
                 mdiCheckboxBlankOutline,
                 mdiCheckBoxOutline,
+                mdiCheckCircleOutline,
+                mdiMinusCircleOutline,
                 mdiAccountSearchOutline,
                 mdiPencilOutline,
-                mdiClose,
             },
             headers: [
                 { text: "User", value: "user" },
@@ -172,13 +151,14 @@ export default {
                 {
                     text: "Permissions",
                     value: "permissions_enabled",
-                    align: "center",
                 },
                 { text: "Actions", value: "actions" },
             ],
             lang: "el",
             page: +this.$route.query.page,
             mode: 0,
+            userId: null,
+            profileDialog: false,
         };
     },
 
@@ -238,9 +218,6 @@ export default {
         ...mapActions("storePanel/settings/users", [
             "getModeratorPermissions",
             "getItems",
-            "enablePermissions",
-            "disablePermissions",
-            "remove",
         ]),
 
         open(mode, item) {
@@ -290,7 +267,7 @@ export default {
 
     mounted() {
         this.getItems(this.query);
-        this.getModeratorPermissions();
+        // this.getModeratorPermissions();
     },
 };
 </script>

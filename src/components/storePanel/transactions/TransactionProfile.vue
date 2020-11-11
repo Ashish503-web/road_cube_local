@@ -40,7 +40,7 @@
                 Transaction
                 <v-spacer></v-spacer>
                 <v-btn icon @click="$emit('cancel')">
-                    <v-icon v-text="icons.mdiClose"></v-icon>
+                    <v-icon size="28" v-text="icons.mdiClose"></v-icon>
                 </v-btn>
             </v-card-title>
 
@@ -73,7 +73,7 @@
                         new Intl.NumberFormat("en-US", {
                             style: "currency",
                             currency: "EUR",
-                            minimumFractionDigits: 2
+                            minimumFractionDigits: 2,
                         }).format(transactionProfile.total_price)
                     }}
                 </v-sheet>
@@ -121,7 +121,7 @@
                     :items="transactionProfile.transaction_items"
                     :footer-props="{
                         itemsPerPageOptions: [12],
-                        showCurrentPage: true
+                        showCurrentPage: true,
                     }"
                     :server-items-length="
                         transactionProfile.transaction_items.length
@@ -142,20 +142,21 @@ export default {
     name: "TransactionProfile",
 
     props: {
-        transactionId: [String, Number]
+        transactionId: [String, Number],
     },
 
     data: () => ({
         icons: { mdiTextBoxOutline, mdiClose },
-        lang: "el"
+        lang: "el",
     }),
 
     computed: {
         headers() {
             return [
                 { text: "Product", value: `product_name[${this.lang}]` },
+                { text: "Quantity", value: "quantity" },
                 { text: "Price", value: "price" },
-                { text: "Points", value: "points" }
+                { text: "Points", value: "points" },
             ];
         },
 
@@ -165,11 +166,11 @@ export default {
 
         transactionProfile() {
             return this.$store.state.storePanel.transactions.transactionProfile;
-        }
+        },
     },
 
     methods: {
-        ...mapActions("storePanel/transactions", ["getItem"])
+        ...mapActions("storePanel/transactions", ["getItem"]),
     },
 
     watch: {
@@ -177,9 +178,9 @@ export default {
             immediate: true,
             handler(val) {
                 this.getItem(val);
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>
 

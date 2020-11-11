@@ -139,9 +139,8 @@ export default {
                 },
                 {
                     text: this.translations.sellingPrice[this.lang],
-                    value: "retail_price",
+                    value: "average_price",
                 },
-                { text: this.translations.coupon[this.lang], value: "coupon" },
                 {
                     text: this.translations.actions[this.lang],
                     value: "actions",
@@ -207,6 +206,10 @@ export default {
         open(mode, item) {
             this.mode = mode;
             this.productGroup = item;
+            if (this.productGroup.average_price)
+                this.productGroup.average_price = this.productGroup.average_price.slice(
+                    1
+                );
             if (this.productGroup.image) this.setShowImageUpload(true);
             else this.setShowImageUpload(false);
             if (this.productGroup.availability_days.length)
