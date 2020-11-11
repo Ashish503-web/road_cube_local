@@ -16,12 +16,28 @@
                         class="subtitle-2 pa-3"
                     >
                         <div>
-                            {{ translations.totalAmount[lang] }}:
-                            {{ totalAmount }}
+                            {{ translations.userPoints[lang] }}:
+                            {{ totalInfo.userPoints }}
                         </div>
                         <div>
-                            {{ translations.totalPoints[lang] }}:
-                            {{ totalPoints }}
+                            {{ translations.newUserPoints[lang] }}:
+                            {{ totalInfo.newUserPoints }}
+                        </div>
+                        <div>
+                            {{ translations.totalAmount[lang] }}:
+                            {{ totalInfo.totalAmount }}
+                        </div>
+                        <div>
+                            {{ translations.totalDiscount[lang] }}:
+                            {{ totalInfo.totalDiscount }}
+                        </div>
+                        <div>
+                            {{ translations.wonPoints[lang] }}:
+                            {{ totalInfo.wonPoints }}
+                        </div>
+                        <div>
+                            {{ translations.lostPoints[lang] }}:
+                            {{ totalInfo.lostPoints }}
                         </div>
                     </v-sheet>
                 </v-card-title>
@@ -65,6 +81,23 @@
                                 :success="success.receipt"
                                 :rules="rules.receipt"
                                 @focus="success.receipt = false"
+                            ></v-text-field>
+                        </v-col>
+                    </v-row>
+
+                    <v-row no-gutters class="mt-1">
+                        <v-col cols="12">
+                            <v-text-field
+                                v-model="transaction.voucher_code"
+                                :label="translations.voucherCode[lang]"
+                                color="secondary"
+                                outlined
+                                dense
+                                clearable
+                                validate-on-blur
+                                :success="success.voucher"
+                                :rules="rules.voucher"
+                                @focus="success.voucher = false"
                             ></v-text-field>
                         </v-col>
                     </v-row>
@@ -297,7 +330,8 @@ export default {
         valid: false,
         disabled: true,
         menu: false,
-        search: ""
+        search: "",
+        totalInfo: {}
     }),
 
     computed: {
@@ -371,7 +405,7 @@ export default {
             "setItem",
             "setSelectedProducts"
         ]),
-        ...mapActions("storePanel/transactions", ["getProducts", "create"]),
+        ...mapActions("storePanel/transactions", ["getProducts", "create", "getTransactionPreview"]),
 
         handleSearch() {
             this.getProducts(`?q=${this.search}`);
@@ -475,6 +509,7 @@ export default {
     mounted() {
         this.$clearFocus();
         this.getProducts(`?page=1`);
+        this.getTransactionPreview()
     },
 
     beforeDestroy() {

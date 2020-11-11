@@ -6,14 +6,34 @@ export default {
                 en: "New Transaction",
                 it: ""
             },
+            userPoints: {
+                el: "",
+                en: "User points",
+                it: ""
+            },
+            newUserPoints: {
+                el: "",
+                en: "New User points",
+                it: ""
+            },
             totalAmount: {
                 el: "",
                 en: "Total Amount",
                 it: ""
             },
-            totalPoints: {
+            totalDiscount: {
                 el: "",
-                en: "Points Won",
+                en: "Total discount",
+                it: ""
+            },
+            wonPoints: {
+                el: "",
+                en: "Won points",
+                it: ""
+            },
+            lostPoints: {
+                el: "",
+                en: "Lost points",
                 it: ""
             },
             user: {
@@ -24,6 +44,11 @@ export default {
             receiptNumber: {
                 el: "",
                 en: "Receipt Number",
+                it: ""
+            },
+            voucherCode: {
+                el: "",
+                en: "Voucher code",
                 it: ""
             },
             orderProducts: {
