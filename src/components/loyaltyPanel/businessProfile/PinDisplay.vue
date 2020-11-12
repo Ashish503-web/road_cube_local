@@ -2,7 +2,7 @@
     <b-standard-card
         title="Pin Display"
         title-color="white"
-        submit-text="update logo"
+        :submit-text="{ el: '', en: 'update logo', it: '' }"
         :loading="loading"
         :error-message="errorMessage"
         @submit="uploadMapLogo({ type: 'mapLogo', imageFile })"
@@ -14,7 +14,7 @@
         <v-row no-gutters align="center" style="height: 120px">
             <v-col cols="12" sm="5" class="pr-2">
                 <v-sheet width="84" class="relative mx-auto">
-                    <v-img :src="bubble" width="84"></v-img>
+                    <v-img :src="bubble" width="84" height="84"></v-img>
                     <v-img :src="mapLogo" class="map-new-pin"></v-img>
                 </v-sheet>
             </v-col>
@@ -22,6 +22,7 @@
             <v-col cols="12" sm="7" class="pl-0 pl-sm-2">
                 Press the following button to choose image:
                 <v-file-input
+                    v-model="fileInput"
                     color="secondary"
                     class="mt-1"
                     outlined
@@ -29,10 +30,81 @@
                     hide-details="auto"
                     :rules="rules"
                     :success="success"
-                    @change="onFileSelected"
                 ></v-file-input>
             </v-col>
         </v-row>
+
+        <v-dialog v-model="dialog" max-width="800" persistent>
+            <v-card>
+                <v-row no-gutters align="center">
+                    <v-col cols="6">
+                        <clipper-basic
+                            :src="imageUrl"
+                            ref="clipper"
+                            :min-height="2"
+                        ></clipper-basic>
+
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn
+                                color="secondary"
+                                class="text-capitalize px-5"
+                                style="font-size: 0.9rem"
+                                @click="getClippedResult"
+                                >clip image</v-btn
+                            >
+                        </v-card-actions>
+                    </v-col>
+                    <v-col cols="6">
+                        <v-card-title class="justify-center"
+                            >Result</v-card-title
+                        >
+                        <v-card-subtitle class="text-center"
+                            >This is the final result that will be displayed as
+                            your store logo</v-card-subtitle
+                        >
+                        <v-divider></v-divider>
+
+                        <v-card-text class="text-center">
+                            <v-sheet height="258">
+                                <img
+                                    :src="resultURL"
+                                    width="250"
+                                    height="250"
+                                    class="rounded-circle"
+                                    :class="{ 'b-image-border': resultURL }"
+                                />
+                            </v-sheet>
+                        </v-card-text>
+
+                        <v-divider></v-divider>
+                        <v-card-actions>
+                            <v-spacer></v-spacer>
+                            <v-btn
+                                class="text-capitalize"
+                                style="font-size: 0.9rem"
+                                text
+                                @click="
+                                    () => {
+                                        fileInput = null;
+                                        dialog = false;
+                                    }
+                                "
+                                >cancel</v-btn
+                            >
+                            <v-btn
+                                color="secondary"
+                                class="text-capitalize px-5"
+                                style="font-size: 0.9rem"
+                                :disabled="!resultURL"
+                                @click="changeImage"
+                                >save</v-btn
+                            >
+                        </v-card-actions>
+                    </v-col>
+                </v-row>
+            </v-card>
+        </v-dialog>
     </b-standard-card>
 </template>
 
@@ -45,6 +117,10 @@ export default {
 
     data() {
         return {
+            dialog: false,
+            fileInput: null,
+            imageUrl: null,
+            resultURL: null,
             bubble,
             mapLogo: "",
             imageFile: "",
@@ -84,10 +160,33 @@ export default {
         ...mapActions("loyaltyPanel/businessProfile", ["uploadMapLogo"]),
 
         onFileSelected(event) {
-            this.imageFile = event;
-            const reader = new FileReader();
-            reader.readAsDataURL(this.imageFile);
-            reader.onload = e => (this.mapLogo = e.target.result);
+            this.resultURL = null;
+            this.dialog = true;
+            if (event) {
+                if (this.imageUrl) URL.revokeObjectURL(this.imageUrl);
+                this.imageUrl = URL.createObjectURL(event);
+            }
+        },
+
+        getClippedResult() {
+            const canvas = this.$refs.clipper.clip();
+            this.resultURL = canvas.toDataURL("image/jpeg", 1);
+        },
+
+        changeImage() {
+            this.mapLogo = this.resultURL;
+            let blobBin = atob(this.resultURL.split(",")[1]);
+            let arr = [];
+
+            for (let i = 0; i < blobBin.length; i++) {
+                arr.push(blobBin.charCodeAt(i));
+            }
+
+            this.imageFile = new Blob([new Uint8Array(arr)], {
+                type: "image/png"
+            });
+
+            this.dialog = false;
         }
     },
 
@@ -97,6 +196,10 @@ export default {
             handler(val) {
                 this.mapLogo = val.map_logo;
             }
+        },
+
+        fileInput(val) {
+            if (val) this.onFileSelected(val);
         },
 
         success(val) {
@@ -112,10 +215,16 @@ export default {
 
 <style scoped>
 .map-new-pin {
+    border-radius: 50%;
     width: 50px;
+    height: 50px;
     position: absolute;
     top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.b-image-border {
+    border: 1px solid rgba(0, 0, 0, 0.26);
 }
 </style>

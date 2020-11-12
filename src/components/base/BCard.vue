@@ -4,7 +4,7 @@
             class="subtitle-1 font-weight-bold"
             :class="{
                 red: type === 'delete',
-                'white--text': type === 'delete',
+                'white--text': type === 'delete'
             }"
         >
             {{ title }}
@@ -60,28 +60,28 @@ export default {
     props: {
         type: {
             type: String,
-            default: "default",
+            default: "default"
         },
         title: String,
         cancelText: {
             type: String,
-            default: "cancel",
+            default: "cancel"
         },
         submitText: {
             type: String,
-            default: "save",
+            default: "save"
         },
         loading: Boolean,
         errorMessage: String,
-        resetValidation: Boolean,
+        resetValidation: Boolean
     },
 
     data: () => ({
         icons: {
-            mdiClose,
+            mdiClose
         },
         valid: false,
-        disabled: true,
+        disabled: true
     }),
 
     watch: {
@@ -95,12 +95,12 @@ export default {
 
         resetValidation(val) {
             if (val) this.$refs.form.resetValidation();
-        },
+        }
     },
 
     mounted() {
         this.$clearFocus();
         this.$refs.form.resetValidation();
-    },
+    }
 };
 </script>

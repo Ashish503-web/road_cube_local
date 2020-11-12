@@ -160,11 +160,12 @@ export default {
             }
         },
 
-        async create({ commit, state }) {
+        async create({ commit, state, rootState }) {
             try {
                 commit("setLoading", true, { root: true });
 
                 let transaction = { ...state.transaction };
+                console.log(transaction);
 
                 await Transaction.create(transaction);
 
@@ -182,6 +183,12 @@ export default {
                         text: "You have successfully created transaction!"
                     },
 
+                    { root: true }
+                );
+                commit(
+                    "storePanel/setTotalTransactions",
+                    rootState.storePanel.store.statistics.total_transactions +
+                        1,
                     { root: true }
                 );
             } catch (ex) {

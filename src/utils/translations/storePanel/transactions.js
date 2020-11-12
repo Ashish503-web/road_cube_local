@@ -3,7 +3,7 @@ export default {
         translations: {
             title: {
                 el: "",
-                en: "Payments & Orders",
+                en: "Transactions & Orders",
                 it: ""
             },
             info: {

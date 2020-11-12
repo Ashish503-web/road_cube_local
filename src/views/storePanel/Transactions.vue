@@ -180,7 +180,7 @@
                 :items="transactions"
                 :footer-props="{
                     itemsPerPageOptions: [12],
-                    showCurrentPage: true,
+                    showCurrentPage: true
                 }"
                 :page.sync="page"
                 :server-items-length="serverItemsLength"
@@ -320,7 +320,7 @@
                                         :loading="mobileLoading"
                                         @change="
                                             updateMobilePayments({
-                                                online_payments,
+                                                online_payments
                                             })
                                         "
                                     ></v-switch>
@@ -368,7 +368,7 @@ import {
     mdiChevronDown,
     mdiCheckboxBlankOutline,
     mdiCheckBoxOutline,
-    mdiCheckBold,
+    mdiCheckBold
 } from "@mdi/js";
 
 import { mapState, mapMutations, mapActions } from "vuex";
@@ -391,19 +391,19 @@ export default {
                 mdiChevronDown,
                 mdiCheckboxBlankOutline,
                 mdiCheckBoxOutline,
-                mdiCheckBold,
+                mdiCheckBold
             },
             online_payments: null,
             menu: {
                 status: false,
-                type: false,
+                type: false
             },
             page: +this.$route.query.page,
             selectedStatuses: [],
             selectedTypes: [],
             dialog: false,
             transactionId: null,
-            settingsDialog: false,
+            settingsDialog: false
         };
     },
 
@@ -413,7 +413,7 @@ export default {
             "mobileLoading",
             "transactionStatuses",
             "transactionTypes",
-            "transactions",
+            "transactions"
         ]),
 
         lang() {
@@ -424,33 +424,33 @@ export default {
             return [
                 {
                     text: this.translations.user[this.lang],
-                    value: "user_identity",
+                    value: "user_identity"
                 },
                 {
                     text: this.translations.amount[this.lang],
-                    value: "total_price",
+                    value: "total_price"
                 },
                 {
                     text: this.translations.points[this.lang],
-                    value: "total_points",
+                    value: "total_points"
                 },
                 {
                     text: this.translations.date[this.lang],
-                    value: "created_at",
+                    value: "created_at"
                 },
                 {
                     text: this.translations.watch[this.lang],
-                    value: "watch",
+                    value: "watch"
                 },
                 {
                     text: this.translations.status[this.lang],
                     value: "transaction_status_name",
-                    width: "20%",
+                    width: "20%"
                 },
                 {
                     text: this.translations.actions[this.lang],
-                    value: "actions",
-                },
+                    value: "actions"
+                }
             ];
         },
 
@@ -472,8 +472,8 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
@@ -485,14 +485,14 @@ export default {
             "getItems",
             "changeStatus",
             "updateMobilePayments",
-            "remove",
+            "remove"
         ]),
 
         statusSelect(item) {
             item.selected = !item.selected;
 
             let index = this.selectedStatuses.findIndex(
-                (s) => s.name === item.name
+                s => s.name === item.name
             );
 
             if (index === -1) {
@@ -505,16 +505,14 @@ export default {
         deleteStatus(item, index) {
             this.selectedStatuses.splice(index, 1);
             this.transactionStatuses.find(
-                (s) => s.name === item.name
+                s => s.name === item.name
             ).selected = false;
         },
 
         typeSelect(item) {
             item.selected = !item.selected;
 
-            let index = this.selectedTypes.findIndex(
-                (t) => t.name === item.name
-            );
+            let index = this.selectedTypes.findIndex(t => t.name === item.name);
 
             if (index === -1) {
                 this.selectedTypes.push(item);
@@ -526,7 +524,7 @@ export default {
         deleteType(item, index) {
             this.selectedTypes.splice(index, 1);
             this.transactionTypes.find(
-                (t) => t.name === item.name
+                t => t.name === item.name
             ).selected = false;
         },
 
@@ -556,7 +554,7 @@ export default {
                             "storeId"
                         )}/transactions/excel/status`
                     )
-                    .then((res) => console.log(res));
+                    .then(res => console.log(res));
 
                 // axios
                 //     .get(
@@ -579,7 +577,7 @@ export default {
             } catch (ex) {
                 console.error(ex.response.data.message);
             }
-        },
+        }
 
         // fundClosure() {
         //     axios.get(
@@ -597,8 +595,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query,
-                    },
+                        ...this.$route.query
+                    }
                 });
             }
 
@@ -613,7 +611,7 @@ export default {
             immediate: true,
             handler(val) {
                 this.online_payments = val.flags.reward.online_payments;
-            },
+            }
         },
 
         transactionStatuses(val) {
@@ -623,9 +621,9 @@ export default {
                         "transaction-status-id"
                     ].split(",");
 
-                    statuses.forEach((s) => {
+                    statuses.forEach(s => {
                         let status = val.find(
-                            (t) => t.transaction_status_id === +s
+                            t => t.transaction_status_id === +s
                         );
 
                         status.selected = true;
@@ -643,10 +641,8 @@ export default {
                         ","
                     );
 
-                    types.forEach((t) => {
-                        let type = val.find(
-                            (s) => s.transaction_type_id === +t
-                        );
+                    types.forEach(t => {
+                        let type = val.find(s => s.transaction_type_id === +t);
 
                         type.selected = true;
 
@@ -660,7 +656,7 @@ export default {
             let str = "";
 
             if (val.length) {
-                val.forEach((s) => (str += `,${s.transaction_status_id}`));
+                val.forEach(s => (str += `,${s.transaction_status_id}`));
                 str = str.slice(1);
             } else {
                 str = undefined;
@@ -670,8 +666,8 @@ export default {
                 this.$router.push({
                     query: {
                         ...this.$route.query,
-                        "transaction-status-id": str,
-                    },
+                        "transaction-status-id": str
+                    }
                 });
             }
         },
@@ -680,7 +676,7 @@ export default {
             let str = "";
 
             if (val.length) {
-                val.forEach((t) => (str += `,${t.transaction_type_id}`));
+                val.forEach(t => (str += `,${t.transaction_type_id}`));
                 str = str.slice(1);
             } else {
                 str = undefined;
@@ -688,10 +684,10 @@ export default {
 
             if (str !== this.$route.query["transaction-type"]) {
                 this.$router.push({
-                    query: { ...this.$route.query, "transaction-type": str },
+                    query: { ...this.$route.query, "transaction-type": str }
                 });
             }
-        },
+        }
     },
 
     beforeCreate() {
@@ -699,8 +695,8 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query,
-                },
+                    ...this.$route.query
+                }
             });
         }
     },
@@ -709,7 +705,7 @@ export default {
         this.getItems(this.query);
         this.getTransactionStatuses();
         this.getTransactionTypes();
-    },
+    }
 };
 </script>
 

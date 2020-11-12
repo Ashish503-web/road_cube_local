@@ -90,10 +90,10 @@ export default {
                             icon: mdiAccountBox,
                             title: {
                                 el: "",
-                                en: "Customer",
+                                en: "Customers",
                                 it: ""
                             },
-                            to: `/${this.lang}/loyaltyPanel/customer`
+                            to: `/${this.lang}/loyaltyPanel/customers`
                         },
                         {
                             icon: mdiAccount,

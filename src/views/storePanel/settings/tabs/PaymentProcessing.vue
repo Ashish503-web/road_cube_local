@@ -23,7 +23,7 @@
             :items="allBankProviders"
             :footer-props="{
                 itemsPerPageOptions: [12],
-                showCurrentPage: true,
+                showCurrentPage: true
             }"
             :page.sync="page"
             :server-items-length="serverItemsLength"
@@ -121,13 +121,13 @@ export default {
             headers: [
                 {
                     text: "When user card is issued by:",
-                    value: "bank",
+                    value: "bank"
                 },
                 {
                     text: "Process payment with:",
-                    value: "provider",
-                },
-            ],
+                    value: "provider"
+                }
+            ]
         };
     },
 
@@ -135,7 +135,7 @@ export default {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/settings/paymentProcessing", [
             "allBankProviders",
-            "storeBankProviders",
+            "storeBankProviders"
         ]),
 
         lang() {
@@ -149,7 +149,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            },
+            }
         },
 
         paymentProcessing: {
@@ -160,8 +160,8 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
@@ -171,13 +171,13 @@ export default {
             "getAllBankProviders",
             "getStoreBankProviders",
             "getItems",
-            "create",
+            "create"
         ]),
 
         open(item) {
             this.paymentProcessing = item;
             this.dialog = true;
-        },
+        }
     },
 
     watch: {
@@ -186,8 +186,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query,
-                    },
+                        ...this.$route.query
+                    }
                 });
             }
             this.getItems(this.query);
@@ -195,7 +195,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        },
+        }
     },
 
     beforeCreate() {
@@ -203,8 +203,8 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query,
-                },
+                    ...this.$route.query
+                }
             });
         }
     },
@@ -212,7 +212,7 @@ export default {
     mounted() {
         this.getAllBankProviders();
         this.getItems();
-    },
+    }
 };
 </script>
 

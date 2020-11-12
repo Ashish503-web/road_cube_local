@@ -192,10 +192,10 @@
                                 >{{
                                     statistics.last_twelve_hours_payments
                                         .total_transactions +
-                                    ` ${translations.transactions[lang]} / ` +
-                                    statistics.last_twelve_hours_payments
-                                        .total_price +
-                                    ` ${translations.total[lang]}`
+                                        ` ${translations.transactions[lang]} / ` +
+                                        statistics.last_twelve_hours_payments
+                                            .total_price +
+                                        ` ${translations.total[lang]}`
                                 }}</v-card-title
                             >
                             <h4
@@ -225,9 +225,10 @@
                                 >{{
                                     statistics.last_week_payments
                                         .total_transactions +
-                                    ` ${translations.transactions[lang]} / ` +
-                                    statistics.last_week_payments.total_price +
-                                    ` ${translations.total[lang]}`
+                                        ` ${translations.transactions[lang]} / ` +
+                                        statistics.last_week_payments
+                                            .total_price +
+                                        ` ${translations.total[lang]}`
                                 }}</v-card-title
                             >
                             <h4
@@ -277,7 +278,7 @@ import {
     mdiCursorDefault,
     mdiCompassOutline,
     mdiPhone,
-    mdiWallet,
+    mdiWallet
 } from "@mdi/js";
 
 import translations from "@/utils/translations/storePanel/home";
@@ -288,7 +289,7 @@ const gradients = [
     ["red", "orange", "yellow"],
     ["purple", "violet"],
     ["#00c6ff", "#F0F", "#FF0"],
-    ["#f72047", "#ffd200", "#1feaea"],
+    ["#f72047", "#ffd200", "#1feaea"]
 ];
 
 export default {
@@ -305,7 +306,7 @@ export default {
             mdiCursorDefault,
             mdiCompassOutline,
             mdiPhone,
-            mdiWallet,
+            mdiWallet
         },
         width: 2,
         radius: 10,
@@ -318,13 +319,13 @@ export default {
         fill: false,
         type: "trend",
         autoLineWidth: false,
-        statistics: {},
+        statistics: {}
     }),
 
     computed: {
         lang() {
             return this.$route.params.lang;
-        },
+        }
     },
 
     watch: {
@@ -332,13 +333,19 @@ export default {
             immediate: true,
             handler(val) {
                 this.statistics = { ...val.statistics };
+                this.statistics.last_twelve_hours_payments = {
+                    ...val.statistics.last_twelve_hours_payments
+                };
+                this.statistics.last_week_payments = {
+                    ...val.statistics.last_week_payments
+                };
 
                 this.statistics.name = val.app_name;
 
                 this.statistics.total_income = new Intl.NumberFormat("en-US", {
                     style: "currency",
                     currency: "EUR",
-                    minimumFractionDigits: 2,
+                    minimumFractionDigits: 2
                 }).format(this.statistics.total_income);
 
                 this.statistics.last_twelve_hours_payments.total_price = new Intl.NumberFormat(
@@ -346,7 +353,7 @@ export default {
                     {
                         style: "currency",
                         currency: "EUR",
-                        minimumFractionDigits: 2,
+                        minimumFractionDigits: 2
                     }
                 ).format(
                     this.statistics.last_twelve_hours_payments.total_price
@@ -357,11 +364,11 @@ export default {
                     {
                         style: "currency",
                         currency: "EUR",
-                        minimumFractionDigits: 2,
+                        minimumFractionDigits: 2
                     }
                 ).format(this.statistics.last_week_payments.total_price);
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>

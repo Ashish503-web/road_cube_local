@@ -12,6 +12,7 @@ export default class Transaction {
         this.user = item.user || "";
         this.receipt_number = item.receipt_number || "";
         this.products = item.products || [];
+        this.amount = item.amount || null;
     }
 
     static getProducts = query =>

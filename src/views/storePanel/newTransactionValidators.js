@@ -7,7 +7,8 @@ export default {
                 receipt: false,
                 product: false,
                 purchasePrice: false,
-                quantity: false
+                quantity: false,
+                amount: false
             },
             rules: {
                 user: [
@@ -46,6 +47,17 @@ export default {
                             this.success.quantity = false;
                             return "Quantity is required";
                         } else return "Quantity must be minimum 1";
+                    }
+                ],
+                amount: [
+                    v => {
+                        if (v >= 0.1) {
+                            this.success.amount = true;
+                            return true;
+                        } else if (!v) {
+                            this.success.amount = false;
+                            return "Purchase price is required";
+                        } else return "Purchase Price must be minimum 0.1";
                     }
                 ]
             }

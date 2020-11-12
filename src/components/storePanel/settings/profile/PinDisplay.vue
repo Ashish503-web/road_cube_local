@@ -11,7 +11,7 @@
         <v-row no-gutters align="center" style="height: 120px">
             <v-col cols="12" sm="5" class="pr-2">
                 <v-sheet width="84" class="relative mx-auto">
-                    <v-img :src="bubble" width="84"></v-img>
+                    <v-img :src="bubble" width="84" height="84"></v-img>
                     <v-img :src="mapLogo" class="map-new-pin"></v-img>
                 </v-sheet>
             </v-col>
@@ -67,6 +67,7 @@
                                 <img
                                     :src="resultURL"
                                     width="250"
+                                    height="250"
                                     class="rounded-circle"
                                     :class="{ 'b-image-border': resultURL }"
                                 />
@@ -92,6 +93,7 @@
                                 color="secondary"
                                 class="text-capitalize px-5"
                                 style="font-size: 0.9rem"
+                                :disabled="!resultURL"
                                 @click="changeImage"
                                 >save</v-btn
                             >
@@ -104,9 +106,9 @@
 </template>
 
 <script>
-import bubble from "@/assets/new_bubble_image.png";
 import { mapMutations, mapActions } from "vuex";
 import translations from "@/utils/translations/storePanel/settings/pinDisplay";
+import bubble from "@/assets/new_bubble_image.png";
 
 export default {
     name: "PinDisplay",
@@ -217,7 +219,9 @@ export default {
 
 <style scoped>
 .map-new-pin {
+    border-radius: 50%;
     width: 50px;
+    height: 50px;
     position: absolute;
     top: 45%;
     left: 50%;

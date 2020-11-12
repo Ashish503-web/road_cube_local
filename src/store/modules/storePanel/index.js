@@ -56,6 +56,10 @@ export default {
             state.store = payload;
         },
 
+        setTotalTransactions(state, payload) {
+            state.store.statistics.total_transactions = payload;
+        },
+
         setLogo(state, payload) {
             state.store.logo = payload;
         },

@@ -172,7 +172,7 @@
                 <v-icon
                     class="b-floating-arrow"
                     x-large
-                    v-text="icons.mdiArrowRightCircleOutline"
+                    v-text="icons.mdiArrowRight"
                 ></v-icon>
 
                 <v-col cols="6" class="pl-8">
@@ -273,7 +273,7 @@ import {
     mdiStoreOutline,
     mdiCashMultiple,
     mdiClockOutline,
-    mdiArrowRightCircleOutline,
+    mdiArrowRight
 } from "@mdi/js";
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 import translations from "@/utils/translations/storePanel/couponsWithTransactions";
@@ -284,15 +284,15 @@ export default {
     mixins: [translations],
 
     data: () => ({
-        icons: { mdiArrowRightCircleOutline },
-        imageFile: null,
+        icons: { mdiArrowRight },
+        imageFile: null
     }),
 
     computed: {
         ...mapState(["loading", "errorMessage"]),
         ...mapState("storePanel/coupons/couponsWithTransactions", [
             "couponWithTransaction",
-            "giftCategories",
+            "giftCategories"
         ]),
 
         lang() {
@@ -306,27 +306,27 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            },
+            }
         },
 
         settings() {
             return [
                 {
                     icon: mdiStoreOutline,
-                    text: `Customer must come ${this.couponWithTransaction.goal_sequence} times to your store`,
+                    text: `Customer must come ${this.couponWithTransaction.goal_sequence} times to your store`
                 },
                 {
                     icon: mdiCashMultiple,
                     text: `Customer must spend at least ${this.couponWithTransaction.goal_minimum_amount} 
-                            euros in each visit`,
+                            euros in each visit`
                 },
                 {
                     icon: mdiClockOutline,
                     text: `Each customer visit should not be later than 
-                    ${this.couponWithTransaction.goal_max_days} days from the last visit`,
-                },
+                    ${this.couponWithTransaction.goal_max_days} days from the last visit`
+                }
             ];
-        },
+        }
     },
 
     methods: {
@@ -335,7 +335,7 @@ export default {
             "getItem",
             "getGiftCategories",
             "create",
-            "remove",
+            "remove"
         ]),
 
         onFileSelected(event) {
@@ -343,16 +343,16 @@ export default {
                 this.imageFile = event;
                 const reader = new FileReader();
                 reader.readAsDataURL(this.imageFile);
-                reader.onload = (e) =>
+                reader.onload = e =>
                     (this.couponWithTransaction.image = e.target.result);
             }
-        },
+        }
     },
 
     mounted() {
         this.getItem();
         this.getGiftCategories();
-    },
+    }
 };
 </script>
 

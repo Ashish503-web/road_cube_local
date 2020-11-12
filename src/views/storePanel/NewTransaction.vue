@@ -203,12 +203,16 @@
 
                     <b-text-field
                         v-else
+                        v-model="transaction.amount"
                         label="Amount"
                         type="number"
                         no-top-margin
+                        :success="success.amount"
+                        :rules="rules.amount"
+                        @cancel-success="success.amount = false"
                     ></b-text-field>
 
-                    <v-alert v-if="errorMessage" type="error">{{
+                    <v-alert v-if="errorMessage" type="error" class="mt-4">{{
                         errorMessage
                     }}</v-alert>
 
@@ -402,7 +406,11 @@ export default {
     watch: {
         valid(val) {
             if (val) {
-                if (this.success.product) {
+                if (this.showProducts) {
+                    if (this.success.product) {
+                        this.disabled = false;
+                    }
+                } else {
                     this.disabled = false;
                 }
             } else {

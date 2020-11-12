@@ -6,6 +6,7 @@ export default {
     state: () => ({
         allBankProviders: [],
         storeBankProviders: [],
+        paymentProcessings: [],
         paymentProcessing: new PaymentProcessing({ bankProvider: {} })
     }),
 
@@ -15,6 +16,7 @@ export default {
                 b.bankProvider = state.storeBankProviders[0].bank_provider;
                 return b;
             });
+            // console.log("AllBankProviders", state.allBankProviders);
         },
 
         setStoreBankProviders(state, payload) {
@@ -67,6 +69,8 @@ export default {
                     data
                 } = await PaymentProcessing.getStoreBankProviders();
 
+                // console.log(data.data.store_bank_providers);
+
                 commit("setStoreBankProviders", data.data.store_bank_providers);
             } catch (ex) {
                 console.error(ex.response.data);
@@ -75,9 +79,11 @@ export default {
 
         async getItems({ commit }) {
             try {
-                const data = await PaymentProcessing.get();
+                const { data } = await PaymentProcessing.get();
 
-                console.log(data);
+                const { store_payment_routings, pagination } = data.data;
+
+                console.log(store_payment_routings);
 
                 // commit("setStoreBankProviders", data.data.store_bank_providers);
             } catch (ex) {

@@ -64,11 +64,11 @@ export default [
     },
 
     {
-        path: "customer",
-        name: "Customer",
+        path: "customers",
+        name: "Customers",
         component: () =>
             import(
-                /* webpackChunkName: "customer" */ "@/views/loyaltyPanel/Customer.vue"
+                /* webpackChunkName: "customers" */ "@/views/loyaltyPanel/Customers.vue"
             )
     },
 

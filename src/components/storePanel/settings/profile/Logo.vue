@@ -13,6 +13,7 @@
                 <v-img
                     :src="logo"
                     width="64"
+                    height="64"
                     class="mx-auto rounded-circle"
                 ></v-img>
             </v-col>
@@ -66,6 +67,7 @@
                                 <img
                                     :src="resultURL"
                                     width="250"
+                                    height="250"
                                     class="rounded-circle"
                                     :class="{ 'b-image-border': resultURL }"
                                 />
@@ -91,6 +93,7 @@
                                 color="secondary"
                                 class="text-capitalize px-5"
                                 style="font-size: 0.9rem"
+                                :disabled="!resultURL"
                                 @click="changeImage"
                                 >save</v-btn
                             >

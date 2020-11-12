@@ -87,6 +87,7 @@
                             :src="logo"
                             width="50"
                             height="50"
+                            contain
                             class="rounded-circle"
                         ></v-img>
                     </v-skeleton-loader>
