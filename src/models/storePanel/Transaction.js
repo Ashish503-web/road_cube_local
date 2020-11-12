@@ -22,6 +22,13 @@ export default class Transaction {
             )}/products${query}`
         );
 
+    static getTransactionPreview = (query) =>{
+        let headers = {'Content-Type': 'application/json'}
+        axios.post(`${ApiEndpoint}/stores/${localStorage.getItem(
+            "storeId"
+        )}/transactions/transaction-preview`,query);
+    }
+
     static getTransactionStatuses = () =>
         axios.get(`${ApiEndpoint}/common/transaction-statuses`);
 

@@ -107,6 +107,35 @@ export default {
             }
         },
 
+        async getTransactionPreview({ commit }) {
+            try {
+                commit("setProductsLoading", true);
+                let query = {
+                    "user": "1012938493",
+                    "voucher": "934242",
+                    "products": [
+                        {
+                            "product_id": 1,
+                            "retail_price": "1",
+                            "quantity": 1
+                        },
+                        {
+                            "product_id": 46,
+                            "retail_price": "100",
+                            "quantity": 1
+                        }
+                    ]
+                }
+                const { data } = await Transaction.getTransactionPreview(query);
+
+                // commit("setProducts", data.data.products);
+                commit("setProductsLoading", false);
+            } catch (ex) {
+                commit("setProductsLoading", false);
+                console.error(ex.response.data.message);
+            }
+        },
+
         async getTransactionStatuses({ commit }) {
             try {
                 const { data } = await Transaction.getTransactionStatuses();
