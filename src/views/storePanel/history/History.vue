@@ -28,7 +28,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.path,
+            tab: this.$route.path
         };
     },
 
@@ -41,14 +41,14 @@ export default {
             return [
                 {
                     name: { el: "", en: "Point Analysis", it: "" },
-                    to: `/${this.lang}/storePanel/history/point-analysis`,
+                    to: `/${this.lang}/storePanel/history/point-analysis`
                 },
                 {
                     name: { el: "", en: "Monthly Points", it: "" },
-                    to: `/${this.lang}/storePanel/history/monthly-points`,
-                },
+                    to: `/${this.lang}/storePanel/history/monthly-points`
+                }
             ];
-        },
+        }
     },
 
     watch: {
@@ -60,9 +60,9 @@ export default {
                         `/${this.lang}/storePanel/history/point-analysis`
                     );
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>
 

@@ -709,12 +709,6 @@ export default {
 };
 </script>
 
-<style>
-.v-data-footer {
-    padding: 12px 0;
-}
-</style>
-
 <style scoped>
 .b-list-active {
     background-color: rgba(42, 48, 66, 0.12);

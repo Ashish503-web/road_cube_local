@@ -12,11 +12,6 @@ import {
     mdiViewList,
     mdiGift,
     mdiTrophyVariant,
-    mdiHelpCircle,
-    mdiReceipt,
-    mdiMapMarker,
-    mdiStore,
-    mdiFire,
     mdiBullhorn
 } from "@mdi/js";
 
@@ -35,7 +30,7 @@ export default {
                             icon: mdiChartBar,
                             title: {
                                 el: "",
-                                en: "Dashboard",
+                                en: "Home",
                                 it: ""
                             },
                             to: `/${this.lang}/loyaltyPanel`,
@@ -54,10 +49,10 @@ export default {
                             icon: mdiSourceBranch,
                             title: {
                                 el: "",
-                                en: "Branches",
+                                en: "Stores",
                                 it: ""
                             },
-                            to: `/${this.lang}/loyaltyPanel/branches`
+                            to: `/${this.lang}/loyaltyPanel/stores`
                         },
                         {
                             icon: mdiFileDocument,
@@ -75,7 +70,7 @@ export default {
                                 en: "Collaborators",
                                 it: ""
                             },
-                            to: `/${this.lang}/loyaltyPanel/collaborators`
+                            to: `/${this.lang}/loyaltyPanel/collaborators?page=1`
                         },
                         {
                             icon: mdiPackageVariantClosed,
@@ -93,7 +88,7 @@ export default {
                                 en: "Customers",
                                 it: ""
                             },
-                            to: `/${this.lang}/loyaltyPanel/customers`
+                            to: `/${this.lang}/loyaltyPanel/customers?page=1`
                         },
                         {
                             icon: mdiAccount,
@@ -102,7 +97,7 @@ export default {
                                 en: "User Rights",
                                 it: ""
                             },
-                            to: `/${this.lang}/loyaltyPanel/user-rights`
+                            to: `/${this.lang}/loyaltyPanel/user-rights?page=1`
                         },
                         {
                             icon: mdiOfficeBuilding,
@@ -120,7 +115,16 @@ export default {
                                 en: "Business Statistics",
                                 it: ""
                             },
-                            to: `/${this.lang}/loyaltyPanel/business-statistics`
+                            to: `/${this.lang}/loyaltyPanel/business-statistics?page=1`
+                        },
+                        {
+                            icon: mdiCreditCardOutline,
+                            title: {
+                                el: "",
+                                en: "Multiple Coupons",
+                                it: ""
+                            },
+                            to: `/${this.lang}/loyaltyPanel/multiple-coupons?page=1`
                         }
                     ]
                 },
@@ -138,7 +142,7 @@ export default {
                                 en: "Category Management",
                                 it: ""
                             },
-                            to: `/${this.lang}/loyaltyPanel/category-management`
+                            to: `/${this.lang}/loyaltyPanel/category-management?page=1`
                         },
                         {
                             icon: mdiGift,
@@ -156,7 +160,7 @@ export default {
                                 en: "Catalog Management",
                                 it: ""
                             },
-                            to: `/${this.lang}/loyaltyPanel/catalog-management`
+                            to: `/${this.lang}/loyaltyPanel/catalog-management?page=1`
                         },
                         {
                             icon: mdiPackageVariantClosed,
@@ -165,82 +169,73 @@ export default {
                                 en: "Supplier Management",
                                 it: ""
                             },
-                            to: `/${this.lang}/loyaltyPanel/supplier-management`
+                            to: `/${this.lang}/loyaltyPanel/supplier-management?page=1`
                         }
                     ]
                 },
-                {
-                    title: {
-                        el: "",
-                        en: "PROMO ACTIONS",
-                        it: ""
-                    },
-                    children: [
-                        {
-                            icon: mdiHelpCircle,
-                            title: {
-                                el: "",
-                                en: "1+1 / Sampling",
-                                it: ""
-                            },
-                            to: `/${this.lang}/loyaltyPanel/sampling`
-                        },
-                        {
-                            icon: mdiReceipt,
-                            title: {
-                                el: "",
-                                en: "Receipt Scanning",
-                                it: ""
-                            },
-                            to: `/${this.lang}/loyaltyPanel/receipt-scanning`
-                        },
-                        {
-                            icon: mdiMapMarker,
-                            title: {
-                                el: "",
-                                en: "Check In",
-                                it: ""
-                            },
-                            to: `/${this.lang}/loyaltyPanel/check-in`
-                        },
-                        {
-                            icon: mdiStore,
-                            title: {
-                                el: "",
-                                en: "Serial Shopping",
-                                it: ""
-                            },
-                            to: `/${this.lang}/loyaltyPanel/serial-shopping`
-                        },
-                        {
-                            icon: mdiTrophyVariant,
-                            title: {
-                                el: "",
-                                en: "Contest & Survey",
-                                it: ""
-                            },
-                            to: `/${this.lang}/loyaltyPanel/contest-survey`
-                        },
-                        {
-                            icon: mdiFire,
-                            title: {
-                                el: "",
-                                en: "Roadcodes",
-                                it: ""
-                            },
-                            to: `/${this.lang}/loyaltyPanel/roadcodes`
-                        },
-                        {
-                            icon: mdiCreditCardOutline,
-                            title: {
-                                el: "",
-                                en: "Multiple Coupons",
-                                it: ""
-                            },
-                            to: `/${this.lang}/loyaltyPanel/multiple-coupons`
-                        }
-                    ]
-                },
+                // {
+                //     title: {
+                //         el: "",
+                //         en: "PROMO ACTIONS",
+                //         it: ""
+                //     },
+                //     children: [
+                //         {
+                //             icon: mdiHelpCircle,
+                //             title: {
+                //                 el: "",
+                //                 en: "1+1 / Sampling",
+                //                 it: ""
+                //             },
+                //             to: `/${this.lang}/loyaltyPanel/sampling`
+                //         },
+                //         {
+                //             icon: mdiReceipt,
+                //             title: {
+                //                 el: "",
+                //                 en: "Receipt Scanning",
+                //                 it: ""
+                //             },
+                //             to: `/${this.lang}/loyaltyPanel/receipt-scanning`
+                //         },
+                //         {
+                //             icon: mdiMapMarker,
+                //             title: {
+                //                 el: "",
+                //                 en: "Check In",
+                //                 it: ""
+                //             },
+                //             to: `/${this.lang}/loyaltyPanel/check-in`
+                //         },
+                //         {
+                //             icon: mdiStore,
+                //             title: {
+                //                 el: "",
+                //                 en: "Serial Shopping",
+                //                 it: ""
+                //             },
+                //             to: `/${this.lang}/loyaltyPanel/serial-shopping`
+                //         },
+                //         {
+                //             icon: mdiTrophyVariant,
+                //             title: {
+                //                 el: "",
+                //                 en: "Contest & Survey",
+                //                 it: ""
+                //             },
+                //             to: `/${this.lang}/loyaltyPanel/contest-survey`
+                //         },
+                //         {
+                //             icon: mdiFire,
+                //             title: {
+                //                 el: "",
+                //                 en: "Roadcodes",
+                //                 it: ""
+                //             },
+                //             to: `/${this.lang}/loyaltyPanel/roadcodes`
+                //         }
+                //     ]
+                // },
                 {
                     title: {
                         el: "",
@@ -255,7 +250,7 @@ export default {
                                 en: "View Campaigns",
                                 it: ""
                             },
-                            to: `/${this.lang}/loyaltyPanel/view-campaigns`
+                            to: `/${this.lang}/loyaltyPanel/view-campaigns?page=1`
                         },
                         {
                             icon: mdiBullhorn,

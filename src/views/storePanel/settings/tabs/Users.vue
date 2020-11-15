@@ -1,22 +1,23 @@
 <template>
-    <v-tab-item :value="$route.path" class="pt-5">
-        <v-toolbar flat height="90">
-            <v-row class="d-flex align-center">
-                <v-btn
-                    color="secondary"
-                    class="text-capitalize ml-3 ml-sm-0"
-                    depressed
-                    @click="open(1, {})"
-                    >register user</v-btn
-                >
+    <v-tab-item :value="$route.path" class="pa-3">
+        <v-row
+            no-gutters
+            justify="space-between"
+            align="center"
+            class="px-4 pb-6"
+        >
+            <v-btn
+                color="secondary"
+                class="text-capitalize ml-3 ml-sm-0"
+                depressed
+                @click="open(1, {})"
+                >register user</v-btn
+            >
 
-                <v-spacer></v-spacer>
-
-                <v-col cols="12" sm="4" class="pb-0">
-                    <b-search-field></b-search-field>
-                </v-col>
-            </v-row>
-        </v-toolbar>
+            <v-col cols="12" sm="4" class="pa-0">
+                <b-search-field></b-search-field>
+            </v-col>
+        </v-row>
 
         <v-data-table
             :headers="headers"
@@ -251,9 +252,3 @@ export default {
     }
 };
 </script>
-
-<style>
-.v-data-footer {
-    padding: 12px 0;
-}
-</style>

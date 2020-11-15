@@ -8,8 +8,8 @@
             >
                 <v-tab
                     v-for="tab in tabs"
-                    :key="tab.name"
-                    v-text="tab.name"
+                    :key="tab.name['en']"
+                    v-text="tab.name[lang]"
                     :to="tab.to"
                     class="text-capitalize d-flex justify-start justify-md-center px-3"
                 ></v-tab>
@@ -40,16 +40,16 @@ export default {
         tabs() {
             return [
                 {
-                    to: `/${this.lang}/loyaltyPanel/products/products-tab`,
-                    name: "products"
+                    name: { el: "", en: "products", it: "" },
+                    to: `/${this.lang}/loyaltyPanel/products/products-tab`
                 },
                 {
-                    to: `/${this.lang}/loyaltyPanel/products/products-per-store`,
-                    name: "products per store"
+                    name: { el: "", en: "products per store", it: "" },
+                    to: `/${this.lang}/loyaltyPanel/products/products-per-store`
                 },
                 {
-                    to: `/${this.lang}/loyaltyPanel/products/products-series`,
-                    name: "series of products"
+                    name: { el: "", en: "series of products", it: "" },
+                    to: `/${this.lang}/loyaltyPanel/products/products-series`
                 }
             ];
         }
@@ -61,7 +61,7 @@ export default {
             handler(val) {
                 if (val.path === `/${this.lang}/loyaltyPanel/products`) {
                     this.$router.push(
-                        `/${this.lang}/loyaltyPanel/products/products-tab`
+                        `/${this.lang}/loyaltyPanel/products/products-tab?page=1`
                     );
                 }
             }

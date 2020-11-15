@@ -2,28 +2,19 @@
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
             <v-toolbar flat height="90">
-                <v-row class="d-flex justify-space-between align-center flex-wrap" style="width: 100%">
-                    <v-btn
-                            color="secondary"
-                            class="text-capitalize d-flex mx-auto mx-sm-0"
-                            depressed
-                            @click="dialog = true"
-                    >create supplier</v-btn
-                    >
+                <v-btn
+                    color="secondary"
+                    class="text-capitalize d-flex mx-auto mx-sm-0"
+                    depressed
+                    v-text="translations.createSupplier[lang]"
+                    @click="dialog = true"
+                ></v-btn>
 
-                    <v-col cols="12" sm="4" class="px-0 mx-auto mx-sm-0">
-                        <v-text-field
-                                label="Search"
-                                color="secondary"
-                                rounded
-                                outlined
-                                dense
-                                clearable
-                                hide-details
-                                :prepend-inner-icon="icons.mdiMagnify"
-                        ></v-text-field>
-                    </v-col>
-                </v-row>
+                <v-spacer></v-spacer>
+
+                <v-col cols="12" sm="4" class="pa-0">
+                    <b-search-field></b-search-field>
+                </v-col>
             </v-toolbar>
 
             <v-data-table
@@ -47,7 +38,10 @@
                             </v-btn>
                         </template>
 
-                        <span class="font-weight-bold">Update</span>
+                        <span
+                            class="font-weight-bold"
+                            v-text="translations.update[lang]"
+                        ></span>
                     </v-tooltip>
 
                     <v-tooltip color="secondary" top>
@@ -62,64 +56,59 @@
                             </v-btn>
                         </template>
 
-                        <span class="font-weight-bold">Delete</span>
+                        <span
+                            class="font-weight-bold"
+                            v-text="translations.delete[lang]"
+                        ></span>
                     </v-tooltip>
                 </template>
             </v-data-table>
 
-            <v-dialog v-model="dialog" :max-width="$vuetify.breakpoint.smAndDown ? '90%' : '40%'" scrollable>
-               <CreateUpdateSupplier @close="dialog=false"/>
+            <v-dialog v-model="dialog" max-width="500">
+                <SupplierForm @cancel="dialog = false" />
             </v-dialog>
         </v-sheet>
-
-        <DeleteDialog />
     </v-container>
 </template>
 
 <script>
-import { mdiPencilOutline, mdiClose, mdiMagnify, mdiPlus } from "@mdi/js";
-import CreateUpdateSupplier from "../../components/loyaltyPanel/suppliermanagement/SupplierForm";
-import DeleteDialog from "@/components/loyaltyPanel/userRights/DeleteDialog.vue";
+import { mdiPencilOutline, mdiClose } from "@mdi/js";
 import { mapMutations } from "vuex";
+
+import SupplierForm from "@/components/loyaltyPanel/supplierManagement/SupplierForm";
+import translations from "@/utils/translations/loyaltyPanel/supplierManagement";
 
 export default {
     name: "SupplierManagement",
-    components: { CreateUpdateSupplier, DeleteDialog },
+
+    components: { SupplierForm },
+
+    mixins: [translations],
+
     data: () => ({
-        icons: {
-            mdiPencilOutline,
-            mdiClose,
-            mdiMagnify,
-            mdiPlus
-        },
-        headers: [
-            { text: "Name", value: "name" },
-            { text: "Email", value: "email" },
-            { text: "Actions", value: "actions" }
-        ],
+        icons: { mdiPencilOutline, mdiClose },
         items: [
             { name: "Vasso", email: "vasso.fitrou@gmail.com" },
             { name: "Test Lefko", email: "lefkothea@roadcube.com" },
             { name: "Papadakis Mixail", email: "info@roadcube.com" }
         ],
         itemsPerPageOptions: [10, 20, 30, -1],
-        dialog: false
+        dialog: false,
+        deleteDialog: false
     }),
-    computed: {
-        deleteDialog: {
-            get() {
-                return this.$store.state.loyaltyPanel.userRights.deleteDialog;
-            },
 
-            set(val) {
-                this.setDeleteDialog(val);
-            }
+    computed: {
+        lang() {
+            return this.$route.params.lang;
         },
-    },
-    methods: {
-        ...mapMutations("loyaltyPanel/userRights", [
-            "setDeleteDialog"
-        ])
+
+        headers() {
+            return [
+                { text: this.translations.name[this.lang], value: "name" },
+                { text: this.translations.email[this.lang], value: "email" },
+                { text: this.translations.actions[this.lang], value: "actions" }
+            ];
+        }
     }
 };
 </script>

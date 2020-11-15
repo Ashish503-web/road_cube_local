@@ -2,33 +2,24 @@
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
             <v-toolbar flat height="90">
-                <v-row class="d-flex justify-space-between align-center flex-wrap" style="width: 100%">
-                    <v-btn
-                            color="secondary"
-                            class="text-capitalize d-flex mx-auto mx-sm-0"
-                            depressed
-                            @click="
+                <v-btn
+                    color="secondary"
+                    class="text-capitalize px-5"
+                    depressed
+                    v-text="translations.registerUser[lang]"
+                    @click="
                         () => {
                             mode = 1;
-                            userDialog = true;
+                            dialog = true;
                         }
                     "
-                    >Register User</v-btn
-                    >
+                ></v-btn>
 
-                    <v-col cols="11" sm="8" md="6" lg="4" class="pa-3 mx-auto mx-sm-0">
-                        <v-text-field
-                                label="Search"
-                                color="secondary"
-                                outlined
-                                dense
-                                clearable
-                                rounded
-                                hide-details
-                                :prepend-inner-icon="icons.mdiMagnify"
-                        ></v-text-field>
-                    </v-col>
-                </v-row>
+                <v-spacer></v-spacer>
+
+                <v-col cols="4" class="pa-0">
+                    <b-search-field></b-search-field>
+                </v-col>
             </v-toolbar>
 
             <v-data-table
@@ -37,7 +28,7 @@
                 :footer-props="{ itemsPerPageOptions }"
                 class="b-outlined"
             >
-                <template v-slot:item.edit>
+                <template v-slot:item.actions>
                     <v-tooltip color="secondary" top>
                         <template v-slot:activator="{ on }">
                             <v-btn
@@ -57,12 +48,15 @@
                             </v-btn>
                         </template>
 
-                        <span style="font-weight: 600">Update</span>
+                        <span
+                            class="font-weight-bold"
+                            v-text="translations.update[lang]"
+                        ></span>
                     </v-tooltip>
 
                     <v-tooltip color="secondary" top>
                         <template v-slot:activator="{ on }">
-    -                        <v-btn
+                            <v-btn
                                 color="red"
                                 icon
                                 v-on="on"
@@ -72,38 +66,52 @@
                             </v-btn>
                         </template>
 
-                        <span style="font-weight: 600">Delete</span>
+                        <span
+                            class="font-weight-bold"
+                            v-text="translations.delete[lang]"
+                        ></span>
                     </v-tooltip>
                 </template>
             </v-data-table>
 
-            <UserDialog />
-            <DeleteDialog />
+            <v-dialog v-model="dialog" max-width="600">
+                <UserForm :mode="mode" @cancel="dialog = false" />
+            </v-dialog>
+
+            <v-dialog v-model="deleteDialog" max-width="500">
+                <b-card
+                    type="delete"
+                    title="Delete Product"
+                    submit-text="delete"
+                    @cancel="deleteDialog = false"
+                >
+                    <div class="pl-2">
+                        Are you sure you want to delete User with name
+                        <span class="font-weight-bold text--primary">Edgar</span
+                        >?
+                    </div>
+                </b-card>
+            </v-dialog>
         </v-sheet>
     </v-container>
 </template>
 
 <script>
-import { mdiMagnify, mdiPencilOutline, mdiClose } from "@mdi/js";
+import { mdiPencilOutline, mdiClose } from "@mdi/js";
 import { mapMutations } from "vuex";
-import UserDialog from "@/components/loyaltyPanel/userRights/UserDialog.vue";
-import DeleteDialog from "@/components/loyaltyPanel/userRights/DeleteDialog.vue";
+
+import UserForm from "@/components/loyaltyPanel/userRights/UserForm.vue";
+import translations from "@/utils/translations/loyaltyPanel/userRights";
 
 export default {
     name: "UserRights",
-    components: { UserDialog, DeleteDialog },
+
+    components: { UserForm },
+
+    mixins: [translations],
+
     data: () => ({
-        icons: {
-            mdiMagnify,
-            mdiPencilOutline,
-            mdiClose
-        },
-        headers: [
-            { text: "Username", value: "username", align: "center" },
-            { text: "User Password", value: "password", align: "center" },
-            { text: "Rights", value: "rights", align: "center" },
-            { text: "Edit", value: "edit", align: "center" }
-        ],
+        icons: { mdiPencilOutline, mdiClose },
         users: [
             {
                 username: "katerinanikos",
@@ -121,47 +129,53 @@ export default {
                 rights: "Press edit..."
             }
         ],
+        mode: 0,
         itemsPerPageOptions: [10, 20, 30, -1]
     }),
 
     computed: {
-        mode: {
-            get() {
-                return this.$store.state.loyaltyPanel.userRights.mode;
-            },
-
-            set(val) {
-                this.setMode(val);
-            }
+        lang() {
+            return this.$route.params.lang;
         },
 
-        userDialog: {
+        headers() {
+            return [
+                {
+                    text: this.translations.userName[this.lang],
+                    value: "username"
+                },
+                {
+                    text: this.translations.userPassword[this.lang],
+                    value: "password"
+                },
+                { text: this.translations.rights[this.lang], value: "rights" },
+                { text: this.translations.actions[this.lang], value: "actions" }
+            ];
+        },
+
+        dialog: {
             get() {
-                return this.$store.state.loyaltyPanel.userRights.userDialog;
+                return this.$store.state.dialog;
             },
 
             set(val) {
-                this.setUserDialog(val);
+                this.setDialog(val);
             }
         },
 
         deleteDialog: {
             get() {
-                return this.$store.state.loyaltyPanel.userRights.deleteDialog;
+                return this.$store.state.deleteDialog;
             },
 
             set(val) {
                 this.setDeleteDialog(val);
             }
-        },
+        }
     },
 
     methods: {
-        ...mapMutations("loyaltyPanel/userRights", [
-            "setMode",
-            "setUserDialog",
-            "setDeleteDialog"
-        ])
+        ...mapMutations(["setDialog", "setDeleteDialog"])
     }
 };
 </script>

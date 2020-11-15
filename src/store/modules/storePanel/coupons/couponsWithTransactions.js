@@ -10,7 +10,6 @@ export default {
 
     mutations: {
         setItem(state, payload) {
-            console.log(payload);
             state.couponWithTransaction = new CouponWithTransaction(payload);
         },
 

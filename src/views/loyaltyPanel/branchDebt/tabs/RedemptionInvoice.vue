@@ -1,129 +1,140 @@
 <template>
     <v-tab-item :value="$route.path">
-        <v-toolbar flat class="my-5">
-            <v-menu offset-y right>
-                <template v-slot:activator="{ on }">
-                    <v-btn text v-on="on">
-                        <v-icon
-                            color="secondary"
-                            v-text="icons.mdiFormatListCheckbox"
-                        ></v-icon>
-                    </v-btn>
-                </template>
-
-                <v-list dense>
-                    <v-list-item href="#">
-                        <v-list-item-icon>
-                            <v-icon
-                                color="green darken-3"
-                                v-text="icons.mdiMicrosoftExcel"
-                            ></v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-title>Export to Excel</v-list-item-title>
-                    </v-list-item>
-
-                    <v-list-item href="#">
-                        <v-list-item-icon>
-                            <v-icon
-                                color="blue darken-3"
-                                v-text="icons.mdiFileDelimitedOutline"
-                            ></v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-title>Export to CSV</v-list-item-title>
-                    </v-list-item>
-                </v-list>
-            </v-menu>
+        <v-toolbar flat height="90">
+            <ExportLinks />
 
             <v-spacer></v-spacer>
 
-            <v-row no-gutters class="d-flex flex-wrap justify-end">
-                <v-col cols="12" sm="4" class="ma-1">
-                    <v-menu
-                        :close-on-content-click="false"
-                        offset-y
-                        max-width="290px"
-                    >
-                        <template v-slot:activator="{ on }">
-                            <v-text-field
-                                label="Range"
-                                color="secondary"
-                                rounded
-                                outlined
-                                dense
-                                clearable
-                                hide-details
-                                :prepend-inner-icon="icons.mdiCalendarSearch"
-                                v-on="on"
-                            ></v-text-field>
-                        </template>
-
-                        <v-date-picker
-                            v-model="range"
+            <v-col cols="12" sm="4">
+                <v-menu
+                    :close-on-content-click="false"
+                    offset-y
+                    max-width="290px"
+                >
+                    <template v-slot:activator="{ on }">
+                        <v-text-field
+                            :label="translations.range[lang]"
                             color="secondary"
-                            range
-                        ></v-date-picker>
-                    </v-menu>
-                </v-col>
+                            rounded
+                            outlined
+                            dense
+                            clearable
+                            hide-details
+                            :prepend-inner-icon="icons.mdiCalendarSearch"
+                            v-on="on"
+                        ></v-text-field>
+                    </template>
 
-                <v-col cols="12" sm="4" class="ma-1">
-                    <v-text-field
-                        label="Search"
+                    <v-date-picker
+                        v-model="range"
                         color="secondary"
-                        rounded
-                        outlined
-                        dense
-                        clearable
-                        hide-details
-                        :prepend-inner-icon="icons.mdiMagnify"
-                    ></v-text-field>
-                </v-col>
-            </v-row>
+                        range
+                    ></v-date-picker>
+                </v-menu>
+            </v-col>
+
+            <v-col cols="12" sm="4">
+                <b-search-field></b-search-field>
+            </v-col>
         </v-toolbar>
 
         <v-data-table
             :headers="headers"
             :items="items"
-            :footer-props="{ itemsPerPageOptions }"
+            :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
+            :page.sync="page"
             class="b-outlined"
         ></v-data-table>
     </v-tab-item>
 </template>
 
 <script>
-import {
-    mdiFormatListCheckbox,
-    mdiMicrosoftExcel,
-    mdiFileDelimitedOutline,
-    mdiCalendarSearch,
-    mdiMagnify
-} from "@mdi/js";
+import { mdiCalendarSearch } from "@mdi/js";
+
+import ExportLinks from "@/components/general/ExportLinks.vue";
+import translations from "@/utils/translations/loyaltyPanel/branchDebt/redemptionInvoice";
 
 export default {
     name: "BranchDebt",
-    data: () => ({
-        icons: {
-            mdiFormatListCheckbox,
-            mdiMicrosoftExcel,
-            mdiFileDelimitedOutline,
-            mdiCalendarSearch,
-            mdiMagnify
+
+    components: { ExportLinks },
+
+    mixins: [translations],
+
+    data() {
+        return {
+            icons: { mdiCalendarSearch },
+            range: [],
+            items: [
+                {
+                    date: "14.09.2020",
+                    name_of_shop: "Bill",
+                    points: "Moskovyan 14",
+                    redeemed_coupons: "Phone"
+                }
+            ],
+            page: +this.$route.query.page
+        };
+    },
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
         },
-        range: [],
-        headers: [
-            { text: "Date", value: "date" },
-            { text: "Name of Shop", value: "name_of_shop" },
-            { text: "Points", value: "points" },
-            { text: "Redeemed Coupons", value: "redeemed_coupons" }
-        ],
-        items: [
-            {
-                date: "14.09.2020",
-                name_of_shop: "Bill",
-                points: "Moskovyan 14",
-                redeemed_coupons: "Phone"
+
+        headers() {
+            return [
+                { text: this.translations.date[this.lang], value: "date" },
+                {
+                    text: this.translations.nameOfShop[this.lang],
+                    value: "name_of_shop"
+                },
+                { text: this.translations.points[this.lang], value: "points" },
+                {
+                    text: this.translations.redeemedCoupons[this.lang],
+                    value: "redeemed_coupons"
+                }
+            ];
+        }
+    },
+
+    watch: {
+        $route(val) {
+            if (!val.query.page) {
+                this.$router.push({
+                    query: {
+                        page: 1,
+                        ...this.$route.query
+                    }
+                });
             }
-        ],
-        itemsPerPageOptions: [10, 20, 30, -1]
-    })
+            this.getItems(this.query);
+        },
+
+        page(page) {
+            this.$router.push({ query: { ...this.$route.query, page } });
+        },
+
+        search(val, oldVal) {
+            if (val != oldVal) {
+                if (val == null) {
+                    this.getItems(this.query);
+                } else {
+                    this.debouncedSearch();
+                }
+            }
+        }
+    },
+
+    beforeCreate() {
+        if (!this.$route.query.page) {
+            this.$router.push({
+                query: {
+                    page: 1,
+                    ...this.$route.query
+                }
+            });
+        }
+    }
 };
 </script>

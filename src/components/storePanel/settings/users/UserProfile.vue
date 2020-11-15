@@ -82,11 +82,11 @@ export default {
     name: "UserProfile",
 
     props: {
-        userId: [String, Number],
+        userId: [String, Number]
     },
 
     data: () => ({
-        icons: { mdiAccountOutline, mdiClose },
+        icons: { mdiAccountOutline, mdiClose }
     }),
 
     computed: {
@@ -96,16 +96,16 @@ export default {
 
         userProfile() {
             return this.$store.state.storePanel.settings.users.userProfile;
-        },
+        }
     },
 
     methods: {
-        ...mapActions("storePanel/settings/users", ["getItem"]),
+        ...mapActions("storePanel/settings/users", ["getItem"])
     },
 
     mounted() {
         this.getItem(this.userId);
-    },
+    }
 };
 </script>
 

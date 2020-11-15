@@ -76,27 +76,29 @@
                         <v-card-actions>
                             <v-btn
                                 color="brown"
-                                class="text-capitalize"
+                                class="text-capitalize pr-4"
+                                width="80"
                                 depressed
                                 disabled
                             >
                                 <v-icon
                                     size="20"
-                                    v-text="icons.mdiArrowLeft"
+                                    v-text="icons.mdiChevronLeft"
                                 ></v-icon
                                 >back
                             </v-btn>
                             <v-spacer></v-spacer>
                             <v-btn
                                 color="secondary"
-                                class="text-capitalize"
+                                class="text-capitalize pl-4"
+                                width="80"
                                 depressed
                                 @click="step++"
                             >
                                 next
                                 <v-icon
                                     size="20"
-                                    v-text="icons.mdiArrowRight"
+                                    v-text="icons.mdiChevronRight"  
                                 ></v-icon>
                             </v-btn>
                         </v-card-actions>
@@ -115,7 +117,11 @@
                                     to appear
                                 </v-card-title>
                             </v-col>
-                            <v-col cols="12" sm="4" class="pr-4 pl-4 pl-sm-0 pb-3 pb-sm-0">
+                            <v-col
+                                cols="12"
+                                sm="4"
+                                class="pr-4 pl-4 pl-sm-0 pb-3 pb-sm-0"
+                            >
                                 <v-select
                                     v-model="campaignAppearType"
                                     :items="['Only Once', 'Recursively']"

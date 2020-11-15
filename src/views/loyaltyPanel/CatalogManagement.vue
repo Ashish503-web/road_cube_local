@@ -1,67 +1,34 @@
 <template>
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
-            <v-toolbar flat height="80">
+            <v-toolbar flat>
                 <v-btn
                     color="secondary"
                     class="text-capitalize"
                     depressed
-                    @click="giftDialog = true"
-                    >add gift</v-btn
-                >
+                    v-text="translations.addGift[lang]"
+                    @click="dialog = true"
+                ></v-btn>
+
                 <v-spacer></v-spacer>
+
                 <v-btn
                     color="secondary"
                     class="text-capitalize"
                     depressed
+                    v-text="translations.createSupplier[lang]"
                     @click="supplierDialog = true"
-                    >create supplier</v-btn
-                >
+                ></v-btn>
             </v-toolbar>
 
             <v-toolbar flat>
                 <v-spacer></v-spacer>
 
                 <v-col cols="12" sm="4" class="pa-0">
-                    <v-menu v-model="menu" offset-y>
-                        <template v-slot:activator="{ attrs }">
-                            <v-text-field
-                                :label="
-                                    selectedSearchType === 'All Fields'
-                                        ? 'Search'
-                                        : selectedSearchType
-                                        ? 'Search by ' + selectedSearchType
-                                        : 'Search'
-                                "
-                                rounded
-                                outlined
-                                dense
-                                clearable
-                                hide-details
-                                :aria-expanded="attrs['aria-expanded']"
-                                :prepend-inner-icon="icons.mdiMagnify"
-                                :append-icon="icons.mdiChevronDown"
-                                @click:append="menu = true"
-                            ></v-text-field>
-                        </template>
-
-                        <v-list dense>
-                            <v-list-item-group
-                                v-model="selectedSearchType"
-                                color="secondary"
-                            >
-                                <v-list-item
-                                    v-for="searchType in searchTypes"
-                                    :key="searchType"
-                                    :value="searchType"
-                                >
-                                    <v-list-item-title
-                                        v-text="searchType"
-                                    ></v-list-item-title>
-                                </v-list-item>
-                            </v-list-item-group>
-                        </v-list>
-                    </v-menu>
+                    <b-search-field
+                        :selectedSearchType="selectedSearchType"
+                        :searchTypes="searchTypes"
+                    ></b-search-field>
                 </v-col>
             </v-toolbar>
 
@@ -86,7 +53,10 @@
                             </v-btn>
                         </template>
 
-                        <span class="font-weight-bold">Update</span>
+                        <span
+                            class="font-weight-bold"
+                            v-text="translations.update[lang]"
+                        ></span>
                     </v-tooltip>
 
                     <v-tooltip color="secondary" top>
@@ -101,59 +71,51 @@
                             </v-btn>
                         </template>
 
-                        <span class="font-weight-bold">Delete</span>
+                        <span
+                            class="font-weight-bold"
+                            v-text="translations.delete[lang]"
+                        ></span>
                     </v-tooltip>
                 </template>
             </v-data-table>
 
-            <v-dialog v-model="giftDialog" :max-width="$vuetify.breakpoint.smAndDown ? '90%' : '40%'" scrollable>
-                <GiftForm @close="giftDialog = false" />
+            <v-dialog v-model="dialog" max-width="500">
+                <GiftForm @cancel="dialog = false" />
             </v-dialog>
 
-            <v-dialog v-model="supplierDialog" :max-width="$vuetify.breakpoint.smAndDown ? '90%' : '40%'" scrollable>
-                <SupplierForm @close="supplierDialog = false" />
+            <v-dialog v-model="supplierDialog" max-width="400">
+                <SupplierForm @cancel="supplierDialog = false" />
             </v-dialog>
-
-            <DeleteDialog />
         </v-sheet>
     </v-container>
 </template>
 
 <script>
-import {
-    mdiMagnify,
-    mdiChevronDown,
-    mdiPencilOutline,
-    mdiClose,
-    mdiPlus
-} from "@mdi/js";
+import { mdiPencilOutline, mdiClose } from "@mdi/js";
 
-import GiftForm from "../../components/loyaltyPanel/catalogManagement/GiftForm";
-import SupplierForm from "../../components/loyaltyPanel/catalogManagement/SupplierForm";
-import DeleteDialog from "@/components/loyaltyPanel/userRights/DeleteDialog.vue";
-import { mapMutations } from "vuex";
+import GiftForm from "@/components/loyaltyPanel/catalogManagement/GiftForm";
+import SupplierForm from "@/components/loyaltyPanel/catalogManagement/SupplierForm";
+import translations from "@/utils/translations/loyaltyPanel/catalogManagement";
 
 export default {
     name: "CatalogManagement",
-    components: { GiftForm, SupplierForm, DeleteDialog },
+
+    components: { GiftForm, SupplierForm },
+
+    mixins: [translations],
+
     data: () => ({
-        icons: {
-            mdiMagnify,
-            mdiChevronDown,
-            mdiPencilOutline,
-            mdiClose,
-            mdiPlus
-        },
-        headers: [
-            { text: "ID Catalog", value: "catalog" },
-            { text: "Image", value: "image" },
-            { text: "Supplier", value: "supplier" },
-            { text: "Category", value: "category" },
-            { text: "Name", value: "name" },
-            { text: "Type", value: "type" },
-            { text: "Points", value: "points" },
-            { text: "Actions", value: "actions" }
+        icons: { mdiPencilOutline, mdiClose },
+        searchTypes: [
+            "All Fields",
+            "Catalog",
+            "Supplier",
+            "Category",
+            "Name",
+            "Points"
         ],
+        selectedSearchType: "All Fields",
+
         gifts: [
             {
                 catalog: "tetstetest",
@@ -165,35 +127,37 @@ export default {
             }
         ],
         itemsPerPageOptions: [10, 25, 50, 100],
-        menu: false,
-        searchTypes: [
-            "All Fields",
-            "Catalog",
-            "Supplier",
-            "Category",
-            "Name",
-            "Points"
-        ],
-        selectedSearchType: "All Fields",
-        giftDialog: false,
-        supplierDialog: false
+        dialog: false,
+        supplierDialog: false,
+        deleteDialog: false
     }),
 
-    computed:{
-        deleteDialog: {
-            get() {
-                return this.$store.state.loyaltyPanel.userRights.deleteDialog;
-            },
-
-            set(val) {
-                this.setDeleteDialog(val);
-            }
+    computed: {
+        lang() {
+            return this.$route.params.lang;
         },
-    },
-    methods: {
-        ...mapMutations("loyaltyPanel/userRights", [
-            "setDeleteDialog"
-        ])
+
+        headers() {
+            return [
+                {
+                    text: this.translations.IDCatalog[this.lang],
+                    value: "catalog"
+                },
+                { text: this.translations.image[this.lang], value: "image" },
+                {
+                    text: this.translations.supplier[this.lang],
+                    value: "supplier"
+                },
+                {
+                    text: this.translations.category[this.lang],
+                    value: "category"
+                },
+                { text: this.translations.name[this.lang], value: "name" },
+                { text: this.translations.type[this.lang], value: "type" },
+                { text: this.translations.points[this.lang], value: "points" },
+                { text: this.translations.actions[this.lang], value: "actions" }
+            ];
+        }
     }
 };
 </script>

@@ -1,23 +1,25 @@
 <template>
     <b-standard-card
-        title="Points Return"
-        title-color="white"
+        :title="translations.title[lang]"
+        :submit-text="{ el: '', en: 'save', it: '' }"
         height="auto"
-        submit-text="save"
     >
-        <h4 class="secondary--text">
-            Do you want points to be returned to the user after using the
-            coupon?
-        </h4>
+        <h4 class="secondary--text" v-text="translations.info[lang]"></h4>
         <v-radio-group class="mt-3 pt-0" hide-details>
             <v-radio color="secondary">
                 <template v-slot:label>
-                    <h4 class="subtitle-2 secondary--text">Yes</h4>
+                    <h4
+                        class="subtitle-2 secondary--text"
+                        v-text="translations.yes[lang]"
+                    ></h4>
                 </template>
             </v-radio>
             <v-radio color="secondary">
                 <template v-slot:label>
-                    <h4 class="subtitle-2 secondary--text">No</h4>
+                    <h4
+                        class="subtitle-2 secondary--text"
+                        v-text="translations.no[lang]"
+                    ></h4>
                 </template>
             </v-radio>
         </v-radio-group>
@@ -25,7 +27,17 @@
 </template>
 
 <script>
+import translations from "@/utils/translations/loyaltyPanel/businessProfile/pointsReturn";
+
 export default {
-    name: "PointsReturn"
+    name: "PointsReturn",
+
+    mixins: [translations],
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        }
+    }
 };
 </script>

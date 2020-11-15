@@ -4,16 +4,7 @@
             <v-toolbar flat height="80">
                 <v-spacer></v-spacer>
                 <v-col cols="12" sm="4" class="pa-0">
-                    <v-text-field
-                        label="Search"
-                        color="secondary"
-                        rounded
-                        outlined
-                        dense
-                        clearable
-                        hide-details
-                        :prepend-inner-icon="icons.mdiMagnify"
-                    ></v-text-field>
+                    <b-search-field></b-search-field>
                 </v-col>
             </v-toolbar>
 
@@ -71,7 +62,7 @@
                             <v-icon
                                 color="green"
                                 style="cursor:pointer"
-                                v-text="icons.mdiChat"
+                                v-text="icons.mdiEmail"
                                 v-on="on"
                             ></v-icon>
                         </template>
@@ -89,21 +80,17 @@
 </template>
 
 <script>
-import {
-    mdiMagnify,
-    mdiCalendarMonth,
-    mdiChat,
-    mdiBell,
-    mdiEmail,
-    mdiLock
-} from "@mdi/js";
+import { mdiCalendarMonth, mdiChat, mdiBell, mdiEmail, mdiLock } from "@mdi/js";
+
+import translations from "@/utils/translations/loyaltyPanel/viewCampaigns";
 
 export default {
     name: "ViewCampaigns",
 
+    mixins: [translations],
+
     data: () => ({
         icons: {
-            mdiMagnify,
             mdiCalendarMonth,
             mdiChat,
             mdiBell,
@@ -124,7 +111,13 @@ export default {
             { date: "2020-08-24 12:09:30", title: "df", status: "completed" }
         ],
         itemsPerPageOptions: [10, 20, 30, -1]
-    })
+    }),
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        }
+    }
 };
 </script>
 

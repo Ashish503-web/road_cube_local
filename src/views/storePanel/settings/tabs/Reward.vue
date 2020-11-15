@@ -1,19 +1,19 @@
 <template>
-    <v-tab-item :value="$route.path" class="pt-5">
-        <v-row no-gutters>
-            <v-col cols="12" md="6" class="pr-0 pr-md-2 mb-3 mb-md-0">
+    <v-tab-item :value="$route.path">
+        <v-row no-gutters class="pa-3 pt-6 b-grey">
+            <v-col cols="12" md="6" class="pr-3">
                 <SendPoints />
             </v-col>
 
-            <v-col cols="12" md="6" class="pl-0 pl-md-2">
+            <v-col cols="12" md="6" class="pl-3">
                 <PointDelivery />
             </v-col>
 
-            <v-col cols="12" md="6" class="pr-0 pr-md-2 mt-5">
+            <v-col cols="12" md="6" class="pr-3 mt-6">
                 <ScanReceipt />
             </v-col>
 
-            <v-col cols="12" md="6" class="pl-0 pl-md-2 mt-5">
+            <v-col cols="12" md="6" class="pl-3 mt-6">
                 <RewardWithPresence />
                 <MobilePayments />
             </v-col>

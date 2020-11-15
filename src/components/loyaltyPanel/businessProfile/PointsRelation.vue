@@ -1,17 +1,16 @@
 <template>
     <b-standard-card
-        title="Offline-Online Points Relation"
-        title-color="white"
-        submit-text="save"
+        :title="translations.title[lang]"
+        :submit-text="{ el: '', en: 'save', it: '' }"
     >
-        Please specify the Offline-Online relation for points that will be given
-        to the user (eg: If you select 30%, if the online points are 100, then
-        the offline points will be 30).
+        {{ translations.info[lang] }}
 
         <v-row no-gutters align="baseline" class="mt-3">
-            <v-col cols="auto" class="pr-2 subtitle-1 font-weight-bold"
-                >Relation:</v-col
-            >
+            <v-col
+                cols="auto"
+                class="pr-2 subtitle-1 font-weight-bold"
+                v-text="translations.relation[lang]"
+            ></v-col>
             <v-col cols="4" class="pl-2">
                 <b-select
                     v-model="selectedPercent"
@@ -25,14 +24,22 @@
 </template>
 
 <script>
+import translations from "@/utils/translations/loyaltyPanel/businessProfile/pointsRelation";
+
 export default {
     name: "PointsRelation",
+
+    mixins: [translations],
 
     data: () => ({
         selectedPercent: 50
     }),
 
     computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
         percents() {
             let arr = [];
 

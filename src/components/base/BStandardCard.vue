@@ -4,7 +4,6 @@
             <v-col cols="12">
                 <v-card-title
                     v-if="activatable"
-                    :class="titleColor"
                     class="subtitle-1 font-weight-bold"
                 >
                     <v-col class="pa-0">
@@ -28,11 +27,7 @@
                     </v-col>
                 </v-card-title>
 
-                <v-card-title
-                    v-else
-                    :class="titleColor"
-                    class="subtitle-1 font-weight-bold"
-                >
+                <v-card-title v-else class="subtitle-1 font-weight-bold">
                     {{ title }}
                 </v-card-title>
                 <v-divider></v-divider>
@@ -70,7 +65,7 @@
                             class="text-capitalize px-4"
                             dark
                             depressed
-                            >{{ cancelText }}</v-btn
+                            >{{ cancelText[lang] }}</v-btn
                         >
                     </template>
                     <v-btn
@@ -99,11 +94,7 @@ export default {
         activatable: Boolean,
         switcher: Boolean,
         title: String,
-        titleColor: {
-            type: String,
-            default: "grey lighten-3"
-        },
-        cancelText: String,
+        cancelText: Object,
         submitText: {
             type: Object,
             default: () => ({ el: "", en: "update details", it: "" })

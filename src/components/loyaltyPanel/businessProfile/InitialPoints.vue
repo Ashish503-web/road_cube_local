@@ -1,18 +1,15 @@
 <template>
     <b-standard-card
-        title="Initial Online/Offline points upon registration"
-        title-color="white"
-        submit-text="save"
+        :title="translations.title[lang]"
+        :submit-text="{ el: '', en: 'save', it: '' }"
     >
-        Set the online / offline points to be given to new users when
-        registering, as well as the limits of users who will receive them. If
-        you want to be unlimited uncheck 'Unlimited users online / offline'
-        respectively.
+        {{ translations.info[lang] }}
+
         <br />
         <div class="mt-3">
-            Totally sent to
+            {{ translations.totallySent[lang] }}
             <span class="font-weight-bold secondary--text">718</span>
-            Users.
+            {{ translations.users[lang] }}
         </div>
 
         <div class="mt-3 red--text">
@@ -29,9 +26,10 @@
                     hide-details
                 >
                     <template v-slot:label>
-                        <h4 class="subtitle-2 secondary--text">
-                            Unlimited users online
-                        </h4>
+                        <h4
+                            class="subtitle-2 secondary--text"
+                            v-text="translations.usersOnline[lang]"
+                        ></h4>
                     </template>
                 </v-checkbox>
             </v-col>
@@ -40,7 +38,7 @@
                 <b-text-field
                     :disabled="wholeUsers"
                     type="number"
-                    label="Online Points"
+                    :label="translations.onlinePoints[lang]"
                 ></b-text-field>
             </v-col>
             <v-col cols="6" class="pl-2">
@@ -48,7 +46,7 @@
                     v-if="!unlimitedOnline"
                     :disabled="wholeUsers"
                     type="number"
-                    label="Online How many users in total"
+                    :label="translations.usersOnlineTotal[lang]"
                 ></b-text-field>
             </v-col>
 
@@ -61,9 +59,10 @@
                     hide-details
                 >
                     <template v-slot:label>
-                        <h4 class="subtitle-2 secondary--text">
-                            Unlimited users offline
-                        </h4>
+                        <h4
+                            class="subtitle-2 secondary--text"
+                            v-text="translations.usersOffline[lang]"
+                        ></h4>
                     </template>
                 </v-checkbox>
             </v-col>
@@ -72,7 +71,7 @@
                 <b-text-field
                     :disabled="wholeUsers"
                     type="number"
-                    label="Offline Points"
+                    :label="translations.offlinePoints[lang]"
                 ></b-text-field>
             </v-col>
             <v-col cols="6" class="pl-2">
@@ -80,7 +79,7 @@
                     v-if="!unlimitedOffline"
                     :disabled="wholeUsers"
                     type="number"
-                    label="Offline How many users in total"
+                    :label="translations.usersOfflineTotal[lang]"
                 ></b-text-field>
             </v-col>
 
@@ -92,9 +91,10 @@
                     hide-details
                 >
                     <template v-slot:label>
-                        <h4 class="subtitle-2 secondary--text">
-                            I want to define users as a whole
-                        </h4>
+                        <h4
+                            class="subtitle-2 secondary--text"
+                            v-text="translations.defineUsers[lang]"
+                        ></h4>
                     </template>
                 </v-checkbox>
             </v-col>
@@ -102,7 +102,7 @@
             <v-col cols="8" class="pr-2">
                 <b-text-field
                     type="number"
-                    label="How many users in total"
+                    :label="translations.usersTotal[lang]"
                 ></b-text-field>
             </v-col>
         </v-row>
@@ -110,13 +110,23 @@
 </template>
 
 <script>
+import translations from "@/utils/translations/loyaltyPanel/businessProfile/initialPoints";
+
 export default {
     name: "InitialPoints",
+
+    mixins: [translations],
 
     data: () => ({
         unlimitedOnline: false,
         unlimitedOffline: false,
         wholeUsers: false
-    })
+    }),
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        }
+    }
 };
 </script>

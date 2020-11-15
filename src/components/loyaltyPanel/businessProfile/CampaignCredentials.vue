@@ -1,14 +1,15 @@
 <template>
     <b-standard-card
-        title="Campaign Credentials"
-        title-color="white"
-        submit-text="save"
+        :title="translations.title[lang]"
+        :submit-text="{ el: '', en: 'save', it: '' }"
     >
-        <h4 class="secondary--text font-weight-bold subtitle-1">
-            Notifications
-        </h4>
-        Fill out an extra contact email to receive notifications when creating
-        and running any campaign.
+        <h4
+            class="subtitle-1 font-weight-bold text--primary"
+            v-text="translations.notifications[lang]"
+        ></h4>
+
+        {{ translations.notificationsInfo[lang] }}
+
         <v-row v-for="n in 3" :key="n" no-gutters align="baseline">
             <v-col
                 cols="auto"
@@ -21,14 +22,16 @@
             </v-col>
         </v-row>
 
-        <h4 class="secondary--text font-weight-bold subtitle-1 mt-7">
-            SMS + Εmail
-        </h4>
-        Fill in the name you want to show when sending messages or Email with
-        the first method. The name must be in Latin characters and without
-        spaces.
+        <h4
+            class="secondary--text font-weight-bold subtitle-1 mt-7"
+            v-text="translations.smsEmail[lang]"
+        ></h4>
 
-        <b-text-field label="Message Sender Name"></b-text-field>
+        {{ translations.smsEmailInfo[lang] }}
+
+        <b-text-field
+            :label="translations.messageSenderName[lang]"
+        ></b-text-field>
 
         <v-divider class="my-7"></v-divider>
 
@@ -40,18 +43,22 @@
         >
             <v-col cols="auto">
                 <h4 class="secondary--text font-weight-bold subtitle-1">
-                    1. Email (First method)
+                    1. {{ translations.emailFirstMethod[lang] }}
                 </h4>
             </v-col>
 
             <v-col cols="auto">
-                <v-btn color="secondary" class="text-capitalize" small depressed
-                    >verify email</v-btn
-                >
+                <v-btn
+                    color="secondary"
+                    class="text-capitalize"
+                    small
+                    depressed
+                    v-text="translations.verifyEmail[lang]"
+                ></v-btn>
             </v-col>
         </v-row>
 
-        Add the email you want to see as the sender of the campaign
+        {{ translations.emailFirstMethodInfo[lang] }}
 
         <v-alert type="warning">
             The email has not been fully verified. The first method will not be
@@ -61,7 +68,7 @@
         <v-divider class="mt-7 mb-4"></v-divider>
 
         <h4 class="secondary--text font-weight-bold subtitle-1">
-            2. Email (Second method)
+            2. {{ translations.emailSecondMethod[lang] }}
         </h4>
 
         <v-alert type="warning" class="mt-3">
@@ -69,25 +76,45 @@
             used in campaigns.
         </v-alert>
 
-        Enter your email credentials in the table below to send email campaigns
-        through your email provider. Leave this blank and RoadCube's email
-        provider will be used.
+        {{ translations.emailSecondMethodInfo[lang] }}
 
-        <b-text-field label="Host" class="mt-7"></b-text-field>
-        <b-text-field label="Name"></b-text-field>
-        <b-text-field type="email" label="Email"></b-text-field>
-        <b-text-field type="password" label="Password"></b-text-field>
+        <b-text-field
+            :label="translations.host[lang]"
+            class="mt-7"
+        ></b-text-field>
+        <b-text-field :label="translations.name[lang]"></b-text-field>
+        <b-text-field
+            :label="translations.email[lang]"
+            type="email"
+        ></b-text-field>
+        <b-text-field
+            :label="translations.password[lang]"
+            type="password"
+        ></b-text-field>
 
-        <v-alert color="blue darken-2" text dense border="left" class="mt-7">
-            * Sending email by priority. If the first method doesnt exists then
-            the second method will be used. If the second method doesnt exists
-            as well then RoadCube's email provider will be used.
-        </v-alert>
+        <v-alert
+            color="blue darken-2"
+            text
+            dense
+            border="left"
+            class="mt-7"
+            v-text="translations.info[lang]"
+        ></v-alert>
     </b-standard-card>
 </template>
 
 <script>
+import translations from "@/utils/translations/loyaltyPanel/businessProfile/campaignCredentials";
+
 export default {
-    name: "CampaignCredentials"
+    name: "CampaignCredentials",
+
+    mixins: [translations],
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        }
+    }
 };
 </script>

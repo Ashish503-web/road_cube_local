@@ -73,7 +73,7 @@ export default {
             handler(val) {
                 if (val.path === `/${this.lang}/storePanel/redeem`) {
                     this.$router.push(
-                        `/${this.lang}/storePanel/redeem/redeem-voucher`
+                        `/${this.lang}/storePanel/redeem/redeem-voucher?page=1`
                     );
                 }
             }

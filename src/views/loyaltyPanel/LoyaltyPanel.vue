@@ -19,6 +19,11 @@ export default {
 </script>
 
 <style>
+.v-label {
+    font-size: 0.885rem;
+    font-weight: 500;
+}
+
 .b-container {
     background-color: rgba(234, 237, 241, 0.57);
     min-height: calc(100vh - 64px);
@@ -26,5 +31,13 @@ export default {
 
 .b-outlined {
     border: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.b-bottom-outlined {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+}
+
+.v-data-footer {
+    padding: 12px 0;
 }
 </style>

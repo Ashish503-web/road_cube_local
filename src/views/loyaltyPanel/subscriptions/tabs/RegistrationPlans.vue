@@ -1,31 +1,18 @@
 <template>
     <v-tab-item :value="$route.path" class="pt-3">
         <v-toolbar flat height="90">
-            <v-row
-                class="d-flex justify-space-between align-center flex-wrap"
-                style="width: 100%"
-            >
-                <v-btn
-                    color="secondary"
-                    class="text-capitalize d-flex mx-auto mx-sm-0"
-                    depressed
-                >
-                    Add registration plan
-                </v-btn>
+            <v-btn
+                color="secondary"
+                class="text-capitalize px-5"
+                depressed
+                v-text="translations.addRegistrationPlan[lang]"
+            ></v-btn>
 
-                <v-col cols="12" sm="4" class="px-0 mx-auto mx-sm-0">
-                    <v-text-field
-                        label="Search"
-                        color="secondary"
-                        rounded
-                        outlined
-                        dense
-                        clearable
-                        hide-details
-                        :prepend-inner-icon="icons.mdiMagnify"
-                    ></v-text-field>
-                </v-col>
-            </v-row>
+            <v-spacer></v-spacer>
+
+            <v-col cols="12" sm="4" class="pa-0">
+                <b-search-field></b-search-field>
+            </v-col>
         </v-toolbar>
 
         <v-sheet outlined style="overflow: auto">
@@ -41,25 +28,14 @@
 </template>
 
 <script>
-import { mdiMagnify } from "@mdi/js";
+import translations from "@/utils/translations/loyaltyPanel/subscriptions/registrationPlans";
 
 export default {
     name: "Pending",
 
+    mixins: [translations],
+
     data: () => ({
-        icons: { mdiMagnify },
-        headers: [
-            { text: "Name", value: "name" },
-            { text: "Type", value: "type" },
-            { text: "Description", value: "description" },
-            { text: "Amount/Rate", value: "amountRate" },
-            { text: "Points", value: "points" },
-            { text: "Check in points", value: "checkPoints" },
-            { text: "Visible", value: "visible" },
-            { text: "Payment Methods", value: "paymentMethods" },
-            { text: "Companies", value: "companies" },
-            { text: "Delete", value: "delete" }
-        ],
         registrationPlans: [
             {
                 name: "Argyris Packet",
@@ -74,6 +50,45 @@ export default {
             }
         ],
         itemsPerPageOptions: [10, 20, 30, -1]
-    })
+    }),
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
+        headers() {
+            return [
+                { text: this.translations.name[this.lang], value: "name" },
+                { text: this.translations.type[this.lang], value: "type" },
+                {
+                    text: this.translations.description[this.lang],
+                    value: "description"
+                },
+                {
+                    text: this.translations.amountRate[this.lang],
+                    value: "amountRate"
+                },
+                { text: this.translations.points[this.lang], value: "points" },
+                {
+                    text: this.translations.checkInPoints[this.lang],
+                    value: "checkPoints"
+                },
+                {
+                    text: this.translations.visible[this.lang],
+                    value: "visible"
+                },
+                {
+                    text: this.translations.paymentMethods[this.lang],
+                    value: "paymentMethods"
+                },
+                {
+                    text: this.translations.companies[this.lang],
+                    value: "companies"
+                },
+                { text: this.translations.delete[this.lang], value: "delete" }
+            ];
+        }
+    }
 };
 </script>

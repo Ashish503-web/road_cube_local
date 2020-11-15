@@ -20,7 +20,7 @@
         <v-data-table
             :headers="headers"
             :items="multipleCoupons"
-            :footer-props="{ itemsPerPageOptions }"
+            :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
             class="b-outlined"
         >
             <template v-slot:no-data>
@@ -46,8 +46,7 @@ export default {
     mixins: [translations],
 
     data: () => ({
-        icons: { mdiMagnify },
-        itemsPerPageOptions: [10, 25, 50, 100],
+        icons: { mdiMagnify }
     }),
 
     computed: {
@@ -62,32 +61,32 @@ export default {
             return [
                 {
                     text: this.translations.promoType[this.lang],
-                    value: "promo_type_name",
+                    value: "promo_type_name"
                 },
                 { text: this.translations.code[this.lang], value: "code" },
                 {
                     text: this.translations.available[this.lang],
-                    value: "available",
+                    value: "available"
                 },
                 { text: this.translations.points[this.lang], value: "points" },
                 {
                     text: this.translations.totalRedeemed[this.lang],
-                    value: "total_redeemed",
+                    value: "total_redeemed"
                 },
                 {
                     text: this.translations.date[this.lang],
-                    value: "created_at",
-                },
+                    value: "created_at"
+                }
             ];
-        },
+        }
     },
 
     methods: {
-        ...mapActions("storePanel/redeem/multipleCoupons", ["getItems"]),
+        ...mapActions("storePanel/redeem/multipleCoupons", ["getItems"])
     },
 
     mounted() {
         this.getItems();
-    },
+    }
 };
 </script>

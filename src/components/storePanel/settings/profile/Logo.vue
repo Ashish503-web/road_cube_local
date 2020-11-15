@@ -10,7 +10,15 @@
 
         <v-row no-gutters align="center" style="height: 120px">
             <v-col cols="12" sm="5" class="pr-2">
+                <v-skeleton-loader
+                    v-if="storeLoading"
+                    type="image"
+                    width="64"
+                    height="64"
+                    class="mx-auto rounded-circle"
+                ></v-skeleton-loader>
                 <v-img
+                    v-else
                     :src="logo"
                     width="64"
                     height="64"
@@ -107,7 +115,7 @@
 
 <script>
 import { mapMutations, mapActions } from "vuex";
-import translations from "@/utils/translations/storePanel/settings/logo";
+import translations from "@/utils/translations/logo";
 
 export default {
     name: "Logo",
@@ -139,6 +147,10 @@ export default {
     computed: {
         lang() {
             return this.$route.params.lang;
+        },
+
+        storeLoading() {
+            return this.$store.state.storePanel.loading;
         },
 
         loading() {

@@ -64,4 +64,8 @@ html,
 body {
     scroll-behavior: smooth !important;
 }
+
+.vuejs-clipper-basic__zoom-area {
+    border-radius: 50%;
+}
 </style>

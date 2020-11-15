@@ -2,28 +2,19 @@
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
             <v-toolbar flat height="90">
-                <v-row class="d-flex justify-space-between align-center flex-wrap" style="width: 100%">
-                    <v-btn
-                            color="secondary"
-                            class="text-capitalize d-flex mx-auto mx-sm-0"
-                            depressed
-                            @click="dialog = true"
-                    >add category
-                    </v-btn>
+                <v-btn
+                    color="secondary"
+                    class="text-capitalize d-flex mx-auto mx-sm-0"
+                    depressed
+                    v-text="translations.addCategory[lang]"
+                    @click="dialog = true"
+                ></v-btn>
 
-                    <v-col cols="12" sm="4" class="px-0 mx-auto mx-sm-0">
-                        <v-text-field
-                                label="Search"
-                                color="secondary"
-                                rounded
-                                outlined
-                                dense
-                                clearable
-                                hide-details
-                                :prepend-inner-icon="icons.mdiMagnify"
-                        ></v-text-field>
-                    </v-col>
-                </v-row>
+                <v-spacer></v-spacer>
+
+                <v-col cols="12" sm="4" class="pa-0">
+                    <b-search-field></b-search-field>
+                </v-col>
             </v-toolbar>
 
             <v-data-table
@@ -47,7 +38,10 @@
                             </v-btn>
                         </template>
 
-                        <span style="font-weight: 600">Update</span>
+                        <span
+                            class="font-weight-bold"
+                            v-text="translations.update[lang]"
+                        ></span>
                     </v-tooltip>
 
                     <v-tooltip color="secondary" top>
@@ -62,44 +56,37 @@
                             </v-btn>
                         </template>
 
-                        <span style="font-weight: 600">Delete</span>
+                        <span
+                            class="font-weight-bold"
+                            v-text="translations.delete[lang]"
+                        ></span>
                     </v-tooltip>
                 </template>
             </v-data-table>
 
-            <v-dialog v-model="dialog" :max-width="$vuetify.breakpoint.smAndDown ? '90%' : '40%'" scrollable>
-                <CategoryForm @close="dialog = false" />
+            <v-dialog v-model="dialog" max-width="500" scrollable>
+                <CategoryForm @cancel="dialog = false" />
             </v-dialog>
-
-            <DeleteDialog />
         </v-sheet>
     </v-container>
 </template>
 
 <script>
-import { mdiMagnify, mdiPencilOutline, mdiClose } from "@mdi/js";
-import CategoryForm from "../../components/loyaltyPanel/categoryManagement/CategoryForm.vue";
-import DeleteDialog from "@/components/loyaltyPanel/userRights/DeleteDialog.vue";
+import { mdiPencilOutline, mdiClose } from "@mdi/js";
 import { mapMutations } from "vuex";
+
+import CategoryForm from "@/components/loyaltyPanel/categoryManagement/CategoryForm.vue";
+import translations from "@/utils/translations/loyaltyPanel/categoryManagement";
 
 export default {
     name: "CategoryManagement",
-    components: { CategoryForm, DeleteDialog },
+
+    components: { CategoryForm },
+
+    mixins: [translations],
+
     data: () => ({
-        icons: {
-            mdiMagnify,
-            mdiPencilOutline,
-            mdiClose
-        },
-        headers: [
-            { text: "Category Name", value: "categoryName" },
-            { text: "Font Color", value: "fontColor" },
-            { text: "Background Color", value: "backgroundColor" },
-            { text: "Image Category", value: "imageCategory" },
-            { text: "English", value: "english" },
-            { text: "Italian", value: "italian" },
-            { text: "Actions", value: "actions" }
-        ],
+        icons: { mdiPencilOutline, mdiClose },
         items: [
             {
                 categoryName: "Ένδυση, Υποδήματα, Αξεσουάρ",
@@ -112,7 +99,45 @@ export default {
         itemsPerPageOptions: [10, 25, 50, 100],
         dialog: false
     }),
+
     computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
+        headers() {
+            return [
+                {
+                    text: this.translations.categoryName[this.lang],
+                    value: "categoryName"
+                },
+                {
+                    text: this.translations.fontColor[this.lang],
+                    value: "fontColor"
+                },
+                {
+                    text: this.translations.backgroundColor[this.lang],
+                    value: "backgroundColor"
+                },
+                {
+                    text: this.translations.imageCategory[this.lang],
+                    value: "imageCategory"
+                },
+                {
+                    text: this.translations.english[this.lang],
+                    value: "english"
+                },
+                {
+                    text: this.translations.italian[this.lang],
+                    value: "italian"
+                },
+                {
+                    text: this.translations.actions[this.lang],
+                    value: "actions"
+                }
+            ];
+        },
+
         deleteDialog: {
             get() {
                 return this.$store.state.loyaltyPanel.userRights.deleteDialog;
@@ -121,12 +146,11 @@ export default {
             set(val) {
                 this.setDeleteDialog(val);
             }
-        },
+        }
     },
+
     methods: {
-        ...mapMutations("loyaltyPanel/userRights", [
-            "setDeleteDialog"
-        ])
+        ...mapMutations("loyaltyPanel/userRights", ["setDeleteDialog"])
     }
 };
 </script>

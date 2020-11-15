@@ -53,7 +53,7 @@ export default {
                                 en: "Transactions",
                                 it: ""
                             },
-                            to: `/${this.lang}/storePanel/transactions`
+                            to: `/${this.lang}/storePanel/transactions?page=1`
                         },
                         {
                             icon: mdiGift,

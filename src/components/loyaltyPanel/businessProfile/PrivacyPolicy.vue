@@ -1,12 +1,10 @@
 <template>
     <b-standard-card
-        title="Privacy Policy"
-        title-color="white"
-        cancel-text="delete"
-        submit-text="save"
+        :title="translations.title[lang]"
+        :cancel-text="{ el: '', en: 'delete', it: '' }"
+        :submit-text="{ el: '', en: 'save', it: '' }"
     >
-        Upload the business privacy policy (in .pdf format). Select the pdf file
-        and then click save.
+        {{ translations.info[lang] }}
 
         <v-row no-gutters align="center" class="mt-3">
             <v-col cols="5" class="pr-2">
@@ -16,7 +14,7 @@
                 >
             </v-col>
             <v-col cols="7" class="pl-2">
-                Privacy policy:
+                {{ translations.privacyPolicy[lang] }}
                 <v-file-input
                     color="secondary"
                     class="mt-1"
@@ -30,7 +28,17 @@
 </template>
 
 <script>
+import translations from "@/utils/translations/loyaltyPanel/businessProfile/privacyPolicy";
+
 export default {
-    name: "PrivacyPolicy"
+    name: "PrivacyPolicy",
+
+    mixins: [translations],
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        }
+    }
 };
 </script>

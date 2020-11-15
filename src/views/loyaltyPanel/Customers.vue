@@ -16,7 +16,7 @@
                 </v-tab>
 
                 <v-btn
-                        class="text-capitalize text-left d-flex justify-lg-center justify-start px-3"
+                    class="text-capitalize text-left d-flex justify-lg-center justify-start px-3"
                     color="secondary"
                     text
                     tile
@@ -34,29 +34,37 @@
             <v-tabs-items v-model="tab">
                 <v-tab-item>
                     <v-toolbar flat height="90">
-                        <v-row class="d-flex justify-space-between align-center flex-wrap" style="width: 100%">
+                        <v-row
+                            class="d-flex justify-space-between align-center flex-wrap"
+                            style="width: 100%"
+                        >
                             <v-btn
-                                    color="secondary"
-                                    class="text-capitalize d-flex mx-auto mx-sm-0"
-                                    depressed
-                                    @click="
-                                () => {
-                                    mode = 1;
-                                    customerDialog = true;
-                                }
-                            "
-                            >add new customer</v-btn>
+                                color="secondary"
+                                class="text-capitalize d-flex mx-auto mx-sm-0"
+                                depressed
+                                @click="
+                                    () => {
+                                        mode = 1;
+                                        customerDialog = true;
+                                    }
+                                "
+                                >add new customer</v-btn
+                            >
 
-                            <v-col cols="12" sm="4" class="px-0 mx-auto mx-sm-0">
+                            <v-col
+                                cols="12"
+                                sm="4"
+                                class="px-0 mx-auto mx-sm-0"
+                            >
                                 <v-text-field
-                                        label="Search"
-                                        color="secondary"
-                                        rounded
-                                        outlined
-                                        dense
-                                        clearable
-                                        hide-details
-                                        :prepend-inner-icon="icons.mdiMagnify"
+                                    label="Search"
+                                    color="secondary"
+                                    rounded
+                                    outlined
+                                    dense
+                                    clearable
+                                    hide-details
+                                    :prepend-inner-icon="icons.mdiMagnify"
                                 ></v-text-field>
                             </v-col>
                         </v-row>

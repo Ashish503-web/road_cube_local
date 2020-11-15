@@ -1,6 +1,6 @@
 <template>
-    <v-tab-item :value="$route.path">
-        <v-row no-gutters align="center" class="pa-4 pb-8">
+    <v-tab-item :value="$route.path" class="pa-3">
+        <v-row no-gutters align="center" class="pa-4 pt-1 pb-8">
             <v-col cols="auto">
                 <v-img
                     src="@/assets/credit-card.png"
@@ -216,17 +216,7 @@ export default {
 };
 </script>
 
-<style>
-.v-data-footer {
-    padding: 12px 0;
-}
-</style>
-
 <style scoped>
-.b-outlined-bottom {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.12);
-}
-
 .b-outlined-bottom:last-child {
     border-bottom: none;
 }

@@ -115,7 +115,7 @@ export default {
         return {
             icons: { mdiPencilOutline, mdiClose },
             page: +this.$route.query.page,
-            mode: 0,
+            mode: 0
         };
     },
 
@@ -131,20 +131,20 @@ export default {
             return [
                 {
                     text: this.translations.productName[this.lang],
-                    value: `name[${this.lang}]`,
+                    value: `name[${this.lang}]`
                 },
                 {
                     text: this.translations.productDescription[this.lang],
-                    value: `description[${this.lang}]`,
+                    value: `description[${this.lang}]`
                 },
                 {
                     text: this.translations.sellingPrice[this.lang],
-                    value: "average_price",
+                    value: "average_price"
                 },
                 {
                     text: this.translations.actions[this.lang],
-                    value: "actions",
-                },
+                    value: "actions"
+                }
             ];
         },
 
@@ -155,7 +155,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            },
+            }
         },
 
         deleteDialog: {
@@ -165,7 +165,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            },
+            }
         },
 
         productGroup: {
@@ -175,7 +175,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
+            }
         },
 
         query() {
@@ -186,7 +186,7 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        },
+        }
     },
 
     methods: {
@@ -194,12 +194,12 @@ export default {
             "setDialog",
             "setDeleteDialog",
             "setResetSuccess",
-            "setResetValidation",
+            "setResetValidation"
         ]),
         ...mapMutations("storePanel/productGroups", [
             "setShowImageUpload",
             "setShowWeekdays",
-            "setItem",
+            "setItem"
         ]),
         ...mapActions("storePanel/productGroups", ["getItems", "remove"]),
 
@@ -218,7 +218,7 @@ export default {
             this.dialog = true;
             setTimeout(() => this.setResetSuccess(true), 300);
             this.setResetValidation(true);
-        },
+        }
     },
 
     watch: {
@@ -234,8 +234,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query,
-                    },
+                        ...this.$route.query
+                    }
                 });
             }
             this.getItems(this.query);
@@ -243,7 +243,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        },
+        }
     },
 
     beforeCreate() {
@@ -251,20 +251,14 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query,
-                },
+                    ...this.$route.query
+                }
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    },
+    }
 };
 </script>
-
-<style>
-.v-data-footer {
-    padding: 12px 0;
-}
-</style>

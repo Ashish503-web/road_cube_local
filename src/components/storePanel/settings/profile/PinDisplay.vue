@@ -12,7 +12,12 @@
             <v-col cols="12" sm="5" class="pr-2">
                 <v-sheet width="84" class="relative mx-auto">
                     <v-img :src="bubble" width="84" height="84"></v-img>
-                    <v-img :src="mapLogo" class="map-new-pin"></v-img>
+                    <v-skeleton-loader
+                        v-if="storeLoading"
+                        type="image"
+                        class="map-new-pin"
+                    ></v-skeleton-loader>
+                    <v-img v-else :src="mapLogo" class="map-new-pin"></v-img>
                 </v-sheet>
             </v-col>
 
@@ -107,7 +112,7 @@
 
 <script>
 import { mapMutations, mapActions } from "vuex";
-import translations from "@/utils/translations/storePanel/settings/pinDisplay";
+import translations from "@/utils/translations/pinDisplay";
 import bubble from "@/assets/new_bubble_image.png";
 
 export default {
@@ -141,6 +146,10 @@ export default {
     computed: {
         lang() {
             return this.$route.params.lang;
+        },
+
+        storeLoading() {
+            return this.$store.state.storePanel.loading;
         },
 
         loading() {

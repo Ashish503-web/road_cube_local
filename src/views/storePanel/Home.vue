@@ -2,238 +2,118 @@
     <v-container fluid class="b-container">
         <v-row>
             <v-col cols="12">
-                <v-card outlined tile>
-                    <v-row class="pb-3">
-                        <v-col cols="12" sm="6" md="6" lg="3">
-                            <v-card-title class="ml-7 pb-0">{{
+                <v-skeleton-loader
+                    v-if="loading"
+                    type="image"
+                    height="112"
+                ></v-skeleton-loader>
+
+                <v-card v-else tile outlined class="py-6">
+                    <v-row
+                        no-gutters
+                        justify="space-between"
+                        align="center"
+                        class="px-5"
+                    >
+                        <v-col cols="auto">
+                            <v-card-title class="pa-0">{{
                                 statistics.name
                             }}</v-card-title>
                             <h4
-                                class="subtitle-1 success--text pl-11"
+                                class="subtitle-1 success--text"
                                 v-text="translations.online[lang]"
                             ></h4>
                         </v-col>
 
-                        <v-col cols="12" sm="6" md="6" lg="3">
-                            <v-card-title class="pb-0 justify-center">{{
-                                statistics.total_customers
-                            }}</v-card-title>
-
-                            <v-card-title
-                                class="pa-0 font-weight-light justify-center text--secondary"
-                            >
-                                <v-icon
-                                    v-text="icons.mdiAccountGroup"
-                                    class="mr-1"
-                                ></v-icon>
-                                {{ translations.customer[lang] }}
-                            </v-card-title>
-                        </v-col>
-
-                        <v-col cols="12" sm="6" md="6" lg="3">
-                            <v-card-title class="pb-0 justify-center">{{
-                                statistics.total_transactions
+                        <v-col
+                            v-for="statistic in titleStatistics"
+                            :key="statistic.text['en']"
+                            cols="auto"
+                        >
+                            <v-card-title class="pa-0 justify-center">{{
+                                statistic.value
                             }}</v-card-title>
                             <v-card-title
                                 class="pa-0 font-weight-light justify-center text--secondary"
                             >
                                 <v-icon
-                                    v-text="icons.mdiDatabase"
+                                    v-text="statistic.icon"
                                     class="mr-1"
                                 ></v-icon>
-                                {{ translations.transactions[lang] }}
-                            </v-card-title>
-                        </v-col>
-
-                        <v-col cols="12" sm="6" md="6" lg="3">
-                            <v-card-title class="pb-0 justify-center">{{
-                                statistics.total_income
-                            }}</v-card-title>
-
-                            <v-card-title
-                                class="pa-0 font-weight-light justify-center text--secondary"
-                            >
-                                <v-icon
-                                    v-text="icons.mdiCurrencyEur"
-                                    class="mr-1"
-                                ></v-icon>
-                                {{ translations.total[lang] }}
+                                {{ statistic.text[lang] }}
                             </v-card-title>
                         </v-col>
                     </v-row>
                 </v-card>
             </v-col>
 
-            <v-col cols="12" sm="6" lg="3">
-                <v-card tile class="pa-5" outlined>
+            <v-col
+                v-for="view in views"
+                v-bind:key="view.text['en']"
+                cols="12"
+                sm="6"
+                lg="3"
+            >
+                <v-skeleton-loader
+                    v-if="loading"
+                    type="image"
+                    height="100"
+                ></v-skeleton-loader>
+
+                <v-card v-else tile outlined class="pa-5">
                     <v-row no-gutters justify="space-between" align="center">
                         <v-col cols="auto">
                             <v-avatar color="accent" size="60">
-                                <v-icon
-                                    dark
-                                    large
-                                    v-text="icons.mdiBinoculars"
-                                ></v-icon>
+                                <v-icon dark large v-text="view.icon"></v-icon>
                             </v-avatar>
                         </v-col>
-                        <v-col cols="auto">
-                            <v-card-title
-                                class="subtitle-1 font-weight-bold pa-0 justify-end"
-                                >{{ statistics.views.map_views }}</v-card-title
-                            >
 
+                        <v-col cols="auto" class="text-right">
+                            <h4
+                                class="subtitle-1 font-weight-bold"
+                                v-text="view.value"
+                            ></h4>
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
-                                v-text="translations.showsOnMap[lang]"
+                                v-text="view.text[lang]"
                             ></h4>
                         </v-col>
                     </v-row>
                 </v-card>
             </v-col>
 
-            <v-col cols="12" sm="6" lg="3">
-                <v-card tile class="pa-5" outlined>
+            <v-col
+                v-for="transaction in transactions"
+                v-bind:key="transaction.text[lang]"
+                cols="12"
+                md="6"
+            >
+                <v-skeleton-loader
+                    v-if="loading"
+                    type="image"
+                    height="100"
+                ></v-skeleton-loader>
+
+                <v-card v-else tile outlined class="pa-5">
                     <v-row no-gutters justify="space-between" align="center">
                         <v-col cols="auto">
                             <v-avatar color="accent" size="60">
                                 <v-icon
                                     dark
                                     large
-                                    v-text="icons.mdiCursorDefault"
+                                    v-text="transaction.icon"
                                 ></v-icon>
                             </v-avatar>
                         </v-col>
-                        <v-col cols="auto">
-                            <v-card-title
-                                class="subtitle-1 font-weight-bold pa-0 justify-end"
-                                >{{ statistics.views.visits }}</v-card-title
-                            >
 
+                        <v-col cols="auto" class="text-right">
                             <h4
-                                class="subtitle-2 font-weight-regular text--secondary"
-                                v-text="translations.clicks[lang]"
+                                class="subtitle-1 font-weight-bold"
+                                v-text="transaction.value"
                             ></h4>
-                        </v-col>
-                    </v-row>
-                </v-card>
-            </v-col>
-
-            <v-col cols="12" sm="6" lg="3">
-                <v-card tile class="pa-5" outlined>
-                    <v-row no-gutters justify="space-between" align="center">
-                        <v-col cols="auto">
-                            <v-avatar color="accent" size="60">
-                                <v-icon
-                                    dark
-                                    large
-                                    v-text="icons.mdiCompassOutline"
-                                ></v-icon>
-                            </v-avatar>
-                        </v-col>
-                        <v-col cols="auto">
-                            <v-card-title
-                                class="subtitle-1 font-weight-bold pa-0 justify-end"
-                                >{{ statistics.views.nav_clicks }}</v-card-title
-                            >
-
                             <h4
                                 class="subtitle-2 font-weight-regular text--secondary"
-                                v-text="translations.clickOnNavigate[lang]"
-                            ></h4>
-                        </v-col>
-                    </v-row>
-                </v-card>
-            </v-col>
-
-            <v-col cols="12" sm="6" lg="3">
-                <v-card tile class="pa-5" outlined>
-                    <v-row no-gutters justify="space-between" align="center">
-                        <v-col cols="auto">
-                            <v-avatar color="accent" size="60">
-                                <v-icon
-                                    dark
-                                    large
-                                    v-text="icons.mdiPhone"
-                                ></v-icon>
-                            </v-avatar>
-                        </v-col>
-                        <v-col cols="auto">
-                            <v-card-title
-                                class="subtitle-1 font-weight-bold pa-0 justify-end"
-                                >{{
-                                    statistics.views.phone_clicks
-                                }}</v-card-title
-                            >
-
-                            <h4
-                                class="subtitle-2 font-weight-regular text--secondary"
-                                v-text="translations.phoneClicks[lang]"
-                            ></h4>
-                        </v-col>
-                    </v-row>
-                </v-card>
-            </v-col>
-
-            <v-col cols="12" sm="6">
-                <v-card tile class="pa-5" outlined>
-                    <v-row no-gutters justify="space-between" align="center">
-                        <v-col cols="auto">
-                            <v-avatar color="accent" size="60">
-                                <v-icon
-                                    dark
-                                    large
-                                    v-text="icons.mdiWallet"
-                                ></v-icon>
-                            </v-avatar>
-                        </v-col>
-                        <v-col class="ml-4">
-                            <v-card-title
-                                class="subtitle-1 font-weight-bold pa-0"
-                                >{{
-                                    statistics.last_twelve_hours_payments
-                                        .total_transactions +
-                                        ` ${translations.transactions[lang]} / ` +
-                                        statistics.last_twelve_hours_payments
-                                            .total_price +
-                                        ` ${translations.total[lang]}`
-                                }}</v-card-title
-                            >
-                            <h4
-                                class="subtitle-2 font-weight-regular text--secondary"
-                                v-text="translations.paymentsLast12Hours[lang]"
-                            ></h4>
-                        </v-col>
-                    </v-row>
-                </v-card>
-            </v-col>
-
-            <v-col cols="12" sm="6">
-                <v-card tile class="pa-5" outlined>
-                    <v-row no-gutters justify="space-between" align="center">
-                        <v-col cols="auto">
-                            <v-avatar color="accent" size="60">
-                                <v-icon
-                                    dark
-                                    large
-                                    v-text="icons.mdiWallet"
-                                ></v-icon>
-                            </v-avatar>
-                        </v-col>
-                        <v-col class="ml-4">
-                            <v-card-title
-                                class="subtitle-1 font-weight-bold pa-0"
-                                >{{
-                                    statistics.last_week_payments
-                                        .total_transactions +
-                                        ` ${translations.transactions[lang]} / ` +
-                                        statistics.last_week_payments
-                                            .total_price +
-                                        ` ${translations.total[lang]}`
-                                }}</v-card-title
-                            >
-                            <h4
-                                class="subtitle-2 font-weight-regular text--secondary"
-                                v-text="translations.paymentsLastWeek[lang]"
+                                v-text="transaction.text[lang]"
                             ></h4>
                         </v-col>
                     </v-row>
@@ -241,7 +121,13 @@
             </v-col>
 
             <v-col cols="12">
-                <v-card tile outlined>
+                <v-skeleton-loader
+                    v-if="loading"
+                    type="image"
+                    height="307"
+                ></v-skeleton-loader>
+
+                <v-card v-else tile outlined>
                     <v-card-title
                         v-text="translations.transactions[lang]"
                     ></v-card-title>
@@ -281,7 +167,7 @@ import {
     mdiWallet
 } from "@mdi/js";
 
-import translations from "@/utils/translations/storePanel/home";
+import translations from "@/utils/translations/home";
 
 const gradients = [
     ["#222"],
@@ -298,16 +184,6 @@ export default {
     mixins: [translations],
 
     data: () => ({
-        icons: {
-            mdiAccountGroup,
-            mdiDatabase,
-            mdiCurrencyEur,
-            mdiBinoculars,
-            mdiCursorDefault,
-            mdiCompassOutline,
-            mdiPhone,
-            mdiWallet
-        },
         width: 2,
         radius: 10,
         padding: 8,
@@ -325,6 +201,122 @@ export default {
     computed: {
         lang() {
             return this.$route.params.lang;
+        },
+
+        loading() {
+            return this.$store.state.storePanel.loading;
+        },
+
+        titleStatistics() {
+            return [
+                {
+                    icon: mdiAccountGroup,
+                    text: {
+                        el: "",
+                        en: "Customer",
+                        it: ""
+                    },
+                    value: this.statistics.total_customers
+                },
+                {
+                    icon: mdiDatabase,
+                    text: {
+                        el: "",
+                        en: "Transactions",
+                        it: ""
+                    },
+                    value: this.statistics.total_transactions
+                },
+                {
+                    icon: mdiCurrencyEur,
+                    text: {
+                        el: "",
+                        en: "Total",
+                        it: ""
+                    },
+                    value: this.statistics.total_income
+                }
+            ];
+        },
+
+        views() {
+            return [
+                {
+                    icon: mdiBinoculars,
+                    text: {
+                        el: "",
+                        en: "User views",
+                        it: ""
+                    },
+                    value: this.statistics.views.map_views
+                },
+                {
+                    icon: mdiCursorDefault,
+                    text: {
+                        el: "",
+                        en: "Clicks",
+                        it: ""
+                    },
+                    value: this.statistics.views.visits
+                },
+                {
+                    icon: mdiDatabase,
+                    text: {
+                        el: "",
+                        en: "User leads",
+                        it: ""
+                    },
+                    value: this.statistics.views.nav_clicks
+                },
+                {
+                    icon: mdiCompassOutline,
+                    text: {
+                        el: "",
+                        en: "Payments",
+                        it: ""
+                    },
+                    value: this.statistics.views.phone_clicks
+                }
+            ];
+        },
+
+        transactions() {
+            return [
+                {
+                    icon: mdiWallet,
+                    text: {
+                        el: "",
+                        en: "Payments Last 12 Hours",
+                        it: ""
+                    },
+                    value: `
+                        ${
+                            this.statistics.last_twelve_hours_payments
+                                .total_transactions
+                        }
+                        ${this.translations.transactions[this.lang]} /
+                        ${
+                            this.statistics.last_twelve_hours_payments
+                                .total_price
+                        }
+                        ${this.translations.total[this.lang]}
+                    `
+                },
+                {
+                    icon: mdiWallet,
+                    text: {
+                        el: "",
+                        en: "Payments Last Week",
+                        it: ""
+                    },
+                    value: `
+                        ${this.statistics.last_week_payments.total_transactions}
+                        ${this.translations.transactions[this.lang]} /
+                        ${this.statistics.last_week_payments.total_price}
+                        ${this.translations.total[this.lang]}
+                    `
+                }
+            ];
         }
     },
 

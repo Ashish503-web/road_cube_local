@@ -1,4 +1,4 @@
-import Product from "@/models/storePanel/Product";
+import Product from "@/models/loyaltyPanel/Product";
 
 export default {
     namespaced: true,
@@ -66,6 +66,8 @@ export default {
 
                 const { data } = await Product.get(query);
                 const { products, pagination } = data.data;
+
+                console.log(data);
 
                 commit("setItems", products);
                 commit("setServerItemsLength", pagination.total, {

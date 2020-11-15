@@ -28,7 +28,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.path,
+            tab: this.$route.path
         };
     },
 
@@ -41,14 +41,14 @@ export default {
             return [
                 {
                     name: { el: "", en: "Products", it: "" },
-                    to: `/${this.lang}/storePanel/products/products-tab`,
+                    to: `/${this.lang}/storePanel/products/products-tab`
                 },
                 {
                     name: { el: "", en: "Product Groups", it: "" },
-                    to: `/${this.lang}/storePanel/products/product-groups`,
-                },
+                    to: `/${this.lang}/storePanel/products/product-groups`
+                }
             ];
-        },
+        }
     },
 
     watch: {
@@ -57,11 +57,11 @@ export default {
             handler(val) {
                 if (val.path === `/${this.lang}/storePanel/products`) {
                     this.$router.push(
-                        `/${this.lang}/storePanel/products/products-tab`
+                        `/${this.lang}/storePanel/products/products-tab?page=1`
                     );
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>

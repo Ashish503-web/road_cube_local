@@ -1,12 +1,11 @@
 <template>
     <b-standard-card
-        title="User Manual"
+        :title="translations.title[lang]"
         title-color="white"
-        cancel-text="delete"
-        submit-text="save"
+        :cancel-text="{ el: '', en: 'delete', it: '' }"
+        :submit-text="{ el: '', en: 'save', it: '' }"
     >
-        Upload user manual that every business will see (in .pdf format). Select
-        pdf file and then click save.
+        {{ translations.info[lang] }}
 
         <v-row no-gutters align="center" class="mt-3">
             <v-col cols="5" class="pr-2">
@@ -16,7 +15,7 @@
                 >
             </v-col>
             <v-col cols="7" class="pl-2">
-                Choose pdf file:
+                {{ translations.uploadText[lang] }}
                 <v-file-input
                     color="secondary"
                     class="mt-1"
@@ -30,7 +29,17 @@
 </template>
 
 <script>
+import translations from "@/utils/translations/loyaltyPanel/businessProfile/userManual";
+
 export default {
-    name: "UserManual"
+    name: "UserManual",
+
+    mixins: [translations],
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        }
+    }
 };
 </script>

@@ -1,7 +1,6 @@
 <template>
     <b-standard-card
-        title="API Authentication"
-        title-color="white"
+        :title="translations.title[lang]"
         height="auto"
         class="mt-5"
     >
@@ -9,28 +8,36 @@
 
         <v-row no-gutters justify="space-between" align="center">
             <v-col cols="6">
-                <b-text-field type="password" label="Password"></b-text-field>
+                <b-text-field
+                    type="password"
+                    :label="translations.password[lang]"
+                ></b-text-field>
             </v-col>
 
             <v-col cols="auto">
-                <v-btn color="secondary" class="text-capitalize mt-3" depressed
-                    >get token</v-btn
-                >
+                <v-btn
+                    color="secondary"
+                    class="text-capitalize mt-3"
+                    depressed
+                    v-text="translations.getToken[lang]"
+                ></v-btn>
             </v-col>
 
             <v-col cols="12" class="secondary--text mt-3">
-                You can find detailed documentation
+                {{ translations.detailedDocumentation[lang] }}
                 <a
                     class="secondary--text subtitle-2"
                     href="https://documenter.getpostman.com/view/5813491/SzKQxfkT?version=latest"
                     target="_blank"
-                    >here</a
-                >
+                    v-text="translations.here[lang]"
+                ></a>
             </v-col>
 
-            <v-col cols="auto" class="subtitle-2 mt-3">
-                Reset all previously created tokens:
-            </v-col>
+            <v-col
+                cols="auto"
+                class="subtitle-2 mt-3"
+                v-text="translations.resetPreviously[lang]"
+            ></v-col>
 
             <v-col class="pl-3">
                 <v-switch
@@ -44,7 +51,17 @@
 </template>
 
 <script>
+import translations from "@/utils/translations/loyaltyPanel/businessProfile/apiAuthentication";
+
 export default {
-    name: "ApiAuthentication"
+    name: "ApiAuthentication",
+
+    mixins: [translations],
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        }
+    }
 };
 </script>

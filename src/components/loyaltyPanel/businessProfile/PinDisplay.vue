@@ -1,26 +1,28 @@
 <template>
     <b-standard-card
-        title="Pin Display"
-        title-color="white"
+        :title="translations.title[lang]"
         :submit-text="{ el: '', en: 'update logo', it: '' }"
         :loading="loading"
         :error-message="errorMessage"
         @submit="uploadMapLogo({ type: 'mapLogo', imageFile })"
     >
-        <div style="height: 100px">
-            Here you can change the display of the pin on the map:
-        </div>
+        <div style="height: 100px" v-text="translations.info[lang]"></div>
 
         <v-row no-gutters align="center" style="height: 120px">
             <v-col cols="12" sm="5" class="pr-2">
                 <v-sheet width="84" class="relative mx-auto">
                     <v-img :src="bubble" width="84" height="84"></v-img>
-                    <v-img :src="mapLogo" class="map-new-pin"></v-img>
+                    <v-skeleton-loader
+                        v-if="companyLoading"
+                        type="image"
+                        class="map-new-pin"
+                    ></v-skeleton-loader>
+                    <v-img v-else :src="mapLogo" class="map-new-pin"></v-img>
                 </v-sheet>
             </v-col>
 
             <v-col cols="12" sm="7" class="pl-0 pl-sm-2">
-                Press the following button to choose image:
+                {{ translations.uploadText[lang] }}
                 <v-file-input
                     v-model="fileInput"
                     color="secondary"
@@ -112,8 +114,12 @@
 import bubble from "@/assets/new_bubble_image.png";
 import { mapMutations, mapActions } from "vuex";
 
+import translations from "@/utils/translations/pinDisplay";
+
 export default {
     name: "PinDisplay",
+
+    mixins: [translations],
 
     data() {
         return {
@@ -139,6 +145,14 @@ export default {
     },
 
     computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
+        companyLoading() {
+            return this.$store.state.loyaltyPanel.loading;
+        },
+
         loading() {
             return this.$store.state.loyaltyPanel.businessProfile.loading
                 .mapLogo;

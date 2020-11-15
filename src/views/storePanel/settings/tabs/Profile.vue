@@ -1,37 +1,37 @@
 <template>
-    <v-tab-item :value="$route.path" class="pt-5">
-        <v-row no-gutters>
-            <v-col cols="12" md="6" class="pr-0 pr-md-2 mb-2 mb-md-0">
+    <v-tab-item :value="$route.path">
+        <v-row no-gutters class="pa-3 pt-6 b-grey">
+            <v-col cols="12" md="6" class="pr-3">
                 <Logo />
             </v-col>
-            <v-col cols="12" md="6" class="pl-0 pl-md-2">
+            <v-col cols="12" md="6" class="pl-3">
                 <PinDisplay />
             </v-col>
-            <v-col cols="12" class="mt-12">
+            <v-col cols="12" class="mt-6">
                 <BusinessInformation />
             </v-col>
-            <v-col cols="12" class="mt-12">
+            <v-col cols="12" class="mt-6">
                 <OperationHours />
             </v-col>
-            <v-col cols="12" md="6" class="pr-2 mt-12">
+            <v-col cols="12" md="6" class="pr-3 mt-6">
                 <Invoicing />
             </v-col>
-            <v-col cols="12" md="6" class="pl-2 mt-12">
+            <v-col cols="12" md="6" class="pl-3 mt-6">
                 <FastPayment />
             </v-col>
-            <v-col cols="12" md="6" class="pr-2 mt-12">
+            <v-col cols="12" md="6" class="pr-3 mt-6">
                 <Orders />
             </v-col>
-            <v-col cols="12" md="6" class="pl-2 mt-12">
+            <v-col cols="12" md="6" class="pl-3 mt-6">
                 <ChangePassword />
             </v-col>
-            <v-col cols="12" md="6" class="pr-2 mt-12">
+            <v-col cols="12" md="6" class="pr-3 mt-6">
                 <CompanyRedemption />
             </v-col>
-            <v-col cols="12" md="6" class="pl-2 mt-12">
+            <v-col cols="12" md="6" class="pl-3 mt-6">
                 <ApiAuthentication />
             </v-col>
-            <v-col cols="12" md="6" class="pr-2 mt-12">
+            <v-col cols="12" md="6" class="pr-3 mt-6">
                 <ProductCategories />
             </v-col>
         </v-row>

@@ -46,103 +46,43 @@
                 </v-col>
             </v-row>
 
-            <v-toolbar flat class="my-7 my-sm-5" height="auto">
-                <v-row class="d-flex justify-space-between align-center">
-                    <v-menu offset-y right>
+            <v-toolbar flat height="90">
+                <ExportLinks withPDF />
+
+                <v-spacer></v-spacer>
+
+                <v-col cols="12" sm="6" md="4">
+                    <v-menu
+                        :close-on-content-click="false"
+                        offset-y
+                        max-width="290px"
+                    >
                         <template v-slot:activator="{ on }">
-                            <v-btn text v-on="on">
-                                <v-icon
-                                    color="secondary"
-                                    v-text="icons.mdiFormatListCheckbox"
-                                ></v-icon>
-                            </v-btn>
-                        </template>
-
-                        <v-list dense>
-                            <v-list-item href="#">
-                                <v-list-item-icon>
-                                    <v-icon
-                                        color="green darken-3"
-                                        v-text="icons.mdiMicrosoftExcel"
-                                    ></v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-title
-                                    >Export to Excel
-                                </v-list-item-title>
-                            </v-list-item>
-
-                            <v-list-item href="#">
-                                <v-list-item-icon>
-                                    <v-icon
-                                        color="red darken-4"
-                                        v-text="icons.mdiFilePdf"
-                                    ></v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-title
-                                    >Export to PDF</v-list-item-title
-                                >
-                            </v-list-item>
-
-                            <v-list-item href="#">
-                                <v-list-item-icon>
-                                    <v-icon
-                                        color="blue darken-3"
-                                        v-text="icons.mdiFileDelimitedOutline"
-                                    ></v-icon>
-                                </v-list-item-icon>
-                                <v-list-item-title
-                                    >Export to CSV</v-list-item-title
-                                >
-                            </v-list-item>
-                        </v-list>
-                    </v-menu>
-
-                    <v-row class="d-flex justify-end align-center ">
-                        <v-col cols="12" sm="6" md="4" class="py-0">
-                            <v-menu
-                                :close-on-content-click="false"
-                                offset-y
-                                max-width="290px"
-                            >
-                                <template v-slot:activator="{ on }">
-                                    <v-text-field
-                                        label="Range"
-                                        color="secondary"
-                                        rounded
-                                        outlined
-                                        dense
-                                        clearable
-                                        hide-details
-                                        :prepend-inner-icon="
-                                            icons.mdiCalendarSearch
-                                        "
-                                        v-on="on"
-                                    ></v-text-field>
-                                </template>
-
-                                <v-date-picker
-                                    v-model="range"
-                                    color="secondary"
-                                    range
-                                    no-title
-                                ></v-date-picker>
-                            </v-menu>
-                        </v-col>
-
-                        <v-col cols="12" sm="6" md="4">
                             <v-text-field
-                                label="Search"
+                                label="Range"
                                 color="secondary"
                                 rounded
                                 outlined
                                 dense
                                 clearable
                                 hide-details
-                                :prepend-inner-icon="icons.mdiMagnify"
+                                :prepend-inner-icon="icons.mdiCalendarSearch"
+                                v-on="on"
                             ></v-text-field>
-                        </v-col>
-                    </v-row>
-                </v-row>
+                        </template>
+
+                        <v-date-picker
+                            v-model="range"
+                            color="secondary"
+                            range
+                            no-title
+                        ></v-date-picker>
+                    </v-menu>
+                </v-col>
+
+                <v-col cols="12" sm="6" md="4">
+                    <b-search-field></b-search-field>
+                </v-col>
             </v-toolbar>
 
             <v-data-table
@@ -156,45 +96,25 @@
 </template>
 
 <script>
-import {
-    mdiFormatListCheckbox,
-    mdiMicrosoftExcel,
-    mdiFilePdf,
-    mdiFileDelimitedOutline,
-    mdiCalendarSearch,
-    mdiMagnify,
-    mdiArrowRightCircle,
-    mdiGift,
-    mdiAccountGroup,
-    mdiHumanHandsup
-} from "@mdi/js";
+import { mdiCalendarSearch, mdiAccountGroup, mdiHumanHandsup } from "@mdi/js";
+
+import ExportLinks from "@/components/general/ExportLinks.vue";
+import translations from "@/utils/translations/loyaltyPanel/businessStatistics";
 
 export default {
     name: "BusinessStatistics",
+
+    components: { ExportLinks },
+
+    mixins: [translations],
+
     data: () => ({
-        tab: 0,
         icons: {
-            mdiFormatListCheckbox,
-            mdiMicrosoftExcel,
-            mdiFilePdf,
-            mdiFileDelimitedOutline,
             mdiCalendarSearch,
-            mdiMagnify,
-            mdiArrowRightCircle,
-            mdiGift,
             mdiAccountGroup,
             mdiHumanHandsup
         },
         range: [],
-        headers: [
-            { text: "No", value: "number", align: "center" },
-            { text: "Name", value: "name", align: "center" },
-            { text: "Total Amount", value: "total_amount", align: "center" },
-            { text: "Transactions", value: "transactions", align: "center" },
-            { text: "Total Points", value: "total_points", align: "center" },
-            { text: "Users", value: "users", align: "center" },
-            { text: "Cards", value: "cards", align: "center" }
-        ],
         statistics: [
             {
                 number: 1,
@@ -225,6 +145,33 @@ export default {
             }
         ],
         itemsPerPageOptions: [10, 20, 30, -1]
-    })
+    }),
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
+        headers() {
+            return [
+                { text: this.translations.no[this.lang], value: "number" },
+                { text: this.translations.name[this.lang], value: "name" },
+                {
+                    text: this.translations.totalAmount[this.lang],
+                    value: "total_amount"
+                },
+                {
+                    text: this.translations.transactions[this.lang],
+                    value: "transactions"
+                },
+                {
+                    text: this.translations.totalPoints[this.lang],
+                    value: "total_points"
+                },
+                { text: this.translations.users[this.lang], value: "users" },
+                { text: this.translations.cards[this.lang], value: "cards" }
+            ];
+        }
+    }
 };
 </script>

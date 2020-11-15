@@ -1,6 +1,10 @@
 <template>
     <v-container fluid class="b-container">
-        <v-sheet class="pa-3">
+        <v-sheet
+            :outlined="tabsWithMargin"
+            class="pa-3"
+            :class="{ 'mx-3': tabsWithMargin }"
+        >
             <v-tabs
                 v-model="tab"
                 color="secondary"
@@ -15,11 +19,11 @@
                     :to="tab.to"
                 ></v-tab>
             </v-tabs>
-
-            <v-tabs-items v-model="tab">
-                <router-view></router-view>
-            </v-tabs-items>
         </v-sheet>
+
+        <v-tabs-items v-model="tab">
+            <router-view></router-view>
+        </v-tabs-items>
     </v-container>
 </template>
 
@@ -77,6 +81,14 @@ export default {
                     to: `/${this.lang}/storePanel/settings/payment-methods`
                 }
             ];
+        },
+
+        tabsWithMargin() {
+            return (
+                this.$route.path ===
+                    `/${this.lang}/storePanel/settings/profile` ||
+                this.$route.path === `/${this.lang}/storePanel/settings/reward`
+            );
         }
     },
 
@@ -86,7 +98,7 @@ export default {
             handler(val) {
                 if (val.path === `/${this.lang}/storePanel/settings`) {
                     this.$router.push(
-                        `/${this.lang}/storePanel/settings/profile`
+                        `/${this.lang}/storePanel/settings/profile?page=1`
                     );
                 }
             }

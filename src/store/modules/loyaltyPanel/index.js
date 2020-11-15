@@ -1,4 +1,4 @@
-import branches from "./branches";
+import stores from "./stores";
 import products from "./products";
 import customer from "./customer";
 import userRights from "./userRights";
@@ -9,7 +9,7 @@ import Company from "@/models/loyaltyPanel/Company.js";
 export default {
     namespaced: true,
     modules: {
-        branches,
+        stores,
         products,
         customer,
         userRights,

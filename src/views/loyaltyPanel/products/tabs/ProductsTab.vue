@@ -5,9 +5,9 @@
                 color="secondary"
                 class="text-capitalize px-5"
                 depressed
+                v-text="translations.addProduct[lang]"
                 @click="open(1, {})"
-                >add product</v-btn
-            >
+            ></v-btn>
 
             <v-spacer></v-spacer>
 
@@ -33,7 +33,7 @@
                     color="secondary"
                     indeterminate
                 ></v-progress-circular>
-                <span v-else>No data available</span>
+                <span v-else v-text="translations.noData[lang]"></span>
             </template>
 
             <template v-slot:item.actions>
@@ -49,7 +49,10 @@
                         </v-btn>
                     </template>
 
-                    <span class="font-weight-bold">Update</span>
+                    <span
+                        class="font-weight-bold"
+                        v-text="translations.update[lang]"
+                    ></span>
                 </v-tooltip>
 
                 <v-tooltip color="secondary" top>
@@ -69,7 +72,10 @@
                         </v-btn>
                     </template>
 
-                    <span class="font-weight-bold">Delete</span>
+                    <span
+                        class="font-weight-bold"
+                        v-text="translations.delete[lang]"
+                    ></span>
                 </v-tooltip>
             </template>
         </v-data-table>
@@ -115,12 +121,16 @@
 import { mdiPencilOutline, mdiClose } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import debounce from "lodash/debounce";
+
 import ProductForm from "@/components/loyaltyPanel/products/ProductForm.vue";
+import translations from "@/utils/translations/loyaltyPanel/products/productsTab";
 
 export default {
     name: "ProductsTab",
 
     components: { ProductForm },
+
+    mixins: [translations],
 
     data() {
         return {
@@ -133,28 +143,6 @@ export default {
                 "Wholesale Price"
             ],
             selectedSearchType: "All Fields",
-            headers: [
-                {
-                    text: "Product Name",
-                    align: "start",
-                    sortable: true,
-                    value: "name",
-                    action: false
-                },
-                {
-                    text: "Product Description",
-                    value: "description",
-                    action: false
-                },
-                { text: "Selling Price", value: "selling", action: false },
-                { text: "Wholesale Price", value: "wholesale", action: false },
-                {
-                    text: "Actions",
-                    value: "actions",
-                    sortable: false,
-                    action: true
-                }
-            ],
             page: +this.$route.query.page,
             mode: 0,
             search: ""
@@ -169,19 +157,30 @@ export default {
             return this.$route.params.lang;
         },
 
-        // headers() {
-        //     return [
-        //         { text: "Product Name", value: `name[${this.lang}]` },
-        //         {
-        //             text: "Product Description",
-        //             value: `description[${this.lang}]`
-        //         },
-        //         { text: "Selling Price", value: "retail_price" },
-        //         { text: "Points", value: "reward_points" },
-        //         { text: "Coupon", value: "coupon" },
-        //         { text: "Actions", value: "actions" }
-        //     ];
-        // },
+        headers() {
+            return [
+                {
+                    text: this.translations.productName[this.lang],
+                    value: `name[${this.lang}]`
+                },
+                {
+                    text: this.translations.productDescription[this.lang],
+                    value: `description[${this.lang}]`
+                },
+                {
+                    text: this.translations.sellingPrice[this.lang],
+                    value: "retail_price"
+                },
+                {
+                    text: this.translations.wholesalePrice[this.lang],
+                    value: "wholesale_price"
+                },
+                {
+                    text: this.translations.actions[this.lang],
+                    value: "actions"
+                }
+            ];
+        },
 
         dialog: {
             get() {

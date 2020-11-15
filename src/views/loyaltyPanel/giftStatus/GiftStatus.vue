@@ -62,7 +62,7 @@ export default {
             handler(val) {
                 if (val.path === `/${this.lang}/loyaltyPanel/gift-status`) {
                     this.$router.push(
-                        `/${this.lang}/loyaltyPanel/gift-status/pending`
+                        `/${this.lang}/loyaltyPanel/gift-status/pending?page=1`
                     );
                 }
             }

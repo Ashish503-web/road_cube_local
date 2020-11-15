@@ -166,7 +166,7 @@ import {
     mdiMenuRight,
     mdiMenuDown,
     mdiCheckboxBlankOutline,
-    mdiCheckBoxOutline,
+    mdiCheckBoxOutline
 } from "@mdi/js";
 
 import validators from "./userValidators";
@@ -176,7 +176,7 @@ export default {
     name: "UserForm",
 
     props: {
-        mode: Number,
+        mode: Number
     },
 
     mixins: [validators],
@@ -187,10 +187,10 @@ export default {
                 mdiMenuRight,
                 mdiMenuDown,
                 mdiCheckboxBlankOutline,
-                mdiCheckBoxOutline,
+                mdiCheckBoxOutline
             },
             lang: "el",
-            showPassword: false,
+            showPassword: false
         };
     },
 
@@ -199,7 +199,7 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation",
+            "resetValidation"
         ]),
         ...mapState("storePanel/settings/users", ["moderatorPermissions"]),
 
@@ -209,11 +209,11 @@ export default {
 
         user() {
             return this.$store.state.storePanel.settings.users.user;
-        },
+        }
     },
 
     methods: {
-        ...mapActions("storePanel/settings/users", ["create", "update"]),
+        ...mapActions("storePanel/settings/users", ["create", "update"])
     },
 
     watch: {
@@ -221,14 +221,14 @@ export default {
             if (val) {
                 this.success = {
                     mobile: false,
-                    password: false,
+                    password: false
                 };
             }
-        },
+        }
     },
 
     mounted() {
         console.log(this.user.permissions);
-    },
+    }
 };
 </script>

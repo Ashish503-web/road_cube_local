@@ -16,6 +16,6 @@ export default {
         },
         setTabDialog(state, payload) {
             state.tabDialog = payload;
-        },
+        }
     }
 };

@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path" class="pt-5">
+    <v-tab-item :value="$route.path" class="pa-3">
         <v-alert type="error" class="font-weight-bold">
             The date for the next payment has passed. Please update your
             subscription. Cost: 62.000,00 €
@@ -29,7 +29,7 @@
         <v-data-table
             :headers="headers"
             :items="transactions"
-            :footer-props="{ itemsPerPageOptions }"
+            :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
             class="b-outlined"
         ></v-data-table>
     </v-tab-item>
@@ -44,7 +44,7 @@ export default {
 
     data: () => ({
         icons: {
-            mdiMagnify,
+            mdiMagnify
         },
         tab: 0,
         itemsPerPageOptions: [10, 25, 50, 100],
@@ -52,25 +52,25 @@ export default {
             { text: "Date", value: "date" },
             { text: "Description", value: "description" },
             { text: "Payment Through", value: "paymentThrough" },
-            { text: "Amount", value: "amount" },
+            { text: "Amount", value: "amount" }
         ],
         transactions: [
             {
                 date: "19-05-2020",
                 description: "Payment: Online",
                 paymentThrough: "Card: **********3434",
-                amount: "37,20 €",
-            },
-        ],
+                amount: "37,20 €"
+            }
+        ]
     }),
 
     methods: {
-        ...mapActions("storePanel/settings/paymentHistory", ["getItems"]),
+        ...mapActions("storePanel/settings/paymentHistory", ["getItems"])
     },
 
     mounted() {
         this.getItems();
-    },
+    }
 };
 </script>
 

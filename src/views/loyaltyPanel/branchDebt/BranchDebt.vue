@@ -8,8 +8,8 @@
             >
                 <v-tab
                     v-for="tab in tabs"
-                    :key="tab.name"
-                    v-text="tab.name"
+                    :key="tab.name['en']"
+                    v-text="tab.name[lang]"
                     :to="tab.to"
                     class="text-capitalize d-flex justify-sm-start justify-center px-3"
                     >Monthly invoicing</v-tab
@@ -41,12 +41,12 @@ export default {
         tabs() {
             return [
                 {
-                    to: `/${this.lang}/loyaltyPanel/branch-debt/monthly-invoicing`,
-                    name: "Monthly Invoicing"
+                    name: { el: "", en: "Monthly Invoicing", it: "" },
+                    to: `/${this.lang}/loyaltyPanel/branch-debt/monthly-invoicing`
                 },
                 {
-                    to: `/${this.lang}/loyaltyPanel/branch-debt/redemption-invoice`,
-                    name: "Redemption Invoice"
+                    name: { el: "", en: "Redemption Invoice", it: "" },
+                    to: `/${this.lang}/loyaltyPanel/branch-debt/redemption-invoice`
                 }
             ];
         }
@@ -58,7 +58,7 @@ export default {
             handler(val) {
                 if (val.path === `/${this.lang}/loyaltyPanel/branch-debt`) {
                     this.$router.push(
-                        `/${this.lang}/loyaltyPanel/branch-debt/monthly-invoicing`
+                        `/${this.lang}/loyaltyPanel/branch-debt/monthly-invoicing?page=1`
                     );
                 }
             }

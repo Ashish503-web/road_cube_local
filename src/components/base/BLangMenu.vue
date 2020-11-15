@@ -15,14 +15,14 @@
                 v-on="on"
             >
                 <img :src="lang.img" width="25" class="mr-1" />
-                <span class="subtitle-2">{{ lang.title }}</span>
+                <span class="subtitle-2">{{ lang.title[language] }}</span>
                 <v-icon
                     v-text="menu ? icons.mdiChevronUp : icons.mdiChevronDown"
                 ></v-icon>
             </v-row>
             <v-btn v-else class="text-capitalize" text v-on="on">
                 <img :src="lang.img" width="25" class="mr-1" />
-                {{ lang.title }}
+                {{ lang.title[language] }}
                 <v-icon
                     v-text="menu ? icons.mdiChevronUp : icons.mdiChevronDown"
                 ></v-icon>
@@ -30,10 +30,9 @@
         </template>
 
         <v-list dense>
-            <!-- <v-list-item-group color="secondary"> -->
             <v-list-item
                 v-for="lang in langs"
-                :key="lang.title"
+                :key="lang.urlTitle"
                 :value="lang"
                 :class="{
                     'pl-2': type === 'inner',
@@ -44,9 +43,10 @@
                 <v-list-item-action class="mr-1">
                     <img :src="lang.img" width="25" />
                 </v-list-item-action>
-                <v-list-item-title v-text="lang.title"></v-list-item-title>
+                <v-list-item-title
+                    v-text="lang.title[language]"
+                ></v-list-item-title>
             </v-list-item>
-            <!-- </v-list-item-group> -->
         </v-list>
     </v-menu>
 </template>
@@ -60,6 +60,7 @@ import italyFlag from "@/assets/flags/Flag_of_Italy.svg";
 
 export default {
     name: "BLangMenu",
+
     props: {
         type: String,
         value: {
@@ -67,6 +68,7 @@ export default {
             default: "el"
         }
     },
+
     data: () => ({
         icons: { mdiChevronUp, mdiChevronDown },
         menu: false,
@@ -76,11 +78,29 @@ export default {
             urlTitle: "el"
         },
         langs: [
-            { img: greeceFlag, title: "Greek", urlTitle: "el" },
-            { img: USFlag, title: "English", urlTitle: "en" },
-            { img: italyFlag, title: "Italian", urlTitle: "it" }
+            {
+                img: greeceFlag,
+                title: { el: "", en: "Greek", it: "" },
+                urlTitle: "el"
+            },
+            {
+                img: USFlag,
+                title: { el: "", en: "English", it: "" },
+                urlTitle: "en"
+            },
+            {
+                img: italyFlag,
+                title: { el: "", en: "Italian", it: "" },
+                urlTitle: "it"
+            }
         ]
     }),
+
+    computed: {
+        language() {
+            return this.$route.params.lang;
+        }
+    },
 
     methods: {
         langSelect(lang) {

@@ -1,22 +1,36 @@
 <template>
     <b-standard-card
-        title="Push Notifications"
-        title-color="white"
-        submit-text="save"
+        :title="translations.title[lang]"
+        :submit-text="{ el: '', en: 'save', it: '' }"
         height="auto"
         class="mt-5"
     >
         <v-row no-gutters justify="center">
             <v-col cols="11">
-                <b-text-field label="REST API Key" no-top-margin></b-text-field>
-                <b-text-field label="One Signal App ID"></b-text-field>
+                <b-text-field
+                    :label="translations.restApiKey[lang]"
+                    no-top-margin
+                ></b-text-field>
+                <b-text-field
+                    :label="translations.oneSignalAppId[lang]"
+                ></b-text-field>
             </v-col>
         </v-row>
     </b-standard-card>
 </template>
 
 <script>
+import translations from "@/utils/translations/loyaltyPanel/businessProfile/pushNotifications";
+
 export default {
-    name: "PushNotifications"
+    name: "PushNotifications",
+
+    mixins: [translations],
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        }
+    }
 };
 </script>

@@ -30,20 +30,6 @@
 
                 <v-list dense>
                     <v-list-item-group color="primary">
-                        <v-list-item
-                            v-for="link in profileLinks"
-                            :key="link.title"
-                        >
-                            <v-list-item-icon class="mr-3">
-                                <v-icon v-text="link.icon"></v-icon>
-                            </v-list-item-icon>
-                            <v-list-item-title
-                                v-text="link.text"
-                            ></v-list-item-title>
-                        </v-list-item>
-
-                        <v-divider class="my-1"></v-divider>
-
                         <v-list-item color="red">
                             <v-list-item-icon class="mr-3">
                                 <v-icon
@@ -74,7 +60,11 @@
             :permanent="$vuetify.breakpoint.mdAndUp"
             dark
         >
-            <router-link :to="`/${lang}/`" class="d-block pa-3 home-link">
+            <router-link
+                :to="`/${lang}/`"
+                class="d-block pa-3 home-link"
+                style=""
+            >
                 <v-img
                     src="../assets/loyalty-logo.png"
                     class="mx-auto"
@@ -188,21 +178,7 @@
 </template>
 
 <script>
-import {
-    mdiMagnify,
-    mdiChevronDown,
-    mdiViewGridPlusOutline,
-    mdiBellOutline,
-    mdiClockOutline,
-    mdiLogout,
-    mdiCogOutline,
-    mdiClose,
-    mdiAccount,
-    mdiAccountOutline,
-    mdiWalletOutline,
-    mdiWrenchOutline,
-    mdiLockOpenOutline
-} from "@mdi/js";
+import { mdiChevronDown, mdiLogout, mdiCogOutline, mdiClose } from "@mdi/js";
 
 import navLinks from "@/utils/loyaltyPanel/navLinks";
 import avatar3 from "../assets/avatars/avatar-3.jpg";
@@ -217,22 +193,14 @@ export default {
     data() {
         return {
             icons: {
-                mdiMagnify,
                 mdiChevronDown,
-                mdiViewGridPlusOutline,
-                mdiBellOutline,
-                mdiClockOutline,
                 mdiLogout,
                 mdiCogOutline,
                 mdiClose
             },
             mini: false,
             leftDrawer: false,
-            rightDrawer: false,
-            profileLinks: [
-                { icon: mdiAccountOutline, text: "Profile" },
-                { icon: mdiWrenchOutline, text: "Settings" }
-            ]
+            rightDrawer: false
         };
     },
 

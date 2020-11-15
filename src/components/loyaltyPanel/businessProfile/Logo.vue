@@ -1,21 +1,24 @@
 <template>
     <b-standard-card
-        title="Logo"
-        title-color="white"
+        :title="translations.title[lang]"
         :submit-text="{ el: '', en: 'update logo', it: '' }"
         :loading="loading"
         :error-message="errorMessage"
         @submit="uploadLogo({ type: 'logo', imageFile })"
     >
-        <div style="height: 100px">
-            You can upload here the logo of your business which will appear in
-            the app and will be on the physical cards. If we think that it can
-            be improved we will contact you before publishment.
-        </div>
+        <div style="height: 100px" v-text="translations.info[lang]"></div>
 
         <v-row no-gutters align="center" style="height: 120px">
             <v-col cols="12" sm="5" class="pr-2">
+                <v-skeleton-loader
+                    v-if="companyLoading"
+                    type="image"
+                    width="64"
+                    height="64"
+                    class="mx-auto rounded-circle"
+                ></v-skeleton-loader>
                 <v-img
+                    v-else
                     :src="logo"
                     width="64"
                     height="64"
@@ -23,7 +26,7 @@
                 ></v-img>
             </v-col>
             <v-col cols="12" sm="7" class="pl-0 pl-sm-2">
-                Press the following button to choose image:
+                {{ translations.uploadText[lang] }}
                 <v-file-input
                     v-model="fileInput"
                     color="secondary"
@@ -113,8 +116,12 @@
 <script>
 import { mapMutations, mapActions } from "vuex";
 
+import translations from "@/utils/translations/logo";
+
 export default {
     name: "Logo",
+
+    mixins: [translations],
 
     data() {
         return {
@@ -139,6 +146,14 @@ export default {
     },
 
     computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
+        companyLoading() {
+            return this.$store.state.loyaltyPanel.loading;
+        },
+
         loading() {
             return this.$store.state.loyaltyPanel.businessProfile.loading.logo;
         },
@@ -211,3 +226,9 @@ export default {
     }
 };
 </script>
+
+<style scoped>
+.b-image-border {
+    border: 1px solid rgba(0, 0, 0, 0.26);
+}
+</style>

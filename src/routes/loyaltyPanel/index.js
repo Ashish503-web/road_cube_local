@@ -1,5 +1,5 @@
 import branchDebtRoutes from "./branchDebtRoutes";
-import branchesRoutes from "./branchesRoutes";
+import storesRoutes from "./storesRoutes";
 import subscriptionsRoutes from "./subscriptionsRoutes";
 import productsRoutes from "./productsRoutes";
 import giftStatusRoutes from "./giftStatusRoutes";
@@ -7,10 +7,10 @@ import giftStatusRoutes from "./giftStatusRoutes";
 export default [
     {
         path: "",
-        name: "LoyaltyPanel",
+        name: "LoyaltyHome",
         component: () =>
             import(
-                /* webpackChunkName: "dashboard" */ "@/views/loyaltyPanel/Dashboard.vue"
+                /* webpackChunkName: "loyaltyHome" */ "@/views/loyaltyPanel/Home.vue"
             )
     },
 
@@ -25,13 +25,13 @@ export default [
     },
 
     {
-        path: "branches",
-        name: "Branches",
+        path: "stores",
+        name: "CompanyStores",
         component: () =>
             import(
-                /* webpackChunkName: "branches" */ "@/views/loyaltyPanel/branches/Branches.vue"
+                /* webpackChunkName: "stores" */ "@/views/loyaltyPanel/stores/Stores.vue"
             ),
-        children: branchesRoutes
+        children: storesRoutes
     },
 
     {
@@ -49,7 +49,7 @@ export default [
         name: "Collaborators",
         component: () =>
             import(
-                /* webpackChunkName: "collaborators" */ "@/views/loyaltyPanel/collaborators/Collaborators.vue"
+                /* webpackChunkName: "collaborators" */ "@/views/loyaltyPanel/Collaborators.vue"
             )
     },
 
@@ -100,6 +100,15 @@ export default [
     },
 
     {
+        path: "multiple-coupons",
+        name: "Multiple Coupons",
+        component: () =>
+            import(
+                /* webpackChunkName: "multipleCoupons" */ "@/views/loyaltyPanel/MultipleCoupons.vue"
+            )
+    },
+
+    {
         path: "category-management",
         name: "Category Management",
         component: () =>
@@ -136,104 +145,95 @@ export default [
             )
     },
 
-    {
-        path: "sampling",
-        name: "Sampling",
-        component: () =>
-            import(
-                /* webpackChunkName: "1+1sampling" */ "@/views/loyaltyPanel/Sampling.vue"
-            )
-    },
+    // {
+    //     path: "sampling",
+    //     name: "Sampling",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "1+1sampling" */ "@/views/loyaltyPanel/Sampling.vue"
+    //         )
+    // },
 
-    {
-        path: "receipt-scanning",
-        name: "Receipt Scanning",
-        component: () =>
-            import(
-                /* webpackChunkName: "receiptScanning" */ "@/views/loyaltyPanel/ReceiptScanning.vue"
-            )
-    },
+    // {
+    //     path: "receipt-scanning",
+    //     name: "Receipt Scanning",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "receiptScanning" */ "@/views/loyaltyPanel/ReceiptScanning.vue"
+    //         )
+    // },
 
-    {
-        path: "check-in",
-        name: "Check In",
-        component: () =>
-            import(
-                /* webpackChunkName: "checkin" */ "@/views/loyaltyPanel/CheckIn.vue"
-            )
-    },
+    // {
+    //     path: "check-in",
+    //     name: "Check In",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "checkin" */ "@/views/loyaltyPanel/CheckIn.vue"
+    //         )
+    // },
 
-    {
-        path: "serial-shopping",
-        name: "Serial Shopping",
-        component: () =>
-            import(
-                /* webpackChunkName: "serialShopping" */ "@/views/loyaltyPanel/SerialShopping.vue"
-            )
-    },
+    // {
+    //     path: "serial-shopping",
+    //     name: "Serial Shopping",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "serialShopping" */ "@/views/loyaltyPanel/SerialShopping.vue"
+    //         )
+    // },
 
-    {
-        path: "contest-survey",
-        name: "Contest & Survey",
-        component: () =>
-            import(
-                /* webpackChunkName: "contestSurvey" */ "@/views/loyaltyPanel/ContestSurvey.vue"
-            )
-    },
+    // {
+    //     path: "contest-survey",
+    //     name: "Contest & Survey",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "contestSurvey" */ "@/views/loyaltyPanel/ContestSurvey.vue"
+    //         )
+    // },
 
-    {
-        path: "add-contest",
-        name: "Add Contest",
-        component: () =>
-            import(
-                /* webpackChunkName: "addContest" */ "@/views/loyaltyPanel/AddContest.vue"
-            )
-    },
+    // {
+    //     path: "add-contest",
+    //     name: "Add Contest",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "addContest" */ "@/views/loyaltyPanel/AddContest.vue"
+    //         )
+    // },
 
-    {
-        path: "view-contest",
-        name: "View Contest",
-        component: () =>
-            import(
-                /* webpackChunkName: "viewContest" */ "@/views/loyaltyPanel/ViewContest.vue"
-            )
-    },
+    // {
+    //     path: "view-contest",
+    //     name: "View Contest",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "viewContest" */ "@/views/loyaltyPanel/ViewContest.vue"
+    //         )
+    // },
 
-    {
-        path: "view-participants",
-        name: "View Participants",
-        component: () =>
-            import(
-                /* webpackChunkName: "viewParticipants" */ "@/views/loyaltyPanel/ViewParticipants.vue"
-            )
-    },
+    // {
+    //     path: "view-participants",
+    //     name: "View Participants",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "viewParticipants" */ "@/views/loyaltyPanel/ViewParticipants.vue"
+    //         )
+    // },
 
-    {
-        path: "view-participant-answer",
-        name: "View Participant Answer",
-        component: () =>
-            import(
-                /* webpackChunkName: "viewParticipantAnswer" */ "@/views/loyaltyPanel/ViewParticipantAnswer.vue"
-            )
-    },
+    // {
+    //     path: "view-participant-answer",
+    //     name: "View Participant Answer",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "viewParticipantAnswer" */ "@/views/loyaltyPanel/ViewParticipantAnswer.vue"
+    //         )
+    // },
 
-    {
-        path: "roadcodes",
-        name: "Roadcodes",
-        component: () =>
-            import(
-                /* webpackChunkName: "roadcodes" */ "@/views/loyaltyPanel/Roadcodes.vue"
-            )
-    },
-
-    {
-        path: "multiple-coupons",
-        name: "Multiple Coupons",
-        component: () =>
-            import(
-                /* webpackChunkName: "multipleCoupons" */ "@/views/loyaltyPanel/MultipleCoupons.vue"
-            )
-    },
+    // {
+    //     path: "roadcodes",
+    //     name: "Roadcodes",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "roadcodes" */ "@/views/loyaltyPanel/Roadcodes.vue"
+    //         )
+    // },
 
     {
         path: "view-campaigns",

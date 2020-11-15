@@ -2,6 +2,7 @@
     <v-menu v-model="menu" offset-y>
         <template v-slot:activator="{ attrs }">
             <v-text-field
+                :value="value"
                 :label="
                     selectedSearchType === 'All Fields'
                         ? 'Search'
@@ -10,6 +11,7 @@
                         : 'Search'
                 "
                 color="secondary"
+                autocomplete="off"
                 rounded
                 outlined
                 dense
@@ -18,6 +20,7 @@
                 :aria-expanded="attrs['aria-expanded']"
                 :prepend-inner-icon="icons.mdiMagnify"
                 :append-icon="searchTypes ? icons[icon] : ''"
+                @input="$emit('input', $event)"
                 @click:append="menu = true"
             ></v-text-field>
         </template>
@@ -43,6 +46,9 @@ export default {
     name: "BSearchField",
 
     props: {
+        value: {
+            type: [String, Number]
+        },
         searchTypes: Array,
         selectedSearchType: String
     },
