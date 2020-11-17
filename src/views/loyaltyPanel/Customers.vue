@@ -87,7 +87,7 @@
 
 <script>
 import { mdiPlus, mdiMagnify } from "@mdi/js";
-import { mapMutations } from "vuex";
+import { mapMutations, mapActions } from "vuex";
 import TabDialog from "@/components/loyaltyPanel/customer/TabDialog.vue";
 import CustomerDialog from "@/components/loyaltyPanel/customer/CustomerDialog.vue";
 
@@ -117,7 +117,7 @@ export default {
     computed: {
         mode: {
             get() {
-                return this.$store.state.loyaltyPanel.customer.mode;
+                return this.$store.state.loyaltyPanel.customers.mode;
             },
 
             set(val) {
@@ -137,7 +137,7 @@ export default {
 
         customerDialog: {
             get() {
-                return this.$store.state.loyaltyPanel.customer.customerDialog;
+                return this.$store.state.loyaltyPanel.customers.customerDialog;
             },
 
             set(val) {
@@ -147,11 +147,18 @@ export default {
     },
 
     methods: {
-        ...mapMutations("loyaltyPanel/customer", [
+        ...mapMutations("loyaltyPanel/customers", [
             "setMode",
             "setTabDialog",
             "setCustomerDialog"
+        ]),
+        ...mapActions("loyaltyPanel/customers", [
+            "getCustomers"
         ])
+    },
+
+    mounted(){
+        this.getCustomers()
     }
 };
 </script>
