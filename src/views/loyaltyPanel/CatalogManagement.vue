@@ -6,7 +6,7 @@
                     color="secondary"
                     class="text-capitalize"
                     depressed
-                    @click="giftDialog = true"
+                    @click="openGiftDialog(null)"
                     >add gift</v-btn
                 >
                 <v-spacer></v-spacer>
@@ -78,7 +78,7 @@
                                 color="yellow darken-3"
                                 icon
                                 v-on="on"
-                                @click="myFunc(item)"
+                                @click="openGiftDialog(item.gift_id)"
                             >
                                 <v-icon
                                     v-text="icons.mdiPencilOutline"
@@ -95,7 +95,7 @@
                                 color="red"
                                 icon
                                 v-on="on"
-                                @click="deleteDialog = true"
+                                @click="openDeleteDialog(item.gift_id)"
                             >
                                 <v-icon v-text="icons.mdiClose"></v-icon>
                             </v-btn>
@@ -107,14 +107,26 @@
             </v-data-table>
 
             <v-dialog v-model="giftDialog" :max-width="$vuetify.breakpoint.smAndDown ? '90%' : '40%'" scrollable>
-                <GiftForm @close="giftDialog = false" />
+                <GiftForm :giftId="giftId" @close="giftDialog = false" />
             </v-dialog>
 
             <v-dialog v-model="supplierDialog" :max-width="$vuetify.breakpoint.smAndDown ? '90%' : '40%'" scrollable>
                 <SupplierForm @close="supplierDialog = false" />
             </v-dialog>
 
-            <DeleteDialog />
+            <v-dialog v-model="deleteDialog" max-width="500">
+                <b-card
+                    type="delete"
+                    title="Delete Gift"
+                    submit-text="delete"
+                    @cancel="deleteDialog = false"
+                    @submit="remove"
+                >
+                    <div class="subtitle-1 font-weight-medium py-3">
+                        Are you sure?
+                    </div>
+                </b-card>
+            </v-dialog>
         </v-sheet>
     </v-container>
 </template>
@@ -130,12 +142,12 @@ import {
 
 import GiftForm from "../../components/loyaltyPanel/catalogManagement/GiftForm";
 import SupplierForm from "../../components/loyaltyPanel/catalogManagement/SupplierForm";
-import DeleteDialog from "@/components/loyaltyPanel/userRights/DeleteDialog.vue";
-import { mapMutations } from "vuex";
+import { mapMutations, mapState, mapActions } from "vuex";
 
 export default {
     name: "CatalogManagement",
-    components: { GiftForm, SupplierForm, DeleteDialog },
+    components: { GiftForm, SupplierForm },
+
     data: () => ({
         icons: {
             mdiMagnify,
@@ -144,25 +156,16 @@ export default {
             mdiClose,
             mdiPlus
         },
+        giftId: null,
         headers: [
-            { text: "ID Catalog", value: "catalog" },
+            { text: "Catalog Number", value: "catalog_number" },
             { text: "Image", value: "image" },
-            { text: "Supplier", value: "supplier" },
-            { text: "Category", value: "category" },
-            { text: "Name", value: "name" },
-            { text: "Type", value: "type" },
+            { text: "Supplier", value: "supplier_id" },
+            { text: "Category", value: "gift_category_id" },
+            { text: "Name", value: "title" },
+            { text: "Description", value: "description" },
             { text: "Points", value: "points" },
             { text: "Actions", value: "actions" }
-        ],
-        gifts: [
-            {
-                catalog: "tetstetest",
-                supplier: "Papadakis Mixail",
-                category: "Γενικά",
-                name: "tetstetest",
-                type: "Αγαθό",
-                points: "23"
-            }
         ],
         itemsPerPageOptions: [10, 25, 50, 100],
         menu: false,
@@ -176,13 +179,20 @@ export default {
         ],
         selectedSearchType: "All Fields",
         giftDialog: false,
-        supplierDialog: false
+        supplierDialog: false,
+        deletingGiftId: null
     }),
 
     computed:{
+        gifts: {
+            get() {
+                return this.$store.state.loyaltyPanel.catalogManagement.gifts;
+            }
+        },
+
         deleteDialog: {
             get() {
-                return this.$store.state.loyaltyPanel.userRights.deleteDialog;
+                return this.$store.state.loyaltyPanel.catalogManagement.deleteDialog;
             },
 
             set(val) {
@@ -191,9 +201,27 @@ export default {
         },
     },
     methods: {
-        ...mapMutations("loyaltyPanel/userRights", [
+        ...mapMutations("loyaltyPanel/catalogManagement", [
             "setDeleteDialog"
-        ])
+        ]),
+        ...mapActions("loyaltyPanel/catalogManagement", ["getGifts","delete"]),
+
+        openGiftDialog(id){
+            this.giftId = id
+            this.giftDialog = true
+        },
+
+        openDeleteDialog(id){
+            this.deletingGiftId = id
+            this.deleteDialog = true
+        },
+
+        remove(){
+            this.delete(this.deletingGiftId)
+        }
+    },
+    mounted(){
+        this.getGifts()
     }
 };
 </script>

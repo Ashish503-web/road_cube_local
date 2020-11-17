@@ -1,6 +1,7 @@
 import branches from "./branches";
 import products from "./products";
-import customer from "./customer";
+import customers from "./customers";
+import catalogManagement from "./catalogManagement";
 import userRights from "./userRights";
 import businessProfile from "./businessProfile";
 
@@ -11,9 +12,10 @@ export default {
     modules: {
         branches,
         products,
-        customer,
+        customers,
         userRights,
-        businessProfile
+        businessProfile,
+        catalogManagement
     },
 
     state: () => ({

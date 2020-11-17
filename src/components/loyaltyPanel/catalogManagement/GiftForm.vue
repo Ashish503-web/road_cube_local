@@ -1,7 +1,7 @@
 <template>
     <v-card>
         <v-card-title class="secondary white--text">
-            New Gift
+            {{ title }}
             <v-spacer></v-spacer>
             <v-icon large dark v-text="icons.mdiPlus"></v-icon>
         </v-card-title>
@@ -9,6 +9,7 @@
         <v-card-text class="pt-7">
             <v-text-field
                 label="Gift Name of Discount"
+                v-model="gift.title"
                 color="secondary"
                 hide-details
                 outlined
@@ -19,6 +20,7 @@
 
             <v-textarea
                 label="Description"
+                v-model="gift.description"
                 hide-details
                 outlined
                 dense
@@ -29,6 +31,7 @@
 
             <v-text-field
                 label="ID Catalog"
+                v-model="gift.catalog_number"
                 hide-details
                 outlined
                 dense
@@ -39,6 +42,7 @@
 
             <v-text-field
                 label="Gift Code"
+                v-model="gift.code"
                 hide-details
                 outlined
                 dense
@@ -48,7 +52,10 @@
             ></v-text-field>
 
             <v-select
-                :items="categories"
+                :items="giftCategories"
+                :item-text="`name[${lang}]`"
+                item-value="gift_category_id"
+                v-model="gift.gift_category_id"
                 menu-props="offsetY"
                 label="Gift Category"
                 hide-details
@@ -60,6 +67,7 @@
 
             <v-text-field
                 type="number"
+                v-model="gift.cost"
                 label="Gift Price"
                 hide-details
                 outlined
@@ -72,6 +80,7 @@
             <v-select
                 :items="suppliers"
                 menu-props="offsetY"
+                v-model="gift.supplier_id"
                 label="Supplier"
                 hide-details
                 outlined
@@ -80,7 +89,7 @@
                 color="secondary"
             ></v-select>
 
-            <v-checkbox class="mt-0">
+            <v-checkbox class="mt-0" v-model="gift.take_from_store">
                 <template v-slot:label>
                     <h4 class="subtitle-2">
                         Receipt from the store (! supplier must have shop)
@@ -88,13 +97,13 @@
                 </template>
             </v-checkbox>
 
-            <v-checkbox class="mt-0">
+            <v-checkbox class="mt-0" v-model="gift.show_on_catalog">
                 <template v-slot:label>
                     <h4 class="subtitle-2">Appear in catalog</h4>
                 </template>
             </v-checkbox>
 
-            <v-checkbox class="mt-0">
+            <v-checkbox class="mt-0" v-model="gift.redeem_in_store">
                 <template v-slot:label>
                     <h4 class="subtitle-2">
                         Appear and Redeem on Stores (Only if it is a Gift
@@ -105,6 +114,7 @@
 
             <v-text-field
                 type="number"
+                v-model="gift.points"
                 label="Points"
                 hide-details
                 outlined
@@ -175,22 +185,27 @@
         <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn text @click="$emit('close')">cancel</v-btn>
-            <v-btn color="secondary" class="px-5">save</v-btn>
+            <v-btn color="secondary" class="px-5" @click="sendForm">save</v-btn>
         </v-card-actions>
     </v-card>
 </template>
 
 <script>
 import { mdiPlus } from "@mdi/js";
+import { mapMutations, mapState, mapActions } from "vuex";
 
 export default {
     name: "GiftForm",
+
+    props: {
+        giftId: Number,
+    },
+
     data: () => ({
         icons: {
             mdiPlus
         },
         suppliers: ["YOU.GR", "PLAISIO", "PUBLIC", "COOKSHOP", "TESCOSMETICS"],
-        categories: ["12344", "Auto - Moto", "toldTouRight"],
         type: "Αγαθό",
         stores: [
             "All",
@@ -204,7 +219,64 @@ export default {
             "Arguris Epipla"
         ],
         selectedStores: []
-    })
+    }),
+    computed:{
+        giftCategories: {
+            get() {
+                return this.$store.state.loyaltyPanel.catalogManagement.giftCategories;
+            }
+        },
+
+        gift: {
+            get() {
+                return this.giftId == null ? {} : this.$store.state.loyaltyPanel.catalogManagement.gift;
+            }
+        },
+
+        lang() {
+            return this.$route.params.lang;
+        },
+
+        mode() {
+            return this.giftId == null ? 1 : 2
+        },
+
+        title() {
+            return this.mode === 1
+                ? "New Gift"
+                : "Update Gift";
+        }
+    },
+    watch: {
+        giftId: function (val){
+            if(val != null){
+                this.getGiftData(val)
+            }
+        }
+    },
+    methods: {
+        ...mapActions("loyaltyPanel/catalogManagement", [
+            "getGiftCategories",
+            "getGiftData",
+            "create",
+            "update"
+            ]),
+
+        sendForm(){
+            if(this.mode == 1){
+                this.create(this.gift)
+            }else{
+                this.update(this.gift)
+            }
+            
+        }
+    },
+    mounted(){
+        this.getGiftCategories()
+        if(this.giftId != null){
+            this.getGiftData(this.giftId)
+        }
+    }
 };
 </script>
 
