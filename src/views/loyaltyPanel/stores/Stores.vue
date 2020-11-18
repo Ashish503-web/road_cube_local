@@ -47,14 +47,14 @@ export default {
                     name: { el: "", en: "financial data", it: "" },
                     to: `/${this.lang}/loyaltyPanel/stores/financial-data`
                 },
-                {
-                    name: { el: "", en: "Settings of Admin Panel", it: "" },
-                    to: `/${this.lang}/loyaltyPanel/stores/admin-panel-settings`
-                },
-                {
-                    name: { el: "", en: "Settings of Application", it: "" },
-                    to: `/${this.lang}/loyaltyPanel/stores/application-settings`
-                },
+                // {
+                //     name: { el: "", en: "Settings of Admin Panel", it: "" },
+                //     to: `/${this.lang}/loyaltyPanel/stores/admin-panel-settings`
+                // },
+                // {
+                //     name: { el: "", en: "Settings of Application", it: "" },
+                //     to: `/${this.lang}/loyaltyPanel/stores/application-settings`
+                // },
                 {
                     name: { el: "", en: "Daily Transaction Limits", it: "" },
                     to: `/${this.lang}/loyaltyPanel/stores/daily-transaction-limits`

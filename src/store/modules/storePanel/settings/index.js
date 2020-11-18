@@ -5,6 +5,7 @@ import productPoints from "./productPoints";
 import users from "./users";
 import paymentProviders from "./paymentProviders";
 import paymentProcessing from "./paymentProcessing";
+import subscription from "./subscription";
 import paymentHistory from "./paymentHistory";
 
 export default {
@@ -17,6 +18,7 @@ export default {
         users,
         paymentProviders,
         paymentProcessing,
+        subscription,
         paymentHistory
     }
 };

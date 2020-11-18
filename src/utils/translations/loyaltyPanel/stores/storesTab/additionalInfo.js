@@ -1,29 +1,29 @@
 export default {
     data: () => ({
         translations: {
-            generalLimits: {
+            additionalInfo: {
                 el: "",
-                en: "General Limits",
+                en: "Store Additional Info",
                 it: ""
             },
-            name: {
+            address: {
                 el: "",
-                en: "Name",
+                en: "Address",
                 it: ""
             },
-            onlineTransactions: {
+            phone: {
                 el: "",
-                en: "Online Transaction Limits",
+                en: "Phone",
                 it: ""
             },
-            offlineTransactions: {
+            registrationDate: {
                 el: "",
-                en: "Offline Transaction Limits",
+                en: "Registration Date",
                 it: ""
             },
-            noData: {
+            availableBanks: {
                 el: "",
-                en: "No data available",
+                en: "Store Available Banks",
                 it: ""
             }
         }

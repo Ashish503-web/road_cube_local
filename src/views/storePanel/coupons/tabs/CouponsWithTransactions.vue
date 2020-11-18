@@ -89,6 +89,7 @@
                                     :src="couponWithTransaction.image"
                                     width="60"
                                     height="50"
+                                    contain
                                 ></v-img>
                             </v-col>
 
@@ -106,6 +107,7 @@
                         <v-btn
                             color="red accent-4"
                             class="text-capitalize white--text px-10"
+                            style="font-size: 0.9rem"
                             depressed
                             v-text="translations.delete[lang]"
                             @click="deleteDialog = true"
@@ -219,7 +221,7 @@
                                 </v-col>
                                 <v-col cols="7">
                                     <v-file-input
-                                        label="Upload Voucher Image"
+                                        :label="translations.uploadCoupon[lang]"
                                         color="secondary"
                                         class="mt-5"
                                         outlined
@@ -260,7 +262,7 @@
                 @cancel="deleteDialog = false"
                 @submit="remove"
             >
-                <div class="subtitle-1 font-weight-medium py-3">
+                <div class="subtitle-1 font-weight-medium pl-2">
                     Are you sure?
                 </div>
             </b-card>

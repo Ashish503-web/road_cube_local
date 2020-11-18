@@ -68,6 +68,11 @@ export default {
                 en: "Select Category",
                 it: ""
             },
+            uploadCoupon: {
+                el: "",
+                en: "Upload Coupon Image",
+                it: ""
+            },
             create: {
                 el: "",
                 en: "Create",

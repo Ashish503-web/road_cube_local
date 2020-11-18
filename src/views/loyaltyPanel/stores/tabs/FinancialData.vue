@@ -1,122 +1,83 @@
 <template>
     <v-tab-item :value="$route.path">
         <v-toolbar flat height="90">
-            <v-btn
-                color="secondary"
-                class="text-capitalize px-5"
-                depressed
-                v-text="translations.addStore[lang]"
-                @click="
-                    () => {
-                        mode = 1;
-                        shopDialog = true;
-                    }
-                "
-            ></v-btn>
-
             <v-spacer></v-spacer>
-
-            <v-btn
-                color="secondary"
-                class="text-capitalize px-5"
-                depressed
-                v-text="translations.rights[lang]"
-                @click="rightsDialog = true"
-            ></v-btn>
-        </v-toolbar>
-
-        <v-row no-gutters justify="end" class="px-4 pb-3">
-            <v-col cols="4">
+            <v-col cols="4" class="pa-0">
                 <b-search-field
                     :selectedSearchType="selectedSearchType"
                     :searchTypes="searchTypes"
                 ></b-search-field>
             </v-col>
-        </v-row>
+        </v-toolbar>
 
         <v-data-table
             :headers="headers"
             :items="items"
-            :footer-props="{ itemsPerPageOptions }"
+            :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
+            :page.sync="page"
+            :server-items-length="serverItemsLength"
+            disable-sort
             class="b-outlined"
         ></v-data-table>
-
-        <v-dialog v-model="shopDialog" max-width="600" scrollable>
-            <StoreForm
-                :mode="mode"
-                @cancel="shopDialog = false"
-                @submit="myFunc"
-            />
-        </v-dialog>
-
-        <v-dialog v-model="rightsDialog" max-width="500" scrollable>
-            <RightsForm
-                :mode="mode"
-                @cancel="rightsDialog = false"
-                @submit="myFunc"
-            />
-        </v-dialog>
     </v-tab-item>
 </template>
 
 <script>
-import { mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 
-import StoreForm from "@/components/loyaltyPanel/stores/StoreForm";
-import RightsForm from "@/components/loyaltyPanel/stores/RightsForm";
 import translations from "@/utils/translations/loyaltyPanel/stores/financialData";
 
 export default {
     name: "FinancialData",
 
-    components: { StoreForm, RightsForm },
-
     mixins: [translations],
 
-    data: () => ({
-        searchTypes: [
-            "All Fields",
-            "Name",
-            "Name of Shop(in app)",
-            "Customer",
-            "Transaction",
-            "Total",
-            "Points"
-        ],
-        selectedSearchType: "All Fields",
-        items: [
-            {
-                name: "Vasilis",
-                name_of_shop: "katerina1",
-                customer: "20",
-                transaction: "34",
-                total: "1905.18",
-                points: "3836"
-            },
-            {
-                name: "Vasilis",
-                name_of_shop: "katerina1",
-                customer: "20",
-                transaction: "34",
-                total: "1905.18",
-                points: "3836"
-            },
-            {
-                name: "Vasilis",
-                name_of_shop: "katerina1",
-                customer: "20",
-                transaction: "34",
-                total: "1905.18",
-                points: "3836"
-            }
-        ],
-        itemsPerPageOptions: [10, 20, 30, -1],
-        mode: 0,
-        shopDialog: false,
-        rightsDialog: false
-    }),
+    data() {
+        return {
+            searchTypes: [
+                "All Fields",
+                "Name",
+                "Name of Shop(in app)",
+                "Customer",
+                "Transaction",
+                "Total",
+                "Points"
+            ],
+            selectedSearchType: "All Fields",
+            items: [
+                {
+                    name: "Vasilis",
+                    name_of_shop: "katerina1",
+                    customer: "20",
+                    transaction: "34",
+                    total: "1905.18",
+                    points: "3836"
+                },
+                {
+                    name: "Vasilis",
+                    name_of_shop: "katerina1",
+                    customer: "20",
+                    transaction: "34",
+                    total: "1905.18",
+                    points: "3836"
+                },
+                {
+                    name: "Vasilis",
+                    name_of_shop: "katerina1",
+                    customer: "20",
+                    transaction: "34",
+                    total: "1905.18",
+                    points: "3836"
+                }
+            ],
+            page: +this.$route.query.page,
+            mode: 0
+        };
+    },
 
     computed: {
+        ...mapState(["loading", "errorMessage", "serverItemsLength"]),
+
         lang() {
             return this.$route.params.lang;
         },
@@ -142,15 +103,54 @@ export default {
                 { text: this.translations.total[this.lang], value: "total" },
                 { text: this.translations.points[this.lang], value: "points" }
             ];
+        },
+
+        query() {
+            let query = "?";
+
+            for (let key in this.$route.query) {
+                query += `${key}=${this.$route.query[key]}&`;
+            }
+
+            return query.slice(0, query.length - 1);
         }
     },
 
     methods: {
-        ...mapMutations("loyaltyPanel/branches", []),
+        ...mapActions("loyaltyPanel/stores/storesTab", ["getFinancialData"])
+    },
 
-        myFunc() {
-            alert(5);
+    watch: {
+        $route(val) {
+            if (!val.query.page) {
+                this.$router.push({
+                    query: {
+                        page: 1,
+                        ...this.$route.query
+                    }
+                });
+            }
+            this.getItems(this.query);
+        },
+
+        page(page) {
+            this.$router.push({ query: { ...this.$route.query, page } });
         }
+    },
+
+    beforeCreate() {
+        if (!this.$route.query.page) {
+            this.$router.push({
+                query: {
+                    page: 1,
+                    ...this.$route.query
+                }
+            });
+        }
+    },
+
+    mounted() {
+        this.getFinancialData(this.query);
     }
 };
 </script>

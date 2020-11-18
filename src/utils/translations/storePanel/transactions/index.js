@@ -13,24 +13,9 @@ export default {
                      ordersfrom 1 place, verify or refund easily`,
                 it: ""
             },
-            download: {
+            settings: {
                 el: "",
-                en: "Export All Transactions",
-                it: ""
-            },
-            fundClosure: {
-                el: "",
-                en: "Export Latest Transactions",
-                it: ""
-            },
-            filterStatus: {
-                el: "",
-                en: "Filter By Status",
-                it: ""
-            },
-            filterType: {
-                el: "",
-                en: "Filter By Type",
+                en: "Settings",
                 it: ""
             },
             user: {

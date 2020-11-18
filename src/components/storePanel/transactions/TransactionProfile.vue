@@ -30,14 +30,14 @@
             ></v-skeleton-loader>
         </v-col>
 
-        <v-card v-else>
+        <v-card v-else tile>
             <v-card-title>
                 <v-icon
                     size="28"
                     class="mr-3 text--primary"
                     v-text="icons.mdiTextBoxOutline"
                 ></v-icon>
-                Transaction
+                {{ translations.title[lang] }}
                 <v-spacer></v-spacer>
                 <v-btn icon @click="$emit('cancel')">
                     <v-icon size="28" v-text="icons.mdiClose"></v-icon>
@@ -52,7 +52,8 @@
                     outlined
                     class="pa-3 mb-3"
                 >
-                    User Identity: {{ transactionProfile.user_identity }}
+                    {{ translations.userIdentity[lang] }}:
+                    {{ transactionProfile.user_identity }}
                 </v-sheet>
 
                 <v-sheet
@@ -60,7 +61,8 @@
                     outlined
                     class="pa-3 mb-3"
                 >
-                    Date: {{ transactionProfile.created_at }}
+                    {{ translations.date[lang] }}:
+                    {{ transactionProfile.created_at }}
                 </v-sheet>
 
                 <v-sheet
@@ -68,12 +70,12 @@
                     outlined
                     class="pa-3 mb-3"
                 >
-                    Total Price:
+                    {{ translations.totalPrice[lang] }}:
                     {{
                         new Intl.NumberFormat("en-US", {
                             style: "currency",
                             currency: "EUR",
-                            minimumFractionDigits: 2,
+                            minimumFractionDigits: 2
                         }).format(transactionProfile.total_price)
                     }}
                 </v-sheet>
@@ -83,7 +85,8 @@
                     outlined
                     class="pa-3 mb-3"
                 >
-                    Total Points: {{ transactionProfile.total_points }}
+                    {{ translations.totalPoints[lang] }}:
+                    {{ transactionProfile.total_points }}
                 </v-sheet>
 
                 <v-sheet
@@ -91,7 +94,8 @@
                     outlined
                     class="pa-3 mb-3"
                 >
-                    Receipt Number: {{ transactionProfile.receipt_number }}
+                    {{ translations.receiptNumber[lang] }}:
+                    {{ transactionProfile.receipt_number }}
                 </v-sheet>
 
                 <v-sheet
@@ -99,7 +103,7 @@
                     outlined
                     class="pa-3 mb-3"
                 >
-                    Type:
+                    {{ translations.type[lang] }}:
                     {{ transactionProfile.transaction_type_name }}
                 </v-sheet>
 
@@ -108,12 +112,12 @@
                     outlined
                     class="pa-3 mb-3"
                 >
-                    Status:
+                    {{ translations.status[lang] }}:
                     {{ transactionProfile.transaction_status_name }}
                 </v-sheet>
 
                 <h3 class="subtitle-1 font-weight-bold mb-3">
-                    Transaction Items
+                    {{ translations.transactionItems[lang] }}
                 </h3>
 
                 <v-data-table
@@ -121,7 +125,7 @@
                     :items="transactionProfile.transaction_items"
                     :footer-props="{
                         itemsPerPageOptions: [12],
-                        showCurrentPage: true,
+                        showCurrentPage: true
                     }"
                     :server-items-length="
                         transactionProfile.transaction_items.length
@@ -138,25 +142,38 @@
 import { mdiTextBoxOutline, mdiClose } from "@mdi/js";
 import { mapActions } from "vuex";
 
+import translations from "@/utils/translations/storePanel/transactions/transactionProfile";
+
 export default {
     name: "TransactionProfile",
 
     props: {
-        transactionId: [String, Number],
+        transactionId: [String, Number]
     },
 
+    mixins: [translations],
+
     data: () => ({
-        icons: { mdiTextBoxOutline, mdiClose },
-        lang: "el",
+        icons: { mdiTextBoxOutline, mdiClose }
     }),
 
     computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
         headers() {
             return [
-                { text: "Product", value: `product_name[${this.lang}]` },
-                { text: "Quantity", value: "quantity" },
-                { text: "Price", value: "price" },
-                { text: "Points", value: "points" },
+                {
+                    text: this.translations.product[this.lang],
+                    value: `product_name[${this.lang}]`
+                },
+                {
+                    text: this.translations.quantity[this.lang],
+                    value: "quantity"
+                },
+                { text: this.translations.price[this.lang], value: "price" },
+                { text: this.translations.points[this.lang], value: "points" }
             ];
         },
 
@@ -166,11 +183,11 @@ export default {
 
         transactionProfile() {
             return this.$store.state.storePanel.transactions.transactionProfile;
-        },
+        }
     },
 
     methods: {
-        ...mapActions("storePanel/transactions", ["getItem"]),
+        ...mapActions("storePanel/transactions", ["getItem"])
     },
 
     watch: {
@@ -178,9 +195,9 @@ export default {
             immediate: true,
             handler(val) {
                 this.getItem(val);
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>
 

@@ -73,13 +73,17 @@ export default {
                 //     to: `/${this.lang}/storePanel/settings/cards`
                 // },
                 {
-                    name: { el: "", en: "payment history", it: "" },
-                    to: `/${this.lang}/storePanel/settings/payment-history`
-                },
-                {
-                    name: { el: "", en: "payment methods", it: "" },
-                    to: `/${this.lang}/storePanel/settings/payment-methods`
+                    name: { el: "", en: "subscription", it: "" },
+                    to: `/${this.lang}/storePanel/settings/subscription`
                 }
+                // {
+                //     name: { el: "", en: "payment history", it: "" },
+                //     to: `/${this.lang}/storePanel/settings/payment-history`
+                // },
+                // {
+                //     name: { el: "", en: "payment methods", it: "" },
+                //     to: `/${this.lang}/storePanel/settings/payment-methods`
+                // }
             ];
         },
 

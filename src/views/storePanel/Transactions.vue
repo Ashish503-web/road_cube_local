@@ -30,150 +30,15 @@
                         <v-img src="@/assets/cog.png"></v-img>
                     </v-avatar>
 
-                    <div style="font-size: 0.875rem" class="mt-1">Settings</div>
+                    <div
+                        style="font-size: 0.875rem"
+                        class="mt-1"
+                        v-text="translations.settings[lang]"
+                    ></div>
                 </v-col>
             </v-row>
 
-            <v-row class="pr-4 pb-3 pt-7" no-gutters>
-                <v-menu
-                    v-model="menu.status"
-                    max-height="300"
-                    offset-y
-                    :close-on-content-click="false"
-                    nudge-bottom="2"
-                >
-                    <template v-slot:activator="{ on }">
-                        <v-btn
-                            color="secondary"
-                            class="text-capitalize"
-                            text
-                            v-on="on"
-                        >
-                            {{ translations.filterStatus[lang] }}
-                            <v-icon
-                                v-text="
-                                    menu.status
-                                        ? icons.mdiChevronUp
-                                        : icons.mdiChevronDown
-                                "
-                            ></v-icon>
-                        </v-btn>
-                    </template>
-
-                    <v-list dense>
-                        <v-list-item
-                            v-for="status in transactionStatuses"
-                            :key="status.name"
-                            class="pl-3"
-                            :class="{ 'b-list-active': status.selected }"
-                            @click="statusSelect(status)"
-                        >
-                            <v-list-item-icon class="mr-2">
-                                <v-icon
-                                    :color="status.selected ? 'secondary' : ''"
-                                    v-text="
-                                        status.selected
-                                            ? icons.mdiCheckBoxOutline
-                                            : icons.mdiCheckboxBlankOutline
-                                    "
-                                ></v-icon>
-                            </v-list-item-icon>
-
-                            <v-list-item-title
-                                v-text="status.name"
-                            ></v-list-item-title>
-                        </v-list-item>
-                    </v-list>
-                </v-menu>
-
-                <v-menu
-                    v-model="menu.type"
-                    max-height="300"
-                    offset-y
-                    :close-on-content-click="false"
-                    nudge-bottom="2"
-                >
-                    <template v-slot:activator="{ on }">
-                        <v-btn
-                            color="secondary"
-                            class="text-capitalize"
-                            text
-                            v-on="on"
-                        >
-                            {{ translations.filterType[lang] }}
-                            <v-icon
-                                v-text="
-                                    menu.type
-                                        ? icons.mdiChevronUp
-                                        : icons.mdiChevronDown
-                                "
-                            ></v-icon>
-                        </v-btn>
-                    </template>
-
-                    <v-list dense>
-                        <v-list-item
-                            v-for="type in transactionTypes"
-                            :key="type.name"
-                            class="pl-3"
-                            :class="{ 'b-list-active': type.selected }"
-                            @click="typeSelect(type)"
-                        >
-                            <v-list-item-icon class="mr-2">
-                                <v-icon
-                                    :color="type.selected ? 'secondary' : ''"
-                                    v-text="
-                                        type.selected
-                                            ? icons.mdiCheckBoxOutline
-                                            : icons.mdiCheckboxBlankOutline
-                                    "
-                                ></v-icon>
-                            </v-list-item-icon>
-                            <v-list-item-title
-                                v-text="type.name"
-                            ></v-list-item-title>
-                        </v-list-item>
-                    </v-list>
-                </v-menu>
-
-                <v-spacer></v-spacer>
-
-                <v-col cols="4" class="pl-12">
-                    <b-search-field></b-search-field>
-                </v-col>
-            </v-row>
-
-            <v-row
-                v-if="selectedStatuses.length > 0"
-                no-gutters
-                class="px-2 py-2"
-            >
-                <v-col cols="12">
-                    <v-chip
-                        v-for="(status, i) in selectedStatuses"
-                        :key="status.name"
-                        color="secondary"
-                        class="ml-2 mb-1 font-weight-medium"
-                        close
-                        @click:close="deleteStatus(status, i)"
-                        >{{ status.name }}</v-chip
-                    >
-                </v-col>
-            </v-row>
-
-            <v-row v-if="selectedTypes.length > 0" no-gutters class="px-2 py-2">
-                <v-col cols="12">
-                    <v-chip
-                        v-for="(type, i) in selectedTypes"
-                        :key="type.name"
-                        color="secondary"
-                        class="ml-2 mb-1 font-weight-medium"
-                        close
-                        @click:close="deleteType(type, i)"
-                        >{{ type.name }}</v-chip
-                    >
-                </v-col>
-            </v-row>
+            <Filters />
 
             <v-data-table
                 :headers="headers"
@@ -203,7 +68,7 @@
                         @click="
                             () => {
                                 transactionId = item.transaction_id;
-                                dialog = true;
+                                transactionDialog = true;
                             }
                         "
                     >
@@ -268,153 +133,49 @@
                 </template>
             </v-data-table>
 
-            <v-dialog v-model="dialog" max-width="600">
-                <transaction-profile
-                    :transaction-id="transactionId"
-                    @cancel="dialog = false"
-                ></transaction-profile>
+            <v-dialog v-model="settingsDialog" max-width="500">
+                <SettingsPanel @cancel="settingsDialog = false" />
             </v-dialog>
 
-            <v-dialog v-model="settingsDialog" max-width="500">
-                <v-card>
-                    <v-card-title>
-                        <v-col class="pa-0 text-center ml-6">
-                            Settings Panel
-                        </v-col>
-                        <v-btn
-                            color="secondary"
-                            icon
-                            @click="settingsDialog = false"
-                        >
-                            <v-icon size="28" v-text="icons.mdiClose"></v-icon>
-                        </v-btn>
-                    </v-card-title>
-
-                    <v-divider></v-divider>
-
-                    <v-card-text class="pt-4">
-                        <v-row no-gutters justify="space-around" align="center">
-                            <v-col cols="auto">
-                                <v-img
-                                    src="@/assets/mobile.png"
-                                    width="70"
-                                    height="70"
-                                ></v-img>
-                            </v-col>
-                            <v-col cols="7">
-                                <div
-                                    class="subtitle-1 font-weight-bold text--primary"
-                                >
-                                    Mobile Payments
-                                </div>
-                                Impress your clients with mobile payments to
-                                your store
-                            </v-col>
-                            <v-col cols="2" class="text-center">
-                                <v-row no-gutters justify="center" class="mb-3">
-                                    <v-switch
-                                        v-model="online_payments"
-                                        color="secondary"
-                                        class="mt-0 pt-0"
-                                        hide-details
-                                        :loading="mobileLoading"
-                                        @change="
-                                            updateMobilePayments({
-                                                online_payments
-                                            })
-                                        "
-                                    ></v-switch>
-                                </v-row>
-
-                                <span
-                                    :class="
-                                        online_payments
-                                            ? 'success--text'
-                                            : 'red--text'
-                                    "
-                                    v-text="online_payments ? 'ON' : 'OFF'"
-                                ></span>
-                            </v-col>
-                        </v-row>
-
-                        <v-row justify="space-around" class="mt-5" no-gutters>
-                            <v-col cols="auto">
-                                <a
-                                    href="#"
-                                    class="text--primary"
-                                    @click="downloadAllTransactions"
-                                >
-                                    {{ translations.download[lang] }}
-                                </a>
-                            </v-col>
-
-                            <v-col cols="auto">
-                                <a href="#" class="text--primary">{{
-                                    translations.fundClosure[lang]
-                                }}</a>
-                            </v-col>
-                        </v-row>
-                    </v-card-text>
-                </v-card>
+            <v-dialog v-model="transactionDialog" max-width="600">
+                <TransactionProfile
+                    :transaction-id="transactionId"
+                    @cancel="transactionDialog = false"
+                />
             </v-dialog>
         </v-sheet>
     </v-container>
 </template>
 
 <script>
-import {
-    mdiClose,
-    mdiChevronUp,
-    mdiChevronDown,
-    mdiCheckboxBlankOutline,
-    mdiCheckBoxOutline,
-    mdiCheckBold
-} from "@mdi/js";
-
+import { mdiCheckBold } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
-import axios from "axios";
+
+import Filters from "@/components/storePanel/transactions/Filters.vue";
+import SettingsPanel from "@/components/storePanel/transactions/SettingsPanel.vue";
 import TransactionProfile from "@/components/storePanel/transactions/TransactionProfile.vue";
 import translations from "@/utils/translations/storePanel/transactions";
 
 export default {
     name: "Transactions",
 
-    components: { TransactionProfile },
+    components: { Filters, SettingsPanel, TransactionProfile },
 
     mixins: [translations],
 
     data() {
         return {
-            icons: {
-                mdiClose,
-                mdiChevronUp,
-                mdiChevronDown,
-                mdiCheckboxBlankOutline,
-                mdiCheckBoxOutline,
-                mdiCheckBold
-            },
-            online_payments: null,
-            menu: {
-                status: false,
-                type: false
-            },
+            icons: { mdiCheckBold },
             page: +this.$route.query.page,
-            selectedStatuses: [],
-            selectedTypes: [],
-            dialog: false,
-            transactionId: null,
-            settingsDialog: false
+            settingsDialog: false,
+            transactionDialog: false,
+            transactionId: null
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
-        ...mapState("storePanel/transactions", [
-            "mobileLoading",
-            "transactionStatuses",
-            "transactionTypes",
-            "transactions"
-        ]),
+        ...mapState("storePanel/transactions", ["transactions"]),
 
         lang() {
             return this.$route.params.lang;
@@ -454,6 +215,16 @@ export default {
             ];
         },
 
+        transaction: {
+            get() {
+                return this.$store.state.storePanel.transactions.transaction;
+            },
+
+            set(val) {
+                this.setItem(val);
+            }
+        },
+
         query() {
             let query = "?";
 
@@ -463,130 +234,16 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        },
-
-        transaction: {
-            get() {
-                return this.$store.state.storePanel.transactions.transaction;
-            },
-
-            set(val) {
-                this.setItem(val);
-            }
         }
     },
 
     methods: {
-        ...mapMutations("storePanel", ["setMobilePayments"]),
         ...mapMutations("storePanel/transactions", ["setItem"]),
         ...mapActions("storePanel/transactions", [
-            "getTransactionStatuses",
-            "getTransactionTypes",
             "getItems",
             "changeStatus",
-            "updateMobilePayments",
             "remove"
-        ]),
-
-        statusSelect(item) {
-            item.selected = !item.selected;
-
-            let index = this.selectedStatuses.findIndex(
-                s => s.name === item.name
-            );
-
-            if (index === -1) {
-                this.selectedStatuses.push(item);
-            } else {
-                this.selectedStatuses.splice(index, 1);
-            }
-        },
-
-        deleteStatus(item, index) {
-            this.selectedStatuses.splice(index, 1);
-            this.transactionStatuses.find(
-                s => s.name === item.name
-            ).selected = false;
-        },
-
-        typeSelect(item) {
-            item.selected = !item.selected;
-
-            let index = this.selectedTypes.findIndex(t => t.name === item.name);
-
-            if (index === -1) {
-                this.selectedTypes.push(item);
-            } else {
-                this.selectedTypes.splice(index, 1);
-            }
-        },
-
-        deleteType(item, index) {
-            this.selectedTypes.splice(index, 1);
-            this.transactionTypes.find(
-                t => t.name === item.name
-            ).selected = false;
-        },
-
-        getStoreId() {
-            return localStorage.getItem("storeId");
-        },
-
-        async downloadAllTransactions() {
-            try {
-                axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
-                    "accessToken"
-                )}`;
-
-                // axios
-                //     .get(
-                //         `https://api.roadcube.tk/v1/stores/${localStorage.getItem(
-                //             "storeId"
-                //         )}/transactions/excel/generate`
-                //     )
-                //     .then(res => {
-                //         console.log(res);
-                //     });
-
-                axios
-                    .get(
-                        `https://api.roadcube.tk/v1/stores/${localStorage.getItem(
-                            "storeId"
-                        )}/transactions/excel/status`
-                    )
-                    .then(res => console.log(res));
-
-                // axios
-                //     .get(
-                //         `https://api.roadcube.tk/v1/stores/${localStorage.getItem(
-                //             "storeId"
-                //         )}/transactions/excel/download`,
-                //         {
-                //             responseType: "blob"
-                //         }
-                //     )
-                //     .then(res => {
-                //         console.log(res);
-                //         const blob = res.data;
-                //         const fileName = res.headers("fileName");
-                //         const link = document.createElement("a");
-                //         link.href = window.URL.createObjectURL(blob);
-                //         link.download = fileName;
-                //         link.click();
-                //     });
-            } catch (ex) {
-                console.error(ex.response.data.message);
-            }
-        }
-
-        // fundClosure() {
-        //     axios.get(
-        //         "https://api.roadcube.test/v1/stores/{{store_id}}/transactions/fund/close"
-        //     );
-        //     axios.get(
-        //         "https://api.roadcube.test/v1/stores/{{store_id}}/transactions/fund/close)"
-        //     );
-        // }
+        ])
     },
 
     watch: {
@@ -605,88 +262,6 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        },
-
-        ["$store.state.storePanel.store"]: {
-            immediate: true,
-            handler(val) {
-                this.online_payments = val.flags.reward.online_payments;
-            }
-        },
-
-        transactionStatuses(val) {
-            if (val.length) {
-                if (this.$route.query["transaction-status-id"]) {
-                    let statuses = this.$route.query[
-                        "transaction-status-id"
-                    ].split(",");
-
-                    statuses.forEach(s => {
-                        let status = val.find(
-                            t => t.transaction_status_id === +s
-                        );
-
-                        status.selected = true;
-
-                        this.selectedStatuses.push(status);
-                    });
-                }
-            }
-        },
-
-        transactionTypes(val) {
-            if (val.length) {
-                if (this.$route.query["transaction-type"]) {
-                    let types = this.$route.query["transaction-type"].split(
-                        ","
-                    );
-
-                    types.forEach(t => {
-                        let type = val.find(s => s.transaction_type_id === +t);
-
-                        type.selected = true;
-
-                        this.selectedTypes.push(type);
-                    });
-                }
-            }
-        },
-
-        selectedStatuses(val) {
-            let str = "";
-
-            if (val.length) {
-                val.forEach(s => (str += `,${s.transaction_status_id}`));
-                str = str.slice(1);
-            } else {
-                str = undefined;
-            }
-
-            if (str !== this.$route.query["transaction-status-id"]) {
-                this.$router.push({
-                    query: {
-                        ...this.$route.query,
-                        "transaction-status-id": str
-                    }
-                });
-            }
-        },
-
-        selectedTypes(val) {
-            let str = "";
-
-            if (val.length) {
-                val.forEach(t => (str += `,${t.transaction_type_id}`));
-                str = str.slice(1);
-            } else {
-                str = undefined;
-            }
-
-            if (str !== this.$route.query["transaction-type"]) {
-                this.$router.push({
-                    query: { ...this.$route.query, "transaction-type": str }
-                });
-            }
         }
     },
 
@@ -703,15 +278,6 @@ export default {
 
     mounted() {
         this.getItems(this.query);
-        this.getTransactionStatuses();
-        this.getTransactionTypes();
     }
 };
 </script>
-
-<style scoped>
-.b-list-active {
-    background-color: rgba(42, 48, 66, 0.12);
-    color: rgb(42, 48, 66);
-}
-</style>

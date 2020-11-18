@@ -14,7 +14,7 @@
     >
         <b-text-field
             v-model="product.name[productLang]"
-            label="Product Name"
+            :label="translations.productName[lang]"
             no-top-margin
             :success="success.name"
             :rules="rules.name"
@@ -27,7 +27,7 @@
 
         <b-textarea
             v-model="product.description[descriptionLang]"
-            label="Product Description"
+            :label="translations.productDescription[lang]"
             :success="success.description"
             :rules="rules.description"
             @cancel-success="success.description = false"
@@ -42,13 +42,16 @@
 
         <v-row no-gutters>
             <v-col cols="12">
-                <h4 class="secondary--text mt-3">Prices</h4>
+                <h4
+                    class="secondary--text mt-3"
+                    v-text="translations.prices[lang]"
+                ></h4>
             </v-col>
             <v-col cols="6" class="pr-2">
                 <b-text-field
                     v-model="product.retail_price"
+                    :label="translations.sellingPrice[lang]"
                     type="number"
-                    label="Selling Price"
                     prepend-inner-icon="mdiCurrencyEur"
                     :success="success.sellingPrice"
                     :rules="rules.sellingPrice"
@@ -58,8 +61,8 @@
             <v-col cols="6" class="pl-2">
                 <b-text-field
                     v-model="product.wholesale_price"
+                    :label="translations.wholesalePrice[lang]"
                     type="number"
-                    label="Wholesale Price"
                     prepend-inner-icon="mdiCurrencyEur"
                     :success="success.wholesalePrice"
                     :rules="rules.wholesalePrice"
@@ -67,13 +70,16 @@
                 ></b-text-field>
             </v-col>
             <v-col cols="12">
-                <h4 class="secondary--text mt-3">Costs</h4>
+                <h4
+                    class="secondary--text mt-3"
+                    v-text="translations.costs[lang]"
+                ></h4>
             </v-col>
             <v-col cols="6" class="pr-2">
                 <b-text-field
                     v-model="product.delivery_cost"
+                    :label="translations.deliveryCost[lang]"
                     type="number"
-                    label="Delivery Cost"
                     prepend-inner-icon="mdiCurrencyEur"
                     :success="success.deliveryCost"
                     :rules="rules.deliveryCost"
@@ -83,8 +89,8 @@
             <v-col cols="6" class="pl-2">
                 <b-text-field
                     v-model="product.shipping_cost"
+                    :label="translations.shippingCost[lang]"
                     type="number"
-                    label="Shipping Cost"
                     prepend-inner-icon="mdiCurrencyEur"
                     :success="success.shippingCost"
                     :rules="rules.shippingCost"
@@ -98,7 +104,7 @@
             :items="categories"
             :item-text="`name[${lang}]`"
             item-value="product_category_id"
-            label="Select Category"
+            :label="translations.selectCategory[lang]"
             :success="success.category"
             :rules="rules.category"
         ></b-select>
@@ -110,17 +116,18 @@
             hide-details="auto"
         >
             <template v-slot:label>
-                <h4 class="secondary--text">
-                    I want the product to be displayed with an image in the
-                    application
-                </h4>
+                <h4
+                    class="secondary--text"
+                    v-text="translations.imageCheckbox[lang]"
+                ></h4>
             </template>
         </v-checkbox>
 
         <v-card v-if="showImageUpload" outlined class="mt-3">
-            <v-card-title class="subtitle-1 font-weight-medium">
-                Product Image (optional)
-            </v-card-title>
+            <v-card-title
+                class="subtitle-1 font-weight-medium"
+                v-text="translations.imageTitle[lang]"
+            ></v-card-title>
             <v-row no-gutters justify="space-between" class="pa-5">
                 <v-col cols="6">
                     <v-img :src="product.image"></v-img>
@@ -144,9 +151,10 @@
             hide-details="auto"
         >
             <template v-slot:label>
-                <h4 class="secondary--text">
-                    I want the product to be displayed on specific days
-                </h4>
+                <h4
+                    class="secondary--text"
+                    v-text="translations.daysCheckbox[lang]"
+                ></h4>
             </template>
         </v-checkbox>
 
@@ -154,15 +162,13 @@
             <v-card-title
                 class="subtitle-1 font-weight-medium"
                 style="word-break: normal"
-            >
-                Choose the days you want the product group to be displayed in
-                public
-            </v-card-title>
+                v-text="translations.daysInfo[lang]"
+            ></v-card-title>
             <v-container>
                 <v-row no-gutters>
                     <v-col
                         v-for="(weekday, i) in weekdays"
-                        :key="weekday"
+                        :key="weekday['en']"
                         cols="3"
                         class="pr-2"
                     >
@@ -170,14 +176,13 @@
                             v-model="product.availability_days"
                             color="secondary"
                             class="mt-0"
-                            :label="weekday"
                             :value="i"
                             hide-details
                         >
                             <template v-slot:label>
                                 <h4
                                     class="secondary--text"
-                                    v-text="weekday"
+                                    v-text="weekday[lang]"
                                 ></h4>
                             </template>
                         </v-checkbox>
@@ -194,7 +199,11 @@
         >
             <template v-slot:label>
                 <h4 class="secondary--text">
-                    {{ product.published ? "Published" : "Unpublished" }}
+                    {{
+                        product.published
+                            ? translations.published[lang]
+                            : translations.unpublished[lang]
+                    }}
                 </h4>
             </template>
         </v-checkbox>
@@ -202,8 +211,10 @@
 </template>
 
 <script>
-import validators from "./productValidators";
 import { mapState, mapMutations, mapActions } from "vuex";
+
+import translations from "@/utils/translations/storePanel/products/productForm";
+import validators from "./productValidators";
 
 export default {
     name: "Product",
@@ -212,7 +223,7 @@ export default {
         mode: Number
     },
 
-    mixins: [validators],
+    mixins: [translations, validators],
 
     data() {
         return {
@@ -220,13 +231,13 @@ export default {
             descriptionLang: "el",
             imageFile: null,
             weekdays: [
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday",
-                "Sunday"
+                { el: "", en: "Monday", it: "" },
+                { el: "", en: "Tuesday", it: "" },
+                { el: "", en: "Wednesday", it: "" },
+                { el: "", en: "Thursday", it: "" },
+                { el: "", en: "Friday", it: "" },
+                { el: "", en: "Saturday", it: "" },
+                { el: "", en: "Sunday", it: "" }
             ]
         };
     },
@@ -246,8 +257,8 @@ export default {
 
         title() {
             return this.mode === 1
-                ? "New Product or Service"
-                : "Update Product or Service";
+                ? this.translations.createTitle[this.lang]
+                : this.translations.updateTitle[this.lang];
         },
 
         showImageUpload: {

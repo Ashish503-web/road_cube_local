@@ -30,120 +30,114 @@
             </v-col>
         </v-row>
 
-        <v-sheet outlined style="overflow: auto">
-            <v-sheet width="1400">
-                <v-data-table
-                    :headers="headers"
-                    :items="stores"
-                    :footer-props="{
-                        itemsPerPageOptions: [12],
-                        showCurrentPage: true
-                    }"
-                    :page.sync="page"
-                    :server-items-length="serverItemsLength"
-                    disable-sort
-                    class="b-bottom-outlined"
-                >
-                    <template v-slot:no-data>
-                        <v-progress-circular
-                            v-if="loading"
+        <v-data-table
+            :headers="headers"
+            :items="stores"
+            :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
+            :page.sync="page"
+            :server-items-length="serverItemsLength"
+            disable-sort
+            class="b-outlined"
+        >
+            <template v-slot:no-data>
+                <v-progress-circular
+                    v-if="loading"
+                    color="secondary"
+                    indeterminate
+                ></v-progress-circular>
+                <span v-else v-text="translations.noData[lang]"></span>
+            </template>
+
+            <template v-slot:item.view="{ item }">
+                <v-tooltip color="secondary" top>
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            icon
+                            v-on="on"
+                            @click="
+                                () => {
+                                    store = item;
+                                    infoDialog = true;
+                                }
+                            "
+                        >
+                            <v-icon v-text="icons.mdiEye"></v-icon>
+                        </v-btn>
+                    </template>
+
+                    <span
+                        class="font-weight-bold"
+                        v-text="translations.showAdditionalInfo[lang]"
+                    ></span>
+                </v-tooltip>
+            </template>
+
+            <template v-slot:item.actions="{ item }">
+                <v-tooltip color="secondary" top>
+                    <template v-slot:activator="{ on }">
+                        <v-btn
                             color="secondary"
-                            indeterminate
-                        ></v-progress-circular>
-                        <span v-else v-text="translations.noData[lang]"></span>
+                            icon
+                            v-on="on"
+                            @click="
+                                () => {
+                                    store = item;
+                                    redirectDialog = true;
+                                }
+                            "
+                        >
+                            <v-icon v-text="icons.mdiOpenInNew"></v-icon>
+                        </v-btn>
                     </template>
 
-                    <template v-slot:item.bank_providers="{ item }">
-                        <v-tooltip color="secondary" top>
-                            <template v-slot:activator="{ on }">
-                                <v-btn
-                                    icon
-                                    v-on="on"
-                                    @click="
-                                        () => {
-                                            storeBanks = item.bank_providers;
-                                            banksDialog = true;
-                                        }
-                                    "
-                                >
-                                    <v-icon v-text="icons.mdiBank"></v-icon>
-                                </v-btn>
-                            </template>
+                    <span
+                        class="font-weight-bold"
+                        v-text="translations.redirect[lang]"
+                    ></span>
+                </v-tooltip>
 
-                            <span
-                                class="font-weight-bold"
-                                v-text="translations.showBanks[lang]"
-                            ></span>
-                        </v-tooltip>
+                <v-tooltip color="secondary" top>
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            color="yellow darken-3"
+                            icon
+                            v-on="on"
+                            @click="open(2, item)"
+                        >
+                            <v-icon v-text="icons.mdiPencilOutline"></v-icon>
+                        </v-btn>
                     </template>
 
-                    <template v-slot:item.actions="{ item }">
-                        <v-tooltip color="secondary" top>
-                            <template v-slot:activator="{ on }">
-                                <v-btn
-                                    color="secondary"
-                                    icon
-                                    v-on="on"
-                                    @click="redirectDialog = true"
-                                >
-                                    <v-icon
-                                        v-text="icons.mdiOpenInNew"
-                                    ></v-icon>
-                                </v-btn>
-                            </template>
+                    <span
+                        class="font-weight-bold"
+                        v-text="translations.update[lang]"
+                    ></span>
+                </v-tooltip>
 
-                            <span
-                                class="font-weight-bold"
-                                v-text="translations.redirect[lang]"
-                            ></span>
-                        </v-tooltip>
-
-                        <v-tooltip color="secondary" top>
-                            <template v-slot:activator="{ on }">
-                                <v-btn
-                                    color="yellow darken-3"
-                                    icon
-                                    v-on="on"
-                                    @click="open(2, item)"
-                                >
-                                    <v-icon
-                                        v-text="icons.mdiPencilOutline"
-                                    ></v-icon>
-                                </v-btn>
-                            </template>
-
-                            <span
-                                class="font-weight-bold"
-                                v-text="translations.update[lang]"
-                            ></span>
-                        </v-tooltip>
-
-                        <v-tooltip color="secondary" top>
-                            <template v-slot:activator="{ on }">
-                                <v-btn
-                                    color="red"
-                                    icon
-                                    v-on="on"
-                                    @click="
-                                        () => {
-                                            store = item;
-                                            deleteDialog = true;
-                                        }
-                                    "
-                                >
-                                    <v-icon v-text="icons.mdiClose"></v-icon>
-                                </v-btn>
-                            </template>
-
-                            <span
-                                class="font-weight-bold"
-                                v-text="translations.delete[lang]"
-                            ></span>
-                        </v-tooltip>
+                <v-tooltip color="secondary" top>
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            color="red"
+                            icon
+                            v-on="on"
+                            @click="
+                                () => {
+                                    store = item;
+                                    deleteDialog = true;
+                                }
+                            "
+                        >
+                            <v-icon v-text="icons.mdiClose"></v-icon>
+                        </v-btn>
                     </template>
-                </v-data-table>
-            </v-sheet>
-        </v-sheet>
+
+                    <span
+                        class="font-weight-bold"
+                        v-text="translations.delete[lang]"
+                    ></span>
+                </v-tooltip>
+            </template>
+        </v-data-table>
 
         <v-dialog v-model="dialog" max-width="600">
             <StoreForm :mode="mode" @cancel="dialog = false" />
@@ -153,55 +147,25 @@
             <RightsForm @cancel="rightsDialog = false" />
         </v-dialog>
 
-        <v-dialog v-model="banksDialog" max-width="500">
-            <v-card>
-                <v-card-title class="subtitle-1 font-weight-bold px-6">
-                    <v-icon
-                        class="mr-3 text--primary"
-                        v-text="icons.mdiBank"
-                    ></v-icon>
-                    Store Available Banks
-                    <v-spacer></v-spacer>
-                    <v-btn icon @click="banksDialog = false">
-                        <v-icon v-text="icons.mdiClose"></v-icon>
-                    </v-btn>
-                </v-card-title>
-
-                <v-divider></v-divider>
-
-                <v-card-text class="pt-4 pb-1">
-                    <template v-if="storeBanks.length">
-                        <div
-                            v-for="bank in storeBanks"
-                            :key="bank['en']"
-                            class="b-outlined pa-3 mb-3"
-                        >
-                            <h4
-                                class="text--primary subtitle-2"
-                                v-text="bank[lang]"
-                            ></h4>
-                        </div>
-                    </template>
-
-                    <div v-else class="b-outlined pa-3 mb-3">
-                        No Banks Available
-                    </div>
-                </v-card-text>
-            </v-card>
+        <v-dialog v-model="infoDialog" max-width="500">
+            <AdditionalInfo @cancel="infoDialog = false" />
         </v-dialog>
 
         <v-dialog v-model="redirectDialog" max-width="500">
             <b-card
                 title="Verification"
-                icon="mdiCheckCircleOutline"
+                :submit-text="{ el: '', en: 'Continue', it: '' }"
                 @cancel="redirectDialog = false"
             >
-                <p>
+                <div class="subtitle-1 font-weight-medium pl-2">
                     Want to go to your substitute on the road
-                    <span class="text--primary font-italic">dieuth.</span>
-                </p>
+                    <span class="font-weight-bold">{{ store.app_name }}</span
+                    >?
+                </div>
 
-                Do you want to continue?
+                <div class="subtitle-1 font-weight-medium pl-2">
+                    Do you want to continue?
+                </div>
             </b-card>
         </v-dialog>
 
@@ -209,18 +173,24 @@
             <b-card
                 type="delete"
                 title="Delete Store"
-                icon="mdiDelete"
-                submit-text="delete"
+                :loading="loading"
+                :error-message="errorMessage"
+                :submit-text="{ el: '', en: 'delete', it: '' }"
                 @cancel="deleteDialog = false"
+                @submit="remove"
             >
-                <div>
+                <div class="subtitle-1 font-weight-medium pl-2">
                     Are you sure you want to delete
                     <span class="font-weight-bold text--primary">dieuth</span>?
                 </div>
 
-                <v-checkbox color="secondary" class="mt-3 pt-0" hide-details>
+                <v-checkbox
+                    color="secondary"
+                    class="mt-3 ml-1 pt-0"
+                    hide-details
+                >
                     <template v-slot:label>
-                        <h4 class="subtitle-2">
+                        <h4 class="subtitle-2 text--primary">
                             Do you want to totally delete Store?
                         </h4>
                     </template>
@@ -231,24 +201,25 @@
 </template>
 
 <script>
-import { mdiBank, mdiPencilOutline, mdiOpenInNew, mdiClose } from "@mdi/js";
+import { mdiEye, mdiPencilOutline, mdiOpenInNew, mdiClose } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import debounce from "lodash/debounce";
 
-import StoreForm from "@/components/loyaltyPanel/stores/StoreForm";
-import RightsForm from "@/components/loyaltyPanel/stores/RightsForm";
+import StoreForm from "@/components/loyaltyPanel/stores/StoreForm.vue";
+import RightsForm from "@/components/loyaltyPanel/stores/RightsForm.vue";
+import AdditionalInfo from "@/components/loyaltyPanel/stores/AdditionalInfo.vue";
 import translations from "@/utils/translations/loyaltyPanel/stores/storesTab";
 
 export default {
     name: "StoresTab",
 
-    components: { StoreForm, RightsForm },
+    components: { StoreForm, RightsForm, AdditionalInfo },
 
     mixins: [translations],
 
     data() {
         return {
-            icons: { mdiBank, mdiPencilOutline, mdiOpenInNew, mdiClose },
+            icons: { mdiEye, mdiPencilOutline, mdiOpenInNew, mdiClose },
             searchTypes: [
                 "All Fields",
                 "Name",
@@ -262,8 +233,7 @@ export default {
             page: +this.$route.query.page,
             mode: 0,
             search: "",
-            banksDialog: false,
-            storeBanks: [],
+            infoDialog: false,
             rightsDialog: false,
             redirectDialog: false
         };
@@ -295,21 +265,8 @@ export default {
                     value: "online_payment"
                 },
                 {
-                    text: this.translations.banks[this.lang],
-                    value: "bank_providers"
-                },
-                {
-                    text: this.translations.address[this.lang],
-                    value: "address",
-                    width: 200
-                },
-                {
-                    text: this.translations.phone[this.lang],
-                    value: "primary_phone"
-                },
-                {
-                    text: this.translations.registrationDate[this.lang],
-                    value: "registration_date"
+                    text: this.translations.view[this.lang],
+                    value: "view"
                 },
                 { text: this.translations.active[this.lang], value: "active" },
                 { text: this.translations.actions[this.lang], value: "actions" }
@@ -402,30 +359,6 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        },
-
-        branches: function(val) {
-            let branches = [];
-            val.map(data => {
-                let item = {};
-                item.name = data.name;
-                item.app_name = data.app_name;
-                item.map = data.map;
-                item.online_payment = data.online_payment ? "On" : "Off";
-                item.bank_providers =
-                    data.bank_providers && data.bank_providers[0]
-                        ? data.bank_providers[0]
-                        : "";
-                item.address = data.address;
-                item.primary_phone = data.primary_phone;
-                item.registration_date = data.registration_date;
-                item.active = data.active ? "On" : "Off";
-                item.app_name = data.app_name;
-
-                branches.push(item);
-            });
-
-            this.items = branches;
         },
 
         search(val) {

@@ -1,10 +1,10 @@
 <template>
-    <v-card>
+    <v-card tile>
         <v-card-title
             class="subtitle-1 font-weight-bold"
             :class="{
                 red: type === 'delete',
-                'white--text': type === 'delete'
+                'white--text': type === 'delete',
             }"
         >
             {{ title }}
@@ -34,7 +34,7 @@
                     class="text-capitalize"
                     style="font-size: 0.9rem"
                     @click="$emit('cancel')"
-                    >{{ cancelText }}</v-btn
+                    >{{ cancelText[lang] }}</v-btn
                 >
                 <v-btn
                     type="submit"
@@ -45,7 +45,7 @@
                     depressed
                     :loading="loading"
                     :disabled="disabled"
-                    >{{ submitText }}</v-btn
+                    >{{ submitText[lang] }}</v-btn
                 >
             </v-card-actions>
         </v-form>
@@ -60,29 +60,35 @@ export default {
     props: {
         type: {
             type: String,
-            default: "default"
+            default: "default",
         },
         title: String,
         cancelText: {
-            type: String,
-            default: "cancel"
+            type: Object,
+            default: () => ({ el: "", en: "cancel", it: "" }),
         },
         submitText: {
-            type: String,
-            default: "save"
+            type: Object,
+            default: () => ({ el: "", en: "save", it: "" }),
         },
         loading: Boolean,
         errorMessage: String,
-        resetValidation: Boolean
+        resetValidation: Boolean,
     },
 
     data: () => ({
         icons: {
-            mdiClose
+            mdiClose,
         },
         valid: false,
-        disabled: true
+        disabled: true,
     }),
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+    },
 
     watch: {
         valid(val) {
@@ -95,12 +101,12 @@ export default {
 
         resetValidation(val) {
             if (val) this.$refs.form.resetValidation();
-        }
+        },
     },
 
     mounted() {
         this.$clearFocus();
         this.$refs.form.resetValidation();
-    }
+    },
 };
 </script>

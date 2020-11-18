@@ -17,23 +17,23 @@ export default [
             )
     },
 
-    {
-        path: "admin-panel-settings",
-        name: "AdminPanelSettings",
-        component: () =>
-            import(
-                /* webpackChunkName: "adminPanelSettings" */ "@/views/loyaltyPanel/stores/tabs/AdminPanelSettings.vue"
-            )
-    },
+    // {
+    //     path: "admin-panel-settings",
+    //     name: "AdminPanelSettings",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "adminPanelSettings" */ "@/views/loyaltyPanel/stores/tabs/AdminPanelSettings.vue"
+    //         )
+    // },
 
-    {
-        path: "application-settings",
-        name: "ApplicationSettings",
-        component: () =>
-            import(
-                /* webpackChunkName: "applicationSettings" */ "@/views/loyaltyPanel/stores/tabs/ApplicationSettings.vue"
-            )
-    },
+    // {
+    //     path: "application-settings",
+    //     name: "ApplicationSettings",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "applicationSettings" */ "@/views/loyaltyPanel/stores/tabs/ApplicationSettings.vue"
+    //         )
+    // },
 
     {
         path: "daily-transaction-limits",

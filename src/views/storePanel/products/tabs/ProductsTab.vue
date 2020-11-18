@@ -96,20 +96,20 @@
         <v-dialog v-model="deleteDialog" max-width="500">
             <b-card
                 type="delete"
-                title="Delete Product"
-                submit-text="delete"
+                :title="translations.deleteProduct[lang]"
+                :submit-text="{ el: '', en: 'delete', it: '' }"
                 :loading="loading"
                 :error-message="errorMessage"
                 @cancel="deleteDialog = false"
                 @submit="remove"
             >
-                <p>
-                    Are you sure you want to delete
+                <div class="subtitle-1 font-weight-medium pl-2">
+                    {{ translations.deleteText[lang] }}
                     <span class="font-weight-bold text--primary">{{
                         product.name[lang]
                     }}</span
                     >?
-                </p>
+                </div>
             </b-card>
         </v-dialog>
     </v-tab-item>

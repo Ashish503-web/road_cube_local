@@ -50,6 +50,21 @@ export default {
                 el: "",
                 en: "Delete",
                 it: ""
+            },
+            deleteProduct: {
+                el: "",
+                en: "Delete Product",
+                it: ""
+            },
+            deleteProductGroup: {
+                el: "",
+                en: "Delete Product Group",
+                it: ""
+            },
+            deleteText: {
+                el: "",
+                en: "Are you sure you want to delete",
+                it: ""
             }
         }
     })

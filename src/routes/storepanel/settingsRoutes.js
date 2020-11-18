@@ -63,20 +63,29 @@ export default [
     },
 
     {
-        path: "payment-history",
-        name: "PaymentHistory",
+        path: "subscription",
+        name: "Subscription",
         component: () =>
             import(
-                /* webpackChunkName: "paymentHistory" */ "@/views/storePanel/settings/tabs/PaymentHistory.vue"
-            )
-    },
-
-    {
-        path: "payment-methods",
-        name: "PaymentMethods",
-        component: () =>
-            import(
-                /* webpackChunkName: "paymentMethods" */ "@/views/storePanel/settings/tabs/PaymentMethods.vue"
+                /* webpackChunkName: "subscription" */ "@/views/storePanel/settings/tabs/Subscription.vue"
             )
     }
+
+    // {
+    //     path: "payment-history",
+    //     name: "PaymentHistory",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "paymentHistory" */ "@/views/storePanel/settings/tabs/PaymentHistory.vue"
+    //         )
+    // },
+
+    // {
+    //     path: "payment-methods",
+    //     name: "PaymentMethods",
+    //     component: () =>
+    //         import(
+    //             /* webpackChunkName: "paymentMethods" */ "@/views/storePanel/settings/tabs/PaymentMethods.vue"
+    //         )
+    // }
 ];

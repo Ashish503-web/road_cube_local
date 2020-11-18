@@ -113,7 +113,6 @@
                 <b-text-field
                     v-model="product.product_identifier"
                     label="Product Id"
-                    type="number"
                 ></b-text-field>
             </v-col>
 
@@ -248,8 +247,9 @@
 </template>
 
 <script>
-import validators from "./productValidators";
 import { mapState, mapMutations, mapActions } from "vuex";
+
+import validators from "./productValidators";
 
 export default {
     name: "Product",
@@ -264,10 +264,10 @@ export default {
         productLang: "el",
         descriptionLang: "el",
         rewardTypes: [
-            { text: "Liters", value: 1 },
-            { text: "Piece", value: 2 },
-            { text: "Per Transaction", value: 3 },
-            { text: "Per Euro", value: 4 }
+            { text: "Per Transaction", value: 1 },
+            { text: "Per Euro", value: 2 },
+            { text: "Piece", value: 3 },
+            { text: "Liters", value: 4 }
         ],
         imageFile: null,
         weekdays: [

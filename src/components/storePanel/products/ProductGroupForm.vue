@@ -14,7 +14,7 @@
     >
         <b-text-field
             v-model="productGroup.name[groupLang]"
-            label="Product Group Name"
+            :label="translations.productGroupName[lang]"
             no-top-margin
             :success="success.name"
             :rules="rules.name"
@@ -27,7 +27,7 @@
 
         <b-textarea
             v-model="productGroup.description[descriptionLang]"
-            label="Product Group Description"
+            :label="translations.productGroupDescription[lang]"
             :success="success.description"
             :rules="rules.description"
             @cancel-success="success.description = false"
@@ -42,8 +42,8 @@
 
         <b-text-field
             v-model="productGroup.average_price"
+            :label="translations.averagePrice[lang]"
             type="number"
-            label="Average Price"
             prepend-inner-icon="mdiCurrencyEur"
             :success="success.averagePrice"
             :rules="rules.averagePrice"
@@ -55,7 +55,7 @@
             :items="categories"
             :item-text="`name[${lang}]`"
             item-value="product_category_id"
-            label="Select Category"
+            :label="translations.selectCategory[lang]"
             :success="success.category"
             :rules="rules.category"
         ></b-select>
@@ -67,17 +67,18 @@
             hide-details="auto"
         >
             <template v-slot:label>
-                <h4 class="secondary--text">
-                    I want the product group to be displayed with an image in
-                    the application
-                </h4>
+                <h4
+                    class="secondary--text"
+                    v-text="translations.imageCheckbox[lang]"
+                ></h4>
             </template>
         </v-checkbox>
 
         <v-card v-if="showImageUpload" outlined class="mt-3">
-            <v-card-title class="subtitle-1 font-weight-medium">
-                Product Image (optional)
-            </v-card-title>
+            <v-card-title
+                class="subtitle-1 font-weight-medium"
+                v-text="translations.imageTitle[lang]"
+            ></v-card-title>
             <v-row no-gutters justify="space-between" class="pa-5">
                 <v-col cols="6">
                     <v-img :src="productGroup.image"></v-img>
@@ -101,9 +102,10 @@
             hide-details="auto"
         >
             <template v-slot:label>
-                <h4 class="secondary--text">
-                    I want the product group to be displayed on specific days
-                </h4>
+                <h4
+                    class="secondary--text"
+                    v-text="translations.daysCheckbox[lang]"
+                ></h4>
             </template>
         </v-checkbox>
 
@@ -111,15 +113,13 @@
             <v-card-title
                 class="subtitle-1 font-weight-medium"
                 style="word-break: normal"
-            >
-                Choose the days you want the product group to be displayed in
-                public
-            </v-card-title>
+                v-text="translations.daysInfo[lang]"
+            ></v-card-title>
             <v-container>
                 <v-row no-gutters>
                     <v-col
                         v-for="(weekday, i) in weekdays"
-                        :key="weekday"
+                        :key="weekday['en']"
                         cols="3"
                         class="pr-2"
                     >
@@ -127,14 +127,13 @@
                             v-model="productGroup.availability_days"
                             color="secondary"
                             class="mt-0"
-                            :label="weekday"
                             :value="i"
                             hide-details
                         >
                             <template v-slot:label>
                                 <h4
                                     class="secondary--text"
-                                    v-text="weekday"
+                                    v-text="weekday[lang]"
                                 ></h4>
                             </template>
                         </v-checkbox>
@@ -151,7 +150,11 @@
         >
             <template v-slot:label>
                 <h4 class="secondary--text">
-                    {{ productGroup.published ? "Published" : "Unpublished" }}
+                    {{
+                        productGroup.published
+                            ? translations.published[lang]
+                            : translations.unpublished[lang]
+                    }}
                 </h4>
             </template>
         </v-checkbox>
@@ -159,30 +162,34 @@
 </template>
 
 <script>
-import validators from "./productGroupValidators";
 import { mapState, mapMutations, mapActions } from "vuex";
+
+import translations from "@/utils/translations/storePanel/products/productGroupForm";
+import validators from "./productGroupValidators";
 
 export default {
     name: "ProductGroup",
+
     props: {
-        mode: Number,
+        mode: Number
     },
-    mixins: [validators],
+
+    mixins: [translations, validators],
+
     data() {
         return {
-            lang: "el",
             groupLang: "el",
             descriptionLang: "el",
             imageFile: null,
             weekdays: [
-                "Monday",
-                "Tuesday",
-                "Wednesday",
-                "Thursday",
-                "Friday",
-                "Saturday",
-                "Sunday",
-            ],
+                { el: "", en: "Monday", it: "" },
+                { el: "", en: "Tuesday", it: "" },
+                { el: "", en: "Wednesday", it: "" },
+                { el: "", en: "Thursday", it: "" },
+                { el: "", en: "Friday", it: "" },
+                { el: "", en: "Saturday", it: "" },
+                { el: "", en: "Sunday", it: "" }
+            ]
         };
     },
 
@@ -191,14 +198,18 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation",
+            "resetValidation"
         ]),
         ...mapState("storePanel/productGroups", ["categories"]),
 
+        lang() {
+            return this.$route.params.lang;
+        },
+
         title() {
             return this.mode === 1
-                ? "New Product Group"
-                : "Update Product Group";
+                ? this.translations.createTitle[this.lang]
+                : this.translations.updateTitle[this.lang];
         },
 
         showImageUpload: {
@@ -209,7 +220,7 @@ export default {
 
             set(val) {
                 this.setShowImageUpload(val);
-            },
+            }
         },
 
         showWeekdays: {
@@ -219,23 +230,23 @@ export default {
 
             set(val) {
                 this.setShowWeekdays(val);
-            },
+            }
         },
 
         productGroup() {
             return this.$store.state.storePanel.productGroups.productGroup;
-        },
+        }
     },
 
     methods: {
         ...mapMutations("storePanel/productGroups", [
             "setShowImageUpload",
-            "setShowWeekdays",
+            "setShowWeekdays"
         ]),
         ...mapActions("storePanel/productGroups", [
             "getCategories",
             "create",
-            "update",
+            "update"
         ]),
 
         onFileSelected(event) {
@@ -243,10 +254,10 @@ export default {
                 this.imageFile = event;
                 const reader = new FileReader();
                 reader.readAsDataURL(this.imageFile);
-                reader.onload = (e) =>
+                reader.onload = e =>
                     (this.productGroup.image = e.target.result);
             }
-        },
+        }
     },
 
     watch: {
@@ -256,14 +267,14 @@ export default {
                     name: false,
                     description: false,
                     averagePrice: false,
-                    category: false,
+                    category: false
                 };
             }
-        },
+        }
     },
 
     mounted() {
         this.getCategories();
-    },
+    }
 };
 </script>

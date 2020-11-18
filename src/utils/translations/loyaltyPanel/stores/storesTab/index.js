@@ -31,24 +31,9 @@ export default {
                 en: "Payments",
                 it: ""
             },
-            banks: {
+            view: {
                 el: "",
-                en: "Banks",
-                it: ""
-            },
-            address: {
-                el: "",
-                en: "Address",
-                it: ""
-            },
-            phone: {
-                el: "",
-                en: "Phone",
-                it: ""
-            },
-            registrationDate: {
-                el: "",
-                en: "Registration Date",
+                en: "View",
                 it: ""
             },
             active: {
@@ -66,9 +51,9 @@ export default {
                 en: "No data available",
                 it: ""
             },
-            showBanks: {
+            showAdditionalInfo: {
                 el: "",
-                en: "Show Banks",
+                en: "Show Additional Info",
                 it: ""
             },
             redirect: {

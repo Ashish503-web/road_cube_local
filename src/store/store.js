@@ -90,6 +90,8 @@ export default new Vuex.Store({
                     "https://api.roadcube.tk/v1/users/me"
                 );
 
+                console.log(data);
+
                 commit("setUser", data.data);
             } catch (ex) {
                 console.error(ex.response.data);

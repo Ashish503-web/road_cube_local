@@ -179,7 +179,7 @@ export default {
 
                 commit("setCountries", data.data);
             } catch (ex) {
-                console.error(ex);
+                console.error(ex.response.data.message);
             }
         },
 
