@@ -299,7 +299,7 @@ export default {
 
     beforeCreate() {
         if (!this.$route.query.page) {
-            this.$router.push({
+            this.$router.replace({
                 query: {
                     page: 1,
                     ...this.$route.query

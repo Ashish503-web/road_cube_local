@@ -2,7 +2,7 @@
     <v-app>
         <router-view name="header"></router-view>
 
-        <v-main :class="{ 'pa-0': $route.path === '/' }">
+        <v-main :class="{ 'pa-0': $route.path === `/${lang}/` }">
             <Notification />
             <router-view></router-view>
         </v-main>
@@ -15,10 +15,18 @@ import Notification from "@/components/general/Notification.vue";
 
 export default {
     name: "App",
+
     components: { Notification },
+
     data: () => ({
         //
     }),
+
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        }
+    },
 
     methods: {
         ...mapMutations(["setStoreId", "setAccessToken"]),

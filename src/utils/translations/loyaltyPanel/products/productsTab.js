@@ -1,6 +1,30 @@
 export default {
     data: () => ({
         translations: {
+            title: {
+                el: "",
+                en: "Common Products",
+                it: ""
+            },
+            info: {
+                el: "",
+                en: `
+                    Here you can add products that your brand is selling to all the stores of 
+                    yours or a certain number of stores. After adding your products here add 
+                    them to your stores from
+                `,
+                it: ""
+            },
+            productsPerStore: {
+                el: "",
+                en: "products per store",
+                it: ""
+            },
+            tab: {
+                el: "",
+                en: "tab",
+                it: ""
+            },
             addProduct: {
                 el: "",
                 en: "Add Product",

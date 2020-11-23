@@ -112,7 +112,7 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
-import translations from "@/utils/translations/storePanel/settings/orders";
+import translations from "@/utils/translations/storePanel/settings/profile/orders";
 
 export default {
     name: "Orders",

@@ -14,11 +14,11 @@
                     class="text-capitalize d-flex justify-start justify-md-center px-3"
                 ></v-tab>
             </v-tabs>
-
-            <v-tabs-items v-model="tab">
-                <router-view></router-view>
-            </v-tabs-items>
         </v-sheet>
+
+        <v-tabs-items v-model="tab" class="mt-3">
+            <router-view></router-view>
+        </v-tabs-items>
     </v-container>
 </template>
 

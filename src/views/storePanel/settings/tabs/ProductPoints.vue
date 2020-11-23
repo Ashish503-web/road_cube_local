@@ -1,5 +1,24 @@
 <template>
     <v-tab-item :value="$route.path" class="pa-3">
+        <v-row no-gutters align="center" class="pa-5 pt-0">
+            <v-col cols="auto">
+                <v-img
+                    src="@/assets/product-points.png"
+                    width="60"
+                    height="60"
+                ></v-img>
+            </v-col>
+
+            <v-col cols="9" class="pl-5">
+                <h4 v-text="translations.title[lang]"></h4>
+                <div
+                    style="font-size: 0.875rem"
+                    class="font-weight-medium mt-1"
+                    v-text="translations.info[lang]"
+                ></div>
+            </v-col>
+        </v-row>
+
         <v-data-table
             :headers="headers"
             :items="productPoints"
@@ -9,8 +28,7 @@
             }"
             :page.sync="page"
             :server-items-length="serverItemsLength"
-            loader-height="2"
-            class="b-outlined"
+            class="b-outlined mt-5"
         >
             <template v-slot:no-data>
                 <v-progress-circular
@@ -18,7 +36,7 @@
                     color="secondary"
                     indeterminate
                 ></v-progress-circular>
-                <span v-else>No data available</span>
+                <span v-else v-text="translations.noData[lang]"></span>
             </template>
 
             <template v-slot:item.reward_points="{ item }">
@@ -53,7 +71,10 @@
                     hide-details
                 >
                     <template v-slot:label>
-                        <h4 class="subtitle-2">Subsidized Points</h4>
+                        <h4
+                            class="subtitle-2"
+                            v-text="translations.subsidizedPoints[lang]"
+                        ></h4>
                     </template>
                 </v-checkbox>
             </template>
@@ -63,9 +84,11 @@
                     color="secondary"
                     class="text-capitalize"
                     depressed
+                    :loading="item.loading"
                     @click="update(item)"
-                    >change</v-btn
                 >
+                    {{ translations.change[lang] }}
+                </v-btn>
             </template>
         </v-data-table>
     </v-tab-item>
@@ -73,23 +96,15 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
+import translations from "@/utils/translations/storePanel/settings/productPoints";
 
 export default {
     name: "ProductPoints",
 
+    mixins: [translations],
+
     data() {
         return {
-            groupRewardTypes: [
-                { text: "Per Transaction", value: 1 },
-                { text: "Per Euro", value: 2 }
-            ],
-            productRewardTypes: [
-                { text: "Per Transaction", value: 1 },
-                { text: "Per Euro", value: 2 },
-                { text: "Piece", value: 3 },
-                { text: "Liters", value: 4 }
-            ],
-            lang: "el",
             page: +this.$route.query.page
         };
     },
@@ -98,20 +113,52 @@ export default {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/settings/productPoints", ["productPoints"]),
 
+        lang() {
+            return this.$route.params.lang;
+        },
+
         headers() {
             return [
                 {
-                    text: "Product Name",
+                    text: this.translations.productName[this.lang],
                     value: `name[${this.lang}]`,
                     width: "20%"
                 },
-                { text: "Points", value: "reward_points", width: "15%" },
-                { text: "Type", value: "reward_type_id", width: "30%" },
                 {
-                    text: "Point Subsidy",
+                    text: this.translations.points[this.lang],
+                    value: "reward_points",
+                    width: "15%"
+                },
+                {
+                    text: this.translations.type[this.lang],
+                    value: "reward_type_id",
+                    width: "30%"
+                },
+                {
+                    text: this.translations.pointSubsidy[this.lang],
                     value: "reward_points_shared"
                 },
-                { text: "Save", value: "save", width: "10%" }
+                {
+                    text: this.translations.action[this.lang],
+                    value: "save",
+                    width: "10%"
+                }
+            ];
+        },
+
+        groupRewardTypes() {
+            return [
+                { text: this.translations.perTransaction[this.lang], value: 1 },
+                { text: this.translations.perEuro[this.lang], value: 2 }
+            ];
+        },
+
+        productRewardTypes() {
+            return [
+                { text: this.translations.perTransaction[this.lang], value: 1 },
+                { text: this.translations.perEuro[this.lang], value: 2 },
+                { text: this.translations.piece[this.lang], value: 3 },
+                { text: this.translations.liters[this.lang], value: 4 }
             ];
         },
 

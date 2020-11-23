@@ -14,11 +14,11 @@
                     class="text-capitalize d-flex justify-start justify-md-center px-3"
                 ></v-tab>
             </v-tabs>
-
-            <v-tabs-items v-model="tab">
-                <router-view></router-view>
-            </v-tabs-items>
         </v-sheet>
+
+        <v-tabs-items v-model="tab" class="mt-3">
+            <router-view></router-view>
+        </v-tabs-items>
     </v-container>
 </template>
 
@@ -28,7 +28,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.path
+            tab: this.$route.path,
         };
     },
 
@@ -41,14 +41,14 @@ export default {
             return [
                 {
                     name: { el: "", en: "Products", it: "" },
-                    to: `/${this.lang}/storePanel/products/products-tab`
+                    to: `/${this.lang}/storePanel/products/products-tab`,
                 },
                 {
                     name: { el: "", en: "Product Groups", it: "" },
-                    to: `/${this.lang}/storePanel/products/product-groups`
-                }
+                    to: `/${this.lang}/storePanel/products/product-groups`,
+                },
             ];
-        }
+        },
     },
 
     watch: {
@@ -60,8 +60,8 @@ export default {
                         `/${this.lang}/storePanel/products/products-tab?page=1`
                     );
                 }
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>

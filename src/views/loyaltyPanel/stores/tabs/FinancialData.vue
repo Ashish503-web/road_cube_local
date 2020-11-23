@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path">
+    <v-tab-item :value="$route.path" class="pa-3">
         <v-toolbar flat height="90">
             <v-spacer></v-spacer>
             <v-col cols="4" class="pa-0">
@@ -41,7 +41,7 @@ export default {
                 "Customer",
                 "Transaction",
                 "Total",
-                "Points"
+                "Points",
             ],
             selectedSearchType: "All Fields",
             items: [
@@ -51,7 +51,7 @@ export default {
                     customer: "20",
                     transaction: "34",
                     total: "1905.18",
-                    points: "3836"
+                    points: "3836",
                 },
                 {
                     name: "Vasilis",
@@ -59,7 +59,7 @@ export default {
                     customer: "20",
                     transaction: "34",
                     total: "1905.18",
-                    points: "3836"
+                    points: "3836",
                 },
                 {
                     name: "Vasilis",
@@ -67,11 +67,11 @@ export default {
                     customer: "20",
                     transaction: "34",
                     total: "1905.18",
-                    points: "3836"
-                }
+                    points: "3836",
+                },
             ],
             page: +this.$route.query.page,
-            mode: 0
+            mode: 0,
         };
     },
 
@@ -86,22 +86,22 @@ export default {
             return [
                 {
                     text: this.translations.name[this.lang],
-                    value: "name"
+                    value: "name",
                 },
                 {
                     text: this.translations.storeName[this.lang],
-                    value: "name_of_shop"
+                    value: "name_of_shop",
                 },
                 {
                     text: this.translations.customer[this.lang],
-                    value: "customer"
+                    value: "customer",
                 },
                 {
                     text: this.translations.transaction[this.lang],
-                    value: "transaction"
+                    value: "transaction",
                 },
                 { text: this.translations.total[this.lang], value: "total" },
-                { text: this.translations.points[this.lang], value: "points" }
+                { text: this.translations.points[this.lang], value: "points" },
             ];
         },
 
@@ -113,11 +113,11 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
-        ...mapActions("loyaltyPanel/stores/storesTab", ["getFinancialData"])
+        ...mapActions("loyaltyPanel/stores/storesTab", ["getFinancialData"]),
     },
 
     watch: {
@@ -126,8 +126,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
             this.getItems(this.query);
@@ -135,7 +135,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -143,14 +143,14 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getFinancialData(this.query);
-    }
+    },
 };
 </script>

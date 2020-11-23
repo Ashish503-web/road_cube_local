@@ -1,10 +1,6 @@
 <template>
     <v-container fluid class="b-container">
-        <v-sheet
-            :outlined="tabsWithMargin"
-            class="pa-3"
-            :class="{ 'mx-3': tabsWithMargin }"
-        >
+        <v-sheet class="pa-3" :class="{ 'mx-3': tabsWithMargin }">
             <v-tabs
                 v-model="tab"
                 color="secondary"
@@ -14,14 +10,14 @@
                 <v-tab
                     v-for="tab in tabs"
                     :key="tab.name['en']"
-                    class="text-capitalize text-left text-md-center justify-start justify-md-center px-3"
                     v-text="tab.name[lang]"
                     :to="tab.to"
+                    class="text-capitalize text-left text-md-center justify-start justify-md-center px-3"
                 ></v-tab>
             </v-tabs>
         </v-sheet>
 
-        <v-tabs-items v-model="tab">
+        <v-tabs-items v-model="tab" class="mt-3">
             <router-view></router-view>
         </v-tabs-items>
     </v-container>
@@ -33,7 +29,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.path
+            tab: this.$route.path,
         };
     },
 
@@ -46,27 +42,27 @@ export default {
             return [
                 {
                     name: { el: "", en: "profile", it: "" },
-                    to: `/${this.lang}/storePanel/settings/profile`
+                    to: `/${this.lang}/storePanel/settings/profile`,
                 },
                 {
                     name: { el: "", en: "reward", it: "" },
-                    to: `/${this.lang}/storePanel/settings/reward`
+                    to: `/${this.lang}/storePanel/settings/reward`,
                 },
                 {
                     name: { el: "", en: "product points", it: "" },
-                    to: `/${this.lang}/storePanel/settings/product-points`
+                    to: `/${this.lang}/storePanel/settings/product-points`,
                 },
                 {
                     name: { el: "", en: "users", it: "" },
-                    to: `/${this.lang}/storePanel/settings/users`
+                    to: `/${this.lang}/storePanel/settings/users`,
                 },
                 {
                     name: { el: "", en: "payment providers", it: "" },
-                    to: `/${this.lang}/storePanel/settings/payment-providers`
+                    to: `/${this.lang}/storePanel/settings/payment-providers`,
                 },
                 {
                     name: { el: "", en: "payment processing", it: "" },
-                    to: `/${this.lang}/storePanel/settings/payment-processing`
+                    to: `/${this.lang}/storePanel/settings/payment-processing`,
                 },
                 // {
                 //     name: { el: "", en: "cards", it: "" },
@@ -74,8 +70,8 @@ export default {
                 // },
                 {
                     name: { el: "", en: "subscription", it: "" },
-                    to: `/${this.lang}/storePanel/settings/subscription`
-                }
+                    to: `/${this.lang}/storePanel/settings/subscription`,
+                },
                 // {
                 //     name: { el: "", en: "payment history", it: "" },
                 //     to: `/${this.lang}/storePanel/settings/payment-history`
@@ -89,11 +85,9 @@ export default {
 
         tabsWithMargin() {
             return (
-                this.$route.path ===
-                    `/${this.lang}/storePanel/settings/profile` ||
-                this.$route.path === `/${this.lang}/storePanel/settings/reward`
+                this.$route.path === `/${this.lang}/storePanel/settings/profile`
             );
-        }
+        },
     },
 
     watch: {
@@ -105,9 +99,9 @@ export default {
                         `/${this.lang}/storePanel/settings/profile?page=1`
                     );
                 }
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>
 

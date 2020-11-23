@@ -1,6 +1,6 @@
 <template>
-    <v-tab-item :value="$route.path" class="pt-3">
-        <v-toolbar flat height="80">
+    <v-tab-item :value="$route.path" class="pa-3">
+        <v-toolbar flat height="90">
             <v-spacer></v-spacer>
 
             <v-col cols="12" sm="4" class="pa-0">
@@ -29,7 +29,7 @@ export default {
     mixins: [translations],
 
     data: () => ({
-        itemsPerPageOptions: [10, 20, 30, -1]
+        itemsPerPageOptions: [10, 20, 30, -1],
     }),
 
     computed: {
@@ -42,39 +42,42 @@ export default {
                 { text: this.translations.name[this.lang], value: "name" },
                 {
                     text: this.translations.storeName[this.lang],
-                    value: "nameShop"
+                    value: "nameShop",
                 },
                 { text: this.translations.map[this.lang], value: "map" },
                 { text: this.translations.active[this.lang], value: "active" },
                 {
                     text: this.translations.address[this.lang],
-                    value: "address"
+                    value: "address",
                 },
                 {
                     text: this.translations.phone[this.lang],
-                    value: "mobilePhone"
+                    value: "mobilePhone",
                 },
                 { text: this.translations.plan[this.lang], value: "plan" },
                 {
                     text: this.translations.paymentMethod[this.lang],
-                    value: "paymentMethod"
+                    value: "paymentMethod",
                 },
                 {
                     text: this.translations.onlineOffline[this.lang],
-                    value: "onOff"
+                    value: "onOff",
                 },
                 {
                     text: this.translations.payment[this.lang],
-                    value: "payment"
+                    value: "payment",
                 },
                 {
                     text: this.translations.nextPayment[this.lang],
-                    value: "paymentDate"
+                    value: "paymentDate",
                 },
                 { text: this.translations.amount[this.lang], value: "amount" },
-                { text: this.translations.options[this.lang], value: "options" }
+                {
+                    text: this.translations.options[this.lang],
+                    value: "options",
+                },
             ];
-        }
-    }
+        },
+    },
 };
 </script>

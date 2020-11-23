@@ -139,10 +139,10 @@ export default {
                             icon: mdiViewList,
                             title: {
                                 el: "",
-                                en: "Category Management",
+                                en: "Catalog Categories",
                                 it: ""
                             },
-                            to: `/${this.lang}/loyaltyPanel/category-management?page=1`
+                            to: `/${this.lang}/loyaltyPanel/catalog-categories?page=1`
                         },
                         {
                             icon: mdiGift,
@@ -157,10 +157,10 @@ export default {
                             icon: mdiTrophyVariant,
                             title: {
                                 el: "",
-                                en: "Catalog Management",
+                                en: "Gift Catalog",
                                 it: ""
                             },
-                            to: `/${this.lang}/loyaltyPanel/catalog-management?page=1`
+                            to: `/${this.lang}/loyaltyPanel/gift-catalog?page=1`
                         },
                         {
                             icon: mdiPackageVariantClosed,

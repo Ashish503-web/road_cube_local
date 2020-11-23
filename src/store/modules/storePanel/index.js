@@ -106,29 +106,50 @@ export default {
             state.store.redemption_type_id = payload;
         },
 
+        setSendPointsActivator(state, payload) {
+            state.store.flags.reward.send_points_by_card_or_phone = payload;
+        },
+
         setSendPoints(state, payload) {
-            state.store.flags.reward.send_points_by_card_or_phone =
-                payload.send_points_by_card_or_phone;
             state.store.notify_customers.system_notification_id =
                 payload.system_notification_id;
-            // state.store.flags.reward.add_new_user_on_send_points =
-            //     payload.add_new_user_on_send_points;
             state.store.flags.reward.choose_product_on_send_points =
                 payload.choose_product_on_send_points;
             state.store.flags.reward.display_receipt_on_send_points =
                 payload.display_receipt_on_send_points;
         },
 
-        setScanReceipt(state, payload) {
-            state.store.flags.reward.scan_receipt = payload;
+        setPointDeliveryActivator(state, payload) {
+            state.store.flags.reward.pos_points_delivery = payload;
         },
 
-        setRewardWithPresence(state, payload) {
-            state.store.flags.reward.open_checkin = payload;
+        setPointDelivery(state, payload) {
+            state.store.flags.reward.pos_display_amount =
+                payload.pos_display_amount;
+            state.store.flags.reward.pos_goal_shopping =
+                payload.pos_goal_shopping;
         },
 
         setMobilePayments(state, payload) {
             state.store.flags.reward.online_payments = payload;
+        },
+
+        setScanReceiptActivator(state, payload) {
+            state.store.flags.reward.scan_receipt = payload;
+        },
+
+        setScanReceipt(state, payload) {
+            state.store.billing_details.receipt_phone = payload.receipt_phone;
+            state.store.billing_details.receipt_vat_number =
+                payload.receipt_vat_number;
+            state.store.billing_details.receipt_address =
+                payload.receipt_address;
+            state.store.billing_details.receipt_comp_name =
+                payload.receipt_comp_name;
+        },
+
+        setRewardWithPresence(state, payload) {
+            state.store.flags.reward.open_checkin = payload;
         }
     },
 

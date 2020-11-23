@@ -33,15 +33,17 @@
                             <v-card-title class="pa-0 justify-center">
                                 {{ statistic.value }}
                             </v-card-title>
-                            <v-card-title
-                                class="pa-0 font-weight-light justify-center text--secondary"
+                            <v-row
+                                no-gutters
+                                align="center"
+                                class="subtitle-1 text-center text--secondary"
                             >
                                 <v-icon
                                     v-text="statistic.icon"
                                     class="mr-1"
                                 ></v-icon>
                                 {{ statistic.text[lang] }}
-                            </v-card-title>
+                            </v-row>
                         </v-col>
                     </v-row>
                 </v-card>
@@ -74,7 +76,7 @@
                                 v-text="view.value"
                             ></h4>
                             <h4
-                                class="subtitle-2 font-weight-regular text--secondary"
+                                class="subtitle-2 font-weight-medium text--secondary"
                                 v-text="view.text[lang]"
                             ></h4>
                         </v-col>
@@ -112,7 +114,7 @@
                                 v-text="transaction.value"
                             ></h4>
                             <h4
-                                class="subtitle-2 font-weight-regular text--secondary"
+                                class="subtitle-2 font-weight-medium text--secondary"
                                 v-text="transaction.text[lang]"
                             ></h4>
                         </v-col>
@@ -120,19 +122,20 @@
                 </v-card>
             </v-col>
 
-            <v-col cols="12" sm="12" md="6">
+            <v-col cols="12">
                 <v-skeleton-loader
                     v-if="loading"
                     type="image"
-                    height="200"
+                    height="307"
                 ></v-skeleton-loader>
 
-                <v-card v-else tile outlined min-height="200">
+                <v-card v-else tile outlined>
                     <v-card tile flat>
                         <v-card-title
-                            class="subtitle-1 font-weight-bold py-2 grey lighten-3"
                             v-text="translations.transactions[lang]"
                         ></v-card-title>
+
+                        <v-divider></v-divider>
 
                         <v-sheet
                             class="v-sheet--offset mx-auto"
@@ -155,40 +158,6 @@
                     </v-card>
                 </v-card>
             </v-col>
-
-            <v-col cols="12" sm="12" md="3">
-                <v-skeleton-loader
-                    v-if="loading"
-                    type="image"
-                    height="200"
-                ></v-skeleton-loader>
-
-                <v-card v-else tile outlined min-height="200" align="center">
-                    <v-card tile flat>
-                        <v-card-title
-                            class="subtitle-1 font-weight-bold py-2 grey lighten-3"
-                            v-text="translations.viewClicks[lang]"
-                        ></v-card-title>
-                    </v-card>
-                </v-card>
-            </v-col>
-
-            <v-col cols="12" sm="12" md="3">
-                <v-skeleton-loader
-                    v-if="loading"
-                    type="image"
-                    height="200"
-                ></v-skeleton-loader>
-
-                <v-card v-else tile outlined min-height="200" align="center">
-                    <v-card tile flat>
-                        <v-card-title
-                            class="subtitle-1 font-weight-bold py-2 grey lighten-3"
-                            v-text="translations.viewNavigations[lang]"
-                        ></v-card-title>
-                    </v-card>
-                </v-card>
-            </v-col>
         </v-row>
     </v-container>
 </template>
@@ -198,11 +167,10 @@ import {
     mdiAccountGroup,
     mdiDatabase,
     mdiCurrencyEur,
-    mdiTrophyVariant,
     mdiBinoculars,
     mdiCursorDefault,
     mdiCompassOutline,
-    mdiWallet
+    mdiWallet,
 } from "@mdi/js";
 
 import translations from "@/utils/translations/home";
@@ -213,7 +181,7 @@ const gradients = [
     ["red", "orange", "yellow"],
     ["purple", "violet"],
     ["#00c6ff", "#F0F", "#FF0"],
-    ["#f72047", "#ffd200", "#1feaea"]
+    ["#f72047", "#ffd200", "#1feaea"],
 ];
 
 export default {
@@ -232,7 +200,7 @@ export default {
         gradients,
         fill: false,
         type: "trend",
-        autoLineWidth: false
+        autoLineWidth: false,
     }),
 
     computed: {
@@ -251,37 +219,28 @@ export default {
                     text: {
                         el: "",
                         en: "Customer",
-                        it: ""
+                        it: "",
                     },
-                    value: 0
+                    value: 0,
                 },
                 {
                     icon: mdiDatabase,
                     text: {
                         el: "",
                         en: "Transactions",
-                        it: ""
+                        it: "",
                     },
-                    value: 0
+                    value: 0,
                 },
                 {
                     icon: mdiCurrencyEur,
                     text: {
                         el: "",
                         en: "Total",
-                        it: ""
+                        it: "",
                     },
-                    value: "0,00"
+                    value: "0,00",
                 },
-                {
-                    icon: mdiTrophyVariant,
-                    text: {
-                        el: "",
-                        en: "username",
-                        it: ""
-                    },
-                    value: 0
-                }
             ];
         },
 
@@ -292,37 +251,37 @@ export default {
                     text: {
                         el: "",
                         en: "User views",
-                        it: ""
+                        it: "",
                     },
-                    value: 0
+                    value: 0,
                 },
                 {
                     icon: mdiCursorDefault,
                     text: {
                         el: "",
                         en: "Clicks",
-                        it: ""
+                        it: "",
                     },
-                    value: 0
+                    value: 0,
                 },
                 {
                     icon: mdiDatabase,
                     text: {
                         el: "",
                         en: "User leads",
-                        it: ""
+                        it: "",
                     },
-                    value: 0
+                    value: 0,
                 },
                 {
                     icon: mdiCompassOutline,
                     text: {
                         el: "",
                         en: "Payments",
-                        it: ""
+                        it: "",
                     },
-                    value: 0
-                }
+                    value: 0,
+                },
             ];
         },
 
@@ -333,27 +292,27 @@ export default {
                     text: {
                         el: "",
                         en: "Last 24 hours",
-                        it: ""
+                        it: "",
                     },
                     value: `
                         0 ${this.translations.transactions[this.lang]} / 0,00 
                         ${this.translations.total[this.lang]}
-                    `
+                    `,
                 },
                 {
                     icon: mdiWallet,
                     text: {
                         el: "",
                         en: "Last 7 Days",
-                        it: ""
+                        it: "",
                     },
                     value: `
                         0 ${this.translations.transactions[this.lang]} / 0,00 
                         ${this.translations.total[this.lang]}
-                    `
-                }
+                    `,
+                },
             ];
-        }
-    }
+        },
+    },
 };
 </script>

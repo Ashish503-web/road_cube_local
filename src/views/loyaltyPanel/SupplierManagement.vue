@@ -4,7 +4,7 @@
             <v-toolbar flat height="90">
                 <v-btn
                     color="secondary"
-                    class="text-capitalize d-flex mx-auto mx-sm-0"
+                    class="text-capitalize px-5"
                     depressed
                     v-text="translations.createSupplier[lang]"
                     @click="dialog = true"

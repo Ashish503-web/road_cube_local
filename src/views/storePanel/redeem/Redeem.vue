@@ -14,11 +14,11 @@
                     class="text-capitalize text-left text-sm-center d-flex justify-start justify-sm-center px-3"
                 ></v-tab>
             </v-tabs>
-
-            <v-tabs-items v-model="tab">
-                <router-view></router-view>
-            </v-tabs-items>
         </v-sheet>
+
+        <v-tabs-items v-model="tab" class="mt-3">
+            <router-view></router-view>
+        </v-tabs-items>
     </v-container>
 </template>
 
@@ -28,7 +28,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.path
+            tab: this.$route.path,
         };
     },
 
@@ -40,31 +40,31 @@ export default {
         tabs() {
             return [
                 {
-                    to: `/${this.lang}/storePanel/redeem/redeem-voucher`,
+                    to: `/${this.lang}/storePanel/redeem/redeem-voucher-code`,
                     name: {
                         el: "",
-                        en: "Redeem Voucher",
-                        it: ""
-                    }
+                        en: "Redeem Voucher Code",
+                        it: "",
+                    },
                 },
                 {
                     to: `/${this.lang}/storePanel/redeem/coupons-overview`,
                     name: {
                         el: "",
                         en: "Coupons Overview",
-                        it: ""
-                    }
+                        it: "",
+                    },
                 },
                 {
                     to: `/${this.lang}/storePanel/redeem/multiple-coupons`,
                     name: {
                         el: "",
                         en: "Multiple Coupons",
-                        it: ""
-                    }
-                }
+                        it: "",
+                    },
+                },
             ];
-        }
+        },
     },
 
     watch: {
@@ -73,11 +73,11 @@ export default {
             handler(val) {
                 if (val.path === `/${this.lang}/storePanel/redeem`) {
                     this.$router.push(
-                        `/${this.lang}/storePanel/redeem/redeem-voucher?page=1`
+                        `/${this.lang}/storePanel/redeem/redeem-voucher-code?page=1`
                     );
                 }
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>

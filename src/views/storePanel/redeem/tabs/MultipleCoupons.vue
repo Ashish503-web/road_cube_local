@@ -1,6 +1,6 @@
 <template>
-    <v-tab-item :value="$route.path">
-        <v-toolbar flat height="80">
+    <v-tab-item :value="$route.path" class="pa-3">
+        <v-toolbar flat height="90">
             <v-spacer></v-spacer>
 
             <v-col cols="12" sm="4">
@@ -46,7 +46,7 @@ export default {
     mixins: [translations],
 
     data: () => ({
-        icons: { mdiMagnify }
+        icons: { mdiMagnify },
     }),
 
     computed: {
@@ -61,32 +61,32 @@ export default {
             return [
                 {
                     text: this.translations.promoType[this.lang],
-                    value: "promo_type_name"
+                    value: "promo_type_name",
                 },
                 { text: this.translations.code[this.lang], value: "code" },
                 {
                     text: this.translations.available[this.lang],
-                    value: "available"
+                    value: "available",
                 },
                 { text: this.translations.points[this.lang], value: "points" },
                 {
                     text: this.translations.totalRedeemed[this.lang],
-                    value: "total_redeemed"
+                    value: "total_redeemed",
                 },
                 {
                     text: this.translations.date[this.lang],
-                    value: "created_at"
-                }
+                    value: "created_at",
+                },
             ];
-        }
+        },
     },
 
     methods: {
-        ...mapActions("storePanel/redeem/multipleCoupons", ["getItems"])
+        ...mapActions("storePanel/redeem/multipleCoupons", ["getItems"]),
     },
 
     mounted() {
         this.getItems();
-    }
+    },
 };
 </script>

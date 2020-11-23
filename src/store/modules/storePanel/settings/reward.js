@@ -10,32 +10,10 @@ export default {
     namespaced: true,
 
     state: () => ({
-        loading: {
-            sendPoints: false,
-            pointDelivery: false,
-            scanReceipt: false,
-            rewardWithPresence: false,
-            mobilePayments: false
-        },
-        errorMessage: {
-            sendPoints: "",
-            pointDelivery: "",
-            scanReceipt: "",
-            rewardWithPresence: "",
-            mobilePayments: ""
-        },
         systemNotifications: []
     }),
 
     mutations: {
-        setLoading(state, { value, type }) {
-            state.loading[type] = value;
-        },
-
-        setErrorMessage(state, { value, type }) {
-            state.errorMessage[type] = value;
-        },
-
         setSystemNotifications(state, payload) {
             state.systemNotifications = payload;
         }
@@ -54,94 +32,73 @@ export default {
             }
         },
 
-        async updateReward({ commit }, { item, type }) {
+        async updateActivator({ commit }, item) {
             try {
-                commit("setLoading", { value: true, type });
+                item.loading = true;
 
                 await axios.put(
                     `${ApiEndpoint}/${localStorage.getItem(
                         "storeId"
                     )}/flags/reward`,
-                    item
+                    { [item.updateProp]: item.active }
                 );
 
-                if (type === "sendPoints") {
-                    commit("storePanel/setSendPoints", item, { root: true });
-                }
-
-                commit("setLoading", { value: false, type });
+                commit(item.commit, item.active, {
+                    root: true
+                });
+                item.loading = false;
                 commit(
                     "setNotification",
                     {
                         show: true,
                         type: "success",
-                        text:
-                            "You have successfully updated reward information!"
+                        text: `You have successfully updated ${item.successText}!`
                     },
-
                     { root: true }
                 );
             } catch (ex) {
-                commit("setLoading", { value: false, type });
-                commit("setErrorMessage", {
-                    value: ex.response.data.message,
-                    type
-                });
-                setTimeout(
-                    () =>
-                        commit("setErrorMessage", {
-                            value: "",
-                            type
-                        }),
-                    5000
+                item.loading = false;
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "error",
+                        text: ex.response.data.message
+                    },
+                    { root: true }
                 );
             }
         },
 
-        async updateScanReceipt({ commit }, { scan_receipt, item, type }) {
+        async updateReward({ commit }, { item, url, commitText, successText }) {
             try {
-                commit("setLoading", { value: true, type });
+                commit("setLoading", true, { root: true });
 
                 await axios.put(
-                    `${ApiEndpoint}/${localStorage.getItem(
-                        "storeId"
-                    )}/flags/reward`,
-                    {
-                        scan_receipt
-                    }
-                );
-
-                await axios.put(
-                    `${ApiEndpoint}/${localStorage.getItem(
-                        "storeId"
-                    )}/billing-details/receipt-information`,
+                    `${ApiEndpoint}/${localStorage.getItem("storeId")}/${url}`,
                     item
                 );
 
-                commit("setLoading", { value: false, type });
+                commit(commitText, item, { root: true });
+
+                commit("setLoading", false, { root: true });
+                commit("setDialog", false, { root: true });
                 commit(
                     "setNotification",
                     {
                         show: true,
                         type: "success",
-                        text:
-                            "You have successfully updated reward information!"
+                        text: `You have successfully updated ${successText}!`
                     },
-
                     { root: true }
                 );
             } catch (ex) {
-                commit("setLoading", { value: false, type });
-                commit("setErrorMessage", {
-                    value: ex.response.data.message,
-                    type
+                commit("setLoading", false, { root: true });
+                commit("setErrorMessage", ex.response.data.message, {
+                    root: true
                 });
                 setTimeout(
-                    () =>
-                        commit("setErrorMessage", {
-                            value: "",
-                            type
-                        }),
+                    () => commit("setErrorMessage", "", { root: true }),
                     5000
                 );
             }

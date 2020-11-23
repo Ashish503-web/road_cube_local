@@ -1,10 +1,10 @@
 export default [
     {
-        path: "redeem-voucher",
-        name: "RedeemVoucher",
+        path: "redeem-voucher-code",
+        name: "RedeemVoucherCode",
         component: () =>
             import(
-                /* webpackChunkName: "redeemVoucher" */ "@/views/storePanel/redeem/tabs/RedeemVoucher.vue"
+                /* webpackChunkName: "redeemVoucherCode" */ "@/views/storePanel/redeem/tabs/RedeemVoucherCode.vue"
             )
     },
 

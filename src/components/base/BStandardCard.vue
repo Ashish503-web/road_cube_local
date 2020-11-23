@@ -1,5 +1,5 @@
 <template>
-    <v-card outlined :height="height">
+    <v-card flat :height="height">
         <v-row no-gutters class="fill-height" align-content="space-between">
             <v-col cols="12">
                 <v-card-title

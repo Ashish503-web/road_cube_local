@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path">
+    <v-tab-item :value="$route.path" class="pa-3">
         <v-toolbar flat height="90">
             <ExportLinks />
 
@@ -78,7 +78,7 @@ export default {
                     bank: "HSBC",
                     with_subsidy: "yes",
                     without_subsidy: "no",
-                    payment: "USD"
+                    payment: "USD",
                 },
                 {
                     date: "14.09.2020",
@@ -89,7 +89,7 @@ export default {
                     bank: "HSBC",
                     with_subsidy: "yes",
                     without_subsidy: "no",
-                    payment: "USD"
+                    payment: "USD",
                 },
                 {
                     date: "14.09.2020",
@@ -100,7 +100,7 @@ export default {
                     bank: "HSBC",
                     with_subsidy: "yes",
                     without_subsidy: "no",
-                    payment: "USD"
+                    payment: "USD",
                 },
                 {
                     date: "14.09.2020",
@@ -111,7 +111,7 @@ export default {
                     bank: "HSBC",
                     with_subsidy: "yes",
                     without_subsidy: "no",
-                    payment: "USD"
+                    payment: "USD",
                 },
                 {
                     date: "14.09.2020",
@@ -122,7 +122,7 @@ export default {
                     bank: "HSBC",
                     with_subsidy: "yes",
                     without_subsidy: "no",
-                    payment: "USD"
+                    payment: "USD",
                 },
                 {
                     date: "14.09.2020",
@@ -133,7 +133,7 @@ export default {
                     bank: "HSBC",
                     with_subsidy: "yes",
                     without_subsidy: "no",
-                    payment: "USD"
+                    payment: "USD",
                 },
                 {
                     date: "14.09.2020",
@@ -144,7 +144,7 @@ export default {
                     bank: "HSBC",
                     with_subsidy: "yes",
                     without_subsidy: "no",
-                    payment: "USD"
+                    payment: "USD",
                 },
                 {
                     date: "14.09.2020",
@@ -155,7 +155,7 @@ export default {
                     bank: "HSBC",
                     with_subsidy: "yes",
                     without_subsidy: "no",
-                    payment: "USD"
+                    payment: "USD",
                 },
                 {
                     date: "14.09.2020",
@@ -166,7 +166,7 @@ export default {
                     bank: "HSBC",
                     with_subsidy: "yes",
                     without_subsidy: "no",
-                    payment: "USD"
+                    payment: "USD",
                 },
                 {
                     date: "14.09.2020",
@@ -177,7 +177,7 @@ export default {
                     bank: "HSBC",
                     with_subsidy: "yes",
                     without_subsidy: "no",
-                    payment: "USD"
+                    payment: "USD",
                 },
                 {
                     date: "14.09.2020",
@@ -188,10 +188,10 @@ export default {
                     bank: "HSBC",
                     with_subsidy: "yes",
                     without_subsidy: "no",
-                    payment: "USD"
-                }
+                    payment: "USD",
+                },
             ],
-            page: +this.$route.query.page
+            page: +this.$route.query.page,
         };
     },
 
@@ -206,28 +206,31 @@ export default {
                 { text: this.translations.name[this.lang], value: "name" },
                 {
                     text: this.translations.streetAddress[this.lang],
-                    value: "street_address"
+                    value: "street_address",
                 },
                 {
                     text: this.translations.product[this.lang],
-                    value: "product"
+                    value: "product",
                 },
                 {
                     text: this.translations.productCode[this.lang],
-                    value: "product_code"
+                    value: "product_code",
                 },
                 { text: this.translations.bank[this.lang], value: "bank" },
                 {
                     text: this.translations.withSubsidy[this.lang],
-                    value: "with_subsidy"
+                    value: "with_subsidy",
                 },
                 {
                     text: this.translations.withoutSubsidy[this.lang],
-                    value: "without_subsidy"
+                    value: "without_subsidy",
                 },
-                { text: this.translations.payment[this.lang], value: "payment" }
+                {
+                    text: this.translations.payment[this.lang],
+                    value: "payment",
+                },
             ];
-        }
+        },
     },
 
     watch: {
@@ -236,8 +239,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
             this.getItems(this.query);
@@ -255,7 +258,7 @@ export default {
                     this.debouncedSearch();
                 }
             }
-        }
+        },
     },
 
     beforeCreate() {
@@ -263,10 +266,10 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
-    }
+    },
 };
 </script>

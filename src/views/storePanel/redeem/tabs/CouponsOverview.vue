@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path">
+    <v-tab-item :value="$route.path" class="pa-3">
         <v-toolbar flat height="90">
             <ExportLinks />
 
@@ -50,7 +50,7 @@ import {
     mdiFormatListCheckbox,
     mdiMicrosoftExcel,
     mdiFileDelimitedOutline,
-    mdiPencilOutline
+    mdiPencilOutline,
 } from "@mdi/js";
 
 import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
@@ -68,18 +68,18 @@ export default {
         return {
             icons: {
                 mdiFormatListCheckbox,
-                mdiPencilOutline
+                mdiPencilOutline,
             },
             exportLinks: [
                 {
                     text: { el: "", en: "Export to Excel", it: "" },
-                    icon: mdiMicrosoftExcel
+                    icon: mdiMicrosoftExcel,
                 },
                 {
                     text: { el: "", en: "Export to CSV", it: "" },
-                    icon: mdiFileDelimitedOutline
-                }
-            ]
+                    icon: mdiFileDelimitedOutline,
+                },
+            ],
         };
     },
 
@@ -91,7 +91,7 @@ export default {
         ...mapState(["loading"]),
         ...mapGetters("storePanel/redeem/couponsOverview", [
             "coupons",
-            "pagination"
+            "pagination",
         ]),
 
         lang() {
@@ -102,28 +102,28 @@ export default {
             return [
                 {
                     text: this.translations.promoType[this.lang],
-                    value: "promo_type_name"
+                    value: "promo_type_name",
                 },
                 { text: this.translations.code[this.lang], value: "code" },
                 {
                     text: this.translations.available[this.lang],
-                    value: "available"
+                    value: "available",
                 },
                 { text: this.translations.points[this.lang], value: "points" },
                 {
                     text: this.translations.totalRedeemed[this.lang],
-                    value: "total_redeemed"
+                    value: "total_redeemed",
                 },
                 {
                     text: this.translations.date[this.lang],
-                    value: "created_at"
-                }
+                    value: "created_at",
+                },
             ];
-        }
+        },
     },
 
     methods: {
-        ...mapActions("storePanel/redeem/couponsOverview", ["getItems"])
-    }
+        ...mapActions("storePanel/redeem/couponsOverview", ["getItems"]),
+    },
 };
 </script>

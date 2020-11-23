@@ -57,7 +57,7 @@
 
 <script>
 import { mapActions } from "vuex";
-import translations from "@/utils/translations/storePanel/settings/invoicing";
+import translations from "@/utils/translations/storePanel/settings/profile/invoicing";
 
 export default {
     name: "Invoicing",

@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path">
+    <v-tab-item :value="$route.path" class="pa-3">
         <v-toolbar flat height="90">
             <v-btn color="secondary" class="text-capitalize" depressed
                 >Add payment method
@@ -8,7 +8,7 @@
 
         <hr />
 
-        <v-col class="border_top_payments_title  mt-3" cols="12">
+        <v-col class="border_top_payments_title mt-3" cols="12">
             <v-card class="pa-2 grey lighten-5 text-center" outlined tile>
                 <h3>IBAN</h3>
 
@@ -19,7 +19,7 @@
                 />
             </v-card>
         </v-col>
-        <v-row class="mb-6 " no-gutters>
+        <v-row class="mb-6" no-gutters>
             <v-col cols="12" lg="2" md="3" sm="6" class="border_top_payment">
                 <v-card class="pa-2 grey lighten-5 text-center" outlined tile>
                     <v-icon
@@ -41,9 +41,7 @@
                     />
                     <v-card-subtitle>Πειραιώς</v-card-subtitle>
                     <v-card-text>
-                        <div class="text-decoration-underline">
-                            ΟΝΟΜΑ AAA
-                        </div>
+                        <div class="text-decoration-underline">ΟΝΟΜΑ AAA</div>
                         <div class="text-decoration-underline">IBAN EE</div>
                     </v-card-text>
                 </v-card>
@@ -60,7 +58,7 @@ export default {
     data: () => ({
         icons: {
             mdiOfficeBuildingOutline,
-            mdiClose
+            mdiClose,
         },
         headers: [
             { text: "Name", value: "name" },
@@ -72,10 +70,10 @@ export default {
             { text: "Visible", value: "visible" },
             { text: "Payment Methods", value: "paymentMethods" },
             { text: "Companies", value: "companies" },
-            { text: "Delete", value: "delete" }
+            { text: "Delete", value: "delete" },
         ],
-        itemsPerPageOptions: [10, 20, 30, -1]
-    })
+        itemsPerPageOptions: [10, 20, 30, -1],
+    }),
 };
 </script>
 <style scoped>

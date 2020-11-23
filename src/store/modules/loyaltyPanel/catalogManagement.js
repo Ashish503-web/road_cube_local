@@ -71,21 +71,21 @@ export default {
 
                 await CatalogManagement.create(body);
 
-                dispatch("getGifts")                
+                dispatch("getGifts");
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });
             }
         },
 
-        async update({ commit, dispatch },  body) {
+        async update({ commit, dispatch }, body) {
             try {
-                console.log(body,'body')
+                console.log(body, "body");
                 commit("setLoading", true, { root: true });
 
-                await CatalogManagement.update(body.gift_id,body);
-                
-                dispatch("getGifts")
+                await CatalogManagement.update(body.gift_id, body);
+
+                dispatch("getGifts");
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });
@@ -98,7 +98,7 @@ export default {
 
                 await CatalogManagement.delete(id);
 
-                dispatch("getGifts")
+                dispatch("getGifts");
                 commit("setDeleteDialog", false);
                 commit("setLoading", false, { root: true });
             } catch (ex) {

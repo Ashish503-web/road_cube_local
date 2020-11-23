@@ -1,6 +1,26 @@
 <template>
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
+            <v-row no-gutters align="center" class="pa-5 pt-0">
+                <v-col cols="auto">
+                    <v-img
+                        src="@/assets/gift-catalog.png"
+                        width="60"
+                        height="60"
+                    ></v-img>
+                </v-col>
+
+                <v-col cols="7" class="pl-5">
+                    <h4 v-text="translations.title[lang]"></h4>
+                    <div
+                        style="font-size: 0.875rem"
+                        class="font-weight-medium mt-1"
+                    >
+                        {{ translations.info[lang] }}
+                    </div>
+                </v-col>
+            </v-row>
+
             <v-toolbar flat>
                 <v-btn
                     color="secondary"
@@ -79,7 +99,10 @@
                 </template>
             </v-data-table>
 
-            <v-dialog v-model="giftDialog" :max-width="$vuetify.breakpoint.smAndDown ? '90%' : '40%'">
+            <v-dialog
+                v-model="giftDialog"
+                :max-width="$vuetify.breakpoint.smAndDown ? '90%' : '40%'"
+            >
                 <GiftForm :giftId="giftId" @close="giftDialog = false" />
             </v-dialog>
 
@@ -105,7 +128,6 @@
 </template>
 
 <script>
-     
 import {
     mdiMagnify,
     mdiChevronDown,
@@ -114,13 +136,14 @@ import {
     mdiPlus
 } from "@mdi/js";
 
-import GiftForm from "../../components/loyaltyPanel/catalogManagement/GiftForm";
-import SupplierForm from "../../components/loyaltyPanel/catalogManagement/SupplierForm";
-import translations from "@/utils/translations/loyaltyPanel/catalogManagement";
 import { mapMutations, mapState, mapActions } from "vuex";
 
+import GiftForm from "../../components/loyaltyPanel/giftCatalog/GiftForm";
+import SupplierForm from "../../components/loyaltyPanel/giftCatalog/SupplierForm";
+import translations from "@/utils/translations/loyaltyPanel/giftCatalog";
+
 export default {
-    name: "CatalogManagement",
+    name: "GiftCatalog",
     components: { GiftForm, SupplierForm },
 
     mixins: [translations],
@@ -150,7 +173,7 @@ export default {
         deletingGiftId: null
     }),
 
-    computed:{
+    computed: {
         lang() {
             return this.$route.params.lang;
         },
@@ -162,7 +185,8 @@ export default {
 
         deleteDialog: {
             get() {
-                return this.$store.state.loyaltyPanel.catalogManagement.deleteDialog;
+                return this.$store.state.loyaltyPanel.catalogManagement
+                    .deleteDialog;
             },
 
             set(val) {
@@ -186,34 +210,35 @@ export default {
                     value: "gift_category_id"
                 },
                 { text: this.translations.name[this.lang], value: "title" },
-                { text: this.translations.type[this.lang], value: "gift_type_id" },
+                {
+                    text: this.translations.type[this.lang],
+                    value: "gift_type_id"
+                },
                 { text: this.translations.points[this.lang], value: "points" },
                 { text: this.translations.actions[this.lang], value: "actions" }
             ];
         }
     },
     methods: {
-        ...mapMutations("loyaltyPanel/catalogManagement", [
-            "setDeleteDialog"
-        ]),
-        ...mapActions("loyaltyPanel/catalogManagement", ["getGifts","delete"]),
+        ...mapMutations("loyaltyPanel/catalogManagement", ["setDeleteDialog"]),
+        ...mapActions("loyaltyPanel/catalogManagement", ["getGifts", "delete"]),
 
-        openGiftDialog(id){
-            this.giftId = id
-            this.giftDialog = true
+        openGiftDialog(id) {
+            this.giftId = id;
+            this.giftDialog = true;
         },
 
-        openDeleteDialog(id){
-            this.deletingGiftId = id
-            this.deleteDialog = true
+        openDeleteDialog(id) {
+            this.deletingGiftId = id;
+            this.deleteDialog = true;
         },
 
-        remove(){
-            this.delete(this.deletingGiftId)
+        remove() {
+            this.delete(this.deletingGiftId);
         }
     },
-    mounted(){
-        this.getGifts()
+    mounted() {
+        this.getGifts();
     }
 };
 </script>

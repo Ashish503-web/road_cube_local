@@ -1,49 +1,53 @@
 export default {
     data: () => ({
         translations: {
-            addGift: {
+            title: {
                 el: "",
-                en: "Add Gift",
+                en: "Customers Base",
                 it: ""
             },
-            createSupplier: {
+            info: {
                 el: "",
-                en: "Create Supplier",
+                en: `
+                    Here you got the list of your customers collected from all different 
+                    sources like mobile apps, POS devices, loyalty cards etc. Add new customers 
+                    manually or insert filters for your customers.
+                `,
                 it: ""
             },
-            IDCatalog: {
+            addNewCustomer: {
                 el: "",
-                en: "ID Catalog",
+                en: "Add New Customer",
                 it: ""
             },
-            image: {
+            memberCards: {
                 el: "",
-                en: "Image",
+                en: "Member Cards",
                 it: ""
             },
-            supplier: {
+            transactions: {
                 el: "",
-                en: "Supplier",
+                en: "Transactions",
                 it: ""
             },
-            category: {
+            total: {
                 el: "",
-                en: "Category",
+                en: "Total",
                 it: ""
             },
-            name: {
+            redeemed: {
                 el: "",
-                en: "Name",
+                en: "Redeemed",
                 it: ""
             },
-            type: {
+            available: {
                 el: "",
-                en: "Type",
+                en: "Available",
                 it: ""
             },
-            points: {
+            userTab: {
                 el: "",
-                en: "Points",
+                en: "User Tab",
                 it: ""
             },
             actions: {
@@ -51,7 +55,7 @@ export default {
                 en: "Actions",
                 it: ""
             },
-            noDate: {
+            noData: {
                 el: "",
                 en: "No data available",
                 it: ""

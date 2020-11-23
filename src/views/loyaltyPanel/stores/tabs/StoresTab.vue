@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path">
+    <v-tab-item :value="$route.path" class="pa-3">
         <v-toolbar flat dense height="90">
             <v-btn
                 color="secondary"
@@ -227,7 +227,7 @@ export default {
                 "Banks",
                 "Address",
                 "Phone",
-                "Registration Date"
+                "Registration Date",
             ],
             selectedSearchType: "All Fields",
             page: +this.$route.query.page,
@@ -235,7 +235,7 @@ export default {
             search: "",
             infoDialog: false,
             rightsDialog: false,
-            redirectDialog: false
+            redirectDialog: false,
         };
     },
 
@@ -252,24 +252,27 @@ export default {
                 {
                     text: this.translations.name[this.lang],
                     value: "name",
-                    width: 200
+                    width: 200,
                 },
                 {
                     text: this.translations.storeName[this.lang],
                     value: "app_name",
-                    width: 200
+                    width: 200,
                 },
                 { text: this.translations.map[this.lang], value: "map" },
                 {
                     text: this.translations.payments[this.lang],
-                    value: "online_payment"
+                    value: "online_payment",
                 },
                 {
                     text: this.translations.view[this.lang],
-                    value: "view"
+                    value: "view",
                 },
                 { text: this.translations.active[this.lang], value: "active" },
-                { text: this.translations.actions[this.lang], value: "actions" }
+                {
+                    text: this.translations.actions[this.lang],
+                    value: "actions",
+                },
             ];
         },
 
@@ -280,7 +283,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         deleteDialog: {
@@ -290,7 +293,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            }
+            },
         },
 
         store: {
@@ -300,7 +303,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
+            },
         },
 
         query() {
@@ -311,7 +314,7 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
@@ -319,7 +322,7 @@ export default {
             "setDialog",
             "setDeleteDialog",
             "setResetSuccess",
-            "setResetValidation"
+            "setResetValidation",
         ]),
         ...mapMutations("loyaltyPanel/stores/storesTab", ["setItem"]),
         ...mapActions("loyaltyPanel/stores/storesTab", ["getItems", "remove"]),
@@ -334,7 +337,7 @@ export default {
 
         handleSearch() {
             this.getItems(`?q=${this.search}`);
-        }
+        },
     },
 
     watch: {
@@ -350,8 +353,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
             this.getItems(this.query);
@@ -367,7 +370,7 @@ export default {
             } else {
                 this.debouncedSearch();
             }
-        }
+        },
     },
 
     beforeCreate() {
@@ -375,8 +378,8 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
@@ -387,6 +390,6 @@ export default {
 
     mounted() {
         this.getItems(this.query);
-    }
+    },
 };
 </script>

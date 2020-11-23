@@ -74,17 +74,6 @@ export default {
             state.transaction = new Transaction(payload);
         },
 
-        addItem(state, payload) {
-            state.transactions.unshift(payload);
-        },
-
-        updateItem(state, payload) {
-            let index = state.transactions.findIndex(
-                p => p.product_id === payload.product_id
-            );
-            state.transactions.splice(index, 1, payload);
-        },
-
         removeItem(state, id) {
             state.transactions = state.transactions.filter(
                 p => p.product_id !== id
@@ -109,8 +98,8 @@ export default {
 
         async getTransactionPreview({ commit }) {
             try {
-                commit("setProductsLoading", true);
-                let query = {
+                // commit("setProductsLoading", true);
+                let item = {
                     user: "1012938493",
                     voucher: "934242",
                     products: [
@@ -118,20 +107,22 @@ export default {
                             product_id: 1,
                             retail_price: "1",
                             quantity: 1
-                        },
+                        }
+                    ],
+                    general_coupon_claims_for_use: [
                         {
-                            product_id: 46,
-                            retail_price: "100",
-                            quantity: 1
+                            coupon_claim_id: 4024,
+                            gift_title: "Coffee",
+                            gift_description: "A special robust coffee for you"
                         }
                     ]
                 };
-                const { data } = await Transaction.getTransactionPreview(query);
+                const data = await Transaction.getTransactionPreview(item);
 
                 // commit("setProducts", data.data.products);
-                commit("setProductsLoading", false);
+                // commit("setProductsLoading", false);
             } catch (ex) {
-                commit("setProductsLoading", false);
+                // commit("setProductsLoading", false);
                 console.error(ex.response.data.message);
             }
         },
@@ -295,46 +286,6 @@ export default {
                     },
 
                     { root: true }
-                );
-            }
-        },
-
-        async update({ commit, state }) {
-            try {
-                commit("setLoading", true, { root: true });
-
-                let product = { ...state.product };
-                delete product.image;
-                if (!product.name.en) product.name.en = product.name.el;
-                if (!product.name.it) product.name.it = product.name.el;
-                if (!product.description.en)
-                    product.description.en = product.description.el;
-                if (!product.description.it)
-                    product.description.it = product.description.el;
-
-                const { data } = await Transaction.update(product);
-
-                commit("updateItem", data.data.product, { root: true });
-                commit("setLoading", false, { root: true });
-                commit("setDialog", false, { root: true });
-                commit(
-                    "setNotification",
-                    {
-                        show: true,
-                        type: "success",
-                        text: "You have successfully updated product!"
-                    },
-
-                    { root: true }
-                );
-            } catch (ex) {
-                commit("setLoading", false, { root: true });
-                commit("setErrorMessage", ex.response.data.message, {
-                    root: true
-                });
-                setTimeout(
-                    () => commit("setErrorMessage", "", { root: true }),
-                    5000
                 );
             }
         },

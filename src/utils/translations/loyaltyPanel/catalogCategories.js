@@ -1,6 +1,22 @@
 export default {
     data: () => ({
         translations: {
+            title: {
+                el: "",
+                en: "Catalog Categories",
+                it: ""
+            },
+            info: {
+                el: "",
+                en:
+                    "Create your catalog categories here and then add the catalog gifts to each category from",
+                it: ""
+            },
+            giftCatalog: {
+                el: "",
+                en: "Gift Catalog",
+                it: ""
+            },
             addCategory: {
                 el: "",
                 en: "Add Category",

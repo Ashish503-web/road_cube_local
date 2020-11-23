@@ -1,6 +1,6 @@
 <template>
-    <v-tab-item :value="$route.path">
-        <v-toolbar flat height="80">
+    <v-tab-item :value="$route.path" class="pa-3">
+        <v-toolbar flat height="90">
             <ExportLinks />
 
             <v-spacer></v-spacer>
@@ -50,7 +50,7 @@ export default {
 
     data() {
         return {
-            page: +this.$route.query.page
+            page: +this.$route.query.page,
         };
     },
 
@@ -68,12 +68,12 @@ export default {
                 { text: this.translations.funded[this.lang], value: "funded" },
                 {
                     text: this.translations.nonFunded[this.lang],
-                    value: "non_funded"
+                    value: "non_funded",
                 },
                 {
                     text: this.translations.totalPoints[this.lang],
-                    value: "total_points"
-                }
+                    value: "total_points",
+                },
             ];
         },
 
@@ -85,11 +85,11 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
-        ...mapActions("storePanel/history", ["getMonthlyPoints"])
+        ...mapActions("storePanel/history", ["getMonthlyPoints"]),
     },
 
     watch: {
@@ -98,8 +98,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
 
@@ -108,7 +108,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -116,14 +116,14 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getMonthlyPoints(this.query);
-    }
+    },
 };
 </script>

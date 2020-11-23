@@ -257,9 +257,9 @@ export default {
             "09",
             "10",
             "11",
-            "12"
+            "12",
         ],
-        cvv: ""
+        cvv: "",
     }),
 
     computed: {
@@ -274,8 +274,8 @@ export default {
             }
 
             return arr;
-        }
-    }
+        },
+    },
 };
 </script>
 

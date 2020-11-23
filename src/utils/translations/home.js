@@ -15,16 +15,6 @@ export default {
                 el: "",
                 en: "Total",
                 it: ""
-            },
-            viewClicks: {
-                el: "",
-                en: "View clicks",
-                it: ""
-            },
-            viewNavigations: {
-                el: "",
-                en: "View navigations",
-                it: ""
             }
         }
     })

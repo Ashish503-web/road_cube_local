@@ -1,14 +1,15 @@
 <template>
-    <b-standard-card
-        title="Send points by card or phone number"
-        activatable
-        :switcher.sync="sendPoints.send_points_by_card_or_phone"
+    <b-card
+        :title="translations.title[lang]"
         :loading="loading"
         :error-message="errorMessage"
+        @cancel="$emit('cancel')"
         @submit="
             updateReward({
-                type: 'sendPoints',
-                item: sendPoints
+                item: sendPoints,
+                url: 'flags/reward',
+                commitText: 'storePanel/setSendPoints',
+                successText: 'send points info'
             })
         "
     >
@@ -21,92 +22,73 @@
             </v-col>
 
             <v-col cols="11" class="pl-1">
-                You will be able to use the donation from the New Transaction
-                page
+                {{ translations.info[lang] }}
 
                 <b-select
                     v-model="sendPoints.system_notification_id"
                     :items="systemNotifications"
                     item-text="name"
                     item-value="system_notification_id"
-                    :disabled="!sendPoints.send_points_by_card_or_phone"
-                    label="How to notify a consumer of points"
+                    :label="translations.notifyConsumers[lang]"
                 ></b-select>
-
-                <!-- <v-checkbox
-                    v-model="sendPoints.add_new_user_on_send_points"
-                    :disabled="!sendPoints.send_points_by_card_or_phone"
-                    color="secondary"
-                    class="pt-0 mt-3"
-                    hide-details
-                >
-                    <template v-slot:label>
-                        <h4 class="subtitle-2">
-                            Ability to add a user to "Send points"
-                        </h4>
-                    </template>
-                </v-checkbox> -->
 
                 <v-checkbox
                     v-model="sendPoints.choose_product_on_send_points"
-                    :disabled="!sendPoints.send_points_by_card_or_phone"
                     color="secondary"
                     class="pt-0 mt-3"
                     hide-details
                 >
                     <template v-slot:label>
-                        <h4 class="subtitle-2">
-                            Ability to select products in "Send points"
-                        </h4>
+                        <h4
+                            class="subtitle-2"
+                            v-text="translations.selectProducts[lang]"
+                        ></h4>
                     </template>
                 </v-checkbox>
 
                 <v-checkbox
                     v-model="sendPoints.display_receipt_on_send_points"
-                    :disabled="!sendPoints.send_points_by_card_or_phone"
                     color="secondary"
                     class="pt-0 mt-1"
                     hide-details
                 >
                     <template v-slot:label>
-                        <h4 class="subtitle-2">
-                            Show receipt code in "Send points"
-                        </h4>
+                        <h4
+                            class="subtitle-2"
+                            v-text="translations.receiptCode[lang]"
+                        ></h4>
                     </template>
                 </v-checkbox>
             </v-col>
         </v-row>
-    </b-standard-card>
+    </b-card>
 </template>
 
 <script>
 import { mdiInformation } from "@mdi/js";
-import { mapMutations, mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
+import translations from "@/utils/translations/storePanel/settings/reward/sendPoints";
 
 export default {
     name: "SendPoints",
 
+    mixins: [translations],
+
     data: () => ({
-        icons: {
-            mdiInformation
-        },
+        icons: { mdiInformation },
         sendPoints: {}
     }),
 
     computed: {
+        ...mapState(["loading", "errorMessage"]),
+
+        lang() {
+            return this.$route.params.lang;
+        },
+
         systemNotifications() {
             return this.$store.state.storePanel.settings.reward
                 .systemNotifications;
-        },
-
-        loading() {
-            return this.$store.state.storePanel.settings.reward.loading
-                .sendPoints;
-        },
-
-        errorMessage() {
-            return this.$store.state.storePanel.settings.reward.errorMessage
-                .sendPoints;
         }
     },
 
@@ -122,14 +104,8 @@ export default {
             immediate: true,
             handler(val) {
                 this.sendPoints = {
-                    send_points_by_card_or_phone:
-                        val.flags.reward.send_points_by_card_or_phone,
-
                     system_notification_id:
                         val.notify_customers.system_notification_id,
-
-                    // add_new_user_on_send_points:
-                    //     val.flags.reward.add_new_user_on_send_points,
 
                     choose_product_on_send_points:
                         val.flags.reward.choose_product_on_send_points,
@@ -140,10 +116,13 @@ export default {
             }
         },
 
-        ["sendPoints.send_points_by_card_or_phone"](val) {
-            if (val) {
-                if (!this.sendPoints.system_notification_id)
-                    this.sendPoints.system_notification_id = 3;
+        ["$store.state.storePanel.store.flags.reward.send_points_by_card_or_phone"]: {
+            immediate: true,
+            handler(val) {
+                if (val) {
+                    if (!this.sendPoints.system_notification_id)
+                        this.sendPoints.system_notification_id = 3;
+                }
             }
         }
     },

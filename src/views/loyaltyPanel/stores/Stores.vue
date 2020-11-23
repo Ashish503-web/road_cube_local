@@ -14,11 +14,11 @@
                     class="text-capitalize d-flex justify-start justify-sm-center px-3"
                 ></v-tab>
             </v-tabs>
-
-            <v-tabs-items v-model="tab">
-                <router-view></router-view>
-            </v-tabs-items>
         </v-sheet>
+
+        <v-tabs-items v-model="tab" class="mt-3">
+            <router-view></router-view>
+        </v-tabs-items>
     </v-container>
 </template>
 
@@ -28,7 +28,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.path
+            tab: this.$route.path,
         };
     },
 
@@ -41,11 +41,11 @@ export default {
             return [
                 {
                     name: { el: "", en: "stores", it: "" },
-                    to: `/${this.lang}/loyaltyPanel/stores/stores-tab`
+                    to: `/${this.lang}/loyaltyPanel/stores/stores-tab`,
                 },
                 {
                     name: { el: "", en: "financial data", it: "" },
-                    to: `/${this.lang}/loyaltyPanel/stores/financial-data`
+                    to: `/${this.lang}/loyaltyPanel/stores/financial-data`,
                 },
                 // {
                 //     name: { el: "", en: "Settings of Admin Panel", it: "" },
@@ -57,10 +57,10 @@ export default {
                 // },
                 {
                     name: { el: "", en: "Daily Transaction Limits", it: "" },
-                    to: `/${this.lang}/loyaltyPanel/stores/daily-transaction-limits`
-                }
+                    to: `/${this.lang}/loyaltyPanel/stores/daily-transaction-limits`,
+                },
             ];
-        }
+        },
     },
 
     watch: {
@@ -72,8 +72,8 @@ export default {
                         `/${this.lang}/loyaltyPanel/stores/stores-tab?page=1`
                     );
                 }
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>

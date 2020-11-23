@@ -175,7 +175,7 @@
 <script>
 import { mdiPencilOutline, mdiClose } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
-import translations from "@/utils/translations/storePanel/settings/productCategories";
+import translations from "@/utils/translations/storePanel/settings/profile/productCategories";
 
 export default {
     name: "ProductCategories",

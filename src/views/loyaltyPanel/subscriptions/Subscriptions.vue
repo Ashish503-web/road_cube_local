@@ -14,11 +14,11 @@
                     class="text-capitalize d-flex justify-md-center justify-start px-3"
                 ></v-tab>
             </v-tabs>
-
-            <v-tabs-items v-model="tab">
-                <router-view></router-view>
-            </v-tabs-items>
         </v-sheet>
+
+        <v-tabs-items v-model="tab" class="mt-3">
+            <router-view></router-view>
+        </v-tabs-items>
     </v-container>
 </template>
 
@@ -28,7 +28,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.path
+            tab: this.$route.path,
         };
     },
 
@@ -41,18 +41,18 @@ export default {
             return [
                 {
                     name: { el: "", en: "stores", it: "" },
-                    to: `/${this.lang}/loyaltyPanel/subscriptions/stores`
+                    to: `/${this.lang}/loyaltyPanel/subscriptions/stores`,
                 },
                 {
                     name: { el: "", en: "registration plans", it: "" },
-                    to: `/${this.lang}/loyaltyPanel/subscriptions/registration-plans`
+                    to: `/${this.lang}/loyaltyPanel/subscriptions/registration-plans`,
                 },
                 {
                     name: { el: "", en: "payment methods", it: "" },
-                    to: `/${this.lang}/loyaltyPanel/subscriptions/payment-methods`
-                }
+                    to: `/${this.lang}/loyaltyPanel/subscriptions/payment-methods`,
+                },
             ];
-        }
+        },
     },
 
     watch: {
@@ -64,8 +64,8 @@ export default {
                         `/${this.lang}/loyaltyPanel/subscriptions/stores?page=1`
                     );
                 }
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>

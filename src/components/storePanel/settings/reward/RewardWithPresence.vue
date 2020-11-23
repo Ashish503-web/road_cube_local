@@ -1,21 +1,10 @@
 <template>
-    <b-standard-card
-        title="Reward with presence in the store"
-        activatable
-        height="auto"
-        :switcher.sync="rewardWithPresence"
-        :loading="loading"
-        :error-message="errorMessage"
-        @submit="
-            updateReward({
-                type: 'rewardWithPresence',
-                item: {
-                    open_checkin: rewardWithPresence,
-                },
-            })
-        "
+    <b-card
+        :title="translations.title[lang]"
+        hide-default-footer
+        @cancel="$emit('cancel')"
     >
-        <v-row no-gutters>
+        <v-row no-gutters class="py-5">
             <v-col cols="1" sm="auto">
                 <v-icon
                     color="secondary"
@@ -24,49 +13,29 @@
             </v-col>
 
             <v-col cols="11" class="pl-1">
-                Win points only with the presence of the customer in the store.
+                {{ translations.info[lang] }}
             </v-col>
         </v-row>
-    </b-standard-card>
+    </b-card>
 </template>
 
 <script>
 import { mdiInformation } from "@mdi/js";
-import { mapActions, mapMutations } from "vuex";
+import translations from "@/utils/translations/storePanel/settings/reward/rewardWithPresence";
 
 export default {
     name: "RewardWithPresence",
 
+    mixins: [translations],
+
     data: () => ({
-        icons: { mdiInformation },
+        icons: { mdiInformation }
     }),
 
     computed: {
-        loading() {
-            return this.$store.state.storePanel.settings.reward.loading
-                .rewardWithPresence;
-        },
-
-        errorMessage() {
-            return this.$store.state.storePanel.settings.reward.errorMessage
-                .rewardWithPresence;
-        },
-
-        rewardWithPresence: {
-            get() {
-                return this.$store.state.storePanel.store.flags.reward
-                    .open_checkin;
-            },
-
-            set(val) {
-                this.setRewardWithPresence(val);
-            },
-        },
-    },
-
-    methods: {
-        ...mapMutations("storePanel", ["setRewardWithPresence"]),
-        ...mapActions("storePanel/settings/reward", ["updateReward"]),
-    },
+        lang() {
+            return this.$route.params.lang;
+        }
+    }
 };
 </script>

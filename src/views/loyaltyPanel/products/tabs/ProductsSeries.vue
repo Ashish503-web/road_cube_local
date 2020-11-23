@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path">
+    <v-tab-item :value="$route.path" class="pa-3">
         <h2 class="text-center mt-5 mb-5">Change the order</h2>
         <v-card class="mx-auto mt-5 mb-5" max-width="800">
             <div class="mb-5 pt-5 text-right">
@@ -37,23 +37,23 @@ export default {
     name: "ProductsSeries",
     data: () => ({
         icons: {
-            mdiSwapVerticalBold
+            mdiSwapVerticalBold,
         },
         items: [
             {
-                text: "dd444"
+                text: "dd444",
             },
             {
-                text: "kst2"
+                text: "kst2",
             },
             {
                 icon: "mdi-send",
-                text: "Send"
+                text: "Send",
             },
             {
-                text: "Drafts"
-            }
-        ]
-    })
+                text: "Drafts",
+            },
+        ],
+    }),
 };
 </script>

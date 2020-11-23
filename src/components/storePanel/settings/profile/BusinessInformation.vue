@@ -130,7 +130,7 @@
 
 <script>
 import { mapActions } from "vuex";
-import translations from "@/utils/translations/storePanel/settings/businessInformation";
+import translations from "@/utils/translations/storePanel/settings/profile/businessInformation";
 import validators from "./businessInformationValidators";
 
 export default {

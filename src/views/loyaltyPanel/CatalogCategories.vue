@@ -1,7 +1,32 @@
 <template>
     <v-container fluid class="b-container">
         <v-sheet class="pa-3">
-            <v-toolbar flat height="90">
+            <v-row no-gutters align="center" class="pa-5 pt-0">
+                <v-col cols="auto">
+                    <v-img
+                        src="@/assets/catalog-categories.png"
+                        width="60"
+                        height="60"
+                    ></v-img>
+                </v-col>
+
+                <v-col cols="7" class="pl-5">
+                    <h4 v-text="translations.title[lang]"></h4>
+                    <div
+                        style="font-size: 0.875rem"
+                        class="font-weight-medium mt-1"
+                    >
+                        {{ translations.info[lang] }}
+                        <router-link
+                            class="blue--text ml-1"
+                            v-text="translations.giftCatalog[lang]"
+                            :to="`/${lang}/loyaltyPanel/gift-catalog?page=1`"
+                        ></router-link>
+                    </div>
+                </v-col>
+            </v-row>
+
+            <v-toolbar flat>
                 <v-btn
                     color="secondary"
                     class="text-capitalize d-flex mx-auto mx-sm-0"
@@ -75,11 +100,11 @@
 import { mdiPencilOutline, mdiClose } from "@mdi/js";
 import { mapMutations } from "vuex";
 
-import CategoryForm from "@/components/loyaltyPanel/categoryManagement/CategoryForm.vue";
-import translations from "@/utils/translations/loyaltyPanel/categoryManagement";
+import CategoryForm from "@/components/loyaltyPanel/catalogCategories/CategoryForm.vue";
+import translations from "@/utils/translations/loyaltyPanel/catalogCategories";
 
 export default {
-    name: "CategoryManagement",
+    name: "CatalogCategories",
 
     components: { CategoryForm },
 

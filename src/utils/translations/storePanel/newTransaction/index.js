@@ -51,11 +51,6 @@ export default {
                 en: "Voucher code",
                 it: ""
             },
-            orderProducts: {
-                el: "",
-                en: "Select Order Products",
-                it: ""
-            },
             createOrder: {
                 el: "",
                 en: "Create Order",

@@ -250,7 +250,7 @@
 <script>
 import { mdiChevronUp, mdiChevronDown, mdiClockOutline } from "@mdi/js";
 import { mapMutations, mapActions, mapGetters } from "vuex";
-import translations from "@/utils/translations/storePanel/settings/operationHours";
+import translations from "@/utils/translations/storePanel/settings/profile/operationHours";
 
 export default {
     name: "OperationHours",

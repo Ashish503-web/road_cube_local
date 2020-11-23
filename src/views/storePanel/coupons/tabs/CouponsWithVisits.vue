@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path">
+    <v-tab-item :value="$route.path" class="pa-3">
         <v-row no-gutters justify="center">
             <v-col cols="10">
                 <v-card-title>Coupons with visits</v-card-title>

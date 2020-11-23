@@ -50,7 +50,7 @@
 
 <script>
 import { mapActions } from "vuex";
-import translations from "@/utils/translations/storePanel/settings/changePassword";
+import translations from "@/utils/translations/storePanel/settings/profile/changePassword";
 import validators from "./changePasswordValidators";
 
 export default {

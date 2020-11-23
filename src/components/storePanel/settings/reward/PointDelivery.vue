@@ -1,18 +1,15 @@
 <template>
-    <b-standard-card
-        title="Point Delivery"
-        activatable
-        :switcher.sync="pointDelivery.pos_points_delivery"
+    <b-card
+        :title="translations.title[lang]"
         :loading="loading"
         :error-message="errorMessage"
+        @cancel="$emit('cancel')"
         @submit="
             updateReward({
-                type: 'pointDelivery',
-                item: {
-                    pos_points_delivery: pointDelivery.pos_points_delivery,
-                    pos_display_amount: pointDelivery.pos_display_amount,
-                    pos_goal_shopping: pointDelivery.pos_goal_shopping
-                }
+                item: pointDelivery,
+                url: 'flags/reward',
+                commitText: 'storePanel/setPointDelivery',
+                successText: 'point delivery info'
             })
         "
     >
@@ -25,70 +22,77 @@
             </v-col>
 
             <v-col cols="11" class="pl-1">
-                You will be able to use the Point Score via a Point Device
-                connected to your store.
+                {{ translations.info[lang] }}
 
                 <v-checkbox
                     v-model="pointDelivery.pos_display_amount"
-                    :disabled="!pointDelivery.pos_points_delivery"
                     color="secondary"
                     class="pt-0 mt-1"
                     hide-details
                 >
                     <template v-slot:label>
-                        <h4 class="subtitle-2">
-                            Show amount in POS
-                        </h4>
+                        <h4
+                            class="subtitle-2"
+                            v-text="translations.showAmount[lang]"
+                        ></h4>
                     </template>
                 </v-checkbox>
 
                 <v-checkbox
                     v-model="pointDelivery.pos_goal_shopping"
-                    :disabled="!pointDelivery.pos_points_delivery"
                     color="secondary"
                     class="pt-0 mt-1"
                     hide-details
                 >
                     <template v-slot:label>
-                        <h4 class="subtitle-2">
-                            Serial Shopping mode in POS
-                        </h4>
+                        <h4
+                            class="subtitle-2"
+                            v-text="translations.serialShopping[lang]"
+                        ></h4>
                     </template>
                 </v-checkbox>
             </v-col>
         </v-row>
-    </b-standard-card>
+    </b-card>
 </template>
 
 <script>
 import { mdiInformation } from "@mdi/js";
-import { mapActions } from "vuex";
+import { mapState, mapActions } from "vuex";
+import translations from "@/utils/translations/storePanel/settings/reward/pointDelivery";
 
 export default {
     name: "PointDelivery",
 
+    mixins: [translations],
+
     data: () => ({
-        icons: { mdiInformation }
+        icons: { mdiInformation },
+        pointDelivery: {}
     }),
 
     computed: {
-        loading() {
-            return this.$store.state.storePanel.settings.reward.loading
-                .pointDelivery;
-        },
+        ...mapState(["loading", "errorMessage"]),
 
-        errorMessage() {
-            return this.$store.state.storePanel.settings.reward.errorMessage
-                .pointDelivery;
-        },
-
-        pointDelivery() {
-            return this.$store.state.storePanel.store.flags.reward;
+        lang() {
+            return this.$route.params.lang;
         }
     },
 
     methods: {
         ...mapActions("storePanel/settings/reward", ["updateReward"])
+    },
+
+    watch: {
+        ["$store.state.storePanel.store.flags.reward"]: {
+            immediate: true,
+            handler(val) {
+                this.pointDelivery = {
+                    pos_display_amount: val.pos_display_amount,
+                    pos_goal_shopping: val.pos_goal_shopping
+                };
+            }
+        }
     }
 };
 </script>

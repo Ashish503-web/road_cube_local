@@ -151,6 +151,7 @@ export default {
 
 setTimeout(() => {
     let playBtn = document.querySelector("#play");
+
     playBtn.addEventListener("click", function() {
         let video = document.querySelector("#video");
         let closeBtn = document.querySelector("#close-video-modal");

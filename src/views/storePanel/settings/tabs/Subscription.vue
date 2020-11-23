@@ -11,9 +11,10 @@
                 width="500"
                 class="mx-auto"
             >
-                <v-card-title class="subtitle-1 font-weight-bold justify-center"
-                    >Please Choose Payment Method</v-card-title
-                >
+                <v-card-title
+                    class="subtitle-1 font-weight-bold justify-center"
+                    v-text="translations.paymentMethod[lang]"
+                ></v-card-title>
 
                 <v-divider></v-divider>
 
@@ -62,174 +63,45 @@
                         class="text-capitalize px-5"
                         :disabled="!store_payment_method_id"
                         :loading="loading"
+                        v-text="translations.save[lang]"
                         @click="
                             attachPaymentMethod({ store_payment_method_id })
                         "
-                        >save</v-btn
-                    >
+                    ></v-btn>
                 </div>
             </v-card>
 
             <template v-else>
-                <v-card outlined width="500" class="mx-auto mt-5">
-                    <v-card-title class="justify-space-between grey lighten-3">
-                        Plan
-                        <v-icon
-                            color="secondary"
-                            x-large
-                            v-text="icons.mdiCashMultiple"
-                        ></v-icon>
-                    </v-card-title>
+                <v-row no-gutters align="center" class="pa-5 pl-0 pt-0">
+                    <v-col cols="auto">
+                        <v-img
+                            src="@/assets/subscription.png"
+                            width="60"
+                            height="60"
+                        ></v-img>
+                    </v-col>
 
-                    <v-divider></v-divider>
+                    <v-col cols="9" class="pl-5">
+                        <h4 v-text="translations.title[lang]"></h4>
+                        <div
+                            style="font-size: 0.875rem"
+                            class="font-weight-medium"
+                            v-text="translations.info[lang]"
+                        ></div>
+                    </v-col>
+                </v-row>
 
-                    <v-card-text>
-                        <v-row no-gutters class="b-outlined">
-                            <v-col cols="6">
-                                <h3
-                                    class="text-center subtitle-1 font-weight-bold pa-3 b-bottom-outlined"
-                                >
-                                    Type
-                                </h3>
+                <h3
+                    class="subtitle-1 font-weight-bold mt-5 mb-3 pl-1"
+                    v-text="translations.subscriptionPlan[lang]"
+                ></h3>
 
-                                <div class="text-center pa-4">
-                                    {{ subscriptionPlanType }}
-                                </div>
-                            </v-col>
-                            <v-col cols="6">
-                                <h3
-                                    class="text-center subtitle-1 font-weight-bold pa-3 b-bottom-outlined"
-                                >
-                                    Amount
-                                </h3>
+                <SubscriptionPlan />
 
-                                <div class="text-center pa-4">
-                                    {{ subscriptionPlanAmount }}
-                                </div>
-                            </v-col>
-                        </v-row>
-                    </v-card-text>
-
-                    <template v-if="openPayment">
-                        <template v-if="showAlert">
-                            <v-alert type="error" class="font-weight-bold mx-4">
-                                Due day has passed, you have to make offline
-                                payment.
-                            </v-alert>
-
-                            <v-card-text class="pt-1">
-                                <v-row no-gutters class="b-outlined">
-                                    <v-col cols="4">
-                                        <h3
-                                            class="text-center text-uppercase subtitle-2 pa-4 b-bottom-outlined"
-                                        >
-                                            Bank
-                                        </h3>
-
-                                        <div
-                                            class="text-center pa-4"
-                                            v-text="
-                                                storeSubscription
-                                                    .store_payment_method
-                                                    .store_payment_method[lang]
-                                            "
-                                        ></div>
-                                    </v-col>
-                                    <v-col cols="4">
-                                        <h3
-                                            class="text-center text-uppercase subtitle-2 pa-4 b-bottom-outlined"
-                                        >
-                                            Name
-                                        </h3>
-
-                                        <div
-                                            class="text-center pa-4"
-                                            v-text="
-                                                storeSubscription
-                                                    .store_payment_method
-                                                    .parent_store_credentials
-                                                    .values.name
-                                            "
-                                        ></div>
-                                    </v-col>
-                                    <v-col cols="4">
-                                        <h3
-                                            class="text-center text-uppercase subtitle-2 pa-4 b-bottom-outlined"
-                                        >
-                                            Iban
-                                        </h3>
-
-                                        <div
-                                            class="text-center pa-4"
-                                            v-text="
-                                                storeSubscription
-                                                    .store_payment_method
-                                                    .parent_store_credentials
-                                                    .values.iban
-                                            "
-                                        ></div>
-                                    </v-col>
-                                </v-row>
-                            </v-card-text>
-                        </template>
-
-                        <form
-                            v-else
-                            :action="redirectForm.action"
-                            :charset="redirectForm.charset"
-                            class="pa-4 pt-0"
-                        >
-                            <v-row
-                                no-gutters
-                                justify="space-between"
-                                align="center"
-                            >
-                                <v-col cols="auto">
-                                    {{
-                                        slug === "clearer"
-                                            ? "Pay with Debit/Credit Card"
-                                            : "Pay with web banking"
-                                    }}
-                                </v-col>
-                                <v-col cols="auto">
-                                    <div
-                                        v-for="(value, prop) in redirectForm"
-                                        :key="prop"
-                                    >
-                                        <input
-                                            v-if="
-                                                prop !== 'action' &&
-                                                    prop !== 'charset'
-                                            "
-                                            type="text"
-                                            hidden
-                                            :name="prop"
-                                            :value="value"
-                                        />
-                                    </div>
-
-                                    <v-btn
-                                        type="submit"
-                                        color="secondary"
-                                        width="150"
-                                        outlined
-                                    >
-                                        <v-icon
-                                            v-if="slug === 'clearer'"
-                                            class="mr-1"
-                                            v-text="icons.mdiCreditCard"
-                                        ></v-icon>
-                                        pay
-                                    </v-btn>
-                                </v-col>
-                            </v-row>
-                        </form>
-                    </template>
-                </v-card>
-
-                <v-toolbar-title class="mt-10 pa-5"
-                    >Payment History</v-toolbar-title
-                >
+                <h3
+                    class="subtitle-1 font-weight-bold mt-12 mb-3 pl-1"
+                    v-text="translations.paymentHistory[lang]"
+                ></h3>
 
                 <v-data-table
                     :headers="headers"
@@ -241,15 +113,6 @@
                     :page.sync="page"
                     class="b-outlined"
                 >
-                    <template v-slot:no-data>
-                        <v-progress-circular
-                            v-if="loading"
-                            color="secondary"
-                            indeterminate
-                        ></v-progress-circular>
-                        <span v-else>No data available</span>
-                    </template>
-
                     <template v-slot:item.total="{ item }">
                         {{
                             new Intl.NumberFormat("en-US", {
@@ -268,8 +131,9 @@
                             text
                             dense
                             outlined
-                            >to be paid</v-alert
                         >
+                            {{ translations.toBePaid[lang] }}
+                        </v-alert>
                         <v-alert
                             v-else
                             type="success"
@@ -277,8 +141,9 @@
                             text
                             dense
                             outlined
-                            >paid</v-alert
                         >
+                            {{ translations.paid[lang] }}
+                        </v-alert>
                     </template>
                 </v-data-table>
             </template>
@@ -287,29 +152,20 @@
 </template>
 
 <script>
-import { mdiCashMultiple, mdiCreditCard } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
+
+import SubscriptionPlan from "@/components/storePanel/subscription/SubscriptionPlan.vue";
+import translations from "@/utils/translations/storePanel/settings/subscription";
 
 export default {
     name: "Subscription",
 
+    components: { SubscriptionPlan },
+
+    mixins: [translations],
+
     data() {
         return {
-            icons: { mdiCashMultiple, mdiCreditCard },
-            headers: [
-                { text: "Total", value: "total", width: "20%" },
-                {
-                    text: "Payment Status",
-                    value: "pending_payment",
-                    width: "50%"
-                },
-                {
-                    text: "Date",
-                    value: "updated_at",
-                    width: "30%",
-                    align: "center"
-                }
-            ],
             page: +this.$route.query.page,
             store_payment_method_id: null
         };
@@ -330,6 +186,27 @@ export default {
 
         lang() {
             return this.$route.params.lang;
+        },
+
+        headers() {
+            return [
+                {
+                    text: this.translations.total[this.lang],
+                    value: "total",
+                    width: "20%"
+                },
+                {
+                    text: this.translations.paymentStatus[this.lang],
+                    value: "pending_payment",
+                    width: "50%"
+                },
+                {
+                    text: this.translations.date[this.lang],
+                    value: "updated_at",
+                    width: "30%",
+                    align: "center"
+                }
+            ];
         },
 
         subscriptionPlanType() {
@@ -375,7 +252,7 @@ export default {
                     }
                 });
             }
-            this.getItems(this.query);
+            this.getItem(this.query);
         },
 
         page(page) {

@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path" class="pt-3">
+    <v-tab-item :value="$route.path" class="pa-3">
         <v-toolbar flat height="90">
             <v-btn
                 color="secondary"
@@ -46,10 +46,10 @@ export default {
                 checkPoints: "10",
                 visible: false,
                 paymentMethods: "...",
-                companies: "..."
-            }
+                companies: "...",
+            },
         ],
-        itemsPerPageOptions: [10, 20, 30, -1]
+        itemsPerPageOptions: [10, 20, 30, -1],
     }),
 
     computed: {
@@ -63,32 +63,32 @@ export default {
                 { text: this.translations.type[this.lang], value: "type" },
                 {
                     text: this.translations.description[this.lang],
-                    value: "description"
+                    value: "description",
                 },
                 {
                     text: this.translations.amountRate[this.lang],
-                    value: "amountRate"
+                    value: "amountRate",
                 },
                 { text: this.translations.points[this.lang], value: "points" },
                 {
                     text: this.translations.checkInPoints[this.lang],
-                    value: "checkPoints"
+                    value: "checkPoints",
                 },
                 {
                     text: this.translations.visible[this.lang],
-                    value: "visible"
+                    value: "visible",
                 },
                 {
                     text: this.translations.paymentMethods[this.lang],
-                    value: "paymentMethods"
+                    value: "paymentMethods",
                 },
                 {
                     text: this.translations.companies[this.lang],
-                    value: "companies"
+                    value: "companies",
                 },
-                { text: this.translations.delete[this.lang], value: "delete" }
+                { text: this.translations.delete[this.lang], value: "delete" },
             ];
-        }
-    }
+        },
+    },
 };
 </script>

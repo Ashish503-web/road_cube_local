@@ -109,11 +109,11 @@ export default [
     },
 
     {
-        path: "category-management",
-        name: "Category Management",
+        path: "catalog-categories",
+        name: "CatalogCategories",
         component: () =>
             import(
-                /* webpackChunkName: "categoryManagement" */ "@/views/loyaltyPanel/CategoryManagement.vue"
+                /* webpackChunkName: "catalogCategories" */ "@/views/loyaltyPanel/CatalogCategories.vue"
             )
     },
 
@@ -128,11 +128,11 @@ export default [
     },
 
     {
-        path: "catalog-management",
-        name: "Catalog Management",
+        path: "gift-catalog",
+        name: "GiftCatalog",
         component: () =>
             import(
-                /* webpackChunkName: "catalogManagement" */ "@/views/loyaltyPanel/CatalogManagement.vue"
+                /* webpackChunkName: "giftCatalog" */ "@/views/loyaltyPanel/GiftCatalog.vue"
             )
     },
 

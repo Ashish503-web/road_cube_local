@@ -23,7 +23,7 @@
 
 <script>
 import { mapActions, mapMutations } from "vuex";
-import translations from "@/utils/translations/storePanel/settings/companyRedemption";
+import translations from "@/utils/translations/storePanel/settings/profile/companyRedemption";
 
 export default {
     name: "CompanyRedemption",

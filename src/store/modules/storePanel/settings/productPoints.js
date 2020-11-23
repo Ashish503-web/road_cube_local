@@ -15,7 +15,10 @@ export default {
 
     mutations: {
         setItems(state, payload) {
-            state.productPoints = payload;
+            state.productPoints = payload.map(p => {
+                p.loading = false;
+                return p;
+            });
         }
     },
 
@@ -42,22 +45,22 @@ export default {
             }
         },
 
-        async update({ commit }, payload) {
+        async update({ commit }, item) {
             try {
-                commit("setLoading", true, { root: true });
+                item.loading = true;
 
                 await axios.put(
                     `${ApiEndpoint}/${localStorage.getItem(
                         "storeId"
-                    )}/products/${payload.product_id}/association`,
+                    )}/products/${item.product_id}/association`,
                     {
-                        reward_points: payload.reward_points,
-                        reward_type_id: payload.reward_type_id,
-                        reward_points_shared: payload.reward_points_shared
+                        reward_points: item.reward_points,
+                        reward_type_id: item.reward_type_id,
+                        reward_points_shared: item.reward_points_shared
                     }
                 );
 
-                commit("setLoading", false, { root: true });
+                item.loading = false;
                 commit(
                     "setNotification",
                     {
@@ -69,7 +72,7 @@ export default {
                     { root: true }
                 );
             } catch (ex) {
-                commit("setLoading", false, { root: true });
+                item.loading = false;
                 commit(
                     "setNotification",
                     {

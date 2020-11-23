@@ -45,7 +45,7 @@
 </template>
 
 <script>
-import translations from "@/utils/translations/storePanel/settings/ApiAuthentication";
+import translations from "@/utils/translations/storePanel/settings/profile/ApiAuthentication";
 
 export default {
     name: "ApiAuthentication",

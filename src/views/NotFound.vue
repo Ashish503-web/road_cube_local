@@ -23,7 +23,7 @@ export default {
     computed: {
         lang() {
             return this.$route.path.slice(0, 4);
-        },
+        }
     },
 
     beforeCreate() {
@@ -32,6 +32,6 @@ export default {
         if (lang !== "/el/" && lang !== "/en/" && lang !== "/it/") {
             this.$router.replace("/en" + this.$route.fullPath);
         }
-    },
+    }
 };
 </script>

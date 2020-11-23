@@ -1,5 +1,33 @@
 <template>
-    <v-tab-item :value="$route.path">
+    <v-tab-item :value="$route.path" class="pa-3">
+        <v-row no-gutters align="center" class="pa-5 pt-0">
+            <v-col cols="auto">
+                <v-img
+                    src="@/assets/products.png"
+                    width="60"
+                    height="60"
+                ></v-img>
+            </v-col>
+
+            <v-col cols="9" class="pl-5">
+                <h4 v-text="translations.title[lang]"></h4>
+                <div
+                    style="font-size: 0.875rem"
+                    class="font-weight-medium mt-1"
+                >
+                    {{ translations.info[lang] }}
+                    <router-link
+                        class="blue--text mx-1"
+                        v-text="translations.productsPerStore[lang]"
+                        :to="
+                            `/${lang}/loyaltyPanel/products/products-per-store`
+                        "
+                    ></router-link>
+                    {{ translations.tab[lang] }}.
+                </div>
+            </v-col>
+        </v-row>
+
         <v-toolbar flat height="90">
             <v-btn
                 color="secondary"

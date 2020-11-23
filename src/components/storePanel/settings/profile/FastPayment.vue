@@ -28,7 +28,7 @@
 
 <script>
 import { mapMutations, mapActions } from "vuex";
-import translations from "@/utils/translations/storePanel/settings/fastPayment";
+import translations from "@/utils/translations/storePanel/settings/profile/fastPayment";
 
 export default {
     name: "FastPayment",

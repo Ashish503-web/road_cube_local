@@ -1,6 +1,6 @@
 <template>
-    <v-tab-item :value="$route.path">
-        <v-row no-gutters align="center" class="pt-7 pb-2 px-5">
+    <v-tab-item :value="$route.path" class="pa-3">
+        <v-row no-gutters align="center" class="pa-5 pt-0">
             <v-col cols="auto">
                 <v-img
                     src="@/assets/coupon-on-products.png"
@@ -19,7 +19,7 @@
             </v-col>
         </v-row>
 
-        <v-toolbar flat height="100">
+        <v-toolbar flat>
             <v-btn
                 color="secondary"
                 class="text-capitalize px-5"
@@ -147,17 +147,17 @@ export default {
             icons: {
                 mdiPencilOutline,
                 mdiClose,
-                mdiFacebook
+                mdiFacebook,
             },
             page: +this.$route.query.page,
-            mode: 0
+            mode: 0,
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/coupons/couponsOnProducts", [
-            "couponsOnProducts"
+            "couponsOnProducts",
         ]),
 
         lang() {
@@ -179,21 +179,21 @@ export default {
                 { text: this.translations.type[this.lang], value: "code" },
                 {
                     text: this.translations.productForSale[this.lang],
-                    value: `product_buy_name[${this.lang}]`
+                    value: `product_buy_name[${this.lang}]`,
                 },
                 {
                     text: this.translations.productForGift[this.lang],
-                    value: `product_free_name[${this.lang}]`
+                    value: `product_free_name[${this.lang}]`,
                 },
                 {
                     text: this.translations.quantity[this.lang],
-                    value: "available"
+                    value: "available",
                 },
                 {
                     text: this.translations.actions[this.lang],
-                    value: "actions"
+                    value: "actions",
                 },
-                { text: this.translations.social[this.lang], value: "social" }
+                { text: this.translations.social[this.lang], value: "social" },
             ];
         },
 
@@ -204,7 +204,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         deleteDialog: {
@@ -214,7 +214,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            }
+            },
         },
 
         couponOnProduct: {
@@ -225,8 +225,8 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
@@ -234,12 +234,12 @@ export default {
             "setDialog",
             "setDeleteDialog",
             "setResetSuccess",
-            "setResetValidation"
+            "setResetValidation",
         ]),
         ...mapMutations("storePanel/coupons/couponsOnProducts", ["setItem"]),
         ...mapActions("storePanel/coupons/couponsOnProducts", [
             "getItems",
-            "remove"
+            "remove",
         ]),
 
         open(mode, item) {
@@ -248,7 +248,7 @@ export default {
             setTimeout(() => this.setResetSuccess(true), 300);
             this.setResetValidation(true);
             this.dialog = true;
-        }
+        },
     },
 
     watch: {
@@ -264,8 +264,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
             this.getItems(this.query);
@@ -273,7 +273,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -281,14 +281,14 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    }
+    },
 };
 </script>

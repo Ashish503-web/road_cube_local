@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path">
+    <v-tab-item :value="$route.path" class="pa-3">
         <v-toolbar flat height="90">
             <ExportLinks />
 
@@ -50,7 +50,7 @@ export default {
 
     data() {
         return {
-            page: +this.$route.query.page
+            page: +this.$route.query.page,
         };
     },
 
@@ -67,12 +67,12 @@ export default {
                 { text: this.translations.date[this.lang], value: "date" },
                 {
                     text: this.translations.product[this.lang],
-                    value: `product_name[${this.lang}]`
+                    value: `product_name[${this.lang}]`,
                 },
                 {
                     text: this.translations.totalPoints[this.lang],
-                    value: "total_points"
-                }
+                    value: "total_points",
+                },
             ];
         },
 
@@ -84,11 +84,11 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
-        ...mapActions("storePanel/history", ["getPointAnalysis"])
+        ...mapActions("storePanel/history", ["getPointAnalysis"]),
     },
 
     watch: {
@@ -97,8 +97,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
 
@@ -107,7 +107,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -115,14 +115,14 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getPointAnalysis(this.query);
-    }
+    },
 };
 </script>

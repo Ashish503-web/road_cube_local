@@ -1,77 +1,60 @@
 <template>
-    <b-standard-card
-        title="Mobile payments"
-        activatable
-        height="auto"
-        class="mt-5"
-        :switcher.sync="mobilePayments"
-        :loading="loading"
-        :error-message="errorMessage"
-        @submit="
-            updateReward({
-                type: 'mobilePayments',
-                item: {
-                    online_payments: mobilePayments
-                }
-            })
-        "
+    <b-card
+        :title="translations.title[lang]"
+        hide-default-footer
+        @cancel="$emit('cancel')"
     >
-        <v-row no-gutters justify="space-around">
+        <v-row no-gutters justify="space-around" class="py-5">
             <v-btn
-                :disabled="!mobilePayments"
                 color="secondary"
                 class="text-capitalize mb-3 mb-sm-0"
                 outlined
-                @click="$router.push('/storePanel/settings/cleaner-management')"
-                >appoint cleaners</v-btn
-            >
+                v-text="translations.appointCleaners[lang]"
+                @click="
+                    () => {
+                        setDialog(false);
+                        $router.push(
+                            `/${lang}/storePanel/settings/payment-providers`
+                        );
+                    }
+                "
+            ></v-btn>
 
             <v-btn
-                :disabled="!mobilePayments"
                 color="secondary"
-                class="text-capitalize"
+                class="text-none"
                 outlined
-                @click="$router.push('/storePanel/settings/payments-direction')"
-                >set a payment direction</v-btn
-            >
+                v-text="translations.paymentDirection[lang]"
+                @click="
+                    () => {
+                        setDialog(false);
+                        $router.push(
+                            `/${lang}/storePanel/settings/payment-processing`
+                        );
+                    }
+                "
+            ></v-btn>
         </v-row>
-    </b-standard-card>
+    </b-card>
 </template>
 
 <script>
-import { mapActions, mapMutations } from "vuex";
+import { mapMutations } from "vuex";
+import translations from "@/utils/translations/storePanel/settings/reward/mobilePayments";
 
 export default {
     name: "MobilePayments",
 
-    data: () => ({}),
+    mixins: [translations],
 
     computed: {
-        loading() {
-            return this.$store.state.storePanel.settings.reward.loading
-                .mobilePayments;
-        },
-
-        errorMessage() {
-            return this.$store.state.storePanel.settings.reward.errorMessage
-                .mobilePayments;
-        },
-
-        mobilePayments: {
-            get() {
-                return this.$store.state.storePanel.store.flags.reward
-                    .online_payments;
-            },
-
-            set(val) {
-                this.setMobilePayments(val);
-            }
+        lang() {
+            return this.$route.params.lang;
         }
     },
 
     methods: {
-        ...mapMutations("storePanel", ["setMobilePayments"]),
-        ...mapActions("storePanel/settings/reward", ["updateReward"])
+        ...mapMutations(["setDialog"])
     }
 };
 </script>

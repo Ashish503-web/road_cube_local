@@ -1,6 +1,6 @@
 <template>
     <v-tab-item :value="$route.path">
-        <v-row no-gutters class="pa-3 pt-6 b-grey">
+        <v-row no-gutters class="pa-3 b-grey">
             <v-col cols="12" md="6" class="pr-3">
                 <Logo />
             </v-col>
@@ -64,11 +64,11 @@ export default {
         ChangePassword,
         CompanyRedemption,
         ProductCategories,
-        ApiAuthentication
+        ApiAuthentication,
     },
 
     mounted() {
         this.$clearFocus();
-    }
+    },
 };
 </script>

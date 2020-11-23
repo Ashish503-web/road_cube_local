@@ -4,7 +4,7 @@
             class="subtitle-1 font-weight-bold"
             :class="{
                 red: type === 'delete',
-                'white--text': type === 'delete',
+                'white--text': type === 'delete'
             }"
         >
             {{ title }}
@@ -27,7 +27,7 @@
 
             <v-divider></v-divider>
 
-            <v-card-actions>
+            <v-card-actions v-if="!hideDefaultFooter">
                 <v-spacer></v-spacer>
                 <v-btn
                     text
@@ -60,34 +60,35 @@ export default {
     props: {
         type: {
             type: String,
-            default: "default",
+            default: "default"
         },
         title: String,
         cancelText: {
             type: Object,
-            default: () => ({ el: "", en: "cancel", it: "" }),
+            default: () => ({ el: "", en: "cancel", it: "" })
         },
         submitText: {
             type: Object,
-            default: () => ({ el: "", en: "save", it: "" }),
+            default: () => ({ el: "", en: "save", it: "" })
         },
+        hideDefaultFooter: Boolean,
         loading: Boolean,
         errorMessage: String,
-        resetValidation: Boolean,
+        resetValidation: Boolean
     },
 
     data: () => ({
         icons: {
-            mdiClose,
+            mdiClose
         },
         valid: false,
-        disabled: true,
+        disabled: true
     }),
 
     computed: {
         lang() {
             return this.$route.params.lang;
-        },
+        }
     },
 
     watch: {
@@ -101,12 +102,12 @@ export default {
 
         resetValidation(val) {
             if (val) this.$refs.form.resetValidation();
-        },
+        }
     },
 
     mounted() {
         this.$clearFocus();
         this.$refs.form.resetValidation();
-    },
+    }
 };
 </script>

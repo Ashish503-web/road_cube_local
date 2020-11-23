@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path">
+    <v-tab-item :value="$route.path" class="pa-3">
         <v-toolbar flat height="90">
             <v-btn
                 color="secondary"
@@ -57,7 +57,7 @@
                             ? new Intl.NumberFormat("en-US", {
                                   style: "currency",
                                   currency: "EUR",
-                                  minimumFractionDigits: 2
+                                  minimumFractionDigits: 2,
                               }).format(item.daily_limits.online.amount)
                             : item.daily_limits.online.points
                     }}
@@ -82,7 +82,7 @@
                             ? new Intl.NumberFormat("en-US", {
                                   style: "currency",
                                   currency: "EUR",
-                                  minimumFractionDigits: 2
+                                  minimumFractionDigits: 2,
                               }).format(item.daily_limits.offline.amount)
                             : item.daily_limits.offline.points
                     }}
@@ -113,18 +113,18 @@ export default {
         return {
             items: [
                 {
-                    name: "Vasilis"
+                    name: "Vasilis",
                 },
                 {
-                    name: "Vasilis"
+                    name: "Vasilis",
                 },
                 {
-                    name: "Vasilis"
-                }
+                    name: "Vasilis",
+                },
             ],
             page: +this.$route.query.page,
             mode: 0,
-            limitsDialog: false
+            limitsDialog: false,
         };
     },
 
@@ -141,18 +141,18 @@ export default {
                 {
                     text: this.translations.name[this.lang],
                     value: `app_name[${this.lang}]`,
-                    width: "34%"
+                    width: "34%",
                 },
                 {
                     text: this.translations.onlineTransactions[this.lang],
                     value: "online_limits",
-                    width: "33%"
+                    width: "33%",
                 },
                 {
                     text: this.translations.offlineTransactions[this.lang],
                     value: "offline_limits",
-                    width: "33%"
-                }
+                    width: "33%",
+                },
             ];
         },
 
@@ -164,11 +164,11 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
-        ...mapActions("loyaltyPanel/stores/dailyLimits", ["getItems"])
+        ...mapActions("loyaltyPanel/stores/dailyLimits", ["getItems"]),
     },
 
     watch: {
@@ -177,8 +177,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
             this.getItems(this.query);
@@ -186,7 +186,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -194,15 +194,15 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    }
+    },
 };
 </script>
 

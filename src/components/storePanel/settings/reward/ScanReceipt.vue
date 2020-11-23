@@ -1,20 +1,15 @@
 <template>
-    <b-standard-card
-        title="Scan Receipt"
-        activatable
-        :switcher.sync="scanReceipt"
+    <b-card
+        :title="translations.title[lang]"
         :loading="loading"
         :error-message="errorMessage"
+        @cancel="$emit('cancel')"
         @submit="
-            updateScanReceipt({
-                type: 'scanReceipt',
-                scan_receipt: scanReceipt,
-                item: {
-                    receipt_phone: billingDetails.receipt_phone,
-                    receipt_vat_number: billingDetails.receipt_vat_number,
-                    receipt_address: billingDetails.receipt_address,
-                    receipt_comp_name: billingDetails.receipt_comp_name
-                }
+            updateReward({
+                item: billingDetails,
+                url: 'billing-details/receipt-information',
+                commitText: 'storePanel/setScanReceipt',
+                successText: 'scan receipt info'
             })
         "
     >
@@ -26,88 +21,81 @@
                 ></v-icon>
             </v-col>
             <v-col cols="11" class="pl-1">
-                Once activated, your customers will be able to scan the receipts
-                from your store.
+                {{ translations.info[lang] }}
             </v-col>
 
             <v-col cols="12" sm="6" class="pr-0 pr-sm-1">
                 <b-text-field
                     v-model="billingDetails.receipt_phone"
-                    :disabled="!scanReceipt"
                     type="number"
-                    label="Business Telephone Number"
+                    :label="translations.telephone[lang]"
                 ></b-text-field>
             </v-col>
 
             <v-col cols="12" sm="6" class="pl-0 pl-sm-1">
                 <b-text-field
                     v-model="billingDetails.receipt_vat_number"
-                    :disabled="!scanReceipt"
                     type="number"
-                    label="Vat Number"
+                    :label="translations.vatNumber[lang]"
                 ></b-text-field>
             </v-col>
 
             <v-col cols="12" sm="6" class="pr-0 pr-sm-1">
                 <b-text-field
                     v-model="billingDetails.receipt_address"
-                    :disabled="!scanReceipt"
-                    label="Business Address"
+                    :label="translations.address[lang]"
                 ></b-text-field>
             </v-col>
 
             <v-col cols="12" sm="6" class="pl-0 pl-sm-1">
                 <b-text-field
                     v-model="billingDetails.receipt_comp_name"
-                    :disabled="!scanReceipt"
-                    label="Business name"
+                    :label="translations.name[lang]"
                 ></b-text-field>
             </v-col>
         </v-row>
-    </b-standard-card>
+    </b-card>
 </template>
 
 <script>
 import { mdiInformation } from "@mdi/js";
-import { mapActions, mapMutations } from "vuex";
+import { mapState, mapActions } from "vuex";
+import translations from "@/utils/translations/storePanel/settings/reward/scanReceipt";
 
 export default {
     name: "ScanReceipt",
 
+    mixins: [translations],
+
     data: () => ({
-        icons: { mdiInformation }
+        icons: { mdiInformation },
+        billingDetails: {}
     }),
 
     computed: {
-        loading() {
-            return this.$store.state.storePanel.settings.reward.loading
-                .scanReceipt;
-        },
+        ...mapState(["loading", "errorMessage"]),
 
-        errorMessage() {
-            return this.$store.state.storePanel.settings.reward.errorMessage
-                .scanReceipt;
-        },
-
-        scanReceipt: {
-            get() {
-                return this.$store.state.storePanel.store.flags.reward
-                    .scan_receipt;
-            },
-
-            set(val) {
-                this.setScanReceipt(val);
-            }
-        },
-
-        billingDetails() {
-            return this.$store.state.storePanel.store.billing_details;
+        lang() {
+            return this.$route.params.lang;
         }
     },
 
     methods: {
-        ...mapMutations("storePanel", ["setScanReceipt"]),
-        ...mapActions("storePanel/settings/reward", ["updateScanReceipt"])
+        ...mapActions("storePanel/settings/reward", ["updateReward"])
+    },
+
+    watch: {
+        ["$store.state.storePanel.store.billing_details"]: {
+            immediate: true,
+            handler(val) {
+                this.billingDetails = {
+                    receipt_phone: val.receipt_phone,
+                    receipt_vat_number: val.receipt_vat_number,
+                    receipt_address: val.receipt_address,
+                    receipt_comp_name: val.receipt_comp_name
+                };
+            }
+        }
     },
 
     mounted() {

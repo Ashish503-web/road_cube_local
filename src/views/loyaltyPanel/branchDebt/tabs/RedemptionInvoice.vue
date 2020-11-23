@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path">
+    <v-tab-item :value="$route.path" class="pa-3">
         <v-toolbar flat height="90">
             <ExportLinks />
 
@@ -70,10 +70,10 @@ export default {
                     date: "14.09.2020",
                     name_of_shop: "Bill",
                     points: "Moskovyan 14",
-                    redeemed_coupons: "Phone"
-                }
+                    redeemed_coupons: "Phone",
+                },
             ],
-            page: +this.$route.query.page
+            page: +this.$route.query.page,
         };
     },
 
@@ -87,15 +87,15 @@ export default {
                 { text: this.translations.date[this.lang], value: "date" },
                 {
                     text: this.translations.nameOfShop[this.lang],
-                    value: "name_of_shop"
+                    value: "name_of_shop",
                 },
                 { text: this.translations.points[this.lang], value: "points" },
                 {
                     text: this.translations.redeemedCoupons[this.lang],
-                    value: "redeemed_coupons"
-                }
+                    value: "redeemed_coupons",
+                },
             ];
-        }
+        },
     },
 
     watch: {
@@ -104,8 +104,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
             this.getItems(this.query);
@@ -123,7 +123,7 @@ export default {
                     this.debouncedSearch();
                 }
             }
-        }
+        },
     },
 
     beforeCreate() {
@@ -131,10 +131,10 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
-    }
+    },
 };
 </script>
