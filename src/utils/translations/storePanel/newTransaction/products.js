@@ -6,6 +6,11 @@ export default {
                 en: "Select Order Products",
                 it: ""
             },
+            selectedProducts: {
+                el: "",
+                en: " Selected Products",
+                it: ""
+            },
             purchasePrice: {
                 el: "",
                 en: "Purchase Price",

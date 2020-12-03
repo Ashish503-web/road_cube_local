@@ -22,7 +22,7 @@ export default {
 
         setStoreBankProviders(state, payload) {
             state.storeBankProviders = payload.map(p => {
-                p.created_at = moment(p.created_at).format("YYYY.MM.DD");
+                p.created_at = moment(p.created_at).format("DD/MM/YYYY HH:mm");
                 return p;
             });
         },

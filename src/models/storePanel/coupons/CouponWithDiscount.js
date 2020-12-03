@@ -4,7 +4,7 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
     "accessToken"
 )}`;
 
-const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
+const ApiEndpoint = `${process.env.VUE_APP_DEFAULT_API_URL}/stores`;
 
 export default class CouponWithDiscount {
     constructor(item = {}) {
@@ -16,9 +16,17 @@ export default class CouponWithDiscount {
         this.discount_percentage = item.discount_percentage || null;
     }
 
+    static clearFalsyValues = obj => {
+        for (let key in obj) {
+            if (!obj[key]) delete obj[key];
+        }
+    };
+
     static getGiftCategories = () =>
         axios.get(
-            `https://api.roadcube.tk/v1/common/companies/${localStorage.getItem(
+            `${
+                process.env.VUE_APP_DEFAULT_API_URL
+            }/common/companies/${localStorage.getItem(
                 "companyId"
             )}/gift-categories`
         );

@@ -4,6 +4,7 @@
         :loading="loading"
         :error-message="errorMessage"
         :reset-validation="resetValidation"
+        :disabled="true"
         @cancel="$emit('cancel')"
         @submit="
             () => {
@@ -16,9 +17,16 @@
             v-model="product.name[productLang]"
             :label="translations.productName[lang]"
             no-top-margin
-            :success="success.name"
-            :rules="rules.name"
-            @cancel-success="success.name = false"
+            :success="productLang === 'el' ? success.name : false"
+            :error-messages="error.name"
+            @focus="
+                () => {
+                    if (productLang === 'el') {
+                        error.name = '';
+                    }
+                }
+            "
+            @blur="validateName"
         >
             <template v-slot:append>
                 <b-lang-menu v-model="productLang" type="inner"></b-lang-menu>
@@ -28,9 +36,16 @@
         <b-textarea
             v-model="product.description[descriptionLang]"
             :label="translations.productDescription[lang]"
-            :success="success.description"
-            :rules="rules.description"
-            @cancel-success="success.description = false"
+            :success="descriptionLang === 'el' ? success.description : false"
+            :error-messages="error.description"
+            @focus="
+                () => {
+                    if (descriptionLang === 'el') {
+                        error.description = '';
+                    }
+                }
+            "
+            @blur="validateDescription"
         >
             <template v-slot:append>
                 <b-lang-menu
@@ -54,8 +69,9 @@
                     type="number"
                     prepend-inner-icon="mdiCurrencyEur"
                     :success="success.sellingPrice"
-                    :rules="rules.sellingPrice"
-                    @cancel-success="success.sellingPrice = false"
+                    :error-messages="error.sellingPrice"
+                    @focus="error.sellingPrice = ''"
+                    @blur="validateSellingPrice"
                 ></b-text-field>
             </v-col>
             <v-col cols="6" class="pl-2">
@@ -65,8 +81,9 @@
                     type="number"
                     prepend-inner-icon="mdiCurrencyEur"
                     :success="success.wholesalePrice"
-                    :rules="rules.wholesalePrice"
-                    @cancel-success="success.wholesalePrice = false"
+                    :error-messages="error.wholesalePrice"
+                    @focus="error.wholesalePrice = ''"
+                    @blur="validateWholesalePrice"
                 ></b-text-field>
             </v-col>
             <v-col cols="12">
@@ -82,8 +99,9 @@
                     type="number"
                     prepend-inner-icon="mdiCurrencyEur"
                     :success="success.deliveryCost"
-                    :rules="rules.deliveryCost"
-                    @cancel-success="success.deliveryCost = false"
+                    :error-messages="error.deliveryCost"
+                    @focus="error.deliveryCost = ''"
+                    @blur="validateDeliveryCost"
                 ></b-text-field>
             </v-col>
             <v-col cols="6" class="pl-2">
@@ -93,8 +111,9 @@
                     type="number"
                     prepend-inner-icon="mdiCurrencyEur"
                     :success="success.shippingCost"
-                    :rules="rules.shippingCost"
-                    @cancel-success="success.shippingCost = false"
+                    :error-messages="error.shippingCost"
+                    @focus="error.shippingCost = ''"
+                    @blur="validateShippingCost"
                 ></b-text-field>
             </v-col>
         </v-row>
@@ -106,7 +125,9 @@
             item-value="product_category_id"
             :label="translations.selectCategory[lang]"
             :success="success.category"
-            :rules="rules.category"
+            :error-messages="error.category"
+            @focus="error.category = ''"
+            @blur="validateCategory"
         ></b-select>
 
         <v-checkbox
@@ -303,22 +324,6 @@ export default {
                 const reader = new FileReader();
                 reader.readAsDataURL(this.imageFile);
                 reader.onload = e => (this.product.image = e.target.result);
-            }
-        }
-    },
-
-    watch: {
-        resetSuccess(val) {
-            if (val) {
-                this.success = {
-                    name: false,
-                    description: false,
-                    sellingPrice: false,
-                    wholesalePrice: false,
-                    deliveryCost: false,
-                    shippingCost: false,
-                    category: false
-                };
             }
         }
     },

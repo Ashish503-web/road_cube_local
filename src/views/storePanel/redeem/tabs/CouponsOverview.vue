@@ -14,6 +14,8 @@
             :headers="headers"
             :items="coupons"
             :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
+            :page.sync="page"
+            :server-items-length="serverItemsLength"
             class="b-outlined"
         >
             <template v-slot:no-data>
@@ -46,14 +48,9 @@
 </template>
 
 <script>
-import {
-    mdiFormatListCheckbox,
-    mdiMicrosoftExcel,
-    mdiFileDelimitedOutline,
-    mdiPencilOutline,
-} from "@mdi/js";
+import { mdiPencilOutline } from "@mdi/js";
 
-import { mapState, mapGetters, mapMutations, mapActions } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 import translations from "@/utils/translations/storePanel/couponsOverview";
 import ExportLinks from "@/components/general/ExportLinks.vue";
 
@@ -66,33 +63,14 @@ export default {
 
     data() {
         return {
-            icons: {
-                mdiFormatListCheckbox,
-                mdiPencilOutline,
-            },
-            exportLinks: [
-                {
-                    text: { el: "", en: "Export to Excel", it: "" },
-                    icon: mdiMicrosoftExcel,
-                },
-                {
-                    text: { el: "", en: "Export to CSV", it: "" },
-                    icon: mdiFileDelimitedOutline,
-                },
-            ],
+            icons: { mdiPencilOutline },
+            page: +this.$route.query.page
         };
     },
 
-    mounted() {
-        this.getItems();
-    },
-
     computed: {
-        ...mapState(["loading"]),
-        ...mapGetters("storePanel/redeem/couponsOverview", [
-            "coupons",
-            "pagination",
-        ]),
+        ...mapState(["loading", "serverItemsLength"]),
+        ...mapState("storePanel/redeem/couponsOverview", ["coupons"]),
 
         lang() {
             return this.$route.params.lang;
@@ -102,28 +80,71 @@ export default {
             return [
                 {
                     text: this.translations.promoType[this.lang],
-                    value: "promo_type_name",
+                    value: "promo_type_name"
                 },
                 { text: this.translations.code[this.lang], value: "code" },
                 {
                     text: this.translations.available[this.lang],
-                    value: "available",
+                    value: "available"
                 },
                 { text: this.translations.points[this.lang], value: "points" },
                 {
                     text: this.translations.totalRedeemed[this.lang],
-                    value: "total_redeemed",
+                    value: "total_redeemed"
                 },
                 {
                     text: this.translations.date[this.lang],
-                    value: "created_at",
-                },
+                    value: "created_at"
+                }
             ];
         },
+
+        query() {
+            let query = "?";
+
+            for (let key in this.$route.query) {
+                query += `${key}=${this.$route.query[key]}&`;
+            }
+
+            return query.slice(0, query.length - 1);
+        }
     },
 
     methods: {
-        ...mapActions("storePanel/redeem/couponsOverview", ["getItems"]),
+        ...mapActions("storePanel/redeem/couponsOverview", ["getItems"])
     },
+
+    watch: {
+        $route(val) {
+            if (!val.query.page) {
+                this.$router.push({
+                    query: {
+                        page: 1,
+                        ...this.$route.query
+                    }
+                });
+            }
+            this.getItems(this.query);
+        },
+
+        page(page) {
+            this.$router.push({ query: { ...this.$route.query, page } });
+        }
+    },
+
+    beforeCreate() {
+        if (!this.$route.query.page) {
+            this.$router.push({
+                query: {
+                    page: 1,
+                    ...this.$route.query
+                }
+            });
+        }
+    },
+
+    mounted() {
+        this.getItems(this.query);
+    }
 };
 </script>

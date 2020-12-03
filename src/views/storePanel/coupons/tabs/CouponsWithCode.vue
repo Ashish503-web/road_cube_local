@@ -147,10 +147,10 @@ export default {
             icons: {
                 mdiPencilOutline,
                 mdiClose,
-                mdiFacebook,
+                mdiFacebook
             },
             page: +this.$route.query.page,
-            mode: 0,
+            mode: 0
         };
     },
 
@@ -167,26 +167,26 @@ export default {
                 { text: this.translations.code[this.lang], value: "code" },
                 {
                     text: this.translations.voucher[this.lang],
-                    value: "voucher",
+                    value: "voucher"
                 },
                 { text: this.translations.points[this.lang], value: "points" },
                 {
                     text: this.translations.acquired[this.lang],
-                    value: "total_claimed",
+                    value: "total_claimed"
                 },
                 {
                     text: this.translations.redeemed[this.lang],
-                    value: "total_redeemed",
+                    value: "total_redeemed"
                 },
                 {
                     text: this.translations.available[this.lang],
-                    value: "available",
+                    value: "available"
                 },
                 {
                     text: this.translations.actions[this.lang],
-                    value: "actions",
+                    value: "actions"
                 },
-                { text: this.translations.social[this.lang], value: "social" },
+                { text: this.translations.social[this.lang], value: "social" }
             ];
         },
 
@@ -207,7 +207,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            },
+            }
         },
 
         deleteDialog: {
@@ -217,7 +217,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            },
+            }
         },
 
         couponWithCode: {
@@ -228,8 +228,8 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
@@ -237,15 +237,15 @@ export default {
             "setDialog",
             "setDeleteDialog",
             "setResetSuccess",
-            "setResetValidation",
+            "setResetValidation"
         ]),
         ...mapMutations("storePanel/coupons/couponsWithCode", [
             "setShowImageUpload",
-            "setItem",
+            "setItem"
         ]),
         ...mapActions("storePanel/coupons/couponsWithCode", [
             "getItems",
-            "remove",
+            "remove"
         ]),
 
         open(mode, item) {
@@ -257,7 +257,7 @@ export default {
             setTimeout(() => this.setResetSuccess(true), 300);
             this.setResetValidation(true);
             this.dialog = true;
-        },
+        }
     },
 
     watch: {
@@ -273,8 +273,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query,
-                    },
+                        ...this.$route.query
+                    }
                 });
             }
 
@@ -283,7 +283,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        },
+        }
     },
 
     beforeCreate() {
@@ -291,14 +291,14 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query,
-                },
+                    ...this.$route.query
+                }
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    },
+    }
 };
 </script>

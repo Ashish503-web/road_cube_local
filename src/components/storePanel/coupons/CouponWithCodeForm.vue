@@ -30,6 +30,7 @@
         ></b-text-field>
 
         <b-text-field
+            v-if="mode === 1"
             v-model="couponWithCode.maximum"
             type="number"
             label="Vouchers Ammount"
@@ -88,12 +89,12 @@ export default {
     name: "CouponWithCodeForm",
 
     props: {
-        mode: Number,
+        mode: Number
     },
 
     data() {
         return {
-            imageFile: null,
+            imageFile: null
         };
     },
 
@@ -102,11 +103,11 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation",
+            "resetValidation"
         ]),
         ...mapState("storePanel/coupons/couponsWithCode", [
             "giftCategories",
-            "couponWithCode",
+            "couponWithCode"
         ]),
 
         lang() {
@@ -127,18 +128,18 @@ export default {
 
             set(val) {
                 this.setShowImageUpload(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
         ...mapMutations("storePanel/coupons/couponsWithCode", [
-            "setShowImageUpload",
+            "setShowImageUpload"
         ]),
         ...mapActions("storePanel/coupons/couponsWithCode", [
             "getGiftCategories",
             "create",
-            "update",
+            "update"
         ]),
 
         onFileSelected(event) {
@@ -146,10 +147,10 @@ export default {
                 this.imageFile = event;
                 const reader = new FileReader();
                 reader.readAsDataURL(this.imageFile);
-                reader.onload = (e) =>
+                reader.onload = e =>
                     (this.couponWithCode.image = e.target.result);
             }
-        },
+        }
     },
 
     watch: {
@@ -162,14 +163,14 @@ export default {
                     wholesalePrice: false,
                     deliveryCost: false,
                     shippingCost: false,
-                    category: false,
+                    category: false
                 };
             }
-        },
+        }
     },
 
     mounted() {
         this.getGiftCategories();
-    },
+    }
 };
 </script>

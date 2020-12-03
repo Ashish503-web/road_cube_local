@@ -1,12 +1,11 @@
 <template>
     <b-standard-card
         :title="translations.title[lang]"
-        :submit-text="{ el: '', en: 'verification', it: '' }"
         :loading="loading"
         :error-message="errorMessage"
-        @submit="updateRedemption"
+        @submit="updateRedemption({ type: 'redemption', redemption_type_id })"
     >
-        <v-radio-group v-model="redemption" class="mt-0">
+        <v-radio-group v-model="redemption_type_id" class="mt-0">
             <v-radio
                 :label="translations.directRedemption[lang]"
                 color="secondary"
@@ -23,12 +22,16 @@
 
 <script>
 import { mapActions, mapMutations } from "vuex";
-import translations from "@/utils/translations/storePanel/settings/profile/companyRedemption";
+import translations from "@/utils/translations/storePanel/settings/profile/redemptionSettings";
 
 export default {
-    name: "CompanyRedemption",
+    name: "RedemptionSettings",
 
     mixins: [translations],
+
+    data: () => ({
+        redemption_type_id: null
+    }),
 
     computed: {
         lang() {
@@ -43,22 +46,20 @@ export default {
         errorMessage() {
             return this.$store.state.storePanel.settings.profile.errorMessage
                 .redemption;
-        },
-
-        redemption: {
-            get() {
-                return this.$store.state.storePanel.store.redemption_type_id;
-            },
-
-            set(val) {
-                this.setRedemption(val);
-            }
         }
     },
 
     methods: {
-        ...mapMutations("storePanel", ["setRedemption"]),
         ...mapActions("storePanel/settings/profile", ["updateRedemption"])
+    },
+
+    watch: {
+        ["$store.state.storePanel.store.redemption_type_id"]: {
+            immediate: true,
+            handler(val) {
+                this.redemption_type_id = val;
+            }
+        }
     }
 };
 </script>

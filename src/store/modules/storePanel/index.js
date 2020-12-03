@@ -56,8 +56,12 @@ export default {
             state.store = payload;
         },
 
-        setTotalTransactions(state, payload) {
-            state.store.statistics.total_transactions = payload;
+        setTransactionStatistics(state, payload) {
+            state.store.statistics.total_transactions += 1;
+            state.store.statistics.last_twelve_hours_payments.total_price += payload;
+            state.store.statistics.last_twelve_hours_payments.total_transactions += 1;
+            state.store.statistics.last_week_payments.total_price += payload;
+            state.store.statistics.last_week_payments.total_transactions += 1;
         },
 
         setLogo(state, payload) {
@@ -94,29 +98,33 @@ export default {
             state.store.billing_details.country_id = payload.country_id;
         },
 
-        setQuickPayment(state, payload) {
-            state.store.flags.general.quick_payment = payload;
+        setFastPayment(state, payload) {
+            state.store.flags.app_settings.fast_payment = payload;
         },
 
-        setOrders(state, payload) {
-            state.store.order_settings = payload;
+        setShoppingCart(state, payload) {
+            state.store.shopping_cart = payload;
         },
 
         setRedemption(state, payload) {
             state.store.redemption_type_id = payload;
         },
 
+        setDeliverySettings(state, payload) {
+            state.store.delivery_settings = payload;
+        },
+
         setSendPointsActivator(state, payload) {
-            state.store.flags.reward.send_points_by_card_or_phone = payload;
+            state.store.flags.reward.offline_transaction = payload;
         },
 
         setSendPoints(state, payload) {
             state.store.notify_customers.system_notification_id =
                 payload.system_notification_id;
-            state.store.flags.reward.choose_product_on_send_points =
-                payload.choose_product_on_send_points;
-            state.store.flags.reward.display_receipt_on_send_points =
-                payload.display_receipt_on_send_points;
+            state.store.flags.reward.offline_transaction_products =
+                payload.offline_transaction_products;
+            state.store.flags.reward.offline_transaction_receipt =
+                payload.offline_transaction_receipt;
         },
 
         setPointDeliveryActivator(state, payload) {
@@ -131,11 +139,11 @@ export default {
         },
 
         setMobilePayments(state, payload) {
-            state.store.flags.reward.online_payments = payload;
+            state.store.flags.reward.online_payment_processing = payload;
         },
 
         setScanReceiptActivator(state, payload) {
-            state.store.flags.reward.scan_receipt = payload;
+            state.store.flags.reward.open_receipt = payload;
         },
 
         setScanReceipt(state, payload) {
@@ -150,6 +158,10 @@ export default {
 
         setRewardWithPresence(state, payload) {
             state.store.flags.reward.open_checkin = payload;
+        },
+
+        setOrders(state, payload) {
+            state.store.flags.reward.orders_allowed = payload;
         }
     },
 

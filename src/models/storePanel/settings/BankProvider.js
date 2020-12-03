@@ -4,7 +4,7 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
     "accessToken"
 )}`;
 
-const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
+const ApiEndpoint = `${process.env.VUE_APP_DEFAULT_API_URL}/stores`;
 
 export default class BankProvider {
     constructor(item = {}) {
@@ -21,7 +21,9 @@ export default class BankProvider {
     }
 
     static get = () =>
-        axios.get(`https://api.roadcube.tk/v1/admin/bank-providers`);
+        axios.get(
+            `${process.env.VUE_APP_DEFAULT_API_URL}/admin/bank-providers`
+        );
 
     static getStoreProviders = () =>
         axios.get(

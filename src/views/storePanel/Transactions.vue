@@ -123,6 +123,10 @@
 
                 <template v-slot:item.actions="{ item }">
                     <v-btn
+                        v-if="
+                            item.transaction_type_id === 2 ||
+                                item.transaction_type_id === 11
+                        "
                         color="grey lighten-2"
                         class="text-capitalize my-1 red--text"
                         width="83"
@@ -175,7 +179,10 @@ export default {
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
-        ...mapState("storePanel/transactions", ["transactions"]),
+        ...mapState("storePanel/transactions", [
+            "transactionStatuses",
+            "transactions"
+        ]),
 
         lang() {
             return this.$route.params.lang;

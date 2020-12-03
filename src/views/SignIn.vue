@@ -40,7 +40,7 @@
                             </v-card-title>
                             <v-card-subtitle
                                 class="font-weight-medium white--text pl-0"
-                                style="font-size: 1rem;"
+                                style="font-size: 1rem"
                                 >enter your phone and password</v-card-subtitle
                             >
 
@@ -73,7 +73,8 @@
                                     class="mt-1"
                                     label="Password"
                                     color="secondary"
-                                    solo-inverted
+                                    light
+                                    solo
                                     flat
                                     dense
                                     rounded
@@ -220,11 +221,11 @@ export default {
             showPassword: false,
             success: {
                 mobile: false,
-                password: false
+                password: false,
             },
             rules: {
                 mobile: [
-                    v => {
+                    (v) => {
                         if (v) {
                             this.success.mobile = true;
                             return true;
@@ -232,12 +233,12 @@ export default {
                             return "Mobile Phone is required";
                         }
                     },
-                    v =>
+                    (v) =>
                         (v || "").length === 10 ||
-                        "Mobile Phone must be 10 characters long"
+                        "Mobile Phone must be 10 characters long",
                 ],
                 password: [
-                    v => {
+                    (v) => {
                         if (v) {
                             this.success.password = true;
                             return true;
@@ -245,19 +246,19 @@ export default {
                             return "Password is required";
                         }
                     },
-                    v =>
+                    (v) =>
                         (v || "").length >= 5 ||
-                        "Password must be 6 characters long"
-                ]
+                        "Password must be 6 characters long",
+                ],
             },
-            dialog: false
+            dialog: false,
         };
     },
 
     computed: {
         lang() {
             return this.$route.params.lang;
-        }
+        },
     },
 
     methods: {
@@ -268,11 +269,11 @@ export default {
                 this.loading = true;
 
                 const { data } = await axios.post(
-                    "https://api.roadcube.tk/v1/users/login",
+                    `${process.env.VUE_APP_DEFAULT_API_URL}/users/login`,
                     {
                         app_provider_id: 1,
                         mobile: this.mobile,
-                        password: this.password
+                        password: this.password,
                     }
                 );
 
@@ -291,7 +292,7 @@ export default {
 
         forgotPassword() {
             this.$router.push("/password-recovery");
-        }
+        },
     },
 
     watch: {
@@ -301,8 +302,8 @@ export default {
             } else {
                 this.disabled = true;
             }
-        }
-    }
+        },
+    },
 };
 </script>
 

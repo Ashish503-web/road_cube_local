@@ -4,7 +4,7 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
     "accessToken"
 )}`;
 
-const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
+const ApiEndpoint = `${process.env.VUE_APP_DEFAULT_API_URL}/stores`;
 
 export default class RedeemVoucher {
     constructor(item = {}) {
@@ -13,9 +13,7 @@ export default class RedeemVoucher {
 
     static create = item =>
         axios.post(
-            `${ApiEndpoint}/${localStorage.getItem(
-                "storeId"
-            )}/coupons/redeems`,
+            `${ApiEndpoint}/${localStorage.getItem("storeId")}/coupons/redeems`,
             item
         );
 }

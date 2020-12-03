@@ -6,36 +6,6 @@ export default {
                 en: "New Transaction",
                 it: ""
             },
-            userPoints: {
-                el: "",
-                en: "User points",
-                it: ""
-            },
-            newUserPoints: {
-                el: "",
-                en: "New User points",
-                it: ""
-            },
-            totalAmount: {
-                el: "",
-                en: "Total Amount",
-                it: ""
-            },
-            totalDiscount: {
-                el: "",
-                en: "Total discount",
-                it: ""
-            },
-            wonPoints: {
-                el: "",
-                en: "Won points",
-                it: ""
-            },
-            lostPoints: {
-                el: "",
-                en: "Lost points",
-                it: ""
-            },
             user: {
                 el: "",
                 en: "User (mobile or loyalty card number)",

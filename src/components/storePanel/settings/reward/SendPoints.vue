@@ -33,7 +33,7 @@
                 ></b-select>
 
                 <v-checkbox
-                    v-model="sendPoints.choose_product_on_send_points"
+                    v-model="sendPoints.offline_transaction_products"
                     color="secondary"
                     class="pt-0 mt-3"
                     hide-details
@@ -47,7 +47,7 @@
                 </v-checkbox>
 
                 <v-checkbox
-                    v-model="sendPoints.display_receipt_on_send_points"
+                    v-model="sendPoints.offline_transaction_receipt"
                     color="secondary"
                     class="pt-0 mt-1"
                     hide-details
@@ -107,22 +107,12 @@ export default {
                     system_notification_id:
                         val.notify_customers.system_notification_id,
 
-                    choose_product_on_send_points:
-                        val.flags.reward.choose_product_on_send_points,
+                    offline_transaction_products:
+                        val.flags.reward.offline_transaction_products,
 
-                    display_receipt_on_send_points:
-                        val.flags.reward.display_receipt_on_send_points
+                    offline_transaction_receipt:
+                        val.flags.reward.offline_transaction_receipt
                 };
-            }
-        },
-
-        ["$store.state.storePanel.store.flags.reward.send_points_by_card_or_phone"]: {
-            immediate: true,
-            handler(val) {
-                if (val) {
-                    if (!this.sendPoints.system_notification_id)
-                        this.sendPoints.system_notification_id = 3;
-                }
             }
         }
     },

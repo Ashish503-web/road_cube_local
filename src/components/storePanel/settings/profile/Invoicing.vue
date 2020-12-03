@@ -1,7 +1,6 @@
 <template>
     <b-standard-card
         :title="translations.title[lang]"
-        :submit-text="{ el: '', en: 'send invoice settings', it: '' }"
         :loading="loading"
         :error-message="errorMessage"
         @submit="

@@ -4,15 +4,21 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
     "accessToken"
 )}`;
 
-const ApiEndpoint = "https://api.roadcube.tk/v1";
+const ApiEndpoint = process.env.VUE_APP_DEFAULT_API_URL;
 
 export default class Transaction {
     constructor(item = {}) {
         this.transaction_id = item.transaction_id || null;
-        this.user = item.user || "";
-        this.receipt_number = item.receipt_number || "";
-        this.products = item.products || [];
+        this.user = item.user || 6944534448;
+        this.receipt_number = item.receipt_number || null;
+        this.voucher = item.voucher || null;
         this.amount = item.amount || null;
+        this.is_online_transaction = item.is_online_transaction || false;
+        this.products = item.products || [];
+        this.product_coupon_claims_for_use =
+            item.product_coupon_claims_for_use || [];
+        this.general_coupon_claims_for_use =
+            item.general_coupon_claims_for_use || [];
     }
 
     static getProducts = query =>
@@ -22,14 +28,13 @@ export default class Transaction {
             )}/products${query}`
         );
 
-    static getTransactionPreview = item => {
+    static getTransactionPreview = item =>
         axios.post(
             `${ApiEndpoint}/stores/${localStorage.getItem(
                 "storeId"
             )}/transactions/transaction-preview`,
             item
         );
-    };
 
     static getTransactionStatuses = () =>
         axios.get(`${ApiEndpoint}/common/transaction-statuses`);

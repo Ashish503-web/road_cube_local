@@ -124,7 +124,28 @@
                         <hr />
 
                         <div class="mt-4" style="font-size: 0.875rem">
-                            No customers are following right now
+                            <v-data-table
+                                v-if="users.length"
+                                :headers="headers"
+                                :items="users"
+                                :footer-props="{
+                                    itemsPerPageOptions: [5],
+                                    showCurrentPage: true
+                                }"
+                                :page.sync="page"
+                                :server-items-length="serverItemsLength"
+                                disable-sort
+                                class="b-outlined"
+                            >
+                                <template v-slot:item.totalVisits="{ item }">
+                                    {{ item.goal_counter }} /
+                                    {{ item.goal_sequence }}
+                                </template>
+                            </v-data-table>
+
+                            <span v-else
+                                >No customers are following right now</span
+                            >
                         </div>
                     </v-card>
                 </v-col>
@@ -275,7 +296,7 @@ import {
     mdiStoreOutline,
     mdiCashMultiple,
     mdiClockOutline,
-    mdiArrowRight,
+    mdiArrowRight
 } from "@mdi/js";
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 import translations from "@/utils/translations/storePanel/couponsWithTransactions";
@@ -285,16 +306,20 @@ export default {
 
     mixins: [translations],
 
-    data: () => ({
-        icons: { mdiArrowRight },
-        imageFile: null,
-    }),
+    data() {
+        return {
+            icons: { mdiArrowRight },
+            imageFile: null,
+            page: +this.$route.query.page
+        };
+    },
 
     computed: {
-        ...mapState(["loading", "errorMessage"]),
+        ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/coupons/couponsWithTransactions", [
             "couponWithTransaction",
             "giftCategories",
+            "users"
         ]),
 
         lang() {
@@ -308,27 +333,39 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            },
+            }
         },
 
         settings() {
             return [
                 {
                     icon: mdiStoreOutline,
-                    text: `Customer must come ${this.couponWithTransaction.goal_sequence} times to your store`,
+                    text: `Customer must come ${this.couponWithTransaction.goal_sequence} times to your store`
                 },
                 {
                     icon: mdiCashMultiple,
-                    text: `Customer must spend at least ${this.couponWithTransaction.goal_minimum_amount} 
-                            euros in each visit`,
+                    text: `Customer must spend at least ${this.couponWithTransaction.goal_minimum_amount}
+                            euros in each visit`
                 },
                 {
                     icon: mdiClockOutline,
-                    text: `Each customer visit should not be later than 
-                    ${this.couponWithTransaction.goal_max_days} days from the last visit`,
-                },
+                    text: `Each customer visit should not be later than
+                    ${this.couponWithTransaction.goal_max_days} days from the last visit`
+                }
             ];
         },
+
+        headers() {
+            return [
+                { text: "User", value: "mobile" },
+                {
+                    text: "Total Visits",
+                    value: "totalVisits",
+                    align: "center"
+                },
+                { text: "Goal Status", value: "status", align: "center" }
+            ];
+        }
     },
 
     methods: {
@@ -337,7 +374,7 @@ export default {
             "getItem",
             "getGiftCategories",
             "create",
-            "remove",
+            "remove"
         ]),
 
         onFileSelected(event) {
@@ -345,16 +382,27 @@ export default {
                 this.imageFile = event;
                 const reader = new FileReader();
                 reader.readAsDataURL(this.imageFile);
-                reader.onload = (e) =>
+                reader.onload = e =>
                     (this.couponWithTransaction.image = e.target.result);
             }
-        },
+        }
+    },
+
+    beforeCreate() {
+        if (!this.$route.query.page) {
+            this.$router.push({
+                query: {
+                    page: 1,
+                    ...this.$route.query
+                }
+            });
+        }
     },
 
     mounted() {
         this.getItem();
         this.getGiftCategories();
-    },
+    }
 };
 </script>
 

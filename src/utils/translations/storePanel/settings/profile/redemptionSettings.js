@@ -3,7 +3,7 @@ export default {
         translations: {
             title: {
                 el: "",
-                en: "Choose redemption for the company",
+                en: "Redemption Settings",
                 it: ""
             },
             directRedemption: {

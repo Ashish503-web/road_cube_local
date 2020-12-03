@@ -130,7 +130,7 @@ import {
     mdiCheckCircleOutline,
     mdiClockOutline,
     mdiPlay,
-    mdiClose
+    mdiClose,
 } from "@mdi/js";
 
 export default {
@@ -142,21 +142,21 @@ export default {
                 mdiArrowRight,
                 mdiClockOutline,
                 mdiPlay,
-                mdiClose
+                mdiClose,
             },
-            dialog: false
+            dialog: false,
         };
-    }
+    },
 };
 
 setTimeout(() => {
     let playBtn = document.querySelector("#play");
 
-    playBtn.addEventListener("click", function() {
+    playBtn.addEventListener("click", function () {
         let video = document.querySelector("#video");
         let closeBtn = document.querySelector("#close-video-modal");
 
-        closeBtn.addEventListener("click", function() {
+        closeBtn.addEventListener("click", function () {
             video.setAttribute("src", "");
         });
 

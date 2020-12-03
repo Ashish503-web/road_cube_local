@@ -73,20 +73,22 @@
                         class="mx-auto"
                     ></v-skeleton-loader>
 
-                    <v-btn
-                        v-else
-                        color="secondary"
-                        class="text-capitalize px-5"
-                        depressed
-                        :disabled="!method.active"
-                        v-text="translations.changeSettings[lang]"
-                        @click="
-                            () => {
-                                currentComponent = method.component;
-                                dialog = true;
-                            }
-                        "
-                    ></v-btn>
+                    <template v-else>
+                        <v-btn
+                            v-if="method.component"
+                            color="secondary"
+                            class="text-capitalize px-5"
+                            depressed
+                            :disabled="!method.active || method.loading"
+                            v-text="translations.changeSettings[lang]"
+                            @click="
+                                () => {
+                                    currentComponent = method.component;
+                                    dialog = true;
+                                }
+                            "
+                        ></v-btn>
+                    </template>
                 </v-col>
             </v-row>
         </v-sheet>
@@ -108,6 +110,7 @@ import PointDelivery from "@/components/storePanel/settings/reward/PointDelivery
 import ScanReceipt from "@/components/storePanel/settings/reward/ScanReceipt";
 import RewardWithPresence from "@/components/storePanel/settings/reward/RewardWithPresence";
 import MobilePayments from "@/components/storePanel/settings/reward/MobilePayments";
+
 import rewardMethods from "@/utils/storePanel/rewardMethods";
 import translations from "@/utils/translations/storePanel/settings/reward";
 
@@ -119,13 +122,13 @@ export default {
         PointDelivery,
         MobilePayments,
         ScanReceipt,
-        RewardWithPresence
+        RewardWithPresence,
     },
 
     mixins: [rewardMethods, translations],
 
     data: () => ({
-        currentComponent: ""
+        currentComponent: "",
     }),
 
     computed: {
@@ -140,7 +143,7 @@ export default {
                 this.translations.method[this.lang],
                 this.translations.description[this.lang],
                 this.translations.activation[this.lang],
-                this.translations.settings[this.lang]
+                this.translations.settings[this.lang],
             ];
         },
 
@@ -151,13 +154,13 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
         ...mapMutations(["setDialog"]),
-        ...mapActions("storePanel/settings/reward", ["updateActivator"])
+        ...mapActions("storePanel/settings/reward", ["updateActivator"]),
     },
 
     watch: {
@@ -165,14 +168,22 @@ export default {
             immediate: true,
             handler(val) {
                 this.rewardMethods[0].active =
-                    val.flags.reward.send_points_by_card_or_phone;
+                    val.flags.reward.offline_transaction;
+                if (val.notify_customers.system_notification_id) {
+                    this.rewardMethods[0].system_notification_id =
+                        val.notify_customers.system_notification_id;
+                } else {
+                    this.rewardMethods[0].system_notification_id = 3;
+                }
                 this.rewardMethods[1].active =
                     val.flags.reward.pos_points_delivery;
-                this.rewardMethods[2].active = val.flags.reward.online_payments;
-                this.rewardMethods[3].active = val.flags.reward.scan_receipt;
+                this.rewardMethods[2].active =
+                    val.flags.reward.online_payment_processing;
+                this.rewardMethods[3].active = val.flags.reward.open_receipt;
                 this.rewardMethods[4].active = val.flags.reward.open_checkin;
-            }
-        }
-    }
+                this.rewardMethods[5].active = val.flags.reward.orders_allowed;
+            },
+        },
+    },
 };
 </script>

@@ -27,10 +27,7 @@
                 <v-col v-for="type in actionTypes" :key="type.text" cols="6">
                     <v-radio color="secondary" :value="type.value">
                         <template v-slot:label>
-                            <h4
-                                class="subtitle-1 font-weight-bold"
-                                v-text="type.text"
-                            ></h4>
+                            <h4 class="subtitle-2" v-text="type.text"></h4>
                         </template>
                     </v-radio>
                 </v-col>
@@ -87,7 +84,7 @@ import { mapState, mapMutations, mapActions } from "vuex";
 export default {
     name: "CouponOnProductForm",
     props: {
-        mode: Number,
+        mode: Number
     },
     // mixins: [validators],
     data() {
@@ -95,8 +92,8 @@ export default {
             lang: "el",
             actionTypes: [
                 { text: "Action 1+1", value: "1p1" },
-                { text: "Sampling", value: "sample" },
-            ],
+                { text: "Sampling", value: "sample" }
+            ]
         };
     },
 
@@ -105,11 +102,11 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation",
+            "resetValidation"
         ]),
         ...mapState("storePanel/coupons/couponsOnProducts", [
             "giftCategories",
-            "products",
+            "products"
         ]),
 
         title() {
@@ -119,7 +116,7 @@ export default {
         couponOnProduct() {
             return this.$store.state.storePanel.coupons.couponsOnProducts
                 .couponOnProduct;
-        },
+        }
     },
 
     methods: {
@@ -127,8 +124,8 @@ export default {
             "getGiftCategories",
             "getProducts",
             "create",
-            "update",
-        ]),
+            "update"
+        ])
     },
 
     watch: {
@@ -141,16 +138,16 @@ export default {
                     wholesalePrice: false,
                     deliveryCost: false,
                     shippingCost: false,
-                    category: false,
+                    category: false
                 };
             }
-        },
+        }
     },
 
     mounted() {
         this.getGiftCategories();
         this.getProducts();
-    },
+    }
 };
 </script>
 

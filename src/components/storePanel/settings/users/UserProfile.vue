@@ -103,8 +103,13 @@ export default {
         ...mapActions("storePanel/settings/users", ["getItem"])
     },
 
-    mounted() {
-        this.getItem(this.userId);
+    watch: {
+        userId: {
+            immediate: true,
+            handler(val) {
+                this.getItem(val);
+            }
+        }
     }
 };
 </script>

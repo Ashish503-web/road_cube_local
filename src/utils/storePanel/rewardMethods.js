@@ -2,7 +2,11 @@ export default {
     data: () => ({
         rewardMethods: [
             {
-                name: { el: "", en: "Loyalty Card Phone Number", it: "" },
+                name: {
+                    el: "",
+                    en: "Cash Payments - Offline Transactions",
+                    it: ""
+                },
                 description: {
                     el: "",
                     en:
@@ -10,8 +14,9 @@ export default {
                     it: ""
                 },
                 active: false,
+                system_notification_id: null,
                 component: "SendPoints",
-                updateProp: "send_points_by_card_or_phone",
+                updateProp: "offline_transaction",
                 loading: false,
                 commit: "storePanel/setSendPointsActivator",
                 successText: "send points activator"
@@ -32,16 +37,16 @@ export default {
                 successText: "point delivery activator"
             },
             {
-                name: { el: "", en: "Mobile Payments", it: "" },
+                name: { el: "", en: "Online Payment Processing", it: "" },
                 description: {
                     el: "",
                     en:
-                        "Reward your customers with mobile payments from your mobile app or the RoadCube",
+                        "Reward your customers with online payments from your mobile app or the RoadCube",
                     it: ""
                 },
                 active: false,
                 component: "MobilePayments",
-                updateProp: "online_payments",
+                updateProp: "online_payment_processing",
                 loading: false,
                 commit: "storePanel/setMobilePayments",
                 successText: "mobile payments"
@@ -56,7 +61,7 @@ export default {
                 },
                 active: false,
                 component: "ScanReceipt",
-                updateProp: "scan_receipt",
+                updateProp: "open_receipt",
                 loading: false,
                 commit: "storePanel/setScanReceiptActivator",
                 successText: "scan receipt activator"
@@ -75,6 +80,24 @@ export default {
                 loading: false,
                 commit: "storePanel/setRewardWithPresence",
                 successText: "reward with presence"
+            },
+            {
+                name: {
+                    el: "",
+                    en: "Orders",
+                    it: ""
+                },
+                description: {
+                    el: "",
+                    en:
+                        "Activate or deactivate orders in your mobile application",
+                    it: ""
+                },
+                active: false,
+                updateProp: "orders_allowed",
+                loading: false,
+                commit: "storePanel/setOrders",
+                successText: "orders activator"
             }
         ]
     })

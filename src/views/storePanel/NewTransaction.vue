@@ -1,6 +1,6 @@
 <template>
     <v-container fluid class="b-container">
-        <v-row class="fill-height" align="center">
+        <v-sheet height="800" color="grey lighten-4">
             <v-card tile flat width="600" class="mx-auto my-3 pa-5">
                 <v-card-title class="text-h5 font-weight-bold pa-0">
                     <v-icon
@@ -10,42 +10,13 @@
                     ></v-icon>
                     {{ translations.newTransaction[lang] }}
                     <v-spacer></v-spacer>
-                    <v-sheet
-                        color="rgba(234, 237, 241, 0.57)"
-                        outlined
-                        class="subtitle-2 pa-3"
-                    >
-                        <div>
-                            {{ translations.userPoints[lang] }}:
-                            {{ totalInfo.userPoints }}
-                        </div>
-                        <div>
-                            {{ translations.newUserPoints[lang] }}:
-                            {{ totalInfo.newUserPoints }}
-                        </div>
-                        <div>
-                            {{ translations.totalAmount[lang] }}:
-                            {{ totalInfo.totalAmount }}
-                        </div>
-                        <div>
-                            {{ translations.totalDiscount[lang] }}:
-                            {{ totalInfo.totalDiscount }}
-                        </div>
-                        <div>
-                            {{ translations.wonPoints[lang] }}:
-                            {{ totalInfo.wonPoints }}
-                        </div>
-                        <div>
-                            {{ translations.lostPoints[lang] }}:
-                            {{ totalInfo.lostPoints }}
-                        </div>
-                    </v-sheet>
+
+                    <TransactionPreview />
                 </v-card-title>
 
                 <v-form
-                    v-model="valid"
                     autocomplete="off"
-                    @submit.prevent="create"
+                    @submit.prevent="create(showProducts)"
                 >
                     <v-row no-gutters class="mt-7">
                         <v-col
@@ -61,10 +32,10 @@
                                 outlined
                                 dense
                                 clearable
-                                validate-on-blur
                                 :success="success.user"
-                                :rules="rules.user"
-                                @focus="success.user = false"
+                                :error-messages="error.user"
+                                @focus="error.user = ''"
+                                @blur="validateUser"
                             ></v-text-field>
                         </v-col>
 
@@ -79,14 +50,15 @@
                                 clearable
                                 validate-on-blur
                                 :success="success.receipt"
-                                :rules="rules.receipt"
-                                @focus="success.receipt = false"
+                                :error-messages="error.receipt"
+                                @focus="error.receipt = ''"
+                                @blur="validateReceipt"
                             ></v-text-field>
                         </v-col>
 
                         <v-col cols="12">
                             <v-text-field
-                                v-model="transaction.voucher_code"
+                                v-model="transaction.voucher"
                                 :label="translations.voucherCode[lang]"
                                 color="secondary"
                                 outlined
@@ -94,13 +66,17 @@
                                 clearable
                                 validate-on-blur
                                 :success="success.voucher"
-                                :rules="rules.voucher"
-                                @focus="success.voucher = false"
                             ></v-text-field>
                         </v-col>
                     </v-row>
 
-                    <Products v-if="showProducts" />
+                    <Products
+                        v-if="showProducts"
+                        @update-productsInput-success="
+                            productsInputSuccess = $event
+                        "
+                        @update-products-success="productsSuccess = $event"
+                    />
 
                     <b-text-field
                         v-else
@@ -109,9 +85,20 @@
                         type="number"
                         no-top-margin
                         :success="success.amount"
-                        :rules="rules.amount"
-                        @cancel-success="success.amount = false"
+                        :error-messages="error.amount"
+                        @focus="error.amount = ''"
+                        @blur="validateAmount"
                     ></b-text-field>
+
+                    <b-select
+                        v-if="generalCouponClaims.length"
+                        v-model="transaction.general_coupon_claims_for_use"
+                        :items="generalCouponClaims"
+                        item-text="gift_title"
+                        return-object
+                        label="General Coupon Claims"
+                        multiple
+                    ></b-select>
 
                     <v-alert v-if="errorMessage" type="error" class="mt-4">{{
                         errorMessage
@@ -125,19 +112,20 @@
                         block
                         large
                         :loading="loading"
-                        :disabled="disabled"
+                        :disabled="!valid"
                         >{{ translations.createOrder[lang] }}</v-btn
                     >
                 </v-form>
             </v-card>
-        </v-row>
+        </v-sheet>
     </v-container>
 </template>
 
 <script>
 import { mdiPlusThick } from "@mdi/js";
-import { mapState, mapActions, mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 
+import TransactionPreview from "@/components/storePanel/newTransaction/TransactionPreview.vue";
 import Products from "@/components/storePanel/newTransaction/Products.vue";
 import translations from "@/utils/translations/storePanel/newTransaction";
 import validators from "./newTransactionValidators";
@@ -145,61 +133,47 @@ import validators from "./newTransactionValidators";
 export default {
     name: "NewTransaction",
 
-    components: { Products },
+    components: { TransactionPreview, Products },
 
     mixins: [translations, validators],
 
     data: () => ({
         icons: { mdiPlusThick },
-        valid: false,
-        disabled: true,
-        totalInfo: {}
+        productsInputSuccess: false,
+        productsSuccess: false
     }),
 
     computed: {
-        ...mapState(["loading", "errorMessage", "resetSuccess"]),
+        ...mapState(["loading", "errorMessage"]),
+        ...mapState("storePanel/transactions", ["generalCouponClaims"]),
 
         lang() {
             return this.$route.params.lang;
         },
 
-        totalAmount() {
-            let amount = 0;
-
-            this.selectedProducts.forEach(p => (amount += +p.retail_price));
-
-            return new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "EUR",
-                minimumFractionDigits: 2
-            }).format(amount);
-        },
-
-        totalPoints() {
-            let point = 0;
-
-            this.selectedProducts.forEach(p => (point += +p.reward_points));
-
-            return point;
-        },
-
         showReceipt() {
             return this.$store.state.storePanel.store.flags.reward
-                .display_receipt_on_send_points;
+                .offline_transaction_receipt;
         },
 
         showProducts() {
             return this.$store.state.storePanel.store.flags.reward
-                .choose_product_on_send_points;
+                .offline_transaction_products;
         },
 
-        transaction() {
-            return this.$store.state.storePanel.transactions.transaction;
+        transaction: {
+            get() {
+                return this.$store.state.storePanel.transactions.transaction;
+            },
+
+            set(val) {
+                this.setItem(val);
+            }
         }
     },
 
     methods: {
-        ...mapMutations(["setResetSuccess"]),
+        ...mapMutations("storePanel/transactions", ["setItem"]),
         ...mapActions("storePanel/transactions", [
             "create",
             "getTransactionPreview"
@@ -207,35 +181,24 @@ export default {
     },
 
     watch: {
-        valid(val) {
-            if (val) {
-                if (this.showProducts) {
-                    if (this.success.product) {
-                        this.disabled = false;
-                    }
-                } else {
-                    this.disabled = false;
-                }
-            } else {
-                this.disabled = true;
-            }
+        ["transaction.amount"](val) {
+            this.getTransactionPreview(this.showProducts);
         },
 
-        resetSuccess(val) {
-            if (val) {
-                this.success = {
-                    user: false,
-                    receipt: false,
-                    amount: false
-                };
-                this.setResetSuccess(false);
+        ["transaction.products"]: {
+            deep: true,
+            handler(val) {
+                this.getTransactionPreview(this.showProducts);
             }
         }
     },
 
     mounted() {
         this.$clearFocus();
-        this.getTransactionPreview();
+    },
+
+    beforeDestroy() {
+        this.transaction = {};
     }
 };
 </script>

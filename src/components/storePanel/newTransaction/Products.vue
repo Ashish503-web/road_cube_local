@@ -9,7 +9,12 @@
             <template v-slot:activator="{ on }">
                 <v-text-field
                     v-model="search"
-                    :label="translations.orderProducts[lang]"
+                    :label="
+                        selectedProducts.length
+                            ? selectedProducts.length +
+                              translations.selectedProducts[lang]
+                            : translations.orderProducts[lang]
+                    "
                     color="secondary"
                     outlined
                     dense
@@ -19,14 +24,9 @@
                     :append-icon="menu ? icons.mdiMenuUp : icons.mdiMenuDown"
                     :loading="productsLoading"
                     :success="success"
-                    :error="error"
-                    :error-messages="errorMessage"
-                    @blur="
-                        () => {
-                            if (!transaction.products.length) error = true;
-                        }
-                    "
-                    @focus="error = false"
+                    :error-messages="error"
+                    @focus="error = ''"
+                    @blur="validateProductsInput"
                     @click:append="menu = !menu"
                 ></v-text-field>
             </template>
@@ -52,15 +52,19 @@
                                 "
                             ></v-icon>
                         </v-list-item-icon>
-                        <v-list-item-title
-                            v-text="product.name[lang]"
-                        ></v-list-item-title>
+                        <v-list-item-title>
+                            {{ product.name[lang] }} ({{
+                                new Intl.NumberFormat("en-US", {
+                                    style: "currency",
+                                    currency: "EUR",
+                                    minimumFractionDigits: 2
+                                }).format(product.retail_price)
+                            }})
+                        </v-list-item-title>
                     </v-list-item>
                 </template>
                 <v-list-item v-else>
-                    <v-list-item-title>
-                        No data available
-                    </v-list-item-title>
+                    <v-list-item-title> No data available </v-list-item-title>
                 </v-list-item>
             </v-list>
         </v-menu>
@@ -78,11 +82,11 @@
                 align="center"
                 class="py-5"
             >
-                <v-col cols="5">
+                <v-col cols="4">
                     {{ product.name[lang] }}
                 </v-col>
 
-                <v-col cols="5">
+                <v-col cols="7">
                     <v-sheet color="white" max-height="40">
                         <b-text-field
                             v-if="product.reward_type_id === 4"
@@ -92,18 +96,47 @@
                             no-top-margin
                             prepend-inner-icon="mdiCurrencyEur"
                             :success="product.success"
-                            :rules="product.rules"
+                            :error-messages="product.error"
+                            @focus="product.error = ''"
+                            @blur="validateProduct(product)"
                         ></b-text-field>
 
-                        <b-text-field
-                            v-else
-                            v-model="product.quantity"
-                            :label="translations.quantity[lang]"
-                            type="number"
-                            no-top-margin
-                            :success="product.success"
-                            :rules="product.rules"
-                        ></b-text-field>
+                        <template v-else>
+                            <v-row no-gutters>
+                                <v-col class="pr-1">
+                                    <b-text-field
+                                        v-model="product.quantity"
+                                        :label="translations.quantity[lang]"
+                                        type="number"
+                                        no-top-margin
+                                        :success="product.success"
+                                        :error-messages="product.error"
+                                        @focus="product.error = ''"
+                                        @blur="validateProduct(product)"
+                                    ></b-text-field>
+                                </v-col>
+
+                                <template v-if="product.product_coupons">
+                                    <v-col
+                                        v-if="product.product_coupons.length"
+                                        cols="6"
+                                        class="pl-1"
+                                    >
+                                        <b-select
+                                            v-model="
+                                                transaction.product_coupon_claims_for_use
+                                            "
+                                            :items="product.product_coupons"
+                                            item-text="code"
+                                            return-object
+                                            label="Select Coupon"
+                                            no-top-margin
+                                            no-clear-icon
+                                        ></b-select>
+                                    </v-col>
+                                </template>
+                            </v-row>
+                        </template>
                     </v-sheet>
                 </v-col>
 
@@ -151,24 +184,19 @@ export default {
         menu: false,
         search: "",
         success: false,
-        error: false
+        error: ""
     }),
 
     computed: {
-        ...mapState("storePanel/transactions", ["productsLoading", "products"]),
+        ...mapState(["resetValidation"]),
+        ...mapState("storePanel/transactions", [
+            "productsLoading",
+            "products",
+            "transaction"
+        ]),
 
         lang() {
             return this.$route.params.lang;
-        },
-
-        transaction: {
-            get() {
-                return this.$store.state.storePanel.transactions.transaction;
-            },
-
-            set(val) {
-                this.setItem(val);
-            }
         },
 
         selectedProducts: {
@@ -180,20 +208,12 @@ export default {
             set(val) {
                 this.setSelectedProducts(val);
             }
-        },
-
-        errorMessage() {
-            if (this.error) return "You must choose at least 1 product";
-            else return "";
         }
     },
 
     methods: {
         ...mapMutations(["setResetValidation"]),
-        ...mapMutations("storePanel/transactions", [
-            "setItem",
-            "setSelectedProducts"
-        ]),
+        ...mapMutations("storePanel/transactions", ["setSelectedProducts"]),
         ...mapActions("storePanel/transactions", ["getProducts"]),
 
         productSelect(item) {
@@ -212,24 +232,53 @@ export default {
 
         productRemove(item, index) {
             this.selectedProducts.splice(index, 1);
-            this.products.find(
+            let product = this.products.find(
                 p => p.product_id === item.product_id
-            ).selected = false;
+            );
+            if (product) product.selected = false;
         },
 
         handleSearch() {
             this.getProducts(`?q=${this.search}`);
+        },
+
+        validateProductsInput() {
+            if (!this.selectedProducts.length) {
+                this.error = "You must choose at least 1 product";
+            } else {
+                this.error = "";
+            }
+        },
+
+        validateProduct(product) {
+            if (product.reward_type_id === 4) {
+                if (!product.retail_price) {
+                    product.error = "Purchase price is required";
+                } else if (product.retail_price < 0.1) {
+                    product.error = "Purchase Price must be minimum 0.1";
+                } else {
+                    product.error = "";
+                }
+            } else {
+                if (!product.quantity) {
+                    product.error = "Product quantity is required";
+                } else if (product.quantity < 1) {
+                    product.error = "Product quantity must be minimum 1";
+                } else {
+                    product.error = "";
+                }
+            }
         }
     },
 
     watch: {
         selectedProducts(val) {
+            this.success = !!val.length;
+
             if (val.length) {
-                this.success = true;
-                this.error = false;
+                this.error = "";
             } else {
-                this.success = false;
-                this.error = true;
+                this.error = "You must choose at least 1 product";
             }
 
             val.forEach(selected => {
@@ -253,16 +302,46 @@ export default {
             });
         },
 
+        ["transaction.products"]: {
+            deep: true,
+            handler(val) {
+                if (val.length) {
+                    let success = true;
+                    val.forEach(p => {
+                        if (p.reward_type_id === 4) {
+                            p.success = p.retail_price >= 0.1;
+                        } else {
+                            p.success = p.quantity >= 1;
+                        }
+
+                        if (!p.success) success = false;
+                    });
+
+                    this.$emit("update-products-success", success);
+                }
+            }
+        },
+
         search(val) {
+            this.menu = true;
             if (val) {
-                this.menu = true;
                 this.debouncedSearch();
+            } else {
+                this.getProducts(`?page=1`);
+            }
+        },
+
+        success(val) {
+            if (val) {
+                this.$emit("update-productsInput-success", true);
+            } else {
+                this.$emit("update-productsInput-success", false);
             }
         },
 
         resetValidation(val) {
             if (val) {
-                this.error = false;
+                this.error = "";
                 this.setResetValidation(false);
             }
         }
@@ -278,7 +357,6 @@ export default {
 
     beforeDestroy() {
         this.selectedProducts = [];
-        this.transaction = {};
     }
 };
 </script>

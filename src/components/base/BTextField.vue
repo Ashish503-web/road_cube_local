@@ -1,19 +1,21 @@
 <template>
     <v-text-field
         :value="value"
-        :label="label"
         :type="type"
+        :label="label"
+        :placeholder="placeholder"
         :class="noTopMargin ? 'mt-0' : 'mt-3'"
         :color="color"
         outlined
         dense
         clearable
         hide-details="auto"
+        :loading="loading"
         :validate-on-blur="validateOnBlur"
         :readonly="readonly"
         :disabled="disabled"
-        :placeholder="placeholder"
         :success="success"
+        :error-messages="errorMessages"
         :rules="rules"
         :hint="hint"
         :persistent-hint="persistentHint"
@@ -23,8 +25,9 @@
         :append-outer-icon="icons[`${appendOuterIcon}`]"
         @input="$emit('input', $event)"
         @click="$emit('click')"
+        @focus="$emit('focus')"
+        @blur="$emit('blur')"
         @click:append="$emit('click-append')"
-        @focus="$emit('cancel-success')"
     >
         <template v-slot:append>
             <slot name="append"></slot>
@@ -61,10 +64,12 @@ export default {
         appendIcon: String,
         appendOuterIcon: String,
         noTopMargin: Boolean,
+        loading: Boolean,
         readonly: Boolean,
         disabled: Boolean,
         placeholder: String,
         success: Boolean,
+        errorMessages: String,
         rules: Array,
         hint: String,
         persistentHint: Boolean,

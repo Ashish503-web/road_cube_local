@@ -16,7 +16,7 @@
 
         <v-divider></v-divider>
 
-        <v-form v-model="valid" ref="form" @submit.prevent="$emit('submit')">
+        <v-form ref="form" @submit.prevent="$emit('submit')">
             <v-card-text class="pt-4">
                 <slot></slot>
             </v-card-text>
@@ -74,15 +74,15 @@ export default {
         hideDefaultFooter: Boolean,
         loading: Boolean,
         errorMessage: String,
-        resetValidation: Boolean
+        resetValidation: Boolean,
+        disabled: {
+            type: Boolean,
+            default: false
+        }
     },
 
     data: () => ({
-        icons: {
-            mdiClose
-        },
-        valid: false,
-        disabled: true
+        icons: { mdiClose }
     }),
 
     computed: {
@@ -91,23 +91,8 @@ export default {
         }
     },
 
-    watch: {
-        valid(val) {
-            if (val) {
-                this.disabled = false;
-            } else {
-                this.disabled = true;
-            }
-        },
-
-        resetValidation(val) {
-            if (val) this.$refs.form.resetValidation();
-        }
-    },
-
     mounted() {
         this.$clearFocus();
-        this.$refs.form.resetValidation();
     }
 };
 </script>

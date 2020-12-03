@@ -64,6 +64,8 @@ export default {
 
                 const { coupons, pagination } = data.data;
 
+                console.log(coupons);
+
                 commit("setItems", coupons);
                 commit("setServerItemsLength", pagination.total, {
                     root: true

@@ -21,9 +21,9 @@ export default {
                 en: "Amount",
                 it: ""
             },
-            info: {
+            paymentInfo: {
                 el: "",
-                en: "Info",
+                en: "Payment Info",
                 it: ""
             },
             paymentType: {
@@ -53,7 +53,7 @@ export default {
             },
             title: {
                 el: "",
-                en: "Offline Payment Info",
+                en: "Payment Info",
                 it: ""
             },
             bank: {

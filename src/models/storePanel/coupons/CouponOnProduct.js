@@ -4,7 +4,7 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
     "accessToken"
 )}`;
 
-const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
+const ApiEndpoint = `${process.env.VUE_APP_DEFAULT_API_URL}/stores`;
 
 export default class CouponOnProduct {
     constructor(item = {}) {
@@ -18,7 +18,9 @@ export default class CouponOnProduct {
 
     static getGiftCategories = () =>
         axios.get(
-            `https://api.roadcube.tk/v1/common/companies/${localStorage.getItem(
+            `${
+                process.env.VUE_APP_DEFAULT_API_URL
+            }/common/companies/${localStorage.getItem(
                 "companyId"
             )}/gift-categories`
         );

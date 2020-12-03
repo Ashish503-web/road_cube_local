@@ -26,7 +26,7 @@
                 <v-col
                     v-if="showAlert"
                     class="subtitle-2 pa-3"
-                    v-text="translations.info[lang]"
+                    v-text="translations.paymentInfo[lang]"
                 ></v-col>
                 <template v-else>
                     <v-col

@@ -4,7 +4,7 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
     "accessToken"
 )}`;
 
-const ApiEndpoint = `https://api.roadcube.tk/v1/companies`;
+const ApiEndpoint = `${process.env.VUE_APP_DEFAULT_API_URL}/companies`;
 
 export default class Company {
     constructor(item = {}) {

@@ -4,7 +4,7 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
     "accessToken"
 )}`;
 
-const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
+const ApiEndpoint = `${process.env.VUE_APP_DEFAULT_API_URL}/stores`;
 
 export default {
     namespaced: true,
@@ -36,12 +36,24 @@ export default {
             try {
                 item.loading = true;
 
-                await axios.put(
-                    `${ApiEndpoint}/${localStorage.getItem(
-                        "storeId"
-                    )}/flags/reward`,
-                    { [item.updateProp]: item.active }
-                );
+                if (item.system_notification_id) {
+                    await axios.put(
+                        `${ApiEndpoint}/${localStorage.getItem(
+                            "storeId"
+                        )}/flags/reward`,
+                        {
+                            [item.updateProp]: item.active,
+                            system_notification_id: item.system_notification_id
+                        }
+                    );
+                } else {
+                    await axios.put(
+                        `${ApiEndpoint}/${localStorage.getItem(
+                            "storeId"
+                        )}/flags/reward`,
+                        { [item.updateProp]: item.active }
+                    );
+                }
 
                 commit(item.commit, item.active, {
                     root: true

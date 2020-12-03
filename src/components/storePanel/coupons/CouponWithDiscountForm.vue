@@ -113,7 +113,7 @@ export default {
                 { text: "Percentage", value: 1 },
                 { text: "Euro", value: 2 }
             ],
-            retailPrice: null
+            retailPrice: 0
         };
     },
 
@@ -160,8 +160,13 @@ export default {
 
     watch: {
         ["couponWithDiscount.product_discount_id"](val) {
-            this.retailPrice = +this.products.find(p => p.product_id === val)
-                .retail_price;
+            if (val) {
+                this.retailPrice = +this.products.find(
+                    p => p.product_id === val
+                ).retail_price;
+            } else {
+                this.retailPrice = 0;
+            }
         },
 
         type(val) {

@@ -1,7 +1,6 @@
 <template>
     <b-standard-card
         :title="translations.title[lang]"
-        :submit-text="{ el: '', en: 'verification', it: '' }"
         :loading="loading"
         :error-message="errorMessage"
         @submit="

@@ -46,24 +46,14 @@ export default {
                 en: "Transaction Items",
                 it: ""
             },
-            product: {
+            productName: {
                 el: "",
-                en: "Product",
+                en: "Product Name",
                 it: ""
             },
             quantity: {
                 el: "",
                 en: "Quantity",
-                it: ""
-            },
-            price: {
-                el: "",
-                en: "Price",
-                it: ""
-            },
-            points: {
-                el: "",
-                en: "Points",
                 it: ""
             }
         }

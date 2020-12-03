@@ -10,10 +10,11 @@ export default {
             businessInformation: false,
             invoicing: false,
             operationHours: false,
-            quickPayment: false,
-            orders: false,
+            fastPayment: false,
+            shoppingCart: false,
             changePassword: false,
-            redemption: false
+            redemption: false,
+            deliverySettings: false
         },
         errorMessage: {
             logo: "",
@@ -21,10 +22,11 @@ export default {
             businessInformation: "",
             invoicing: "",
             operationHours: "",
-            quickPayment: "",
-            orders: "",
+            fastPayment: "",
+            shoppingCart: "",
             changePassword: "",
-            redemption: ""
+            redemption: "",
+            deliverySettings: ""
         },
         resetSuccess: {
             logo: false,
@@ -249,16 +251,16 @@ export default {
             }
         },
 
-        async updateQuickPayment({ commit, rootState }) {
+        async updateFastPayment({ commit }, { type, fast_payment }) {
             try {
-                commit("setLoading", { value: true, type: "quickPayment" });
+                commit("setLoading", { value: true, type });
 
-                await Profile.updateQuickPayment({
-                    quick_payment:
-                        rootState.storePanel.store.flags.general.quick_payment
+                await Profile.updateFastPayment({ fast_payment });
+
+                commit("storePanel/setFastPayment", fast_payment, {
+                    root: true
                 });
-
-                commit("setLoading", { value: false, type: "quickPayment" });
+                commit("setLoading", { value: false, type });
                 commit(
                     "setNotification",
                     {
@@ -270,36 +272,34 @@ export default {
                     { root: true }
                 );
             } catch (ex) {
-                commit("setLoading", { value: false, type: "quickPayment" });
+                commit("setLoading", { value: false, type });
                 commit("setErrorMessage", {
                     value: ex.response.data.message,
-                    type: "quickPayment"
+                    type
                 });
                 setTimeout(
-                    () =>
-                        commit("setErrorMessage", {
-                            value: "",
-                            type: "quickPayment"
-                        }),
+                    () => commit("setErrorMessage", { value: "", type }),
                     5000
                 );
             }
         },
 
-        async updateOrders({ commit }, { type, item }) {
+        async updateShoppingCart({ commit }, { type, shopping_cart }) {
             try {
                 commit("setLoading", { value: true, type });
 
-                await Profile.updateOrders(item);
+                await Profile.updateShoppingCart({ shopping_cart });
 
-                commit("storePanel/setOrders", item, { root: true });
+                commit("storePanel/setShoppingCart", shopping_cart, {
+                    root: true
+                });
                 commit("setLoading", { value: false, type });
                 commit(
                     "setNotification",
                     {
                         show: true,
                         type: "success",
-                        text: "You have successfully updated orders!"
+                        text: "You have successfully updated shopping cart!"
                     },
 
                     { root: true }
@@ -347,48 +347,67 @@ export default {
             }
         },
 
-        async updateRedemption({ commit, rootState }) {
+        async updateRedemption({ commit }, { type, redemption_type_id }) {
             try {
-                commit("setLoading", {
-                    value: true,
-                    type: "redemption"
-                });
+                commit("setLoading", { value: true, type });
 
-                await Profile.updateRedemption({
-                    redemption_type_id:
-                        rootState.storePanel.store.redemption_type_id
-                });
+                await Profile.updateRedemption({ redemption_type_id });
 
-                commit("setLoading", {
-                    value: false,
-                    type: "redemption"
+                commit("storePanel/setRedemption", redemption_type_id, {
+                    root: true
                 });
+                commit("setLoading", { value: false, type });
                 commit(
                     "setNotification",
                     {
                         show: true,
                         type: "success",
                         text:
-                            "You have successfully updated receipt information!"
+                            "You have successfully updated redemption settings!"
                     },
 
                     { root: true }
                 );
             } catch (ex) {
-                commit("setLoading", {
-                    value: false,
-                    type: "redemption"
-                });
+                commit("setLoading", { value: false, type });
                 commit("setErrorMessage", {
                     value: ex.response.data.message,
-                    type: "redemption"
+                    type
                 });
                 setTimeout(
-                    () =>
-                        commit("setErrorMessage", {
-                            value: "",
-                            type: "redemption"
-                        }),
+                    () => commit("setErrorMessage", { value: "", type }),
+                    5000
+                );
+            }
+        },
+
+        async updateDeliverySettings({ commit }, { type, item }) {
+            try {
+                commit("setLoading", { value: true, type });
+
+                await Profile.updateDeliverySettings(item);
+
+                commit("storePanel/setDeliverySettings", item, {
+                    root: true
+                });
+                commit("setLoading", { value: false, type });
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated delivery settings!"
+                    },
+                    { root: true }
+                );
+            } catch (ex) {
+                commit("setLoading", { value: false, type });
+                commit("setErrorMessage", {
+                    value: ex.response.data.message,
+                    type
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", { value: "", type }),
                     5000
                 );
             }

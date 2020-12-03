@@ -143,7 +143,7 @@ export default {
             );
         },
 
-        scrollFunction() {
+        handleScroll() {
             if (document.getElementById("header") !== null) {
                 if (this.hasScroll()) {
                     this.scrolled = true;
@@ -154,14 +154,8 @@ export default {
         }
     },
 
-    watch: {
-        $route(val) {
-            console.log(val);
-        }
-    },
-
     mounted() {
-        window.onscroll = this.scrollFunction;
+        window.onscroll = this.handleScroll;
     }
 };
 </script>

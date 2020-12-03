@@ -3,7 +3,7 @@
         :title="translations.title[lang]"
         :loading="loading"
         :error-message="errorMessage"
-        @submit="updateFastPayment({ type: 'fastPayment', fast_payment })"
+        @submit="updateShoppingCart({ type: 'shoppingCart', shopping_cart })"
     >
         {{ translations.info[lang] }}
 
@@ -13,9 +13,9 @@
             </v-col>
             <v-col cols="auto" class="ml-3">
                 <v-switch
-                    v-model="fast_payment"
+                    v-model="shopping_cart"
                     :label="
-                        fast_payment
+                        shopping_cart
                             ? translations.on[lang]
                             : translations.off[lang]
                     "
@@ -31,15 +31,15 @@
 
 <script>
 import { mapActions } from "vuex";
-import translations from "@/utils/translations/storePanel/settings/profile/fastPayment";
+import translations from "@/utils/translations/storePanel/settings/profile/shoppingCart";
 
 export default {
-    name: "FastPayment",
+    name: "ShoppingCart",
 
     mixins: [translations],
 
     data: () => ({
-        fast_payment: null,
+        shopping_cart: null,
     }),
 
     computed: {
@@ -49,32 +49,29 @@ export default {
 
         loading() {
             return this.$store.state.storePanel.settings.profile.loading
-                .fastPayment;
+                .shoppingCart;
         },
 
         errorMessage() {
             return this.$store.state.storePanel.settings.profile.errorMessage
-                .fastPayment;
+                .shoppingCart;
         },
 
         disabled() {
-            return !(
-                this.$store.state.storePanel.store.flags.reward
-                    .online_payment_processing &&
-                this.$store.state.storePanel.store.flags.reward.orders_allowed
-            );
+            return !this.$store.state.storePanel.store.flags.reward
+                .orders_allowed;
         },
     },
 
     methods: {
-        ...mapActions("storePanel/settings/profile", ["updateFastPayment"]),
+        ...mapActions("storePanel/settings/profile", ["updateShoppingCart"]),
     },
 
     watch: {
-        ["$store.state.storePanel.store.flags.app_settings.fast_payment"]: {
+        ["$store.state.storePanel.store.shopping_cart"]: {
             immediate: true,
             handler(val) {
-                this.fast_payment = val;
+                this.shopping_cart = val;
             },
         },
     },

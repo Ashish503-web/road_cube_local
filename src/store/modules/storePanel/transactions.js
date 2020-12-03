@@ -7,13 +7,16 @@ export default {
     state: () => ({
         mobileLoading: false,
         productsLoading: false,
+        previewLoading: false,
         products: [],
         selectedProducts: [],
         transactionStatuses: [],
         transactionTypes: [],
         transactionProfile: {},
         transactions: [],
-        transaction: new Transaction()
+        transaction: new Transaction(),
+        transactionPreview: {},
+        generalCouponClaims: []
     }),
 
     mutations: {
@@ -25,9 +28,21 @@ export default {
             state.productsLoading = payload;
         },
 
+        setPreviewLoading(state, payload) {
+            state.previewLoading = payload;
+        },
+
         setProducts(state, payload) {
             state.products = payload.map(p => {
-                p.selected = false;
+                if (state.selectedProducts.length) {
+                    let selectedProduct = state.selectedProducts.find(
+                        s => s.product_id === p.product_id
+                    );
+                    if (selectedProduct) p.selected = true;
+                } else {
+                    p.selected = false;
+                }
+
                 return p;
             });
         },
@@ -53,25 +68,45 @@ export default {
         setItems(state, payload) {
             state.transactions = payload.map(t => {
                 t.loading = false;
-                t.created_at = moment(t.created_at).format("YYYY.MM.DD");
+                t.created_at = moment(t.created_at).format("DD/MM/YYYY HH:mm");
                 return t;
             });
         },
 
         setTransactionProfile(state, payload) {
+            payload.created_at = moment(payload.created_at).format(
+                "DD/MM/YYYY HH:mm"
+            );
             payload.transaction_items.forEach(
                 t =>
-                    (t.price = new Intl.NumberFormat("en-US", {
+                    (t.total_row_price = new Intl.NumberFormat("en-US", {
                         style: "currency",
                         currency: "EUR",
                         minimumFractionDigits: 2
-                    }).format(t.price))
+                    }).format(t.total_row_price))
             );
             state.transactionProfile = payload;
         },
 
         setItem(state, payload) {
             state.transaction = new Transaction(payload);
+        },
+
+        setTransactionPreview(state, payload) {
+            state.transactionPreview = payload;
+        },
+
+        setTransactionProductCouponClaims(state, payload) {
+            payload.forEach(payloadProduct => {
+                let product = state.transaction.products.find(
+                    p => p.product_id === payloadProduct.product_id
+                );
+                product.product_coupons = payloadProduct.product_coupons;
+            });
+        },
+
+        setGeneralCouponClaims(state, payload) {
+            state.generalCouponClaims = payload;
         },
 
         removeItem(state, id) {
@@ -96,33 +131,40 @@ export default {
             }
         },
 
-        async getTransactionPreview({ commit }) {
+        async getTransactionPreview({ commit, state }, showProducts) {
             try {
-                // commit("setProductsLoading", true);
-                let item = {
-                    user: "1012938493",
-                    voucher: "934242",
-                    products: [
-                        {
-                            product_id: 1,
-                            retail_price: "1",
-                            quantity: 1
-                        }
-                    ],
-                    general_coupon_claims_for_use: [
-                        {
-                            coupon_claim_id: 4024,
-                            gift_title: "Coffee",
-                            gift_description: "A special robust coffee for you"
-                        }
-                    ]
-                };
-                const data = await Transaction.getTransactionPreview(item);
+                commit("setPreviewLoading", true);
 
-                // commit("setProducts", data.data.products);
-                // commit("setProductsLoading", false);
+                let transaction = { ...state.transaction };
+                for (let key in transaction) {
+                    if (!transaction[key]) delete transaction[key];
+                }
+                if (!showProducts) delete transaction.products;
+
+                const { data } = await Transaction.getTransactionPreview(
+                    transaction
+                );
+
+                if (showProducts) {
+                    commit(
+                        "setTransactionProductCouponClaims",
+                        data.data.products
+                    );
+                }
+
+                if (data.data.general_coupon_claims) {
+                    if (data.data.general_coupon_claims.length) {
+                        commit(
+                            "setGeneralCouponClaims",
+                            data.data.general_coupon_claims
+                        );
+                    }
+                }
+
+                commit("setTransactionPreview", data.data);
+                commit("setPreviewLoading", false);
             } catch (ex) {
-                // commit("setProductsLoading", false);
+                commit("setPreviewLoading", false);
                 console.error(ex.response.data.message);
             }
         },
@@ -180,19 +222,35 @@ export default {
             }
         },
 
-        async create({ commit, state, rootState }) {
+        async create({ commit, state }, showProducts) {
             try {
                 commit("setLoading", true, { root: true });
 
                 let transaction = { ...state.transaction };
-                console.log(transaction);
+                for (let key in transaction) {
+                    if (!transaction[key]) delete transaction[key];
+                }
+
+                delete transaction.general_coupon_claims_for_use;
+
+                if (!showProducts) {
+                    delete transaction.products;
+                }
 
                 await Transaction.create(transaction);
 
                 commit("setItem", {});
+                commit(
+                    "storePanel/setTransactionStatistics",
+                    state.transactionPreview.total_amount -
+                        state.transactionPreview.total_discount,
+                    {
+                        root: true
+                    }
+                );
+                commit("setTransactionPreview", {});
                 commit("setSelectedProducts", []);
                 commit("setResetValidation", true, { root: true });
-                commit("setResetSuccess", true, { root: true });
                 commit("setProducts", state.products);
                 commit("setLoading", false, { root: true });
                 commit(
@@ -203,12 +261,6 @@ export default {
                         text: "You have successfully created transaction!"
                     },
 
-                    { root: true }
-                );
-                commit(
-                    "storePanel/setTotalTransactions",
-                    rootState.storePanel.store.statistics.total_transactions +
-                        1,
                     { root: true }
                 );
             } catch (ex) {

@@ -165,15 +165,21 @@ export default {
         headers() {
             return [
                 {
-                    text: this.translations.product[this.lang],
+                    text: this.translations.productName[this.lang],
                     value: `product_name[${this.lang}]`
+                },
+                {
+                    text: this.translations.totalPrice[this.lang],
+                    value: "total_row_price"
+                },
+                {
+                    text: this.translations.totalPoints[this.lang],
+                    value: "total_row_points"
                 },
                 {
                     text: this.translations.quantity[this.lang],
                     value: "quantity"
-                },
-                { text: this.translations.price[this.lang], value: "price" },
-                { text: this.translations.points[this.lang], value: "points" }
+                }
             ];
         },
 

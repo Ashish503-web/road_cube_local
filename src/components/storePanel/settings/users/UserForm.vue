@@ -18,6 +18,7 @@
                         v-model="user.mobile"
                         v-mask="'##########'"
                         label="Mobile"
+                        no-top-margin
                         :success="success.mobile"
                         :rules="rules.mobile"
                         @cancel-success="success.mobile = false"
@@ -28,6 +29,7 @@
                         v-model="user.password"
                         :type="showPassword ? 'text' : 'password'"
                         label="Password"
+                        no-top-margin
                         append-icon="mdiEye"
                         :success="success.password"
                         :rules="rules.password"
@@ -36,9 +38,30 @@
                     ></b-text-field>
                 </v-col>
             </template>
-            <v-col cols="12" class="subtitle-1 text--primary py-0 mt-2"
-                >Permissions</v-col
+            <v-col
+                cols="12"
+                class="subtitle-1 text--primary py-0 mt-0"
+                :class="{ 'mt-2': mode === 1, 'mb-2': mode === 2 }"
             >
+                <v-row no-gutters align="center">
+                    <v-col>
+                        Permissions
+                    </v-col>
+
+                    <v-col cols="auto" class="pr-1">
+                        <v-checkbox
+                            v-model="allPermissions"
+                            color="secondary"
+                            class="pt-0 mt-0"
+                            hide-details
+                        >
+                            <template v-slot:label>
+                                <h4 class="subtitle-2">Update All</h4>
+                            </template>
+                        </v-checkbox>
+                    </v-col>
+                </v-row>
+            </v-col>
 
             <v-col
                 v-for="(value, name) in user.permissions"
@@ -190,7 +213,8 @@ export default {
                 mdiCheckBoxOutline
             },
             lang: "el",
-            showPassword: false
+            showPassword: false,
+            allPermissions: false
         };
     },
 
@@ -217,6 +241,55 @@ export default {
     },
 
     watch: {
+        user(val) {
+            this.allPermissions = false;
+        },
+
+        allPermissions(val) {
+            let permissions = this.user.permissions;
+            if (val) {
+                for (let key in permissions) {
+                    if (typeof permissions[key] === "object") {
+                        let subPermissions = permissions[key];
+
+                        for (let key in subPermissions) {
+                            if (typeof subPermissions[key] === "object") {
+                                for (let subKey in subPermissions[key]) {
+                                    subPermissions[key][subKey] = true;
+                                }
+                            } else {
+                                subPermissions[key] = true;
+                            }
+                        }
+                    } else {
+                        permissions[key] = true;
+                    }
+                }
+
+                this.user.permissions_enabled = true;
+            } else {
+                for (let key in permissions) {
+                    if (typeof permissions[key] === "object") {
+                        let subPermissions = permissions[key];
+
+                        for (let key in subPermissions) {
+                            if (typeof subPermissions[key] === "object") {
+                                for (let subKey in subPermissions[key]) {
+                                    subPermissions[key][subKey] = false;
+                                }
+                            } else {
+                                subPermissions[key] = false;
+                            }
+                        }
+                    } else {
+                        permissions[key] = false;
+                    }
+                }
+
+                this.user.permissions_enabled = false;
+            }
+        },
+
         resetSuccess(val) {
             if (val) {
                 this.success = {
@@ -225,10 +298,6 @@ export default {
                 };
             }
         }
-    },
-
-    mounted() {
-        console.log(this.user.permissions);
     }
 };
 </script>

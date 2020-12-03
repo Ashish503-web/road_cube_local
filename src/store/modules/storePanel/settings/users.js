@@ -1,4 +1,5 @@
 import User from "@/models/storePanel/settings/User";
+import Permissions from "@/models/storePanel/settings/Permissions";
 import moment from "moment";
 
 export default {
@@ -13,24 +14,16 @@ export default {
 
     mutations: {
         setModeratorPermissions(state, payload) {
-            payload.homepage = false;
-            for (let key in payload) {
-                if (typeof payload[key] === "object") {
-                    payload[key].open = false;
-                    let obj = payload[key];
-
-                    for (let subKey in obj) {
-                        if (subKey !== "open") obj[subKey].open = false;
-                    }
-                }
-            }
             state.moderatorPermissions = payload;
         },
 
         setItems(state, payload) {
             state.users = payload.map(u => {
-                if (!u.permissions.length) u.permissions_enabled = false;
-                u.created_at = moment(u.created_at).format("YYYY.MM.DD");
+                u.created_at = moment(u.created_at).format("DD/MM/YYYY HH:mm");
+                u.permissions_enabled = User.checkPermissionsStatus(
+                    u.permissions
+                );
+
                 return u;
             });
         },
@@ -49,14 +42,19 @@ export default {
             payload.created_at = moment(payload.created_at).format(
                 "YYYY.MM.DD"
             );
+            payload.permissions_enabled = User.checkPermissionsStatus(
+                payload.permissions
+            );
+
             state.users.unshift(payload);
         },
 
         updateItem(state, payload) {
-            let index = state.users.findIndex(
-                u => u.user_id === payload.user_id
+            let user = state.users.find(u => u.user_id === payload.id);
+            user.permissions = payload.permissions;
+            user.permissions_enabled = User.checkPermissionsStatus(
+                payload.permissions
             );
-            state.users.splice(index, 1, payload);
         },
 
         removeItem(state, id) {
@@ -82,7 +80,6 @@ export default {
                 const { data } = await User.get();
 
                 const { users, pagination } = data.data;
-                console.log(users);
 
                 commit("setItems", users);
                 commit("setServerItemsLength", pagination.total, {
@@ -117,21 +114,12 @@ export default {
                 commit("setLoading", true, { root: true });
 
                 let user = { ...state.user };
-                for (let key in user.permissions) {
-                    let obj = user.permissions[key];
-                    delete obj.open;
-
-                    for (let prop in obj) {
-                        let subObj = obj[prop];
-
-                        delete subObj.open;
-                    }
-                }
+                delete user.user_id;
+                user.permissions = new Permissions(user.permissions);
                 user.permissions = [user.permissions];
 
                 const { data } = await User.create(user);
-
-                console.log(data);
+                data.data.permissions = user.permissions[0];
 
                 commit("addItem", data.data);
                 commit(
@@ -168,14 +156,17 @@ export default {
                 commit("setLoading", true, { root: true });
 
                 let user = { ...state.user };
+                let id = user.user_id;
+                delete user.user_id;
+                delete user.mobile;
+                delete user.password;
+
+                user.permissions = new Permissions(user.permissions);
                 user.permissions = [user.permissions];
 
-                const { data } = await User.update(
-                    user.user_id,
-                    user.permissions
-                );
+                await User.update(id, user);
 
-                commit("updateItem", data.data.product, { root: true });
+                commit("updateItem", { id, permissions: user.permissions[0] });
                 commit("setLoading", false, { root: true });
                 commit("setDialog", false, { root: true });
                 commit(
@@ -183,7 +174,7 @@ export default {
                     {
                         show: true,
                         type: "success",
-                        text: "You have successfully updated product!"
+                        text: "You have successfully updated user permissions!"
                     },
 
                     { root: true }

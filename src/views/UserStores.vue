@@ -38,6 +38,7 @@
                     return-object
                     menu-props="offsetY"
                     color="blue"
+                    item-color="blue"
                     label="Please select a store or company"
                     no-top-margin
                     light
@@ -86,15 +87,15 @@ export default {
             store: null,
             success: false,
             rules: [
-                v => {
+                (v) => {
                     if (v) {
                         this.success = true;
                         return true;
                     } else {
                         return "Store is required";
                     }
-                }
-            ]
+                },
+            ],
         };
     },
 
@@ -103,7 +104,7 @@ export default {
 
         lang() {
             return this.$route.params.lang;
-        }
+        },
     },
 
     methods: {
@@ -113,7 +114,7 @@ export default {
             try {
                 axios.defaults.headers.Authorization = `Bearer ${this.accessToken}`;
                 const { data } = await axios.get(
-                    "https://api.roadcube.tk/v1/users/stores"
+                    `${process.env.VUE_APP_DEFAULT_API_URL}/users/stores`
                 );
 
                 this.setUserStores(data.data.stores);
@@ -138,7 +139,7 @@ export default {
                 this.errorMessage = ex.response.data.message;
                 setTimeout(() => (this.errorMessage = ""), 5000);
             }
-        }
+        },
     },
 
     mounted() {
@@ -152,8 +153,8 @@ export default {
             } else {
                 this.disabled = true;
             }
-        }
-    }
+        },
+    },
 };
 </script>
 

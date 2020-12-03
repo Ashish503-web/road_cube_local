@@ -7,6 +7,8 @@ import axios from "axios";
 import modules from "./modules";
 
 export default new Vuex.Store({
+    modules,
+
     state: {
         accessToken: "",
         storeId: "",
@@ -87,19 +89,13 @@ export default new Vuex.Store({
                 axios.defaults.headers.Authorization = `Bearer ${state.accessToken}`;
 
                 const { data } = await axios.get(
-                    "https://api.roadcube.tk/v1/users/me"
+                    `${process.env.VUE_APP_DEFAULT_API_URL}/users/me`
                 );
-
-                console.log(data);
 
                 commit("setUser", data.data);
             } catch (ex) {
                 console.error(ex.response.data);
             }
         }
-    },
-
-    getters: {},
-
-    modules
+    }
 });

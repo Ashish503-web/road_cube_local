@@ -1,4 +1,5 @@
 import CouponWithDiscount from "@/models/storePanel/coupons/CouponWithDiscount";
+import moment from "moment";
 
 export default {
     namespaced: true,
@@ -20,7 +21,10 @@ export default {
         },
 
         setItems(state, payload) {
-            state.couponsWithDiscount = payload;
+            state.couponsWithDiscount = payload.map(c => {
+                c.created_at = moment(c.created_at).format("DD/MM/YYYY HH:mm");
+                return c;
+            });
         },
 
         setItem(state, payload) {
@@ -90,12 +94,15 @@ export default {
                 commit("setLoading", true, { root: true });
 
                 let couponWithDiscount = { ...state.couponWithDiscount };
+                CouponWithDiscount.clearFalsyValues(couponWithDiscount);
 
                 const { data } = await CouponWithDiscount.create(
                     couponWithDiscount
                 );
 
                 const { coupon } = data.data;
+
+                console.log(coupon);
 
                 coupon.discount_product_name = coupon.product.name;
                 coupon.total_discount = coupon.discount;
@@ -151,7 +158,8 @@ export default {
                     {
                         show: true,
                         type: "success",
-                        text: "You have successfully deleted product!"
+                        text:
+                            "You have successfully deleted product's discount!"
                     },
 
                     { root: true }

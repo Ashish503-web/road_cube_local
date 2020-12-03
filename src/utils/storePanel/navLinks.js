@@ -14,7 +14,7 @@ export default {
     computed: {
         hideNewTransaction() {
             return !this.$store.state.storePanel.store.flags.reward
-                .send_points_by_card_or_phone;
+                .offline_transaction;
         },
 
         navLinks() {

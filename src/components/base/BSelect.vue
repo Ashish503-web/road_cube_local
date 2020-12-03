@@ -17,6 +17,7 @@
         hide-details="auto"
         :loading="loading"
         :success="success"
+        :error-messages="errorMessages"
         :rules="rules"
         :rounded="rounded"
         :clearable="!noClearIcon"
@@ -28,6 +29,8 @@
         @input="$emit('input', $event)"
         @change="$emit('change')"
         @click="$emit('click')"
+        @focus="$emit('focus')"
+        @blur="$emit('blur')"
     >
         <template v-slot:prepend-inner>
             <slot name="prepend-inner"></slot>
@@ -60,6 +63,7 @@ export default {
         rounded: Boolean,
         disabled: Boolean,
         success: Boolean,
+        errorMessages: String,
         rules: Array,
         loading: Boolean
     },

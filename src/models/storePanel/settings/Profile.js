@@ -4,7 +4,7 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
     "accessToken"
 )}`;
 
-const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
+const ApiEndpoint = `${process.env.VUE_APP_DEFAULT_API_URL}/stores`;
 
 export default class Profile {
     static uploadImage = image =>
@@ -31,17 +31,14 @@ export default class Profile {
             item
         );
 
-    static updateQuickPayment = item =>
+    static updateFastPayment = item =>
         axios.put(
             `${ApiEndpoint}/${localStorage.getItem("storeId")}/flags`,
             item
         );
 
-    static updateOrders = item =>
-        axios.put(
-            `${ApiEndpoint}/${localStorage.getItem("storeId")}/settings/orders`,
-            item
-        );
+    static updateShoppingCart = item =>
+        axios.put(`${ApiEndpoint}/${localStorage.getItem("storeId")}`, item);
 
     static updatePassword = item =>
         axios.post(
@@ -56,6 +53,14 @@ export default class Profile {
             `${ApiEndpoint}/${localStorage.getItem(
                 "storeId"
             )}/redemption-types`,
+            item
+        );
+
+    static updateDeliverySettings = item =>
+        axios.put(
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/settings/delivery`,
             item
         );
 }

@@ -4,16 +4,7 @@
             <v-spacer></v-spacer>
 
             <v-col cols="12" sm="4">
-                <v-text-field
-                    label="Search"
-                    color="secondary"
-                    rounded
-                    outlined
-                    dense
-                    clearable
-                    hide-details
-                    :prepend-inner-icon="icons.mdiMagnify"
-                ></v-text-field>
+                <b-search-field></b-search-field>
             </v-col>
         </v-toolbar>
 
@@ -21,6 +12,8 @@
             :headers="headers"
             :items="multipleCoupons"
             :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
+            :page.sync="page"
+            :server-items-length="serverItemsLength"
             class="b-outlined"
         >
             <template v-slot:no-data>
@@ -36,8 +29,7 @@
 </template>
 
 <script>
-import { mdiMagnify } from "@mdi/js";
-import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 import translations from "@/utils/translations/storePanel/couponsOverview";
 
 export default {
@@ -45,13 +37,15 @@ export default {
 
     mixins: [translations],
 
-    data: () => ({
-        icons: { mdiMagnify },
-    }),
+    data() {
+        return {
+            page: +this.$route.query.page
+        };
+    },
 
     computed: {
-        ...mapState(["loading"]),
-        ...mapGetters("storePanel/redeem/multipleCoupons", ["multipleCoupons"]),
+        ...mapState(["loading", "serverItemsLength"]),
+        ...mapState("storePanel/redeem/multipleCoupons", ["multipleCoupons"]),
 
         lang() {
             return this.$route.params.lang;
@@ -61,32 +55,71 @@ export default {
             return [
                 {
                     text: this.translations.promoType[this.lang],
-                    value: "promo_type_name",
+                    value: "promo_type_name"
                 },
                 { text: this.translations.code[this.lang], value: "code" },
                 {
                     text: this.translations.available[this.lang],
-                    value: "available",
+                    value: "available"
                 },
                 { text: this.translations.points[this.lang], value: "points" },
                 {
                     text: this.translations.totalRedeemed[this.lang],
-                    value: "total_redeemed",
+                    value: "total_redeemed"
                 },
                 {
                     text: this.translations.date[this.lang],
-                    value: "created_at",
-                },
+                    value: "created_at"
+                }
             ];
         },
+
+        query() {
+            let query = "?";
+
+            for (let key in this.$route.query) {
+                query += `${key}=${this.$route.query[key]}&`;
+            }
+
+            return query.slice(0, query.length - 1);
+        }
     },
 
     methods: {
-        ...mapActions("storePanel/redeem/multipleCoupons", ["getItems"]),
+        ...mapActions("storePanel/redeem/multipleCoupons", ["getItems"])
+    },
+
+    watch: {
+        $route(val) {
+            if (!val.query.page) {
+                this.$router.push({
+                    query: {
+                        page: 1,
+                        ...this.$route.query
+                    }
+                });
+            }
+            this.getItems(this.query);
+        },
+
+        page(page) {
+            this.$router.push({ query: { ...this.$route.query, page } });
+        }
+    },
+
+    beforeCreate() {
+        if (!this.$route.query.page) {
+            this.$router.push({
+                query: {
+                    page: 1,
+                    ...this.$route.query
+                }
+            });
+        }
     },
 
     mounted() {
-        this.getItems();
-    },
+        this.getItems(this.query);
+    }
 };
 </script>

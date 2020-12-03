@@ -3,22 +3,22 @@ export default {
         translations: {
             title: {
                 el: "",
-                en: "Fast Payment",
+                en: "Shopping Cart",
                 it: ""
             },
             info: {
                 el: "",
                 en: `
-                    Activating "Fast Payment" will allow customers to make an instant order
-                    to your store even without choosing a product. Keep in mind that for
-                    "Fast Payment" to be activated, you first need to activate the "Online
-                    Payment Processing" and "Orders" options through the "Reward" tab.
+                    Activating “Shopping Cart” will allow customers to order more than one
+                    product into your store via mobile application. Keep in mind that for
+                    “Shopping Cart” to be activated, you first need to activate the “Orders”
+                    through the “Reward” tab.
                 `,
                 it: ""
             },
             toggle: {
                 el: "",
-                en: "Activate Fast Payment",
+                en: "Activate Shopping Cart",
                 it: ""
             },
             on: {

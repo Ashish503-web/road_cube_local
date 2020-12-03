@@ -1,4 +1,5 @@
 import Subscription from "@/models/storePanel/settings/Subscription";
+import moment from "moment";
 
 export default {
     namespaced: true,
@@ -20,7 +21,10 @@ export default {
         },
 
         setBillings(state, payload) {
-            state.billings = payload;
+            state.billings = payload.map(b => {
+                b.updated_at = moment(b.updated_at).format("DD/MM/YYYY HH:mm");
+                return b;
+            });
         },
 
         setOpenPayment(state, payload) {

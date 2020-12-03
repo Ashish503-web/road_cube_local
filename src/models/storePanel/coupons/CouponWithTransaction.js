@@ -4,7 +4,7 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
     "accessToken"
 )}`;
 
-const ApiEndpoint = `https://api.roadcube.tk/v1/stores`;
+const ApiEndpoint = `${process.env.VUE_APP_DEFAULT_API_URL}/stores`;
 
 export default class CouponWithTransactions {
     constructor(item = {}) {
@@ -21,7 +21,9 @@ export default class CouponWithTransactions {
 
     static getGiftCategories = () =>
         axios.get(
-            `https://api.roadcube.tk/v1/common/companies/${localStorage.getItem(
+            `${
+                process.env.VUE_APP_DEFAULT_API_URL
+            }/common/companies/${localStorage.getItem(
                 "companyId"
             )}/gift-categories`
         );
@@ -29,6 +31,13 @@ export default class CouponWithTransactions {
     static getItem = () =>
         axios.get(
             `${ApiEndpoint}/${localStorage.getItem("storeId")}/coupons/goals`
+        );
+
+    static getItemUsers = (id, query) =>
+        axios.get(
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/coupons/goals/${id}/user-statistics${query}`
         );
 
     static create = item =>

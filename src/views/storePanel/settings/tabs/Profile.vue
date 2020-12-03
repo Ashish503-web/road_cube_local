@@ -20,19 +20,22 @@
                 <FastPayment />
             </v-col>
             <v-col cols="12" md="6" class="pr-3 mt-6">
-                <Orders />
+                <ShoppingCart />
             </v-col>
             <v-col cols="12" md="6" class="pl-3 mt-6">
                 <ChangePassword />
             </v-col>
             <v-col cols="12" md="6" class="pr-3 mt-6">
-                <CompanyRedemption />
+                <RedemptionSettings />
             </v-col>
             <v-col cols="12" md="6" class="pl-3 mt-6">
                 <ApiAuthentication />
             </v-col>
             <v-col cols="12" md="6" class="pr-3 mt-6">
                 <ProductCategories />
+            </v-col>
+            <v-col cols="12" md="6" class="pl-3 mt-6">
+                <DeliverySettings />
             </v-col>
         </v-row>
     </v-tab-item>
@@ -45,11 +48,12 @@ import BusinessInformation from "@/components/storePanel/settings/profile/Busine
 import OperationHours from "@/components/storePanel/settings/profile/OperationHours";
 import Invoicing from "@/components/storePanel/settings/profile/Invoicing";
 import FastPayment from "@/components/storePanel/settings/profile/FastPayment";
-import Orders from "@/components/storePanel/settings/profile/Orders";
+import ShoppingCart from "@/components/storePanel/settings/profile/ShoppingCart";
 import ChangePassword from "@/components/storePanel/settings/profile/ChangePassword";
-import CompanyRedemption from "@/components/storePanel/settings/profile/CompanyRedemption";
+import RedemptionSettings from "@/components/storePanel/settings/profile/RedemptionSettings";
 import ProductCategories from "@/components/storePanel/settings/profile/ProductCategories";
 import ApiAuthentication from "@/components/storePanel/settings/profile/ApiAuthentication";
+import DeliverySettings from "@/components/storePanel/settings/profile/DeliverySettings";
 
 export default {
     name: "Profile",
@@ -60,15 +64,16 @@ export default {
         OperationHours,
         Invoicing,
         FastPayment,
-        Orders,
+        ShoppingCart,
         ChangePassword,
-        CompanyRedemption,
+        RedemptionSettings,
         ProductCategories,
         ApiAuthentication,
+        DeliverySettings
     },
 
     mounted() {
         this.$clearFocus();
-    },
+    }
 };
 </script>

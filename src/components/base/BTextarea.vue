@@ -10,6 +10,7 @@
         hide-details="auto"
         validate-on-blur
         :success="success"
+        :error-messages="errorMessages"
         :rules="rules"
         :prepend-icon="icons[`${prependIcon}`]"
         :prepend-inner-icon="icons[`${prependInnerIcon}`]"
@@ -17,7 +18,8 @@
         :append-outer-icon="icons[`${appendOuterIcon}`]"
         @input="$emit('input', $event)"
         @click="$emit('click')"
-        @focus="$emit('cancel-success')"
+        @focus="$emit('focus')"
+        @blur="$emit('blur')"
     >
         <template v-slot:append>
             <slot name="append"></slot>
@@ -40,6 +42,7 @@ export default {
         appendOuterIcon: String,
         noTopMargin: Boolean,
         success: Boolean,
+        errorMessages: String,
         rules: Array
     },
 
