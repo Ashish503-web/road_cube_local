@@ -9,7 +9,7 @@ const ApiEndpoint = process.env.VUE_APP_DEFAULT_API_URL;
 export default class Transaction {
     constructor(item = {}) {
         this.transaction_id = item.transaction_id || null;
-        this.user = item.user || 6944534448;
+        this.user = item.user || null;
         this.receipt_number = item.receipt_number || null;
         this.voucher = item.voucher || null;
         this.amount = item.amount || null;

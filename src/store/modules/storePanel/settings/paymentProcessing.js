@@ -4,23 +4,20 @@ export default {
     namespaced: true,
 
     state: () => ({
-        allBankProviders: [],
         storeBankProviders: [],
         paymentProcessings: [],
         paymentProcessing: new PaymentProcessing({ bankProvider: {} })
     }),
 
     mutations: {
-        setAllBankProviders(state, payload) {
-            state.allBankProviders = payload.map(b => {
-                b.bankProvider = state.storeBankProviders[0].bank_provider;
-                return b;
-            });
-            // console.log("AllBankProviders", state.allBankProviders);
+        setStoreBankProviders(state, payload) {
+            state.storeBankProviders = payload.filter(
+                p => p.store_bank_provider_id
+            );
         },
 
-        setStoreBankProviders(state, payload) {
-            state.storeBankProviders = payload;
+        setItems(state, payload) {
+            state.paymentProcessings = payload;
         },
 
         setItem(state, payload) {
@@ -28,48 +25,21 @@ export default {
         },
 
         updateItem(state, payload) {
-            let index = state.bankProviders.findIndex(
-                b => b.name.el === payload.name.el
+            let index = state.paymentProcessings.findIndex(
+                p =>
+                    p.store_payment_routing_id ===
+                    payload.store_payment_routing_id
             );
-            state.bankProviders.splice(index, 1, payload);
-        },
-
-        removeItem(state, payload) {
-            state.bankProviders = state.bankProviders.filter(
-                b => b.product_category_id !== payload
-            );
+            state.paymentProcessings.splice(index, 1, payload);
         }
     },
 
     actions: {
-        async getAllBankProviders({ commit, dispatch }) {
-            try {
-                commit("setLoading", true, { root: true });
-
-                const { data } = await PaymentProcessing.getAllBankProviders();
-
-                const { bank_providers, pagination } = data.data;
-
-                await dispatch("getStoreBankProviders");
-
-                commit("setAllBankProviders", bank_providers);
-                commit("setServerItemsLength", pagination.total, {
-                    root: true
-                });
-                commit("setLoading", false, { root: true });
-            } catch (ex) {
-                commit("setLoading", false, { root: true });
-                console.error(ex.response.data);
-            }
-        },
-
         async getStoreBankProviders({ commit }) {
             try {
                 const {
                     data
                 } = await PaymentProcessing.getStoreBankProviders();
-
-                // console.log(data.data.store_bank_providers);
 
                 commit("setStoreBankProviders", data.data.store_bank_providers);
             } catch (ex) {
@@ -79,26 +49,34 @@ export default {
 
         async getItems({ commit }) {
             try {
+                commit("setLoading", true, { root: true });
+
                 const { data } = await PaymentProcessing.get();
 
-                const { store_payment_routings, pagination } = data.data;
-
-                console.log(store_payment_routings);
-
-                // commit("setStoreBankProviders", data.data.store_bank_providers);
+                commit("setItems", data.data.store_payment_routings);
+                commit("setLoading", false, { root: true });
             } catch (ex) {
+                commit("setLoading", false, { root: true });
                 console.error(ex.response.data);
             }
         },
 
-        async create({ commit, state }) {
+        async update({ commit, state }) {
             try {
                 commit("setLoading", true, { root: true });
 
-                let paymentProcessing = { ...state.paymentProcessing };
+                let store_bank_clearer_id = state.storeBankProviders.find(
+                    p =>
+                        p.bank_provider_id ===
+                        state.paymentProcessing.bank_clearer.bank_provider_id
+                ).store_bank_provider_id;
 
-                await PaymentProcessing.create(paymentProcessing);
+                const { data } = await PaymentProcessing.update(
+                    state.paymentProcessing.store_payment_routing_id,
+                    { store_bank_clearer_id }
+                );
 
+                commit("updateItem", data.data.store_payment_routing);
                 commit("setLoading", false, { root: true });
                 commit("setDialog", false, { root: true });
                 commit(
@@ -106,36 +84,7 @@ export default {
                     {
                         show: true,
                         type: "success",
-                        text: "You have successfully created product category!"
-                    },
-                    { root: true }
-                );
-            } catch (ex) {
-                commit("setLoading", false, { root: true });
-                commit("setErrorMessage", ex.response.data.message, {
-                    root: true
-                });
-                setTimeout(
-                    () => commit("setErrorMessage", "", { root: true }),
-                    5000
-                );
-            }
-        },
-
-        async remove({ commit }, id) {
-            try {
-                commit("setLoading", true, { root: true });
-
-                // await BankProvider.delete(id);
-
-                commit("removeItem", id);
-                commit("setLoading", false, { root: true });
-                commit(
-                    "setNotification",
-                    {
-                        show: true,
-                        type: "success",
-                        text: "You have successfully deleted product category!"
+                        text: "You have successfully updated bank clearer!"
                     },
                     { root: true }
                 );

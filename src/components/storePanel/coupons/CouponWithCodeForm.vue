@@ -4,6 +4,7 @@
         :loading="loading"
         :error-message="errorMessage"
         :reset-validation="resetValidation"
+        :disabled="!valid"
         @cancel="$emit('cancel')"
         @submit="mode === 1 ? create(imageFile) : update(imageFile)"
     >
@@ -14,6 +15,10 @@
             item-value="gift_category_id"
             label="Gift Category"
             no-top-margin
+            :success="success.giftCategory"
+            :error-messages="error.giftCategory"
+            @focus="error.giftCategory = ''"
+            @blur="validateGiftCategory"
         ></b-select>
 
         <b-text-field
@@ -21,29 +26,49 @@
             label="Coupon Code (e.g. Maroudas Optika)"
             hint="* This is the code that you can share in posters, documents and internet. We suggest you to type something similar to your company name."
             persistent-hint
+            :success="success.code"
+            :error-messages="error.code"
+            @focus="error.code = ''"
+            @blur="validateCode"
         ></b-text-field>
 
         <b-text-field
             v-model="couponWithCode.points"
             type="number"
             label="Moves (RoadCube Points)"
+            :success="success.points"
+            :error-messages="error.points"
+            @focus="error.points = ''"
+            @blur="validatePoints"
         ></b-text-field>
 
         <b-text-field
             v-if="mode === 1"
             v-model="couponWithCode.maximum"
             type="number"
-            label="Vouchers Ammount"
+            label="Quantity"
+            :success="success.quantity"
+            :error-messages="error.quantity"
+            @focus="error.quantity = ''"
+            @blur="validateQuantity"
         ></b-text-field>
 
         <b-text-field
             v-model="couponWithCode.gift_title"
             label="Gift Title"
+            :success="success.giftTitle"
+            :error-messages="error.giftTitle"
+            @focus="error.giftTitle = ''"
+            @blur="validateGiftTitle"
         ></b-text-field>
 
         <b-textarea
             v-model="couponWithCode.gift_description"
             label="Gift Description"
+            :success="success.giftDescription"
+            :error-messages="error.giftDescription"
+            @focus="error.giftDescription = ''"
+            @blur="validateGiftDescription"
         ></b-textarea>
 
         <v-checkbox
@@ -84,17 +109,20 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
+import validators from "./codeValidators";
 
 export default {
     name: "CouponWithCodeForm",
 
     props: {
-        mode: Number
+        mode: Number,
     },
+
+    mixins: [validators],
 
     data() {
         return {
-            imageFile: null
+            imageFile: null,
         };
     },
 
@@ -103,11 +131,11 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation"
+            "resetValidation",
         ]),
         ...mapState("storePanel/coupons/couponsWithCode", [
             "giftCategories",
-            "couponWithCode"
+            "couponWithCode",
         ]),
 
         lang() {
@@ -128,18 +156,18 @@ export default {
 
             set(val) {
                 this.setShowImageUpload(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
         ...mapMutations("storePanel/coupons/couponsWithCode", [
-            "setShowImageUpload"
+            "setShowImageUpload",
         ]),
         ...mapActions("storePanel/coupons/couponsWithCode", [
             "getGiftCategories",
             "create",
-            "update"
+            "update",
         ]),
 
         onFileSelected(event) {
@@ -147,30 +175,14 @@ export default {
                 this.imageFile = event;
                 const reader = new FileReader();
                 reader.readAsDataURL(this.imageFile);
-                reader.onload = e =>
+                reader.onload = (e) =>
                     (this.couponWithCode.image = e.target.result);
             }
-        }
-    },
-
-    watch: {
-        resetSuccess(val) {
-            if (val) {
-                this.success = {
-                    name: false,
-                    description: false,
-                    sellingPrice: false,
-                    wholesalePrice: false,
-                    deliveryCost: false,
-                    shippingCost: false,
-                    category: false
-                };
-            }
-        }
+        },
     },
 
     mounted() {
         this.getGiftCategories();
-    }
+    },
 };
 </script>

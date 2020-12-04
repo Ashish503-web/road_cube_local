@@ -140,7 +140,7 @@ export default {
     data: () => ({
         icons: { mdiPlusThick },
         productsInputSuccess: false,
-        productsSuccess: false
+        productsSuccess: false,
     }),
 
     computed: {
@@ -168,16 +168,16 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
         ...mapMutations("storePanel/transactions", ["setItem"]),
         ...mapActions("storePanel/transactions", [
             "create",
-            "getTransactionPreview"
-        ])
+            "getTransactionPreview",
+        ]),
     },
 
     watch: {
@@ -189,8 +189,8 @@ export default {
             deep: true,
             handler(val) {
                 this.getTransactionPreview(this.showProducts);
-            }
-        }
+            },
+        },
     },
 
     mounted() {
@@ -199,6 +199,6 @@ export default {
 
     beforeDestroy() {
         this.transaction = {};
-    }
+    },
 };
 </script>

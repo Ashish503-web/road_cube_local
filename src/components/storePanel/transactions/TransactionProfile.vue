@@ -75,7 +75,7 @@
                         new Intl.NumberFormat("en-US", {
                             style: "currency",
                             currency: "EUR",
-                            minimumFractionDigits: 2
+                            minimumFractionDigits: 2,
                         }).format(transactionProfile.total_price)
                     }}
                 </v-sheet>
@@ -125,7 +125,7 @@
                     :items="transactionProfile.transaction_items"
                     :footer-props="{
                         itemsPerPageOptions: [12],
-                        showCurrentPage: true
+                        showCurrentPage: true,
                     }"
                     :server-items-length="
                         transactionProfile.transaction_items.length
@@ -148,13 +148,13 @@ export default {
     name: "TransactionProfile",
 
     props: {
-        transactionId: [String, Number]
+        transactionId: [String, Number],
     },
 
     mixins: [translations],
 
     data: () => ({
-        icons: { mdiTextBoxOutline, mdiClose }
+        icons: { mdiTextBoxOutline, mdiClose },
     }),
 
     computed: {
@@ -166,20 +166,20 @@ export default {
             return [
                 {
                     text: this.translations.productName[this.lang],
-                    value: `product_name[${this.lang}]`
+                    value: `product_name[${this.lang}]`,
                 },
                 {
                     text: this.translations.totalPrice[this.lang],
-                    value: "total_row_price"
+                    value: "total_row_price",
                 },
                 {
                     text: this.translations.totalPoints[this.lang],
-                    value: "total_row_points"
+                    value: "total_row_points",
                 },
                 {
                     text: this.translations.quantity[this.lang],
-                    value: "quantity"
-                }
+                    value: "quantity",
+                },
             ];
         },
 
@@ -189,11 +189,11 @@ export default {
 
         transactionProfile() {
             return this.$store.state.storePanel.transactions.transactionProfile;
-        }
+        },
     },
 
     methods: {
-        ...mapActions("storePanel/transactions", ["getItem"])
+        ...mapActions("storePanel/transactions", ["getItem"]),
     },
 
     watch: {
@@ -201,9 +201,9 @@ export default {
             immediate: true,
             handler(val) {
                 this.getItem(val);
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>
 

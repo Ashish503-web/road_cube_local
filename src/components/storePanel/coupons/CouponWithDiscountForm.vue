@@ -4,6 +4,7 @@
         :loading="loading"
         :error-message="errorMessage"
         :reset-validation="resetValidation"
+        :disabled="!valid"
         @cancel="$emit('cancel')"
         @submit="create"
     >
@@ -15,8 +16,9 @@
             label="Gift Category"
             no-top-margin
             :success="success.giftCategory"
-            :rules="rules.giftCategory"
-            @cancel-success="success.giftCategory = false"
+            :error-messages="error.giftCategory"
+            @focus="error.giftCategory = ''"
+            @blur="validateGiftCategory"
         ></b-select>
 
         <v-row no-gutters align="center">
@@ -28,8 +30,9 @@
                     item-value="product_id"
                     label="Product"
                     :success="success.product"
-                    :rules="rules.product"
-                    @cancel-success="success.product = false"
+                    :error-messages="error.product"
+                    @focus="error.product = ''"
+                    @blur="validateProduct"
                 ></b-select>
             </v-col>
 
@@ -44,7 +47,7 @@
                         new Intl.NumberFormat("en-US", {
                             style: "currency",
                             currency: "EUR",
-                            minimumFractionDigits: 2
+                            minimumFractionDigits: 2,
                         }).format(retailPrice)
                     }}
                 </v-sheet>
@@ -81,8 +84,9 @@
             type="number"
             prepend-inner-icon="mdiPercent"
             :success="success.discountPercentage"
-            :rules="rules.discountPercentage"
-            @cancel-success="success.discountPercentage = false"
+            :error-messages="error.discountPercentage"
+            @focus="error.discountPercentage = ''"
+            @blur="validateDiscountPercentage"
         ></b-text-field>
         <b-text-field
             v-else
@@ -91,8 +95,9 @@
             type="number"
             prepend-inner-icon="mdiCurrencyEur"
             :success="success.discountValue"
-            :rules="rules.discountValue"
-            @cancel-success="success.discountValue = false"
+            :error-messages="error.discountValue"
+            @focus="error.discountValue = ''"
+            @blur="validateDiscountValue"
         ></b-text-field>
     </b-card>
 </template>
@@ -111,9 +116,9 @@ export default {
             type: 1,
             discountTypes: [
                 { text: "Percentage", value: 1 },
-                { text: "Euro", value: 2 }
+                { text: "Euro", value: 2 },
             ],
-            retailPrice: 0
+            retailPrice: 0,
         };
     },
 
@@ -122,12 +127,12 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation"
+            "resetValidation",
         ]),
         ...mapState("storePanel/coupons/couponsWithDiscount", [
             "giftCategories",
             "products",
-            "couponWithDiscount"
+            "couponWithDiscount",
         ]),
 
         lang() {
@@ -147,22 +152,22 @@ export default {
             }
 
             return icon;
-        }
+        },
     },
 
     methods: {
         ...mapActions("storePanel/coupons/couponsWithDiscount", [
             "getGiftCategories",
             "getProducts",
-            "create"
-        ])
+            "create",
+        ]),
     },
 
     watch: {
         ["couponWithDiscount.product_discount_id"](val) {
             if (val) {
                 this.retailPrice = +this.products.find(
-                    p => p.product_id === val
+                    (p) => p.product_id === val
                 ).retail_price;
             } else {
                 this.retailPrice = 0;
@@ -170,26 +175,19 @@ export default {
         },
 
         type(val) {
-            if (val === 1) this.couponWithDiscount.discount_value = null;
-            else if (val === 2)
+            if (val === 1) {
+                this.couponWithDiscount.discount_value = null;
+                this.error.discountValue = "";
+            } else if (val === 2) {
                 this.couponWithDiscount.discount_percentage = null;
-        },
-
-        resetSuccess(val) {
-            if (val) {
-                this.success = {
-                    giftCategory: false,
-                    product: false,
-                    discountPercentage: false,
-                    discountValue: false
-                };
+                this.error.discountPercentage = "";
             }
-        }
+        },
     },
 
     mounted() {
         this.getGiftCategories();
         this.getProducts();
-    }
+    },
 };
 </script>

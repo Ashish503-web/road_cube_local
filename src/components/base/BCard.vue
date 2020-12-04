@@ -4,7 +4,7 @@
             class="subtitle-1 font-weight-bold"
             :class="{
                 red: type === 'delete',
-                'white--text': type === 'delete'
+                'white--text': type === 'delete',
             }"
         >
             {{ title }}
@@ -60,16 +60,16 @@ export default {
     props: {
         type: {
             type: String,
-            default: "default"
+            default: "default",
         },
         title: String,
         cancelText: {
             type: Object,
-            default: () => ({ el: "", en: "cancel", it: "" })
+            default: () => ({ el: "", en: "cancel", it: "" }),
         },
         submitText: {
             type: Object,
-            default: () => ({ el: "", en: "save", it: "" })
+            default: () => ({ el: "", en: "save", it: "" }),
         },
         hideDefaultFooter: Boolean,
         loading: Boolean,
@@ -77,22 +77,22 @@ export default {
         resetValidation: Boolean,
         disabled: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
 
     data: () => ({
-        icons: { mdiClose }
+        icons: { mdiClose },
     }),
 
     computed: {
         lang() {
             return this.$route.params.lang;
-        }
+        },
     },
 
     mounted() {
         this.$clearFocus();
-    }
+    },
 };
 </script>

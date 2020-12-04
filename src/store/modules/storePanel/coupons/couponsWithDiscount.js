@@ -102,8 +102,6 @@ export default {
 
                 const { coupon } = data.data;
 
-                console.log(coupon);
-
                 coupon.discount_product_name = coupon.product.name;
                 coupon.total_discount = coupon.discount;
 

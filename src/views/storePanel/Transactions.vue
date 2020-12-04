@@ -45,7 +45,7 @@
                 :items="transactions"
                 :footer-props="{
                     itemsPerPageOptions: [12],
-                    showCurrentPage: true
+                    showCurrentPage: true,
                 }"
                 :page.sync="page"
                 :server-items-length="serverItemsLength"
@@ -125,7 +125,7 @@
                     <v-btn
                         v-if="
                             item.transaction_type_id === 2 ||
-                                item.transaction_type_id === 11
+                            item.transaction_type_id === 11
                         "
                         color="grey lighten-2"
                         class="text-capitalize my-1 red--text"
@@ -173,7 +173,7 @@ export default {
             page: +this.$route.query.page,
             settingsDialog: false,
             transactionDialog: false,
-            transactionId: null
+            transactionId: null,
         };
     },
 
@@ -181,7 +181,7 @@ export default {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/transactions", [
             "transactionStatuses",
-            "transactions"
+            "transactions",
         ]),
 
         lang() {
@@ -192,33 +192,33 @@ export default {
             return [
                 {
                     text: this.translations.user[this.lang],
-                    value: "user_identity"
+                    value: "user_identity",
                 },
                 {
                     text: this.translations.amount[this.lang],
-                    value: "total_price"
+                    value: "total_price",
                 },
                 {
                     text: this.translations.points[this.lang],
-                    value: "total_points"
+                    value: "total_points",
                 },
                 {
                     text: this.translations.date[this.lang],
-                    value: "created_at"
+                    value: "created_at",
                 },
                 {
                     text: this.translations.watch[this.lang],
-                    value: "watch"
+                    value: "watch",
                 },
                 {
                     text: this.translations.status[this.lang],
                     value: "transaction_status_name",
-                    width: "20%"
+                    width: "20%",
                 },
                 {
                     text: this.translations.actions[this.lang],
-                    value: "actions"
-                }
+                    value: "actions",
+                },
             ];
         },
 
@@ -229,7 +229,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
+            },
         },
 
         query() {
@@ -241,7 +241,7 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
@@ -249,8 +249,8 @@ export default {
         ...mapActions("storePanel/transactions", [
             "getItems",
             "changeStatus",
-            "remove"
-        ])
+            "remove",
+        ]),
     },
 
     watch: {
@@ -259,8 +259,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
 
@@ -269,7 +269,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -277,14 +277,14 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    }
+    },
 };
 </script>

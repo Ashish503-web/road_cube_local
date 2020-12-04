@@ -56,14 +56,6 @@ export default {
             state.store = payload;
         },
 
-        setTransactionStatistics(state, payload) {
-            state.store.statistics.total_transactions += 1;
-            state.store.statistics.last_twelve_hours_payments.total_price += payload;
-            state.store.statistics.last_twelve_hours_payments.total_transactions += 1;
-            state.store.statistics.last_week_payments.total_price += payload;
-            state.store.statistics.last_week_payments.total_transactions += 1;
-        },
-
         setLogo(state, payload) {
             state.store.logo = payload;
         },

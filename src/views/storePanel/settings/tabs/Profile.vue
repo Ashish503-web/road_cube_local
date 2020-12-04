@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 import Logo from "@/components/storePanel/settings/profile/Logo";
 import PinDisplay from "@/components/storePanel/settings/profile/PinDisplay";
 import BusinessInformation from "@/components/storePanel/settings/profile/BusinessInformation";
@@ -69,11 +71,16 @@ export default {
         RedemptionSettings,
         ProductCategories,
         ApiAuthentication,
-        DeliverySettings
+        DeliverySettings,
+    },
+
+    methods: {
+        ...mapActions("storePanel", ["getStore"]),
     },
 
     mounted() {
+        this.getStore();
         this.$clearFocus();
-    }
+    },
 };
 </script>

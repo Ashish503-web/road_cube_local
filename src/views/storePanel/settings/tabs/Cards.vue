@@ -49,11 +49,7 @@
                                         transition="scale-transition"
                                         :close-on-content-click="false"
                                     >
-                                        <template
-                                            v-slot:activator="{
-                                                on
-                                            }"
-                                        >
+                                        <template v-slot:activator="{ on }">
                                             <v-btn
                                                 color="grey lighten-3"
                                                 class="px-0"
@@ -241,7 +237,7 @@ import {
     mdiChevronDown,
     mdiPound,
     mdiArrowRight,
-    mdiArrowLeft
+    mdiArrowLeft,
 } from "@mdi/js";
 
 export default {
@@ -254,13 +250,13 @@ export default {
             mdiChevronDown,
             mdiPound,
             mdiArrowRight,
-            mdiArrowLeft
+            mdiArrowLeft,
         },
         step: 1,
         colorPickerMenu: false,
         showSwatches: false,
         pickedColor: "#ffffff",
-        cardBackgroundColor: "#ffffff"
-    })
+        cardBackgroundColor: "#ffffff",
+    }),
 };
 </script>

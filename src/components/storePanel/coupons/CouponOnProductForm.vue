@@ -4,6 +4,7 @@
         :loading="loading"
         :error-message="errorMessage"
         :reset-validation="resetValidation"
+        :disabled="!valid"
         @cancel="$emit('cancel')"
         @submit="mode === 1 ? create() : update()"
     >
@@ -14,6 +15,10 @@
             item-value="gift_category_id"
             label="Gift Category"
             no-top-margin
+            :success="success.giftCategory"
+            :error-messages="error.giftCategory"
+            @focus="error.giftCategory = ''"
+            @blur="validateGiftCategory"
         ></b-select>
 
         <v-radio-group
@@ -47,6 +52,10 @@
                     :item-text="`name[${lang}]`"
                     item-value="product_id"
                     label="Product for sale"
+                    :success="success.saleProduct"
+                    :error-messages="error.saleProduct"
+                    @focus="error.saleProduct = ''"
+                    @blur="validateSaleProduct"
                 ></b-select>
             </v-col>
             <v-col cols="6" class="pl-2">
@@ -56,6 +65,10 @@
                     :item-text="`name[${lang}]`"
                     item-value="product_id"
                     label="Product for gift"
+                    :success="success.giftProduct"
+                    :error-messages="error.giftProduct"
+                    @focus="error.giftProduct = ''"
+                    @blur="validateGiftProduct"
                 ></b-select>
             </v-col>
         </v-row>
@@ -67,33 +80,44 @@
             :item-text="`name[${lang}]`"
             item-value="product_id"
             label="Product for gift"
+            :success="success.giftProduct"
+            :error-messages="error.giftProduct"
+            @focus="error.giftProduct = ''"
+            @blur="validateGiftProduct"
         ></b-select>
 
         <b-text-field
             v-model="couponOnProduct.maximum"
-            type="number"
             label="Quantity"
+            type="number"
+            :success="success.quantity"
+            :error-messages="error.quantity"
+            @focus="error.quantity = ''"
+            @blur="validateQuantity"
         ></b-text-field>
     </b-card>
 </template>
 
 <script>
-// import validators from "./productValidators";
 import { mapState, mapMutations, mapActions } from "vuex";
+import validators from "./productValidators";
 
 export default {
     name: "CouponOnProductForm",
+
     props: {
-        mode: Number
+        mode: Number,
     },
-    // mixins: [validators],
+
+    mixins: [validators],
+
     data() {
         return {
             lang: "el",
             actionTypes: [
                 { text: "Action 1+1", value: "1p1" },
-                { text: "Sampling", value: "sample" }
-            ]
+                { text: "Sampling", value: "sample" },
+            ],
         };
     },
 
@@ -102,11 +126,11 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation"
+            "resetValidation",
         ]),
         ...mapState("storePanel/coupons/couponsOnProducts", [
             "giftCategories",
-            "products"
+            "products",
         ]),
 
         title() {
@@ -116,7 +140,7 @@ export default {
         couponOnProduct() {
             return this.$store.state.storePanel.coupons.couponsOnProducts
                 .couponOnProduct;
-        }
+        },
     },
 
     methods: {
@@ -124,30 +148,14 @@ export default {
             "getGiftCategories",
             "getProducts",
             "create",
-            "update"
-        ])
-    },
-
-    watch: {
-        resetSuccess(val) {
-            if (val) {
-                this.success = {
-                    name: false,
-                    description: false,
-                    sellingPrice: false,
-                    wholesalePrice: false,
-                    deliveryCost: false,
-                    shippingCost: false,
-                    category: false
-                };
-            }
-        }
+            "update",
+        ]),
     },
 
     mounted() {
         this.getGiftCategories();
         this.getProducts();
-    }
+    },
 };
 </script>
 

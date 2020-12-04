@@ -77,14 +77,15 @@ export default {
             payload.created_at = moment(payload.created_at).format(
                 "DD/MM/YYYY HH:mm"
             );
-            payload.transaction_items.forEach(
-                t =>
-                    (t.total_row_price = new Intl.NumberFormat("en-US", {
-                        style: "currency",
-                        currency: "EUR",
-                        minimumFractionDigits: 2
-                    }).format(t.total_row_price))
-            );
+            payload.transaction_items.forEach(t => {
+                t.total_row_price = new Intl.NumberFormat("en-US", {
+                    style: "currency",
+                    currency: "EUR",
+                    minimumFractionDigits: 2
+                }).format(t.total_row_price);
+
+                if (t.reward_type_id === 4) t.quantity = "";
+            });
             state.transactionProfile = payload;
         },
 
@@ -240,14 +241,6 @@ export default {
                 await Transaction.create(transaction);
 
                 commit("setItem", {});
-                commit(
-                    "storePanel/setTransactionStatistics",
-                    state.transactionPreview.total_amount -
-                        state.transactionPreview.total_discount,
-                    {
-                        root: true
-                    }
-                );
                 commit("setTransactionPreview", {});
                 commit("setSelectedProducts", []);
                 commit("setResetValidation", true, { root: true });

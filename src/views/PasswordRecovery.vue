@@ -21,31 +21,41 @@
                         <h3 class="subtitle-1 font-weight-bold mt-3">
                             Step 1 - Request verification code
                         </h3>
-                        <b-text-field type="text" label="Please enter mobile phone"></b-text-field>
+                        <b-text-field
+                            type="text"
+                            label="Please enter mobile phone"
+                        ></b-text-field>
                         <v-btn
-                                type="submit"
-                                color="secondary"
-                                tile
-                                class="px-5 mt-3"
-                                >Send me SMS</v-btn
-                            >
-                        
+                            type="submit"
+                            color="secondary"
+                            tile
+                            class="px-5 mt-3"
+                            >Send me SMS</v-btn
+                        >
+
                         <h3 class="subtitle-1 font-weight-bold mt-5">
                             Step 2 - Change password with sms code
                         </h3>
-                        <b-text-field type="text" label="Please enter mobile phone"></b-text-field>
-                        <b-text-field type="text" label="Please enter new password"></b-text-field>
-                        <b-text-field type="text" label="Please repeat new password"></b-text-field>
+                        <b-text-field
+                            type="text"
+                            label="Please enter mobile phone"
+                        ></b-text-field>
+                        <b-text-field
+                            type="text"
+                            label="Please enter new password"
+                        ></b-text-field>
+                        <b-text-field
+                            type="text"
+                            label="Please repeat new password"
+                        ></b-text-field>
                         <v-btn
-                                type="submit"
-                                color="secondary"
-                                tile
-                                class="px-5 mt-3"
-                                >Change password</v-btn
-                            >
+                            type="submit"
+                            color="secondary"
+                            tile
+                            class="px-5 mt-3"
+                            >Change password</v-btn
+                        >
                     </v-col>
-
-                    
                 </v-card>
             </v-card>
         </v-row>
@@ -61,17 +71,11 @@ export default {
     name: "PasswordRecovery",
 
     data() {
-        return {
-            
-        };
+        return {};
     },
 
-    methods: {
-        
-    },
+    methods: {},
 
-    watch: {
-        
-    },
+    watch: {},
 };
 </script>

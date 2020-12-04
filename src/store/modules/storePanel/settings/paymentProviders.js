@@ -1,86 +1,70 @@
-import BankProvider from "@/models/storePanel/settings/BankProvider";
-import moment from "moment";
+import PaymentProvider from "@/models/storePanel/settings/PaymentProvider";
 
 export default {
     namespaced: true,
 
     state: () => ({
-        bankProviders: [],
-        storeBankProviders: [],
-        bankProvider: new BankProvider()
+        providersLoading: false,
+        paymentProviders: [],
+        paymentProvider: new PaymentProvider()
     }),
 
-    getters: {
-        bankProviders: state => state.bankProviders,
-        storeBankProviders: state => state.storeBankProviders
-    },
-
     mutations: {
-        setBankProviders(state, payload) {
-            state.bankProviders = payload;
+        setLoading(state, payload) {
+            state.providersLoading = payload;
         },
 
-        setStoreBankProviders(state, payload) {
-            state.storeBankProviders = payload.map(p => {
-                p.created_at = moment(p.created_at).format("DD/MM/YYYY HH:mm");
-                return p;
-            });
+        setPaymentProviders(state, payload) {
+            state.paymentProviders = payload;
         },
 
         setItem(state, payload) {
-            state.bankProvider = new BankProvider(payload);
-        },
-
-        addItem(state, payload) {
-            state.bankProviders.unshift(payload);
+            state.paymentProvider = new PaymentProvider(payload);
         },
 
         updateItem(state, payload) {
-            let index = state.bankProviders.findIndex(
-                b => b.name.el === payload.name.el
+            let paymentProvider = state.paymentProviders.find(
+                p => p.bank_provider_id === payload.bank_provider_id
             );
-            state.bankProviders.splice(index, 1, payload);
+            paymentProvider.store_bank_provider_id =
+                payload.store_bank_provider_id;
+            paymentProvider.credentials = payload.credentials;
         },
 
         removeItem(state, payload) {
-            state.bankProviders = state.bankProviders.filter(
-                b => b.product_category_id !== payload
+            let paymentProvider = state.paymentProviders.find(
+                p => p.bank_provider_id === payload.bank_provider_id
             );
+            paymentProvider.store_bank_provider_id = null;
+            paymentProvider.credentials = null;
         }
     },
 
     actions: {
-        async getBankProviders({ commit }, query) {
-            try {
-                const { data } = await BankProvider.get(query);
-
-                const bank_providers = data.data.bank_providers;
-
-                commit("setBankProviders", bank_providers);
-            } catch (ex) {
-                console.error(ex.response.data);
-            }
-        },
-
         async getItems({ commit }, query) {
             try {
-                const { data } = await BankProvider.getStoreProviders();
+                commit("setLoading", true);
 
-                const store_bank_providers = data.data.store_bank_providers;
-                console.log(store_bank_providers);
-                commit("setStoreBankProviders", store_bank_providers);
+                const { data } = await PaymentProvider.get(query);
+
+                commit("setPaymentProviders", data.data.store_bank_providers);
+                commit("setLoading", false);
             } catch (ex) {
+                commit("setLoading", false);
                 console.error(ex.response.data);
             }
         },
 
-        async createItem({ commit, state, dispatch }, form) {
+        async create({ commit, state }) {
             try {
                 commit("setLoading", true, { root: true });
 
-                const { data } = await BankProvider.createItem(form);
+                const { data } = await PaymentProvider.create({
+                    bank_provider_id: state.paymentProvider.bank_provider_id,
+                    credentials: state.paymentProvider.credentials
+                });
 
-                dispatch("getItems");
+                commit("updateItem", data.data.store_bank_provider);
                 commit("setLoading", false, { root: true });
                 commit("setDialog", false, { root: true });
                 commit(
@@ -104,77 +88,15 @@ export default {
             }
         },
 
-        async create({ commit, state }) {
+        async remove({ commit, state }) {
             try {
                 commit("setLoading", true, { root: true });
 
-                let productCategory = { ...state.productCategory };
-                delete productCategory.product_category_id;
-                productCategory.store_id = localStorage.getItem("storeId");
-                if (!productCategory.name.en)
-                    productCategory.name.en = productCategory.name.el;
-                if (!productCategory.name.it)
-                    productCategory.name.it = productCategory.name.el;
-
-                const { data } = await BankProvider.create(productCategory);
-
-                commit("addItem", data.data.product_category);
-                commit("setItem", {});
-                commit("setLoading", false, { root: true });
-                commit(
-                    "setNotification",
-                    {
-                        show: true,
-                        type: "success",
-                        text: "You have successfully created product category!"
-                    },
-                    { root: true }
+                await PaymentProvider.delete(
+                    state.paymentProvider.store_bank_provider_id
                 );
-            } catch (ex) {
-                commit("setLoading", false, { root: true });
-                commit("setErrorMessage", ex.response.data.message, {
-                    root: true
-                });
-                setTimeout(
-                    () => commit("setErrorMessage", "", { root: true }),
-                    5000
-                );
-            }
-        },
 
-        async updateProvider({ dispatch, commit, rootState }, form) {
-            try {
-                commit("setLoading", true, { root: true });
-
-                const { data } = await BankProvider.updateProvider(form);
-
-                dispatch("getItems");
-                commit("setLoading", false, { root: true });
-                commit("setUpdateDialog", false, { root: true });
-                commit("setDialog", false);
-                commit(
-                    "setNotification",
-                    {
-                        show: true,
-                        type: "success",
-                        text: "You have successfully updated Bank Provider!"
-                    },
-                    { root: true }
-                );
-            } catch (ex) {
-                commit("setLoading", false);
-                commit("setErrorMessage", ex.response.data.message);
-                setTimeout(() => commit("setErrorMessage", ""), 5000);
-            }
-        },
-
-        async removeProvider({ commit, dispatch }, id) {
-            try {
-                commit("setLoading", true, { root: true });
-
-                await BankProvider.removeProvider(id);
-
-                dispatch("getItems");
+                commit("removeItem", state.paymentProvider);
                 commit("setLoading", false, { root: true });
                 commit("setDeleteDialog", false, { root: true });
                 commit(
@@ -183,35 +105,6 @@ export default {
                         show: true,
                         type: "success",
                         text: "You have successfully deleted Bank Provider!"
-                    },
-                    { root: true }
-                );
-            } catch (ex) {
-                commit("setLoading", false, { root: true });
-                commit("setErrorMessage", ex.response.data.message, {
-                    root: true
-                });
-                setTimeout(
-                    () => commit("setErrorMessage", "", { root: true }),
-                    5000
-                );
-            }
-        },
-
-        async remove({ commit }, id) {
-            try {
-                commit("setLoading", true, { root: true });
-
-                await BankProvider.delete(id);
-
-                commit("removeItem", id);
-                commit("setLoading", false, { root: true });
-                commit(
-                    "setNotification",
-                    {
-                        show: true,
-                        type: "success",
-                        text: "You have successfully deleted product category!"
                     },
                     { root: true }
                 );

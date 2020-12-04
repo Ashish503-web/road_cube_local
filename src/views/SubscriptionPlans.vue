@@ -29,7 +29,7 @@
                     >
                         <v-card class="mt-5 pa-4">
                             <div
-                                class="text-button font-weight-bold  blue--text text--darken-2 text-center text-no-wrap text-truncate"
+                                class="text-button font-weight-bold blue--text text--darken-2 text-center text-no-wrap text-truncate"
                                 v-text="plan.plan_name"
                             ></div>
                             <div class="d-flex justify-center mt-2">
@@ -193,7 +193,7 @@ export default {
     name: "SubscriptionPlans",
 
     data: () => ({
-        icons: { mdiFileDocumentEditOutline, mdiCheckCircleOutline }
+        icons: { mdiFileDocumentEditOutline, mdiCheckCircleOutline },
     }),
 
     computed: {
@@ -203,7 +203,7 @@ export default {
 
         subscriptionPlans() {
             return this.$store.state.register.subscriptionPlans;
-        }
+        },
     },
 
     methods: {
@@ -213,7 +213,7 @@ export default {
         setSubscriptionPlan(planId) {
             localStorage.setItem("subscriptionPlan", planId);
             this.$router.push(`/${this.lang}/create-account`);
-        }
+        },
     },
 
     mounted() {
@@ -223,7 +223,7 @@ export default {
         this.setAppProvider({ app_provider_id, store_id });
 
         this.getSubscriptionPlans();
-    }
+    },
 };
 </script>
 

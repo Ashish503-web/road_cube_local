@@ -4,6 +4,7 @@
         :loading="loading"
         :error-message="errorMessage"
         :reset-validation="resetValidation"
+        :disabled="!valid"
         @cancel="$emit('cancel')"
         @submit="
             () => {
@@ -16,9 +17,10 @@
             v-model="productGroup.name[groupLang]"
             :label="translations.productGroupName[lang]"
             no-top-margin
-            :success="success.name"
-            :rules="rules.name"
-            @cancel-success="success.name = false"
+            :success="groupLang === 'el' ? success.name : false"
+            :error-messages="error.name"
+            @focus="error.name = ''"
+            @blur="validateName"
         >
             <template v-slot:append>
                 <b-lang-menu v-model="groupLang" type="inner"></b-lang-menu>
@@ -29,8 +31,9 @@
             v-model="productGroup.description[descriptionLang]"
             :label="translations.productGroupDescription[lang]"
             :success="success.description"
-            :rules="rules.description"
-            @cancel-success="success.description = false"
+            :error-messages="error.description"
+            @focus="error.description = ''"
+            @blur="validateDescription"
         >
             <template v-slot:append>
                 <b-lang-menu
@@ -46,8 +49,9 @@
             type="number"
             prepend-inner-icon="mdiCurrencyEur"
             :success="success.averagePrice"
-            :rules="rules.averagePrice"
-            @cancel-success="success.averagePrice = false"
+            :error-messages="error.averagePrice"
+            @focus="error.averagePrice = ''"
+            @blur="validateAveragePrice"
         ></b-text-field>
 
         <b-select
@@ -57,7 +61,9 @@
             item-value="product_category_id"
             :label="translations.selectCategory[lang]"
             :success="success.category"
-            :rules="rules.category"
+            :error-messages="error.category"
+            @focus="error.category = ''"
+            @blur="validateCategory"
         ></b-select>
 
         <v-checkbox
@@ -171,7 +177,7 @@ export default {
     name: "ProductGroup",
 
     props: {
-        mode: Number
+        mode: Number,
     },
 
     mixins: [translations, validators],
@@ -188,8 +194,8 @@ export default {
                 { el: "", en: "Thursday", it: "" },
                 { el: "", en: "Friday", it: "" },
                 { el: "", en: "Saturday", it: "" },
-                { el: "", en: "Sunday", it: "" }
-            ]
+                { el: "", en: "Sunday", it: "" },
+            ],
         };
     },
 
@@ -198,7 +204,7 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation"
+            "resetValidation",
         ]),
         ...mapState("storePanel/productGroups", ["categories"]),
 
@@ -220,7 +226,7 @@ export default {
 
             set(val) {
                 this.setShowImageUpload(val);
-            }
+            },
         },
 
         showWeekdays: {
@@ -230,23 +236,23 @@ export default {
 
             set(val) {
                 this.setShowWeekdays(val);
-            }
+            },
         },
 
         productGroup() {
             return this.$store.state.storePanel.productGroups.productGroup;
-        }
+        },
     },
 
     methods: {
         ...mapMutations("storePanel/productGroups", [
             "setShowImageUpload",
-            "setShowWeekdays"
+            "setShowWeekdays",
         ]),
         ...mapActions("storePanel/productGroups", [
             "getCategories",
             "create",
-            "update"
+            "update",
         ]),
 
         onFileSelected(event) {
@@ -254,27 +260,14 @@ export default {
                 this.imageFile = event;
                 const reader = new FileReader();
                 reader.readAsDataURL(this.imageFile);
-                reader.onload = e =>
+                reader.onload = (e) =>
                     (this.productGroup.image = e.target.result);
             }
-        }
-    },
-
-    watch: {
-        resetSuccess(val) {
-            if (val) {
-                this.success = {
-                    name: false,
-                    description: false,
-                    averagePrice: false,
-                    category: false
-                };
-            }
-        }
+        },
     },
 
     mounted() {
         this.getCategories();
-    }
+    },
 };
 </script>

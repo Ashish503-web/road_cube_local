@@ -20,14 +20,11 @@
 
         <v-data-table
             :headers="headers"
-            :items="allBankProviders"
-            :footer-props="{
-                itemsPerPageOptions: [12],
-                showCurrentPage: true
-            }"
+            :items="paymentProcessings"
+            :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
             :page.sync="page"
-            :server-items-length="serverItemsLength"
             disable-sort
+            hide-default-footer
             class="b-outlined"
         >
             <template v-slot:no-data>
@@ -39,22 +36,20 @@
                 <span v-else>No data available</span>
             </template>
 
-            <template v-slot:item.bank="{ item }">
+            <template v-slot:item.bank_provider="{ item }">
                 <img
-                    :src="item.logo"
+                    :src="item.bank_provider.logo"
                     width="30"
                     height="30"
                     class="mr-2"
                     style="vertical-align: middle"
                 />
-                <span style="text-decoration: underline; cursor: pointer">
-                    {{ item.name[lang] }}
-                </span>
+                <span v-text="item.bank_provider.name[lang]"></span>
             </template>
 
-            <template v-slot:item.provider="{ item }">
+            <template v-slot:item.bank_clearer="{ item }">
                 <img
-                    :src="item.bankProvider.logo"
+                    :src="item.bank_clearer.logo"
                     width="30"
                     height="30"
                     class="mr-2"
@@ -62,9 +57,9 @@
                 />
                 <span
                     style="text-decoration: underline; cursor: pointer"
+                    v-text="item.bank_clearer.name[lang]"
                     @click="open(item)"
-                    >{{ item.bankProvider.name[lang] }}</span
-                >
+                ></span>
             </template>
         </v-data-table>
 
@@ -74,10 +69,10 @@
                 :loading="loading"
                 :error-message="errorMessage"
                 @cancel="dialog = false"
-                @submit="create"
+                @submit="update"
             >
                 <v-radio-group
-                    v-model="paymentProcessing.store_bank_clearer_id"
+                    v-model="paymentProcessing.bank_clearer.bank_provider_id"
                     class="mt-0 pt-0"
                     hide-details
                 >
@@ -86,18 +81,13 @@
                         :key="provider.store_bank_provider_id"
                         color="secondary"
                         class="b-outlined pa-3"
-                        :value="provider.store_bank_provider_id"
+                        :value="provider.bank_provider_id"
                     >
                         <template v-slot:label>
-                            <img
-                                :src="provider.bank_provider.logo"
-                                width="40"
-                                height="40"
-                                class="mr-3"
-                            />
+                            <img :src="provider.logo" width="60" class="mr-3" />
                             <h4
                                 class="text--primary subtitle-2"
-                                v-text="provider.bank_provider.name[lang]"
+                                v-text="provider.name[lang]"
                             ></h4>
                         </template>
                     </v-radio>
@@ -121,21 +111,21 @@ export default {
             headers: [
                 {
                     text: "When user card is issued by:",
-                    value: "bank"
+                    value: "bank_provider",
                 },
                 {
                     text: "Process payment with:",
-                    value: "provider"
-                }
-            ]
+                    value: "bank_clearer",
+                },
+            ],
         };
     },
 
     computed: {
-        ...mapState(["loading", "errorMessage", "serverItemsLength"]),
+        ...mapState(["loading", "errorMessage"]),
         ...mapState("storePanel/settings/paymentProcessing", [
-            "allBankProviders",
-            "storeBankProviders"
+            "storeBankProviders",
+            "paymentProcessings",
         ]),
 
         lang() {
@@ -149,7 +139,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         paymentProcessing: {
@@ -160,24 +150,23 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
         ...mapMutations(["setDialog"]),
         ...mapMutations("storePanel/settings/paymentProcessing", ["setItem"]),
         ...mapActions("storePanel/settings/paymentProcessing", [
-            "getAllBankProviders",
             "getStoreBankProviders",
             "getItems",
-            "create"
+            "update",
         ]),
 
         open(item) {
             this.paymentProcessing = item;
             this.dialog = true;
-        }
+        },
     },
 
     watch: {
@@ -186,8 +175,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
             this.getItems(this.query);
@@ -195,7 +184,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -203,16 +192,16 @@ export default {
             this.$router.replace({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
-        this.getAllBankProviders();
         this.getItems();
-    }
+        this.getStoreBankProviders();
+    },
 };
 </script>
 

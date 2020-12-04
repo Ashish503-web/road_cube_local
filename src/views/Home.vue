@@ -34,7 +34,7 @@ export default {
         About,
         Products,
         Quickfeatures,
-        HomeSection
+        HomeSection,
     },
 
     data: () => ({}),
@@ -47,7 +47,7 @@ export default {
         ) {
             this.$router.push("/en" + this.$route.fullPath);
         }
-    }
+    },
 };
 </script>
 

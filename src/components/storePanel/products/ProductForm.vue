@@ -4,7 +4,7 @@
         :loading="loading"
         :error-message="errorMessage"
         :reset-validation="resetValidation"
-        :disabled="true"
+        :disabled="!valid"
         @cancel="$emit('cancel')"
         @submit="
             () => {
@@ -19,13 +19,7 @@
             no-top-margin
             :success="productLang === 'el' ? success.name : false"
             :error-messages="error.name"
-            @focus="
-                () => {
-                    if (productLang === 'el') {
-                        error.name = '';
-                    }
-                }
-            "
+            @focus="error.name = ''"
             @blur="validateName"
         >
             <template v-slot:append>
@@ -38,13 +32,7 @@
             :label="translations.productDescription[lang]"
             :success="descriptionLang === 'el' ? success.description : false"
             :error-messages="error.description"
-            @focus="
-                () => {
-                    if (descriptionLang === 'el') {
-                        error.description = '';
-                    }
-                }
-            "
+            @focus="error.description = ''"
             @blur="validateDescription"
         >
             <template v-slot:append>
@@ -241,7 +229,7 @@ export default {
     name: "Product",
 
     props: {
-        mode: Number
+        mode: Number,
     },
 
     mixins: [translations, validators],
@@ -258,8 +246,8 @@ export default {
                 { el: "", en: "Thursday", it: "" },
                 { el: "", en: "Friday", it: "" },
                 { el: "", en: "Saturday", it: "" },
-                { el: "", en: "Sunday", it: "" }
-            ]
+                { el: "", en: "Sunday", it: "" },
+            ],
         };
     },
 
@@ -268,7 +256,7 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation"
+            "resetValidation",
         ]),
         ...mapState("storePanel/products", ["categories"]),
 
@@ -289,7 +277,7 @@ export default {
 
             set(val) {
                 this.setShowImageUpload(val);
-            }
+            },
         },
 
         showWeekdays: {
@@ -299,23 +287,23 @@ export default {
 
             set(val) {
                 this.setShowWeekdays(val);
-            }
+            },
         },
 
         product() {
             return this.$store.state.storePanel.products.product;
-        }
+        },
     },
 
     methods: {
         ...mapMutations("storePanel/products", [
             "setShowImageUpload",
-            "setShowWeekdays"
+            "setShowWeekdays",
         ]),
         ...mapActions("storePanel/products", [
             "getCategories",
             "create",
-            "update"
+            "update",
         ]),
 
         onFileSelected(event) {
@@ -323,13 +311,13 @@ export default {
                 this.imageFile = event;
                 const reader = new FileReader();
                 reader.readAsDataURL(this.imageFile);
-                reader.onload = e => (this.product.image = e.target.result);
+                reader.onload = (e) => (this.product.image = e.target.result);
             }
-        }
+        },
     },
 
     mounted() {
         this.getCategories();
-    }
+    },
 };
 </script>

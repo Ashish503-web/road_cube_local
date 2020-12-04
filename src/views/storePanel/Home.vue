@@ -169,9 +169,10 @@ import {
     mdiCursorDefault,
     mdiCompassOutline,
     mdiPhone,
-    mdiWallet
+    mdiWallet,
 } from "@mdi/js";
 
+import { mapActions } from "vuex";
 import translations from "@/utils/translations/home";
 
 const gradients = [
@@ -180,7 +181,7 @@ const gradients = [
     ["red", "orange", "yellow"],
     ["purple", "violet"],
     ["#00c6ff", "#F0F", "#FF0"],
-    ["#f72047", "#ffd200", "#1feaea"]
+    ["#f72047", "#ffd200", "#1feaea"],
 ];
 
 export default {
@@ -200,7 +201,7 @@ export default {
         fill: false,
         type: "trend",
         autoLineWidth: false,
-        statistics: {}
+        statistics: {},
     }),
 
     computed: {
@@ -219,28 +220,32 @@ export default {
                     text: {
                         el: "",
                         en: "Customer",
-                        it: ""
+                        it: "",
                     },
-                    value: this.statistics.total_customers
+                    value: this.statistics.total_customers,
                 },
                 {
                     icon: mdiDatabase,
                     text: {
                         el: "",
                         en: "Transactions",
-                        it: ""
+                        it: "",
                     },
-                    value: this.statistics.total_transactions
+                    value: this.statistics.total_transactions,
                 },
                 {
                     icon: mdiCurrencyEur,
                     text: {
                         el: "",
                         en: "Total",
-                        it: ""
+                        it: "",
                     },
-                    value: this.statistics.total_income
-                }
+                    value: new Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: "EUR",
+                        minimumFractionDigits: 2,
+                    }).format(this.statistics.total_income),
+                },
             ];
         },
 
@@ -251,37 +256,37 @@ export default {
                     text: {
                         el: "",
                         en: "User views",
-                        it: ""
+                        it: "",
                     },
-                    value: this.statistics.views.map_views
+                    value: this.statistics.views.map_views,
                 },
                 {
                     icon: mdiCursorDefault,
                     text: {
                         el: "",
                         en: "Clicks",
-                        it: ""
+                        it: "",
                     },
-                    value: this.statistics.views.visits
+                    value: this.statistics.views.visits,
                 },
                 {
                     icon: mdiDatabase,
                     text: {
                         el: "",
                         en: "User leads",
-                        it: ""
+                        it: "",
                     },
-                    value: this.statistics.views.nav_clicks
+                    value: this.statistics.views.nav_clicks,
                 },
                 {
                     icon: mdiCompassOutline,
                     text: {
                         el: "",
                         en: "Payments",
-                        it: ""
+                        it: "",
                     },
-                    value: this.statistics.views.phone_clicks
-                }
+                    value: this.statistics.views.phone_clicks,
+                },
             ];
         },
 
@@ -292,7 +297,7 @@ export default {
                     text: {
                         el: "",
                         en: "Payments Last 12 Hours",
-                        it: ""
+                        it: "",
                     },
                     value: `
                         ${
@@ -300,72 +305,57 @@ export default {
                                 .total_transactions
                         }
                         ${this.translations.transactions[this.lang]} /
-                        ${
+                        ${new Intl.NumberFormat("en-US", {
+                            style: "currency",
+                            currency: "EUR",
+                            minimumFractionDigits: 2,
+                        }).format(
                             this.statistics.last_twelve_hours_payments
                                 .total_price
-                        }
+                        )}
                         ${this.translations.total[this.lang]}
-                    `
+                    `,
                 },
                 {
                     icon: mdiWallet,
                     text: {
                         el: "",
                         en: "Payments Last Week",
-                        it: ""
+                        it: "",
                     },
                     value: `
                         ${this.statistics.last_week_payments.total_transactions}
                         ${this.translations.transactions[this.lang]} /
-                        ${this.statistics.last_week_payments.total_price}
+                        ${new Intl.NumberFormat("en-US", {
+                            style: "currency",
+                            currency: "EUR",
+                            minimumFractionDigits: 2,
+                        }).format(
+                            this.statistics.last_week_payments.total_price
+                        )}
                         ${this.translations.total[this.lang]}
-                    `
-                }
+                    `,
+                },
             ];
-        }
+        },
+    },
+
+    methods: {
+        ...mapActions("storePanel", ["getStore"]),
     },
 
     watch: {
         ["$store.state.storePanel.store"]: {
             immediate: true,
             handler(val) {
-                this.statistics = { ...val.statistics };
-                this.statistics.last_twelve_hours_payments = {
-                    ...val.statistics.last_twelve_hours_payments
-                };
-                this.statistics.last_week_payments = {
-                    ...val.statistics.last_week_payments
-                };
-
+                this.statistics = val.statistics;
                 this.statistics.name = val.app_name;
+            },
+        },
+    },
 
-                this.statistics.total_income = new Intl.NumberFormat("en-US", {
-                    style: "currency",
-                    currency: "EUR",
-                    minimumFractionDigits: 2
-                }).format(this.statistics.total_income);
-
-                this.statistics.last_twelve_hours_payments.total_price = new Intl.NumberFormat(
-                    "en-US",
-                    {
-                        style: "currency",
-                        currency: "EUR",
-                        minimumFractionDigits: 2
-                    }
-                ).format(
-                    this.statistics.last_twelve_hours_payments.total_price
-                );
-
-                this.statistics.last_week_payments.total_price = new Intl.NumberFormat(
-                    "en-US",
-                    {
-                        style: "currency",
-                        currency: "EUR",
-                        minimumFractionDigits: 2
-                    }
-                ).format(this.statistics.last_week_payments.total_price);
-            }
-        }
-    }
+    mounted() {
+        this.getStore();
+    },
 };
 </script>

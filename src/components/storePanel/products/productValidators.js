@@ -22,6 +22,27 @@ export default {
         };
     },
 
+    computed: {
+        valid() {
+            let wholesaleValid =
+                !this.product.wholesale_price || this.success.wholesalePrice;
+            let deliveryValid =
+                !this.product.delivery_cost || this.success.deliveryCost;
+            let shippingValid =
+                !this.product.shipping_cost || this.success.shippingCost;
+
+            return (
+                this.success.name &&
+                this.success.description &&
+                this.success.sellingPrice &&
+                wholesaleValid &&
+                deliveryValid &&
+                shippingValid &&
+                this.success.category
+            );
+        }
+    },
+
     methods: {
         validateName() {
             if (this.productLang === "el") {
@@ -152,7 +173,12 @@ export default {
             if (val) {
                 this.error = {
                     name: "",
-                    description: ""
+                    description: "",
+                    sellingPrice: "",
+                    wholesalePrice: "",
+                    deliveryCost: "",
+                    shippingCost: "",
+                    category: ""
                 };
             }
         }

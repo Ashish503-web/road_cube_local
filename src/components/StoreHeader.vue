@@ -16,15 +16,14 @@
             <v-tooltip color="secondary" bottom>
                 <template v-slot:activator="{ on }">
                     <v-btn icon v-on="on">
-                        <v-icon
-                            size="28"
-                            v-text="icons.mdiHelpCircleOutline"
-                        ></v-icon>
+                        <v-icon v-text="icons.mdiHelpCircleOutline"></v-icon>
                     </v-btn>
                 </template>
 
                 <span class="font-weight-bold">Help</span>
             </v-tooltip>
+
+            <AppNotifications />
 
             <v-menu offset-y transition="slide-y-transition">
                 <template v-slot:activator="{ on }">
@@ -174,16 +173,18 @@
 import {
     mdiHelpCircleOutline,
     mdiChevronDown,
-    mdiAccountOutline,
-    mdiWrenchOutline,
-    mdiLogout
+    mdiBellOutline,
+    mdiLogout,
 } from "@mdi/js";
 
+import AppNotifications from "@/components/general/AppNotifications.vue";
 import navLinks from "@/utils/storePanel/navLinks";
 import axios from "axios";
 
 export default {
     name: "StoreHeader",
+
+    components: { AppNotifications },
 
     mixins: [navLinks],
 
@@ -192,10 +193,11 @@ export default {
             icons: {
                 mdiHelpCircleOutline,
                 mdiChevronDown,
-                mdiLogout
+                mdiBellOutline,
+                mdiLogout,
             },
             mini: false,
-            drawer: false
+            drawer: false,
         };
     },
 
@@ -210,7 +212,7 @@ export default {
                     this.$router.push(
                         `/${val}/` + this.$route.fullPath.slice(4)
                     );
-            }
+            },
         },
 
         loading() {
@@ -231,7 +233,7 @@ export default {
 
         containerHeight() {
             return this.mini ? "calc(100vh - 194px)" : "calc(100vh - 184px)";
-        }
+        },
     },
 
     methods: {
@@ -249,8 +251,8 @@ export default {
                 this.$router.push(`/${this.lang}/`);
                 console.log(ex.response.data);
             }
-        }
-    }
+        },
+    },
 };
 </script>
 

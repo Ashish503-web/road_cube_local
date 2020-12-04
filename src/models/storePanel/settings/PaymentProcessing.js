@@ -8,12 +8,10 @@ const ApiEndpoint = process.env.VUE_APP_DEFAULT_API_URL;
 
 export default class PaymentProcessing {
     constructor(item = {}) {
-        this.bank_provider_id = item.bank_provider_id || null;
-        this.store_bank_clearer_id = item.bankProvider.bank_provider_id || null;
+        this.store_payment_routing_id = item.store_payment_routing_id;
+        this.bank_provider = item.bank_provider || {};
+        this.bank_clearer = item.bank_clearer || {};
     }
-
-    static getAllBankProviders = () =>
-        axios.get(`${ApiEndpoint}/admin/bank-providers`);
 
     static getStoreBankProviders = () =>
         axios.get(
@@ -29,11 +27,11 @@ export default class PaymentProcessing {
             )}/settings/payment-routings`
         );
 
-    static create = item =>
-        axios.post(
+    static update = (id, item) =>
+        axios.put(
             `${ApiEndpoint}/stores/${localStorage.getItem(
                 "storeId"
-            )}/settings/payment-routings`,
+            )}/settings/payment-routings/${id}`,
             item
         );
 }
