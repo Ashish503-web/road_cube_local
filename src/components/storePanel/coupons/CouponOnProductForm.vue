@@ -3,8 +3,7 @@
         :title="title"
         :loading="loading"
         :error-message="errorMessage"
-        :reset-validation="resetValidation"
-        :disabled="!valid"
+        :disabled="!formValid"
         @cancel="$emit('cancel')"
         @submit="mode === 1 ? create() : update()"
     >
@@ -88,12 +87,12 @@
 
         <b-text-field
             v-model="couponOnProduct.maximum"
-            label="Quantity"
+            label="Total Coupons"
             type="number"
-            :success="success.quantity"
-            :error-messages="error.quantity"
-            @focus="error.quantity = ''"
-            @blur="validateQuantity"
+            :success="success.totalCoupons"
+            :error-messages="error.totalCoupons"
+            @focus="error.totalCoupons = ''"
+            @blur="validateTotalCoupons"
         ></b-text-field>
     </b-card>
 </template>
@@ -144,6 +143,7 @@ export default {
     },
 
     methods: {
+        ...mapMutations(["setResetSuccess", "setResetValidation"]),
         ...mapActions("storePanel/coupons/couponsOnProducts", [
             "getGiftCategories",
             "getProducts",

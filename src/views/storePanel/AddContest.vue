@@ -191,7 +191,7 @@ import {
     mdiFormSelect,
     mdiStarOutline,
     mdiFaceOutline,
-    mdiLock
+    mdiLock,
 } from "@mdi/js";
 
 import EditorMenu from "@/components/editor/EditorMenu.vue";
@@ -217,7 +217,7 @@ export default {
     data: () => ({
         icons: {
             mdiArrowLeft,
-            mdiCalendarMonth
+            mdiCalendarMonth,
         },
         menu: false,
         winMenu: false,
@@ -227,59 +227,62 @@ export default {
             {
                 icon: mdiCardTextOutline,
                 name: "Text Field",
-                value: { name: "editor-input-element", type: "Text Field" }
+                value: { name: "editor-input-element", type: "Text Field" },
             },
             {
                 icon: mdiPound,
                 name: "Number Field",
-                value: { name: "editor-input-element", type: "Number Field" }
+                value: { name: "editor-input-element", type: "Number Field" },
             },
             {
                 icon: mdiLockOutline,
                 name: "Password Field",
-                value: { name: "editor-input-element", type: "Password Field" }
+                value: { name: "editor-input-element", type: "Password Field" },
             },
             {
                 icon: mdiEmailOutline,
                 name: "Email Field",
-                value: { name: "editor-input-element", type: "Email Field" }
+                value: { name: "editor-input-element", type: "Email Field" },
             },
             {
                 icon: mdiCalendarMonth,
                 name: "Date Field",
-                value: { name: "editor-input-element", type: "Date Field" }
+                value: { name: "editor-input-element", type: "Date Field" },
             },
             {
                 icon: mdiClockOutline,
                 name: "Time Field",
-                value: { name: "editor-input-element", type: "Time Field" }
+                value: { name: "editor-input-element", type: "Time Field" },
             },
             {
                 icon: mdiCalendarClock,
                 name: "Date/Time Field",
-                value: { name: "editor-input-element", type: "Date/Time Field" }
+                value: {
+                    name: "editor-input-element",
+                    type: "Date/Time Field",
+                },
             },
             {
                 icon: mdiPaletteOutline,
                 name: "Color Picker",
-                value: { name: "editor-color-picker", type: "Color Picker" }
+                value: { name: "editor-color-picker", type: "Color Picker" },
             },
             {
                 icon: mdiCheckBoxOutline,
                 name: "Checkbox Group",
-                value: { name: "editor-checkbox" }
+                value: { name: "editor-checkbox" },
             },
             { icon: mdiUploadOutline, name: "File Upload" },
             { icon: mdiAlphaHBoxOutline, name: "Header" },
             { icon: mdiRadioboxMarked, name: "Radio Group" },
             { icon: mdiFormSelect, name: "Select" },
             { icon: mdiStarOutline, name: "Star Rating" },
-            { icon: mdiFaceOutline, name: "User Details" }
+            { icon: mdiFaceOutline, name: "User Details" },
         ],
         elements: [],
         dialog: false,
         selectedElement: {},
-        index: null
+        index: null,
     }),
 
     methods: {
@@ -338,7 +341,7 @@ export default {
             }
 
             return str;
-        }
-    }
+        },
+    },
 };
 </script>

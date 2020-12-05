@@ -8,12 +8,15 @@ export default {
             },
             mobilePayments: {
                 el: "",
-                en: "Mobile Payments",
+                en: "Online Payment Processing",
                 it: ""
             },
             mobilePaymentsInfo: {
                 el: "",
-                en: "Impress your clients with mobile payments to your store",
+                en: `
+                    Impress your clients with online payment processing that are made 
+                    through the mobile application directly to your store.
+                `,
                 it: ""
             },
             on: {

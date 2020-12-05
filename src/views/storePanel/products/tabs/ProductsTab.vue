@@ -45,6 +45,16 @@
                 <span v-else v-text="translations.noData[lang]"></span>
             </template>
 
+            <template v-slot:item.retail_price="{ item }">
+                {{
+                    new Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: "EUR",
+                        minimumFractionDigits: 2,
+                    }).format(item.retail_price)
+                }}
+            </template>
+
             <template v-slot:item.actions="{ item }">
                 <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
@@ -229,8 +239,6 @@ export default {
         open(mode, item) {
             this.mode = mode;
             this.product = item;
-            if (this.product.retail_price)
-                this.product.retail_price = this.product.retail_price.slice(1);
             if (this.product.image) this.setShowImageUpload(true);
             else this.setShowImageUpload(false);
             if (this.product.availability_days.length)
@@ -247,13 +255,6 @@ export default {
     },
 
     watch: {
-        dialog(val) {
-            if (!val) {
-                this.setResetSuccess(false);
-                this.setResetValidation(false);
-            }
-        },
-
         $route(val) {
             if (!val.query.page) {
                 this.$router.push({

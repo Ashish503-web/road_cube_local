@@ -1,6 +1,15 @@
 export default {
     data() {
         return {
+            valid: {
+                name: false,
+                description: false,
+                sellingPrice: false,
+                wholesalePrice: false,
+                deliveryCost: false,
+                shippingCost: false,
+                category: false
+            },
             success: {
                 name: false,
                 description: false,
@@ -23,22 +32,15 @@ export default {
     },
 
     computed: {
-        valid() {
-            let wholesaleValid =
-                !this.product.wholesale_price || this.success.wholesalePrice;
-            let deliveryValid =
-                !this.product.delivery_cost || this.success.deliveryCost;
-            let shippingValid =
-                !this.product.shipping_cost || this.success.shippingCost;
-
+        formValid() {
             return (
-                this.success.name &&
-                this.success.description &&
-                this.success.sellingPrice &&
-                wholesaleValid &&
-                deliveryValid &&
-                shippingValid &&
-                this.success.category
+                this.valid.name &&
+                this.valid.description &&
+                this.valid.sellingPrice &&
+                this.valid.wholesalePrice &&
+                this.valid.deliveryCost &&
+                this.valid.shippingCost &&
+                this.valid.category
             );
         }
     },
@@ -121,38 +123,66 @@ export default {
             }
         },
 
-        ["product.name.el"](val) {
-            this.success.name = !!val;
-        },
-
         descriptionLang(val) {
             if (val === "en" || val === "it") {
                 this.error.description = "";
             }
         },
 
-        ["product.description.el"](val) {
-            this.success.description = !!val;
+        ["product.name.el"]: {
+            immediate: true,
+            handler(val) {
+                this.valid.name = !!val;
+                this.success.name = !!val;
+            }
         },
 
-        ["product.retail_price"](val) {
-            this.success.sellingPrice = val >= 0.1;
+        ["product.description.el"]: {
+            immediate: true,
+            handler(val) {
+                this.valid.description = !!val;
+                this.success.description = !!val;
+            }
         },
 
-        ["product.wholesale_price"](val) {
-            this.success.wholesalePrice = val >= 0.1;
+        ["product.retail_price"]: {
+            immediate: true,
+            handler(val) {
+                this.valid.sellingPrice = val >= 0.1;
+                this.success.sellingPrice = val >= 0.1;
+            }
         },
 
-        ["product.delivery_cost"](val) {
-            this.success.deliveryCost = val >= 0.1;
+        ["product.wholesale_price"]: {
+            immediate: true,
+            handler(val) {
+                this.valid.wholesalePrice = val >= 0.1 || !val;
+                this.success.wholesalePrice = val >= 0.1;
+            }
         },
 
-        ["product.shipping_cost"](val) {
-            this.success.shippingCost = val >= 0.1;
+        ["product.delivery_cost"]: {
+            immediate: true,
+            handler(val) {
+                this.valid.deliveryCost = val >= 0.1 || !val;
+                this.success.deliveryCost = val >= 0.1;
+            }
         },
 
-        ["product.product_category_id"](val) {
-            this.success.category = !!val;
+        ["product.shipping_cost"]: {
+            immediate: true,
+            handler(val) {
+                this.valid.shippingCost = val >= 0.1 || !val;
+                this.success.shippingCost = val >= 0.1;
+            }
+        },
+
+        ["product.product_category_id"]: {
+            immediate: true,
+            handler(val) {
+                this.valid.category = !!val;
+                this.success.category = !!val;
+            }
         },
 
         resetSuccess(val) {
@@ -166,20 +196,27 @@ export default {
                     shippingCost: false,
                     category: false
                 };
+
+                this.setResetSuccess(false);
             }
         },
 
-        resetValidation(val) {
-            if (val) {
-                this.error = {
-                    name: "",
-                    description: "",
-                    sellingPrice: "",
-                    wholesalePrice: "",
-                    deliveryCost: "",
-                    shippingCost: "",
-                    category: ""
-                };
+        resetValidation: {
+            immediate: true,
+            handler(val) {
+                if (val) {
+                    this.error = {
+                        name: "",
+                        description: "",
+                        sellingPrice: "",
+                        wholesalePrice: "",
+                        deliveryCost: "",
+                        shippingCost: "",
+                        category: ""
+                    };
+
+                    this.setResetValidation(false);
+                }
             }
         }
     }

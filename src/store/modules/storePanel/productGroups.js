@@ -25,14 +25,7 @@ export default {
         },
 
         setItems(state, payload) {
-            state.productGroups = payload.map(p => {
-                p.average_price = new Intl.NumberFormat("en-US", {
-                    style: "currency",
-                    currency: "EUR",
-                    minimumFractionDigits: 2
-                }).format(p.average_price);
-                return p;
-            });
+            state.productGroups = payload;
         },
 
         setItem(state, payload) {
@@ -40,11 +33,6 @@ export default {
         },
 
         addItem(state, payload) {
-            payload.average_price = new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "EUR",
-                minimumFractionDigits: 2
-            }).format(payload.average_price);
             state.productGroups.unshift(payload);
         },
 

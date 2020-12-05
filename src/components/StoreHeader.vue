@@ -158,9 +158,9 @@
                             <v-list-item-icon>
                                 <v-icon v-text="item.icon"></v-icon>
                             </v-list-item-icon>
-                            <v-list-item-title
-                                v-text="item.title[lang]"
-                            ></v-list-item-title>
+
+                            <v-list-item-title v-text="item.title[lang]">
+                            </v-list-item-title>
                         </v-list-item>
                     </div>
                 </v-list>

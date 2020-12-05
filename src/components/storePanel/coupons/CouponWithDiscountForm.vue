@@ -3,8 +3,7 @@
         title="Add Discount"
         :loading="loading"
         :error-message="errorMessage"
-        :reset-validation="resetValidation"
-        :disabled="!valid"
+        :disabled="!formValid"
         @cancel="$emit('cancel')"
         @submit="create"
     >
@@ -156,6 +155,7 @@ export default {
     },
 
     methods: {
+        ...mapMutations(["setResetSuccess", "setResetValidation"]),
         ...mapActions("storePanel/coupons/couponsWithDiscount", [
             "getGiftCategories",
             "getProducts",

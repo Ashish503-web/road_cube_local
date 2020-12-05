@@ -137,10 +137,7 @@ export default {
                 commit("setPreviewLoading", true);
 
                 let transaction = { ...state.transaction };
-                for (let key in transaction) {
-                    if (!transaction[key]) delete transaction[key];
-                }
-                if (!showProducts) delete transaction.products;
+                Transaction.clearFalsyValues(transaction);
 
                 const { data } = await Transaction.getTransactionPreview(
                     transaction
@@ -228,15 +225,7 @@ export default {
                 commit("setLoading", true, { root: true });
 
                 let transaction = { ...state.transaction };
-                for (let key in transaction) {
-                    if (!transaction[key]) delete transaction[key];
-                }
-
-                delete transaction.general_coupon_claims_for_use;
-
-                if (!showProducts) {
-                    delete transaction.products;
-                }
+                Transaction.clearFalsyValues(transaction);
 
                 await Transaction.create(transaction);
 

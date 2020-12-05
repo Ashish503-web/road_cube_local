@@ -64,8 +64,6 @@ export default {
 
                 const { coupons, pagination } = data.data;
 
-                console.log(coupons);
-
                 commit("setItems", coupons);
                 commit("setServerItemsLength", pagination.total, {
                     root: true
@@ -131,6 +129,7 @@ export default {
 
                 let couponWithCode = { ...state.couponWithCode };
                 delete couponWithCode.image;
+                delete couponWithCode.maximum;
 
                 const { data } = await CouponWithCode.update(couponWithCode);
 

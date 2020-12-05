@@ -74,7 +74,6 @@ export default {
         hideDefaultFooter: Boolean,
         loading: Boolean,
         errorMessage: String,
-        resetValidation: Boolean,
         disabled: {
             type: Boolean,
             default: false,

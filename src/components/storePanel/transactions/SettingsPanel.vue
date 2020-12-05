@@ -31,23 +31,27 @@
                 <v-col cols="2" class="text-center">
                     <v-row no-gutters justify="center" class="mb-3">
                         <v-switch
-                            v-model="online_payments"
+                            v-model="online_payment_processing"
                             color="secondary"
                             class="mt-0 pt-0"
                             hide-details
                             :loading="mobileLoading"
                             @change="
                                 updateMobilePayments({
-                                    online_payments
+                                    online_payment_processing,
                                 })
                             "
                         ></v-switch>
                     </v-row>
 
                     <span
-                        :class="online_payments ? 'success--text' : 'red--text'"
+                        :class="
+                            online_payment_processing
+                                ? 'success--text'
+                                : 'red--text'
+                        "
                         v-text="
-                            online_payments
+                            online_payment_processing
                                 ? translations.on[lang]
                                 : translations.off[lang]
                         "
@@ -90,7 +94,7 @@ export default {
 
     data: () => ({
         icons: { mdiClose },
-        online_payments: null
+        online_payment_processing: null,
     }),
 
     computed: {
@@ -98,7 +102,7 @@ export default {
 
         lang() {
             return this.$route.params.lang;
-        }
+        },
     },
 
     methods: {
@@ -126,7 +130,7 @@ export default {
                             "storeId"
                         )}/transactions/excel/status`
                     )
-                    .then(res => console.log(res));
+                    .then((res) => console.log(res));
 
                 // axios
                 //     .get(
@@ -149,7 +153,7 @@ export default {
             } catch (ex) {
                 console.error(ex.response.data.message);
             }
-        }
+        },
 
         // fundClosure() {
         //     axios.get(
@@ -162,12 +166,12 @@ export default {
     },
 
     watch: {
-        ["$store.state.storePanel.store"]: {
+        ["$store.state.storePanel.store.flags.reward.online_payment_processing"]: {
             immediate: true,
             handler(val) {
-                this.online_payments = val.flags.reward.online_payments;
-            }
-        }
-    }
+                this.online_payment_processing = val;
+            },
+        },
+    },
 };
 </script>

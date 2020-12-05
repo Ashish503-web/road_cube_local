@@ -33,6 +33,14 @@ export default class PaymentProvider {
             item
         );
 
+    static update = item =>
+        axios.put(
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/settings/bank-providers`,
+            item
+        );
+
     static delete = id =>
         axios.delete(
             `${ApiEndpoint}/${localStorage.getItem(

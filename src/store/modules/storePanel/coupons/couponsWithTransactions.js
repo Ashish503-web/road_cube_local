@@ -42,21 +42,23 @@ export default {
 
                 const { data } = await CouponWithTransaction.getItem();
 
-                let { coupon } = data.data;
-                coupon.image = coupon.gift_image;
+                if (data.data.coupon) {
+                    let { coupon } = data.data;
 
-                if (coupon.coupon_id) {
-                    await dispatch("getItemUsers", {
-                        id: coupon.coupon_id,
-                        query: "?page=1"
-                    });
+                    if (coupon.coupon_id) {
+                        coupon.image = coupon.gift_image;
+                        await dispatch("getItemUsers", {
+                            id: coupon.coupon_id,
+                            query: "?page=1"
+                        });
+                    }
                 }
 
                 commit("setItem", data.data.coupon);
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });
-                console.error(ex.response.data);
+                console.error(ex.response.data.message);
             }
         },
 

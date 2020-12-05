@@ -88,6 +88,40 @@ export default {
             }
         },
 
+        async update({ commit, state }) {
+            try {
+                commit("setLoading", true, { root: true });
+
+                const { data } = await PaymentProvider.update({
+                    store_bank_provider_id:
+                        state.paymentProvider.store_bank_provider_id,
+                    credentials: state.paymentProvider.credentials
+                });
+
+                commit("updateItem", data.data.store_bank_provider);
+                commit("setLoading", false, { root: true });
+                commit("setDialog", false, { root: true });
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated Bank Provider!"
+                    },
+                    { root: true }
+                );
+            } catch (ex) {
+                commit("setLoading", false, { root: true });
+                commit("setErrorMessage", ex.response.data.message, {
+                    root: true
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", "", { root: true }),
+                    5000
+                );
+            }
+        },
+
         async remove({ commit, state }) {
             try {
                 commit("setLoading", true, { root: true });

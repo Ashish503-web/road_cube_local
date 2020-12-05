@@ -3,8 +3,7 @@
         :title="title"
         :loading="loading"
         :error-message="errorMessage"
-        :reset-validation="resetValidation"
-        :disabled="!valid"
+        :disabled="!formValid"
         @cancel="$emit('cancel')"
         @submit="mode === 1 ? create(imageFile) : update(imageFile)"
     >
@@ -46,11 +45,11 @@
             v-if="mode === 1"
             v-model="couponWithCode.maximum"
             type="number"
-            label="Quantity"
-            :success="success.quantity"
-            :error-messages="error.quantity"
-            @focus="error.quantity = ''"
-            @blur="validateQuantity"
+            label="Total Coupons"
+            :success="success.totalCoupons"
+            :error-messages="error.totalCoupons"
+            @focus="error.totalCoupons = ''"
+            @blur="validateTotalCoupons"
         ></b-text-field>
 
         <b-text-field
@@ -161,6 +160,7 @@ export default {
     },
 
     methods: {
+        ...mapMutations(["setResetSuccess", "setResetValidation"]),
         ...mapMutations("storePanel/coupons/couponsWithCode", [
             "setShowImageUpload",
         ]),

@@ -3,8 +3,7 @@
         :title="title"
         :loading="loading"
         :error-message="errorMessage"
-        :reset-validation="resetValidation"
-        :disabled="!valid"
+        :disabled="!formValid"
         @cancel="$emit('cancel')"
         @submit="
             () => {
@@ -296,6 +295,7 @@ export default {
     },
 
     methods: {
+        ...mapMutations(["setResetSuccess", "setResetValidation"]),
         ...mapMutations("storePanel/products", [
             "setShowImageUpload",
             "setShowWeekdays",

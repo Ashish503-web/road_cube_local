@@ -1,6 +1,12 @@
 export default {
     data() {
         return {
+            valid: {
+                name: false,
+                description: false,
+                averagePrice: false,
+                category: false
+            },
             success: {
                 name: false,
                 description: false,
@@ -17,12 +23,12 @@ export default {
     },
 
     computed: {
-        valid() {
+        formValid() {
             return (
-                this.success.name &&
-                this.success.description &&
-                this.success.averagePrice &&
-                this.success.category
+                this.valid.name &&
+                this.valid.description &&
+                this.valid.averagePrice &&
+                this.valid.category
             );
         }
     },
@@ -74,26 +80,42 @@ export default {
             }
         },
 
-        ["productGroup.name.el"](val) {
-            this.success.name = !!val;
-        },
-
         descriptionLang(val) {
             if (val === "en" || val === "it") {
                 this.error.description = "";
             }
         },
 
-        ["productGroup.description.el"](val) {
-            this.success.description = !!val;
+        ["productGroup.name.el"]: {
+            immediate: true,
+            handler(val) {
+                this.valid.name = !!val;
+                this.success.name = !!val;
+            }
         },
 
-        ["productGroup.average_price"](val) {
-            this.success.averagePrice = val >= 0.1;
+        ["productGroup.description.el"]: {
+            immediate: true,
+            handler(val) {
+                this.valid.description = !!val;
+                this.success.description = !!val;
+            }
         },
 
-        ["productGroup.product_category_id"](val) {
-            this.success.category = !!val;
+        ["productGroup.average_price"]: {
+            immediate: true,
+            handler(val) {
+                this.valid.averagePrice = val >= 0.1;
+                this.success.averagePrice = val >= 0.1;
+            }
+        },
+
+        ["productGroup.product_category_id"]: {
+            immediate: true,
+            handler(val) {
+                this.valid.category = !!val;
+                this.success.category = !!val;
+            }
         },
 
         resetSuccess(val) {
@@ -104,17 +126,24 @@ export default {
                     averagePrice: false,
                     category: false
                 };
+
+                this.setResetSuccess(false);
             }
         },
 
-        resetValidation(val) {
-            if (val) {
-                this.error = {
-                    name: "",
-                    description: "",
-                    averagePrice: "",
-                    category: ""
-                };
+        resetValidation: {
+            immediate: true,
+            handler(val) {
+                if (val) {
+                    this.error = {
+                        name: "",
+                        description: "",
+                        averagePrice: "",
+                        category: ""
+                    };
+
+                    this.setResetValidation(false);
+                }
             }
         }
     }

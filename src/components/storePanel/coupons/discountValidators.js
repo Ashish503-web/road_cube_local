@@ -17,7 +17,7 @@ export default {
     },
 
     computed: {
-        valid() {
+        formValid() {
             let discountValid =
                 this.type === 1
                     ? this.success.discountPercentage
@@ -102,17 +102,24 @@ export default {
                     discountPercentage: false,
                     discountValue: false
                 };
+
+                this.setResetSuccess(false);
             }
         },
 
-        resetValidation(val) {
-            if (val) {
-                this.error = {
-                    giftCategory: "",
-                    product: "",
-                    discountPercentage: "",
-                    discountValue: ""
-                };
+        resetValidation: {
+            immediate: true,
+            handler(val) {
+                if (val) {
+                    this.error = {
+                        giftCategory: "",
+                        product: "",
+                        discountPercentage: "",
+                        discountValue: ""
+                    };
+
+                    this.setResetValidation(false);
+                }
             }
         }
     }

@@ -57,19 +57,34 @@
                     </v-col>
 
                     <v-col cols="auto">
+                        <template v-if="paymentProvider.store_bank_provider_id">
+                            <v-btn
+                                color="secondary"
+                                class="mr-3"
+                                width="100"
+                                height="50"
+                                depressed
+                                @click="open(2, paymentProvider)"
+                                >edit</v-btn
+                            >
+                            <v-btn
+                                color="secondary"
+                                width="120"
+                                height="50"
+                                depressed
+                                @click="open(0, paymentProvider)"
+                                >disable</v-btn
+                            >
+                        </template>
                         <v-btn
-                            large
+                            v-else
                             color="secondary"
                             width="120"
                             height="50"
                             depressed
-                            v-text="
-                                paymentProvider.store_bank_provider_id
-                                    ? 'disable'
-                                    : 'enable'
-                            "
-                            @click="open(paymentProvider)"
-                        ></v-btn>
+                            @click="open(1, paymentProvider)"
+                            >enable</v-btn
+                        >
                     </v-col>
                 </v-row>
             </v-col>
@@ -77,11 +92,11 @@
 
         <v-dialog v-model="dialog" max-width="500">
             <b-card
-                title="Create Provider"
+                :title="title"
                 :loading="loading"
                 :error-message="errorMessage"
                 @cancel="dialog = false"
-                @submit="create"
+                @submit="mode === 1 ? create() : update()"
             >
                 <b-text-field
                     v-for="(field, i) in paymentProvider.fields"
@@ -127,6 +142,7 @@ export default {
         return {
             icons: { mdiPencilOutline, mdiClose, mdiMagnify },
             page: +this.$route.query.page,
+            mode: 0,
         };
     },
 
@@ -139,6 +155,10 @@ export default {
 
         lang() {
             return this.$route.params.lang;
+        },
+
+        title() {
+            return this.mode === 1 ? "Create Provider" : "Update Provider";
         },
 
         dialog: {
@@ -193,9 +213,10 @@ export default {
             "remove",
         ]),
 
-        open(item) {
+        open(mode, item) {
+            this.mode = mode;
             this.paymentProvider = item;
-            if (item.store_bank_provider_id) {
+            if (mode === 0) {
                 this.deleteDialog = true;
             } else {
                 this.setResetValidation(true);

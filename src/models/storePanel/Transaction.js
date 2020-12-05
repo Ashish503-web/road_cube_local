@@ -21,6 +21,15 @@ export default class Transaction {
             item.general_coupon_claims_for_use || [];
     }
 
+    static clearFalsyValues = obj => {
+        for (let key in obj) {
+            if (!obj[key]) delete obj[key];
+            else if (typeof obj[key] === "object") {
+                if (!obj[key].length) delete obj[key];
+            }
+        }
+    };
+
     static getProducts = query =>
         axios.get(
             `${ApiEndpoint}/stores/${localStorage.getItem(

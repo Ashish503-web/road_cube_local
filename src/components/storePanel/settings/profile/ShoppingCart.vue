@@ -11,7 +11,7 @@
             <v-col cols="auto" class="subtitle-2">
                 {{ translations.toggle[lang] }}:
             </v-col>
-            <v-col cols="auto" class="ml-3">
+            <v-col cols="auto" class="ml-3" style="position: relative">
                 <v-switch
                     v-model="shopping_cart"
                     :label="
@@ -19,11 +19,13 @@
                             ? translations.on[lang]
                             : translations.off[lang]
                     "
-                    :disabled="disabled"
+                    :readonly="readonly"
                     color="secondary"
                     class="mt-0 pt-0"
                     hide-details="auto"
                 ></v-switch>
+
+                <div v-if="readonly" class="b-not-allowed"></div>
             </v-col>
         </v-row>
     </b-standard-card>
@@ -57,7 +59,7 @@ export default {
                 .shoppingCart;
         },
 
-        disabled() {
+        readonly() {
             return !this.$store.state.storePanel.store.flags.reward
                 .orders_allowed;
         },
@@ -77,3 +79,14 @@ export default {
     },
 };
 </script>
+
+<style scoped>
+.b-not-allowed {
+    cursor: no-drop;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+</style>

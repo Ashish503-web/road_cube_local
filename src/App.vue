@@ -33,6 +33,15 @@ export default {
         ...mapActions(["getUser"]),
     },
 
+    async beforeCreate() {
+        console.log(caches);
+        // if (Object.keys(caches).length) {
+        //     const names = await caches.keys();
+        //     await Promise.all(names.map((name) => caches.delete(name)));
+        //     window.location.reload();
+        // }
+    },
+
     mounted() {
         const accessToken = localStorage.getItem("accessToken");
         const storeId = localStorage.getItem("storeId");

@@ -217,13 +217,6 @@ export default {
     },
 
     watch: {
-        dialog(val) {
-            if (!val) {
-                this.setResetSuccess(false);
-                this.setResetValidation(false);
-            }
-        },
-
         $route(val) {
             if (!val.query.page) {
                 this.$router.push({

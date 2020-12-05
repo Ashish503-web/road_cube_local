@@ -1,11 +1,19 @@
 export default {
     data() {
         return {
+            valid: {
+                giftCategory: false,
+                code: false,
+                points: false,
+                totalCoupons: false,
+                giftTitle: false,
+                giftDescription: false
+            },
             success: {
                 giftCategory: false,
                 code: false,
                 points: false,
-                quantity: false,
+                totalCoupons: false,
                 giftTitle: false,
                 giftDescription: false
             },
@@ -13,7 +21,7 @@ export default {
                 giftCategory: "",
                 code: "",
                 points: "",
-                quantity: "",
+                totalCoupons: "",
                 giftTitle: "",
                 giftDescription: ""
             }
@@ -21,14 +29,16 @@ export default {
     },
 
     computed: {
-        valid() {
+        formValid() {
+            let totalCouponsValid =
+                this.mode === 1 ? this.valid.totalCoupons : true;
             return (
-                this.success.giftCategory &&
-                this.success.code &&
-                this.success.points &&
-                this.success.quantity &&
-                this.success.giftTitle &&
-                this.success.giftDescription
+                this.valid.giftCategory &&
+                this.valid.code &&
+                this.valid.points &&
+                totalCouponsValid &&
+                this.valid.giftTitle &&
+                this.valid.giftDescription
             );
         }
     },
@@ -58,13 +68,13 @@ export default {
             }
         },
 
-        validateQuantity() {
+        validateTotalCoupons() {
             if (!this.couponWithCode.maximum) {
-                this.error.quantity = "Quantity is required";
+                this.error.totalCoupons = "Total Coupons is required";
             } else if (this.couponWithCode.maximum < 1) {
-                this.error.quantity = "Quantity must be minimum 1";
+                this.error.totalCoupons = "Total Coupons must be minimum 1";
             } else {
-                this.error.quantity = "";
+                this.error.totalCoupons = "";
             }
         },
 
@@ -86,28 +96,52 @@ export default {
     },
 
     watch: {
-        ["couponWithCode.gift_category_id"](val) {
-            this.success.giftCategory = !!val;
+        ["couponWithCode.gift_category_id"]: {
+            immediate: true,
+            handler(val) {
+                this.valid.giftCategory = !!val;
+                this.success.giftCategory = !!val;
+            }
         },
 
-        ["couponWithCode.code"](val) {
-            this.success.code = !!val;
+        ["couponWithCode.code"]: {
+            immediate: true,
+            handler(val) {
+                this.valid.code = !!val;
+                this.success.code = !!val;
+            }
         },
 
-        ["couponWithCode.points"](val) {
-            this.success.points = !!val;
+        ["couponWithCode.points"]: {
+            immediate: true,
+            handler(val) {
+                this.valid.points = !!val;
+                this.success.points = !!val;
+            }
         },
 
-        ["couponWithCode.maximum"](val) {
-            this.success.quantity = val >= 1;
+        ["couponWithCode.maximum"]: {
+            immediate: true,
+            handler(val) {
+                this.valid.totalCoupons = val >= 1;
+                this.success.totalCoupons = val >= 1;
+            }
         },
 
-        ["couponWithCode.gift_title"](val) {
-            this.success.giftTitle = !!val;
+        ["couponWithCode.gift_title"]: {
+            immediate: true,
+            handler(val) {
+                this.valid.giftTitle = !!val;
+                this.success.giftTitle = !!val;
+            }
         },
 
-        ["couponWithCode.gift_description"](val) {
-            this.success.giftDescription = !!val;
+        ["couponWithCode.gift_description"]: {
+            immediate: true,
+            handler(val) {
+                this.valid.giftDescription = !!val;
+                this.success.giftDescription = !!val;
+            }
         },
 
         resetSuccess(val) {
@@ -116,23 +150,30 @@ export default {
                     giftCategory: false,
                     code: false,
                     points: false,
-                    quantity: false,
+                    totalCoupons: false,
                     giftTitle: false,
                     giftDescription: false
                 };
+
+                this.setResetSuccess(false);
             }
         },
 
-        resetValidation(val) {
-            if (val) {
-                this.error = {
-                    giftCategory: "",
-                    code: "",
-                    points: "",
-                    quantity: "",
-                    giftTitle: "",
-                    giftDescription: ""
-                };
+        resetValidation: {
+            immediate: true,
+            handler(val) {
+                if (val) {
+                    this.error = {
+                        giftCategory: "",
+                        code: "",
+                        points: "",
+                        totalCoupons: "",
+                        giftTitle: "",
+                        giftDescription: ""
+                    };
+
+                    this.setResetValidation(false);
+                }
             }
         }
     }

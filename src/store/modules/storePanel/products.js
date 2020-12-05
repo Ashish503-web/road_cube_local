@@ -25,14 +25,7 @@ export default {
         },
 
         setItems(state, payload) {
-            state.products = payload.map(p => {
-                p.retail_price = new Intl.NumberFormat("en-US", {
-                    style: "currency",
-                    currency: "EUR",
-                    minimumFractionDigits: 2
-                }).format(p.retail_price);
-                return p;
-            });
+            state.products = payload;
         },
 
         setItem(state, payload) {
@@ -40,11 +33,6 @@ export default {
         },
 
         addItem(state, payload) {
-            payload.retail_price = new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "EUR",
-                minimumFractionDigits: 2
-            }).format(payload.retail_price);
             state.products.unshift(payload);
         },
 
@@ -166,7 +154,7 @@ export default {
                         mode: 2
                     });
                 } else {
-                    commit("updateItem", data.data.product, { root: true });
+                    commit("updateItem", data.data.product);
                     commit("setLoading", false, { root: true });
                     commit("setDialog", false, { root: true });
                     commit(

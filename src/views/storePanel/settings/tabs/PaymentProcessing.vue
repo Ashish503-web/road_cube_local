@@ -39,8 +39,7 @@
             <template v-slot:item.bank_provider="{ item }">
                 <img
                     :src="item.bank_provider.logo"
-                    width="30"
-                    height="30"
+                    width="100"
                     class="mr-2"
                     style="vertical-align: middle"
                 />
@@ -50,8 +49,7 @@
             <template v-slot:item.bank_clearer="{ item }">
                 <img
                     :src="item.bank_clearer.logo"
-                    width="30"
-                    height="30"
+                    width="100"
                     class="mr-2"
                     style="vertical-align: middle"
                 />
