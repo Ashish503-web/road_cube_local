@@ -20,7 +20,11 @@ export default {
         },
 
         setItems(state, payload) {
-            state.couponsOnProducts = payload;
+            state.couponsOnProducts = payload.map(c => {
+                c.product_buy = c.product_buy_name;
+                c.product_free = c.product_free_name;
+                return c;
+            });
         },
 
         setItem(state, payload) {
@@ -91,15 +95,13 @@ export default {
 
                 let couponOnProduct = { ...state.couponOnProduct };
                 delete couponOnProduct.coupon_id;
+                delete couponOnProduct.code;
                 if (couponOnProduct.action === "sample")
                     delete couponOnProduct.product_buy_id;
 
                 const { data } = await CouponOnProduct.create(couponOnProduct);
 
                 const { coupon } = data.data;
-
-                coupon.product_buy_name = coupon.product_buy.name;
-                coupon.product_free_name = coupon.product_free.name;
 
                 commit("addItem", coupon);
                 commit(

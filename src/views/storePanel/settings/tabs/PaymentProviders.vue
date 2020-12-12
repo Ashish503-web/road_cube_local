@@ -1,8 +1,9 @@
 <template>
     <v-tab-item :value="$route.path" class="pa-3">
-        <h3 class="text-h6 font-weight-bold text-center">
-            Set up one or more mobile payments for your business.
-        </h3>
+        <h3
+            class="text-h6 font-weight-bold text-center"
+            v-text="translations.title[lang]"
+        ></h3>
 
         <v-row
             v-if="providersLoading"
@@ -35,8 +36,8 @@
                             width="100"
                             v-text="
                                 paymentProvider.store_bank_provider_id
-                                    ? 'active'
-                                    : 'inactive'
+                                    ? translations.active[lang]
+                                    : translations.inactive[lang]
                             "
                         ></v-sheet>
                     </v-col>
@@ -64,17 +65,17 @@
                                 width="100"
                                 height="50"
                                 depressed
+                                v-text="translations.edit[lang]"
                                 @click="open(2, paymentProvider)"
-                                >edit</v-btn
-                            >
+                            ></v-btn>
                             <v-btn
                                 color="secondary"
                                 width="120"
                                 height="50"
                                 depressed
+                                v-text="translations.disable[lang]"
                                 @click="open(0, paymentProvider)"
-                                >disable</v-btn
-                            >
+                            ></v-btn>
                         </template>
                         <v-btn
                             v-else
@@ -82,9 +83,9 @@
                             width="120"
                             height="50"
                             depressed
+                            v-text="translations.enable[lang]"
                             @click="open(1, paymentProvider)"
-                            >enable</v-btn
-                        >
+                        ></v-btn>
                     </v-col>
                 </v-row>
             </v-col>
@@ -112,15 +113,15 @@
         <v-dialog v-model="deleteDialog" max-width="500">
             <b-card
                 type="delete"
-                title="Delete Provider"
-                :submit-text="{ el: '', en: 'delete', it: '' }"
+                :title="translations.disableProvider[lang]"
+                :submit-text="{ el: '', en: 'disable', it: '' }"
                 :loading="loading"
                 :error-message="errorMessage"
                 @cancel="deleteDialog = false"
                 @submit="remove"
             >
                 <div class="subtitle-1 font-weight-medium pl-2">
-                    Are you sure you want to delete
+                    {{ translations.areYouSure[lang] }}
                     <span class="font-weight-bold text--primary">{{
                         paymentProvider.name[lang]
                     }}</span
@@ -132,17 +133,20 @@
 </template>
 
 <script>
-import { mapState, mapMutations, mapActions } from "vuex";
 import { mdiPencilOutline, mdiClose, mdiMagnify } from "@mdi/js";
+import { mapState, mapMutations, mapActions } from "vuex";
+import translations from "@/utils/translations/storePanel/settings/paymentProviders";
 
 export default {
     name: "PaymentProviders",
+
+    mixins: [translations],
 
     data() {
         return {
             icons: { mdiPencilOutline, mdiClose, mdiMagnify },
             page: +this.$route.query.page,
-            mode: 0,
+            mode: 0
         };
     },
 
@@ -150,7 +154,7 @@ export default {
         ...mapState(["loading", "errorMessage", "resetValidation"]),
         ...mapState("storePanel/settings/paymentProviders", [
             "providersLoading",
-            "paymentProviders",
+            "paymentProviders"
         ]),
 
         lang() {
@@ -158,7 +162,9 @@ export default {
         },
 
         title() {
-            return this.mode === 1 ? "Create Provider" : "Update Provider";
+            return this.mode === 1
+                ? this.translations.createProvider[this.lang]
+                : this.translations.updateProvider[this.lang];
         },
 
         dialog: {
@@ -168,7 +174,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            },
+            }
         },
 
         deleteDialog: {
@@ -178,7 +184,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            },
+            }
         },
 
         paymentProvider: {
@@ -189,7 +195,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
+            }
         },
 
         query() {
@@ -200,7 +206,7 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        },
+        }
     },
 
     methods: {
@@ -210,7 +216,7 @@ export default {
             "getItems",
             "create",
             "update",
-            "remove",
+            "remove"
         ]),
 
         open(mode, item) {
@@ -222,7 +228,7 @@ export default {
                 this.setResetValidation(true);
                 this.dialog = true;
             }
-        },
+        }
     },
 
     watch: {
@@ -231,8 +237,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query,
-                    },
+                        ...this.$route.query
+                    }
                 });
             }
 
@@ -241,7 +247,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        },
+        }
     },
 
     beforeCreate() {
@@ -249,14 +255,14 @@ export default {
             this.$router.replace({
                 query: {
                     page: 1,
-                    ...this.$route.query,
-                },
+                    ...this.$route.query
+                }
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    },
+    }
 };
 </script>

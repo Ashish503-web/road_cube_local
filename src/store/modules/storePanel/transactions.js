@@ -16,7 +16,8 @@ export default {
         transactions: [],
         transaction: new Transaction(),
         transactionPreview: {},
-        generalCouponClaims: []
+        generalCouponClaims: [],
+        samplingCoupons: []
     }),
 
     mutations: {
@@ -102,12 +103,33 @@ export default {
                 let product = state.transaction.products.find(
                     p => p.product_id === payloadProduct.product_id
                 );
-                product.product_coupons = payloadProduct.product_coupons;
+
+                if (product) {
+                    product.product_coupons = payloadProduct.product_coupons.map(
+                        p => {
+                            p.text = {};
+                            p.text.el = `${p.product_free.name.el} (${p.code})`;
+                            p.text.en = `${p.product_free.name.en} (${p.code})`;
+                            p.text.it = `${p.product_free.name.it} (${p.code})`;
+                            return p;
+                        }
+                    );
+
+                    let index = state.transaction.products.findIndex(
+                        p => p.product_id === payloadProduct.product_id
+                    );
+
+                    state.transaction.products.splice(index, 1, product);
+                }
             });
         },
 
         setGeneralCouponClaims(state, payload) {
             state.generalCouponClaims = payload;
+        },
+
+        setSamplingCoupons(state, payload) {
+            state.samplingCoupons = payload;
         },
 
         removeItem(state, id) {
@@ -158,6 +180,8 @@ export default {
                         );
                     }
                 }
+
+                commit("setSamplingCoupons", data.data.sampling_coupons);
 
                 commit("setTransactionPreview", data.data);
                 commit("setPreviewLoading", false);
@@ -211,7 +235,7 @@ export default {
                 commit("setLoading", true, { root: true });
 
                 const { data } = await Transaction.getItem(id);
-
+                console.log(data);
                 commit("setTransactionProfile", data.data);
                 commit("setLoading", false, { root: true });
             } catch (ex) {
@@ -295,9 +319,13 @@ export default {
 
                 await Transaction.updateMobilePayments(item);
 
-                commit("storePanel/setMobilePayments", item.online_payments, {
-                    root: true
-                });
+                commit(
+                    "storePanel/setMobilePayments",
+                    item.online_payment_processing,
+                    {
+                        root: true
+                    }
+                );
                 commit("setMobileLoading", false);
                 commit(
                     "setNotification",
@@ -324,11 +352,11 @@ export default {
             }
         },
 
-        async remove({ commit, state, rootState }) {
+        async refundTransaction({ commit, state, rootState }) {
             try {
                 commit("setLoading", true, { root: true });
 
-                await Transaction.delete(state.product.product_id);
+                await Transaction.refundTransaction();
                 commit(
                     "setServerItemsLength",
                     rootState.serverItemsLength - 1,
@@ -342,7 +370,7 @@ export default {
                     {
                         show: true,
                         type: "success",
-                        text: "You have successfully deleted product!"
+                        text: "You have successfully refunded transaction!"
                     },
 
                     { root: true }

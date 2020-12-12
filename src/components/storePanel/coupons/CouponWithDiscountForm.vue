@@ -1,6 +1,6 @@
 <template>
     <b-card
-        title="Add Discount"
+        :title="translations.addDiscount[lang]"
         :loading="loading"
         :error-message="errorMessage"
         :disabled="!formValid"
@@ -12,7 +12,7 @@
             :items="giftCategories"
             :item-text="`name[${lang}]`"
             item-value="gift_category_id"
-            label="Gift Category"
+            :label="translations.giftCategory[lang]"
             no-top-margin
             :success="success.giftCategory"
             :error-messages="error.giftCategory"
@@ -27,7 +27,7 @@
                     :items="products"
                     :item-text="`name[${lang}]`"
                     item-value="product_id"
-                    label="Product"
+                    :label="translations.product[lang]"
                     :success="success.product"
                     :error-messages="error.product"
                     @focus="error.product = ''"
@@ -41,7 +41,7 @@
                     outlined
                     class="subtitle-2 pa-3"
                 >
-                    Product Price:
+                    {{ translations.productPrice[lang] }}
                     {{
                         new Intl.NumberFormat("en-US", {
                             style: "currency",
@@ -54,12 +54,15 @@
         </v-row>
 
         <v-sheet class="mt-3 pa-3 pt-2" outlined>
-            <h4 class="subtitle-1 font-weight-medium">Discount Type</h4>
+            <h4
+                class="subtitle-1 font-weight-medium"
+                v-text="translations.discountType[lang]"
+            ></h4>
             <v-radio-group v-model="type" class="mt-3 pt-0" hide-details="auto">
                 <v-row no-gutters>
                     <v-col
                         v-for="type in discountTypes"
-                        :key="type.text"
+                        :key="type.text['en']"
                         cols="auto"
                         class="pr-5"
                     >
@@ -67,7 +70,7 @@
                             <template v-slot:label>
                                 <h4
                                     class="font-weight-medium text--primary"
-                                    v-text="type.text"
+                                    v-text="type.text[lang]"
                                 ></h4>
                             </template>
                         </v-radio>
@@ -79,7 +82,7 @@
         <b-text-field
             v-if="type === 1"
             v-model="couponWithDiscount.discount_percentage"
-            label="Amount"
+            :label="translations.amount[lang]"
             type="number"
             prepend-inner-icon="mdiPercent"
             :success="success.discountPercentage"
@@ -90,7 +93,7 @@
         <b-text-field
             v-else
             v-model="couponWithDiscount.discount_value"
-            label="Amount"
+            :label="translations.amount[lang]"
             type="number"
             prepend-inner-icon="mdiCurrencyEur"
             :success="success.discountValue"
@@ -103,19 +106,20 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
-import validators from "./discountValidators";
+import translations from "@/utils/translations/storePanel/coupons/couponsWithDiscount/couponWithDiscountForm";
+import validators from "@/utils/validators/storePanel/couponWithDiscount";
 
 export default {
     name: "CouponWithDiscountForm",
 
-    mixins: [validators],
+    mixins: [translations, validators],
 
     data() {
         return {
             type: 1,
             discountTypes: [
-                { text: "Percentage", value: 1 },
-                { text: "Euro", value: 2 },
+                { text: { el: "", en: "Percentage", it: "" }, value: 1 },
+                { text: { el: "", en: "Euro", it: "" }, value: 2 },
             ],
             retailPrice: 0,
         };

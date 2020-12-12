@@ -77,26 +77,6 @@ export default {
                 el: "",
                 en: "Create",
                 it: ""
-            },
-            yourSettings: {
-                el: "",
-                en: "Your Settings:",
-                it: ""
-            },
-            reward: {
-                el: "",
-                en: "The Reward:",
-                it: ""
-            },
-            customersFollowing: {
-                el: "",
-                en: "Customers Following Your Reward:",
-                it: ""
-            },
-            delete: {
-                el: "",
-                en: "Delete",
-                it: ""
             }
         }
     })

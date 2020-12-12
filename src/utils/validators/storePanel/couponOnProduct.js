@@ -18,6 +18,31 @@ export default {
                 saleProduct: "",
                 giftProduct: "",
                 totalCoupons: ""
+            },
+            errorMessages: {
+                giftCategoryRequired: {
+                    el: "",
+                    en: "Gift Category is required",
+                    it: ""
+                },
+                saleProductRequired: {
+                    el: "",
+                    en: "Product for sale is required",
+                    it: ""
+                },
+                giftProductRequired: {
+                    el: "",
+                    en: "Product for gift is required",
+                    it: ""
+                },
+                totalCouponsRequired: {
+                    el: "",
+                    en: "Total Coupons is required"
+                },
+                totalCouponsValue: {
+                    el: "",
+                    en: "Total Coupons must be minimum 1"
+                }
             }
         };
     },
@@ -44,7 +69,9 @@ export default {
     methods: {
         validateGiftCategory() {
             if (!this.couponOnProduct.gift_category_id) {
-                this.error.giftCategory = "Gift category is required";
+                this.error.giftCategory = this.errorMessages.giftCategoryRequired[
+                    this.lang
+                ];
             } else {
                 this.error.giftCategory = "";
             }
@@ -52,7 +79,9 @@ export default {
 
         validateSaleProduct() {
             if (!this.couponOnProduct.product_buy_id) {
-                this.error.saleProduct = "Product for sale is required";
+                this.error.saleProduct = this.errorMessages.saleProductRequired[
+                    this.lang
+                ];
             } else {
                 this.error.saleProduct = "";
             }
@@ -60,7 +89,9 @@ export default {
 
         validateGiftProduct() {
             if (!this.couponOnProduct.product_free_id) {
-                this.error.giftProduct = "Product for gift is required";
+                this.error.giftProduct = this.errorMessages.giftProductRequired[
+                    this.lang
+                ];
             } else {
                 this.error.giftProduct = "";
             }
@@ -68,9 +99,13 @@ export default {
 
         validateTotalCoupons() {
             if (!this.couponOnProduct.maximum) {
-                this.error.totalCoupons = "Quantity is required";
+                this.error.totalCoupons = this.errorMessages.totalCouponsRequired[
+                    this.lang
+                ];
             } else if (this.couponOnProduct.maximum < 1) {
-                this.error.totalCoupons = "Quantity must be minimum 1";
+                this.error.totalCoupons = this.errorMessages.totalCouponsValue[
+                    this.lang
+                ];
             } else {
                 this.error.totalCoupons = "";
             }

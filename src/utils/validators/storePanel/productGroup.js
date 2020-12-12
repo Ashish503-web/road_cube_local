@@ -18,6 +18,33 @@ export default {
                 description: "",
                 averagePrice: "",
                 category: ""
+            },
+            errorMessages: {
+                nameRequired: {
+                    el: "",
+                    en: "Name is required",
+                    it: ""
+                },
+                descriptionRequired: {
+                    el: "",
+                    en: "Description is required",
+                    it: ""
+                },
+                averagePriceRequired: {
+                    el: "",
+                    en: "Average Price is required",
+                    it: ""
+                },
+                averagePriceMin: {
+                    el: "",
+                    en: "Average Price must be minimum 0.1",
+                    it: ""
+                },
+                categoryRequired: {
+                    el: "",
+                    en: "Category is required",
+                    it: ""
+                }
             }
         };
     },
@@ -37,7 +64,9 @@ export default {
         validateName() {
             if (this.groupLang === "el") {
                 if (!this.productGroup.name["el"]) {
-                    this.error.name = "Name is required";
+                    this.error.name = this.errorMessages.nameRequired[
+                        this.lang
+                    ];
                 } else {
                     this.error.name = "";
                 }
@@ -47,7 +76,9 @@ export default {
         validateDescription() {
             if (this.descriptionLang === "el") {
                 if (!this.productGroup.description["el"]) {
-                    this.error.description = "Description is required";
+                    this.error.description = this.errorMessages.descriptionRequired[
+                        this.lang
+                    ];
                 } else {
                     this.error.description = "";
                 }
@@ -56,9 +87,13 @@ export default {
 
         validateAveragePrice() {
             if (!this.productGroup.average_price) {
-                this.error.averagePrice = "Average Price is required";
+                this.error.averagePrice = this.errorMessages.averagePriceRequired[
+                    this.lang
+                ];
             } else if (this.productGroup.average_price < 0.1) {
-                this.error.averagePrice = "Average Price must be minimum 0.1";
+                this.error.averagePrice = this.errorMessages.averagePriceMin[
+                    this.lang
+                ];
             } else {
                 this.error.averagePrice = "";
             }
@@ -66,7 +101,9 @@ export default {
 
         validateCategory() {
             if (!this.productGroup.product_category_id) {
-                this.error.category = "Category is required";
+                this.error.category = this.errorMessages.categoryRequired[
+                    this.lang
+                ];
             } else {
                 this.error.category = "";
             }

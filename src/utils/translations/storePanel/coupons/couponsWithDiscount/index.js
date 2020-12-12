@@ -53,6 +53,16 @@ export default {
                 el: "",
                 en: "Delete",
                 it: ""
+            },
+            deleteDiscount: {
+                el: "",
+                en: "Delete Discount",
+                it: ""
+            },
+            areYouSure: {
+                el: "",
+                en: "Are you sure you want to delete",
+                it: ""
             }
         }
     })

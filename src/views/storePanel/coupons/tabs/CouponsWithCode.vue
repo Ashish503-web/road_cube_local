@@ -21,11 +21,13 @@
 
         <v-toolbar flat>
             <v-btn
-                color="secondary"
+                :color="permissions.create ? 'secondary' : 'grey'"
                 class="text-capitalize px-5"
                 depressed
                 v-text="translations.create[lang]"
-                @click="open(1, {})"
+                @click="
+                    permissions.create ? open(1, {}) : setPermissionDialog(true)
+                "
             ></v-btn>
 
             <v-spacer></v-spacer>
@@ -56,10 +58,16 @@
                 <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            color="yellow darken-3"
+                            :color="
+                                permissions.delete ? 'yellow darken-3' : 'grey'
+                            "
                             icon
                             v-on="on"
-                            @click="open(2, item)"
+                            @click="
+                                permissions.update
+                                    ? open(2, item)
+                                    : setPermissionDialog(true)
+                            "
                         >
                             <v-icon v-text="icons.mdiPencilOutline"></v-icon>
                         </v-btn>
@@ -74,13 +82,17 @@
                 <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            color="red"
+                            :color="permissions.delete ? 'red' : 'grey'"
                             icon
                             v-on="on"
                             @click="
                                 () => {
-                                    couponWithCode = item;
-                                    deleteDialog = true;
+                                    if (permissions.delete) {
+                                        couponWithCode = item;
+                                        deleteDialog = true;
+                                    } else {
+                                        setPermissionDialog(true);
+                                    }
                                 }
                             "
                         >
@@ -110,15 +122,15 @@
         <v-dialog v-model="deleteDialog" max-width="500">
             <b-card
                 type="delete"
-                title="Delete Coupon"
-                submit-text="delete"
+                :title="translations.deleteCode[lang]"
+                :submit-text="{ el: '', en: 'delete', it: '' }"
                 :loading="loading"
                 :error-message="errorMessage"
                 @cancel="deleteDialog = false"
                 @submit="remove"
             >
-                <div class="subtitle-1 font-weight-medium py-3">
-                    Are you sure you want to delete
+                <div class="subtitle-1 font-weight-medium py-3 px-2">
+                    {{ translations.areYouSure[lang] }}
                     <span class="font-weight-bold text--primary">{{
                         couponWithCode.code
                     }}</span
@@ -133,7 +145,7 @@
 import { mdiPencilOutline, mdiClose, mdiFacebook } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import CouponWithCodeForm from "@/components/storePanel/coupons/CouponWithCodeForm.vue";
-import translations from "@/utils/translations/storePanel/couponsWithCode";
+import translations from "@/utils/translations/storePanel/coupons/couponsWithCode";
 
 export default {
     name: "CouponsWithCode",
@@ -160,6 +172,12 @@ export default {
 
         lang() {
             return this.$route.params.lang;
+        },
+
+        permissions() {
+            return this.$store.state.permissions.coupons
+                ? this.$store.state.permissions.coupons.voucher
+                : {};
         },
 
         headers() {
@@ -238,6 +256,7 @@ export default {
             "setDeleteDialog",
             "setResetSuccess",
             "setResetValidation",
+            "setPermissionDialog",
         ]),
         ...mapMutations("storePanel/coupons/couponsWithCode", [
             "setShowImageUpload",

@@ -21,6 +21,21 @@ export default {
                 en: "Voucher code",
                 it: ""
             },
+            amount: {
+                el: "",
+                en: "Amount",
+                it: ""
+            },
+            generalCouponClaims: {
+                el: "",
+                en: "General Coupon Claims",
+                it: ""
+            },
+            samplingCoupons: {
+                el: "",
+                en: "Sampling Coupons",
+                it: ""
+            },
             createOrder: {
                 el: "",
                 en: "Create Order",

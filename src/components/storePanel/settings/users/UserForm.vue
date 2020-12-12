@@ -3,7 +3,7 @@
         :title="title"
         :loading="loading"
         :error-message="errorMessage"
-        :reset-validation="resetValidation"
+        :disabled="!formValid"
         @cancel="$emit('cancel')"
         @submit="
             () => {
@@ -17,23 +17,26 @@
                     <b-text-field
                         v-model="user.mobile"
                         v-mask="'##########'"
-                        label="Mobile"
+                        :label="translations.mobile[lang]"
                         no-top-margin
                         :success="success.mobile"
-                        :rules="rules.mobile"
-                        @cancel-success="success.mobile = false"
+                        :error-messages="error.mobile"
+                        @focus="error.mobile = ''"
+                        @blur="validateMobile"
                     ></b-text-field>
                 </v-col>
                 <v-col cols="6" class="pl-2">
                     <b-text-field
                         v-model="user.password"
                         :type="showPassword ? 'text' : 'password'"
-                        label="Password"
+                        :label="translations.password[lang]"
                         no-top-margin
+                        prepend-inner-icon="mdiLock"
                         append-icon="mdiEye"
                         :success="success.password"
-                        :rules="rules.password"
-                        @cancel-success="success.password = false"
+                        :error-messages="error.password"
+                        @focus="error.password = ''"
+                        @blur="validatePassword"
                         @click-append="showPassword = !showPassword"
                     ></b-text-field>
                 </v-col>
@@ -44,9 +47,7 @@
                 :class="{ 'mt-2': mode === 1, 'mb-2': mode === 2 }"
             >
                 <v-row no-gutters align="center">
-                    <v-col>
-                        Permissions
-                    </v-col>
+                    <v-col v-text="translations.permissions[lang]"></v-col>
 
                     <v-col cols="auto" class="pr-1">
                         <v-checkbox
@@ -56,7 +57,10 @@
                             hide-details
                         >
                             <template v-slot:label>
-                                <h4 class="subtitle-2">Update All</h4>
+                                <h4
+                                    class="subtitle-2"
+                                    v-text="translations.updateAll[lang]"
+                                ></h4>
                             </template>
                         </v-checkbox>
                     </v-col>
@@ -189,20 +193,21 @@ import {
     mdiMenuRight,
     mdiMenuDown,
     mdiCheckboxBlankOutline,
-    mdiCheckBoxOutline
+    mdiCheckBoxOutline,
 } from "@mdi/js";
 
-import validators from "./userValidators";
 import { mapState, mapMutations, mapActions } from "vuex";
+import translations from "@/utils/translations/storePanel/settings/users/userForm";
+import validators from "@/utils/validators/storePanel/user";
 
 export default {
     name: "UserForm",
 
     props: {
-        mode: Number
+        mode: Number,
     },
 
-    mixins: [validators],
+    mixins: [translations, validators],
 
     data() {
         return {
@@ -210,11 +215,10 @@ export default {
                 mdiMenuRight,
                 mdiMenuDown,
                 mdiCheckboxBlankOutline,
-                mdiCheckBoxOutline
+                mdiCheckBoxOutline,
             },
-            lang: "el",
             showPassword: false,
-            allPermissions: false
+            allPermissions: false,
         };
     },
 
@@ -223,21 +227,28 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation"
+            "resetValidation",
         ]),
         ...mapState("storePanel/settings/users", ["moderatorPermissions"]),
 
+        lang() {
+            return this.$route.params.lang;
+        },
+
         title() {
-            return this.mode === 1 ? "New User" : "Update User";
+            return this.mode === 1
+                ? this.translations.newUser[this.lang]
+                : this.translations.updateUser[this.lang];
         },
 
         user() {
             return this.$store.state.storePanel.settings.users.user;
-        }
+        },
     },
 
     methods: {
-        ...mapActions("storePanel/settings/users", ["create", "update"])
+        ...mapMutations(["setResetSuccess", "setResetValidation"]),
+        ...mapActions("storePanel/settings/users", ["create", "update"]),
     },
 
     watch: {
@@ -289,15 +300,6 @@ export default {
                 this.user.permissions_enabled = false;
             }
         },
-
-        resetSuccess(val) {
-            if (val) {
-                this.success = {
-                    mobile: false,
-                    password: false
-                };
-            }
-        }
-    }
+    },
 };
 </script>

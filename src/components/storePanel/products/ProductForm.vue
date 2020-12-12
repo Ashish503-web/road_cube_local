@@ -222,7 +222,7 @@
 import { mapState, mapMutations, mapActions } from "vuex";
 
 import translations from "@/utils/translations/storePanel/products/productForm";
-import validators from "./productValidators";
+import validators from "@/utils/validators/storePanel/product";
 
 export default {
     name: "Product",

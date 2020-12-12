@@ -70,13 +70,13 @@ export default {
 
     data: () => ({
         icons: { mdiArrowRight, mdiInformationOutline },
-        voucher: "",
+        voucher: ""
     }),
 
     computed: {
         lang() {
             return this.$route.params.lang;
-        },
+        }
     },
 
     methods: {
@@ -85,11 +85,11 @@ export default {
         sendRequest() {
             if (this.voucher != "") {
                 let formData = {
-                    voucher: this.voucher,
+                    voucher: this.voucher
                 };
                 this.create(formData);
             }
-        },
-    },
+        }
+    }
 };
 </script>

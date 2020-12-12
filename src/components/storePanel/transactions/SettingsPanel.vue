@@ -38,7 +38,7 @@
                             :loading="mobileLoading"
                             @change="
                                 updateMobilePayments({
-                                    online_payment_processing,
+                                    online_payment_processing
                                 })
                             "
                         ></v-switch>
@@ -94,7 +94,7 @@ export default {
 
     data: () => ({
         icons: { mdiClose },
-        online_payment_processing: null,
+        online_payment_processing: null
     }),
 
     computed: {
@@ -102,7 +102,7 @@ export default {
 
         lang() {
             return this.$route.params.lang;
-        },
+        }
     },
 
     methods: {
@@ -130,7 +130,7 @@ export default {
                             "storeId"
                         )}/transactions/excel/status`
                     )
-                    .then((res) => console.log(res));
+                    .then(res => console.log(res));
 
                 // axios
                 //     .get(
@@ -153,7 +153,7 @@ export default {
             } catch (ex) {
                 console.error(ex.response.data.message);
             }
-        },
+        }
 
         // fundClosure() {
         //     axios.get(
@@ -170,8 +170,8 @@ export default {
             immediate: true,
             handler(val) {
                 this.online_payment_processing = val;
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>

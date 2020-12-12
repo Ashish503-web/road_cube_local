@@ -30,6 +30,22 @@ export default class Product {
         this.group_product = false;
     }
 
+    static getClass(obj) {
+        return {}.toString.call(obj).slice(8, -1);
+    }
+
+    static clearFalsyValues = obj => {
+        for (let key in obj) {
+            if (!obj[key]) delete obj[key];
+            else if (this.getClass(obj[key]) === "Array") {
+                if (!obj[key].length) delete obj[key];
+            }
+        }
+
+        if (!obj.published) obj.published = false;
+        if (!obj.group_product) obj.group_product = false;
+    };
+
     static getCategories = () =>
         axios.get(
             `${ApiEndpoint}/${localStorage.getItem(

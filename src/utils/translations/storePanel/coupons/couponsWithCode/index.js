@@ -77,6 +77,16 @@ export default {
                 el: "",
                 en: "Share",
                 it: ""
+            },
+            deleteCode: {
+                el: "",
+                en: "Delete Code",
+                it: ""
+            },
+            areYouSure: {
+                el: "",
+                en: "Are you sure you want to delete",
+                it: ""
             }
         }
     })

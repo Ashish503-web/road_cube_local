@@ -10,6 +10,28 @@ export default {
                 user: "",
                 receipt: "",
                 amount: ""
+            },
+            errorMessages: {
+                userRequired: {
+                    el: "",
+                    en: "User is required",
+                    it: ""
+                },
+                receiptRequired: {
+                    el: "",
+                    en: "Receipt Number is required",
+                    it: ""
+                },
+                amountRequired: {
+                    el: "",
+                    en: "Amount is required",
+                    it: ""
+                },
+                amountMin: {
+                    el: "",
+                    en: "Amount must be minimum 0.1",
+                    it: ""
+                }
             }
         };
     },
@@ -21,15 +43,10 @@ export default {
                     return (
                         this.success.user &&
                         this.success.receipt &&
-                        this.productsInputSuccess &&
                         this.productsSuccess
                     );
                 } else {
-                    return (
-                        !!this.success.user &&
-                        !!this.productsInputSuccess &&
-                        this.productsSuccess
-                    );
+                    return this.success.user && this.productsSuccess;
                 }
             } else {
                 if (this.showReceipt) {
@@ -48,7 +65,7 @@ export default {
     methods: {
         validateUser() {
             if (!this.transaction.user) {
-                this.error.user = "User is required";
+                this.error.user = this.errorMessages.userRequired[this.lang];
             } else {
                 this.error.user = "";
             }
@@ -56,7 +73,9 @@ export default {
 
         validateReceipt() {
             if (!this.transaction.receipt_number) {
-                this.error.receipt = "Receipt Number is required";
+                this.error.receipt = this.errorMessages.receiptRequired[
+                    this.lang
+                ];
             } else {
                 this.error.receipt = "";
             }
@@ -64,9 +83,11 @@ export default {
 
         validateAmount() {
             if (!this.transaction.amount) {
-                this.error.amount = "Amount is required";
+                this.error.amount = this.errorMessages.amountRequired[
+                    this.lang
+                ];
             } else if (this.transaction.amount < 0.1) {
-                this.error.amount = "Amount must be minimum 0.1";
+                this.error.amount = this.errorMessages.amountMin[this.lang];
             } else {
                 this.error.amount = "";
             }

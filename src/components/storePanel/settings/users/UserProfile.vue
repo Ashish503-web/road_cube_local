@@ -18,16 +18,6 @@
                 max-width="500"
                 type="image"
             ></v-skeleton-loader>
-            <!-- <v-skeleton-loader
-                class="mx-auto"
-                max-width="500"
-                type="image"
-            ></v-skeleton-loader>
-            <v-skeleton-loader
-                class="mx-auto"
-                max-width="500"
-                type="image"
-            ></v-skeleton-loader> -->
         </v-col>
 
         <v-card v-else width="500" class="mx-auto" outlined>
@@ -36,7 +26,7 @@
                     class="mr-3 text--primary"
                     v-text="icons.mdiAccountOutline"
                 ></v-icon>
-                User Profile
+                {{ translations.userProfile[lang] }}
                 <v-spacer></v-spacer>
                 <v-btn icon @click="$emit('cancel')">
                     <v-icon v-text="icons.mdiClose"></v-icon>
@@ -51,7 +41,8 @@
                     outlined
                     class="pa-3 mb-3"
                 >
-                    User Mobile: {{ userProfile.mobile }}
+                    {{ translations.userMobile[lang] }}:
+                    {{ userProfile.mobile }}
                 </v-sheet>
 
                 <v-sheet
@@ -59,7 +50,8 @@
                     outlined
                     class="pa-3 mb-3"
                 >
-                    SMS Count: {{ userProfile.sms_count }}
+                    {{ translations.smsCount[lang] }}:
+                    {{ userProfile.sms_count }}
                 </v-sheet>
 
                 <v-sheet
@@ -67,7 +59,7 @@
                     outlined
                     class="pa-3 mb-3"
                 >
-                    TOS: {{ userProfile.tos }}
+                    {{ translations.TOS[lang] }}: {{ userProfile.tos }}
                 </v-sheet>
             </v-card-text>
         </v-card>
@@ -77,6 +69,7 @@
 <script>
 import { mdiAccountOutline, mdiClose } from "@mdi/js";
 import { mapActions } from "vuex";
+import translations from "@/utils/translations/storePanel/settings/users/userProfile";
 
 export default {
     name: "UserProfile",
@@ -85,11 +78,17 @@ export default {
         userId: [String, Number]
     },
 
+    mixins: [translations],
+
     data: () => ({
         icons: { mdiAccountOutline, mdiClose }
     }),
 
     computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
         loading() {
             return this.$store.state.loading;
         },

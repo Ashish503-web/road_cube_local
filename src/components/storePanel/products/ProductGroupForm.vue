@@ -170,7 +170,7 @@
 import { mapState, mapMutations, mapActions } from "vuex";
 
 import translations from "@/utils/translations/storePanel/products/productGroupForm";
-import validators from "./productGroupValidators";
+import validators from "@/utils/validators/storePanel/productGroup";
 
 export default {
     name: "ProductGroup",

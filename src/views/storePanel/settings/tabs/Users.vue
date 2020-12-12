@@ -10,9 +10,9 @@
                 color="secondary"
                 class="text-capitalize ml-3 ml-sm-0"
                 depressed
+                v-text="translations.registerUser[lang]"
                 @click="open(1, {})"
-                >register user</v-btn
-            >
+            ></v-btn>
 
             <v-col cols="12" sm="4" class="pa-0">
                 <b-search-field></b-search-field>
@@ -34,14 +34,20 @@
                     color="secondary"
                     indeterminate
                 ></v-progress-circular>
-                <span v-else>No data available</span>
+                <span v-else v-text="translations.noData[lang]"></span>
             </template>
 
             <template v-slot:item.permissions_enabled="{ item }">
-                <span v-if="item.permissions_enabled" class="green--text"
-                    >Yes</span
-                >
-                <span v-else class="red--text">No</span>
+                <span
+                    v-if="item.permissions_enabled"
+                    class="green--text"
+                    v-text="translations.yes[lang]"
+                ></span>
+                <span
+                    v-else
+                    class="red--text"
+                    v-text="translations.no[lang]"
+                ></span>
             </template>
 
             <template v-slot:item.actions="{ item }">
@@ -63,7 +69,10 @@
                         </v-btn>
                     </template>
 
-                    <span class="font-weight-bold">User Profile</span>
+                    <span
+                        class="font-weight-bold"
+                        v-text="translations.userProfile[lang]"
+                    ></span>
                 </v-tooltip>
 
                 <v-tooltip color="secondary" top>
@@ -78,7 +87,10 @@
                         </v-btn>
                     </template>
 
-                    <span class="font-weight-bold">Update Permissions</span>
+                    <span
+                        class="font-weight-bold"
+                        v-text="translations.updatePermissions[lang]"
+                    ></span>
                 </v-tooltip>
             </template>
         </v-data-table>
@@ -100,7 +112,7 @@ import {
     mdiCheckCircleOutline,
     mdiMinusCircleOutline,
     mdiAccountSearchOutline,
-    mdiPencilOutline
+    mdiPencilOutline,
 } from "@mdi/js";
 
 import UIPermissions from "@/models/storePanel/settings/UIPermissions";
@@ -109,10 +121,14 @@ import { mapState, mapMutations, mapActions } from "vuex";
 import UserForm from "@/components/storePanel/settings/users/UserForm.vue";
 import UserProfile from "@/components/storePanel/settings/users/UserProfile.vue";
 
+import translations from "@/utils/translations/storePanel/settings/users";
+
 export default {
     name: "Users",
 
     components: { UserForm, UserProfile },
+
+    mixins: [translations],
 
     data() {
         return {
@@ -122,23 +138,12 @@ export default {
                 mdiCheckCircleOutline,
                 mdiMinusCircleOutline,
                 mdiAccountSearchOutline,
-                mdiPencilOutline
+                mdiPencilOutline,
             },
-            headers: [
-                { text: "User", value: "user" },
-                { text: "Role", value: "role" },
-                { text: "Date", value: "created_at" },
-                {
-                    text: "Enabled",
-                    value: "permissions_enabled"
-                },
-                { text: "Actions", value: "actions" }
-            ],
-            lang: "el",
             page: +this.$route.query.page,
             mode: 0,
             userId: null,
-            profileDialog: false
+            profileDialog: false,
         };
     },
 
@@ -146,8 +151,31 @@ export default {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/settings/users", [
             "moderatorPermissions",
-            "users"
+            "users",
         ]),
+
+        lang() {
+            return this.$route.params.lang;
+        },
+
+        headers() {
+            return [
+                { text: this.translations.user[this.lang], value: "user" },
+                { text: this.translations.role[this.lang], value: "role" },
+                {
+                    text: this.translations.date[this.lang],
+                    value: "created_at",
+                },
+                {
+                    text: this.translations.enabled[this.lang],
+                    value: "permissions_enabled",
+                },
+                {
+                    text: this.translations.actions[this.lang],
+                    value: "actions",
+                },
+            ];
+        },
 
         dialog: {
             get() {
@@ -156,7 +184,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         deleteDialog: {
@@ -166,7 +194,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            }
+            },
         },
 
         user: {
@@ -176,7 +204,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
+            },
         },
 
         query() {
@@ -187,7 +215,7 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
@@ -195,12 +223,12 @@ export default {
             "setDialog",
             "setDeleteDialog",
             "setResetSuccess",
-            "setResetValidation"
+            "setResetValidation",
         ]),
         ...mapMutations("storePanel/settings/users", ["setItem"]),
         ...mapActions("storePanel/settings/users", [
             "getModeratorPermissions",
-            "getItems"
+            "getItems",
         ]),
 
         open(mode, item) {
@@ -214,24 +242,17 @@ export default {
             setTimeout(() => this.setResetSuccess(true), 300);
             this.setResetValidation(true);
             this.dialog = true;
-        }
+        },
     },
 
     watch: {
-        dialog(val) {
-            if (!val) {
-                this.setResetSuccess(false);
-                this.setResetValidation(false);
-            }
-        },
-
         $route(val) {
             if (!val.query.page) {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
             this.getItems(this.query);
@@ -239,7 +260,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -247,8 +268,8 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
@@ -256,6 +277,6 @@ export default {
     mounted() {
         this.getItems(this.query);
         this.getModeratorPermissions();
-    }
+    },
 };
 </script>

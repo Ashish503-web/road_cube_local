@@ -19,6 +19,7 @@ export default class Transaction {
             item.product_coupon_claims_for_use || [];
         this.general_coupon_claims_for_use =
             item.general_coupon_claims_for_use || [];
+        this.sampling_coupons_for_use = item.sampling_coupons_for_use || [];
     }
 
     static clearFalsyValues = obj => {
@@ -89,18 +90,11 @@ export default class Transaction {
             { transaction_status_id: item.transaction_status_id }
         );
 
-    static update = item =>
-        axios.put(
-            `${ApiEndpoint}/stores/${localStorage.getItem(
-                "storeId"
-            )}/transactions/${item.transaction_id}`,
-            item
-        );
-
-    static delete = id =>
+    static refundTransaction = item =>
         axios.delete(
             `${ApiEndpoint}/stores/${localStorage.getItem(
                 "storeId"
-            )}/transactions/${id}`
+            )}/transactions/cancel-transaction`,
+            item
         );
 }

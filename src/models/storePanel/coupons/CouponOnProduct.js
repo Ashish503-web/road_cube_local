@@ -9,6 +9,7 @@ const ApiEndpoint = `${process.env.VUE_APP_DEFAULT_API_URL}/stores`;
 export default class CouponOnProduct {
     constructor(item = {}) {
         this.coupon_id = item.coupon_id || null;
+        this.code = item.code || null;
         this.action = item.action || "1p1";
         this.gift_category_id = item.gift_category_id || null;
         this.product_buy_id = item.product_buy_id || null;
@@ -47,7 +48,7 @@ export default class CouponOnProduct {
         axios.put(
             `${ApiEndpoint}/${localStorage.getItem(
                 "storeId"
-            )}/coupons/products/${item.product_id}`,
+            )}/coupons/products/${item.coupon_id}`,
             item
         );
 

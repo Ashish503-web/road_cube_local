@@ -4,6 +4,11 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 import axios from "axios";
+
+axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
+    "accessToken"
+)}`;
+
 import modules from "./modules";
 
 export default new Vuex.Store({
@@ -14,8 +19,10 @@ export default new Vuex.Store({
         storeId: "",
         user: {},
         userStores: [],
+        permissions: {},
         dialog: false,
         deleteDialog: false,
+        permissionDialog: false,
         loading: false,
         errorMessage: "",
         resetSuccess: false,
@@ -45,12 +52,20 @@ export default new Vuex.Store({
             state.userStores = payload;
         },
 
+        setPermissions(state, payload) {
+            state.permissions = payload;
+        },
+
         setDialog(state, payload) {
             state.dialog = payload;
         },
 
         setDeleteDialog(state, payload) {
             state.deleteDialog = payload;
+        },
+
+        setPermissionDialog(state, payload) {
+            state.permissionDialog = payload;
         },
 
         setLoading(state, payload) {
@@ -81,13 +96,13 @@ export default new Vuex.Store({
     actions: {
         async getUser({ commit, state }) {
             try {
-                axios.defaults.headers.Authorization = `Bearer ${state.accessToken}`;
-
                 const { data } = await axios.get(
                     `${process.env.VUE_APP_DEFAULT_API_URL}/users/me`
                 );
 
-                commit("setUser", data.data);
+                data.data.user.role = data.data.user_stores[0].role.name;
+                commit("setUser", data.data.user);
+                commit("setPermissions", data.data.user_stores[0].permissions);
             } catch (ex) {
                 console.error(ex.response.data);
             }

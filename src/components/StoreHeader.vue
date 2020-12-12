@@ -25,14 +25,29 @@
 
             <AppNotifications />
 
-            <v-menu offset-y transition="slide-y-transition">
+            <v-menu offset-y transition="slide-y-transition" nudge-bottom="2">
                 <template v-slot:activator="{ on }">
-                    <v-btn class="text-capitalize" text v-on="on">
-                        <v-avatar size="32" class="mr-2">
-                            <v-img :src="user.avatar"></v-img>
-                        </v-avatar>
-                        {{ user.full_name }}
-                        <v-icon v-text="icons.mdiChevronDown"></v-icon>
+                    <v-btn class="text-capitalize" height="50" text v-on="on">
+                        <v-row no-gutters align="center">
+                            <v-col cols="auto">
+                                <v-avatar size="32" class="mr-2">
+                                    <v-img :src="user.avatar"></v-img>
+                                </v-avatar>
+                            </v-col>
+
+                            <v-col cols="auto" class="ml-1 mr-4">
+                                <div>
+                                    {{ user.full_name }}
+                                </div>
+                                <small class="green--text">{{
+                                    user.role
+                                }}</small>
+                            </v-col>
+
+                            <v-col cols="auto">
+                                <v-icon v-text="icons.mdiChevronDown"></v-icon>
+                            </v-col>
+                        </v-row>
                     </v-btn>
                 </template>
 
@@ -174,7 +189,7 @@ import {
     mdiHelpCircleOutline,
     mdiChevronDown,
     mdiBellOutline,
-    mdiLogout,
+    mdiLogout
 } from "@mdi/js";
 
 import AppNotifications from "@/components/general/AppNotifications.vue";
@@ -194,10 +209,10 @@ export default {
                 mdiHelpCircleOutline,
                 mdiChevronDown,
                 mdiBellOutline,
-                mdiLogout,
+                mdiLogout
             },
             mini: false,
-            drawer: false,
+            drawer: false
         };
     },
 
@@ -212,7 +227,7 @@ export default {
                     this.$router.push(
                         `/${val}/` + this.$route.fullPath.slice(4)
                     );
-            },
+            }
         },
 
         loading() {
@@ -233,7 +248,7 @@ export default {
 
         containerHeight() {
             return this.mini ? "calc(100vh - 194px)" : "calc(100vh - 184px)";
-        },
+        }
     },
 
     methods: {
@@ -251,8 +266,8 @@ export default {
                 this.$router.push(`/${this.lang}/`);
                 console.log(ex.response.data);
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

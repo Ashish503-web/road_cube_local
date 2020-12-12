@@ -3,10 +3,11 @@
         :title="translations.title[lang]"
         :loading="loading"
         :error-message="errorMessage"
+        :disabled="!formValid"
         @submit="
             updateBusinessInformation({
                 type: 'businessInformation',
-                item: businessInformation
+                item: businessInformation,
             })
         "
     >
@@ -16,10 +17,10 @@
                     v-model="businessInformation.name"
                     :label="translations.name[lang]"
                     no-top-margin
-                    :validate-on-blur="false"
                     :success="success.name"
-                    :rules="rules.name"
-                    @cancel-success="success.name = false"
+                    :error-messages="error.name"
+                    @focus="error.name = ''"
+                    @blur="validateName"
                 ></b-text-field>
 
                 <b-text-field
@@ -27,10 +28,10 @@
                     v-mask="'##########'"
                     type="number"
                     :label="translations.telephone[lang]"
-                    :validate-on-blur="false"
                     :success="success.primaryPhone"
-                    :rules="rules.primaryPhone"
-                    @cancel-success="success.primaryPhone = false"
+                    :error-messages="error.primaryPhone"
+                    @focus="error.primaryPhone = ''"
+                    @blur="validatePrimaryPhone"
                 ></b-text-field>
 
                 <b-select
@@ -40,7 +41,9 @@
                     item-value="country_id"
                     :label="translations.country[lang]"
                     :success="success.country"
-                    :rules="rules.country"
+                    :error-messages="error.country"
+                    @focus="error.country = ''"
+                    @blur="validateCountry"
                 ></b-select>
 
                 <b-text-field
@@ -48,19 +51,19 @@
                     v-mask="'##########'"
                     type="number"
                     :label="translations.telephone2[lang]"
-                    :validate-on-blur="false"
                     :success="success.secondaryPhone"
-                    :rules="rules.secondaryPhone"
-                    @cancel-success="success.secondaryPhone = false"
+                    :error-messages="error.secondaryPhone"
+                    @focus="error.secondaryPhone = ''"
+                    @blur="validateSecondaryPhone"
                 ></b-text-field>
 
                 <b-text-field
                     v-model="businessInformation.full_name"
                     :label="translations.fullname[lang]"
-                    :validate-on-blur="false"
                     :success="success.fullname"
-                    :rules="rules.fullname"
-                    @cancel-success="success.fullname = false"
+                    :error-messages="error.fullname"
+                    @focus="error.fullname = ''"
+                    @blur="validateFullname"
                 ></b-text-field>
             </v-col>
 
@@ -69,16 +72,14 @@
                     v-model="businessInformation.address"
                     :label="translations.address[lang]"
                     no-top-margin
-                    :validate-on-blur="false"
                     :success="success.address"
-                    :rules="rules.address"
-                    @cancel-success="success.address = false"
+                    :error-messages="error.address"
+                    @focus="error.address = ''"
+                    @blur="validateAddress"
                 ></b-text-field>
 
                 <v-btn
-                    :href="
-                        `http://maps.google.com/?q=${businessInformation.address}`
-                    "
+                    :href="`http://maps.google.com/?q=${businessInformation.address}`"
                     target="_blank"
                     class="text-capitalize mt-3"
                     height="40"
@@ -97,10 +98,10 @@
                 <b-text-field
                     v-model="businessInformation.activity"
                     :label="translations.activity[lang]"
-                    :validate-on-blur="false"
                     :success="success.activity"
-                    :rules="rules.activity"
-                    @cancel-success="success.activity = false"
+                    :error-messages="error.activity"
+                    @focus="error.activity = ''"
+                    @blur="validateActivity"
                 ></b-text-field>
 
                 <b-text-field
@@ -108,20 +109,20 @@
                     v-mask="'##########'"
                     type="number"
                     :label="translations.ownersPhone[lang]"
-                    :validate-on-blur="false"
                     :success="success.mobile"
-                    :rules="rules.mobile"
-                    @cancel-success="success.mobile = false"
+                    :error-messages="error.mobile"
+                    @focus="error.mobile = ''"
+                    @blur="validateMobile"
                 ></b-text-field>
 
                 <b-text-field
                     v-model="businessInformation.email"
                     type="email"
                     :label="translations.email[lang]"
-                    :validate-on-blur="false"
                     :success="success.email"
-                    :rules="rules.email"
-                    @cancel-success="success.email = false"
+                    :error-messages="error.email"
+                    @focus="error.email = ''"
+                    @blur="validateEmail"
                 ></b-text-field>
             </v-col>
         </v-row>
@@ -129,9 +130,9 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapMutations, mapActions } from "vuex";
 import translations from "@/utils/translations/storePanel/settings/profile/businessInformation";
-import validators from "./businessInformationValidators";
+import validators from "@/utils/validators/storePanel/businessInformation";
 
 export default {
     name: "BusinessInformation",
@@ -140,7 +141,7 @@ export default {
 
     data: () => ({
         businessInformation: {},
-        validate: false
+        validate: false,
     }),
 
     computed: {
@@ -158,16 +159,22 @@ export default {
                 .businessInformation;
         },
 
+        resetSuccess() {
+            return this.$store.state.storePanel.settings.profile.resetSuccess
+                .businessInformation;
+        },
+
         countries() {
             return this.$store.state.storePanel.settings.profile.countries;
-        }
+        },
     },
 
     methods: {
+        ...mapMutations("storePanel/settings/profile", ["setResetSuccess"]),
         ...mapActions("storePanel/settings/profile", [
             "getCountries",
-            "updateBusinessInformation"
-        ])
+            "updateBusinessInformation",
+        ]),
     },
 
     watch: {
@@ -191,28 +198,19 @@ export default {
 
                     full_name: val.billing_details.full_name,
 
-                    email: val.email
+                    email: val.email,
                 };
 
-                setTimeout(() => {
-                    this.success = {
-                        name: false,
-                        primaryPhone: false,
-                        country: false,
-                        secondaryPhone: false,
-                        fullname: false,
-                        address: false,
-                        activity: false,
-                        mobile: false,
-                        email: false
-                    };
-                }, 300);
-            }
-        }
+                this.setResetSuccess({
+                    value: true,
+                    type: "businessInformation",
+                });
+            },
+        },
     },
 
     mounted() {
         this.getCountries();
-    }
+    },
 };
 </script>

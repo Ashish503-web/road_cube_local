@@ -66,6 +66,16 @@ export default {
                 el: "",
                 en: "Share",
                 it: ""
+            },
+            deleteAction: {
+                el: "",
+                en: "Delete Action",
+                it: ""
+            },
+            areYouSure: {
+                el: "",
+                en: "Are you sure you want to delete",
+                it: ""
             }
         }
     })

@@ -10,11 +10,12 @@
             </v-col>
 
             <v-col cols="7" class="pl-3">
-                <h4>Payments Processing</h4>
-                <div style="font-size: 0.875rem" class="font-weight-medium">
-                    Select with which payment provider you will process your
-                    transactions based on the card issuer of your clients
-                </div>
+                <h4 v-text="translations.title[lang]"></h4>
+                <div
+                    style="font-size: 0.875rem"
+                    class="font-weight-medium"
+                    v-text="translations.info[lang]"
+                ></div>
             </v-col>
         </v-row>
 
@@ -33,7 +34,7 @@
                     color="secondary"
                     indeterminate
                 ></v-progress-circular>
-                <span v-else>No data available</span>
+                <span v-else v-text="translations.noData[lang]"></span>
             </template>
 
             <template v-slot:item.bank_provider="{ item }">
@@ -63,7 +64,7 @@
 
         <v-dialog v-model="dialog" max-width="500">
             <b-card
-                title="Choose Bank Provider"
+                :title="translations.chooseBank[lang]"
                 :loading="loading"
                 :error-message="errorMessage"
                 @cancel="dialog = false"
@@ -98,24 +99,17 @@
 <script>
 import { mdiMenuUp, mdiMenuDown } from "@mdi/js";
 import { mapState, mapActions, mapMutations } from "vuex";
+import translations from "@/utils/translations/storePanel/settings/paymentProcessing";
 
 export default {
     name: "PaymentProcessing",
 
+    mixins: [translations],
+
     data() {
         return {
             icons: { mdiMenuUp, mdiMenuDown },
-            page: +this.$route.query.page,
-            headers: [
-                {
-                    text: "When user card is issued by:",
-                    value: "bank_provider",
-                },
-                {
-                    text: "Process payment with:",
-                    value: "bank_clearer",
-                },
-            ],
+            page: +this.$route.query.page
         };
     },
 
@@ -123,11 +117,24 @@ export default {
         ...mapState(["loading", "errorMessage"]),
         ...mapState("storePanel/settings/paymentProcessing", [
             "storeBankProviders",
-            "paymentProcessings",
+            "paymentProcessings"
         ]),
 
         lang() {
             return this.$route.params.lang;
+        },
+
+        headers() {
+            return [
+                {
+                    text: this.translations.cardIssued[this.lang],
+                    value: "bank_provider"
+                },
+                {
+                    text: this.translations.processPayment[this.lang],
+                    value: "bank_clearer"
+                }
+            ];
         },
 
         dialog: {
@@ -137,7 +144,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            },
+            }
         },
 
         paymentProcessing: {
@@ -148,8 +155,8 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
@@ -158,13 +165,13 @@ export default {
         ...mapActions("storePanel/settings/paymentProcessing", [
             "getStoreBankProviders",
             "getItems",
-            "update",
+            "update"
         ]),
 
         open(item) {
             this.paymentProcessing = item;
             this.dialog = true;
-        },
+        }
     },
 
     watch: {
@@ -173,8 +180,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query,
-                    },
+                        ...this.$route.query
+                    }
                 });
             }
             this.getItems(this.query);
@@ -182,7 +189,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        },
+        }
     },
 
     beforeCreate() {
@@ -190,8 +197,8 @@ export default {
             this.$router.replace({
                 query: {
                     page: 1,
-                    ...this.$route.query,
-                },
+                    ...this.$route.query
+                }
             });
         }
     },
@@ -199,7 +206,7 @@ export default {
     mounted() {
         this.getItems();
         this.getStoreBankProviders();
-    },
+    }
 };
 </script>
 

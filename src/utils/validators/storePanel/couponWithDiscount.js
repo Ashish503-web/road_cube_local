@@ -12,6 +12,53 @@ export default {
                 product: "",
                 discountPercentage: "",
                 discountValue: ""
+            },
+            errorMessages: {
+                giftCategoryRequired: {
+                    el: "",
+                    en: "Gift category is required",
+                    it: ""
+                },
+                productRequired: {
+                    el: "",
+                    en: "Product is required",
+                    it: ""
+                },
+                discountPercentageRequired: {
+                    el: "",
+                    en: "Discount percent is required",
+                    it: ""
+                },
+                discountPercentageMin: {
+                    el: "",
+                    en: "Discount percent must be minimum 1",
+                    it: ""
+                },
+                discountPercentageMax: {
+                    el: "",
+                    en: "Discount percent must be maximum 100",
+                    it: ""
+                },
+                discountValueRequired: {
+                    el: "",
+                    en: "Discount value is required",
+                    it: ""
+                },
+                discountValueMin: {
+                    el: "",
+                    en: "Discount value must be minimum 0.1",
+                    it: ""
+                },
+                discountValueMax: {
+                    el: ``,
+                    en: `Discount value must be less than `,
+                    it: ``
+                },
+                euro: {
+                    el: "",
+                    en: " euro",
+                    it: ""
+                }
             }
         };
     },
@@ -34,7 +81,9 @@ export default {
     methods: {
         validateGiftCategory() {
             if (!this.couponWithDiscount.gift_category_id) {
-                this.error.giftCategory = "Gift category is required";
+                this.error.giftCategory = this.errorMessages.giftCategoryRequired[
+                    this.lang
+                ];
             } else {
                 this.error.giftCategory = "";
             }
@@ -42,7 +91,9 @@ export default {
 
         validateProduct() {
             if (!this.couponWithDiscount.product_discount_id) {
-                this.error.product = "Product is required";
+                this.error.product = this.errorMessages.productRequired[
+                    this.lang
+                ];
             } else {
                 this.error.product = "";
             }
@@ -50,13 +101,17 @@ export default {
 
         validateDiscountPercentage() {
             if (!this.couponWithDiscount.discount_percentage) {
-                this.error.discountPercentage = "Discount percent is required";
+                this.error.discountPercentage = this.errorMessages.discountPercentageRequired[
+                    this.lang
+                ];
             } else if (this.couponWithDiscount.discount_percentage < 1) {
-                this.error.discountPercentage =
-                    "Discount percent must be minimum 1";
+                this.error.discountPercentage = this.errorMessages.discountPercentageMin[
+                    this.lang
+                ];
             } else if (this.couponWithDiscount.discount_percentage > 100) {
-                this.error.discountPercentage =
-                    "Discount percent must be maximum 100";
+                this.error.discountPercentage = this.errorMessages.discountPercentageMax[
+                    this.lang
+                ];
             } else {
                 this.error.discountPercentage = "";
             }
@@ -64,13 +119,20 @@ export default {
 
         validateDiscountValue() {
             if (!this.couponWithDiscount.discount_value) {
-                this.error.discountValue = "Discount value is required";
+                this.error.discountValue = this.errorMessages.discountValueRequired[
+                    this.lang
+                ];
             } else if (this.couponWithDiscount.discount_value < 0.1) {
-                this.error.discountValue = "Discount value must be minimum 0.1";
+                this.error.discountValue = this.errorMessages.discountValueMin[
+                    this.lang
+                ];
             } else if (
                 this.couponWithDiscount.discount_value > this.retailPrice
             ) {
-                this.error.discountValue = `Discount value must be less than ${this.retailPrice} euro`;
+                this.error.discountValue =
+                    this.errorMessages.discountValueMax[this.lang] +
+                    this.retailPrice +
+                    this.errorMessages.euro[this.lang];
             } else {
                 this.error.discountValue = "";
             }

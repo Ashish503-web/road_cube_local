@@ -11,7 +11,7 @@
                     :key="tab.name['en']"
                     v-text="tab.name[lang]"
                     :to="tab.to"
-                    class="text-capitalize text-left text-sm-center d-flex justify-start justify-sm-center px-3"
+                    class="text-capitalize px-3"
                 ></v-tab>
             </v-tabs>
         </v-sheet>
@@ -28,7 +28,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.path,
+            tab: this.$route.path
         };
     },
 
@@ -37,47 +37,70 @@ export default {
             return this.$route.params.lang;
         },
 
+        permissions() {
+            return this.$store.state.permissions.redemption
+                ? this.$store.state.permissions.redemption
+                : {};
+        },
+
         tabs() {
-            return [
-                {
+            let arr = [];
+
+            if (this.permissions.redeem_voucher) {
+                arr.push({
                     to: `/${this.lang}/storePanel/redeem/redeem-voucher-code`,
                     name: {
                         el: "",
                         en: "Redeem Voucher Code",
-                        it: "",
-                    },
-                },
-                {
+                        it: ""
+                    }
+                });
+            }
+
+            if (this.permissions.coupons_overview) {
+                arr.push({
                     to: `/${this.lang}/storePanel/redeem/coupons-overview`,
                     name: {
                         el: "",
                         en: "Coupons Overview",
-                        it: "",
-                    },
-                },
-                {
+                        it: ""
+                    }
+                });
+            }
+
+            if (this.permissions.multiple_coupons) {
+                arr.push({
                     to: `/${this.lang}/storePanel/redeem/multiple-coupons`,
                     name: {
                         el: "",
                         en: "Multiple Coupons",
-                        it: "",
+                        it: ""
                     },
-                },
-            ];
-        },
+                    show: this.permissions.multiple_coupons
+                });
+            }
+
+            return arr;
+        }
     },
 
     watch: {
-        $route: {
+        tabs: {
             immediate: true,
             handler(val) {
-                if (val.path === `/${this.lang}/storePanel/redeem`) {
-                    this.$router.push(
-                        `/${this.lang}/storePanel/redeem/redeem-voucher-code?page=1`
-                    );
+                if (val.length) {
+                    if (
+                        this.$route.path === `/${this.lang}/storePanel/redeem`
+                    ) {
+                        if (val[0].name.en === "Redeem Voucher Code") {
+                            this.$router.push(val[0].to);
+                        } else {
+                            this.$router.push(val[0].to + "?page=1");
+                        }
+                    }
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>

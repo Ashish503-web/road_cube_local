@@ -162,14 +162,14 @@ export default {
     data() {
         return {
             page: +this.$route.query.page,
-            mode: 0,
+            mode: 0
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage"]),
         ...mapState("storePanel/coupons/couponsWithVisits", [
-            "couponWithVisit",
+            "couponWithVisit"
         ]),
 
         lang() {
@@ -183,7 +183,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            },
+            }
         },
 
         deleteDialog: {
@@ -193,7 +193,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            },
+            }
         },
 
         query() {
@@ -204,7 +204,7 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        },
+        }
     },
 
     methods: {
@@ -212,13 +212,13 @@ export default {
             "setDialog",
             "setDeleteDialog",
             "setResetSuccess",
-            "setResetValidation",
+            "setResetValidation"
         ]),
         ...mapMutations("storePanel/coupons/couponsWithVisits", ["setItem"]),
         ...mapActions("storePanel/coupons/couponsWithVisits", [
             "getItems",
-            "remove",
-        ]),
+            "remove"
+        ])
     },
 
     watch: {
@@ -227,8 +227,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query,
-                    },
+                        ...this.$route.query
+                    }
                 });
             }
 
@@ -237,7 +237,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        },
+        }
     },
 
     beforeCreate() {
@@ -245,15 +245,15 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query,
-                },
+                    ...this.$route.query
+                }
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    },
+    }
 };
 </script>
 

@@ -72,16 +72,13 @@
 
                     <Products
                         v-if="showProducts"
-                        @update-productsInput-success="
-                            productsInputSuccess = $event
-                        "
                         @update-products-success="productsSuccess = $event"
                     />
 
                     <b-text-field
                         v-else
                         v-model="transaction.amount"
-                        label="Amount"
+                        :label="translations.amount[lang]"
                         type="number"
                         no-top-margin
                         :success="success.amount"
@@ -96,7 +93,17 @@
                         :items="generalCouponClaims"
                         item-text="gift_title"
                         return-object
-                        label="General Coupon Claims"
+                        :label="translations.generalCouponClaims[lang]"
+                        multiple
+                    ></b-select>
+
+                    <b-select
+                        v-model="transaction.sampling_coupons_for_use"
+                        :items="samplingCoupons"
+                        :item-text="`product_free.name[${this.lang}]`"
+                        return-object
+                        :label="translations.samplingCoupons[lang]"
+                        class="mt-6"
                         multiple
                     ></b-select>
 
@@ -124,11 +131,12 @@
 <script>
 import { mdiPlusThick } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
+import debounce from "lodash/debounce";
 
 import TransactionPreview from "@/components/storePanel/newTransaction/TransactionPreview.vue";
 import Products from "@/components/storePanel/newTransaction/Products.vue";
 import translations from "@/utils/translations/storePanel/newTransaction";
-import validators from "./newTransactionValidators";
+import validators from "@/utils/validators/storePanel/newTransaction";
 
 export default {
     name: "NewTransaction",
@@ -139,13 +147,16 @@ export default {
 
     data: () => ({
         icons: { mdiPlusThick },
-        productsInputSuccess: false,
         productsSuccess: false,
+        oldProducts: [],
     }),
 
     computed: {
         ...mapState(["loading", "errorMessage"]),
-        ...mapState("storePanel/transactions", ["generalCouponClaims"]),
+        ...mapState("storePanel/transactions", [
+            "generalCouponClaims",
+            "samplingCoupons",
+        ]),
 
         lang() {
             return this.$route.params.lang;
@@ -178,19 +189,23 @@ export default {
             "create",
             "getTransactionPreview",
         ]),
+
+        handleGetTransactionPreview() {
+            this.getTransactionPreview(false);
+        },
     },
 
     watch: {
         ["transaction.amount"](val) {
-            this.getTransactionPreview(this.showProducts);
+            this.debouncedGetTransactionPreview();
         },
+    },
 
-        ["transaction.products"]: {
-            deep: true,
-            handler(val) {
-                this.getTransactionPreview(this.showProducts);
-            },
-        },
+    created() {
+        this.debouncedGetTransactionPreview = debounce(
+            this.handleGetTransactionPreview,
+            500
+        );
     },
 
     mounted() {

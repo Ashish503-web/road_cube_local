@@ -28,7 +28,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.path,
+            tab: this.$route.path
         };
     },
 
@@ -37,32 +37,47 @@ export default {
             return this.$route.params.lang;
         },
 
-        tabs() {
-            return [
-                {
-                    name: { el: "", en: "Point Analysis", it: "" },
-                    to: `/${this.lang}/storePanel/history/point-analysis`,
-                },
-                {
-                    name: { el: "", en: "Monthly Points", it: "" },
-                    to: `/${this.lang}/storePanel/history/monthly-points`,
-                },
-            ];
+        permissions() {
+            return this.$store.state.permissions.history
+                ? this.$store.state.permissions.history
+                : {};
         },
+
+        tabs() {
+            let arr = [];
+
+            if (this.permissions.points_analysis) {
+                arr.push({
+                    name: { el: "", en: "Point Analysis", it: "" },
+                    to: `/${this.lang}/storePanel/history/point-analysis`
+                });
+            }
+
+            if (this.permissions.monthly_points) {
+                arr.push({
+                    name: { el: "", en: "Monthly Points", it: "" },
+                    to: `/${this.lang}/storePanel/history/monthly-points`
+                });
+            }
+
+            return arr;
+        }
     },
 
     watch: {
-        $route: {
+        tabs: {
             immediate: true,
             handler(val) {
-                if (val.path === `/${this.lang}/storePanel/history`) {
-                    this.$router.push(
-                        `/${this.lang}/storePanel/history/point-analysis`
-                    );
+                if (val.length) {
+                    if (
+                        this.$route.path === `/${this.lang}/storePanel/history`
+                    ) {
+                        this.$router.push(val[0].to + "?page=1");
+                    }
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>
 

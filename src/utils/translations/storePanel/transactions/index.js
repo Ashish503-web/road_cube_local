@@ -33,6 +33,21 @@ export default {
                 en: "Points",
                 it: ""
             },
+            totalAmount: {
+                el: "",
+                en: "Total Amount",
+                it: ""
+            },
+            deliveryFee: {
+                el: "",
+                en: "Delivery Fee",
+                it: ""
+            },
+            delivery: {
+                el: "",
+                en: "Delivery",
+                it: ""
+            },
             date: {
                 el: "",
                 en: "Date",
@@ -43,7 +58,7 @@ export default {
                 en: "Status",
                 it: ""
             },
-            watch: {
+            showDetails: {
                 el: "",
                 en: "Show details",
                 it: ""
@@ -56,6 +71,16 @@ export default {
             noData: {
                 el: "",
                 en: "No data available",
+                it: ""
+            },
+            deliveryDetails: {
+                el: "",
+                en: "Delivery Details",
+                it: ""
+            },
+            pickupFromStore: {
+                el: "",
+                en: "Pickup from store",
                 it: ""
             }
         }

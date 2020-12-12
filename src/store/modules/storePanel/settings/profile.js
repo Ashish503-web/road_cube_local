@@ -30,7 +30,9 @@ export default {
         },
         resetSuccess: {
             logo: false,
-            mapLogo: false
+            mapLogo: false,
+            businessInformation: false,
+            changePassword: false
         },
         countries: []
     }),
@@ -145,6 +147,7 @@ export default {
                 commit("storePanel/setBusinessInformation", item, {
                     root: true
                 });
+                commit("setResetSuccess", { value: true, type });
                 commit("setLoading", { value: false, type });
                 commit(
                     "setNotification",
@@ -323,6 +326,7 @@ export default {
 
                 await Profile.updatePassword(item);
 
+                commit("setResetSuccess", { value: true, type });
                 commit("setLoading", { value: false, type });
                 commit(
                     "setNotification",

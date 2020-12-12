@@ -29,7 +29,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.path,
+            tab: this.$route.path
         };
     },
 
@@ -38,48 +38,70 @@ export default {
             return this.$route.params.lang;
         },
 
-        tabs() {
-            return [
-                {
-                    name: { el: "", en: "coupons with transactions", it: "" },
-                    to: `/${this.lang}/storePanel/coupons/with-transactions`,
-                },
-
-                {
-                    name: { el: "", en: "coupons with code", it: "" },
-                    to: `/${this.lang}/storePanel/coupons/with-code`,
-                },
-
-                {
-                    name: { el: "", en: "coupons on products", it: "" },
-                    to: `/${this.lang}/storePanel/coupons/on-products`,
-                },
-
-                // {
-                //     name: { el: "", en: "coupons with visits", it: "" },
-                //     to: `/${this.lang}/storePanel/coupons/with-visits`
-                // },
-
-                {
-                    name: { el: "", en: "coupons with discount", it: "" },
-                    to: `/${this.lang}/storePanel/coupons/with-discount`,
-                },
-            ];
+        permissions() {
+            return this.$store.state.permissions.coupons
+                ? this.$store.state.permissions.coupons
+                : { goal: {}, voucher: {}, product: {}, discount: {} };
         },
+
+        tabs() {
+            let arr = [];
+
+            if (this.permissions.goal.read) {
+                arr.push({
+                    name: { el: "", en: "coupons with transactions", it: "" },
+                    to: `/${this.lang}/storePanel/coupons/with-transactions`
+                });
+            }
+
+            if (this.permissions.voucher.read) {
+                arr.push({
+                    name: { el: "", en: "coupons with code", it: "" },
+                    to: `/${this.lang}/storePanel/coupons/with-code`
+                });
+            }
+
+            if (this.permissions.product.read) {
+                arr.push({
+                    name: { el: "", en: "coupons on products", it: "" },
+                    to: `/${this.lang}/storePanel/coupons/on-products`
+                });
+            }
+
+            if (this.permissions.discount.read) {
+                arr.push({
+                    name: { el: "", en: "coupons with discount", it: "" },
+                    to: `/${this.lang}/storePanel/coupons/with-discount`
+                });
+            }
+
+            return arr;
+
+            // {
+            //     name: { el: "", en: "coupons with visits", it: "" },
+            //     to: `/${this.lang}/storePanel/coupons/with-visits`
+            // },
+        }
     },
 
     watch: {
-        $route: {
+        tabs: {
             immediate: true,
             handler(val) {
-                if (val.path === `/${this.lang}/storePanel/coupons`) {
-                    this.$router.push(
-                        `/${this.lang}/storePanel/coupons/with-transactions`
-                    );
+                if (val.length) {
+                    if (
+                        this.$route.path === `/${this.lang}/storePanel/coupons`
+                    ) {
+                        if (val[0].name.en === "coupons with transactions") {
+                            this.$router.push(val[0].to);
+                        } else {
+                            this.$router.push(val[0].to + "?page=1");
+                        }
+                    }
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>
 

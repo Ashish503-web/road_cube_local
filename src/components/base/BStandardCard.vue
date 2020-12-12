@@ -34,11 +34,7 @@
             </v-col>
 
             <v-col cols="12">
-                <v-form
-                    v-model="valid"
-                    ref="form"
-                    @submit.prevent="$emit('submit')"
-                >
+                <v-form @submit.prevent="$emit('submit')">
                     <v-card-text
                         class="pt-4 text--secondary relative"
                         :class="{ 'px-0': noBodyPadding }"
@@ -72,8 +68,8 @@
                         color="secondary"
                         class="text-capitalize px-5"
                         depressed
-                        :disabled="disabled"
                         :loading="loading"
+                        :disabled="disabled"
                         @click="$emit('submit')"
                         >{{ submitText[lang] }}</v-btn
                     >
@@ -100,29 +96,18 @@ export default {
             default: () => ({ el: "", en: "update details", it: "" })
         },
         loading: Boolean,
-        errorMessage: String,
         noBodyPadding: Boolean,
-        hideDefaultFooter: Boolean
+        hideDefaultFooter: Boolean,
+        errorMessage: String,
+        disabled: {
+            type: Boolean,
+            default: false
+        }
     },
-
-    data: () => ({
-        valid: false,
-        disabled: true
-    }),
 
     computed: {
         lang() {
             return this.$route.params.lang;
-        }
-    },
-
-    watch: {
-        valid(val) {
-            if (val) {
-                this.disabled = false;
-            } else {
-                this.disabled = true;
-            }
         }
     }
 };

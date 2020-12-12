@@ -27,6 +27,48 @@ export default {
                 deliveryCost: "",
                 shippingCost: "",
                 category: ""
+            },
+            errorMessages: {
+                nameRequired: {
+                    el: "",
+                    en: "Name is required",
+                    it: ""
+                },
+                descriptionRequired: {
+                    el: "",
+                    en: "Description is required",
+                    it: ""
+                },
+                sellingPriceRequired: {
+                    el: "",
+                    en: "Selling Price is required",
+                    it: ""
+                },
+                sellingPriceMin: {
+                    el: "",
+                    en: "Selling Price must be minimum 0.1",
+                    it: ""
+                },
+                wholesalePriceMin: {
+                    el: "",
+                    en: "Wholesale Price must be minimum 0.1",
+                    it: ""
+                },
+                deliveryCostMin: {
+                    el: "",
+                    en: "Delivery Cost must be minimum 0.1",
+                    it: ""
+                },
+                shippingCostMin: {
+                    el: "",
+                    en: "Shipping Cost must be minimum 0.1",
+                    it: ""
+                },
+                categoryRequired: {
+                    el: "",
+                    en: "Category is required",
+                    it: ""
+                }
             }
         };
     },
@@ -49,7 +91,9 @@ export default {
         validateName() {
             if (this.productLang === "el") {
                 if (!this.product.name["el"]) {
-                    this.error.name = "Name is required";
+                    this.error.name = this.errorMessages.nameRequired[
+                        this.lang
+                    ];
                 } else {
                     this.error.name = "";
                 }
@@ -59,7 +103,9 @@ export default {
         validateDescription() {
             if (this.descriptionLang === "el") {
                 if (!this.product.description["el"]) {
-                    this.error.description = "Description is required";
+                    this.error.description = this.errorMessages.descriptionRequired[
+                        this.lang
+                    ];
                 } else {
                     this.error.description = "";
                 }
@@ -68,9 +114,13 @@ export default {
 
         validateSellingPrice() {
             if (!this.product.retail_price) {
-                this.error.sellingPrice = "Selling Price is required";
+                this.error.sellingPrice = this.errorMessages.sellingPriceRequired[
+                    this.lang
+                ];
             } else if (this.product.retail_price < 0.1) {
-                this.error.sellingPrice = "Selling Price must be minimum 0.1";
+                this.error.sellingPrice = this.errorMessages.sellingPriceMin[
+                    this.lang
+                ];
             } else {
                 this.error.sellingPrice = "";
             }
@@ -80,8 +130,9 @@ export default {
             if (!this.product.wholesale_price) {
                 this.error.wholesalePrice = "";
             } else if (this.product.wholesale_price < 0.1) {
-                this.error.wholesalePrice =
-                    "Wholesale Price must be minimum 0.1";
+                this.error.wholesalePrice = this.errorMessages.wholesalePriceMin[
+                    this.lang
+                ];
             } else {
                 this.error.wholesalePrice = "";
             }
@@ -91,7 +142,9 @@ export default {
             if (!this.product.delivery_cost) {
                 this.error.deliveryCost = "";
             } else if (this.product.delivery_cost < 0.1) {
-                this.error.deliveryCost = "Delivery Cost must be minimum 0.1";
+                this.error.deliveryCost = this.errorMessages.deliveryCostMin[
+                    this.lang
+                ];
             } else {
                 this.error.deliveryCost = "";
             }
@@ -101,7 +154,9 @@ export default {
             if (!this.product.shipping_cost) {
                 this.error.shippingCost = "";
             } else if (this.product.shipping_cost < 0.1) {
-                this.error.shippingCost = "Shipping Cost must be minimum 0.1";
+                this.error.shippingCost = this.errorMessages.shippingCostMin[
+                    this.lang
+                ];
             } else {
                 this.error.shippingCost = "";
             }
@@ -109,7 +164,9 @@ export default {
 
         validateCategory() {
             if (!this.product.product_category_id) {
-                this.error.category = "Category is required";
+                this.error.category = this.errorMessages.categoryRequired[
+                    this.lang
+                ];
             } else {
                 this.error.category = "";
             }

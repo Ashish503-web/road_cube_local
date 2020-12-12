@@ -28,7 +28,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.path,
+            tab: this.$route.path
         };
     },
 
@@ -37,18 +37,29 @@ export default {
             return this.$route.params.lang;
         },
 
+        permissions() {
+            return this.$store.state.permissions.products
+                ? this.$store.state.permissions.products.group
+                : {};
+        },
+
         tabs() {
-            return [
+            let arr = [
                 {
                     name: { el: "", en: "Products", it: "" },
-                    to: `/${this.lang}/storePanel/products/products-tab`,
-                },
-                {
-                    name: { el: "", en: "Product Groups", it: "" },
-                    to: `/${this.lang}/storePanel/products/product-groups`,
-                },
+                    to: `/${this.lang}/storePanel/products/products-tab`
+                }
             ];
-        },
+
+            if (this.permissions.read) {
+                arr.push({
+                    name: { el: "", en: "Product Groups", it: "" },
+                    to: `/${this.lang}/storePanel/products/product-groups`
+                });
+            }
+
+            return arr;
+        }
     },
 
     watch: {
@@ -60,8 +71,8 @@ export default {
                         `/${this.lang}/storePanel/products/products-tab?page=1`
                     );
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>

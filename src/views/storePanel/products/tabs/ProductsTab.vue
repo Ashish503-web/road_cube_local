@@ -2,11 +2,13 @@
     <v-tab-item :value="$route.path" class="pa-3">
         <v-toolbar flat height="90">
             <v-btn
-                color="secondary"
+                :color="permissions.create ? 'secondary' : 'grey'"
                 class="text-capitalize px-5"
                 depressed
                 v-text="translations.addProduct[lang]"
-                @click="open(1, {})"
+                @click="
+                    permissions.create ? open(1, {}) : setPermissionDialog(true)
+                "
             ></v-btn>
 
             <v-spacer></v-spacer>
@@ -59,10 +61,16 @@
                 <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            color="yellow darken-3"
+                            :color="
+                                permissions.update ? 'yellow darken-3' : 'grey'
+                            "
                             icon
                             v-on="on"
-                            @click="open(2, item)"
+                            @click="
+                                permissions.update
+                                    ? open(2, item)
+                                    : setPermissionDialog(true)
+                            "
                         >
                             <v-icon v-text="icons.mdiPencilOutline"></v-icon>
                         </v-btn>
@@ -77,13 +85,17 @@
                 <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            color="red"
+                            :color="permissions.delete ? 'red' : 'grey'"
                             icon
                             v-on="on"
                             @click="
                                 () => {
-                                    product = item;
-                                    deleteDialog = true;
+                                    if (permissions.delete) {
+                                        product = item;
+                                        deleteDialog = true;
+                                    } else {
+                                        setPermissionDialog(true);
+                                    }
                                 }
                             "
                         >
@@ -113,7 +125,7 @@
                 @cancel="deleteDialog = false"
                 @submit="remove"
             >
-                <div class="subtitle-1 font-weight-medium pl-2">
+                <div class="subtitle-1 font-weight-medium py-3 px-2">
                     {{ translations.deleteText[lang] }}
                     <span class="font-weight-bold text--primary">{{
                         product.name[lang]
@@ -154,6 +166,12 @@ export default {
 
         lang() {
             return this.$route.params.lang;
+        },
+
+        permissions() {
+            return this.$store.state.permissions.products
+                ? this.$store.state.permissions.products
+                : {};
         },
 
         headers() {
@@ -228,6 +246,7 @@ export default {
             "setDeleteDialog",
             "setResetSuccess",
             "setResetValidation",
+            "setPermissionDialog",
         ]),
         ...mapMutations("storePanel/products", [
             "setShowImageUpload",

@@ -30,4 +30,20 @@ export default class Store {
 
     static get = () =>
         axios.get(`${ApiEndpoint}/${localStorage.getItem("storeId")}`);
+
+    static acceptRedemption = item =>
+        axios.post(
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/redemption/accept`,
+            item
+        );
+
+    static rejectRedemption = item =>
+        axios.post(
+            `${ApiEndpoint}/${localStorage.getItem(
+                "storeId"
+            )}/redemption/reject`,
+            item
+        );
 }

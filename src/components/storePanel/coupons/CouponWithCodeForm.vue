@@ -12,7 +12,7 @@
             :items="giftCategories"
             :item-text="`name[${lang}]`"
             item-value="gift_category_id"
-            label="Gift Category"
+            :label="translations.giftCategory[lang]"
             no-top-margin
             :success="success.giftCategory"
             :error-messages="error.giftCategory"
@@ -22,8 +22,8 @@
 
         <b-text-field
             v-model="couponWithCode.code"
-            label="Coupon Code (e.g. Maroudas Optika)"
-            hint="* This is the code that you can share in posters, documents and internet. We suggest you to type something similar to your company name."
+            :label="translations.couponCode[lang]"
+            :hint="translations.couponCodeHint[lang]"
             persistent-hint
             :success="success.code"
             :error-messages="error.code"
@@ -34,7 +34,7 @@
         <b-text-field
             v-model="couponWithCode.points"
             type="number"
-            label="Moves (RoadCube Points)"
+            :label="translations.moves[lang]"
             :success="success.points"
             :error-messages="error.points"
             @focus="error.points = ''"
@@ -45,7 +45,7 @@
             v-if="mode === 1"
             v-model="couponWithCode.maximum"
             type="number"
-            label="Total Coupons"
+            :label="translations.totalCoupons[lang]"
             :success="success.totalCoupons"
             :error-messages="error.totalCoupons"
             @focus="error.totalCoupons = ''"
@@ -54,7 +54,7 @@
 
         <b-text-field
             v-model="couponWithCode.gift_title"
-            label="Gift Title"
+            :label="translations.giftTitle[lang]"
             :success="success.giftTitle"
             :error-messages="error.giftTitle"
             @focus="error.giftTitle = ''"
@@ -63,7 +63,7 @@
 
         <b-textarea
             v-model="couponWithCode.gift_description"
-            label="Gift Description"
+            :label="translations.giftDescription[lang]"
             :success="success.giftDescription"
             :error-messages="error.giftDescription"
             @focus="error.giftDescription = ''"
@@ -77,17 +77,18 @@
             hide-details="auto"
         >
             <template v-slot:label>
-                <h4 class="secondary--text">
-                    I want the product to be displayed with an image in the
-                    application
-                </h4>
+                <h4
+                    class="secondary--text"
+                    v-text="translations.imageCheckbox[lang]"
+                ></h4>
             </template>
         </v-checkbox>
 
         <v-card v-if="showImageUpload" outlined class="mt-3">
-            <v-card-title class="subtitle-1 font-weight-medium">
-                Product Image (optional)
-            </v-card-title>
+            <v-card-title
+                class="subtitle-1 font-weight-medium"
+                v-text="translations.imageTitle[lang]"
+            ></v-card-title>
             <v-row no-gutters justify="space-between" class="pa-5">
                 <v-col cols="6">
                     <v-img :src="couponWithCode.image"></v-img>
@@ -108,7 +109,8 @@
 
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
-import validators from "./codeValidators";
+import translations from "@/utils/translations/storePanel/coupons/couponsWithCode/couponWithCodeForm";
+import validators from "@/utils/validators/storePanel/couponWithCode";
 
 export default {
     name: "CouponWithCodeForm",
@@ -117,7 +119,7 @@ export default {
         mode: Number,
     },
 
-    mixins: [validators],
+    mixins: [translations, validators],
 
     data() {
         return {
@@ -143,8 +145,8 @@ export default {
 
         title() {
             return this.mode === 1
-                ? "New Coupon With Code"
-                : "Update Coupon With Code";
+                ? this.translations.newCoupon[this.lang]
+                : this.translations.updateCoupon[this.lang];
         },
 
         showImageUpload: {

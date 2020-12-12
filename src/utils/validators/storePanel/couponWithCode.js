@@ -24,6 +24,43 @@ export default {
                 totalCoupons: "",
                 giftTitle: "",
                 giftDescription: ""
+            },
+            errorMessages: {
+                giftCategoryRequired: {
+                    el: "",
+                    en: "Gift Category is required",
+                    it: ""
+                },
+                codeRequired: {
+                    el: "",
+                    en: "Coupon Code is required",
+                    it: ""
+                },
+                movesRequired: {
+                    el: "",
+                    en: "Moves is required",
+                    it: ""
+                },
+                totalCouponsRequired: {
+                    el: "",
+                    en: "Total Coupons is required",
+                    it: ""
+                },
+                totalCouponsValue: {
+                    el: "",
+                    en: "Total Coupons must be minimum 1",
+                    it: ""
+                },
+                giftTitleRequired: {
+                    el: "",
+                    en: "Gift Title is required",
+                    it: ""
+                },
+                giftDescriptionRequired: {
+                    el: "",
+                    en: "Gift Description is required",
+                    it: ""
+                }
             }
         };
     },
@@ -46,7 +83,9 @@ export default {
     methods: {
         validateGiftCategory() {
             if (!this.couponWithCode.gift_category_id) {
-                this.error.giftCategory = "Gift Category is required";
+                this.error.giftCategory = this.errorMessages.giftCategoryRequired[
+                    this.lang
+                ];
             } else {
                 this.error.giftCategory = "";
             }
@@ -54,7 +93,7 @@ export default {
 
         validateCode() {
             if (!this.couponWithCode.code) {
-                this.error.code = "Coupon Code is required";
+                this.error.code = this.errorMessages.codeRequired[this.lang];
             } else {
                 this.error.code = "";
             }
@@ -62,7 +101,7 @@ export default {
 
         validatePoints() {
             if (!this.couponWithCode.points) {
-                this.error.points = "Moves is required";
+                this.error.points = this.errorMessages.movesRequired[this.lang];
             } else {
                 this.error.points = "";
             }
@@ -70,9 +109,13 @@ export default {
 
         validateTotalCoupons() {
             if (!this.couponWithCode.maximum) {
-                this.error.totalCoupons = "Total Coupons is required";
+                this.error.totalCoupons = this.errorMessages.totalCouponsRequired[
+                    this.lang
+                ];
             } else if (this.couponWithCode.maximum < 1) {
-                this.error.totalCoupons = "Total Coupons must be minimum 1";
+                this.error.totalCoupons = this.errorMessages.totalCouponsValue[
+                    this.lang
+                ];
             } else {
                 this.error.totalCoupons = "";
             }
@@ -80,7 +123,9 @@ export default {
 
         validateGiftTitle() {
             if (!this.couponWithCode.gift_title) {
-                this.error.giftTitle = "Gift Title is required";
+                this.error.giftTitle = this.errorMessages.giftTitleRequired[
+                    this.lang
+                ];
             } else {
                 this.error.giftTitle = "";
             }
@@ -88,7 +133,9 @@ export default {
 
         validateGiftDescription() {
             if (!this.couponWithCode.gift_description) {
-                this.error.giftDescription = "Gift Description is required";
+                this.error.giftDescription = this.errorMessages.giftDescriptionRequired[
+                    this.lang
+                ];
             } else {
                 this.error.giftDescription = "";
             }

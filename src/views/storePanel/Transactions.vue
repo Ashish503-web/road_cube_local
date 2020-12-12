@@ -45,7 +45,7 @@
                 :items="transactions"
                 :footer-props="{
                     itemsPerPageOptions: [12],
-                    showCurrentPage: true,
+                    showCurrentPage: true
                 }"
                 :page.sync="page"
                 :server-items-length="serverItemsLength"
@@ -61,9 +61,67 @@
                     <span v-else v-text="translations.noData[lang]"></span>
                 </template>
 
-                <template v-slot:item.watch="{ item }">
+                <template v-slot:item.total_price="{ item }">
+                    {{
+                        new Intl.NumberFormat("en-US", {
+                            style: "currency",
+                            currency: "EUR",
+                            minimumFractionDigits: 2
+                        }).format(item.total_price)
+                    }}
+                </template>
+
+                <template v-slot:item.total_amount="{ item }">
+                    {{
+                        new Intl.NumberFormat("en-US", {
+                            style: "currency",
+                            currency: "EUR",
+                            minimumFractionDigits: 2
+                        }).format(item.total_amount)
+                    }}
+                </template>
+
+                <template v-slot:item.delivery_fee="{ item }">
+                    {{
+                        new Intl.NumberFormat("en-US", {
+                            style: "currency",
+                            currency: "EUR",
+                            minimumFractionDigits: 2
+                        }).format(item.delivery_fee)
+                    }}
+                </template>
+
+                <template v-slot:item.delivery_address="{ item }">
                     <div
-                        class="d-flex align-center"
+                        v-if="item.delivery_address"
+                        class="text-decoration-underline"
+                        style="cursor:pointer"
+                        @click="
+                            () => {
+                                deliveryDetails = item.delivery_address;
+                                deliveryDialog = true;
+                            }
+                        "
+                    >
+                        <v-icon
+                            color="secondary"
+                            v-text="icons.mdiMapMarker"
+                        ></v-icon>
+                        {{ translations.deliveryDetails[lang] }}
+                    </div>
+
+                    <span v-else>
+                        <v-icon
+                            color="secondary"
+                            v-text="icons.mdiMapMarker"
+                        ></v-icon>
+                        {{ translations.pickupFromStore[lang] }}
+                    </span>
+                </template>
+
+                <template v-slot:item.show_details="{ item }">
+                    <div
+                        class="text-decoration-underline"
                         style="cursor: pointer"
                         @click="
                             () => {
@@ -72,15 +130,27 @@
                             }
                         "
                     >
-                        <img src="@/assets/eye.png" alt="eye" width="24" />
-                        <div class="ml-2 text-decoration-underline">
-                            Show details
-                        </div>
+                        <img
+                            src="@/assets/eye.png"
+                            style="vertical-align: middle"
+                            alt="eye"
+                            width="24"
+                            class="mr-1"
+                        />
+                        {{ translations.showDetails[lang] }}
                     </div>
                 </template>
 
                 <template v-slot:item.transaction_status_name="{ item }">
-                    <v-sheet
+                    <v-alert
+                        v-if="item.transaction_status_id === 3"
+                        type="success"
+                        dense
+                        class="mb-0 text-center"
+                    >
+                        <span class="mr-6 subtitle-2">Verified</span>
+                    </v-alert>
+                    <!-- <v-sheet
                         v-if="item.transaction_status_id === 3"
                         color="grey lighten-2"
                         class="green--text text--darken-2 subtitle-2 rounded"
@@ -92,7 +162,7 @@
                             v-text="icons.mdiCheckBold"
                         ></v-icon>
                         Verified
-                    </v-sheet>
+                    </v-sheet> -->
                     <v-sheet v-else>
                         <b-select
                             v-model="item.transaction_status_id"
@@ -125,13 +195,18 @@
                     <v-btn
                         v-if="
                             item.transaction_type_id === 2 ||
-                            item.transaction_type_id === 11
+                                item.transaction_type_id === 11
                         "
                         color="grey lighten-2"
                         class="text-capitalize my-1 red--text"
                         width="83"
                         depressed
-                        @click="myFunc(item)"
+                        @click="
+                            () => {
+                                transactionId = item.transaction_id;
+                                dialog = true;
+                            }
+                        "
                         >Refund</v-btn
                     >
                 </template>
@@ -141,10 +216,24 @@
                 <SettingsPanel @cancel="settingsDialog = false" />
             </v-dialog>
 
+            <v-dialog v-model="deliveryDialog" max-width="500">
+                <DeliveryDetails
+                    :delivery-details="deliveryDetails"
+                    @cancel="deliveryDialog = false"
+                />
+            </v-dialog>
+
             <v-dialog v-model="transactionDialog" max-width="600">
                 <TransactionProfile
                     :transaction-id="transactionId"
                     @cancel="transactionDialog = false"
+                />
+            </v-dialog>
+
+            <v-dialog v-model="dialog" max-width="500">
+                <RefundTransaction
+                    :transaction-id="transactionId"
+                    @cancel="dialog = false"
                 />
             </v-dialog>
         </v-sheet>
@@ -152,28 +241,39 @@
 </template>
 
 <script>
-import { mdiCheckBold } from "@mdi/js";
+import { mdiCheckBold, mdiMapMarker } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 
 import Filters from "@/components/storePanel/transactions/Filters.vue";
 import SettingsPanel from "@/components/storePanel/transactions/SettingsPanel.vue";
+import DeliveryDetails from "@/components/storePanel/transactions/DeliveryDetails.vue";
 import TransactionProfile from "@/components/storePanel/transactions/TransactionProfile.vue";
+import RefundTransaction from "@/components/storePanel/transactions/RefundTransaction.vue";
+
 import translations from "@/utils/translations/storePanel/transactions";
 
 export default {
     name: "Transactions",
 
-    components: { Filters, SettingsPanel, TransactionProfile },
+    components: {
+        Filters,
+        SettingsPanel,
+        DeliveryDetails,
+        TransactionProfile,
+        RefundTransaction
+    },
 
     mixins: [translations],
 
     data() {
         return {
-            icons: { mdiCheckBold },
+            icons: { mdiCheckBold, mdiMapMarker },
             page: +this.$route.query.page,
             settingsDialog: false,
+            deliveryDialog: false,
+            deliveryDetails: {},
             transactionDialog: false,
-            transactionId: null,
+            transactionId: null
         };
     },
 
@@ -181,7 +281,7 @@ export default {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/transactions", [
             "transactionStatuses",
-            "transactions",
+            "transactions"
         ]),
 
         lang() {
@@ -192,34 +292,58 @@ export default {
             return [
                 {
                     text: this.translations.user[this.lang],
-                    value: "user_identity",
+                    value: "user_identity"
                 },
                 {
                     text: this.translations.amount[this.lang],
-                    value: "total_price",
+                    value: "total_price"
                 },
                 {
                     text: this.translations.points[this.lang],
-                    value: "total_points",
+                    value: "total_points"
+                },
+                {
+                    text: this.translations.totalAmount[this.lang],
+                    value: "total_amount"
+                },
+                {
+                    text: this.translations.deliveryFee[this.lang],
+                    value: "delivery_fee"
+                },
+                {
+                    text: this.translations.delivery[this.lang],
+                    value: "delivery_address",
+                    width: 180
                 },
                 {
                     text: this.translations.date[this.lang],
-                    value: "created_at",
+                    value: "created_at"
                 },
                 {
-                    text: this.translations.watch[this.lang],
-                    value: "watch",
+                    text: this.translations.showDetails[this.lang],
+                    value: "show_details",
+                    width: 150
                 },
                 {
                     text: this.translations.status[this.lang],
                     value: "transaction_status_name",
-                    width: "20%",
+                    width: "20%"
                 },
                 {
                     text: this.translations.actions[this.lang],
-                    value: "actions",
-                },
+                    value: "actions"
+                }
             ];
+        },
+
+        dialog: {
+            get() {
+                return this.$store.state.dialog;
+            },
+
+            set(val) {
+                this.setDialog(val);
+            }
         },
 
         transaction: {
@@ -229,7 +353,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
+            }
         },
 
         query() {
@@ -241,16 +365,17 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        },
+        }
     },
 
     methods: {
+        ...mapMutations(["setDialog"]),
         ...mapMutations("storePanel/transactions", ["setItem"]),
         ...mapActions("storePanel/transactions", [
             "getItems",
             "changeStatus",
-            "remove",
-        ]),
+            "remove"
+        ])
     },
 
     watch: {
@@ -259,8 +384,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query,
-                    },
+                        ...this.$route.query
+                    }
                 });
             }
 
@@ -269,7 +394,7 @@ export default {
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
-        },
+        }
     },
 
     beforeCreate() {
@@ -277,14 +402,14 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query,
-                },
+                    ...this.$route.query
+                }
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    },
+    }
 };
 </script>

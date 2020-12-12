@@ -21,11 +21,11 @@
 
         <v-toolbar flat>
             <v-btn
-                color="secondary"
+                :color="permissions.create ? 'secondary' : 'grey'"
                 class="text-capitalize px-5"
                 depressed
                 v-text="translations.addDiscountCoupons[lang]"
-                @click="open"
+                @click="permissions.create ? open() : setPermissionDialog(true)"
             ></v-btn>
         </v-toolbar>
 
@@ -50,13 +50,17 @@
                 <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            color="red"
+                            :color="permissions.delete ? 'red' : 'grey'"
                             icon
                             v-on="on"
                             @click="
                                 () => {
-                                    couponWithDiscount = item;
-                                    deleteDialog = true;
+                                    if (permissions.delete) {
+                                        couponWithDiscount = item;
+                                        deleteDialog = true;
+                                    } else {
+                                        setPermissionDialog(true);
+                                    }
                                 }
                             "
                         >
@@ -79,15 +83,15 @@
         <v-dialog v-model="deleteDialog" max-width="500">
             <b-card
                 type="delete"
-                title="Delete Product"
-                submit-text="delete"
+                :title="translations.deleteDiscount[lang]"
+                :submit-text="{ el: '', en: 'delete', it: '' }"
                 :loading="loading"
                 :error-message="errorMessage"
                 @cancel="deleteDialog = false"
                 @submit="remove"
             >
-                <div class="subtitle-1 font-weight-medium">
-                    Are you sure you want to delete
+                <div class="subtitle-1 font-weight-medium py-3 px-2">
+                    {{ translations.areYouSure[lang] }}
                     <span class="font-weight-bold text--primary">{{
                         couponWithDiscount.discount_product_name[lang]
                     }}</span>
@@ -102,7 +106,7 @@
 import { mdiPlus, mdiClose } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import CouponWithDiscountForm from "@/components/storePanel/coupons/CouponWithDiscountForm.vue";
-import translations from "@/utils/translations/storePanel/couponsWithDiscount";
+import translations from "@/utils/translations/storePanel/coupons/couponsWithDiscount";
 
 export default {
     name: "CouponsWithDiscount",
@@ -129,6 +133,12 @@ export default {
 
         lang() {
             return this.$route.params.lang;
+        },
+
+        permissions() {
+            return this.$store.state.permissions.coupons
+                ? this.$store.state.permissions.coupons.discount
+                : {};
         },
 
         headers() {
@@ -201,6 +211,7 @@ export default {
             "setDeleteDialog",
             "setResetSuccess",
             "setResetValidation",
+            "setPermissionDialog",
         ]),
         ...mapMutations("storePanel/coupons/couponsWithDiscount", ["setItem"]),
         ...mapActions("storePanel/coupons/couponsWithDiscount", [

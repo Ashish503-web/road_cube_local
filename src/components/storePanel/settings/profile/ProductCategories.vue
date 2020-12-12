@@ -125,14 +125,14 @@
                                 class="text-capitalize"
                                 height="32"
                                 text
+                                v-text="translations.cancel[lang]"
                                 @click="
                                     () => {
                                         category.expanded = false;
                                         selectedProductCategory = {};
                                     }
                                 "
-                                >cancel</v-btn
-                            >
+                            ></v-btn>
                             <v-btn
                                 type="submit"
                                 color="secondary"
@@ -141,7 +141,7 @@
                                 depressed
                                 :loading="selectedProductCategory.loading"
                                 @click="update"
-                                >save</v-btn
+                                >{{ translations.save[lang] }}</v-btn
                             >
                         </v-card-actions>
                     </v-card>
@@ -150,8 +150,8 @@
             <v-dialog v-model="deleteDialog" max-width="500">
                 <b-card
                     type="delete"
-                    title="Delete Product Category"
-                    submit-text="delete"
+                    :title="translations.deleteCategory[lang]"
+                    :submit-text="{ el: '', en: 'delete', it: '' }"
                     :loading="selectedProductCategory.loading"
                     :error-message="errorMessage"
                     @cancel="deleteDialog = false"
@@ -159,7 +159,7 @@
                         remove(selectedProductCategory.product_category_id)
                     "
                 >
-                    <div class="subtitle-1 font-weight-medium py-3">
+                    <div class="subtitle-1 font-weight-medium py-3 px-2">
                         Are you sure you want to delete
                         <span class="font-weight-bold text--primary">{{
                             selectedProductCategory.name[lang]
@@ -187,14 +187,14 @@ export default {
             icons: { mdiPencilOutline, mdiClose },
             categoryLang: "el",
             selectedLang: "el",
-            page: +this.$route.query.page
+            page: +this.$route.query.page,
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/settings/productCategories", [
-            "productCategories"
+            "productCategories",
         ]),
 
         lang() {
@@ -208,7 +208,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            }
+            },
         },
 
         productCategory: {
@@ -219,7 +219,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
+            },
         },
 
         selectedProductCategory: {
@@ -230,7 +230,7 @@ export default {
 
             set(val) {
                 this.setSelectedItem(val);
-            }
+            },
         },
 
         query() {
@@ -241,21 +241,21 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
         ...mapMutations(["setDeleteDialog"]),
         ...mapMutations("storePanel/settings/productCategories", [
             "setItem",
-            "setSelectedItem"
+            "setSelectedItem",
         ]),
         ...mapActions("storePanel/settings/productCategories", [
             "getItems",
             "create",
             "update",
-            "remove"
-        ])
+            "remove",
+        ]),
     },
 
     watch: {
@@ -264,8 +264,8 @@ export default {
                 this.$router.push({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
             this.getItems(this.query);
@@ -277,7 +277,7 @@ export default {
 
         perPage(perPage) {
             this.$router.push({ query: { ...this.$route.query, perPage } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -285,15 +285,15 @@ export default {
             this.$router.push({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    }
+    },
 };
 </script>
 

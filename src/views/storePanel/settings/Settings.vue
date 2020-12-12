@@ -29,7 +29,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.path,
+            tab: this.$route.path
         };
     },
 
@@ -38,70 +38,101 @@ export default {
             return this.$route.params.lang;
         },
 
+        permissions() {
+            return this.$store.state.permissions.settings
+                ? this.$store.state.permissions.settings
+                : { users: {} };
+        },
+
         tabs() {
-            return [
-                {
+            let arr = [];
+
+            if (this.permissions.profile) {
+                arr.push({
                     name: { el: "", en: "profile", it: "" },
-                    to: `/${this.lang}/storePanel/settings/profile`,
-                },
-                {
+                    to: `/${this.lang}/storePanel/settings/profile`
+                });
+            }
+
+            if (this.permissions.reward) {
+                arr.push({
                     name: { el: "", en: "reward", it: "" },
-                    to: `/${this.lang}/storePanel/settings/reward`,
-                },
-                {
+                    to: `/${this.lang}/storePanel/settings/reward`
+                });
+            }
+
+            if (this.permissions.product_points) {
+                arr.push({
                     name: { el: "", en: "product points", it: "" },
-                    to: `/${this.lang}/storePanel/settings/product-points`,
-                },
-                {
+                    to: `/${this.lang}/storePanel/settings/product-points`
+                });
+            }
+
+            if (this.permissions.users.read) {
+                arr.push({
                     name: { el: "", en: "users", it: "" },
-                    to: `/${this.lang}/storePanel/settings/users`,
-                },
-                {
+                    to: `/${this.lang}/storePanel/settings/users`
+                });
+            }
+
+            if (this.permissions.cleaners) {
+                arr.push({
                     name: { el: "", en: "payment providers", it: "" },
-                    to: `/${this.lang}/storePanel/settings/payment-providers`,
-                },
-                {
+                    to: `/${this.lang}/storePanel/settings/payment-providers`
+                });
+            }
+
+            if (this.permissions.payment_routing) {
+                arr.push({
                     name: { el: "", en: "payment processing", it: "" },
-                    to: `/${this.lang}/storePanel/settings/payment-processing`,
-                },
-                // {
-                //     name: { el: "", en: "cards", it: "" },
-                //     to: `/${this.lang}/storePanel/settings/cards`
-                // },
-                {
+                    to: `/${this.lang}/storePanel/settings/payment-processing`
+                });
+            }
+
+            if (this.permissions.subscriptions) {
+                arr.push({
                     name: { el: "", en: "subscription", it: "" },
-                    to: `/${this.lang}/storePanel/settings/subscription`,
-                },
-                // {
-                //     name: { el: "", en: "payment history", it: "" },
-                //     to: `/${this.lang}/storePanel/settings/payment-history`
-                // },
-                // {
-                //     name: { el: "", en: "payment methods", it: "" },
-                //     to: `/${this.lang}/storePanel/settings/payment-methods`
-                // }
-            ];
+                    to: `/${this.lang}/storePanel/settings/subscription`
+                });
+            }
+
+            return arr;
+
+            // {
+            //     name: { el: "", en: "cards", it: "" },
+            //     to: `/${this.lang}/storePanel/settings/cards`
+            // },
+            // {
+            //     name: { el: "", en: "payment history", it: "" },
+            //     to: `/${this.lang}/storePanel/settings/payment-history`
+            // },
+            // {
+            //     name: { el: "", en: "payment methods", it: "" },
+            //     to: `/${this.lang}/storePanel/settings/payment-methods`
+            // }
         },
 
         tabsWithMargin() {
             return (
                 this.$route.path === `/${this.lang}/storePanel/settings/profile`
             );
-        },
+        }
     },
 
     watch: {
-        $route: {
+        tabs: {
             immediate: true,
             handler(val) {
-                if (val.path === `/${this.lang}/storePanel/settings`) {
-                    this.$router.push(
-                        `/${this.lang}/storePanel/settings/profile?page=1`
-                    );
+                if (val.length) {
+                    if (
+                        this.$route.path === `/${this.lang}/storePanel/settings`
+                    ) {
+                        this.$router.push(val[0].to + "?page=1");
+                    }
                 }
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>
 

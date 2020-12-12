@@ -4,7 +4,7 @@
             class="subtitle-1 font-weight-bold"
             :class="{
                 red: type === 'delete',
-                'white--text': type === 'delete',
+                'white--text': type === 'delete'
             }"
         >
             {{ title }}
@@ -16,7 +16,7 @@
 
         <v-divider></v-divider>
 
-        <v-form ref="form" @submit.prevent="$emit('submit')">
+        <v-form @submit.prevent="$emit('submit')">
             <v-card-text class="pt-4">
                 <slot></slot>
             </v-card-text>
@@ -60,38 +60,38 @@ export default {
     props: {
         type: {
             type: String,
-            default: "default",
+            default: "default"
         },
         title: String,
         cancelText: {
             type: Object,
-            default: () => ({ el: "", en: "cancel", it: "" }),
+            default: () => ({ el: "", en: "cancel", it: "" })
         },
         submitText: {
             type: Object,
-            default: () => ({ el: "", en: "save", it: "" }),
+            default: () => ({ el: "", en: "save", it: "" })
         },
         hideDefaultFooter: Boolean,
         loading: Boolean,
         errorMessage: String,
         disabled: {
             type: Boolean,
-            default: false,
-        },
+            default: false
+        }
     },
 
     data: () => ({
-        icons: { mdiClose },
+        icons: { mdiClose }
     }),
 
     computed: {
         lang() {
             return this.$route.params.lang;
-        },
+        }
     },
 
     mounted() {
         this.$clearFocus();
-    },
+    }
 };
 </script>

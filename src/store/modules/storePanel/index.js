@@ -39,16 +39,29 @@ export default {
 
     state: () => ({
         loading: false,
+        redemptionDialog: false,
+        redemptions: [],
+        timer: null,
         store: new Store()
     }),
-
-    getters: {
-        store: state => state.store
-    },
 
     mutations: {
         setLoading(state, payload) {
             state.loading = payload;
+        },
+
+        setRedemptionDialog(state, payload) {
+            state.redemptionDialog = payload;
+        },
+
+        addRedemption(state, payload) {
+            state.redemptions.push(payload);
+        },
+
+        removeRedemption(state, voucher) {
+            state.redemptions = state.redemptions.filter(
+                r => r.voucher !== voucher
+            );
         },
 
         setStore(state, payload) {
@@ -171,6 +184,70 @@ export default {
                 commit("setLoading", false);
             } catch (ex) {
                 console.error(ex.response.data);
+            }
+        },
+
+        async rejectRedemption({ commit }, item) {
+            try {
+                item.rejectLoading = true;
+
+                await Store.rejectRedemption({
+                    voucher: item.voucher
+                });
+
+                item.rejectLoading = false;
+                commit("removeRedemption", item.voucher);
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully rejected voucher!"
+                    },
+
+                    { root: true }
+                );
+            } catch (ex) {
+                item.rejectLoading = false;
+                commit("setErrorMessage", ex.response.data.message, {
+                    root: true
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", "", { root: true }),
+                    5000
+                );
+            }
+        },
+
+        async acceptRedemption({ commit }, item) {
+            try {
+                item.acceptLoading = true;
+
+                await Store.rejectRedemption({
+                    voucher: item.voucher
+                });
+
+                item.acceptLoading = false;
+                commit("removeRedemption", item.voucher);
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully accepted voucher!"
+                    },
+
+                    { root: true }
+                );
+            } catch (ex) {
+                item.acceptLoading = false;
+                commit("setErrorMessage", ex.response.data.message, {
+                    root: true
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", "", { root: true }),
+                    5000
+                );
             }
         }
     }

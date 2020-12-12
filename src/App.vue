@@ -3,8 +3,9 @@
         <router-view name="header"></router-view>
 
         <v-main :class="{ 'pa-0': $route.path === `/${lang}/` }">
-            <Notification />
             <router-view></router-view>
+            <Notification />
+            <PermissionDialog />
         </v-main>
     </v-app>
 </template>
@@ -12,11 +13,12 @@
 <script>
 import { mapMutations, mapActions } from "vuex";
 import Notification from "@/components/general/Notification.vue";
+import PermissionDialog from "@/components/general/PermissionDialog.vue";
 
 export default {
     name: "App",
 
-    components: { Notification },
+    components: { Notification, PermissionDialog },
 
     data: () => ({
         //
@@ -25,22 +27,22 @@ export default {
     computed: {
         lang() {
             return this.$route.params.lang;
-        },
+        }
     },
 
     methods: {
         ...mapMutations(["setStoreId", "setAccessToken"]),
-        ...mapActions(["getUser"]),
+        ...mapActions(["getUser"])
     },
 
-    async beforeCreate() {
-        console.log(caches);
-        // if (Object.keys(caches).length) {
-        //     const names = await caches.keys();
-        //     await Promise.all(names.map((name) => caches.delete(name)));
-        //     window.location.reload();
-        // }
-    },
+    // async beforeCreate() {
+    //     console.log(caches);
+    //     if (Object.keys(caches).length) {
+    //         const names = await caches.keys();
+    //         await Promise.all(names.map((name) => caches.delete(name)));
+    //         window.location.reload();
+    //     }
+    // },
 
     mounted() {
         const accessToken = localStorage.getItem("accessToken");
@@ -54,7 +56,7 @@ export default {
         if (storeId) {
             this.setStoreId(storeId);
         }
-    },
+    }
 };
 </script>
 

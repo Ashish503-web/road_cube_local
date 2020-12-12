@@ -35,6 +35,21 @@ export default {
                 el: "",
                 en: "Delete",
                 it: ""
+            },
+            cancel: {
+                el: "",
+                en: "cancel",
+                it: ""
+            },
+            save: {
+                el: "",
+                en: "save",
+                it: ""
+            },
+            deleteCategory: {
+                el: "",
+                en: "Delete Product Category",
+                it: ""
             }
         }
     })

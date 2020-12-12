@@ -3,10 +3,11 @@
         :title="translations.title[lang]"
         :loading="loading"
         :error-message="errorMessage"
+        :disabled="!formValid"
         @submit="
             updatePassword({
                 type: 'changePassword',
-                item: changePassword
+                item: changePassword,
             })
         "
     >
@@ -18,8 +19,9 @@
             prepend-inner-icon="mdiLock"
             append-icon="mdiEye"
             :success="success.password"
-            :rules="rules.password"
-            @cancel-success="success.password = false"
+            :error-messages="error.password"
+            @focus="error.password = ''"
+            @blur="validatePassword"
             @click-append="show.password = !show.password"
         ></b-text-field>
         <b-text-field
@@ -29,8 +31,9 @@
             prepend-inner-icon="mdiLock"
             append-icon="mdiEye"
             :success="success.newPassword"
-            :rules="rules.newPassword"
-            @cancel-success="success.newPassword = false"
+            :error-messages="error.newPassword"
+            @focus="error.newPassword = ''"
+            @blur="validateNewPassword"
             @click-append="show.newPassword = !show.newPassword"
         ></b-text-field>
         <b-text-field
@@ -40,17 +43,18 @@
             prepend-inner-icon="mdiLockOutline"
             append-icon="mdiEye"
             :success="success.confirmPassword"
-            :rules="rules.confirmPassword"
-            @cancel-success="success.confirmPassword = false"
+            :error-messages="error.confirmPassword"
+            @focus="error.confirmPassword = ''"
+            @blur="validateConfirmPassword"
             @click-append="show.confirmPassword = !show.confirmPassword"
         ></b-text-field>
     </b-standard-card>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapMutations, mapActions } from "vuex";
 import translations from "@/utils/translations/storePanel/settings/profile/changePassword";
-import validators from "./changePasswordValidators";
+import validators from "@/utils/validators/storePanel/changePassword";
 
 export default {
     name: "ChangePassword",
@@ -61,13 +65,13 @@ export default {
         show: {
             password: false,
             newPassword: false,
-            confirmPassword: false
+            confirmPassword: false,
         },
         changePassword: {
             current_password: "",
             new_password: "",
-            new_password_confirm: ""
-        }
+            new_password_confirm: "",
+        },
     }),
 
     computed: {
@@ -83,11 +87,17 @@ export default {
         errorMessage() {
             return this.$store.state.storePanel.settings.profile.errorMessage
                 .changePassword;
-        }
+        },
+
+        resetSuccess() {
+            return this.$store.state.storePanel.settings.profile.resetSuccess
+                .changePassword;
+        },
     },
 
     methods: {
-        ...mapActions("storePanel/settings/profile", ["updatePassword"])
-    }
+        ...mapMutations("storePanel/settings/profile", ["setResetSuccess"]),
+        ...mapActions("storePanel/settings/profile", ["updatePassword"]),
+    },
 };
 </script>
