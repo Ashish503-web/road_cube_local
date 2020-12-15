@@ -237,7 +237,7 @@ import {
     mdiChevronDown,
     mdiPound,
     mdiArrowRight,
-    mdiArrowLeft,
+    mdiArrowLeft
 } from "@mdi/js";
 
 export default {
@@ -250,13 +250,13 @@ export default {
             mdiChevronDown,
             mdiPound,
             mdiArrowRight,
-            mdiArrowLeft,
+            mdiArrowLeft
         },
         step: 1,
         colorPickerMenu: false,
         showSwatches: false,
         pickedColor: "#ffffff",
-        cardBackgroundColor: "#ffffff",
-    }),
+        cardBackgroundColor: "#ffffff"
+    })
 };
 </script>

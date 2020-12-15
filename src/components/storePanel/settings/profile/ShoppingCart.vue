@@ -41,7 +41,7 @@ export default {
     mixins: [translations],
 
     data: () => ({
-        shopping_cart: null,
+        shopping_cart: null
     }),
 
     computed: {
@@ -50,23 +50,22 @@ export default {
         },
 
         loading() {
-            return this.$store.state.storePanel.settings.profile.loading
-                .shoppingCart;
+            return this.$store.state.storePanel.profile.loading.shoppingCart;
         },
 
         errorMessage() {
-            return this.$store.state.storePanel.settings.profile.errorMessage
+            return this.$store.state.storePanel.profile.errorMessage
                 .shoppingCart;
         },
 
         readonly() {
             return !this.$store.state.storePanel.store.flags.reward
                 .orders_allowed;
-        },
+        }
     },
 
     methods: {
-        ...mapActions("storePanel/settings/profile", ["updateShoppingCart"]),
+        ...mapActions("storePanel/profile", ["updateShoppingCart"])
     },
 
     watch: {
@@ -74,9 +73,9 @@ export default {
             immediate: true,
             handler(val) {
                 this.shopping_cart = val;
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>
 

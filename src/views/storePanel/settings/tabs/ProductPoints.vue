@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path" class="pa-3">
+    <v-tab-item v-if="permission" :value="$route.fullPath" class="pa-3">
         <v-row no-gutters align="center" class="pa-5 pt-0">
             <v-col cols="auto">
                 <v-img
@@ -24,7 +24,7 @@
             :items="productPoints"
             :footer-props="{
                 itemsPerPageOptions: [12],
-                showCurrentPage: true
+                showCurrentPage: true,
             }"
             :page.sync="page"
             :server-items-length="serverItemsLength"
@@ -95,6 +95,8 @@
 </template>
 
 <script>
+import productPoints from "@/store/modules/storePanel/settings/productPoints";
+
 import { mapState, mapMutations, mapActions } from "vuex";
 import translations from "@/utils/translations/storePanel/settings/productPoints";
 
@@ -105,16 +107,22 @@ export default {
 
     data() {
         return {
-            page: +this.$route.query.page
+            page: +this.$route.query.page,
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
-        ...mapState("storePanel/settings/productPoints", ["productPoints"]),
+        ...mapState("storePanel/productPoints", ["productPoints"]),
 
         lang() {
             return this.$route.params.lang;
+        },
+
+        permission() {
+            return this.$store.state.permissions.settings
+                ? this.$store.state.permissions.settings.product_points
+                : null;
         },
 
         headers() {
@@ -122,34 +130,34 @@ export default {
                 {
                     text: this.translations.productName[this.lang],
                     value: `name[${this.lang}]`,
-                    width: "20%"
+                    width: "20%",
                 },
                 {
                     text: this.translations.points[this.lang],
                     value: "reward_points",
-                    width: "15%"
+                    width: "15%",
                 },
                 {
                     text: this.translations.type[this.lang],
                     value: "reward_type_id",
-                    width: "30%"
+                    width: "30%",
                 },
                 {
                     text: this.translations.pointSubsidy[this.lang],
-                    value: "reward_points_shared"
+                    value: "reward_points_shared",
                 },
                 {
                     text: this.translations.action[this.lang],
                     value: "save",
-                    width: "10%"
-                }
+                    width: "10%",
+                },
             ];
         },
 
         groupRewardTypes() {
             return [
                 { text: this.translations.perTransaction[this.lang], value: 1 },
-                { text: this.translations.perEuro[this.lang], value: 2 }
+                { text: this.translations.perEuro[this.lang], value: 2 },
             ];
         },
 
@@ -158,7 +166,7 @@ export default {
                 { text: this.translations.perTransaction[this.lang], value: 1 },
                 { text: this.translations.perEuro[this.lang], value: 2 },
                 { text: this.translations.piece[this.lang], value: 3 },
-                { text: this.translations.liters[this.lang], value: 4 }
+                { text: this.translations.liters[this.lang], value: 4 },
             ];
         },
 
@@ -170,51 +178,62 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
-        ...mapActions("storePanel/settings/productPoints", [
-            "getItems",
-            "update"
-        ])
+        ...mapActions("storePanel/productPoints", ["getItems", "update"]),
     },
 
     watch: {
+        permission: {
+            immediate: true,
+            handler(val) {
+                if (!val) {
+                    this.$router.replace(
+                        `/${this.lang}/storePanel/forbidden-gateway`
+                    );
+                }
+            },
+        },
+
         $route(val) {
             if (!val.query.page) {
-                this.$router.push({
+                this.$router.replace({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
             this.getItems(this.query);
         },
 
         page(page) {
-            this.$router.push({ query: { ...this.$route.query, page } });
+            this.$router.replace({ query: { ...this.$route.query, page } });
         },
-
-        perPage(perPage) {
-            this.$router.push({ query: { ...this.$route.query, perPage } });
-        }
     },
 
     beforeCreate() {
+        if (!this.$store.state.storePanel.productPoints) {
+            this.$store.registerModule(
+                ["storePanel", "productPoints"],
+                productPoints
+            );
+        }
+
         if (!this.$route.query.page) {
-            this.$router.push({
+            this.$router.replace({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    }
+    },
 };
 </script>

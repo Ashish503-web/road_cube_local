@@ -177,6 +177,8 @@
 </template>
 
 <script>
+import couponsWithTransactions from "@/store/modules/storePanel/coupons/couponsWithTransactions";
+
 import { mdiArrowRight } from "@mdi/js";
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 
@@ -199,7 +201,7 @@ export default {
 
     computed: {
         ...mapState(["loading"]),
-        ...mapState("storePanel/coupons/couponsWithTransactions", [
+        ...mapState("storePanel/couponsWithTransactions", [
             "couponWithTransaction",
             "giftCategories",
         ]),
@@ -217,7 +219,7 @@ export default {
 
     methods: {
         ...mapMutations(["setPermissionDialog"]),
-        ...mapActions("storePanel/coupons/couponsWithTransactions", [
+        ...mapActions("storePanel/couponsWithTransactions", [
             "getItem",
             "getGiftCategories",
             "create",
@@ -235,9 +237,35 @@ export default {
     },
 
     watch: {
+        ["permissions.read"](val) {
+            if (!val) {
+                this.$router.replace(
+                    `/${this.lang}/storePanel/forbidden-gateway`
+                );
+            }
+        },
+
         loading(val) {
             if (!val) setTimeout(() => this.$clearFocus(), 1000);
         },
+    },
+
+    beforeCreate() {
+        if (!this.$store.state.storePanel.couponsWithTransactions) {
+            this.$store.registerModule(
+                ["storePanel", "couponsWithTransactions"],
+                couponsWithTransactions
+            );
+        }
+
+        if (!this.$route.query.page) {
+            this.$router.replace({
+                query: {
+                    page: 1,
+                    ...this.$route.query,
+                },
+            });
+        }
     },
 
     mounted() {

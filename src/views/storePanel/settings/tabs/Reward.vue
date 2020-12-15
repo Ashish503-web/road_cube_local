@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path" class="pa-3">
+    <v-tab-item v-if="permission" :value="$route.path" class="pa-3">
         <v-row no-gutters align="center" class="pa-5 pt-0">
             <v-col cols="auto">
                 <v-img src="@/assets/reward.png" width="60" height="60"></v-img>
@@ -103,6 +103,8 @@
 </template>
 
 <script>
+import reward from "@/store/modules/storePanel/settings/reward";
+
 import { mapState, mapMutations, mapActions } from "vuex";
 
 import SendPoints from "@/components/storePanel/settings/reward/SendPoints";
@@ -138,6 +140,12 @@ export default {
             return this.$route.params.lang;
         },
 
+        permission() {
+            return this.$store.state.permissions.settings
+                ? this.$store.state.permissions.settings.reward
+                : null;
+        },
+
         headers() {
             return [
                 this.translations.method[this.lang],
@@ -160,10 +168,21 @@ export default {
 
     methods: {
         ...mapMutations(["setDialog"]),
-        ...mapActions("storePanel/settings/reward", ["updateActivator"]),
+        ...mapActions("storePanel/reward", ["updateActivator"]),
     },
 
     watch: {
+        permission: {
+            immediate: true,
+            handler(val) {
+                if (!val) {
+                    this.$router.replace(
+                        `/${this.lang}/storePanel/forbidden-gateway`
+                    );
+                }
+            },
+        },
+
         ["$store.state.storePanel.store"]: {
             immediate: true,
             handler(val) {
@@ -184,6 +203,12 @@ export default {
                 this.rewardMethods[5].active = val.flags.reward.orders_allowed;
             },
         },
+    },
+
+    beforeCreate() {
+        if (!this.$store.state.storePanel.reward) {
+            this.$store.registerModule(["storePanel", "reward"], reward);
+        }
     },
 };
 </script>

@@ -142,7 +142,7 @@ export default {
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
-        ...mapState("storePanel/coupons/couponsWithTransactions", [
+        ...mapState("storePanel/couponsWithTransactions", [
             "couponWithTransaction",
             "users",
         ]),
@@ -221,7 +221,7 @@ export default {
 
     methods: {
         ...mapMutations(["setDeleteDialog", "setPermissionDialog"]),
-        ...mapActions("storePanel/coupons/couponsWithTransactions", [
+        ...mapActions("storePanel/couponsWithTransactions", [
             "getItemUsers",
             "remove",
         ]),

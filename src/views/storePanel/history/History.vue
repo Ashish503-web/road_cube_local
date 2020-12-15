@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid class="b-container">
+    <v-container v-if="permissions.read" fluid class="b-container">
         <v-sheet class="pa-3">
             <v-tabs
                 v-model="tab"
@@ -23,12 +23,14 @@
 </template>
 
 <script>
+import history from "@/store/modules/storePanel/history";
+
 export default {
     name: "History",
 
     data() {
         return {
-            tab: this.$route.path
+            tab: this.$route.path,
         };
     },
 
@@ -49,19 +51,19 @@ export default {
             if (this.permissions.points_analysis) {
                 arr.push({
                     name: { el: "", en: "Point Analysis", it: "" },
-                    to: `/${this.lang}/storePanel/history/point-analysis`
+                    to: `/${this.lang}/storePanel/history/point-analysis?page=1`,
                 });
             }
 
             if (this.permissions.monthly_points) {
                 arr.push({
                     name: { el: "", en: "Monthly Points", it: "" },
-                    to: `/${this.lang}/storePanel/history/monthly-points`
+                    to: `/${this.lang}/storePanel/history/monthly-points?page=1`,
                 });
             }
 
             return arr;
-        }
+        },
     },
 
     watch: {
@@ -69,15 +71,25 @@ export default {
             immediate: true,
             handler(val) {
                 if (val.length) {
-                    if (
+                    if (!this.permissions.read) {
+                        this.$router.replace(
+                            `/${this.lang}/storePanel/forbidden-gateway`
+                        );
+                    } else if (
                         this.$route.path === `/${this.lang}/storePanel/history`
                     ) {
-                        this.$router.push(val[0].to + "?page=1");
+                        this.$router.replace(val[0].to);
                     }
                 }
-            }
+            },
+        },
+    },
+
+    beforeCreate() {
+        if (!this.$store.state.storePanel.history) {
+            this.$store.registerModule(["storePanel", "history"], history);
         }
-    }
+    },
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path" class="pa-3">
+    <v-tab-item :value="$route.fullPath" class="pa-3">
         <v-row no-gutters align="center" class="pa-5 pt-0">
             <v-col cols="auto">
                 <v-img
@@ -103,6 +103,8 @@
 </template>
 
 <script>
+import couponsWithDiscount from "@/store/modules/storePanel/coupons/couponsWithDiscount";
+
 import { mdiPlus, mdiClose } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import CouponWithDiscountForm from "@/components/storePanel/coupons/CouponWithDiscountForm.vue";
@@ -127,9 +129,7 @@ export default {
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
-        ...mapState("storePanel/coupons/couponsWithDiscount", [
-            "couponsWithDiscount",
-        ]),
+        ...mapState("storePanel/couponsWithDiscount", ["couponsWithDiscount"]),
 
         lang() {
             return this.$route.params.lang;
@@ -163,16 +163,6 @@ export default {
             ];
         },
 
-        query() {
-            let query = "?";
-
-            for (let key in this.$route.query) {
-                query += `${key}=${this.$route.query[key]}&`;
-            }
-
-            return query.slice(0, query.length - 1);
-        },
-
         dialog: {
             get() {
                 return this.$store.state.dialog;
@@ -195,13 +185,23 @@ export default {
 
         couponWithDiscount: {
             get() {
-                return this.$store.state.storePanel.coupons.couponsWithDiscount
+                return this.$store.state.storePanel.couponsWithDiscount
                     .couponWithDiscount;
             },
 
             set(val) {
                 this.setItem(val);
             },
+        },
+
+        query() {
+            let query = "?";
+
+            for (let key in this.$route.query) {
+                query += `${key}=${this.$route.query[key]}&`;
+            }
+
+            return query.slice(0, query.length - 1);
         },
     },
 
@@ -213,11 +213,8 @@ export default {
             "setResetValidation",
             "setPermissionDialog",
         ]),
-        ...mapMutations("storePanel/coupons/couponsWithDiscount", ["setItem"]),
-        ...mapActions("storePanel/coupons/couponsWithDiscount", [
-            "getItems",
-            "remove",
-        ]),
+        ...mapMutations("storePanel/couponsWithDiscount", ["setItem"]),
+        ...mapActions("storePanel/couponsWithDiscount", ["getItems", "remove"]),
 
         open(item) {
             this.couponWithDiscount = item;
@@ -228,9 +225,17 @@ export default {
     },
 
     watch: {
+        ["permissions.read"](val) {
+            if (!val) {
+                this.$router.replace(
+                    `/${this.lang}/storePanel/forbidden-gateway`
+                );
+            }
+        },
+
         $route(val) {
             if (!val.query.page) {
-                this.$router.push({
+                this.$router.replace({
                     query: {
                         page: 1,
                         ...this.$route.query,
@@ -241,13 +246,20 @@ export default {
         },
 
         page(page) {
-            this.$router.push({ query: { ...this.$route.query, page } });
+            this.$router.replace({ query: { ...this.$route.query, page } });
         },
     },
 
     beforeCreate() {
+        if (!this.$store.state.storePanel.couponsWithDiscount) {
+            this.$store.registerModule(
+                ["storePanel", "couponsWithDiscount"],
+                couponsWithDiscount
+            );
+        }
+
         if (!this.$route.query.page) {
-            this.$router.push({
+            this.$router.replace({
                 query: {
                     page: 1,
                     ...this.$route.query,

@@ -167,7 +167,7 @@ export default {
     }),
 
     computed: {
-        ...mapState("storePanel/settings/subscription", [
+        ...mapState("storePanel/subscription", [
             "storeSubscription",
             "showAlert",
             "slug",

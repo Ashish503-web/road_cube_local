@@ -70,7 +70,7 @@
                             </v-avatar>
                         </v-col>
 
-                        <v-col cols="auto" class="text-right">
+                        <v-col class="text-right">
                             <h4
                                 class="subtitle-1 font-weight-bold"
                                 v-text="view.value"
@@ -169,7 +169,7 @@ import {
     mdiCursorDefault,
     mdiCompassOutline,
     mdiPhone,
-    mdiWallet
+    mdiWallet,
 } from "@mdi/js";
 
 import { mapActions } from "vuex";
@@ -181,7 +181,7 @@ const gradients = [
     ["red", "orange", "yellow"],
     ["purple", "violet"],
     ["#00c6ff", "#F0F", "#FF0"],
-    ["#f72047", "#ffd200", "#1feaea"]
+    ["#f72047", "#ffd200", "#1feaea"],
 ];
 
 export default {
@@ -201,12 +201,18 @@ export default {
         fill: false,
         type: "trend",
         autoLineWidth: false,
-        statistics: {}
+        statistics: {},
     }),
 
     computed: {
         lang() {
             return this.$route.params.lang;
+        },
+
+        permission() {
+            return this.$store.state.permissions.homepage
+                ? this.$store.state.permissions.homepage.read
+                : null;
         },
 
         loading() {
@@ -220,32 +226,32 @@ export default {
                     text: {
                         el: "",
                         en: "Customer",
-                        it: ""
+                        it: "",
                     },
-                    value: this.statistics.total_customers
+                    value: this.statistics.total_customers,
                 },
                 {
                     icon: mdiDatabase,
                     text: {
                         el: "",
                         en: "Transactions",
-                        it: ""
+                        it: "",
                     },
-                    value: this.statistics.total_transactions
+                    value: this.statistics.total_transactions,
                 },
                 {
                     icon: mdiCurrencyEur,
                     text: {
                         el: "",
                         en: "Total",
-                        it: ""
+                        it: "",
                     },
                     value: new Intl.NumberFormat("en-US", {
                         style: "currency",
                         currency: "EUR",
-                        minimumFractionDigits: 2
-                    }).format(this.statistics.total_income)
-                }
+                        minimumFractionDigits: 2,
+                    }).format(this.statistics.total_income),
+                },
             ];
         },
 
@@ -255,38 +261,38 @@ export default {
                     icon: mdiBinoculars,
                     text: {
                         el: "",
-                        en: "User views",
-                        it: ""
+                        en: "User map views",
+                        it: "",
                     },
-                    value: this.statistics.views.map_views
+                    value: this.statistics.views.map_views,
                 },
                 {
                     icon: mdiCursorDefault,
                     text: {
                         el: "",
-                        en: "Clicks",
-                        it: ""
+                        en: "User store clicks",
+                        it: "",
                     },
-                    value: this.statistics.views.visits
+                    value: this.statistics.views.visits,
                 },
                 {
                     icon: mdiDatabase,
                     text: {
                         el: "",
-                        en: "User leads",
-                        it: ""
+                        en: "User navigation clicks",
+                        it: "",
                     },
-                    value: this.statistics.views.nav_clicks
+                    value: this.statistics.views.nav_clicks,
                 },
                 {
                     icon: mdiCompassOutline,
                     text: {
                         el: "",
-                        en: "Payments",
-                        it: ""
+                        en: "User phone clicks",
+                        it: "",
                     },
-                    value: this.statistics.views.phone_clicks
-                }
+                    value: this.statistics.views.phone_clicks,
+                },
             ];
         },
 
@@ -297,7 +303,7 @@ export default {
                     text: {
                         el: "",
                         en: "Payments Last 12 Hours",
-                        it: ""
+                        it: "",
                     },
                     value: `
                         ${
@@ -308,20 +314,20 @@ export default {
                         ${new Intl.NumberFormat("en-US", {
                             style: "currency",
                             currency: "EUR",
-                            minimumFractionDigits: 2
+                            minimumFractionDigits: 2,
                         }).format(
                             this.statistics.last_twelve_hours_payments
                                 .total_price
                         )}
                         ${this.translations.total[this.lang]}
-                    `
+                    `,
                 },
                 {
                     icon: mdiWallet,
                     text: {
                         el: "",
                         en: "Payments Last Week",
-                        it: ""
+                        it: "",
                     },
                     value: `
                         ${this.statistics.last_week_payments.total_transactions}
@@ -329,33 +335,42 @@ export default {
                         ${new Intl.NumberFormat("en-US", {
                             style: "currency",
                             currency: "EUR",
-                            minimumFractionDigits: 2
+                            minimumFractionDigits: 2,
                         }).format(
                             this.statistics.last_week_payments.total_price
                         )}
                         ${this.translations.total[this.lang]}
-                    `
-                }
+                    `,
+                },
             ];
-        }
+        },
     },
 
     methods: {
-        ...mapActions("storePanel", ["getStore"])
+        ...mapActions("storePanel", ["getStore"]),
     },
 
     watch: {
+        permission(val) {
+            if (!val) {
+                this.$router.replace(
+                    `/${this.lang}/storePanel/forbidden-gateway`
+                );
+            }
+        },
+
         ["$store.state.storePanel.store"]: {
             immediate: true,
             handler(val) {
+                console.log(val.statistics);
                 this.statistics = val.statistics;
                 this.statistics.name = val.app_name;
-            }
-        }
+            },
+        },
     },
 
     mounted() {
         this.getStore();
-    }
+    },
 };
 </script>

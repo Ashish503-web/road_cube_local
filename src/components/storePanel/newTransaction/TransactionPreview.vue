@@ -59,16 +59,16 @@ export default {
 
             set(val) {
                 this.setTransactionPreview(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
-        ...mapMutations("storePanel/transactions", ["setTransactionPreview"])
+        ...mapMutations("storePanel/transactions", ["setTransactionPreview"]),
     },
 
     beforeDestroy() {
         this.transactionPreview = {};
-    }
+    },
 };
 </script>

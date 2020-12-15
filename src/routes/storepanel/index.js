@@ -127,5 +127,14 @@ export default [
                 )
         },
         children: settingsRoutes
+    },
+
+    {
+        path: "forbidden-gateway",
+        name: "StoreForbiddenGateway",
+        component: () =>
+            import(
+                /* webpackChunkName: "forbiddenGateway" */ "@/views/storePanel/ForbiddenGateway.vue"
+            )
     }
 ];

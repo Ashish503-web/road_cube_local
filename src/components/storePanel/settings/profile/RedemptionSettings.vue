@@ -7,12 +7,12 @@
     >
         <v-radio-group v-model="redemption_type_id" class="mt-0">
             <v-radio
-                :label="translations.directRedemption[lang]"
+                :label="translations.codeRedemption[lang]"
                 color="secondary"
                 :value="1"
             ></v-radio>
             <v-radio
-                :label="translations.codeRedemption[lang]"
+                :label="translations.directRedemption[lang]"
                 color="secondary"
                 :value="2"
             ></v-radio>
@@ -30,7 +30,7 @@ export default {
     mixins: [translations],
 
     data: () => ({
-        redemption_type_id: null
+        redemption_type_id: null,
     }),
 
     computed: {
@@ -39,18 +39,16 @@ export default {
         },
 
         loading() {
-            return this.$store.state.storePanel.settings.profile.loading
-                .redemption;
+            return this.$store.state.storePanel.profile.loading.redemption;
         },
 
         errorMessage() {
-            return this.$store.state.storePanel.settings.profile.errorMessage
-                .redemption;
-        }
+            return this.$store.state.storePanel.profile.errorMessage.redemption;
+        },
     },
 
     methods: {
-        ...mapActions("storePanel/settings/profile", ["updateRedemption"])
+        ...mapActions("storePanel/profile", ["updateRedemption"]),
     },
 
     watch: {
@@ -58,8 +56,8 @@ export default {
             immediate: true,
             handler(val) {
                 this.redemption_type_id = val;
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>

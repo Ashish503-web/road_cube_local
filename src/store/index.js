@@ -1,5 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
+import register from "./modules/register";
+import loyaltyPanel from "./modules/loyaltyPanel";
 
 Vue.use(Vuex);
 
@@ -9,10 +11,11 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
     "accessToken"
 )}`;
 
-import modules from "./modules";
-
 export default new Vuex.Store({
-    modules,
+    modules: {
+        register,
+        loyaltyPanel
+    },
 
     state: {
         accessToken: "",
@@ -94,7 +97,7 @@ export default new Vuex.Store({
     },
 
     actions: {
-        async getUser({ commit, state }) {
+        async getUser({ commit }) {
             try {
                 const { data } = await axios.get(
                     `${process.env.VUE_APP_DEFAULT_API_URL}/users/me`

@@ -94,12 +94,12 @@ export default {
         },
 
         userProfile() {
-            return this.$store.state.storePanel.settings.users.userProfile;
+            return this.$store.state.storePanel.users.userProfile;
         }
     },
 
     methods: {
-        ...mapActions("storePanel/settings/users", ["getItem"])
+        ...mapActions("storePanel/users", ["getItem"])
     },
 
     watch: {

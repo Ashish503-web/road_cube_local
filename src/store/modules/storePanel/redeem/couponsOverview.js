@@ -12,6 +12,7 @@ export default {
         setItems(state, payload) {
             state.coupons = payload.map(c => {
                 c.created_at = moment(c.created_at).format("DD/MM/YYYY HH:mm");
+                if (c.available === null) c.available = "Unlimited";
                 return c;
             });
         }

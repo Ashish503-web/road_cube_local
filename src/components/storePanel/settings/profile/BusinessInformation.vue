@@ -7,7 +7,7 @@
         @submit="
             updateBusinessInformation({
                 type: 'businessInformation',
-                item: businessInformation,
+                item: businessInformation
             })
         "
     >
@@ -79,7 +79,9 @@
                 ></b-text-field>
 
                 <v-btn
-                    :href="`http://maps.google.com/?q=${businessInformation.address}`"
+                    :href="
+                        `http://maps.google.com/?q=${businessInformation.address}`
+                    "
                     target="_blank"
                     class="text-capitalize mt-3"
                     height="40"
@@ -141,7 +143,7 @@ export default {
 
     data: () => ({
         businessInformation: {},
-        validate: false,
+        validate: false
     }),
 
     computed: {
@@ -150,31 +152,31 @@ export default {
         },
 
         loading() {
-            return this.$store.state.storePanel.settings.profile.loading
+            return this.$store.state.storePanel.profile.loading
                 .businessInformation;
         },
 
         errorMessage() {
-            return this.$store.state.storePanel.settings.profile.errorMessage
+            return this.$store.state.storePanel.profile.errorMessage
                 .businessInformation;
         },
 
         resetSuccess() {
-            return this.$store.state.storePanel.settings.profile.resetSuccess
+            return this.$store.state.storePanel.profile.resetSuccess
                 .businessInformation;
         },
 
         countries() {
-            return this.$store.state.storePanel.settings.profile.countries;
-        },
+            return this.$store.state.storePanel.profile.countries;
+        }
     },
 
     methods: {
-        ...mapMutations("storePanel/settings/profile", ["setResetSuccess"]),
-        ...mapActions("storePanel/settings/profile", [
+        ...mapMutations("storePanel/profile", ["setResetSuccess"]),
+        ...mapActions("storePanel/profile", [
             "getCountries",
-            "updateBusinessInformation",
-        ]),
+            "updateBusinessInformation"
+        ])
     },
 
     watch: {
@@ -198,19 +200,19 @@ export default {
 
                     full_name: val.billing_details.full_name,
 
-                    email: val.email,
+                    email: val.email
                 };
 
                 this.setResetSuccess({
                     value: true,
-                    type: "businessInformation",
+                    type: "businessInformation"
                 });
-            },
-        },
+            }
+        }
     },
 
     mounted() {
         this.getCountries();
-    },
+    }
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path" class="pa-3">
+    <v-tab-item v-if="permission" :value="$route.fullPath" class="pa-3">
         <v-row
             no-gutters
             justify="space-between"
@@ -106,6 +106,8 @@
 </template>
 
 <script>
+import users from "@/store/modules/storePanel/settings/users";
+
 import {
     mdiCheckboxBlankOutline,
     mdiCheckBoxOutline,
@@ -149,13 +151,16 @@ export default {
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
-        ...mapState("storePanel/settings/users", [
-            "moderatorPermissions",
-            "users",
-        ]),
+        ...mapState("storePanel/users", ["moderatorPermissions", "users"]),
 
         lang() {
             return this.$route.params.lang;
+        },
+
+        permission() {
+            return this.$store.state.permissions.settings
+                ? this.$store.state.permissions.settings.users.read
+                : null;
         },
 
         headers() {
@@ -199,7 +204,7 @@ export default {
 
         user: {
             get() {
-                return this.$store.state.storePanel.settings.users.user;
+                return this.$store.state.storePanel.users.user;
             },
 
             set(val) {
@@ -225,8 +230,8 @@ export default {
             "setResetSuccess",
             "setResetValidation",
         ]),
-        ...mapMutations("storePanel/settings/users", ["setItem"]),
-        ...mapActions("storePanel/settings/users", [
+        ...mapMutations("storePanel/users", ["setItem"]),
+        ...mapActions("storePanel/users", [
             "getModeratorPermissions",
             "getItems",
         ]),
@@ -246,9 +251,20 @@ export default {
     },
 
     watch: {
+        permission: {
+            immediate: true,
+            handler(val) {
+                if (!val) {
+                    this.$router.replace(
+                        `/${this.lang}/storePanel/forbidden-gateway`
+                    );
+                }
+            },
+        },
+
         $route(val) {
             if (!val.query.page) {
-                this.$router.push({
+                this.$router.replace({
                     query: {
                         page: 1,
                         ...this.$route.query,
@@ -259,13 +275,17 @@ export default {
         },
 
         page(page) {
-            this.$router.push({ query: { ...this.$route.query, page } });
+            this.$router.replace({ query: { ...this.$route.query, page } });
         },
     },
 
     beforeCreate() {
+        if (!this.$store.state.storePanel.users) {
+            this.$store.registerModule(["storePanel", "users"], users);
+        }
+
         if (!this.$route.query.page) {
-            this.$router.push({
+            this.$router.replace({
                 query: {
                     page: 1,
                     ...this.$route.query,

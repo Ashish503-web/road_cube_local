@@ -83,6 +83,7 @@ export default {
                 commit("setLoading", true, { root: true });
 
                 let product = { ...state.product };
+                delete product.image;
                 Product.clearFalsyValues(product);
 
                 if (!product.name.en) product.name.en = product.name.el;
@@ -137,6 +138,7 @@ export default {
                 commit("setLoading", true, { root: true });
 
                 let product = { ...state.product };
+                delete product.image;
                 Product.clearFalsyValues(product);
 
                 if (!product.name.en) product.name.en = product.name.el;

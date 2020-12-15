@@ -193,7 +193,7 @@ import {
     mdiMenuRight,
     mdiMenuDown,
     mdiCheckboxBlankOutline,
-    mdiCheckBoxOutline,
+    mdiCheckBoxOutline
 } from "@mdi/js";
 
 import { mapState, mapMutations, mapActions } from "vuex";
@@ -204,7 +204,7 @@ export default {
     name: "UserForm",
 
     props: {
-        mode: Number,
+        mode: Number
     },
 
     mixins: [translations, validators],
@@ -215,10 +215,10 @@ export default {
                 mdiMenuRight,
                 mdiMenuDown,
                 mdiCheckboxBlankOutline,
-                mdiCheckBoxOutline,
+                mdiCheckBoxOutline
             },
             showPassword: false,
-            allPermissions: false,
+            allPermissions: false
         };
     },
 
@@ -227,9 +227,9 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation",
+            "resetValidation"
         ]),
-        ...mapState("storePanel/settings/users", ["moderatorPermissions"]),
+        ...mapState("storePanel/users", ["moderatorPermissions", "user"]),
 
         lang() {
             return this.$route.params.lang;
@@ -239,16 +239,12 @@ export default {
             return this.mode === 1
                 ? this.translations.newUser[this.lang]
                 : this.translations.updateUser[this.lang];
-        },
-
-        user() {
-            return this.$store.state.storePanel.settings.users.user;
-        },
+        }
     },
 
     methods: {
         ...mapMutations(["setResetSuccess", "setResetValidation"]),
-        ...mapActions("storePanel/settings/users", ["create", "update"]),
+        ...mapActions("storePanel/users", ["create", "update"])
     },
 
     watch: {
@@ -257,7 +253,7 @@ export default {
         },
 
         allPermissions(val) {
-            let permissions = this.user.permissions;
+            let { permissions } = this.user;
             if (val) {
                 for (let key in permissions) {
                     if (typeof permissions[key] === "object") {
@@ -299,7 +295,7 @@ export default {
 
                 this.user.permissions_enabled = false;
             }
-        },
-    },
+        }
+    }
 };
 </script>

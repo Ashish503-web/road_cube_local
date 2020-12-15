@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path" class="pa-3">
+    <v-tab-item :value="$route.fullPath" class="pa-3">
         <v-row no-gutters align="center" class="pa-5 pt-0">
             <v-col cols="auto">
                 <v-img
@@ -142,6 +142,8 @@
 </template>
 
 <script>
+import couponsOnProducts from "@/store/modules/storePanel/coupons/couponsOnProducts";
+
 import { mdiPencilOutline, mdiClose, mdiFacebook } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import CouponOnProductForm from "@/components/storePanel/coupons/CouponOnProductForm.vue";
@@ -168,9 +170,7 @@ export default {
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
-        ...mapState("storePanel/coupons/couponsOnProducts", [
-            "couponsOnProducts",
-        ]),
+        ...mapState("storePanel/couponsOnProducts", ["couponsOnProducts"]),
 
         lang() {
             return this.$route.params.lang;
@@ -230,7 +230,7 @@ export default {
 
         couponOnProduct: {
             get() {
-                return this.$store.state.storePanel.coupons.couponsOnProducts
+                return this.$store.state.storePanel.couponsOnProducts
                     .couponOnProduct;
             },
 
@@ -258,11 +258,8 @@ export default {
             "setResetValidation",
             "setPermissionDialog",
         ]),
-        ...mapMutations("storePanel/coupons/couponsOnProducts", ["setItem"]),
-        ...mapActions("storePanel/coupons/couponsOnProducts", [
-            "getItems",
-            "remove",
-        ]),
+        ...mapMutations("storePanel/couponsOnProducts", ["setItem"]),
+        ...mapActions("storePanel/couponsOnProducts", ["getItems", "remove"]),
 
         open(mode, item) {
             this.mode = mode;
@@ -274,9 +271,17 @@ export default {
     },
 
     watch: {
+        ["permissions.read"](val) {
+            if (!val) {
+                this.$router.replace(
+                    `/${this.lang}/storePanel/forbidden-gateway`
+                );
+            }
+        },
+
         $route(val) {
             if (!val.query.page) {
-                this.$router.push({
+                this.$router.replace({
                     query: {
                         page: 1,
                         ...this.$route.query,
@@ -287,13 +292,20 @@ export default {
         },
 
         page(page) {
-            this.$router.push({ query: { ...this.$route.query, page } });
+            this.$router.replace({ query: { ...this.$route.query, page } });
         },
     },
 
     beforeCreate() {
+        if (!this.$store.state.storePanel.couponsOnProducts) {
+            this.$store.registerModule(
+                ["storePanel", "couponsOnProducts"],
+                couponsOnProducts
+            );
+        }
+
         if (!this.$route.query.page) {
-            this.$router.push({
+            this.$router.replace({
                 query: {
                     page: 1,
                     ...this.$route.query,

@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path" class="pa-3">
+    <v-tab-item v-if="permission" :value="$route.path" class="pa-3">
         <h3
             class="text-h6 font-weight-bold text-center"
             v-text="translations.title[lang]"
@@ -133,6 +133,8 @@
 </template>
 
 <script>
+import paymentProviders from "@/store/modules/storePanel/settings/paymentProviders";
+
 import { mdiPencilOutline, mdiClose, mdiMagnify } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import translations from "@/utils/translations/storePanel/settings/paymentProviders";
@@ -145,20 +147,25 @@ export default {
     data() {
         return {
             icons: { mdiPencilOutline, mdiClose, mdiMagnify },
-            page: +this.$route.query.page,
-            mode: 0
+            mode: 0,
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage", "resetValidation"]),
-        ...mapState("storePanel/settings/paymentProviders", [
+        ...mapState("storePanel/paymentProviders", [
             "providersLoading",
-            "paymentProviders"
+            "paymentProviders",
         ]),
 
         lang() {
             return this.$route.params.lang;
+        },
+
+        permission() {
+            return this.$store.state.permissions.settings
+                ? this.$store.state.permissions.settings.cleaners
+                : null;
         },
 
         title() {
@@ -174,7 +181,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         deleteDialog: {
@@ -184,39 +191,29 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            }
+            },
         },
 
         paymentProvider: {
             get() {
-                return this.$store.state.storePanel.settings.paymentProviders
+                return this.$store.state.storePanel.paymentProviders
                     .paymentProvider;
             },
 
             set(val) {
                 this.setItem(val);
-            }
+            },
         },
-
-        query() {
-            let query = "?";
-
-            for (let key in this.$route.query) {
-                query += `${key}=${this.$route.query[key]}&`;
-            }
-
-            return query.slice(0, query.length - 1);
-        }
     },
 
     methods: {
         ...mapMutations(["setDialog", "setDeleteDialog", "setResetValidation"]),
-        ...mapMutations("storePanel/settings/paymentProviders", ["setItem"]),
-        ...mapActions("storePanel/settings/paymentProviders", [
+        ...mapMutations("storePanel/paymentProviders", ["setItem"]),
+        ...mapActions("storePanel/paymentProviders", [
             "getItems",
             "create",
             "update",
-            "remove"
+            "remove",
         ]),
 
         open(mode, item) {
@@ -228,41 +225,33 @@ export default {
                 this.setResetValidation(true);
                 this.dialog = true;
             }
-        }
+        },
     },
 
     watch: {
-        $route(val) {
-            if (!val.query.page) {
-                this.$router.push({
-                    query: {
-                        page: 1,
-                        ...this.$route.query
-                    }
-                });
-            }
-
-            this.getItems(this.query);
+        permission: {
+            immediate: true,
+            handler(val) {
+                if (!val) {
+                    this.$router.replace(
+                        `/${this.lang}/storePanel/forbidden-gateway`
+                    );
+                }
+            },
         },
-
-        page(page) {
-            this.$router.push({ query: { ...this.$route.query, page } });
-        }
     },
 
     beforeCreate() {
-        if (!this.$route.query.page) {
-            this.$router.replace({
-                query: {
-                    page: 1,
-                    ...this.$route.query
-                }
-            });
+        if (!this.$store.state.storePanel.paymentProviders) {
+            this.$store.registerModule(
+                ["storePanel", "paymentProviders"],
+                paymentProviders
+            );
         }
     },
 
     mounted() {
-        this.getItems(this.query);
-    }
+        this.getItems();
+    },
 };
 </script>

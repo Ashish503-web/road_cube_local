@@ -116,14 +116,14 @@ export default {
     name: "CouponWithCodeForm",
 
     props: {
-        mode: Number,
+        mode: Number
     },
 
     mixins: [translations, validators],
 
     data() {
         return {
-            imageFile: null,
+            imageFile: null
         };
     },
 
@@ -132,11 +132,11 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation",
+            "resetValidation"
         ]),
-        ...mapState("storePanel/coupons/couponsWithCode", [
+        ...mapState("storePanel/couponsWithCode", [
             "giftCategories",
-            "couponWithCode",
+            "couponWithCode"
         ]),
 
         lang() {
@@ -151,25 +151,23 @@ export default {
 
         showImageUpload: {
             get() {
-                return this.$store.state.storePanel.coupons.couponsWithCode
+                return this.$store.state.storePanel.couponsWithCode
                     .showImageUpload;
             },
 
             set(val) {
                 this.setShowImageUpload(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
         ...mapMutations(["setResetSuccess", "setResetValidation"]),
-        ...mapMutations("storePanel/coupons/couponsWithCode", [
-            "setShowImageUpload",
-        ]),
-        ...mapActions("storePanel/coupons/couponsWithCode", [
+        ...mapMutations("storePanel/couponsWithCode", ["setShowImageUpload"]),
+        ...mapActions("storePanel/couponsWithCode", [
             "getGiftCategories",
             "create",
-            "update",
+            "update"
         ]),
 
         onFileSelected(event) {
@@ -177,14 +175,14 @@ export default {
                 this.imageFile = event;
                 const reader = new FileReader();
                 reader.readAsDataURL(this.imageFile);
-                reader.onload = (e) =>
+                reader.onload = e =>
                     (this.couponWithCode.image = e.target.result);
             }
-        },
+        }
     },
 
     mounted() {
         this.getGiftCategories();
-    },
+    }
 };
 </script>

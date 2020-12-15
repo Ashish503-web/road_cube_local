@@ -41,7 +41,7 @@ export default {
     mixins: [translations],
 
     data: () => ({
-        fast_payment: null,
+        fast_payment: null
     }),
 
     computed: {
@@ -50,23 +50,22 @@ export default {
         },
 
         loading() {
-            return this.$store.state.storePanel.settings.profile.loading
-                .fastPayment;
+            return this.$store.state.storePanel.profile.loading.fastPayment;
         },
 
         errorMessage() {
-            return this.$store.state.storePanel.settings.profile.errorMessage
+            return this.$store.state.storePanel.profile.errorMessage
                 .fastPayment;
         },
 
         readonly() {
             return !this.$store.state.storePanel.store.flags.reward
                 .online_payment_processing;
-        },
+        }
     },
 
     methods: {
-        ...mapActions("storePanel/settings/profile", ["updateFastPayment"]),
+        ...mapActions("storePanel/profile", ["updateFastPayment"])
     },
 
     watch: {
@@ -74,9 +73,9 @@ export default {
             immediate: true,
             handler(val) {
                 this.fast_payment = val;
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>
 

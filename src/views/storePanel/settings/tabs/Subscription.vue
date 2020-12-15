@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path" class="pa-3">
+    <v-tab-item v-if="permission" :value="$route.path" class="pa-3">
         <v-row v-if="loading" no-gutters justify="center" align="center">
             <v-progress-circular indeterminate></v-progress-circular>
         </v-row>
@@ -152,9 +152,11 @@
 </template>
 
 <script>
+import subscription from "@/store/modules/storePanel/settings/subscription";
+
 import { mapState, mapMutations, mapActions } from "vuex";
 
-import SubscriptionPlan from "@/components/storePanel/subscription/SubscriptionPlan.vue";
+import SubscriptionPlan from "@/components/storePanel/settings/subscription/SubscriptionPlan.vue";
 import translations from "@/utils/translations/storePanel/settings/subscription";
 
 export default {
@@ -173,7 +175,7 @@ export default {
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
-        ...mapState("storePanel/settings/subscription", [
+        ...mapState("storePanel/subscription", [
             "storeSubscription",
             "billings",
             "openPayment",
@@ -186,6 +188,12 @@ export default {
 
         lang() {
             return this.$route.params.lang;
+        },
+
+        permission() {
+            return this.$store.state.permissions.settings
+                ? this.$store.state.permissions.settings.subscriptions
+                : null;
         },
 
         headers() {
@@ -236,16 +244,27 @@ export default {
     },
 
     methods: {
-        ...mapActions("storePanel/settings/subscription", [
+        ...mapActions("storePanel/subscription", [
             "getItem",
             "attachPaymentMethod",
         ]),
     },
 
     watch: {
+        permission: {
+            immediate: true,
+            handler(val) {
+                if (!val) {
+                    this.$router.replace(
+                        `/${this.lang}/storePanel/forbidden-gateway`
+                    );
+                }
+            },
+        },
+
         $route(val) {
             if (!val.query.page) {
-                this.$router.push({
+                this.$router.replace({
                     query: {
                         page: 1,
                         ...this.$route.query,
@@ -256,13 +275,20 @@ export default {
         },
 
         page(page) {
-            this.$router.push({ query: { ...this.$route.query, page } });
+            this.$router.replace({ query: { ...this.$route.query, page } });
         },
     },
 
     beforeCreate() {
+        if (!this.$store.state.storePanel.subscription) {
+            this.$store.registerModule(
+                ["storePanel", "subscription"],
+                subscription
+            );
+        }
+
         if (!this.$route.query.page) {
-            this.$router.push({
+            this.$router.replace({
                 query: {
                     page: 1,
                     ...this.$route.query,

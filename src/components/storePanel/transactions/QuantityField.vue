@@ -7,6 +7,7 @@
         outlined
         dense
         clearable
+        hide-details="auto"
         :success="success"
         :error-messages="error"
         @focus="error = ''"
@@ -22,24 +23,34 @@ export default {
     props: {
         value: [String, Number],
         label: String,
+        quantityMax: Number,
     },
 
-    data: () => ({
-        success: false,
-        error: "",
-        errorMessages: {
-            quantityRequired: {
-                el: "",
-                en: "Product quantity is required",
-                it: "",
+    data() {
+        return {
+            success: false,
+            error: "",
+            errorMessages: {
+                quantityRequired: {
+                    el: "",
+                    en: "Refund quantity is required",
+                    it: "",
+                },
+                quantityMin: {
+                    el: "",
+                    en: "Refund quantity must be minimum 1",
+                    it: "",
+                },
+                quantityMax: {
+                    el: "",
+                    en:
+                        "Refund quantity must be less than or equal to " +
+                        this.quantityMax,
+                    it: "",
+                },
             },
-            quantityMin: {
-                el: "",
-                en: "Product quantity must be minimum 1",
-                it: "",
-            },
-        },
-    }),
+        };
+    },
 
     computed: {
         lang() {
@@ -53,6 +64,8 @@ export default {
                 this.error = this.errorMessages.quantityRequired[this.lang];
             } else if (this.value < 1) {
                 this.error = this.errorMessages.quantityMin[this.lang];
+            } else if (this.value > this.quantityMax) {
+                this.error = this.errorMessages.quantityMax[this.lang];
             } else {
                 this.error = "";
             }
@@ -63,8 +76,7 @@ export default {
         value: {
             immediate: true,
             handler(val) {
-                this.success = val >= 1;
-                this.$emit("get-transaction");
+                this.success = val >= 1 && val <= this.quantityMax;
             },
         },
     },

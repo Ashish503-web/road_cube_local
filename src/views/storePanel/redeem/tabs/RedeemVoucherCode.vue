@@ -59,6 +59,8 @@
 </template>
 
 <script>
+import redeemVoucher from "@/store/modules/storePanel/redeem/redeemVoucher";
+
 import { mdiArrowRight, mdiInformationOutline } from "@mdi/js";
 import { mapState, mapMutations, mapActions, mapGetters } from "vuex";
 import translations from "@/utils/translations/storePanel/redeemVoucher";
@@ -70,26 +72,54 @@ export default {
 
     data: () => ({
         icons: { mdiArrowRight, mdiInformationOutline },
-        voucher: ""
+        voucher: "",
     }),
 
     computed: {
         lang() {
             return this.$route.params.lang;
-        }
+        },
+
+        permission() {
+            return this.$store.state.permissions.redemption
+                ? this.$store.state.permissions.redemption.redeem_voucher
+                : null;
+        },
     },
 
     methods: {
-        ...mapActions("storePanel/redeem/redeemVoucher", ["create"]),
+        ...mapActions("storePanel/redeemVoucher", ["create"]),
 
         sendRequest() {
             if (this.voucher != "") {
                 let formData = {
-                    voucher: this.voucher
+                    voucher: this.voucher,
                 };
                 this.create(formData);
             }
+        },
+    },
+
+    watch: {
+        permission: {
+            immediate: true,
+            handler(val) {
+                if (!val) {
+                    this.$router.replace(
+                        `/${this.lang}/storePanel/forbidden-gateway`
+                    );
+                }
+            },
+        },
+    },
+
+    beforeCreate() {
+        if (!this.$store.state.storePanel.redeemVoucher) {
+            this.$store.registerModule(
+                ["storePanel", "redeemVoucher"],
+                redeemVoucher
+            );
         }
-    }
+    },
 };
 </script>

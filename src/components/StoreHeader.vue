@@ -185,6 +185,8 @@
 </template>
 
 <script>
+import storePanel from "@/store/modules/storePanel";
+
 import {
     mdiHelpCircleOutline,
     mdiChevronDown,
@@ -267,6 +269,11 @@ export default {
                 console.log(ex.response.data);
             }
         }
+    },
+
+    beforeCreate() {
+        if (!this.$store.state.storePanel)
+            this.$store.registerModule("storePanel", storePanel);
     }
 };
 </script>

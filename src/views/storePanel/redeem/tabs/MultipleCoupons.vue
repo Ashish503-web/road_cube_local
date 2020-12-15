@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path" class="pa-3">
+    <v-tab-item :value="$route.fullPath" class="pa-3">
         <v-toolbar flat height="90">
             <v-spacer></v-spacer>
 
@@ -29,6 +29,8 @@
 </template>
 
 <script>
+import multipleCoupons from "@/store/modules/storePanel/redeem/multipleCoupons";
+
 import { mapState, mapMutations, mapActions } from "vuex";
 import translations from "@/utils/translations/storePanel/couponsOverview";
 
@@ -39,38 +41,44 @@ export default {
 
     data() {
         return {
-            page: +this.$route.query.page
+            page: +this.$route.query.page,
         };
     },
 
     computed: {
         ...mapState(["loading", "serverItemsLength"]),
-        ...mapState("storePanel/redeem/multipleCoupons", ["multipleCoupons"]),
+        ...mapState("storePanel/multipleCoupons", ["multipleCoupons"]),
 
         lang() {
             return this.$route.params.lang;
+        },
+
+        permission() {
+            return this.$store.state.permissions.redemption
+                ? this.$store.state.permissions.redemption.multiple_coupons
+                : null;
         },
 
         headers() {
             return [
                 {
                     text: this.translations.promoType[this.lang],
-                    value: "promo_type_name"
+                    value: "promo_type_name",
                 },
                 { text: this.translations.code[this.lang], value: "code" },
                 {
                     text: this.translations.available[this.lang],
-                    value: "available"
+                    value: "available",
                 },
                 { text: this.translations.points[this.lang], value: "points" },
                 {
                     text: this.translations.totalRedeemed[this.lang],
-                    value: "total_redeemed"
+                    value: "total_redeemed",
                 },
                 {
                     text: this.translations.date[this.lang],
-                    value: "created_at"
-                }
+                    value: "created_at",
+                },
             ];
         },
 
@@ -82,44 +90,62 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
-        ...mapActions("storePanel/redeem/multipleCoupons", ["getItems"])
+        ...mapActions("storePanel/multipleCoupons", ["getItems"]),
     },
 
     watch: {
+        permission: {
+            immediate: true,
+            handler(val) {
+                if (!val) {
+                    this.$router.replace(
+                        `/${this.lang}/storePanel/forbidden-gateway`
+                    );
+                }
+            },
+        },
+
         $route(val) {
             if (!val.query.page) {
-                this.$router.push({
+                this.$router.replace({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
             this.getItems(this.query);
         },
 
         page(page) {
-            this.$router.push({ query: { ...this.$route.query, page } });
-        }
+            this.$router.replace({ query: { ...this.$route.query, page } });
+        },
     },
 
     beforeCreate() {
+        if (!this.$store.state.storePanel.multipleCoupons) {
+            this.$store.registerModule(
+                ["storePanel", "multipleCoupons"],
+                multipleCoupons
+            );
+        }
+
         if (!this.$route.query.page) {
-            this.$router.push({
+            this.$router.replace({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    }
+    },
 };
 </script>

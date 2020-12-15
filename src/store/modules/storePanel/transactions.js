@@ -235,7 +235,7 @@ export default {
                 commit("setLoading", true, { root: true });
 
                 const { data } = await Transaction.getItem(id);
-                console.log(data);
+
                 commit("setTransactionProfile", data.data);
                 commit("setLoading", false, { root: true });
             } catch (ex) {
@@ -244,7 +244,7 @@ export default {
             }
         },
 
-        async create({ commit, state }, showProducts) {
+        async create({ commit, state }) {
             try {
                 commit("setLoading", true, { root: true });
 
@@ -257,7 +257,7 @@ export default {
                 commit("setTransactionPreview", {});
                 commit("setSelectedProducts", []);
                 commit("setResetValidation", true, { root: true });
-                commit("setProducts", state.products);
+                commit("setGeneralCouponClaims", []);
                 commit("setLoading", false, { root: true });
                 commit(
                     "setNotification",
@@ -352,19 +352,14 @@ export default {
             }
         },
 
-        async refundTransaction({ commit, state, rootState }) {
+        async refundTransaction({ commit }, item) {
             try {
                 commit("setLoading", true, { root: true });
 
-                await Transaction.refundTransaction();
-                commit(
-                    "setServerItemsLength",
-                    rootState.serverItemsLength - 1,
-                    { root: true }
-                );
+                await Transaction.refundTransaction(item);
+
                 commit("setLoading", false, { root: true });
-                commit("setDeleteDialog", false, { root: true });
-                commit("removeItem", state.product.product_id);
+                commit("setDialog", false, { root: true });
                 commit(
                     "setNotification",
                     {

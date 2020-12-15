@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid class="b-container">
+    <v-container v-if="permissions.read" fluid class="b-container">
         <v-sheet class="pa-3">
             <v-tabs
                 v-model="tab"
@@ -28,7 +28,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.path
+            tab: this.$route.path,
         };
     },
 
@@ -52,36 +52,36 @@ export default {
                     name: {
                         el: "",
                         en: "Redeem Voucher Code",
-                        it: ""
-                    }
+                        it: "",
+                    },
                 });
             }
 
             if (this.permissions.coupons_overview) {
                 arr.push({
-                    to: `/${this.lang}/storePanel/redeem/coupons-overview`,
+                    to: `/${this.lang}/storePanel/redeem/coupons-overview?page=1`,
                     name: {
                         el: "",
                         en: "Coupons Overview",
-                        it: ""
-                    }
+                        it: "",
+                    },
                 });
             }
 
             if (this.permissions.multiple_coupons) {
                 arr.push({
-                    to: `/${this.lang}/storePanel/redeem/multiple-coupons`,
+                    to: `/${this.lang}/storePanel/redeem/multiple-coupons?page=1`,
                     name: {
                         el: "",
                         en: "Multiple Coupons",
-                        it: ""
+                        it: "",
                     },
-                    show: this.permissions.multiple_coupons
+                    show: this.permissions.multiple_coupons,
                 });
             }
 
             return arr;
-        }
+        },
     },
 
     watch: {
@@ -89,18 +89,18 @@ export default {
             immediate: true,
             handler(val) {
                 if (val.length) {
-                    if (
+                    if (!this.permissions.read) {
+                        this.$router.replace(
+                            `/${this.lang}/storePanel/forbidden-gateway`
+                        );
+                    } else if (
                         this.$route.path === `/${this.lang}/storePanel/redeem`
                     ) {
-                        if (val[0].name.en === "Redeem Voucher Code") {
-                            this.$router.push(val[0].to);
-                        } else {
-                            this.$router.push(val[0].to + "?page=1");
-                        }
+                        this.$router.replace(val[0].to);
                     }
                 }
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>

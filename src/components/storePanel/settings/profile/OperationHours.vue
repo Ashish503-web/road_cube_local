@@ -292,12 +292,11 @@ export default {
         },
 
         loading() {
-            return this.$store.state.storePanel.settings.profile.loading
-                .operationHours;
+            return this.$store.state.storePanel.profile.loading.operationHours;
         },
 
         errorMessage() {
-            return this.$store.state.storePanel.settings.profile.errorMessage
+            return this.$store.state.storePanel.profile.errorMessage
                 .operationHours;
         },
 
@@ -307,7 +306,7 @@ export default {
     },
 
     methods: {
-        ...mapActions("storePanel/settings/profile", ["updateTimetable"]),
+        ...mapActions("storePanel/profile", ["updateTimetable"]),
 
         openMenu(className, weekday, array, index) {
             this.elemToWrap = "." + className;

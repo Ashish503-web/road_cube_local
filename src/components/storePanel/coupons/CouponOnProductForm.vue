@@ -113,7 +113,7 @@ export default {
     name: "CouponOnProductForm",
 
     props: {
-        mode: Number,
+        mode: Number
     },
 
     mixins: [translations, validators],
@@ -122,8 +122,8 @@ export default {
         return {
             actionTypes: [
                 { text: { el: "", en: "Action 1+1", it: "" }, value: "1p1" },
-                { text: { el: "", en: "Sampling", it: "" }, value: "sample" },
-            ],
+                { text: { el: "", en: "Sampling", it: "" }, value: "sample" }
+            ]
         };
     },
 
@@ -132,11 +132,11 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation",
+            "resetValidation"
         ]),
-        ...mapState("storePanel/coupons/couponsOnProducts", [
+        ...mapState("storePanel/couponsOnProducts", [
             "giftCategories",
-            "products",
+            "products"
         ]),
 
         lang() {
@@ -150,25 +150,25 @@ export default {
         },
 
         couponOnProduct() {
-            return this.$store.state.storePanel.coupons.couponsOnProducts
+            return this.$store.state.storePanel.couponsOnProducts
                 .couponOnProduct;
-        },
+        }
     },
 
     methods: {
         ...mapMutations(["setResetSuccess", "setResetValidation"]),
-        ...mapActions("storePanel/coupons/couponsOnProducts", [
+        ...mapActions("storePanel/couponsOnProducts", [
             "getGiftCategories",
             "getProducts",
             "create",
-            "update",
-        ]),
+            "update"
+        ])
     },
 
     mounted() {
         this.getGiftCategories();
         this.getProducts();
-    },
+    }
 };
 </script>
 

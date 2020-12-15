@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path" class="pa-3">
+    <v-tab-item :value="$route.fullPath" class="pa-3">
         <v-toolbar flat height="90">
             <v-btn
                 :color="permissions.create ? 'secondary' : 'grey'"
@@ -138,6 +138,8 @@
 </template>
 
 <script>
+import products from "@/store/modules/storePanel/products";
+
 import { mdiPencilOutline, mdiClose, mdiMagnify } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import debounce from "lodash/debounce";
@@ -276,7 +278,7 @@ export default {
     watch: {
         $route(val) {
             if (!val.query.page) {
-                this.$router.push({
+                this.$router.replace({
                     query: {
                         page: 1,
                         ...this.$route.query,
@@ -287,7 +289,7 @@ export default {
         },
 
         page(page) {
-            this.$router.push({ query: { ...this.$route.query, page } });
+            this.$router.replace({ query: { ...this.$route.query, page } });
         },
 
         search(val, oldVal) {
@@ -302,8 +304,12 @@ export default {
     },
 
     beforeCreate() {
+        if (!this.$store.state.storePanel.products) {
+            this.$store.registerModule(["storePanel", "products"], products);
+        }
+
         if (!this.$route.query.page) {
-            this.$router.push({
+            this.$router.replace({
                 query: {
                     page: 1,
                     ...this.$route.query,

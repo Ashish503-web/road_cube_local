@@ -161,9 +161,9 @@ import { mapState, mapMutations, mapActions } from "vuex";
 import debounce from "lodash/debounce";
 
 import { Fragment } from "vue-fragment";
-import TransactionProduct from "@/models/storePanel/TransactionProduct";
 import QuantityField from "./QuantityField.vue";
 import PriceField from "./PriceField.vue";
+import TransactionProduct from "@/models/storePanel/TransactionProduct";
 import translations from "@/utils/translations/storePanel/newTransaction/products";
 
 export default {

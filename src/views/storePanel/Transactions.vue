@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid class="b-container">
+    <v-container v-if="permission" fluid class="b-container">
         <v-sheet class="pa-3">
             <v-row no-gutters align="center" class="pa-4">
                 <v-col cols="auto">
@@ -45,7 +45,7 @@
                 :items="transactions"
                 :footer-props="{
                     itemsPerPageOptions: [12],
-                    showCurrentPage: true
+                    showCurrentPage: true,
                 }"
                 :page.sync="page"
                 :server-items-length="serverItemsLength"
@@ -66,7 +66,7 @@
                         new Intl.NumberFormat("en-US", {
                             style: "currency",
                             currency: "EUR",
-                            minimumFractionDigits: 2
+                            minimumFractionDigits: 2,
                         }).format(item.total_price)
                     }}
                 </template>
@@ -76,7 +76,7 @@
                         new Intl.NumberFormat("en-US", {
                             style: "currency",
                             currency: "EUR",
-                            minimumFractionDigits: 2
+                            minimumFractionDigits: 2,
                         }).format(item.total_amount)
                     }}
                 </template>
@@ -86,7 +86,7 @@
                         new Intl.NumberFormat("en-US", {
                             style: "currency",
                             currency: "EUR",
-                            minimumFractionDigits: 2
+                            minimumFractionDigits: 2,
                         }).format(item.delivery_fee)
                     }}
                 </template>
@@ -95,7 +95,7 @@
                     <div
                         v-if="item.delivery_address"
                         class="text-decoration-underline"
-                        style="cursor:pointer"
+                        style="cursor: pointer"
                         @click="
                             () => {
                                 deliveryDetails = item.delivery_address;
@@ -195,7 +195,7 @@
                     <v-btn
                         v-if="
                             item.transaction_type_id === 2 ||
-                                item.transaction_type_id === 11
+                            item.transaction_type_id === 11
                         "
                         color="grey lighten-2"
                         class="text-capitalize my-1 red--text"
@@ -241,6 +241,8 @@
 </template>
 
 <script>
+import transactions from "@/store/modules/storePanel/transactions";
+
 import { mdiCheckBold, mdiMapMarker } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 
@@ -260,7 +262,7 @@ export default {
         SettingsPanel,
         DeliveryDetails,
         TransactionProfile,
-        RefundTransaction
+        RefundTransaction,
     },
 
     mixins: [translations],
@@ -273,7 +275,7 @@ export default {
             deliveryDialog: false,
             deliveryDetails: {},
             transactionDialog: false,
-            transactionId: null
+            transactionId: null,
         };
     },
 
@@ -281,58 +283,64 @@ export default {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/transactions", [
             "transactionStatuses",
-            "transactions"
+            "transactions",
         ]),
 
         lang() {
             return this.$route.params.lang;
         },
 
+        permission() {
+            return this.$store.state.permissions.transactions
+                ? this.$store.state.permissions.transactions.read
+                : null;
+        },
+
         headers() {
             return [
                 {
                     text: this.translations.user[this.lang],
-                    value: "user_identity"
+                    value: "user_identity",
                 },
                 {
                     text: this.translations.amount[this.lang],
-                    value: "total_price"
+                    value: "total_price",
                 },
                 {
                     text: this.translations.points[this.lang],
-                    value: "total_points"
+                    value: "total_points",
                 },
                 {
                     text: this.translations.totalAmount[this.lang],
-                    value: "total_amount"
+                    value: "total_amount",
                 },
                 {
                     text: this.translations.deliveryFee[this.lang],
-                    value: "delivery_fee"
+                    value: "delivery_fee",
                 },
                 {
                     text: this.translations.delivery[this.lang],
                     value: "delivery_address",
-                    width: 180
+                    width: 180,
                 },
                 {
                     text: this.translations.date[this.lang],
-                    value: "created_at"
+                    value: "created_at",
                 },
                 {
                     text: this.translations.showDetails[this.lang],
                     value: "show_details",
-                    width: 150
+                    width: 150,
                 },
                 {
                     text: this.translations.status[this.lang],
                     value: "transaction_status_name",
-                    width: "20%"
+                    width: "20%",
                 },
                 {
                     text: this.translations.actions[this.lang],
-                    value: "actions"
-                }
+                    value: "actions",
+                },
             ];
         },
 
@@ -343,7 +351,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         transaction: {
@@ -353,7 +361,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
+            },
         },
 
         query() {
@@ -365,7 +373,7 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
@@ -374,18 +382,26 @@ export default {
         ...mapActions("storePanel/transactions", [
             "getItems",
             "changeStatus",
-            "remove"
-        ])
+            "remove",
+        ]),
     },
 
     watch: {
+        permission(val) {
+            if (!val) {
+                this.$router.replace(
+                    `/${this.lang}/storePanel/forbidden-gateway`
+                );
+            }
+        },
+
         $route(val) {
             if (!val.query.page) {
-                this.$router.push({
+                this.$router.replace({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
 
@@ -393,23 +409,30 @@ export default {
         },
 
         page(page) {
-            this.$router.push({ query: { ...this.$route.query, page } });
-        }
+            this.$router.replace({ query: { ...this.$route.query, page } });
+        },
     },
 
     beforeCreate() {
+        if (!this.$store.state.storePanel.transactions) {
+            this.$store.registerModule(
+                ["storePanel", "transactions"],
+                transactions
+            );
+        }
+
         if (!this.$route.query.page) {
-            this.$router.push({
+            this.$router.replace({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    }
+    },
 };
 </script>

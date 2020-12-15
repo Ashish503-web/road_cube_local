@@ -7,7 +7,7 @@
         @submit="
             updatePassword({
                 type: 'changePassword',
-                item: changePassword,
+                item: changePassword
             })
         "
     >
@@ -65,13 +65,13 @@ export default {
         show: {
             password: false,
             newPassword: false,
-            confirmPassword: false,
+            confirmPassword: false
         },
         changePassword: {
             current_password: "",
             new_password: "",
-            new_password_confirm: "",
-        },
+            new_password_confirm: ""
+        }
     }),
 
     computed: {
@@ -80,24 +80,23 @@ export default {
         },
 
         loading() {
-            return this.$store.state.storePanel.settings.profile.loading
-                .changePassword;
+            return this.$store.state.storePanel.profile.loading.changePassword;
         },
 
         errorMessage() {
-            return this.$store.state.storePanel.settings.profile.errorMessage
+            return this.$store.state.storePanel.profile.errorMessage
                 .changePassword;
         },
 
         resetSuccess() {
-            return this.$store.state.storePanel.settings.profile.resetSuccess
+            return this.$store.state.storePanel.profile.resetSuccess
                 .changePassword;
-        },
+        }
     },
 
     methods: {
-        ...mapMutations("storePanel/settings/profile", ["setResetSuccess"]),
-        ...mapActions("storePanel/settings/profile", ["updatePassword"]),
-    },
+        ...mapMutations("storePanel/profile", ["setResetSuccess"]),
+        ...mapActions("storePanel/profile", ["updatePassword"])
+    }
 };
 </script>

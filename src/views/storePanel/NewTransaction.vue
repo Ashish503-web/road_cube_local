@@ -1,6 +1,6 @@
 <template>
     <v-container fluid class="b-container">
-        <v-sheet height="800" color="grey lighten-4">
+        <v-sheet v-if="permission" height="800" color="grey lighten-4">
             <v-card tile flat width="600" class="mx-auto my-3 pa-5">
                 <v-card-title class="text-h5 font-weight-bold pa-0">
                     <v-icon
@@ -129,6 +129,8 @@
 </template>
 
 <script>
+import transactions from "@/store/modules/storePanel/transactions";
+
 import { mdiPlusThick } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import debounce from "lodash/debounce";
@@ -146,6 +148,7 @@ export default {
     mixins: [translations, validators],
 
     data: () => ({
+        showNotice: false,
         icons: { mdiPlusThick },
         productsSuccess: false,
         oldProducts: [],
@@ -154,12 +157,20 @@ export default {
     computed: {
         ...mapState(["loading", "errorMessage"]),
         ...mapState("storePanel/transactions", [
+            "showNewNotice",
+            "showNewPage",
             "generalCouponClaims",
             "samplingCoupons",
         ]),
 
         lang() {
             return this.$route.params.lang;
+        },
+
+        permission() {
+            return this.$store.state.permissions.transactions
+                ? this.$store.state.permissions.transactions.create
+                : null;
         },
 
         showReceipt() {
@@ -184,7 +195,11 @@ export default {
     },
 
     methods: {
-        ...mapMutations("storePanel/transactions", ["setItem"]),
+        ...mapMutations("storePanel/transactions", [
+            "setShowNewNotice",
+            "setShowNewPage",
+            "setItem",
+        ]),
         ...mapActions("storePanel/transactions", [
             "create",
             "getTransactionPreview",
@@ -196,9 +211,30 @@ export default {
     },
 
     watch: {
+        permission(val) {
+            if (!val) {
+                this.$router.replace(
+                    `/${this.lang}/storePanel/forbidden-gateway`
+                );
+            }
+        },
+
+        ["transaction.user"](val) {
+            this.debouncedGetTransactionPreview(this.showProducts);
+        },
+
         ["transaction.amount"](val) {
             this.debouncedGetTransactionPreview();
         },
+    },
+
+    beforeCreate() {
+        if (!this.$store.state.storePanel.transactions) {
+            this.$store.registerModule(
+                ["storePanel", "transactions"],
+                transactions
+            );
+        }
     },
 
     created() {

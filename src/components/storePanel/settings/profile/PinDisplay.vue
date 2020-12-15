@@ -153,24 +153,21 @@ export default {
         },
 
         loading() {
-            return this.$store.state.storePanel.settings.profile.loading
-                .mapLogo;
+            return this.$store.state.storePanel.profile.loading.mapLogo;
         },
 
         errorMessage() {
-            return this.$store.state.storePanel.settings.profile.errorMessage
-                .mapLogo;
+            return this.$store.state.storePanel.profile.errorMessage.mapLogo;
         },
 
         resetSuccess() {
-            return this.$store.state.storePanel.settings.profile.resetSuccess
-                .mapLogo;
+            return this.$store.state.storePanel.profile.resetSuccess.mapLogo;
         }
     },
 
     methods: {
-        ...mapMutations("storePanel/settings/profile", ["setResetSuccess"]),
-        ...mapActions("storePanel/settings/profile", ["uploadMapLogo"]),
+        ...mapMutations("storePanel/profile", ["setResetSuccess"]),
+        ...mapActions("storePanel/profile", ["uploadMapLogo"]),
 
         onFileSelected(event) {
             this.resultURL = null;

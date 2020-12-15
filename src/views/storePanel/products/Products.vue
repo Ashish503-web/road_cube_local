@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid class="b-container">
+    <v-container v-if="permissions.read" fluid class="b-container">
         <v-sheet class="pa-3">
             <v-tabs
                 v-model="tab"
@@ -28,7 +28,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.path
+            tab: this.$route.path,
         };
     },
 
@@ -39,7 +39,7 @@ export default {
 
         permissions() {
             return this.$store.state.permissions.products
-                ? this.$store.state.permissions.products.group
+                ? this.$store.state.permissions.products
                 : {};
         },
 
@@ -47,32 +47,50 @@ export default {
             let arr = [
                 {
                     name: { el: "", en: "Products", it: "" },
-                    to: `/${this.lang}/storePanel/products/products-tab`
-                }
+                    to: `/${this.lang}/storePanel/products/products-tab?page=1`,
+                },
             ];
 
             if (this.permissions.read) {
                 arr.push({
                     name: { el: "", en: "Product Groups", it: "" },
-                    to: `/${this.lang}/storePanel/products/product-groups`
+                    to: `/${this.lang}/storePanel/products/product-groups?page=1`,
                 });
             }
 
             return arr;
-        }
+        },
     },
 
     watch: {
-        $route: {
+        ["permissions.read"]: {
             immediate: true,
             handler(val) {
+                if (val !== null && val !== undefined) {
+                    if (!val) {
+                        this.$router.replace(
+                            `/${this.lang}/storePanel/forbidden-gateway`
+                        );
+                    } else if (
+                        this.$route.path === `/${this.lang}/storePanel/products`
+                    ) {
+                        this.$router.replace(
+                            `/${this.lang}/storePanel/products/products-tab?page=1`
+                        );
+                    }
+                }
+            },
+        },
+
+        $route: {
+            handler(val) {
                 if (val.path === `/${this.lang}/storePanel/products`) {
-                    this.$router.push(
+                    this.$router.replace(
                         `/${this.lang}/storePanel/products/products-tab?page=1`
                     );
                 }
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>

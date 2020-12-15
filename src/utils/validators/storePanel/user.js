@@ -115,8 +115,8 @@ export default {
             handler(val) {
                 if (val) {
                     this.error = {
-                        mobile: false,
-                        password: false
+                        mobile: "",
+                        password: ""
                     };
 
                     this.setResetValidation(false);

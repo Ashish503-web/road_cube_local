@@ -154,23 +154,21 @@ export default {
         },
 
         loading() {
-            return this.$store.state.storePanel.settings.profile.loading.logo;
+            return this.$store.state.storePanel.profile.loading.logo;
         },
 
         errorMessage() {
-            return this.$store.state.storePanel.settings.profile.errorMessage
-                .logo;
+            return this.$store.state.storePanel.profile.errorMessage.logo;
         },
 
         resetSuccess() {
-            return this.$store.state.storePanel.settings.profile.resetSuccess
-                .logo;
+            return this.$store.state.storePanel.profile.resetSuccess.logo;
         }
     },
 
     methods: {
-        ...mapMutations("storePanel/settings/profile", ["setResetSuccess"]),
-        ...mapActions("storePanel/settings/profile", ["uploadLogo"]),
+        ...mapMutations("storePanel/profile", ["setResetSuccess"]),
+        ...mapActions("storePanel/profile", ["uploadLogo"]),
 
         onFileSelected(event) {
             this.resultURL = null;

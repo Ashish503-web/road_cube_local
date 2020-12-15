@@ -3,22 +3,16 @@ import RedeemVoucher from "@/models/storePanel/redeem/RedeemVoucher";
 export default {
     namespaced: true,
 
-    state: () => ({
-        
-    }),
+    state: () => ({}),
 
-    mutations: {
-        
-    },
+    mutations: {},
 
     actions: {
-        async create({ commit, state, rootState } , item) {
+        async create({ commit }, item) {
             try {
                 commit("setLoading", true, { root: true });
 
-                await RedeemVoucher.create(
-                    item
-                );
+                await RedeemVoucher.create(item);
 
                 commit("setLoading", false, { root: true });
                 commit("setDialog", false, { root: true });
@@ -42,6 +36,6 @@ export default {
                     5000
                 );
             }
-        },
+        }
     }
 };

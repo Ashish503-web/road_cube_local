@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path" class="pa-3">
+    <v-tab-item :value="$route.fullPath" class="pa-3">
         <v-toolbar flat height="90">
             <ExportLinks />
 
@@ -50,7 +50,7 @@ export default {
 
     data() {
         return {
-            page: +this.$route.query.page
+            page: +this.$route.query.page,
         };
     },
 
@@ -62,17 +62,23 @@ export default {
             return this.$route.params.lang;
         },
 
+        permission() {
+            return this.$store.state.permissions.history
+                ? this.$store.state.permissions.history.points_analysis
+                : null;
+        },
+
         headers() {
             return [
                 { text: this.translations.date[this.lang], value: "date" },
                 {
                     text: this.translations.product[this.lang],
-                    value: `product_name[${this.lang}]`
+                    value: `product_name[${this.lang}]`,
                 },
                 {
                     text: this.translations.totalPoints[this.lang],
-                    value: "total_points"
-                }
+                    value: "total_points",
+                },
             ];
         },
 
@@ -84,21 +90,32 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
-        ...mapActions("storePanel/history", ["getPointAnalysis"])
+        ...mapActions("storePanel/history", ["getPointAnalysis"]),
     },
 
     watch: {
+        permission: {
+            immediate: true,
+            handler(val) {
+                if (!val) {
+                    this.$router.replace(
+                        `/${this.lang}/storePanel/forbidden-gateway`
+                    );
+                }
+            },
+        },
+
         $route(val) {
             if (!val.query.page) {
-                this.$router.push({
+                this.$router.replace({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
 
@@ -106,23 +123,23 @@ export default {
         },
 
         page(page) {
-            this.$router.push({ query: { ...this.$route.query, page } });
-        }
+            this.$router.replace({ query: { ...this.$route.query, page } });
+        },
     },
 
     beforeCreate() {
         if (!this.$route.query.page) {
-            this.$router.push({
+            this.$router.replace({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getPointAnalysis(this.query);
-    }
+    },
 };
 </script>

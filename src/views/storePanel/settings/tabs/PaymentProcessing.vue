@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path" class="pa-3">
+    <v-tab-item v-if="permission" :value="$route.path" class="pa-3">
         <v-row no-gutters align="center" class="pa-4 pt-1 pb-8">
             <v-col cols="auto">
                 <v-img
@@ -23,7 +23,6 @@
             :headers="headers"
             :items="paymentProcessings"
             :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
-            :page.sync="page"
             disable-sort
             hide-default-footer
             class="b-outlined"
@@ -97,6 +96,8 @@
 </template>
 
 <script>
+import paymentProcessing from "@/store/modules/storePanel/settings/paymentProcessing";
+
 import { mdiMenuUp, mdiMenuDown } from "@mdi/js";
 import { mapState, mapActions, mapMutations } from "vuex";
 import translations from "@/utils/translations/storePanel/settings/paymentProcessing";
@@ -109,31 +110,36 @@ export default {
     data() {
         return {
             icons: { mdiMenuUp, mdiMenuDown },
-            page: +this.$route.query.page
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage"]),
-        ...mapState("storePanel/settings/paymentProcessing", [
+        ...mapState("storePanel/paymentProcessing", [
             "storeBankProviders",
-            "paymentProcessings"
+            "paymentProcessings",
         ]),
 
         lang() {
             return this.$route.params.lang;
         },
 
+        permission() {
+            return this.$store.state.permissions.settings
+                ? this.$store.state.permissions.settings.payment_routing
+                : null;
+        },
+
         headers() {
             return [
                 {
                     text: this.translations.cardIssued[this.lang],
-                    value: "bank_provider"
+                    value: "bank_provider",
                 },
                 {
                     text: this.translations.processPayment[this.lang],
-                    value: "bank_clearer"
-                }
+                    value: "bank_clearer",
+                },
             ];
         },
 
@@ -144,69 +150,62 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         paymentProcessing: {
             get() {
-                return this.$store.state.storePanel.settings.paymentProcessing
+                return this.$store.state.storePanel.paymentProcessing
                     .paymentProcessing;
             },
 
             set(val) {
                 this.setItem(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
         ...mapMutations(["setDialog"]),
-        ...mapMutations("storePanel/settings/paymentProcessing", ["setItem"]),
-        ...mapActions("storePanel/settings/paymentProcessing", [
+        ...mapMutations("storePanel/paymentProcessing", ["setItem"]),
+        ...mapActions("storePanel/paymentProcessing", [
             "getStoreBankProviders",
             "getItems",
-            "update"
+            "update",
         ]),
 
         open(item) {
             this.paymentProcessing = item;
             this.dialog = true;
-        }
+        },
     },
 
     watch: {
-        $route(val) {
-            if (!val.query.page) {
-                this.$router.push({
-                    query: {
-                        page: 1,
-                        ...this.$route.query
-                    }
-                });
-            }
-            this.getItems(this.query);
+        permission: {
+            immediate: true,
+            handler(val) {
+                if (!val) {
+                    this.$router.replace(
+                        `/${this.lang}/storePanel/forbidden-gateway`
+                    );
+                }
+            },
         },
-
-        page(page) {
-            this.$router.push({ query: { ...this.$route.query, page } });
-        }
     },
 
     beforeCreate() {
-        if (!this.$route.query.page) {
-            this.$router.replace({
-                query: {
-                    page: 1,
-                    ...this.$route.query
-                }
-            });
+        if (!this.$store.state.storePanel.paymentProcessing) {
+            this.$store.registerModule(
+                ["storePanel", "paymentProcessing"],
+                paymentProcessing
+            );
         }
     },
 
     mounted() {
         this.getItems();
         this.getStoreBankProviders();
-    }
+    },
 };
 </script>
 

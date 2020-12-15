@@ -46,7 +46,7 @@
                         new Intl.NumberFormat("en-US", {
                             style: "currency",
                             currency: "EUR",
-                            minimumFractionDigits: 2,
+                            minimumFractionDigits: 2
                         }).format(retailPrice)
                     }}
                 </v-sheet>
@@ -119,9 +119,9 @@ export default {
             type: 1,
             discountTypes: [
                 { text: { el: "", en: "Percentage", it: "" }, value: 1 },
-                { text: { el: "", en: "Euro", it: "" }, value: 2 },
+                { text: { el: "", en: "Euro", it: "" }, value: 2 }
             ],
-            retailPrice: 0,
+            retailPrice: 0
         };
     },
 
@@ -130,12 +130,12 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation",
+            "resetValidation"
         ]),
-        ...mapState("storePanel/coupons/couponsWithDiscount", [
+        ...mapState("storePanel/couponsWithDiscount", [
             "giftCategories",
             "products",
-            "couponWithDiscount",
+            "couponWithDiscount"
         ]),
 
         lang() {
@@ -155,23 +155,23 @@ export default {
             }
 
             return icon;
-        },
+        }
     },
 
     methods: {
         ...mapMutations(["setResetSuccess", "setResetValidation"]),
-        ...mapActions("storePanel/coupons/couponsWithDiscount", [
+        ...mapActions("storePanel/couponsWithDiscount", [
             "getGiftCategories",
             "getProducts",
-            "create",
-        ]),
+            "create"
+        ])
     },
 
     watch: {
         ["couponWithDiscount.product_discount_id"](val) {
             if (val) {
                 this.retailPrice = +this.products.find(
-                    (p) => p.product_id === val
+                    p => p.product_id === val
                 ).retail_price;
             } else {
                 this.retailPrice = 0;
@@ -186,12 +186,12 @@ export default {
                 this.couponWithDiscount.discount_percentage = null;
                 this.error.discountPercentage = "";
             }
-        },
+        }
     },
 
     mounted() {
         this.getGiftCategories();
         this.getProducts();
-    },
+    }
 };
 </script>

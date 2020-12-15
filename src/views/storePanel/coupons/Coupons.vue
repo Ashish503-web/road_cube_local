@@ -57,21 +57,21 @@ export default {
             if (this.permissions.voucher.read) {
                 arr.push({
                     name: { el: "", en: "coupons with code", it: "" },
-                    to: `/${this.lang}/storePanel/coupons/with-code`
+                    to: `/${this.lang}/storePanel/coupons/with-code?page=1`
                 });
             }
 
             if (this.permissions.product.read) {
                 arr.push({
                     name: { el: "", en: "coupons on products", it: "" },
-                    to: `/${this.lang}/storePanel/coupons/on-products`
+                    to: `/${this.lang}/storePanel/coupons/on-products?page=1`
                 });
             }
 
             if (this.permissions.discount.read) {
                 arr.push({
                     name: { el: "", en: "coupons with discount", it: "" },
-                    to: `/${this.lang}/storePanel/coupons/with-discount`
+                    to: `/${this.lang}/storePanel/coupons/with-discount?page=1`
                 });
             }
 
@@ -92,11 +92,7 @@ export default {
                     if (
                         this.$route.path === `/${this.lang}/storePanel/coupons`
                     ) {
-                        if (val[0].name.en === "coupons with transactions") {
-                            this.$router.push(val[0].to);
-                        } else {
-                            this.$router.push(val[0].to + "?page=1");
-                        }
+                        this.$router.replace(val[0].to);
                     }
                 }
             }

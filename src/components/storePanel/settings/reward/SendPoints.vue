@@ -87,13 +87,12 @@ export default {
         },
 
         systemNotifications() {
-            return this.$store.state.storePanel.settings.reward
-                .systemNotifications;
+            return this.$store.state.storePanel.reward.systemNotifications;
         }
     },
 
     methods: {
-        ...mapActions("storePanel/settings/reward", [
+        ...mapActions("storePanel/reward", [
             "getSystemNotifications",
             "updateReward"
         ])

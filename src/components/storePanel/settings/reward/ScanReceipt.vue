@@ -81,7 +81,7 @@ export default {
     },
 
     methods: {
-        ...mapActions("storePanel/settings/reward", ["updateReward"])
+        ...mapActions("storePanel/reward", ["updateReward"])
     },
 
     watch: {

@@ -1,5 +1,5 @@
 <template>
-    <v-container fluid class="b-container">
+    <v-container v-if="permissions.read" fluid class="b-container">
         <v-sheet class="pa-3" :class="{ 'mx-3': tabsWithMargin }">
             <v-tabs
                 v-model="tab"
@@ -29,7 +29,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.path
+            tab: this.$route.path,
         };
     },
 
@@ -50,49 +50,49 @@ export default {
             if (this.permissions.profile) {
                 arr.push({
                     name: { el: "", en: "profile", it: "" },
-                    to: `/${this.lang}/storePanel/settings/profile`
+                    to: `/${this.lang}/storePanel/settings/profile`,
                 });
             }
 
             if (this.permissions.reward) {
                 arr.push({
                     name: { el: "", en: "reward", it: "" },
-                    to: `/${this.lang}/storePanel/settings/reward`
+                    to: `/${this.lang}/storePanel/settings/reward`,
                 });
             }
 
             if (this.permissions.product_points) {
                 arr.push({
                     name: { el: "", en: "product points", it: "" },
-                    to: `/${this.lang}/storePanel/settings/product-points`
+                    to: `/${this.lang}/storePanel/settings/product-points?page=1`,
                 });
             }
 
             if (this.permissions.users.read) {
                 arr.push({
                     name: { el: "", en: "users", it: "" },
-                    to: `/${this.lang}/storePanel/settings/users`
+                    to: `/${this.lang}/storePanel/settings/users?page=1`,
                 });
             }
 
             if (this.permissions.cleaners) {
                 arr.push({
                     name: { el: "", en: "payment providers", it: "" },
-                    to: `/${this.lang}/storePanel/settings/payment-providers`
+                    to: `/${this.lang}/storePanel/settings/payment-providers`,
                 });
             }
 
             if (this.permissions.payment_routing) {
                 arr.push({
                     name: { el: "", en: "payment processing", it: "" },
-                    to: `/${this.lang}/storePanel/settings/payment-processing`
+                    to: `/${this.lang}/storePanel/settings/payment-processing`,
                 });
             }
 
             if (this.permissions.subscriptions) {
                 arr.push({
                     name: { el: "", en: "subscription", it: "" },
-                    to: `/${this.lang}/storePanel/settings/subscription`
+                    to: `/${this.lang}/storePanel/settings/subscription`,
                 });
             }
 
@@ -116,7 +116,7 @@ export default {
             return (
                 this.$route.path === `/${this.lang}/storePanel/settings/profile`
             );
-        }
+        },
     },
 
     watch: {
@@ -124,15 +124,19 @@ export default {
             immediate: true,
             handler(val) {
                 if (val.length) {
-                    if (
+                    if (!this.permissions.read) {
+                        this.$router.replace(
+                            `/${this.lang}/storePanel/forbidden-gateway`
+                        );
+                    } else if (
                         this.$route.path === `/${this.lang}/storePanel/settings`
                     ) {
-                        this.$router.push(val[0].to + "?page=1");
+                        this.$router.replace(val[0].to);
                     }
                 }
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>
 

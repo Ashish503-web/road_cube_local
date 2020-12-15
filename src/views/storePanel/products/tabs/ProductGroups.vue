@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path" class="pa-3">
+    <v-tab-item :value="$route.fullPath" class="pa-3">
         <v-toolbar flat height="90">
             <v-btn
                 :color="permissions.create ? 'secondary' : 'grey'"
@@ -118,6 +118,8 @@
 </template>
 
 <script>
+import productGroups from "@/store/modules/storePanel/productGroups";
+
 import { mdiPencilOutline, mdiClose } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import ProductGroupForm from "@/components/storePanel/products/ProductGroupForm.vue";
@@ -244,9 +246,20 @@ export default {
     },
 
     watch: {
+        ["permissions.read"]: {
+            immediate: true,
+            handler(val) {
+                if (!val) {
+                    this.$router.replace(
+                        `/${this.lang}/storePanel/forbidden-gateway`
+                    );
+                }
+            },
+        },
+
         $route(val) {
             if (!val.query.page) {
-                this.$router.push({
+                this.$router.replace({
                     query: {
                         page: 1,
                         ...this.$route.query,
@@ -257,13 +270,20 @@ export default {
         },
 
         page(page) {
-            this.$router.push({ query: { ...this.$route.query, page } });
+            this.$router.replace({ query: { ...this.$route.query, page } });
         },
     },
 
     beforeCreate() {
+        if (!this.$store.state.storePanel.productGroups) {
+            this.$store.registerModule(
+                ["storePanel", "productGroups"],
+                productGroups
+            );
+        }
+
         if (!this.$route.query.page) {
-            this.$router.push({
+            this.$router.replace({
                 query: {
                     page: 1,
                     ...this.$route.query,

@@ -74,18 +74,16 @@ export default {
         },
 
         loading() {
-            return this.$store.state.storePanel.settings.profile.loading
-                .invoicing;
+            return this.$store.state.storePanel.profile.loading.invoicing;
         },
 
         errorMessage() {
-            return this.$store.state.storePanel.settings.profile.errorMessage
-                .invoicing;
+            return this.$store.state.storePanel.profile.errorMessage.invoicing;
         }
     },
 
     methods: {
-        ...mapActions("storePanel/settings/profile", ["updateInvoicing"])
+        ...mapActions("storePanel/profile", ["updateInvoicing"])
     },
 
     watch: {

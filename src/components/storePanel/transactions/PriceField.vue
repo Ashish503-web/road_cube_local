@@ -7,6 +7,7 @@
         outlined
         dense
         clearable
+        hide-details="auto"
         :success="success"
         :error-messages="error"
         @focus="error = ''"
@@ -22,24 +23,34 @@ export default {
     props: {
         value: [String, Number],
         label: String,
+        priceMax: [Number],
     },
 
-    data: () => ({
-        success: false,
-        error: "",
-        errorMessages: {
-            priceRequired: {
-                el: "",
-                en: "Purchase price is required",
-                it: "",
+    data() {
+        return {
+            success: false,
+            error: "",
+            errorMessages: {
+                priceRequired: {
+                    el: "",
+                    en: "Refund price is required",
+                    it: "",
+                },
+                priceMin: {
+                    el: "",
+                    en: "Refund price must be minimum 0.1",
+                    it: "",
+                },
+                priceMax: {
+                    el: "",
+                    en:
+                        "Refund price must be less than or equal to " +
+                        this.priceMax,
+                    it: "",
+                },
             },
-            priceMin: {
-                el: "",
-                en: "Purchase Price must be minimum 0.1",
-                it: "",
-            },
-        },
-    }),
+        };
+    },
 
     computed: {
         lang() {
@@ -53,6 +64,8 @@ export default {
                 this.error = this.errorMessages.priceRequired[this.lang];
             } else if (this.value < 0.1) {
                 this.error = this.errorMessages.priceMin[this.lang];
+            } else if (this.value > this.priceMax) {
+                this.error = this.errorMessages.priceMax[this.lang];
             } else {
                 this.error = "";
             }
@@ -63,8 +76,7 @@ export default {
         value: {
             immediate: true,
             handler(val) {
-                this.success = val >= 0.1;
-                this.$emit("get-transaction");
+                this.success = val >= 0.1 && val <= this.priceMax;
             },
         },
     },

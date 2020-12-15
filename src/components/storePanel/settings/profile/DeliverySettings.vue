@@ -133,18 +133,18 @@ export default {
         },
 
         loading() {
-            return this.$store.state.storePanel.settings.profile.loading
+            return this.$store.state.storePanel.profile.loading
                 .deliverySettings;
         },
 
         errorMessage() {
-            return this.$store.state.storePanel.settings.profile.errorMessage
+            return this.$store.state.storePanel.profile.errorMessage
                 .deliverySettings;
         }
     },
 
     methods: {
-        ...mapActions("storePanel/settings/profile", ["updateDeliverySettings"])
+        ...mapActions("storePanel/profile", ["updateDeliverySettings"])
     },
 
     watch: {

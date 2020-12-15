@@ -173,6 +173,8 @@
 </template>
 
 <script>
+import productCategories from "@/store/modules/storePanel/settings/productCategories";
+
 import { mdiPencilOutline, mdiClose } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import translations from "@/utils/translations/storePanel/settings/profile/productCategories";
@@ -187,15 +189,13 @@ export default {
             icons: { mdiPencilOutline, mdiClose },
             categoryLang: "el",
             selectedLang: "el",
-            page: +this.$route.query.page,
+            page: 1
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
-        ...mapState("storePanel/settings/productCategories", [
-            "productCategories",
-        ]),
+        ...mapState("storePanel/productCategories", ["productCategories"]),
 
         lang() {
             return this.$route.params.lang;
@@ -208,29 +208,29 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            },
+            }
         },
 
         productCategory: {
             get() {
-                return this.$store.state.storePanel.settings.productCategories
+                return this.$store.state.storePanel.productCategories
                     .productCategory;
             },
 
             set(val) {
                 this.setItem(val);
-            },
+            }
         },
 
         selectedProductCategory: {
             get() {
-                return this.$store.state.storePanel.settings.productCategories
+                return this.$store.state.storePanel.productCategories
                     .selectedProductCategory;
             },
 
             set(val) {
                 this.setSelectedItem(val);
-            },
+            }
         },
 
         query() {
@@ -241,59 +241,41 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        },
+        }
     },
 
     methods: {
         ...mapMutations(["setDeleteDialog"]),
-        ...mapMutations("storePanel/settings/productCategories", [
+        ...mapMutations("storePanel/productCategories", [
             "setItem",
-            "setSelectedItem",
+            "setSelectedItem"
         ]),
-        ...mapActions("storePanel/settings/productCategories", [
+        ...mapActions("storePanel/productCategories", [
             "getItems",
             "create",
             "update",
-            "remove",
-        ]),
+            "remove"
+        ])
     },
 
     watch: {
-        $route(val) {
-            if (!val.query.page) {
-                this.$router.push({
-                    query: {
-                        page: 1,
-                        ...this.$route.query,
-                    },
-                });
-            }
-            this.getItems(this.query);
-        },
-
         page(page) {
-            this.$router.push({ query: { ...this.$route.query, page } });
-        },
-
-        perPage(perPage) {
-            this.$router.push({ query: { ...this.$route.query, perPage } });
-        },
+            this.getItems(this.query);
+        }
     },
 
     beforeCreate() {
-        if (!this.$route.query.page) {
-            this.$router.push({
-                query: {
-                    page: 1,
-                    ...this.$route.query,
-                },
-            });
+        if (!this.$store.state.storePanel.productCategories) {
+            this.$store.registerModule(
+                ["storePanel", "productCategories"],
+                productCategories
+            );
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    },
+    }
 };
 </script>
 

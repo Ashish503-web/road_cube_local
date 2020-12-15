@@ -1,5 +1,5 @@
 <template>
-    <v-tab-item :value="$route.path">
+    <v-tab-item v-if="permission" :value="$route.path">
         <v-row no-gutters class="pa-3 b-grey">
             <v-col cols="12" md="6" class="pr-3">
                 <Logo />
@@ -42,6 +42,8 @@
 </template>
 
 <script>
+import profile from "@/store/modules/storePanel/settings/profile";
+
 import { mapActions } from "vuex";
 
 import Logo from "@/components/storePanel/settings/profile/Logo";
@@ -59,6 +61,7 @@ import DeliverySettings from "@/components/storePanel/settings/profile/DeliveryS
 
 export default {
     name: "Profile",
+
     components: {
         Logo,
         PinDisplay,
@@ -74,8 +77,39 @@ export default {
         DeliverySettings,
     },
 
+    computed: {
+        lang() {
+            return this.$route.params.lang;
+        },
+
+        permission() {
+            return this.$store.state.permissions.settings
+                ? this.$store.state.permissions.settings.profile
+                : null;
+        },
+    },
+
     methods: {
         ...mapActions("storePanel", ["getStore"]),
+    },
+
+    watch: {
+        permission: {
+            immediate: true,
+            handler(val) {
+                if (!val) {
+                    this.$router.replace(
+                        `/${this.lang}/storePanel/forbidden-gateway`
+                    );
+                }
+            },
+        },
+    },
+
+    beforeCreate() {
+        if (!this.$store.state.storePanel.profile) {
+            this.$store.registerModule(["storePanel", "profile"], profile);
+        }
     },
 
     mounted() {
