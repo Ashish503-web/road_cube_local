@@ -46,9 +46,14 @@
                         >{{ couponWithTransaction.gift_title }}
                     </v-col>
 
-                    <v-col cols="2" class="text-center">{{
-                        couponWithTransaction.maximum || "- left"
-                    }}</v-col>
+                    <v-col cols="2" class="text-center">
+                        {{
+                            couponWithTransaction.maximum -
+                                couponWithTransaction.available
+                        }}
+                        /
+                        {{ couponWithTransaction.maximum }}
+                    </v-col>
                 </v-row>
             </v-card>
 
@@ -87,7 +92,7 @@
                         :items="users"
                         :footer-props="{
                             itemsPerPageOptions: [5],
-                            showCurrentPage: true,
+                            showCurrentPage: true
                         }"
                         :page.sync="page"
                         :server-items-length="serverItemsLength"
@@ -136,7 +141,7 @@ export default {
 
     data() {
         return {
-            page: 1,
+            page: 1
         };
     },
 
@@ -144,7 +149,7 @@ export default {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("storePanel/couponsWithTransactions", [
             "couponWithTransaction",
-            "users",
+            "users"
         ]),
 
         lang() {
@@ -164,7 +169,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            },
+            }
         },
 
         settings() {
@@ -174,8 +179,8 @@ export default {
                     text: {
                         el: ``,
                         en: `Customer must come ${this.couponWithTransaction.goal_sequence} times to your store`,
-                        it: ``,
-                    },
+                        it: ``
+                    }
                 },
                 {
                     icon: mdiCashMultiple,
@@ -185,8 +190,8 @@ export default {
                             Customer must spend at least ${this.couponWithTransaction.goal_minimum_amount}
                             euros in each visit
                         `,
-                        it: ``,
-                    },
+                        it: ``
+                    }
                 },
                 {
                     icon: mdiClockOutline,
@@ -196,9 +201,9 @@ export default {
                             Each customer visit should not be later than
                             ${this.couponWithTransaction.goal_max_days} days from the last visit
                         `,
-                        it: ``,
-                    },
-                },
+                        it: ``
+                    }
+                }
             ];
         },
 
@@ -208,32 +213,32 @@ export default {
                 {
                     text: this.translations.totalVisits[this.lang],
                     value: "totalVisits",
-                    align: "center",
+                    align: "center"
                 },
                 {
                     text: this.translations.goalStatus[this.lang],
                     value: "status",
-                    align: "center",
-                },
+                    align: "center"
+                }
             ];
-        },
+        }
     },
 
     methods: {
         ...mapMutations(["setDeleteDialog", "setPermissionDialog"]),
         ...mapActions("storePanel/couponsWithTransactions", [
             "getItemUsers",
-            "remove",
-        ]),
+            "remove"
+        ])
     },
 
     watch: {
         page(page) {
             this.getItemUsers({
                 id: this.couponWithTransaction.coupon_id,
-                query: `?page=${page}`,
+                query: `?page=${page}`
             });
-        },
-    },
+        }
+    }
 };
 </script>

@@ -15,6 +15,7 @@ export default class CouponWithTransactions {
         this.goal_max_days = item.goal_max_days || null;
         this.gift_title = item.gift_title || "";
         this.gift_description = item.gift_description || "";
+        this.available = item.available || null;
         this.maximum = item.maximum || null;
         this.image = item.image || "";
     }

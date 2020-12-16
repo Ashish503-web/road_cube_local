@@ -176,7 +176,7 @@ export default {
     name: "ProductGroup",
 
     props: {
-        mode: Number,
+        mode: Number
     },
 
     mixins: [translations, validators],
@@ -193,8 +193,8 @@ export default {
                 { el: "", en: "Thursday", it: "" },
                 { el: "", en: "Friday", it: "" },
                 { el: "", en: "Saturday", it: "" },
-                { el: "", en: "Sunday", it: "" },
-            ],
+                { el: "", en: "Sunday", it: "" }
+            ]
         };
     },
 
@@ -203,7 +203,7 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation",
+            "resetValidation"
         ]),
         ...mapState("storePanel/productGroups", ["categories"]),
 
@@ -225,7 +225,7 @@ export default {
 
             set(val) {
                 this.setShowImageUpload(val);
-            },
+            }
         },
 
         showWeekdays: {
@@ -235,24 +235,24 @@ export default {
 
             set(val) {
                 this.setShowWeekdays(val);
-            },
+            }
         },
 
         productGroup() {
             return this.$store.state.storePanel.productGroups.productGroup;
-        },
+        }
     },
 
     methods: {
         ...mapMutations(["setResetSuccess", "setResetValidation"]),
         ...mapMutations("storePanel/productGroups", [
             "setShowImageUpload",
-            "setShowWeekdays",
+            "setShowWeekdays"
         ]),
         ...mapActions("storePanel/productGroups", [
             "getCategories",
             "create",
-            "update",
+            "update"
         ]),
 
         onFileSelected(event) {
@@ -260,14 +260,14 @@ export default {
                 this.imageFile = event;
                 const reader = new FileReader();
                 reader.readAsDataURL(this.imageFile);
-                reader.onload = (e) =>
+                reader.onload = e =>
                     (this.productGroup.image = e.target.result);
             }
-        },
+        }
     },
 
     mounted() {
         this.getCategories();
-    },
+    }
 };
 </script>

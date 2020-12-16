@@ -91,7 +91,7 @@ export default class Transaction {
         );
 
     static refundTransaction = item =>
-        axios.delete(
+        axios.post(
             `${ApiEndpoint}/stores/${localStorage.getItem(
                 "storeId"
             )}/transactions/cancel-transaction`,

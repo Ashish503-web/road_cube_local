@@ -73,13 +73,13 @@
                     @blur="validateWholesalePrice"
                 ></b-text-field>
             </v-col>
-            <v-col cols="12">
+            <!-- <v-col cols="12">
                 <h4
                     class="secondary--text mt-3"
                     v-text="translations.costs[lang]"
                 ></h4>
-            </v-col>
-            <v-col cols="6" class="pr-2">
+            </v-col> -->
+            <!-- <v-col cols="6" class="pr-2">
                 <b-text-field
                     v-model="product.delivery_cost"
                     :label="translations.deliveryCost[lang]"
@@ -102,7 +102,7 @@
                     @focus="error.shippingCost = ''"
                     @blur="validateShippingCost"
                 ></b-text-field>
-            </v-col>
+            </v-col> -->
         </v-row>
 
         <b-select
@@ -228,7 +228,7 @@ export default {
     name: "Product",
 
     props: {
-        mode: Number,
+        mode: Number
     },
 
     mixins: [translations, validators],
@@ -245,8 +245,8 @@ export default {
                 { el: "", en: "Thursday", it: "" },
                 { el: "", en: "Friday", it: "" },
                 { el: "", en: "Saturday", it: "" },
-                { el: "", en: "Sunday", it: "" },
-            ],
+                { el: "", en: "Sunday", it: "" }
+            ]
         };
     },
 
@@ -255,7 +255,7 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation",
+            "resetValidation"
         ]),
         ...mapState("storePanel/products", ["categories"]),
 
@@ -276,7 +276,7 @@ export default {
 
             set(val) {
                 this.setShowImageUpload(val);
-            },
+            }
         },
 
         showWeekdays: {
@@ -286,24 +286,24 @@ export default {
 
             set(val) {
                 this.setShowWeekdays(val);
-            },
+            }
         },
 
         product() {
             return this.$store.state.storePanel.products.product;
-        },
+        }
     },
 
     methods: {
         ...mapMutations(["setResetSuccess", "setResetValidation"]),
         ...mapMutations("storePanel/products", [
             "setShowImageUpload",
-            "setShowWeekdays",
+            "setShowWeekdays"
         ]),
         ...mapActions("storePanel/products", [
             "getCategories",
             "create",
-            "update",
+            "update"
         ]),
 
         onFileSelected(event) {
@@ -311,13 +311,13 @@ export default {
                 this.imageFile = event;
                 const reader = new FileReader();
                 reader.readAsDataURL(this.imageFile);
-                reader.onload = (e) => (this.product.image = e.target.result);
+                reader.onload = e => (this.product.image = e.target.result);
             }
-        },
+        }
     },
 
     mounted() {
         this.getCategories();
-    },
+    }
 };
 </script>

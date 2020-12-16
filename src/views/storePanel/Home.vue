@@ -136,24 +136,9 @@
 
                     <v-divider></v-divider>
 
-                    <v-sheet
-                        class="v-sheet--offset mx-auto"
-                        max-width="calc(100% - 32px)"
-                    >
-                        <v-sparkline
-                            :value="value"
-                            :gradient="gradient"
-                            :smooth="radius || false"
-                            :padding="padding"
-                            :line-width="width"
-                            :stroke-linecap="lineCap"
-                            :gradient-direction="gradientDirection"
-                            :fill="fill"
-                            :type="type"
-                            :auto-line-width="autoLineWidth"
-                            auto-draw
-                        ></v-sparkline>
-                    </v-sheet>
+                    <v-card-title>
+                        <canvas ref="myChart"></canvas>
+                    </v-card-title>
                 </v-card>
             </v-col>
         </v-row>
@@ -169,20 +154,13 @@ import {
     mdiCursorDefault,
     mdiCompassOutline,
     mdiPhone,
-    mdiWallet,
+    mdiWallet
 } from "@mdi/js";
+
+import Chart from "chart.js";
 
 import { mapActions } from "vuex";
 import translations from "@/utils/translations/home";
-
-const gradients = [
-    ["#222"],
-    ["#42b3f4"],
-    ["red", "orange", "yellow"],
-    ["purple", "violet"],
-    ["#00c6ff", "#F0F", "#FF0"],
-    ["#f72047", "#ffd200", "#1feaea"],
-];
 
 export default {
     name: "StorePanelHome",
@@ -190,18 +168,7 @@ export default {
     mixins: [translations],
 
     data: () => ({
-        width: 2,
-        radius: 10,
-        padding: 8,
-        lineCap: "round",
-        gradient: gradients[5],
-        value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
-        gradientDirection: "top",
-        gradients,
-        fill: false,
-        type: "trend",
-        autoLineWidth: false,
-        statistics: {},
+        statistics: {}
     }),
 
     computed: {
@@ -226,32 +193,32 @@ export default {
                     text: {
                         el: "",
                         en: "Customer",
-                        it: "",
+                        it: ""
                     },
-                    value: this.statistics.total_customers,
+                    value: this.statistics.total_customers
                 },
                 {
                     icon: mdiDatabase,
                     text: {
                         el: "",
                         en: "Transactions",
-                        it: "",
+                        it: ""
                     },
-                    value: this.statistics.total_transactions,
+                    value: this.statistics.total_transactions
                 },
                 {
                     icon: mdiCurrencyEur,
                     text: {
                         el: "",
                         en: "Total",
-                        it: "",
+                        it: ""
                     },
                     value: new Intl.NumberFormat("en-US", {
                         style: "currency",
                         currency: "EUR",
-                        minimumFractionDigits: 2,
-                    }).format(this.statistics.total_income),
-                },
+                        minimumFractionDigits: 2
+                    }).format(this.statistics.total_income)
+                }
             ];
         },
 
@@ -262,37 +229,37 @@ export default {
                     text: {
                         el: "",
                         en: "User map views",
-                        it: "",
+                        it: ""
                     },
-                    value: this.statistics.views.map_views,
+                    value: this.statistics.views.map_views
                 },
                 {
                     icon: mdiCursorDefault,
                     text: {
                         el: "",
                         en: "User store clicks",
-                        it: "",
+                        it: ""
                     },
-                    value: this.statistics.views.visits,
+                    value: this.statistics.views.visits
                 },
                 {
                     icon: mdiDatabase,
                     text: {
                         el: "",
                         en: "User navigation clicks",
-                        it: "",
+                        it: ""
                     },
-                    value: this.statistics.views.nav_clicks,
+                    value: this.statistics.views.nav_clicks
                 },
                 {
                     icon: mdiCompassOutline,
                     text: {
                         el: "",
                         en: "User phone clicks",
-                        it: "",
+                        it: ""
                     },
-                    value: this.statistics.views.phone_clicks,
-                },
+                    value: this.statistics.views.phone_clicks
+                }
             ];
         },
 
@@ -303,7 +270,7 @@ export default {
                     text: {
                         el: "",
                         en: "Payments Last 12 Hours",
-                        it: "",
+                        it: ""
                     },
                     value: `
                         ${
@@ -314,20 +281,20 @@ export default {
                         ${new Intl.NumberFormat("en-US", {
                             style: "currency",
                             currency: "EUR",
-                            minimumFractionDigits: 2,
+                            minimumFractionDigits: 2
                         }).format(
                             this.statistics.last_twelve_hours_payments
                                 .total_price
                         )}
                         ${this.translations.total[this.lang]}
-                    `,
+                    `
                 },
                 {
                     icon: mdiWallet,
                     text: {
                         el: "",
                         en: "Payments Last Week",
-                        it: "",
+                        it: ""
                     },
                     value: `
                         ${this.statistics.last_week_payments.total_transactions}
@@ -335,19 +302,66 @@ export default {
                         ${new Intl.NumberFormat("en-US", {
                             style: "currency",
                             currency: "EUR",
-                            minimumFractionDigits: 2,
+                            minimumFractionDigits: 2
                         }).format(
                             this.statistics.last_week_payments.total_price
                         )}
                         ${this.translations.total[this.lang]}
-                    `,
-                },
+                    `
+                }
             ];
-        },
+        }
     },
 
     methods: {
         ...mapActions("storePanel", ["getStore"]),
+
+        createChart() {
+            var myChart = new Chart(this.$refs.myChart, {
+                type: "line",
+                data: {
+                    labels: [
+                        "Monday",
+                        "Tuesday",
+                        "Wednesday",
+                        "Thursday",
+                        "Friday",
+                        "Saturday",
+                        "Sunday"
+                    ],
+                    datasets: [
+                        {
+                            label: "Transaction Amount",
+                            data: [
+                                -51.34,
+                                -67.98,
+                                -78.3,
+                                -25.1,
+                                56.58,
+                                76.67,
+                                -98.38
+                            ],
+                            backgroundColor: ["rgba(0, 0, 0, 0)"],
+                            borderColor: ["rgba(255, 99, 132, 1)"],
+                            borderWidth: 4,
+                            pointBackgroundColor: "rgba(255, 99, 132, 1)",
+                            pointBorderColor: "rgba(255, 99, 132, 1)"
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
+        }
     },
 
     watch: {
@@ -362,15 +376,15 @@ export default {
         ["$store.state.storePanel.store"]: {
             immediate: true,
             handler(val) {
-                console.log(val.statistics);
                 this.statistics = val.statistics;
                 this.statistics.name = val.app_name;
-            },
-        },
+            }
+        }
     },
 
     mounted() {
         this.getStore();
-    },
+        setTimeout(() => this.createChart(), 1500);
+    }
 };
 </script>

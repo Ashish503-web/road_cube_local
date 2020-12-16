@@ -147,7 +147,7 @@ export default {
     data() {
         return {
             icons: { mdiPencilOutline, mdiClose, mdiMagnify },
-            mode: 0,
+            mode: 0
         };
     },
 
@@ -155,7 +155,7 @@ export default {
         ...mapState(["loading", "errorMessage", "resetValidation"]),
         ...mapState("storePanel/paymentProviders", [
             "providersLoading",
-            "paymentProviders",
+            "paymentProviders"
         ]),
 
         lang() {
@@ -181,7 +181,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            },
+            }
         },
 
         deleteDialog: {
@@ -191,7 +191,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            },
+            }
         },
 
         paymentProvider: {
@@ -202,8 +202,8 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
@@ -213,7 +213,7 @@ export default {
             "getItems",
             "create",
             "update",
-            "remove",
+            "remove"
         ]),
 
         open(mode, item) {
@@ -225,7 +225,7 @@ export default {
                 this.setResetValidation(true);
                 this.dialog = true;
             }
-        },
+        }
     },
 
     watch: {
@@ -237,8 +237,8 @@ export default {
                         `/${this.lang}/storePanel/forbidden-gateway`
                     );
                 }
-            },
-        },
+            }
+        }
     },
 
     beforeCreate() {
@@ -252,6 +252,6 @@ export default {
 
     mounted() {
         this.getItems();
-    },
+    }
 };
 </script>

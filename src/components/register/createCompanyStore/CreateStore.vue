@@ -104,7 +104,7 @@
                             Store Details
                         </h4>
 
-                        <v-select
+                        <!-- <v-select
                             v-model="giftCategory"
                             :items="giftCategories"
                             item-text="name.el"
@@ -130,7 +130,7 @@
                             clearable
                             :success="success.storeCategory"
                             :rules="rules.storeCategory"
-                        ></v-select>
+                        ></v-select> -->
 
                         <v-text-field
                             v-model="name"
@@ -265,25 +265,25 @@ export default {
             }
         },
 
-        giftCategory: {
-            get() {
-                return this.$store.state.register.giftCategory;
-            },
+        // giftCategory: {
+        //     get() {
+        //         return this.$store.state.register.giftCategory;
+        //     },
 
-            set(val) {
-                this.setGiftCategory(val);
-            }
-        },
+        //     set(val) {
+        //         this.setGiftCategory(val);
+        //     }
+        // },
 
-        storeCategory: {
-            get() {
-                return this.$store.state.register.storeCategory;
-            },
+        // storeCategory: {
+        //     get() {
+        //         return this.$store.state.register.storeCategory;
+        //     },
 
-            set(val) {
-                this.setStoreCategory(val);
-            }
-        },
+        //     set(val) {
+        //         this.setStoreCategory(val);
+        //     }
+        // },
 
         name: {
             get() {

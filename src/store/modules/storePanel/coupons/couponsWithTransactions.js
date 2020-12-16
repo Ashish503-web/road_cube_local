@@ -87,6 +87,7 @@ export default {
                 let couponWithTransaction = { ...state.couponWithTransaction };
                 delete couponWithTransaction.coupon_id;
                 delete couponWithTransaction.image;
+                delete couponWithTransaction.available;
 
                 const { data } = await CouponWithTransaction.create(
                     couponWithTransaction

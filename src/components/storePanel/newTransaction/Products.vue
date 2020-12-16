@@ -44,7 +44,7 @@
                         :key="product.product_id"
                         class="pl-3"
                         :class="{
-                            'b-list-active': product.selected,
+                            'b-list-active': product.selected
                         }"
                         @click="productSelect(product)"
                     >
@@ -63,7 +63,7 @@
                                 new Intl.NumberFormat("en-US", {
                                     style: "currency",
                                     currency: "EUR",
-                                    minimumFractionDigits: 2,
+                                    minimumFractionDigits: 2
                                 }).format(product.retail_price)
                             }})
                         </v-list-item-title>
@@ -154,7 +154,7 @@ import {
     mdiMenuDown,
     mdiCheckBoxOutline,
     mdiCheckboxBlankOutline,
-    mdiClose,
+    mdiClose
 } from "@mdi/js";
 
 import { mapState, mapMutations, mapActions } from "vuex";
@@ -179,7 +179,7 @@ export default {
             mdiMenuDown,
             mdiCheckBoxOutline,
             mdiCheckboxBlankOutline,
-            mdiClose,
+            mdiClose
         },
         menu: false,
         search: "",
@@ -188,8 +188,8 @@ export default {
         productRequired: {
             el: "",
             en: "You must choose at least 1 product",
-            it: "",
-        },
+            it: ""
+        }
     }),
 
     computed: {
@@ -197,7 +197,7 @@ export default {
         ...mapState("storePanel/transactions", [
             "productsLoading",
             "products",
-            "transaction",
+            "transaction"
         ]),
 
         lang() {
@@ -212,8 +212,8 @@ export default {
 
             set(val) {
                 this.setSelectedProducts(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
@@ -221,14 +221,14 @@ export default {
         ...mapMutations("storePanel/transactions", ["setSelectedProducts"]),
         ...mapActions("storePanel/transactions", [
             "getProducts",
-            "getTransactionPreview",
+            "getTransactionPreview"
         ]),
 
         productSelect(item) {
             item.selected = !item.selected;
 
             let index = this.selectedProducts.findIndex(
-                (p) => p.product_id === item.product_id
+                p => p.product_id === item.product_id
             );
 
             if (index === -1) {
@@ -243,7 +243,7 @@ export default {
         productRemove(item, index) {
             this.selectedProducts.splice(index, 1);
             let product = this.products.find(
-                (p) => p.product_id === item.product_id
+                p => p.product_id === item.product_id
             );
             if (product) product.selected = false;
             this.debouncedGetTransactionPreview(true);
@@ -263,7 +263,7 @@ export default {
             } else {
                 this.error = "";
             }
-        },
+        }
     },
 
     watch: {
@@ -276,9 +276,9 @@ export default {
                 this.error = this.productRequired[this.lang];
             }
 
-            val.forEach((selected) => {
+            val.forEach(selected => {
                 let product = this.transaction.products.find(
-                    (p) => p.product_id === selected.product_id
+                    p => p.product_id === selected.product_id
                 );
 
                 if (product) {
@@ -292,7 +292,7 @@ export default {
 
             this.transaction.products = [];
 
-            val.forEach((p) => {
+            val.forEach(p => {
                 this.transaction.products.push(new TransactionProduct(p));
             });
         },
@@ -319,7 +319,7 @@ export default {
                 this.error = "";
                 this.setResetValidation(false);
             }
-        },
+        }
     },
 
     created() {
@@ -336,7 +336,7 @@ export default {
 
     beforeDestroy() {
         this.selectedProducts = [];
-    },
+    }
 };
 </script>
 

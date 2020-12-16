@@ -7,7 +7,6 @@
         outlined
         dense
         clearable
-        hide-details="auto"
         :success="success"
         :error-messages="error"
         @focus="error = ''"
@@ -23,7 +22,7 @@ export default {
     props: {
         value: [String, Number],
         label: String,
-        priceMax: [Number],
+        priceMax: [Number]
     },
 
     data() {
@@ -34,28 +33,28 @@ export default {
                 priceRequired: {
                     el: "",
                     en: "Refund price is required",
-                    it: "",
+                    it: ""
                 },
                 priceMin: {
                     el: "",
                     en: "Refund price must be minimum 0.1",
-                    it: "",
+                    it: ""
                 },
                 priceMax: {
                     el: "",
                     en:
                         "Refund price must be less than or equal to " +
                         this.priceMax,
-                    it: "",
-                },
-            },
+                    it: ""
+                }
+            }
         };
     },
 
     computed: {
         lang() {
             return this.$route.params.lang;
-        },
+        }
     },
 
     methods: {
@@ -69,7 +68,7 @@ export default {
             } else {
                 this.error = "";
             }
-        },
+        }
     },
 
     watch: {
@@ -77,8 +76,8 @@ export default {
             immediate: true,
             handler(val) {
                 this.success = val >= 0.1 && val <= this.priceMax;
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>

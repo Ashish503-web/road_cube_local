@@ -1,11 +1,13 @@
 import Transaction from "@/models/storePanel/Transaction";
 import moment from "moment";
+import { dispatch } from "rxjs/internal/observable/pairs";
 
 export default {
     namespaced: true,
 
     state: () => ({
         mobileLoading: false,
+        refundLoading: false,
         productsLoading: false,
         previewLoading: false,
         products: [],
@@ -23,6 +25,10 @@ export default {
     mutations: {
         setMobileLoading(state, payload) {
             state.mobileLoading = payload;
+        },
+
+        setRefundLoading(state, payload) {
+            state.refundLoading = payload;
         },
 
         setProductsLoading(state, payload) {
@@ -352,13 +358,25 @@ export default {
             }
         },
 
-        async refundTransaction({ commit }, item) {
+        async refundTransaction({ commit, dispatch }, { item, query }) {
             try {
-                commit("setLoading", true, { root: true });
+                commit("setRefundLoading", true);
 
-                await Transaction.refundTransaction(item);
+                let transaction = { transaction_id: null, products: [] };
+                transaction.transaction_id = item.transaction_id;
+                item.products.forEach(p => transaction.products.push({ ...p }));
 
-                commit("setLoading", false, { root: true });
+                transaction.products.forEach(p => {
+                    delete p.max_quantity;
+                    delete p.max_retail_price;
+                    delete p.name;
+                    delete p.reward_type_id;
+                });
+
+                await Transaction.refundTransaction(transaction);
+                await dispatch("getItems", query);
+
+                commit("setRefundLoading", false);
                 commit("setDialog", false, { root: true });
                 commit(
                     "setNotification",
@@ -371,7 +389,7 @@ export default {
                     { root: true }
                 );
             } catch (ex) {
-                commit("setLoading", false, { root: true });
+                commit("setRefundLoading", false);
                 commit("setErrorMessage", ex.response.data.message, {
                     root: true
                 });
