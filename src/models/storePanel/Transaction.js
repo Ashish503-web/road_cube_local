@@ -15,8 +15,6 @@ export default class Transaction {
         this.amount = item.amount || null;
         this.is_online_transaction = item.is_online_transaction || false;
         this.products = item.products || [];
-        this.product_coupon_claims_for_use =
-            item.product_coupon_claims_for_use || [];
         this.general_coupon_claims_for_use =
             item.general_coupon_claims_for_use || [];
         this.sampling_coupons_for_use = item.sampling_coupons_for_use || [];

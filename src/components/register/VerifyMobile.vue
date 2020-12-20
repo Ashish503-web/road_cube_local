@@ -8,7 +8,7 @@
             entered</v-card-subtitle
         >
 
-        <v-form v-model="valid" class="px-5" @submit.prevent="verifyMobile">
+        <v-form class="px-5" @submit.prevent="verifyMobile">
             <v-alert type="info"
                 >For development - {{ mobileVerificationCode }}, this will be
                 removed</v-alert
@@ -22,8 +22,10 @@
                 outlined
                 clearable
                 :prepend-inner-icon="icons.mdiCellphoneIphone"
-                :rules="codeRules"
-                :success="codeSuccess"
+                :success="success"
+                :error-messages="error"
+                @focus="error = ''"
+                @blur="validateCode"
             ></v-text-field>
 
             <v-alert v-if="errorMessage" type="error">{{
@@ -44,7 +46,7 @@
                     tile
                     class="px-5"
                     :loading="loading"
-                    :disabled="disabled"
+                    :disabled="!valid"
                     >verify</v-btn
                 >
             </v-card-actions>
@@ -62,27 +64,29 @@ export default {
     data() {
         return {
             icons: { mdiCellphoneIphone },
-            valid: false,
-            disabled: true,
-            codeSuccess: false,
-            codeRules: [
-                v => {
-                    if (v) {
-                        this.codeSuccess = true;
-                        return true;
-                    } else {
-                        return "Mobile Code is required";
-                    }
+            success: false,
+            error: "",
+            errorMessages: {
+                codeRequired: {
+                    el: "",
+                    en: "Mobile Code is required",
+                    it: ""
                 },
-                v =>
-                    (v || "").length === 4 ||
-                    "Mobile Code must be 4 characters long"
-            ]
+                codeLength: {
+                    el: "",
+                    en: "Mobile Code must be 4 characters long",
+                    it: ""
+                }
+            }
         };
     },
 
     computed: {
         ...mapState("register", ["loading", "errorMessage"]),
+
+        lang() {
+            return this.$route.params.lang;
+        },
 
         mobileVerificationCode() {
             return this.$store.state.register.mobileVerificationCode;
@@ -96,20 +100,34 @@ export default {
             set(val) {
                 this.setCode(val);
             }
+        },
+
+        valid() {
+            return this.success;
         }
     },
 
     methods: {
         ...mapMutations("register", ["setCode"]),
-        ...mapActions("register", ["resendCode", "verifyMobile"])
+        ...mapActions("register", ["resendCode", "verifyMobile"]),
+
+        validateCode() {
+            if (!this.code) {
+                this.error = this.errorMessages.codeRequired[this.lang];
+            } else if (this.code.length !== 4) {
+                this.error = this.errorMessages.codeLength[this.lang];
+            } else {
+                this.error = "";
+            }
+        }
     },
 
     watch: {
-        valid(val) {
+        code(val) {
             if (val) {
-                this.disabled = false;
+                this.success = val.length === 4;
             } else {
-                this.disabled = true;
+                this.success = false;
             }
         }
     }

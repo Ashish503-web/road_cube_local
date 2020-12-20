@@ -149,7 +149,7 @@ export default {
                     {
                         show: true,
                         type: "success",
-                        text: "You have successfully updated product!"
+                        text: "You have successfully updated coupon on product!"
                     },
 
                     { root: true }

@@ -126,7 +126,7 @@ export default {
     name: "AppProviders",
 
     data: () => ({
-        icons: { mdiFileDocumentEditOutline, mdiCheckCircleOutline },
+        icons: { mdiFileDocumentEditOutline, mdiCheckCircleOutline }
     }),
 
     computed: {
@@ -136,7 +136,7 @@ export default {
 
         appProviders() {
             return this.$store.state.register.appProviders;
-        },
+        }
     },
 
     methods: {
@@ -146,12 +146,12 @@ export default {
             localStorage.setItem("appProvider", provider.app_provider_id);
             localStorage.setItem("providerStoreId", provider.store_id);
             this.$router.push(`/${this.lang}/subscription-plans`);
-        },
+        }
     },
 
     mounted() {
         this.getAppProviders();
-    },
+    }
 };
 </script>
 

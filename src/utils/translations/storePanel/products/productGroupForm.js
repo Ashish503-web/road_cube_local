@@ -57,11 +57,6 @@ export default {
                 el: "",
                 en: "Published",
                 it: ""
-            },
-            unpublished: {
-                el: "",
-                en: "Unpublished",
-                it: ""
             }
         }
     })

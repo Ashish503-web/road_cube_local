@@ -36,6 +36,7 @@
             :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
             :page.sync="page"
             :server-items-length="serverItemsLength"
+            disable-sort
             class="b-outlined"
         >
             <template v-slot:no-data>
@@ -55,6 +56,19 @@
                         minimumFractionDigits: 2
                     }).format(item.retail_price)
                 }}
+            </template>
+
+            <template v-slot:item.published="{ item }">
+                <v-icon
+                    v-if="item.published"
+                    color="green"
+                    v-text="icons.mdiCheckCircleOutline"
+                ></v-icon>
+                <v-icon
+                    v-else
+                    color="red"
+                    v-text="icons.mdiMinusCircleOutline"
+                ></v-icon>
             </template>
 
             <template v-slot:item.actions="{ item }">
@@ -140,7 +154,13 @@
 <script>
 import products from "@/store/modules/storePanel/products";
 
-import { mdiPencilOutline, mdiClose, mdiMagnify } from "@mdi/js";
+import {
+    mdiCheckCircleOutline,
+    mdiMinusCircleOutline,
+    mdiPencilOutline,
+    mdiClose,
+    mdiMagnify
+} from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import debounce from "lodash/debounce";
 import ProductForm from "@/components/storePanel/products/ProductForm.vue";
@@ -155,7 +175,13 @@ export default {
 
     data() {
         return {
-            icons: { mdiPencilOutline, mdiClose, mdiMagnify },
+            icons: {
+                mdiCheckCircleOutline,
+                mdiMinusCircleOutline,
+                mdiPencilOutline,
+                mdiClose,
+                mdiMagnify
+            },
             page: +this.$route.query.page,
             mode: 0,
             search: ""
@@ -193,6 +219,15 @@ export default {
                 {
                     text: this.translations.points[this.lang],
                     value: "reward_points"
+                },
+                {
+                    text: this.translations.category[this.lang],
+                    value: "reward_points"
+                },
+                {
+                    text: this.translations.published[this.lang],
+                    value: "published",
+                    align: "center"
                 },
                 {
                     text: this.translations.actions[this.lang],

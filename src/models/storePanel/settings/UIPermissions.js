@@ -38,7 +38,8 @@ export default class UIPermissions {
         this.products = {
             open: false,
             ...item.products,
-            group: { open: false, ...item.products.group }
+            group: { open: false, ...item.products.group },
+            categories: { open: false, ...item.products.categories }
         } || {
             open: false,
             read: true,
@@ -47,6 +48,13 @@ export default class UIPermissions {
             delete: true,
             order: true,
             group: {
+                open: false,
+                read: true,
+                create: true,
+                update: true,
+                delete: true
+            },
+            categories: {
                 open: false,
                 read: true,
                 create: true,

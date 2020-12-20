@@ -1,4 +1,5 @@
 import Register from "@/models/Register";
+import StoreDetails from "@/models/StoreDetails";
 
 export default {
     namespaced: true,
@@ -10,28 +11,17 @@ export default {
         appProvider: null,
         providerStoreId: null,
         subscriptionPlans: [],
-        subscriptionPlan: null,
         step: 1,
         countries: [],
-        country: null,
-        mobile: null,
+        mobile: 6982591305,
         tos: false,
         userRegistrationIdentifier: "",
         mobileVerificationCode: "",
         code: "",
-        giftCategories: [],
-        // giftCategory: null,
-        storeCategories: [],
-        // storeCategory: null,
-        name: "",
-        address: "",
-        zip: "",
-        vatNumber: "",
-        email: "",
-        primaryPhone: "",
         fullname: "",
         password: "",
         confirmPassword: "",
+        storeDetails: new StoreDetails(),
         successMessage: ""
     }),
 
@@ -58,7 +48,7 @@ export default {
         },
 
         setSubscriptionPlan(state, payload) {
-            state.subscriptionPlan = payload;
+            state.storeDetails.store_subscription_plan_id = payload;
         },
 
         setStep(state, payload) {
@@ -67,10 +57,6 @@ export default {
 
         setCountries(state, payload) {
             state.countries = payload;
-        },
-
-        setCountry(state, payload) {
-            state.country = payload;
         },
 
         setMobile(state, payload) {
@@ -91,46 +77,6 @@ export default {
 
         setCode(state, payload) {
             state.code = payload;
-        },
-
-        setGiftCategories(state, payload) {
-            state.giftCategories = payload;
-        },
-
-        setGiftCategory(state, payload) {
-            state.giftCategory = payload;
-        },
-
-        setStoreCategories(state, payload) {
-            state.storeCategories = payload;
-        },
-
-        setStoreCategory(state, payload) {
-            state.storeCategory = payload;
-        },
-
-        setName(state, payload) {
-            state.name = payload;
-        },
-
-        setAddress(state, payload) {
-            state.address = payload;
-        },
-
-        setZip(state, payload) {
-            state.zip = payload;
-        },
-
-        setVatNumber(state, payload) {
-            state.vatNumber = payload;
-        },
-
-        setEmail(state, payload) {
-            state.email = payload;
-        },
-
-        setPrimaryPhone(state, payload) {
-            state.primaryPhone = payload;
         },
 
         setFullname(state, payload) {
@@ -188,12 +134,12 @@ export default {
                 commit("setLoading", true);
 
                 const { data } = await Register.createAccount({
-                    country_id: state.country,
+                    country_id: state.storeDetails.country_id,
                     mobile: state.mobile,
                     tos: state.tos
                 });
 
-                localStorage.setItem("country", state.country);
+                localStorage.setItem("country", state.storeDetails.country_id);
                 localStorage.setItem("mobile", state.mobile);
                 localStorage.setItem(
                     "userRegistrationIdentifier",
@@ -275,48 +221,11 @@ export default {
             }
         },
 
-        async getGiftCategories({ commit, state }) {
-            try {
-                const { data } = await Register.getGiftCategories(
-                    state.providerStoreId
-                );
-
-                commit("setGiftCategories", data.data);
-            } catch (ex) {
-                console.error(ex.response.data.message);
-            }
-        },
-
-        async getStoreCategories({ commit, state }) {
-            try {
-                const { data } = await Register.getStoreCategories();
-
-                commit("setStoreCategories", data.data);
-            } catch (ex) {
-                console.error(ex.response.data.message);
-            }
-        },
-
         async createStore({ commit, state }) {
             try {
                 commit("setLoading", true);
 
                 const { data } = await Register.createStore({
-                    store_details: {
-                        name: state.name,
-                        address: state.address,
-                        zip: state.zip,
-                        lat: 35.124233,
-                        lon: 11.432112,
-                        vat_number: state.vatNumber,
-                        email: state.email,
-                        primary_phone: state.primaryPhone,
-                        // store_category_id: state.storeCategory,
-                        // gift_category_id: state.giftCategory,
-                        parent_id: 1,
-                        store_subscription_plan_id: state.subscriptionPlan,
-                        country_id: state.country
-                    },
                     user_details: {
                         user_registration_identifier:
                             state.userRegistrationIdentifier,
@@ -327,22 +236,32 @@ export default {
                         referral: "Facebook",
                         tos: true,
                         marketing: true
-                    }
+                    },
+                    store_details: state.storeDetails
                 });
 
                 localStorage.setItem("storeId", data.data.store_id);
                 commit("setStoreId", data.data.store_id, { root: true });
 
-                const signIn = await Register.storeSignIn({
+                const { data: signIn } = await Register.storeSignIn({
                     app_provider_id: state.appProvider,
                     mobile: state.mobile,
                     password: state.password
                 });
 
-                localStorage.setItem("accessToken", signIn.data.access_token);
-                commit("setAccessToken", signIn.data.access_token, {
+                localStorage.setItem("accessToken", signIn.access_token);
+                commit("setAccessToken", signIn.access_token, {
                     root: true
                 });
+
+                signIn.extra_data.user.role =
+                    signIn.extra_data.user_stores[0].role.name;
+                commit("setUser", signIn.extra_data.user, { root: true });
+                commit(
+                    "setPermissions",
+                    signIn.extra_data.user_stores[0].permissions,
+                    { root: true }
+                );
 
                 localStorage.removeItem("registrationStep");
                 localStorage.removeItem("country");

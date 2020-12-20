@@ -29,6 +29,9 @@
         @blur="$emit('blur')"
         @click:append="$emit('click-append')"
     >
+        <template v-slot:prepend-inner>
+            <slot name="prepend-inner"></slot>
+        </template>
         <template v-slot:append>
             <slot name="append"></slot>
         </template>

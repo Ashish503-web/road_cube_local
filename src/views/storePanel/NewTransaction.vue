@@ -1,50 +1,104 @@
 <template>
     <v-container fluid class="b-container">
-        <v-sheet v-if="permission" height="800" color="grey lighten-4">
-            <v-card tile flat width="600" class="mx-auto my-3 pa-5">
-                <v-card-title class="text-h5 font-weight-bold pa-0">
+        <v-sheet v-if="permission" min-height="800" color="grey lighten-4">
+            <v-card tile flat width="600" class="mx-auto my-3">
+                <v-card-title class="text-h5 font-weight-bold px-10 pt-5">
                     <v-icon
-                        class="text--primary ml-n1 mr-3"
+                        class="text--primary ml-n1 mr-1"
                         large
                         v-text="icons.mdiPlusThick"
                     ></v-icon>
                     {{ translations.newTransaction[lang] }}
-                    <v-spacer></v-spacer>
-
-                    <TransactionPreview />
                 </v-card-title>
+
+                <v-card-subtitle
+                    class="px-10"
+                    v-text="translations.info[lang]"
+                ></v-card-subtitle>
+
+                <v-divider class="mb-5"></v-divider>
 
                 <v-form
                     autocomplete="off"
                     @submit.prevent="create(showProducts)"
                 >
-                    <v-row no-gutters class="mt-7">
+                    <v-row no-gutters align="center" class="px-10">
                         <v-col
-                            :cols="showReceipt ? 6 : 12"
-                            :class="{ 'pr-2': showReceipt }"
+                            cols="auto"
+                            class="subtitle-1 font-weight-bold pr-5"
                         >
+                            {{ translations.selectUser[lang] }}
+
+                            <v-img
+                                src="@/assets/new-transaction-user.png"
+                                width="90"
+                                class="rounded-circle mt-4"
+                            ></v-img>
+
+                            <div
+                                class="subtitle-2 font-weight-medium text-center mt-2"
+                            >
+                                {{
+                                    transactionPreview.current_user_points || 0
+                                }}
+                                {{ translations.points[lang] }}
+                            </div>
+
+                            <div
+                                class="subtitle-2 font-weight-medium text-center"
+                            >
+                                {{ transactionPreview.new_user_points || 0 }}
+                                {{ translations.points[lang] }}
+                            </div>
+
+                            <div style="height: 2px">
+                                <v-progress-linear
+                                    color="secondary"
+                                    :indeterminate="previewLoading"
+                                    :active="previewLoading"
+                                    height="2"
+                                ></v-progress-linear>
+                            </div>
+                        </v-col>
+
+                        <v-col class="pl-10">
                             <v-text-field
                                 v-model="transaction.user"
                                 v-mask="'###############'"
                                 type="number"
                                 :label="translations.user[lang]"
                                 color="secondary"
+                                class="mt-3"
                                 outlined
                                 dense
                                 clearable
+                                hide-details="auto"
                                 :success="success.user"
                                 :error-messages="error.user"
                                 @focus="error.user = ''"
                                 @blur="validateUser"
                             ></v-text-field>
-                        </v-col>
 
-                        <v-col cols="6" class="pl-2">
+                            <v-checkbox
+                                v-model="showVoucher"
+                                color="secondary"
+                                hide-details
+                                class="mt-3 pt-0"
+                                :label="translations.userVoucher[lang]"
+                            ></v-checkbox>
+                        </v-col>
+                    </v-row>
+
+                    <v-divider class="my-5"></v-divider>
+
+                    <v-row no-gutters class="px-10">
+                        <v-col cols="12">
                             <v-text-field
                                 v-if="showReceipt"
                                 v-model="transaction.receipt_number"
                                 :label="translations.receiptNumber[lang]"
                                 color="secondary"
+                                class="mt-1"
                                 outlined
                                 dense
                                 clearable
@@ -54,21 +108,21 @@
                                 @focus="error.receipt = ''"
                                 @blur="validateReceipt"
                             ></v-text-field>
-                        </v-col>
 
-                        <v-col cols="12">
                             <v-text-field
+                                v-if="showVoucher"
                                 v-model="transaction.voucher"
                                 :label="translations.voucherCode[lang]"
                                 color="secondary"
+                                class="mt-1"
                                 outlined
                                 dense
                                 clearable
-                                validate-on-blur
-                                :success="success.voucher"
                             ></v-text-field>
                         </v-col>
                     </v-row>
+
+                    <v-divider class="mb-6"></v-divider>
 
                     <Products
                         v-if="showProducts"
@@ -79,6 +133,7 @@
                         v-else
                         v-model="transaction.amount"
                         :label="translations.amount[lang]"
+                        class="mx-10"
                         type="number"
                         no-top-margin
                         :success="success.amount"
@@ -87,6 +142,12 @@
                         @blur="validateAmount"
                     ></b-text-field>
 
+                    <v-divider class="mb-5"></v-divider>
+
+                    <h3 class="subtitle-1 font-weight-bold px-10 pb-5">
+                        General Coupons:
+                    </h3>
+
                     <b-select
                         v-if="generalCouponClaims.length"
                         v-model="transaction.general_coupon_claims_for_use"
@@ -94,8 +155,16 @@
                         item-text="gift_title"
                         return-object
                         :label="translations.generalCouponClaims[lang]"
+                        class="mx-10"
                         multiple
                     ></b-select>
+
+                    <v-divider class="mb-5"></v-divider>
+
+                    <h3
+                        class="subtitle-1 font-weight-bold px-10 pb-2"
+                        v-text="translations.samplingCoupons[lang]"
+                    ></h3>
 
                     <b-select
                         v-model="transaction.sampling_coupons_for_use"
@@ -103,7 +172,7 @@
                         :item-text="`product_free.name[${this.lang}]`"
                         return-object
                         :label="translations.samplingCoupons[lang]"
-                        class="mt-6"
+                        class="mx-10"
                         multiple
                     ></b-select>
 
@@ -111,17 +180,18 @@
                         errorMessage
                     }}</v-alert>
 
-                    <v-btn
-                        type="submit"
-                        color="secondary"
-                        depressed
-                        class="mt-7"
-                        block
-                        large
-                        :loading="loading"
-                        :disabled="!valid"
-                        >{{ translations.createOrder[lang] }}</v-btn
-                    >
+                    <div class="px-10 pt-7 pb-5">
+                        <v-btn
+                            type="submit"
+                            color="secondary"
+                            depressed
+                            block
+                            large
+                            :loading="loading"
+                            :disabled="!valid"
+                            >{{ translations.createOrder[lang] }}</v-btn
+                        >
+                    </div>
                 </v-form>
             </v-card>
         </v-sheet>
@@ -135,7 +205,6 @@ import { mdiPlusThick } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import debounce from "lodash/debounce";
 
-import TransactionPreview from "@/components/storePanel/newTransaction/TransactionPreview.vue";
 import Products from "@/components/storePanel/newTransaction/Products.vue";
 import translations from "@/utils/translations/storePanel/newTransaction";
 import validators from "@/utils/validators/storePanel/newTransaction";
@@ -143,24 +212,22 @@ import validators from "@/utils/validators/storePanel/newTransaction";
 export default {
     name: "NewTransaction",
 
-    components: { TransactionPreview, Products },
+    components: { Products },
 
     mixins: [translations, validators],
 
     data: () => ({
-        showNotice: false,
         icons: { mdiPlusThick },
         productsSuccess: false,
-        oldProducts: [],
+        showVoucher: false
     }),
 
     computed: {
         ...mapState(["loading", "errorMessage"]),
         ...mapState("storePanel/transactions", [
-            "showNewNotice",
-            "showNewPage",
+            "previewLoading",
             "generalCouponClaims",
-            "samplingCoupons",
+            "samplingCoupons"
         ]),
 
         lang() {
@@ -183,6 +250,17 @@ export default {
                 .offline_transaction_products;
         },
 
+        transactionPreview: {
+            get() {
+                return this.$store.state.storePanel.transactions
+                    .transactionPreview;
+            },
+
+            set(val) {
+                this.setTransactionPreview(val);
+            }
+        },
+
         transaction: {
             get() {
                 return this.$store.state.storePanel.transactions.transaction;
@@ -190,24 +268,23 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
         ...mapMutations("storePanel/transactions", [
-            "setShowNewNotice",
-            "setShowNewPage",
-            "setItem",
+            "setTransactionPreview",
+            "setItem"
         ]),
         ...mapActions("storePanel/transactions", [
             "create",
-            "getTransactionPreview",
+            "getTransactionPreview"
         ]),
 
         handleGetTransactionPreview() {
             this.getTransactionPreview(false);
-        },
+        }
     },
 
     watch: {
@@ -225,7 +302,7 @@ export default {
 
         ["transaction.amount"](val) {
             this.debouncedGetTransactionPreview();
-        },
+        }
     },
 
     beforeCreate() {
@@ -249,7 +326,8 @@ export default {
     },
 
     beforeDestroy() {
+        this.transactionPreview = {};
         this.transaction = {};
-    },
+    }
 };
 </script>

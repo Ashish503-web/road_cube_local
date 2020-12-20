@@ -32,6 +32,9 @@ export default {
         },
 
         addItem(state, payload) {
+            payload.created_at = moment(payload.created_at).format(
+                "DD/MM/YYYY HH:mm"
+            );
             state.couponsWithDiscount.unshift(payload);
         },
 

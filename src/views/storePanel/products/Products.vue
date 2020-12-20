@@ -51,10 +51,17 @@ export default {
                 },
             ];
 
-            if (this.permissions.read) {
+            if (this.permissions.group.read) {
                 arr.push({
                     name: { el: "", en: "Product Groups", it: "" },
                     to: `/${this.lang}/storePanel/products/product-groups?page=1`,
+                });
+            }
+
+            if (this.permissions.categories.read) {
+                arr.push({
+                    name: { el: "", en: "Product Categories", it: "" },
+                    to: `/${this.lang}/storePanel/products/product-categories?page=1`,
                 });
             }
 

@@ -73,36 +73,6 @@
                     @blur="validateWholesalePrice"
                 ></b-text-field>
             </v-col>
-            <!-- <v-col cols="12">
-                <h4
-                    class="secondary--text mt-3"
-                    v-text="translations.costs[lang]"
-                ></h4>
-            </v-col> -->
-            <!-- <v-col cols="6" class="pr-2">
-                <b-text-field
-                    v-model="product.delivery_cost"
-                    :label="translations.deliveryCost[lang]"
-                    type="number"
-                    prepend-inner-icon="mdiCurrencyEur"
-                    :success="success.deliveryCost"
-                    :error-messages="error.deliveryCost"
-                    @focus="error.deliveryCost = ''"
-                    @blur="validateDeliveryCost"
-                ></b-text-field>
-            </v-col>
-            <v-col cols="6" class="pl-2">
-                <b-text-field
-                    v-model="product.shipping_cost"
-                    :label="translations.shippingCost[lang]"
-                    type="number"
-                    prepend-inner-icon="mdiCurrencyEur"
-                    :success="success.shippingCost"
-                    :error-messages="error.shippingCost"
-                    @focus="error.shippingCost = ''"
-                    @blur="validateShippingCost"
-                ></b-text-field>
-            </v-col> -->
         </v-row>
 
         <b-select
@@ -206,13 +176,10 @@
             hide-details="auto"
         >
             <template v-slot:label>
-                <h4 class="secondary--text">
-                    {{
-                        product.published
-                            ? translations.published[lang]
-                            : translations.unpublished[lang]
-                    }}
-                </h4>
+                <h4
+                    class="secondary--text"
+                    v-text="translations.published[lang]"
+                ></h4>
             </template>
         </v-checkbox>
     </b-card>

@@ -40,7 +40,9 @@ export default {
 
     computed: {
         formValid() {
-            return this.valid.mobile && this.valid.password;
+            return this.mode === 1
+                ? this.valid.mobile && this.valid.password
+                : true;
         }
     },
 

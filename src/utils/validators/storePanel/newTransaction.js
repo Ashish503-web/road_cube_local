@@ -39,14 +39,29 @@ export default {
     computed: {
         valid() {
             if (this.showProducts) {
+                let transactionProductsValid = true;
+                this.transaction.products.forEach(p => {
+                    if (p.reward_type_id === 4) {
+                        if (p.retail_price < 0.1)
+                            transactionProductsValid = false;
+                    } else {
+                        if (p.quantity < 1) transactionProductsValid = false;
+                    }
+                });
+
                 if (this.showReceipt) {
                     return (
                         this.success.user &&
                         this.success.receipt &&
-                        this.productsSuccess
+                        this.productsSuccess &&
+                        transactionProductsValid
                     );
                 } else {
-                    return this.success.user && this.productsSuccess;
+                    return (
+                        this.success.user &&
+                        this.productsSuccess &&
+                        transactionProductsValid
+                    );
                 }
             } else {
                 if (this.showReceipt) {

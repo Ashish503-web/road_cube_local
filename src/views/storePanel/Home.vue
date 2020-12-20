@@ -126,7 +126,6 @@
                 <v-skeleton-loader
                     v-if="loading"
                     type="image"
-                    height="307"
                 ></v-skeleton-loader>
 
                 <v-card v-else tile outlined>
@@ -136,9 +135,9 @@
 
                     <v-divider></v-divider>
 
-                    <v-card-title>
+                    <v-card-text>
                         <canvas ref="myChart"></canvas>
-                    </v-card-title>
+                    </v-card-text>
                 </v-card>
             </v-col>
         </v-row>
@@ -154,10 +153,11 @@ import {
     mdiCursorDefault,
     mdiCompassOutline,
     mdiPhone,
-    mdiWallet
+    mdiWallet,
 } from "@mdi/js";
 
 import Chart from "chart.js";
+import moment from "moment";
 
 import { mapActions } from "vuex";
 import translations from "@/utils/translations/home";
@@ -168,7 +168,9 @@ export default {
     mixins: [translations],
 
     data: () => ({
-        statistics: {}
+        statistics: {},
+        labels: [],
+        values: [],
     }),
 
     computed: {
@@ -193,32 +195,32 @@ export default {
                     text: {
                         el: "",
                         en: "Customer",
-                        it: ""
+                        it: "",
                     },
-                    value: this.statistics.total_customers
+                    value: this.statistics.total_customers,
                 },
                 {
                     icon: mdiDatabase,
                     text: {
                         el: "",
                         en: "Transactions",
-                        it: ""
+                        it: "",
                     },
-                    value: this.statistics.total_transactions
+                    value: this.statistics.total_transactions,
                 },
                 {
                     icon: mdiCurrencyEur,
                     text: {
                         el: "",
                         en: "Total",
-                        it: ""
+                        it: "",
                     },
                     value: new Intl.NumberFormat("en-US", {
                         style: "currency",
                         currency: "EUR",
-                        minimumFractionDigits: 2
-                    }).format(this.statistics.total_income)
-                }
+                        minimumFractionDigits: 2,
+                    }).format(this.statistics.total_income),
+                },
             ];
         },
 
@@ -229,37 +231,37 @@ export default {
                     text: {
                         el: "",
                         en: "User map views",
-                        it: ""
+                        it: "",
                     },
-                    value: this.statistics.views.map_views
+                    value: this.statistics.views.map_views,
                 },
                 {
                     icon: mdiCursorDefault,
                     text: {
                         el: "",
                         en: "User store clicks",
-                        it: ""
+                        it: "",
                     },
-                    value: this.statistics.views.visits
+                    value: this.statistics.views.visits,
                 },
                 {
                     icon: mdiDatabase,
                     text: {
                         el: "",
                         en: "User navigation clicks",
-                        it: ""
+                        it: "",
                     },
-                    value: this.statistics.views.nav_clicks
+                    value: this.statistics.views.nav_clicks,
                 },
                 {
                     icon: mdiCompassOutline,
                     text: {
                         el: "",
                         en: "User phone clicks",
-                        it: ""
+                        it: "",
                     },
-                    value: this.statistics.views.phone_clicks
-                }
+                    value: this.statistics.views.phone_clicks,
+                },
             ];
         },
 
@@ -270,7 +272,7 @@ export default {
                     text: {
                         el: "",
                         en: "Payments Last 12 Hours",
-                        it: ""
+                        it: "",
                     },
                     value: `
                         ${
@@ -281,20 +283,20 @@ export default {
                         ${new Intl.NumberFormat("en-US", {
                             style: "currency",
                             currency: "EUR",
-                            minimumFractionDigits: 2
+                            minimumFractionDigits: 2,
                         }).format(
                             this.statistics.last_twelve_hours_payments
                                 .total_price
                         )}
                         ${this.translations.total[this.lang]}
-                    `
+                    `,
                 },
                 {
                     icon: mdiWallet,
                     text: {
                         el: "",
                         en: "Payments Last Week",
-                        it: ""
+                        it: "",
                     },
                     value: `
                         ${this.statistics.last_week_payments.total_transactions}
@@ -302,66 +304,82 @@ export default {
                         ${new Intl.NumberFormat("en-US", {
                             style: "currency",
                             currency: "EUR",
-                            minimumFractionDigits: 2
+                            minimumFractionDigits: 2,
                         }).format(
                             this.statistics.last_week_payments.total_price
                         )}
                         ${this.translations.total[this.lang]}
-                    `
-                }
+                    `,
+                },
             ];
-        }
+        },
     },
 
     methods: {
         ...mapActions("storePanel", ["getStore"]),
 
         createChart() {
-            var myChart = new Chart(this.$refs.myChart, {
+            let ctx = this.$refs.myChart.getContext("2d");
+
+            var gradientStroke = ctx.createLinearGradient(500, -100, 100, 0);
+            gradientStroke.addColorStop(0, "#1feaea");
+            gradientStroke.addColorStop(0.33, "yellow");
+            gradientStroke.addColorStop(0.66, "orange");
+            gradientStroke.addColorStop(1, "red");
+
+            var myChart = new Chart(ctx, {
                 type: "line",
                 data: {
-                    labels: [
-                        "Monday",
-                        "Tuesday",
-                        "Wednesday",
-                        "Thursday",
-                        "Friday",
-                        "Saturday",
-                        "Sunday"
-                    ],
+                    labels: this.labels,
                     datasets: [
                         {
-                            label: "Transaction Amount",
-                            data: [
-                                -51.34,
-                                -67.98,
-                                -78.3,
-                                -25.1,
-                                56.58,
-                                76.67,
-                                -98.38
-                            ],
+                            label: "",
+                            data: this.values,
                             backgroundColor: ["rgba(0, 0, 0, 0)"],
-                            borderColor: ["rgba(255, 99, 132, 1)"],
+                            borderColor: gradientStroke,
+                            pointBorderColor: gradientStroke,
+                            pointBackgroundColor: gradientStroke,
+                            pointHoverBackgroundColor: gradientStroke,
+                            pointHoverBorderColor: gradientStroke,
                             borderWidth: 4,
-                            pointBackgroundColor: "rgba(255, 99, 132, 1)",
-                            pointBorderColor: "rgba(255, 99, 132, 1)"
-                        }
-                    ]
+                        },
+                    ],
                 },
                 options: {
+                    legend: {
+                        position: "top",
+                    },
                     scales: {
                         yAxes: [
                             {
                                 ticks: {
-                                    beginAtZero: true
-                                }
-                            }
-                        ]
-                    }
-                }
+                                    fontColor: "rgba(0,0,0,0.5)",
+                                    fontStyle: "bold",
+                                    beginAtZero: true,
+                                    maxTicksLimit: 5,
+                                    padding: 20,
+                                },
+                                gridLines: {
+                                    drawTicks: false,
+                                },
+                            },
+                        ],
+                        xAxes: [
+                            {
+                                gridLines: {
+                                    zeroLineColor: "transparent",
+                                },
+                                ticks: {
+                                    padding: 20,
+                                    fontColor: "rgba(0,0,0,0.5)",
+                                    fontStyle: "bold",
+                                },
+                            },
+                        ],
+                    },
+                },
             });
-        }
+        },
     },
 
     watch: {
@@ -378,13 +396,32 @@ export default {
             handler(val) {
                 this.statistics = val.statistics;
                 this.statistics.name = val.app_name;
-            }
-        }
+                if (this.statistics.last_seven_days_revenue) {
+                    if (!this.labels.length) {
+                        this.statistics.last_seven_days_revenue.forEach((r) =>
+                            this.labels.push(
+                                moment(r.date).format("DD/MM/YYYY")
+                            )
+                        );
+
+                        this.labels.reverse();
+                    }
+
+                    if (!this.values.length) {
+                        this.statistics.last_seven_days_revenue.forEach((r) =>
+                            this.values.push(r.total_price)
+                        );
+
+                        this.values.reverse();
+                    }
+                }
+            },
+        },
     },
 
     mounted() {
         this.getStore();
         setTimeout(() => this.createChart(), 1500);
-    }
+    },
 };
 </script>

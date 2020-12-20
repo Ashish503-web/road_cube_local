@@ -1,19 +1,24 @@
 export default {
     data: () => ({
         translations: {
-            title: {
+            addCategory: {
                 el: "",
-                en: "Product Categories",
+                en: "Add Category",
                 it: ""
             },
-            name: {
+            nameInGreek: {
                 el: "",
-                en: "Category Name",
+                en: "Name in Greek",
                 it: ""
             },
-            add: {
+            nameInEnglish: {
                 el: "",
-                en: "Add",
+                en: "Name in English",
+                it: ""
+            },
+            nameInItalian: {
+                el: "",
+                en: "Name in Italian",
                 it: ""
             },
             actions: {
@@ -36,19 +41,14 @@ export default {
                 en: "Delete",
                 it: ""
             },
-            cancel: {
-                el: "",
-                en: "cancel",
-                it: ""
-            },
-            save: {
-                el: "",
-                en: "save",
-                it: ""
-            },
             deleteCategory: {
                 el: "",
                 en: "Delete Product Category",
+                it: ""
+            },
+            areYouSure: {
+                el: "",
+                en: "Are you sure you want to delete",
                 it: ""
             }
         }

@@ -1,6 +1,5 @@
 import Transaction from "@/models/storePanel/Transaction";
 import moment from "moment";
-import { dispatch } from "rxjs/internal/observable/pairs";
 
 export default {
     namespaced: true,
@@ -257,13 +256,18 @@ export default {
                 let transaction = { ...state.transaction };
                 Transaction.clearFalsyValues(transaction);
 
+                transaction.products.forEach(p => {
+                    if (!p.product_coupons_for_use.length)
+                        delete p.product_coupons_for_use;
+                });
                 await Transaction.create(transaction);
 
                 commit("setItem", {});
                 commit("setTransactionPreview", {});
                 commit("setSelectedProducts", []);
-                commit("setResetValidation", true, { root: true });
+                commit("setProducts", state.products);
                 commit("setGeneralCouponClaims", []);
+                commit("setResetValidation", true, { root: true });
                 commit("setLoading", false, { root: true });
                 commit(
                     "setNotification",
@@ -371,6 +375,7 @@ export default {
                     delete p.max_retail_price;
                     delete p.name;
                     delete p.reward_type_id;
+                    delete p.product_coupons_for_use;
                 });
 
                 await Transaction.refundTransaction(transaction);

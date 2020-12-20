@@ -8,7 +8,7 @@ const ApiEndpoint = `${process.env.VUE_APP_DEFAULT_API_URL}/stores`;
 
 export default class ProductCategory {
     constructor(item = {}) {
-        this.store_id = item.store_id || null;
+        this.store_id = item.store_id || localStorage.getItem("storeId");
         this.product_category_id = item.product_category_id || null;
         this.name = item.name || {
             el: "",

@@ -31,6 +31,16 @@ export default {
                 en: "Points",
                 it: ""
             },
+            category: {
+                el: "",
+                en: "Category",
+                it: ""
+            },
+            published: {
+                el: "",
+                en: "Published",
+                it: ""
+            },
             actions: {
                 el: "",
                 en: "Actions",

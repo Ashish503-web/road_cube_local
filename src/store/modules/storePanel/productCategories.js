@@ -1,12 +1,11 @@
-import ProductCategory from "@/models/storePanel/settings/ProductCategory";
+import ProductCategory from "@/models/storePanel/ProductCategory";
 
 export default {
     namespaced: true,
 
     state: () => ({
         productCategories: [],
-        productCategory: new ProductCategory(),
-        selectedProductCategory: new ProductCategory()
+        productCategory: new ProductCategory()
     }),
 
     mutations: {
@@ -22,32 +21,20 @@ export default {
             state.productCategory = new ProductCategory(payload);
         },
 
-        setSelectedItem(state, payload) {
-            let obj = new ProductCategory(payload);
-            obj.loading = false;
-            state.selectedProductCategory = obj;
-        },
-
-        setSelectedLoading(state, payload) {
-            state.selectedProductCategory.loading = payload;
-        },
-
         addItem(state, payload) {
             state.productCategories.unshift(payload);
         },
 
         updateItem(state, payload) {
-            payload.expanded = false;
-            payload.loading = false;
             let index = state.productCategories.findIndex(
                 p => p.product_category_id === payload.product_category_id
             );
             state.productCategories.splice(index, 1, payload);
         },
 
-        removeItem(state, payload) {
+        removeItem(state, id) {
             state.productCategories = state.productCategories.filter(
-                p => p.product_category_id !== payload
+                p => p.product_category_id !== id
             );
         }
     },
@@ -55,6 +42,8 @@ export default {
     actions: {
         async getItems({ commit }, query) {
             try {
+                commit("setLoading", true, { root: true });
+
                 const { data } = await ProductCategory.get(query);
 
                 const { product_categories, pagination } = data.data;
@@ -63,7 +52,9 @@ export default {
                 commit("setServerItemsLength", pagination.total, {
                     root: true
                 });
+                commit("setLoading", false, { root: true });
             } catch (ex) {
+                commit("setLoading", false, { root: true });
                 console.error(ex.response.data);
             }
         },
@@ -74,7 +65,6 @@ export default {
 
                 let productCategory = { ...state.productCategory };
                 delete productCategory.product_category_id;
-                productCategory.store_id = localStorage.getItem("storeId");
                 if (!productCategory.name.en)
                     productCategory.name.en = productCategory.name.el;
                 if (!productCategory.name.it)
@@ -83,13 +73,13 @@ export default {
                 const { data } = await ProductCategory.create(productCategory);
 
                 commit("addItem", data.data.product_category);
-                commit("setItem", {});
                 commit(
                     "setServerItemsLength",
                     rootState.serverItemsLength + 1,
                     { root: true }
                 );
                 commit("setLoading", false, { root: true });
+                commit("setDialog", false, { root: true });
                 commit(
                     "setNotification",
                     {
@@ -113,12 +103,9 @@ export default {
 
         async update({ commit, state }) {
             try {
-                commit("setSelectedLoading", true);
+                commit("setLoading", true, { root: true });
 
-                let productCategory = { ...state.selectedProductCategory };
-                delete productCategory.expanded;
-                delete productCategory.loading;
-                productCategory.store_id = localStorage.getItem("storeId");
+                let productCategory = { ...state.productCategory };
 
                 if (!productCategory.name.en)
                     productCategory.name.en = productCategory.name.el;
@@ -128,6 +115,8 @@ export default {
                 const { data } = await ProductCategory.update(productCategory);
 
                 commit("updateItem", data.data.product_category);
+                commit("setLoading", false, { root: true });
+                commit("setDialog", false, { root: true });
                 commit(
                     "setNotification",
                     {
@@ -138,7 +127,7 @@ export default {
                     { root: true }
                 );
             } catch (ex) {
-                commit("setSelectedLoading", false);
+                commit("setLoading", false, { root: true });
                 commit("setErrorMessage", ex.response.data.message, {
                     root: true
                 });
@@ -149,20 +138,22 @@ export default {
             }
         },
 
-        async remove({ commit, rootState }, id) {
+        async remove({ commit, state, rootState }) {
             try {
-                commit("setSelectedLoading", true);
+                commit("setLoading", true, { root: true });
 
-                await ProductCategory.delete(id);
+                await ProductCategory.delete(
+                    state.productCategory.product_category_id
+                );
 
-                commit("removeItem", id);
                 commit(
                     "setServerItemsLength",
                     rootState.serverItemsLength - 1,
                     { root: true }
                 );
-                commit("setSelectedLoading", false);
+                commit("setLoading", false, { root: true });
                 commit("setDeleteDialog", false, { root: true });
+                commit("removeItem", state.productCategory.product_category_id);
                 commit(
                     "setNotification",
                     {
@@ -173,7 +164,7 @@ export default {
                     { root: true }
                 );
             } catch (ex) {
-                commit("setSelectedLoading", false);
+                commit("setLoading", false, { root: true });
                 commit("setErrorMessage", ex.response.data.message, {
                     root: true
                 });

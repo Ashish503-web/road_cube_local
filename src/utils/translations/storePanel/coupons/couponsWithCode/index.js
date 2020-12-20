@@ -23,11 +23,6 @@ export default {
                 en: "Code",
                 it: ""
             },
-            voucher: {
-                el: "",
-                en: "Voucher",
-                it: ""
-            },
             points: {
                 el: "",
                 en: "Points",

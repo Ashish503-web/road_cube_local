@@ -87,15 +87,15 @@ export default {
             store: null,
             success: false,
             rules: [
-                (v) => {
+                v => {
                     if (v) {
                         this.success = true;
                         return true;
                     } else {
                         return "Store is required";
                     }
-                },
-            ],
+                }
+            ]
         };
     },
 
@@ -104,7 +104,7 @@ export default {
 
         lang() {
             return this.$route.params.lang;
-        },
+        }
     },
 
     methods: {
@@ -139,7 +139,7 @@ export default {
                 this.errorMessage = ex.response.data.message;
                 setTimeout(() => (this.errorMessage = ""), 5000);
             }
-        },
+        }
     },
 
     mounted() {
@@ -153,8 +153,8 @@ export default {
             } else {
                 this.disabled = true;
             }
-        },
-    },
+        }
+    }
 };
 </script>
 

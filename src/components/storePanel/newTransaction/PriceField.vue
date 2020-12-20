@@ -3,6 +3,7 @@
         :value="value"
         :label="label"
         color="secondary"
+        class="ma-3 mt-5"
         type="number"
         outlined
         dense
@@ -21,7 +22,7 @@ export default {
 
     props: {
         value: [String, Number],
-        label: String,
+        label: String
     },
 
     data: () => ({
@@ -31,20 +32,20 @@ export default {
             priceRequired: {
                 el: "",
                 en: "Purchase price is required",
-                it: "",
+                it: ""
             },
             priceMin: {
                 el: "",
                 en: "Purchase Price must be minimum 0.1",
-                it: "",
-            },
-        },
+                it: ""
+            }
+        }
     }),
 
     computed: {
         lang() {
             return this.$route.params.lang;
-        },
+        }
     },
 
     methods: {
@@ -56,7 +57,7 @@ export default {
             } else {
                 this.error = "";
             }
-        },
+        }
     },
 
     watch: {
@@ -65,8 +66,8 @@ export default {
             handler(val) {
                 this.success = val >= 0.1;
                 this.$emit("get-transaction");
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>

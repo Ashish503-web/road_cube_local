@@ -36,21 +36,6 @@ export default {
                 en: "Wholesale Price",
                 it: ""
             },
-            costs: {
-                el: "",
-                en: "Costs",
-                it: ""
-            },
-            deliveryCost: {
-                el: "",
-                en: "Delivery Cost",
-                it: ""
-            },
-            shippingCost: {
-                el: "",
-                en: "Shipping Cost",
-                it: ""
-            },
             selectCategory: {
                 el: "",
                 en: "Select Category",
@@ -81,11 +66,6 @@ export default {
             published: {
                 el: "",
                 en: "Published",
-                it: ""
-            },
-            unpublished: {
-                el: "",
-                en: "Unpublished",
                 it: ""
             }
         }

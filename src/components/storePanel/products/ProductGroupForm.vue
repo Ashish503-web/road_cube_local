@@ -154,13 +154,10 @@
             hide-details="auto"
         >
             <template v-slot:label>
-                <h4 class="secondary--text">
-                    {{
-                        productGroup.published
-                            ? translations.published[lang]
-                            : translations.unpublished[lang]
-                    }}
-                </h4>
+                <h4
+                    class="secondary--text"
+                    v-text="translations.published[lang]"
+                ></h4>
             </template>
         </v-checkbox>
     </b-card>

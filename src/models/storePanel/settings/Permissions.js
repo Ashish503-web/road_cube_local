@@ -41,6 +41,12 @@ export default class Permissions {
                 create: item.products.group.create,
                 update: item.products.group.update,
                 delete: item.products.group.delete
+            },
+            categories: {
+                read: item.products.categories.read,
+                create: item.products.categories.create,
+                update: item.products.categories.update,
+                delete: item.products.categories.delete
             }
         };
         this.coupons = {

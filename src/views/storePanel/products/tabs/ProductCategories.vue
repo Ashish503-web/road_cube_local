@@ -1,37 +1,24 @@
 <template>
     <v-tab-item :value="$route.fullPath" class="pa-3">
-        <v-row no-gutters align="center" class="pa-5 pt-0">
-            <v-col cols="auto">
-                <v-img
-                    src="@/assets/coupon-with-discount.png"
-                    width="60"
-                    height="60"
-                ></v-img>
-            </v-col>
-
-            <v-col class="pl-2">
-                <h4 v-text="translations.title[lang]"></h4>
-                <div
-                    style="font-size: 0.875rem"
-                    class="font-weight-medium"
-                    v-text="translations.info[lang]"
-                ></div>
-            </v-col>
-        </v-row>
-
-        <v-toolbar flat>
+        <v-toolbar flat height="90">
             <v-btn
-                :color="permissions.create ? 'secondary' : 'grey'"
+                color="secondary"
                 class="text-capitalize px-5"
                 depressed
-                v-text="translations.addDiscountCoupons[lang]"
-                @click="permissions.create ? open() : setPermissionDialog(true)"
+                v-text="translations.addCategory[lang]"
+                @click="open(1, {})"
             ></v-btn>
+
+            <v-spacer></v-spacer>
+
+            <v-col cols="4" class="pa-0">
+                <b-search-field></b-search-field>
+            </v-col>
         </v-toolbar>
 
         <v-data-table
             :headers="headers"
-            :items="couponsWithDiscount"
+            :items="productCategories"
             :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
             :page.sync="page"
             :server-items-length="serverItemsLength"
@@ -50,17 +37,31 @@
                 <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
                         <v-btn
-                            :color="permissions.delete ? 'red' : 'grey'"
+                            color="yellow darken-3"
+                            icon
+                            v-on="on"
+                            @click="open(2, item)"
+                        >
+                            <v-icon v-text="icons.mdiPencilOutline"></v-icon>
+                        </v-btn>
+                    </template>
+
+                    <span
+                        class="font-weight-bold"
+                        v-text="translations.update[lang]"
+                    ></span>
+                </v-tooltip>
+
+                <v-tooltip color="secondary" top>
+                    <template v-slot:activator="{ on }">
+                        <v-btn
+                            color="red"
                             icon
                             v-on="on"
                             @click="
                                 () => {
-                                    if (permissions.delete) {
-                                        couponWithDiscount = item;
-                                        deleteDialog = true;
-                                    } else {
-                                        setPermissionDialog(true);
-                                    }
+                                    productCategory = item;
+                                    deleteDialog = true;
                                 }
                             "
                         >
@@ -77,13 +78,13 @@
         </v-data-table>
 
         <v-dialog v-model="dialog" max-width="500">
-            <CouponWithDiscountForm @cancel="dialog = false" />
+            <ProductCategoryForm :mode="mode" @cancel="dialog = false" />
         </v-dialog>
 
         <v-dialog v-model="deleteDialog" max-width="500">
             <b-card
                 type="delete"
-                :title="translations.deleteDiscount[lang]"
+                :title="translations.deleteCategory[lang]"
                 :submit-text="{ el: '', en: 'delete', it: '' }"
                 :loading="loading"
                 :error-message="errorMessage"
@@ -93,9 +94,9 @@
                 <div class="subtitle-1 font-weight-medium py-3 px-2">
                     {{ translations.areYouSure[lang] }}
                     <span class="font-weight-bold text--primary">{{
-                        couponWithDiscount.discount_product_name[lang]
-                    }}</span>
-                    discount?
+                        productCategory.name[lang]
+                    }}</span
+                    >?
                 </div>
             </b-card>
         </v-dialog>
@@ -103,63 +104,60 @@
 </template>
 
 <script>
-import couponsWithDiscount from "@/store/modules/storePanel/coupons/couponsWithDiscount";
+import productCategories from "@/store/modules/storePanel/productCategories";
 
-import { mdiPlus, mdiClose } from "@mdi/js";
+import { mdiPencilOutline, mdiClose } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
-import CouponWithDiscountForm from "@/components/storePanel/coupons/CouponWithDiscountForm.vue";
-import translations from "@/utils/translations/storePanel/coupons/couponsWithDiscount";
+import ProductCategoryForm from "@/components/storePanel/products/ProductCategoryForm.vue";
+import translations from "@/utils/translations/storePanel/products/productCategories";
 
 export default {
-    name: "CouponsWithDiscount",
+    name: "ProductCategories",
 
-    components: { CouponWithDiscountForm },
+    components: { ProductCategoryForm },
 
     mixins: [translations],
 
     data() {
         return {
-            icons: {
-                mdiPlus,
-                mdiClose
-            },
-            page: +this.$route.query.page
+            icons: { mdiPencilOutline, mdiClose },
+            page: +this.$route.query.page,
+            mode: 0,
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
-        ...mapState("storePanel/couponsWithDiscount", ["couponsWithDiscount"]),
+        ...mapState("storePanel/productCategories", ["productCategories"]),
 
         lang() {
             return this.$route.params.lang;
         },
 
         permissions() {
-            return this.$store.state.permissions.coupons
-                ? this.$store.state.permissions.coupons.discount
+            return this.$store.state.permissions.products
+                ? this.$store.state.permissions.products.categories
                 : {};
         },
 
         headers() {
             return [
                 {
-                    text: this.translations.product[this.lang],
-                    value: `discount_product_name[${this.lang}]`
+                    text: this.translations.nameInGreek[this.lang],
+                    value: `name.el`,
                 },
                 {
-                    text: this.translations.discount[this.lang],
-                    value: "total_discount"
+                    text: this.translations.nameInEnglish[this.lang],
+                    value: `name.en`,
                 },
-                { text: this.translations.points[this.lang], value: "points" },
                 {
-                    text: this.translations.date[this.lang],
-                    value: "created_at"
+                    text: this.translations.nameInItalian[this.lang],
+                    value: `name.it`,
                 },
                 {
                     text: this.translations.actions[this.lang],
-                    value: "actions"
-                }
+                    value: "actions",
+                },
             ];
         },
 
@@ -170,7 +168,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         deleteDialog: {
@@ -180,18 +178,18 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            }
+            },
         },
 
-        couponWithDiscount: {
+        productCategory: {
             get() {
-                return this.$store.state.storePanel.couponsWithDiscount
-                    .couponWithDiscount;
+                return this.$store.state.storePanel.productCategories
+                    .productCategory;
             },
 
             set(val) {
                 this.setItem(val);
-            }
+            },
         },
 
         query() {
@@ -202,7 +200,7 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        }
+        },
     },
 
     methods: {
@@ -211,26 +209,29 @@ export default {
             "setDeleteDialog",
             "setResetSuccess",
             "setResetValidation",
-            "setPermissionDialog"
         ]),
-        ...mapMutations("storePanel/couponsWithDiscount", ["setItem"]),
-        ...mapActions("storePanel/couponsWithDiscount", ["getItems", "remove"]),
+        ...mapMutations("storePanel/productCategories", ["setItem"]),
+        ...mapActions("storePanel/productCategories", ["getItems", "remove"]),
 
-        open(item) {
-            this.couponWithDiscount = item;
+        open(mode, item) {
+            this.mode = mode;
+            this.productCategory = item;
             setTimeout(() => this.setResetSuccess(true), 300);
             this.setResetValidation(true);
             this.dialog = true;
-        }
+        },
     },
 
     watch: {
-        ["permissions.read"](val) {
-            if (!val) {
-                this.$router.replace(
-                    `/${this.lang}/storePanel/forbidden-gateway`
-                );
-            }
+        ["permissions.read"]: {
+            immediate: true,
+            handler(val) {
+                if (!val) {
+                    this.$router.replace(
+                        `/${this.lang}/storePanel/forbidden-gateway`
+                    );
+                }
+            },
         },
 
         $route(val) {
@@ -238,38 +239,36 @@ export default {
                 this.$router.replace({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
+
             this.getItems(this.query);
         },
 
         page(page) {
             this.$router.replace({ query: { ...this.$route.query, page } });
-        }
+        },
     },
 
     beforeCreate() {
-        if (!this.$store.state.storePanel.couponsWithDiscount) {
+        if (!this.$store.state.storePanel.productCategories) {
             this.$store.registerModule(
-                ["storePanel", "couponsWithDiscount"],
-                couponsWithDiscount
+                ["storePanel", "productCategories"],
+                productCategories
             );
-        }
-
-        if (!this.$route.query.page) {
-            this.$router.replace({
-                query: {
-                    page: 1,
-                    ...this.$route.query
-                }
-            });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    }
+    },
 };
 </script>
+
+<style scoped>
+.b-border-top {
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+}
+</style>

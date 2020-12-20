@@ -1,99 +1,176 @@
 <template>
     <fragment>
-        <v-menu
-            v-model="menu"
-            max-height="300"
-            offset-y
-            :close-on-content-click="false"
-        >
-            <template v-slot:activator="{ on }">
-                <v-text-field
-                    v-model="search"
-                    ref="search"
-                    :label="
-                        selectedProducts.length
-                            ? selectedProducts.length +
-                              translations.selectedProducts[lang]
-                            : translations.orderProducts[lang]
-                    "
+        <v-row no-gutters justify="space-between" align="center" class="px-10">
+            <v-col cols="12" class="subtitle-1 font-weight-bold mb-4">
+                {{ translations.selectProducts[lang] }}
+            </v-col>
+            <v-col cols="auto">
+                <v-img
+                    src="@/assets/new-transaction-basket.png"
+                    width="90"
+                    class="rounded-circle"
+                ></v-img>
+            </v-col>
+
+            <v-col cols="auto" style="font-size: 0.875rem">
+                <div>
+                    {{ transaction.products.length }}
+                    {{ translations.productsSelected[lang] }}
+                </div>
+                <div>
+                    {{ transactionPreview.won_points || 0 }}
+                    {{ translations.pointsWon[lang] }}
+                </div>
+                <div>
+                    {{ transactionPreview.lost_points || 0 }}
+                    {{ translations.pointsLost[lang] }}
+                </div>
+
+                <div style="height: 2px">
+                    <v-progress-linear
+                        color="secondary"
+                        :indeterminate="previewLoading"
+                        :active="previewLoading"
+                        height="2"
+                    ></v-progress-linear>
+                </div>
+            </v-col>
+
+            <v-col cols="auto">
+                <v-btn
                     color="secondary"
-                    outlined
-                    dense
-                    clearable
-                    v-on="on"
-                    hide-details="auto"
-                    :append-icon="menu ? icons.mdiMenuUp : icons.mdiMenuDown"
-                    :loading="productsLoading"
-                    :success="success"
-                    :error-messages="error"
-                    @focus="error = ''"
-                    @blur="validateProductsInput"
-                    @click:append="
-                        () => {
-                            menu = !menu;
-                            $refs.search.focus();
-                        }
-                    "
-                ></v-text-field>
-            </template>
+                    class="text-capitalize pr-6"
+                    depressed
+                    @click.stop="dialog = true"
+                >
+                    <v-icon class="mr-2" v-text="icons.mdiPlus"></v-icon>
+                    {{ translations.addProducts[lang] }}
+                </v-btn>
+            </v-col>
+        </v-row>
 
-            <v-list dense>
-                <template v-if="products.length">
-                    <v-list-item
-                        v-for="product in products"
-                        :key="product.product_id"
-                        class="pl-3"
-                        :class="{
-                            'b-list-active': product.selected
-                        }"
-                        @click="productSelect(product)"
-                    >
-                        <v-list-item-icon class="mr-2">
-                            <v-icon
-                                :color="product.selected ? 'secondary' : ''"
-                                v-text="
-                                    product.selected
-                                        ? icons.mdiCheckBoxOutline
-                                        : icons.mdiCheckboxBlankOutline
-                                "
-                            ></v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-title>
-                            {{ product.name[lang] }} ({{
-                                new Intl.NumberFormat("en-US", {
-                                    style: "currency",
-                                    currency: "EUR",
-                                    minimumFractionDigits: 2
-                                }).format(product.retail_price)
-                            }})
-                        </v-list-item-title>
-                    </v-list-item>
-                </template>
-                <v-list-item v-else>
-                    <v-list-item-title> No data available </v-list-item-title>
-                </v-list-item>
-            </v-list>
-        </v-menu>
-
-        <v-card
-            v-for="(product, i) in transaction.products"
-            :key="product.product_id"
-            color="rgba(234, 237, 241, 0.57)"
-            outlined
-            class="px-3 my-2"
-        >
-            <v-row
-                no-gutters
-                justify="space-between"
-                align="center"
-                class="py-5"
+        <v-dialog v-model="dialog" max-width="500">
+            <b-card
+                :title="translations.orderProducts[lang]"
+                @cancel="dialog = false"
             >
-                <v-col cols="4">
-                    {{ product.name[lang] }}
-                </v-col>
+                <div>
+                    <v-menu
+                        v-model="menu"
+                        max-height="300"
+                        offset-y
+                        :close-on-content-click="false"
+                        nudge-bottom="3"
+                    >
+                        <template v-slot:activator="{ on }">
+                            <v-text-field
+                                v-model="search"
+                                ref="search"
+                                :label="translations.searchProducts[lang]"
+                                color="secondary"
+                                outlined
+                                dense
+                                clearable
+                                v-on="on"
+                                hide-details="auto"
+                                autocomplete="off"
+                                :append-icon="
+                                    menu ? icons.mdiMenuUp : icons.mdiMenuDown
+                                "
+                                :loading="productsLoading"
+                                :success="success"
+                                :error-messages="error"
+                                @focus="error = ''"
+                                @blur="validateProductsInput"
+                                @click:append="
+                                    () => {
+                                        menu = !menu;
+                                        $refs.search.focus();
+                                    }
+                                "
+                            ></v-text-field>
+                        </template>
 
-                <v-col cols="7">
-                    <v-sheet color="white" max-height="40">
+                        <v-list dense>
+                            <template v-if="products.length">
+                                <v-list-item
+                                    v-for="product in products"
+                                    :key="product.product_id"
+                                    class="pl-3"
+                                    :class="{
+                                        'b-list-active': product.selected
+                                    }"
+                                    @click="productSelect(product)"
+                                >
+                                    <v-list-item-icon class="mr-2">
+                                        <v-icon
+                                            :color="
+                                                product.selected
+                                                    ? 'secondary'
+                                                    : ''
+                                            "
+                                            v-text="
+                                                product.selected
+                                                    ? icons.mdiCheckBoxOutline
+                                                    : icons.mdiCheckboxBlankOutline
+                                            "
+                                        ></v-icon>
+                                    </v-list-item-icon>
+                                    <v-list-item-title>
+                                        {{ product.name[lang] }} ({{
+                                            new Intl.NumberFormat("en-US", {
+                                                style: "currency",
+                                                currency: "EUR",
+                                                minimumFractionDigits: 2
+                                            }).format(product.retail_price)
+                                        }})
+                                    </v-list-item-title>
+                                </v-list-item>
+                            </template>
+                            <v-list-item v-else>
+                                <v-list-item-title
+                                    v-text="translations.noData[lang]"
+                                ></v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </v-menu>
+                </div>
+            </b-card>
+        </v-dialog>
+
+        <v-row no-gutters class="pa-6">
+            <v-col
+                v-for="(product, i) in transaction.products"
+                :key="product.product_id"
+                cols="4"
+                class="pa-2"
+            >
+                <v-card tile outlined>
+                    <v-card-title class="subtitle-2 font-weight-bold pa-0 pl-3">
+                        <v-col cols="9" class="pa-0 text-truncate">
+                            {{ product.name[lang] }}
+                        </v-col>
+
+                        <v-col cols="auto" class="pa-0">
+                            <v-btn
+                                color="red"
+                                icon
+                                @click="productRemove(product, i)"
+                            >
+                                <v-icon v-text="icons.mdiClose"></v-icon>
+                            </v-btn>
+                        </v-col>
+                    </v-card-title>
+                    <div
+                        style="font-size: 0.8rem"
+                        class="pl-3 mt-n2 text--secondary font-weight-medium"
+                    >
+                        34 {{ translations.points[lang] }}
+                    </div>
+
+                    <v-divider class="mt-1"></v-divider>
+
+                    <div class="pt-1 pb-3">
                         <price-field
                             v-if="product.reward_type_id === 4"
                             v-model="product.retail_price"
@@ -103,58 +180,44 @@
                         ></price-field>
 
                         <template v-else>
-                            <v-row no-gutters>
-                                <v-col class="pr-1">
-                                    <quantity-field
-                                        v-model="product.quantity"
-                                        :label="translations.quantity[lang]"
-                                        @get-transaction="
-                                            debouncedGetTransactionPreview
-                                        "
-                                    ></quantity-field>
-                                </v-col>
+                            <quantity-field
+                                v-model="product.quantity"
+                                :label="translations.quantity[lang]"
+                                @get-transaction="
+                                    debouncedGetTransactionPreview
+                                "
+                            ></quantity-field>
 
-                                <template v-if="product.product_coupons">
-                                    <v-col
-                                        v-if="product.product_coupons.length"
-                                        cols="6"
-                                        class="pl-1"
-                                    >
-                                        <b-select
-                                            v-model="
-                                                transaction.product_coupon_claims_for_use
-                                            "
-                                            :items="product.product_coupons"
-                                            :item-text="`text[${lang}]`"
-                                            return-object
-                                            label="Select Coupon"
-                                            no-top-margin
-                                            no-clear-icon
-                                        ></b-select>
-                                    </v-col>
-                                </template>
-                            </v-row>
+                            <template v-if="product.product_coupons">
+                                <b-select
+                                    v-if="product.product_coupons.length"
+                                    v-model="product.product_coupons_for_use"
+                                    :items="product.product_coupons"
+                                    :item-text="`text[${lang}]`"
+                                    return-object
+                                    :label="translations.selectCoupon[lang]"
+                                    class="ma-3"
+                                    no-top-margin
+                                    no-clear-icon
+                                    multiple
+                                ></b-select>
+                            </template>
                         </template>
-                    </v-sheet>
-                </v-col>
-
-                <v-col cols="auto">
-                    <v-btn color="red" icon @click="productRemove(product, i)">
-                        <v-icon v-text="icons.mdiClose"></v-icon>
-                    </v-btn>
-                </v-col>
-            </v-row>
-        </v-card>
+                    </div>
+                </v-card>
+            </v-col>
+        </v-row>
     </fragment>
 </template>
 
 <script>
 import {
+    mdiPlus,
+    mdiClose,
     mdiMenuUp,
     mdiMenuDown,
     mdiCheckBoxOutline,
-    mdiCheckboxBlankOutline,
-    mdiClose
+    mdiCheckboxBlankOutline
 } from "@mdi/js";
 
 import { mapState, mapMutations, mapActions } from "vuex";
@@ -175,11 +238,12 @@ export default {
 
     data: () => ({
         icons: {
+            mdiPlus,
+            mdiClose,
             mdiMenuUp,
             mdiMenuDown,
             mdiCheckBoxOutline,
-            mdiCheckboxBlankOutline,
-            mdiClose
+            mdiCheckboxBlankOutline
         },
         menu: false,
         search: "",
@@ -195,6 +259,8 @@ export default {
     computed: {
         ...mapState(["resetValidation"]),
         ...mapState("storePanel/transactions", [
+            "previewLoading",
+            "transactionPreview",
             "productsLoading",
             "products",
             "transaction"
@@ -202,6 +268,16 @@ export default {
 
         lang() {
             return this.$route.params.lang;
+        },
+
+        dialog: {
+            get() {
+                return this.$store.state.dialog;
+            },
+
+            set(val) {
+                this.setDialog(val);
+            }
         },
 
         selectedProducts: {
@@ -217,7 +293,7 @@ export default {
     },
 
     methods: {
-        ...mapMutations(["setResetValidation"]),
+        ...mapMutations(["setDialog", "setResetValidation"]),
         ...mapMutations("storePanel/transactions", ["setSelectedProducts"]),
         ...mapActions("storePanel/transactions", [
             "getProducts",

@@ -188,6 +188,7 @@ export default {
                 commit("setLoading", true, { root: true });
 
                 await Product.delete(state.product.product_id);
+
                 commit(
                     "setServerItemsLength",
                     rootState.serverItemsLength - 1,

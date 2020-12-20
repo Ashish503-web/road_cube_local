@@ -6,9 +6,32 @@ export default {
                 en: "New Transaction",
                 it: ""
             },
+            info: {
+                el: "",
+                en: `
+                    Send points manually to old or new users based on their mobile
+                    phone number or their loyalty card number
+                `,
+                it: ""
+            },
+            selectUser: {
+                el: "",
+                en: "Select User:",
+                it: ""
+            },
+            points: {
+                el: "",
+                en: "Points",
+                it: ""
+            },
             user: {
                 el: "",
                 en: "User (mobile or loyalty card number)",
+                it: ""
+            },
+            userVoucher: {
+                el: "",
+                en: "User has voucher code",
                 it: ""
             },
             receiptNumber: {
@@ -33,7 +56,7 @@ export default {
             },
             samplingCoupons: {
                 el: "",
-                en: "Sampling Coupons",
+                en: "Sampling Coupons:",
                 it: ""
             },
             createOrder: {

@@ -36,7 +36,7 @@
                 :value="lang"
                 :class="{
                     'pl-2': type === 'inner',
-                    'b-active': lang.urlTitle === value
+                    'b-active': lang.urlTitle === value,
                 }"
                 @click="langSelect(lang)"
             >
@@ -65,8 +65,8 @@ export default {
         type: String,
         value: {
             type: String,
-            default: "el"
-        }
+            default: "el",
+        },
     },
 
     data: () => ({
@@ -75,31 +75,31 @@ export default {
         lang: {
             img: greeceFlag,
             title: "Greek",
-            urlTitle: "el"
+            urlTitle: "el",
         },
         langs: [
             {
                 img: greeceFlag,
                 title: { el: "", en: "Greek", it: "" },
-                urlTitle: "el"
+                urlTitle: "el",
             },
             {
                 img: USFlag,
                 title: { el: "", en: "English", it: "" },
-                urlTitle: "en"
+                urlTitle: "en",
             },
             {
                 img: italyFlag,
                 title: { el: "", en: "Italian", it: "" },
-                urlTitle: "it"
-            }
-        ]
+                urlTitle: "it",
+            },
+        ],
     }),
 
     computed: {
         language() {
             return this.$route.params.lang;
-        }
+        },
     },
 
     methods: {
@@ -107,17 +107,17 @@ export default {
             if (lang !== this.lang) {
                 this.$emit("input", lang.urlTitle);
             }
-        }
+        },
     },
 
     watch: {
         value: {
             immediate: true,
             handler(val) {
-                this.lang = this.langs.find(lang => lang.urlTitle === val);
-            }
-        }
-    }
+                this.lang = this.langs.find((lang) => lang.urlTitle === val);
+            },
+        },
+    },
 };
 </script>
 

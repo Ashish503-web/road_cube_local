@@ -15,5 +15,14 @@ export default [
             import(
                 /* webpackChunkName: "productGroups" */ "@/views/storePanel/products/tabs/ProductGroups.vue"
             )
+    },
+
+    {
+        path: "product-categories",
+        name: "ProductCategories",
+        component: () =>
+            import(
+                /* webpackChunkName: "productCategories" */ "@/views/storePanel/products/tabs/ProductCategories.vue"
+            )
     }
 ];

@@ -5,5 +5,6 @@ export default class TransactionProduct {
         this.name = item.name || { el: "", en: "", it: "" };
         this.retail_price = item.retail_price || 1;
         this.quantity = item.quantity || 1;
+        this.product_coupons_for_use = item.product_coupons_for_use || [];
     }
 }

@@ -32,9 +32,6 @@
                 <ApiAuthentication />
             </v-col>
             <v-col cols="12" md="6" class="pr-3 mt-6">
-                <ProductCategories />
-            </v-col>
-            <v-col cols="12" md="6" class="pl-3 mt-6">
                 <DeliverySettings />
             </v-col>
         </v-row>
@@ -55,7 +52,6 @@ import FastPayment from "@/components/storePanel/settings/profile/FastPayment";
 import ShoppingCart from "@/components/storePanel/settings/profile/ShoppingCart";
 import ChangePassword from "@/components/storePanel/settings/profile/ChangePassword";
 import RedemptionSettings from "@/components/storePanel/settings/profile/RedemptionSettings";
-import ProductCategories from "@/components/storePanel/settings/profile/ProductCategories";
 import ApiAuthentication from "@/components/storePanel/settings/profile/ApiAuthentication";
 import DeliverySettings from "@/components/storePanel/settings/profile/DeliverySettings";
 
@@ -72,7 +68,6 @@ export default {
         ShoppingCart,
         ChangePassword,
         RedemptionSettings,
-        ProductCategories,
         ApiAuthentication,
         DeliverySettings,
     },

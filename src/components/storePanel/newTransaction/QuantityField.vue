@@ -3,10 +3,12 @@
         :value="value"
         :label="label"
         color="secondary"
+        class="ma-3 mt-5"
         type="number"
         outlined
         dense
         clearable
+        hide-details="auto"
         :success="success"
         :error-messages="error"
         @focus="error = ''"
@@ -21,7 +23,7 @@ export default {
 
     props: {
         value: [String, Number],
-        label: String,
+        label: String
     },
 
     data: () => ({
@@ -31,20 +33,20 @@ export default {
             quantityRequired: {
                 el: "",
                 en: "Product quantity is required",
-                it: "",
+                it: ""
             },
             quantityMin: {
                 el: "",
                 en: "Product quantity must be minimum 1",
-                it: "",
-            },
-        },
+                it: ""
+            }
+        }
     }),
 
     computed: {
         lang() {
             return this.$route.params.lang;
-        },
+        }
     },
 
     methods: {
@@ -56,7 +58,7 @@ export default {
             } else {
                 this.error = "";
             }
-        },
+        }
     },
 
     watch: {
@@ -65,8 +67,8 @@ export default {
             handler(val) {
                 this.success = val >= 1;
                 this.$emit("get-transaction");
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>

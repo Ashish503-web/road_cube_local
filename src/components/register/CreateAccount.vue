@@ -2,11 +2,11 @@
     <v-window-item :value="1">
         <v-card-title class="pl-0">Create Account</v-card-title>
 
-        <v-form v-model="valid" @submit.prevent="createAccount">
+        <v-form @submit.prevent="createAccount">
             <v-row no-gutters>
                 <v-col cols="4">
                     <v-select
-                        v-model="country"
+                        v-model="storeDetails.country_id"
                         :items="countries"
                         item-value="country_id"
                         menu-props="offsetY"
@@ -14,7 +14,9 @@
                         color="secondary"
                         item-color="secondary"
                         :success="success.country"
-                        :rules="rules.country"
+                        :error-messages="error.country"
+                        @focus="error.country = ''"
+                        @blur="validateCountry"
                     >
                         <template v-slot:selection="{ item }">
                             <v-row
@@ -63,9 +65,12 @@
                         label="Mobile Phone"
                         color="secondary"
                         clearable
+                        validate-on-blur
                         :prepend-inner-icon="icons.mdiCellphoneIphone"
                         :success="success.mobile"
-                        :rules="rules.mobile"
+                        :error-messages="error.mobile"
+                        @focus="error.mobile = ''"
+                        @blur="validateMobile"
                     ></v-text-field>
                 </v-col>
 
@@ -73,10 +78,16 @@
                     <v-checkbox
                         v-model="tos"
                         color="secondary"
-                        label="I accept terms of services"
                         :success="success.tos"
-                        :rules="rules.tos"
-                    ></v-checkbox>
+                        :error-messages="error.tos"
+                        @click="validateTos"
+                    >
+                        <template v-slot:label>
+                            <h4 class="subtitle-1 font-weight-medium">
+                                I accept terms of services
+                            </h4>
+                        </template>
+                    </v-checkbox>
                 </v-col>
             </v-row>
 
@@ -97,7 +108,7 @@
                     tile
                     class="px-5"
                     :loading="loading"
-                    :disabled="disabled"
+                    :disabled="!valid"
                     >register</v-btn
                 >
             </v-card-actions>
@@ -108,76 +119,30 @@
 <script>
 import { mdiMenuDown, mdiMenuUp, mdiCellphoneIphone } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
+import validators from "@/utils/validators/storePanel/createAccount";
 
 export default {
     name: "CreateAccount",
 
+    mixins: [validators],
+
     data() {
         return {
             icons: { mdiMenuDown, mdiMenuUp, mdiCellphoneIphone },
-            menu: false,
-            valid: false,
-            disabled: true,
-            success: {
-                country: false,
-                mobile: false,
-                tos: false,
-            },
-            rules: {
-                country: [
-                    (v) => {
-                        if (v) {
-                            this.success.country = true;
-                            return true;
-                        } else {
-                            return "Country is required";
-                        }
-                    },
-                ],
-
-                mobile: [
-                    (v) => {
-                        if (v) {
-                            this.success.mobile = true;
-                            return true;
-                        } else {
-                            return "Mobile Phone is required";
-                        }
-                    },
-                    (v) =>
-                        (v || "").length === 10 ||
-                        "Mobile Phone must be 10 characters long",
-                ],
-
-                tos: [
-                    (v) => {
-                        if (v) {
-                            this.success.tos = true;
-                            return true;
-                        } else {
-                            return "You must accept terms of services to proceed";
-                        }
-                    },
-                ],
-            },
+            menu: false
         };
     },
 
     computed: {
-        ...mapState("register", ["loading", "errorMessage", "countries"]),
+        ...mapState("register", [
+            "loading",
+            "errorMessage",
+            "countries",
+            "storeDetails"
+        ]),
 
         lang() {
             return this.$route.params.lang;
-        },
-
-        country: {
-            get() {
-                return this.$store.state.register.country;
-            },
-
-            set(val) {
-                this.setCountry(val);
-            },
         },
 
         mobile: {
@@ -187,7 +152,7 @@ export default {
 
             set(val) {
                 this.setMobile(val);
-            },
+            }
         },
 
         tos: {
@@ -197,27 +162,17 @@ export default {
 
             set(val) {
                 this.setTos(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
-        ...mapMutations("register", ["setCountry", "setMobile", "setTos"]),
-        ...mapActions("register", ["getCountries", "createAccount"]),
-    },
-
-    watch: {
-        valid(val) {
-            if (val) {
-                this.disabled = false;
-            } else {
-                this.disabled = true;
-            }
-        },
+        ...mapMutations("register", ["setMobile", "setTos"]),
+        ...mapActions("register", ["getCountries", "createAccount"])
     },
 
     mounted() {
         this.getCountries();
-    },
+    }
 };
 </script>

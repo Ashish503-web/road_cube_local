@@ -2,9 +2,12 @@
     <v-tab-item>
         <v-card-title class="justify-center"> Create a Store </v-card-title>
 
-        <v-form v-model="valid" @submit.prevent="createStore">
+        <v-form autocomplete="off" @submit.prevent="createStore">
             <v-card-text class="pt-0">
-                <v-row v-if="subscriptionPlan" no-gutters>
+                <v-row
+                    v-if="storeDetails.store_subscription_plan_id"
+                    no-gutters
+                >
                     <v-col cols="12">
                         <h4 class="subtitle-1 font-weight-bold mt-3">
                             User Details
@@ -17,7 +20,9 @@
                             clearable
                             :prepend-inner-icon="icons.mdiAccount"
                             :success="success.fullname"
-                            :rules="rules.fullname"
+                            :error-messages="error.fullname"
+                            @focus="error.fullname = ''"
+                            @blur="validateFullname"
                         ></v-text-field>
 
                         <v-text-field
@@ -30,7 +35,9 @@
                             :prepend-inner-icon="icons.mdiLock"
                             :append-icon="icons.mdiEye"
                             :success="success.password"
-                            :rules="rules.password"
+                            :error-messages="error.password"
+                            @focus="error.password = ''"
+                            @blur="validatePassword"
                             @click:append="show.password = !show.password"
                         >
                         </v-text-field>
@@ -45,7 +52,9 @@
                             :prepend-inner-icon="icons.mdiLockOutline"
                             :append-icon="icons.mdiEye"
                             :success="success.confirmPassword"
-                            :rules="rules.confirmPassword"
+                            :error-messages="error.confirmPassword"
+                            @focus="error.confirmPassword = ''"
+                            @blur="validateConfirmPassword"
                             @click:append="
                                 show.confirmPassword = !show.confirmPassword
                             "
@@ -100,94 +109,79 @@
                     </v-col>
 
                     <v-col cols="12">
-                        <h4 class="subtitle-1 font-weight-bold mt-3">
+                        <h4 class="subtitle-1 font-weight-bold mt-7">
                             Store Details
                         </h4>
 
-                        <!-- <v-select
-                            v-model="giftCategory"
-                            :items="giftCategories"
-                            item-text="name.el"
-                            item-value="gift_category_id"
-                            menu-props="offsetY"
-                            label="Gift Category"
-                            color="secondary"
-                            item-color="secondary"
-                            clearable
-                            :success="success.giftCategory"
-                            :rules="rules.giftCategory"
-                        ></v-select>
-
-                        <v-select
-                            v-model="storeCategory"
-                            :items="storeCategories"
-                            item-text="name.en"
-                            item-value="store_category_id"
-                            menu-props="offsetY"
-                            label="Store Category"
-                            color="secondary"
-                            item-color="secondary"
-                            clearable
-                            :success="success.storeCategory"
-                            :rules="rules.storeCategory"
-                        ></v-select> -->
-
                         <v-text-field
-                            v-model="name"
+                            v-model="storeDetails.name"
                             label="Store Name"
                             color="secondary"
                             clearable
                             :success="success.name"
-                            :rules="rules.name"
+                            :error-messages="error.name"
+                            @focus="error.name = ''"
+                            @blur="validateName"
                         ></v-text-field>
 
                         <v-text-field
-                            v-model="address"
+                            v-model="storeDetails.address"
                             label="Address"
                             color="secondary"
                             clearable
                             :success="success.address"
-                            :rules="rules.address"
+                            :error-messages="error.address"
+                            @focus="error.address = ''"
+                            @blur="validateAddress"
                         ></v-text-field>
 
                         <v-text-field
-                            v-model="zip"
+                            v-model="storeDetails.zip"
                             v-mask="'#####'"
                             label="Zip Code"
                             color="secondary"
                             clearable
                             :success="success.zip"
-                            :rules="rules.zip"
+                            :error-messages="error.zip"
+                            @focus="error.zip = ''"
+                            @blur="validateZip"
                         ></v-text-field>
 
                         <v-text-field
-                            v-model="vatNumber"
+                            v-model="storeDetails.vat_number"
                             v-mask="'#########'"
                             label="Vat Number"
                             color="secondary"
                             clearable
                             :success="success.vatNumber"
-                            :rules="rules.vatNumber"
+                            :error-messages="error.vatNumber"
+                            @focus="error.vatNumber = ''"
+                            @blur="validateVatNumber"
                         ></v-text-field>
 
                         <v-text-field
-                            v-model="email"
+                            v-model="storeDetails.email"
                             type="email"
                             label="Email"
                             color="secondary"
                             clearable
                             :success="success.email"
-                            :rules="rules.email"
+                            :error-messages="error.email"
+                            @focus="error.email = ''"
+                            @blur="validateEmail"
                         ></v-text-field>
 
                         <v-text-field
-                            v-model="primaryPhone"
+                            v-model="storeDetails.primary_phone"
                             v-mask="'##########'"
                             label="Primary Phone"
                             color="secondary"
                             clearable
+                            autocomplete="off"
                             :success="success.primaryPhone"
-                            :rules="rules.primaryPhone"
+                            :error-messages="error.primaryPhone"
+                            @focus="error.primaryPhone = ''"
+                            @blur="validatePrimaryPhone"
                         ></v-text-field>
                     </v-col>
                 </v-row>
@@ -197,21 +191,18 @@
                 errorMessage
             }}</v-alert>
 
-            <v-divider></v-divider>
-
             <v-card-actions>
-                <v-spacer></v-spacer>
-
-                <v-btn text>cancel</v-btn>
                 <v-btn
                     type="submit"
                     color="secondary"
-                    class="px-5"
+                    class="text-capitalize"
+                    style="font-size: 1rem"
+                    block
                     depressed
-                    :disabled="disabled"
+                    :disabled="!valid"
                     :loading="loading"
                 >
-                    save
+                    create store
                 </v-btn>
             </v-card-actions>
         </v-form>
@@ -221,7 +212,7 @@
 <script>
 import axios from "axios";
 import { mdiAccount, mdiLock, mdiLockOutline, mdiEye } from "@mdi/js";
-import validators from "./storeValidators";
+import validators from "@/utils/validators/storePanel/createStore";
 import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
@@ -238,12 +229,11 @@ export default {
     },
 
     computed: {
-        ...mapState("register", [
-            "loading",
-            "errorMessage",
-            "giftCategories",
-            "storeCategories"
-        ]),
+        ...mapState("register", ["loading", "errorMessage", "storeDetails"]),
+
+        lang() {
+            return this.$route.params.lang;
+        },
 
         appProvider: {
             get() {
@@ -252,96 +242,6 @@ export default {
 
             set(val) {
                 this.setAppProvider(val);
-            }
-        },
-
-        subscriptionPlan: {
-            get() {
-                return this.$store.state.register.subscriptionPlan;
-            },
-
-            set(val) {
-                this.setSubscriptionPlan(val);
-            }
-        },
-
-        // giftCategory: {
-        //     get() {
-        //         return this.$store.state.register.giftCategory;
-        //     },
-
-        //     set(val) {
-        //         this.setGiftCategory(val);
-        //     }
-        // },
-
-        // storeCategory: {
-        //     get() {
-        //         return this.$store.state.register.storeCategory;
-        //     },
-
-        //     set(val) {
-        //         this.setStoreCategory(val);
-        //     }
-        // },
-
-        name: {
-            get() {
-                return this.$store.state.register.name;
-            },
-
-            set(val) {
-                this.setName(val);
-            }
-        },
-
-        address: {
-            get() {
-                return this.$store.state.register.address;
-            },
-
-            set(val) {
-                this.setAddress(val);
-            }
-        },
-
-        zip: {
-            get() {
-                return this.$store.state.register.zip;
-            },
-
-            set(val) {
-                this.setZip(val);
-            }
-        },
-
-        vatNumber: {
-            get() {
-                return this.$store.state.register.vatNumber;
-            },
-
-            set(val) {
-                this.setVatNumber(val);
-            }
-        },
-
-        email: {
-            get() {
-                return this.$store.state.register.email;
-            },
-
-            set(val) {
-                this.setEmail(val);
-            }
-        },
-
-        primaryPhone: {
-            get() {
-                return this.$store.state.register.primaryPhone;
-            },
-
-            set(val) {
-                this.setPrimaryPhone(val);
             }
         },
 
@@ -379,48 +279,15 @@ export default {
     methods: {
         ...mapMutations("register", [
             "setAppProvider",
-            "setSubscriptionPlan",
-            "setGiftCategories",
-            "setGiftCategory",
-            "setStoreCategory",
-            "setName",
-            "setAddress",
-            "setZip",
-            "setVatNumber",
-            "setEmail",
-            "setPrimaryPhone",
             "setFullname",
             "setPassword",
             "setConfirmPassword"
         ]),
-        ...mapActions("register", [
-            "getGiftCategories",
-            "getStoreCategories",
-            "createStore"
-        ])
-    },
-
-    watch: {
-        valid(val) {
-            if (val) {
-                this.disabled = false;
-            } else {
-                this.disabled = true;
-            }
-        }
+        ...mapActions("register", ["createStore"])
     },
 
     mounted() {
         this.$clearFocus();
-        this.getGiftCategories();
-        this.getStoreCategories();
-
-        // axios
-        //     .post(
-        //         `https://maps.googleapis.com/maps/api/js?key=AIzaSyBO7NVvj3D2unctftPpj-O0n3aoS0MbUEQ&libraries=places&callback=initMap`
-        //     )
-        //     .then(res => console.log(res))
-        //     .catch(err => console.error(err));
     }
 };
 </script>
