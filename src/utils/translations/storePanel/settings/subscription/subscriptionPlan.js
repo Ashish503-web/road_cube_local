@@ -46,6 +46,11 @@ export default {
                 en: "Pay with web banking",
                 it: ""
             },
+            offline: {
+                el: "",
+                en: "Offline",
+                it: ""
+            },
             pay: {
                 el: "",
                 en: "Pay",

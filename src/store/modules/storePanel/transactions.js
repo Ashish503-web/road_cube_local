@@ -134,7 +134,16 @@ export default {
         },
 
         setSamplingCoupons(state, payload) {
-            state.samplingCoupons = payload;
+            state.samplingCoupons = payload.map(s => {
+                let coupon = state.transaction.sampling_coupons_for_use.find(
+                    c => c.coupon_id === s.coupon_id
+                );
+
+                if (coupon) s.selected = coupon.selected;
+                else s.selected = false;
+
+                return s;
+            });
         },
 
         removeItem(state, id) {
@@ -256,10 +265,13 @@ export default {
                 let transaction = { ...state.transaction };
                 Transaction.clearFalsyValues(transaction);
 
-                transaction.products.forEach(p => {
-                    if (!p.product_coupons_for_use.length)
-                        delete p.product_coupons_for_use;
-                });
+                if (transaction.products) {
+                    transaction.products.forEach(p => {
+                        if (!p.product_coupons_for_use.length)
+                            delete p.product_coupons_for_use;
+                    });
+                }
+
                 await Transaction.create(transaction);
 
                 commit("setItem", {});
@@ -267,6 +279,7 @@ export default {
                 commit("setSelectedProducts", []);
                 commit("setProducts", state.products);
                 commit("setGeneralCouponClaims", []);
+                commit("setSamplingCoupons", []);
                 commit("setResetValidation", true, { root: true });
                 commit("setLoading", false, { root: true });
                 commit(

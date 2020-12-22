@@ -1,6 +1,11 @@
 <template>
     <fragment>
-        <v-row no-gutters justify="space-between" align="center" class="px-10">
+        <v-row
+            no-gutters
+            justify="space-between"
+            align="center"
+            class="px-10 pt-5"
+        >
             <v-col cols="12" class="subtitle-1 font-weight-bold mb-4">
                 {{ translations.selectProducts[lang] }}
             </v-col>
@@ -61,6 +66,7 @@
                         offset-y
                         :close-on-content-click="false"
                         nudge-bottom="3"
+                        @blur="validateProductsInput"
                     >
                         <template v-slot:activator="{ on }">
                             <v-text-field
@@ -81,7 +87,6 @@
                                 :success="success"
                                 :error-messages="error"
                                 @focus="error = ''"
-                                @blur="validateProductsInput"
                                 @click:append="
                                     () => {
                                         menu = !menu;
@@ -138,7 +143,7 @@
             </b-card>
         </v-dialog>
 
-        <v-row no-gutters class="pa-6">
+        <v-row no-gutters class="pa-6 b-bottom-outlined">
             <v-col
                 v-for="(product, i) in transaction.products"
                 :key="product.product_id"

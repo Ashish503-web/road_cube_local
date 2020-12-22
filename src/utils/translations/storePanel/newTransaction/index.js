@@ -54,11 +54,6 @@ export default {
                 en: "General Coupon Claims",
                 it: ""
             },
-            samplingCoupons: {
-                el: "",
-                en: "Sampling Coupons:",
-                it: ""
-            },
             createOrder: {
                 el: "",
                 en: "Create Order",

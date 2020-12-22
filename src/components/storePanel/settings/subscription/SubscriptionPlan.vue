@@ -24,20 +24,19 @@
                     v-text="translations.amount[lang]"
                 ></v-col>
                 <v-col
-                    v-if="showAlert"
+                    class="subtitle-2 pa-3"
+                    v-text="translations.paymentType[lang]"
+                ></v-col>
+                <v-col
+                    v-if="onlinePayment"
+                    class="subtitle-2 pa-3"
+                    v-text="translations.action[lang]"
+                ></v-col>
+                <v-col
+                    v-else
                     class="subtitle-2 pa-3"
                     v-text="translations.paymentInfo[lang]"
                 ></v-col>
-                <template v-else>
-                    <v-col
-                        class="subtitle-2 pa-3"
-                        v-text="translations.paymentType[lang]"
-                    ></v-col>
-                    <v-col
-                        class="subtitle-2 pa-3"
-                        v-text="translations.action[lang]"
-                    ></v-col>
-                </template>
             </v-row>
             <v-row no-gutters align="center" style="font-size: 0.875rem">
                 <v-col class="pa-3">
@@ -49,44 +48,45 @@
                 <v-col class="pa-3">
                     {{ subscriptionPlanAmount }}
                 </v-col>
-                <v-col v-if="showAlert" class="pa-3">
-                    <v-btn class="ml-n2" icon @click="dialog = true">
-                        <v-icon v-text="icons.mdiCreditCard"></v-icon>
-                    </v-btn>
-                </v-col>
-                <template v-else>
-                    <v-col class="pa-3">
-                        {{
-                            slug === "clearer"
+                <v-col class="pa-3">
+                    {{
+                        onlinePayment
+                            ? slug === "clearer"
                                 ? translations.payWithCard[lang]
                                 : translations.payWithWeb[lang]
-                        }}
-                    </v-col>
+                            : translations.offline[lang]
+                    }}
+                </v-col>
+                <template v-if="onlinePayment">
                     <v-col class="pa-3">
                         <form
                             :action="redirectForm.action"
                             :charset="redirectForm.charset"
                         >
-                            <div
-                                v-for="(value, prop) in redirectForm"
-                                :key="prop"
-                            >
-                                <input
-                                    v-if="
-                                        prop !== 'action' && prop !== 'charset'
-                                    "
-                                    type="text"
-                                    hidden
-                                    :name="prop"
-                                    :value="value"
-                                />
-                            </div>
+                            <template v-if="openPayment">
+                                <div
+                                    v-for="(value, prop) in redirectForm"
+                                    :key="prop"
+                                >
+                                    <input
+                                        v-if="
+                                            prop !== 'action' &&
+                                                prop !== 'charset'
+                                        "
+                                        type="text"
+                                        hidden
+                                        :name="prop"
+                                        :value="value"
+                                    />
+                                </div>
+                            </template>
 
                             <v-btn
                                 type="submit"
                                 color="success"
                                 width="150"
                                 depressed
+                                :disabled="!openPayment"
                             >
                                 <v-icon
                                     v-if="slug === 'clearer'"
@@ -98,46 +98,58 @@
                         </form>
                     </v-col>
                 </template>
+                <v-col v-else class="pa-3">
+                    <v-btn class="ml-n2" icon @click.stop="dialog = true">
+                        <v-icon v-text="icons.mdiCreditCard"></v-icon>
+                    </v-btn>
+                </v-col>
             </v-row>
         </v-sheet>
 
-        <v-dialog v-if="showAlert" v-model="dialog" max-width="600">
-            <b-card :title="translations.title[lang]" @cancel="dialog = false">
+        <v-dialog v-if="!onlinePayment" v-model="dialog" max-width="500">
+            <b-card
+                :title="translations.title[lang]"
+                @cancel="dialog = false"
+                hide-default-footer
+            >
                 <v-sheet outlined>
                     <v-row no-gutters class="b-bottom-outlined">
                         <v-col
+                            cols="4"
                             class="subtitle-2 pa-3"
                             v-text="translations.bank[lang]"
                         ></v-col>
                         <v-col
+                            cols="4"
                             class="subtitle-2 pa-3"
                             v-text="translations.name[lang]"
                         ></v-col>
                         <v-col
+                            cols="4"
                             class="subtitle-2 pa-3"
                             v-text="translations.iban[lang]"
                         ></v-col>
                     </v-row>
                     <v-row no-gutters style="font-size: 0.875rem">
                         <v-col
+                            cols="4"
+                            class="pa-3"
+                            v-text="paymentMethod.store_payment_method[lang]"
+                        ></v-col>
+                        <v-col
+                            cols="4"
                             class="pa-3"
                             v-text="
-                                storeSubscription.store_payment_method
-                                    .store_payment_method[lang]
+                                paymentMethod.parent_store_credentials.values
+                                    .name
                             "
                         ></v-col>
                         <v-col
+                            cols="4"
                             class="pa-3"
                             v-text="
-                                storeSubscription.store_payment_method
-                                    .parent_store_credentials.values.name
-                            "
-                        ></v-col>
-                        <v-col
-                            class="pa-3"
-                            v-text="
-                                storeSubscription.store_payment_method
-                                    .parent_store_credentials.values.iban
+                                paymentMethod.parent_store_credentials.values
+                                    .iban
                             "
                         ></v-col>
                     </v-row>
@@ -170,6 +182,8 @@ export default {
         ...mapState("storePanel/subscription", [
             "storeSubscription",
             "showAlert",
+            "onlinePayment",
+            "openPayment",
             "slug",
             "redirectForm"
         ]),
@@ -201,6 +215,15 @@ export default {
                 currency: "EUR",
                 minimumFractionDigits: 2
             }).format(planAmount);
+        },
+
+        paymentMethod() {
+            return this.storeSubscription.store_payment_method
+                ? this.storeSubscription.store_payment_method
+                : {
+                      store_payment_method: {},
+                      parent_store_credentials: { values: {} }
+                  };
         }
     }
 };

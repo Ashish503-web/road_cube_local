@@ -178,7 +178,6 @@ export default {
         ...mapState("storePanel/subscription", [
             "storeSubscription",
             "billings",
-            "openPayment",
             "showAlert",
             "slug",
             "redirectForm",

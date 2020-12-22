@@ -7,10 +7,12 @@ import VueMask from "v-mask";
 import VueRx from "vue-rx";
 import VuejsClipper from "vuejs-clipper/dist/vuejs-clipper.umd";
 import "vuejs-clipper/dist/vuejs-clipper.css";
+import VueSocialSharing from "vue-social-sharing";
 
 Vue.use(VueMask);
 Vue.use(VueRx);
 Vue.use(VuejsClipper);
+Vue.use(VueSocialSharing);
 
 import AOS from "aos";
 import "aos/dist/aos.css";

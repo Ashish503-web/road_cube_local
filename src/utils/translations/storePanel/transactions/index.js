@@ -23,11 +23,6 @@ export default {
                 en: "User",
                 it: ""
             },
-            amount: {
-                el: "",
-                en: "Amount",
-                it: ""
-            },
             points: {
                 el: "",
                 en: "Points",

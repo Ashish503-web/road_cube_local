@@ -16,13 +16,17 @@
                     v-text="translations.info[lang]"
                 ></v-card-subtitle>
 
-                <v-divider class="mb-5"></v-divider>
+                <v-divider></v-divider>
 
                 <v-form
                     autocomplete="off"
                     @submit.prevent="create(showProducts)"
                 >
-                    <v-row no-gutters align="center" class="px-10">
+                    <v-row
+                        no-gutters
+                        align="center"
+                        class="px-10 py-5 b-bottom-outlined"
+                    >
                         <v-col
                             cols="auto"
                             class="subtitle-1 font-weight-bold pr-5"
@@ -89,16 +93,17 @@
                         </v-col>
                     </v-row>
 
-                    <v-divider class="my-5"></v-divider>
-
-                    <v-row no-gutters class="px-10">
+                    <v-row
+                        v-if="showReceipt || showVoucher"
+                        no-gutters
+                        class="px-10 pt-6 b-bottom-outlined"
+                    >
                         <v-col cols="12">
                             <v-text-field
                                 v-if="showReceipt"
                                 v-model="transaction.receipt_number"
                                 :label="translations.receiptNumber[lang]"
                                 color="secondary"
-                                class="mt-1"
                                 outlined
                                 dense
                                 clearable
@@ -114,7 +119,6 @@
                                 v-model="transaction.voucher"
                                 :label="translations.voucherCode[lang]"
                                 color="secondary"
-                                class="mt-1"
                                 outlined
                                 dense
                                 clearable
@@ -122,59 +126,45 @@
                         </v-col>
                     </v-row>
 
-                    <v-divider class="mb-6"></v-divider>
-
                     <Products
                         v-if="showProducts"
                         @update-products-success="productsSuccess = $event"
                     />
 
-                    <b-text-field
-                        v-else
-                        v-model="transaction.amount"
-                        :label="translations.amount[lang]"
-                        class="mx-10"
-                        type="number"
-                        no-top-margin
-                        :success="success.amount"
-                        :error-messages="error.amount"
-                        @focus="error.amount = ''"
-                        @blur="validateAmount"
-                    ></b-text-field>
+                    <div v-else class="px-10 py-6 b-bottom-outlined">
+                        <b-text-field
+                            v-model="transaction.amount"
+                            :label="translations.amount[lang]"
+                            type="number"
+                            no-top-margin
+                            :success="success.amount"
+                            :error-messages="error.amount"
+                            @focus="error.amount = ''"
+                            @blur="validateAmount"
+                        ></b-text-field>
+                    </div>
 
-                    <v-divider class="mb-5"></v-divider>
-
-                    <h3 class="subtitle-1 font-weight-bold px-10 pb-5">
-                        General Coupons:
-                    </h3>
-
-                    <b-select
+                    <v-row
                         v-if="generalCouponClaims.length"
-                        v-model="transaction.general_coupon_claims_for_use"
-                        :items="generalCouponClaims"
-                        item-text="gift_title"
-                        return-object
-                        :label="translations.generalCouponClaims[lang]"
-                        class="mx-10"
-                        multiple
-                    ></b-select>
+                        no-gutters
+                        class="px-10 pt-5 pb-7 b-bottom-outlined"
+                    >
+                        <v-col
+                            cols="12"
+                            class="subtitle-1 font-weight-bold pb-2"
+                            >General Coupons:</v-col
+                        >
+                        <b-select
+                            v-model="transaction.general_coupon_claims_for_use"
+                            :items="generalCouponClaims"
+                            item-text="gift_title"
+                            return-object
+                            :label="translations.generalCouponClaims[lang]"
+                            multiple
+                        ></b-select>
+                    </v-row>
 
-                    <v-divider class="mb-5"></v-divider>
-
-                    <h3
-                        class="subtitle-1 font-weight-bold px-10 pb-2"
-                        v-text="translations.samplingCoupons[lang]"
-                    ></h3>
-
-                    <b-select
-                        v-model="transaction.sampling_coupons_for_use"
-                        :items="samplingCoupons"
-                        :item-text="`product_free.name[${this.lang}]`"
-                        return-object
-                        :label="translations.samplingCoupons[lang]"
-                        class="mx-10"
-                        multiple
-                    ></b-select>
+                    <SamplingCoupons v-if="samplingCoupons.length" />
 
                     <v-alert v-if="errorMessage" type="error" class="mt-4">{{
                         errorMessage
@@ -206,13 +196,14 @@ import { mapState, mapMutations, mapActions } from "vuex";
 import debounce from "lodash/debounce";
 
 import Products from "@/components/storePanel/newTransaction/Products.vue";
+import SamplingCoupons from "@/components/storePanel/newTransaction/SamplingCoupons.vue";
 import translations from "@/utils/translations/storePanel/newTransaction";
 import validators from "@/utils/validators/storePanel/newTransaction";
 
 export default {
     name: "NewTransaction",
 
-    components: { Products },
+    components: { SamplingCoupons, Products },
 
     mixins: [translations, validators],
 

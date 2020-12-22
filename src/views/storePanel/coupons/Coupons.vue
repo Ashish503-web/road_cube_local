@@ -29,7 +29,7 @@ export default {
 
     data() {
         return {
-            tab: this.$route.path
+            tab: this.$route.path,
         };
     },
 
@@ -50,28 +50,28 @@ export default {
             if (this.permissions.goal.read) {
                 arr.push({
                     name: { el: "", en: "coupons with transactions", it: "" },
-                    to: `/${this.lang}/storePanel/coupons/with-transactions`
+                    to: `/${this.lang}/storePanel/coupons/with-transactions`,
                 });
             }
 
             if (this.permissions.voucher.read) {
                 arr.push({
                     name: { el: "", en: "coupons with code", it: "" },
-                    to: `/${this.lang}/storePanel/coupons/with-code?page=1`
+                    to: `/${this.lang}/storePanel/coupons/with-code?page=1`,
                 });
             }
 
             if (this.permissions.product.read) {
                 arr.push({
                     name: { el: "", en: "coupons on products", it: "" },
-                    to: `/${this.lang}/storePanel/coupons/on-products?page=1`
+                    to: `/${this.lang}/storePanel/coupons/on-products?page=1`,
                 });
             }
 
             if (this.permissions.discount.read) {
                 arr.push({
                     name: { el: "", en: "coupons with discount", it: "" },
-                    to: `/${this.lang}/storePanel/coupons/with-discount?page=1`
+                    to: `/${this.lang}/storePanel/coupons/with-discount?page=1`,
                 });
             }
 
@@ -81,7 +81,7 @@ export default {
             //     name: { el: "", en: "coupons with visits", it: "" },
             //     to: `/${this.lang}/storePanel/coupons/with-visits`
             // },
-        }
+        },
     },
 
     watch: {
@@ -95,9 +95,9 @@ export default {
                         this.$router.replace(val[0].to);
                     }
                 }
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>
 

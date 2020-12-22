@@ -7,6 +7,7 @@ export default {
     state: () => ({
         storeSubscription: {},
         billings: [],
+        onlinePayment: false,
         openPayment: false,
         showAlert: false,
         slug: "",
@@ -25,6 +26,10 @@ export default {
                 b.updated_at = moment(b.updated_at).format("DD/MM/YYYY HH:mm");
                 return b;
             });
+        },
+
+        setOnlinePayment(state, payload) {
+            state.onlinePayment = payload;
         },
 
         setOpenPayment(state, payload) {
@@ -82,26 +87,27 @@ export default {
                 const { store_subscription } = data.data;
 
                 if (store_subscription.method_chosen) {
-                    if (store_subscription.open_payment) {
-                        commit("setOpenPayment", true);
-                    }
-
                     const paymentMethod =
                         store_subscription.store_payment_method;
 
-                    if (!paymentMethod.store_payment_method_online) {
-                        commit("setShowAlert", true);
-                    } else {
-                        const slug =
-                            store_subscription.store_payment_method
-                                .store_payment_method_slug;
+                    const slug = paymentMethod.store_payment_method_slug;
 
-                        commit("setSlug", slug);
-
-                        if (slug === "clearer" || slug === "iris") {
-                            dispatch("getRedirectForm");
+                    if (store_subscription.open_payment) {
+                        if (!paymentMethod.store_payment_method_online) {
+                            commit("setShowAlert", true);
+                        } else {
+                            if (slug === "clearer" || slug === "iris") {
+                                dispatch("getRedirectForm");
+                            }
                         }
                     }
+
+                    commit(
+                        "setOnlinePayment",
+                        paymentMethod.store_payment_method_online
+                    );
+                    commit("setOpenPayment", store_subscription.open_payment);
+                    commit("setSlug", slug);
 
                     commit("setStoreSubscription", store_subscription);
                     commit("setBillings", store_subscription.billings);

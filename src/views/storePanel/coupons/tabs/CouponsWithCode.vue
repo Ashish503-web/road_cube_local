@@ -1,5 +1,20 @@
 <template>
     <v-tab-item :value="$route.fullPath" class="pa-3">
+        <!-- <div
+            ref="fbButton"
+            style="visibility: hidden"
+            class="fb-share-button"
+            data-href="https://developers.facebook.com/docs/plugins/"
+            data-layout="button_count"
+            data-size="large"
+        >
+            <a
+                target="_blank"
+                href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fdevelopers.facebook.com%2Fdocs%2Fplugins%2F&amp;src=sdkpreparse"
+                class="fb-xfbml-parse-ignore"
+                >Share</a
+            >
+        </div> -->
         <v-row no-gutters align="center" class="pa-5 pt-0">
             <v-col cols="auto">
                 <v-img
@@ -108,9 +123,26 @@
             </template>
 
             <template v-slot:item.social>
-                <v-btn color="blue darken-1" depressed dark small>
+                <v-btn
+                    color="blue darken-1"
+                    class="text-capitalize"
+                    depressed
+                    dark
+                    small
+                >
                     <v-icon class="mr-1" v-text="icons.mdiFacebook"></v-icon>
-                    {{ translations.share[lang] }} 0
+
+                    <ShareNetwork
+                        network="facebook"
+                        url="https://news.vuejs.org/issues/180"
+                        title="Say hi to Vite! A brand new, extremely fast development setup for Vue."
+                        description="This week, I’d like to introduce you to 'Vite', which means 'Fast'. It’s a brand new development setup created by Evan You."
+                        quote="The hot reload is so fast it\'s near instant. - Evan You"
+                        hashtags="vuejs,vite"
+                        style="color: white; text-decoration: none; font-size: 0.875rem"
+                    >
+                        {{ translations.share[lang] }}
+                    </ShareNetwork>
                 </v-btn>
             </template>
         </v-data-table>

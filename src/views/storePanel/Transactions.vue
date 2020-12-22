@@ -303,10 +303,6 @@ export default {
                     value: "user_identity"
                 },
                 {
-                    text: this.translations.amount[this.lang],
-                    value: "total_price"
-                },
-                {
                     text: this.translations.points[this.lang],
                     value: "total_points"
                 },
