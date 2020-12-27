@@ -26,6 +26,11 @@ export default {
                 en: "Selling Price",
                 it: ""
             },
+            averagePrice: {
+                el: "",
+                en: "Average Price",
+                it: ""
+            },
             points: {
                 el: "",
                 en: "Points",

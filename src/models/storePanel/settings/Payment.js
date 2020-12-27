@@ -1,10 +1,4 @@
-import axios from "axios";
-
-axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
-    "accessToken"
-)}`;
-
-const ApiEndpoint = process.env.VUE_APP_DEFAULT_API_URL;
+import API from "@/models/API";
 
 export default class Payment {
     constructor(item = {}) {
@@ -13,15 +7,13 @@ export default class Payment {
     }
 
     static get = () =>
-        axios.get(
-            `${ApiEndpoint}/stores/${localStorage.getItem(
-                "storeId"
-            )}/settings/subscription`
+        API().get(
+            `/stores/${localStorage.getItem("storeId")}/settings/subscription`
         );
 
     static create = item =>
-        axios.post(
-            `${ApiEndpoint}/stores/${localStorage.getItem(
+        API().post(
+            `/stores/${localStorage.getItem(
                 "storeId"
             )}/settings/payment-routings`,
             item

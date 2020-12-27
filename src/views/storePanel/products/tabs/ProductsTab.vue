@@ -293,6 +293,10 @@ export default {
         ...mapActions("storePanel/products", ["getItems", "remove"]),
 
         open(mode, item) {
+            if (mode === 2) {
+                item.product_category_id =
+                    item.product_category.product_category_id;
+            }
             this.mode = mode;
             this.product = item;
             if (this.product.image) this.setShowImageUpload(true);

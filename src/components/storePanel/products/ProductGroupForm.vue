@@ -12,10 +12,22 @@
             }
         "
     >
+        <b-select
+            v-model="productGroup.product_category_id"
+            :items="categories"
+            :item-text="`name[${lang}]`"
+            item-value="product_category_id"
+            :label="translations.selectCategory[lang]"
+            no-top-margin
+            :success="success.category"
+            :error-messages="error.category"
+            @focus="error.category = ''"
+            @blur="validateCategory"
+        ></b-select>
+
         <b-text-field
             v-model="productGroup.name[groupLang]"
             :label="translations.productGroupName[lang]"
-            no-top-margin
             :success="groupLang === 'el' ? success.name : false"
             :error-messages="error.name"
             @focus="error.name = ''"
@@ -52,18 +64,6 @@
             @focus="error.averagePrice = ''"
             @blur="validateAveragePrice"
         ></b-text-field>
-
-        <b-select
-            v-model="productGroup.product_category_id"
-            :items="categories"
-            :item-text="`name[${lang}]`"
-            item-value="product_category_id"
-            :label="translations.selectCategory[lang]"
-            :success="success.category"
-            :error-messages="error.category"
-            @focus="error.category = ''"
-            @blur="validateCategory"
-        ></b-select>
 
         <v-checkbox
             v-model="showImageUpload"

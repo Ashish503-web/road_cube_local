@@ -1,10 +1,4 @@
-import axios from "axios";
-
-axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
-    "accessToken"
-)}`;
-
-const ApiEndpoint = `${process.env.VUE_APP_DEFAULT_API_URL}/stores`;
+import API from "@/models/API";
 
 export default class CouponWithCode {
     constructor(item = {}) {
@@ -19,47 +13,41 @@ export default class CouponWithCode {
     }
 
     static getGiftCategories = () =>
-        axios.get(
-            `${
-                process.env.VUE_APP_DEFAULT_API_URL
-            }/common/companies/${localStorage.getItem(
+        API().get(
+            `/common/companies/${localStorage.getItem(
                 "companyId"
             )}/gift-categories`
         );
 
     static get = query =>
-        axios.get(
-            `${ApiEndpoint}/${localStorage.getItem(
+        API().get(
+            `/stores/${localStorage.getItem(
                 "storeId"
             )}/coupons/vouchers${query}`
         );
 
     static create = item =>
-        axios.post(
-            `${ApiEndpoint}/${localStorage.getItem(
-                "storeId"
-            )}/coupons/vouchers`,
+        API().post(
+            `/stores/${localStorage.getItem("storeId")}/coupons/vouchers`,
             item
         );
 
     static update = item =>
-        axios.put(
-            `${ApiEndpoint}/${localStorage.getItem(
-                "storeId"
-            )}/coupons/vouchers/${item.coupon_id}`,
+        API().put(
+            `/stores/${localStorage.getItem("storeId")}/coupons/vouchers/${
+                item.coupon_id
+            }`,
             item
         );
 
     static delete = id =>
-        axios.delete(
-            `${ApiEndpoint}/${localStorage.getItem(
-                "storeId"
-            )}/coupons/vouchers/${id}`
+        API().delete(
+            `/stores/${localStorage.getItem("storeId")}/coupons/vouchers/${id}`
         );
 
     static uploadImage = (id, image) =>
-        axios.post(
-            `${ApiEndpoint}/${localStorage.getItem(
+        API().post(
+            `/stores/${localStorage.getItem(
                 "storeId"
             )}/coupons/vouchers/${id}/images`,
             image

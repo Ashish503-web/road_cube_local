@@ -1,10 +1,4 @@
-import axios from "axios";
-
-axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
-    "accessToken"
-)}`;
-
-const ApiEndpoint = `${process.env.VUE_APP_DEFAULT_API_URL}/stores`;
+import API from "@/models/API";
 
 export default class RedeemVoucher {
     constructor(item = {}) {
@@ -12,8 +6,8 @@ export default class RedeemVoucher {
     }
 
     static create = item =>
-        axios.post(
-            `${ApiEndpoint}/${localStorage.getItem("storeId")}/coupons/redeems`,
+        API().post(
+            `/stores/${localStorage.getItem("storeId")}/coupons/redeems`,
             item
         );
 }

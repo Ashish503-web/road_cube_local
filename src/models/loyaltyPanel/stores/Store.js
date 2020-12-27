@@ -1,10 +1,4 @@
-import axios from "axios";
-
-axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
-    "accessToken"
-)}`;
-
-const ApiEndpoint = process.env.VUE_APP_DEFAULT_API_URL;
+import API from "@/models/API";
 
 export default class Store {
     constructor(item = {}) {
@@ -26,68 +20,58 @@ export default class Store {
     }
 
     static getSubscriptionPlans = () =>
-        axios.get(
-            `${ApiEndpoint}/common/companies/${localStorage.getItem(
+        API().get(
+            `/common/companies/${localStorage.getItem(
                 "storeId"
             )}/subscription-plans`
         );
 
-    static getCountries = () => axios.get(`${ApiEndpoint}/common/countries`);
+    static getCountries = () => API().get(`/common/countries`);
 
     static get = query =>
-        axios.get(
-            `${ApiEndpoint}/companies/${localStorage.getItem(
-                "storeId"
-            )}/stores${query}`
+        API().get(
+            `/companies/${localStorage.getItem("storeId")}/stores${query}`
         );
 
     static getItem = id =>
-        axios.get(
-            `${ApiEndpoint}/companies/${localStorage.getItem(
-                "storeId"
-            )}/stores/${id}`
-        );
+        API().get(`/companies/${localStorage.getItem("storeId")}/stores/${id}`);
 
     static getFinancialData = query =>
-        axios.get(
-            `${ApiEndpoint}/companies/${localStorage.getItem(
+        API().get(
+            `/companies/${localStorage.getItem(
                 "storeId"
             )}/stores-summaries${query}`
         );
 
     static getDailyLimits = query =>
-        axios.get(
-            `${ApiEndpoint}/companies/${localStorage.getItem(
+        API().get(
+            `/companies/${localStorage.getItem(
                 "storeId"
             )}/stores/daily-limits${query}`
         );
 
     static create = item =>
-        axios.post(
-            `${ApiEndpoint}/companies/${localStorage.getItem(
-                "storeId"
-            )}/stores/create`,
+        API().post(
+            `/companies/${localStorage.getItem("storeId")}/stores/create`,
             item
         );
 
     static update = item =>
-        axios.put(
-            `${ApiEndpoint}/companies/${localStorage.getItem(
-                "storeId"
-            )}/stores/${item.store_id}`,
+        API().put(
+            `/companies/${localStorage.getItem("storeId")}/stores/${
+                item.store_id
+            }`,
             item
         );
 
     static delete = id =>
-        axios.delete(
-            `${ApiEndpoint}/companies/${localStorage.getItem(
-                "storeId"
-            )}/stores/${id}`
+        API().delete(
+            `/companies/${localStorage.getItem("storeId")}/stores/${id}`
         );
 
     static uploadImage = (id, image) =>
-        axios.post(
-            `${ApiEndpoint}${localStorage.getItem(
+        API().post(
+            `/companies/${localStorage.getItem(
                 "storeId"
             )}/products/${id}/images`,
             image

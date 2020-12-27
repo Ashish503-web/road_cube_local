@@ -3,7 +3,7 @@ import API from "@/models/API";
 export default class Product {
     constructor(item = {}) {
         this.product_id = item.product_id || null;
-        this.published = item.published || false;
+        this.product_category_id = item.product_category_id || null;
         this.name = item.name || {
             el: "",
             en: "",
@@ -16,10 +16,10 @@ export default class Product {
         };
         this.retail_price = item.retail_price || null;
         this.wholesale_price = item.wholesale_price || null;
-        this.product_category_id = item.product_category_id || null;
         this.availability_days = item.availability_days || [];
-        this.image = item.image || "";
+        this.published = item.published || false;
         this.group_product = false;
+        this.image = item.image || "";
     }
 
     static getClass(obj) {

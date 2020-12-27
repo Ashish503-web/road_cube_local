@@ -1,10 +1,4 @@
-import axios from "axios";
-
-axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
-    "accessToken"
-)}`;
-
-const ApiEndpoint = `${process.env.VUE_APP_DEFAULT_API_URL}/stores`;
+import API from "@/models/API";
 
 export default class MultipleCoupons {
     constructor(item = {}) {
@@ -12,7 +6,7 @@ export default class MultipleCoupons {
     }
 
     static get = () =>
-        axios.get(
-            `${ApiEndpoint}/${localStorage.getItem("storeId")}/coupons/redeemed`
+        API().get(
+            `/stores/${localStorage.getItem("storeId")}/coupons/redeemed`
         );
 }

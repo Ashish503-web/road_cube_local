@@ -1,10 +1,4 @@
-import axios from "axios";
-
-axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
-    "accessToken"
-)}`;
-
-const ApiEndpoint = `${process.env.VUE_APP_DEFAULT_API_URL}/stores`;
+import API from "@/models/API";
 
 export default class Store {
     constructor(item = {}) {
@@ -28,22 +22,17 @@ export default class Store {
         };
     }
 
-    static get = () =>
-        axios.get(`${ApiEndpoint}/${localStorage.getItem("storeId")}`);
+    static get = () => API().get(`/stores/${localStorage.getItem("storeId")}`);
 
     static acceptRedemption = item =>
-        axios.post(
-            `${ApiEndpoint}/${localStorage.getItem(
-                "storeId"
-            )}/redemption/accept`,
+        API().post(
+            `/stores/${localStorage.getItem("storeId")}/redemption/accept`,
             item
         );
 
     static rejectRedemption = item =>
-        axios.post(
-            `${ApiEndpoint}/${localStorage.getItem(
-                "storeId"
-            )}/redemption/reject`,
+        API().post(
+            `/stores/${localStorage.getItem("storeId")}/redemption/reject`,
             item
         );
 }

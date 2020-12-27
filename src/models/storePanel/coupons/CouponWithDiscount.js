@@ -1,10 +1,4 @@
-import axios from "axios";
-
-axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
-    "accessToken"
-)}`;
-
-const ApiEndpoint = `${process.env.VUE_APP_DEFAULT_API_URL}/stores`;
+import API from "@/models/API";
 
 export default class CouponWithDiscount {
     constructor(item = {}) {
@@ -23,36 +17,30 @@ export default class CouponWithDiscount {
     };
 
     static getGiftCategories = () =>
-        axios.get(
-            `${
-                process.env.VUE_APP_DEFAULT_API_URL
-            }/common/companies/${localStorage.getItem(
+        API().get(
+            `/common/companies/${localStorage.getItem(
                 "companyId"
             )}/gift-categories`
         );
 
     static getProducts = () =>
-        axios.get(`${ApiEndpoint}/${localStorage.getItem("storeId")}/products`);
+        API().get(`/stores/${localStorage.getItem("storeId")}/products`);
 
     static get = query =>
-        axios.get(
-            `${ApiEndpoint}/${localStorage.getItem(
+        API().get(
+            `/stores/${localStorage.getItem(
                 "storeId"
             )}/coupons/discounts${query}`
         );
 
     static create = item =>
-        axios.post(
-            `${ApiEndpoint}/${localStorage.getItem(
-                "storeId"
-            )}/coupons/discounts`,
+        API().post(
+            `/stores/${localStorage.getItem("storeId")}/coupons/discounts`,
             item
         );
 
     static delete = id =>
-        axios.delete(
-            `${ApiEndpoint}/${localStorage.getItem(
-                "storeId"
-            )}/coupons/discounts/${id}`
+        API().delete(
+            `/stores/${localStorage.getItem("storeId")}/coupons/discounts/${id}`
         );
 }

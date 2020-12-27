@@ -32,7 +32,7 @@
                     new Intl.NumberFormat("en-US", {
                         style: "currency",
                         currency: "EUR",
-                        minimumFractionDigits: 2,
+                        minimumFractionDigits: 2
                     }).format(item.average_price)
                 }}
             </template>
@@ -136,7 +136,7 @@ export default {
         return {
             icons: { mdiPencilOutline, mdiClose },
             page: +this.$route.query.page,
-            mode: 0,
+            mode: 0
         };
     },
 
@@ -158,20 +158,20 @@ export default {
             return [
                 {
                     text: this.translations.productName[this.lang],
-                    value: `name[${this.lang}]`,
+                    value: `name[${this.lang}]`
                 },
                 {
                     text: this.translations.productDescription[this.lang],
-                    value: `description[${this.lang}]`,
+                    value: `description[${this.lang}]`
                 },
                 {
-                    text: this.translations.sellingPrice[this.lang],
-                    value: "average_price",
+                    text: this.translations.averagePrice[this.lang],
+                    value: "average_price"
                 },
                 {
                     text: this.translations.actions[this.lang],
-                    value: "actions",
-                },
+                    value: "actions"
+                }
             ];
         },
 
@@ -182,7 +182,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            },
+            }
         },
 
         deleteDialog: {
@@ -192,7 +192,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            },
+            }
         },
 
         productGroup: {
@@ -202,7 +202,7 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            },
+            }
         },
 
         query() {
@@ -213,7 +213,7 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        },
+        }
     },
 
     methods: {
@@ -222,16 +222,20 @@ export default {
             "setDeleteDialog",
             "setResetSuccess",
             "setResetValidation",
-            "setPermissionDialog",
+            "setPermissionDialog"
         ]),
         ...mapMutations("storePanel/productGroups", [
             "setShowImageUpload",
             "setShowWeekdays",
-            "setItem",
+            "setItem"
         ]),
         ...mapActions("storePanel/productGroups", ["getItems", "remove"]),
 
         open(mode, item) {
+            if (mode === 2) {
+                item.product_category_id =
+                    item.product_category.product_category_id;
+            }
             this.mode = mode;
             this.productGroup = item;
             if (this.productGroup.image) this.setShowImageUpload(true);
@@ -242,7 +246,7 @@ export default {
             this.dialog = true;
             setTimeout(() => this.setResetSuccess(true), 300);
             this.setResetValidation(true);
-        },
+        }
     },
 
     watch: {
@@ -254,7 +258,7 @@ export default {
                         `/${this.lang}/storePanel/forbidden-gateway`
                     );
                 }
-            },
+            }
         },
 
         $route(val) {
@@ -262,8 +266,8 @@ export default {
                 this.$router.replace({
                     query: {
                         page: 1,
-                        ...this.$route.query,
-                    },
+                        ...this.$route.query
+                    }
                 });
             }
             this.getItems(this.query);
@@ -271,7 +275,7 @@ export default {
 
         page(page) {
             this.$router.replace({ query: { ...this.$route.query, page } });
-        },
+        }
     },
 
     beforeCreate() {
@@ -286,14 +290,14 @@ export default {
             this.$router.replace({
                 query: {
                     page: 1,
-                    ...this.$route.query,
-                },
+                    ...this.$route.query
+                }
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    },
+    }
 };
 </script>

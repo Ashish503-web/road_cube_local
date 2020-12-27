@@ -1,10 +1,4 @@
-import axios from "axios";
-
-axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
-    "accessToken"
-)}`;
-
-const ApiEndpoint = process.env.VUE_APP_DEFAULT_API_URL;
+import API from "@/models/API";
 
 export default class Product {
     constructor(item = {}) {
@@ -37,45 +31,37 @@ export default class Product {
     }
 
     static getCategories = () =>
-        axios.get(
-            `${ApiEndpoint}/stores/${localStorage.getItem(
-                "storeId"
-            )}/product-categories`
+        API().get(
+            `/stores/${localStorage.getItem("storeId")}/product-categories`
         );
 
     static get = query =>
-        axios.get(
-            `${ApiEndpoint}/companies/${localStorage.getItem(
-                "storeId"
-            )}/products${query}`
+        API().get(
+            `/companies/${localStorage.getItem("storeId")}/products${query}`
         );
 
     static create = item =>
-        axios.post(
-            `${ApiEndpoint}/companies/${localStorage.getItem(
-                "storeId"
-            )}/products`,
+        API().post(
+            `/companies/${localStorage.getItem("storeId")}/products`,
             item
         );
 
     static update = item =>
-        axios.put(
-            `${ApiEndpoint}/companies/${localStorage.getItem(
-                "storeId"
-            )}/products/${item.product_id}`,
+        API().put(
+            `/companies/${localStorage.getItem("storeId")}/products/${
+                item.product_id
+            }`,
             item
         );
 
     static delete = id =>
-        axios.delete(
-            `${ApiEndpoint}/companies/${localStorage.getItem(
-                "storeId"
-            )}/products/${id}`
+        API().delete(
+            `/companies/${localStorage.getItem("storeId")}/products/${id}`
         );
 
     static uploadImage = (id, image) =>
-        axios.post(
-            `${ApiEndpoint}/companies${localStorage.getItem(
+        API().post(
+            `/companies${localStorage.getItem(
                 "storeId"
             )}/products/${id}/images`,
             image

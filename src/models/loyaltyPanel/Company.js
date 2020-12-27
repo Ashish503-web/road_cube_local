@@ -1,10 +1,4 @@
-import axios from "axios";
-
-axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
-    "accessToken"
-)}`;
-
-const ApiEndpoint = `${process.env.VUE_APP_DEFAULT_API_URL}/companies`;
+import API from "@/models/API";
 
 export default class Company {
     constructor(item = {}) {
@@ -29,5 +23,5 @@ export default class Company {
     }
 
     static get = () =>
-        axios.get(`${ApiEndpoint}/${localStorage.getItem("storeId")}`);
+        API().get(`/companies/${localStorage.getItem("storeId")}`);
 }

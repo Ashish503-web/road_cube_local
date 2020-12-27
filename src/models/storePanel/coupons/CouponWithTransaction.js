@@ -1,10 +1,4 @@
-import axios from "axios";
-
-axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
-    "accessToken"
-)}`;
-
-const ApiEndpoint = `${process.env.VUE_APP_DEFAULT_API_URL}/stores`;
+import API from "@/models/API";
 
 export default class CouponWithTransactions {
     constructor(item = {}) {
@@ -21,42 +15,36 @@ export default class CouponWithTransactions {
     }
 
     static getGiftCategories = () =>
-        axios.get(
-            `${
-                process.env.VUE_APP_DEFAULT_API_URL
-            }/common/companies/${localStorage.getItem(
+        API().get(
+            `/common/companies/${localStorage.getItem(
                 "companyId"
             )}/gift-categories`
         );
 
     static getItem = () =>
-        axios.get(
-            `${ApiEndpoint}/${localStorage.getItem("storeId")}/coupons/goals`
-        );
+        API().get(`/stores/${localStorage.getItem("storeId")}/coupons/goals`);
 
     static getItemUsers = (id, query) =>
-        axios.get(
-            `${ApiEndpoint}/${localStorage.getItem(
+        API().get(
+            `/stores/${localStorage.getItem(
                 "storeId"
             )}/coupons/goals/${id}/user-statistics${query}`
         );
 
     static create = item =>
-        axios.post(
-            `${ApiEndpoint}/${localStorage.getItem("storeId")}/coupons/goals`,
+        API().post(
+            `/stores/${localStorage.getItem("storeId")}/coupons/goals`,
             item
         );
 
     static delete = id =>
-        axios.delete(
-            `${ApiEndpoint}/${localStorage.getItem(
-                "storeId"
-            )}/coupons/goals/${id}`
+        API().delete(
+            `/stores/${localStorage.getItem("storeId")}/coupons/goals/${id}`
         );
 
     static uploadImage = (id, image) =>
-        axios.post(
-            `${ApiEndpoint}/${localStorage.getItem(
+        API().post(
+            `/stores/${localStorage.getItem(
                 "storeId"
             )}/coupons/goals/${id}/images`,
             image

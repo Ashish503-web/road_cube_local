@@ -1,10 +1,4 @@
-import axios from "axios";
-
-axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
-    "accessToken"
-)}`;
-
-const ApiEndpoint = process.env.VUE_APP_DEFAULT_API_URL;
+import API from "@/models/API";
 
 export default class Transaction {
     constructor(item = {}) {
@@ -30,67 +24,58 @@ export default class Transaction {
     };
 
     static getProducts = query =>
-        axios.get(
-            `${ApiEndpoint}/stores/${localStorage.getItem(
-                "storeId"
-            )}/products${query}`
+        API().get(
+            `/stores/${localStorage.getItem("storeId")}/products${query}`
         );
 
     static getTransactionPreview = item =>
-        axios.post(
-            `${ApiEndpoint}/stores/${localStorage.getItem(
+        API().post(
+            `/stores/${localStorage.getItem(
                 "storeId"
             )}/transactions/transaction-preview`,
             item
         );
 
     static getTransactionStatuses = () =>
-        axios.get(`${ApiEndpoint}/common/transaction-statuses`);
+        API().get(`/common/transaction-statuses`);
 
-    static getTransactionTypes = () =>
-        axios.get(`${ApiEndpoint}/common/transaction-types`);
+    static getTransactionTypes = () => API().get(`/common/transaction-types`);
 
     static get = query =>
-        axios.get(
-            `${ApiEndpoint}/stores/${localStorage.getItem(
-                "storeId"
-            )}/transactions${query}`
+        API().get(
+            `/stores/${localStorage.getItem("storeId")}/transactions${query}`
         );
 
     static getItem = id =>
-        axios.get(
-            `${ApiEndpoint}/stores/${localStorage.getItem(
-                "storeId"
-            )}/transactions/${id}`
+        API().get(
+            `/stores/${localStorage.getItem("storeId")}/transactions/${id}`
         );
 
     static create = item =>
-        axios.post(
-            `${ApiEndpoint}/stores/${localStorage.getItem(
+        API().post(
+            `/stores/${localStorage.getItem(
                 "storeId"
             )}/transactions/create-store-staff-user-transaction`,
             item
         );
 
     static updateMobilePayments = item =>
-        axios.put(
-            `${ApiEndpoint}/stores/${localStorage.getItem(
-                "storeId"
-            )}/flags/reward`,
+        API().put(
+            `/stores/${localStorage.getItem("storeId")}/flags/reward`,
             item
         );
 
     static changeStatus = item =>
-        axios.put(
-            `${ApiEndpoint}/stores/${localStorage.getItem(
-                "storeId"
-            )}/transactions/${item.transaction_id}/change-status`,
+        API().put(
+            `/stores/${localStorage.getItem("storeId")}/transactions/${
+                item.transaction_id
+            }/change-status`,
             { transaction_status_id: item.transaction_status_id }
         );
 
     static refundTransaction = item =>
-        axios.post(
-            `${ApiEndpoint}/stores/${localStorage.getItem(
+        API().post(
+            `/stores/${localStorage.getItem(
                 "storeId"
             )}/transactions/cancel-transaction`,
             item

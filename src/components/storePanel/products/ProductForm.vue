@@ -12,10 +12,22 @@
             }
         "
     >
+        <b-select
+            v-model="product.product_category_id"
+            :items="categories"
+            :item-text="`name[${lang}]`"
+            item-value="product_category_id"
+            :label="translations.selectCategory[lang]"
+            no-top-margin
+            :success="success.category"
+            :error-messages="error.category"
+            @focus="error.category = ''"
+            @blur="validateCategory"
+        ></b-select>
+
         <b-text-field
             v-model="product.name[productLang]"
             :label="translations.productName[lang]"
-            no-top-margin
             :success="productLang === 'el' ? success.name : false"
             :error-messages="error.name"
             @focus="error.name = ''"
@@ -74,18 +86,6 @@
                 ></b-text-field>
             </v-col>
         </v-row>
-
-        <b-select
-            v-model="product.product_category_id"
-            :items="categories"
-            :item-text="`name[${lang}]`"
-            item-value="product_category_id"
-            :label="translations.selectCategory[lang]"
-            :success="success.category"
-            :error-messages="error.category"
-            @focus="error.category = ''"
-            @blur="validateCategory"
-        ></b-select>
 
         <v-checkbox
             v-model="showImageUpload"
