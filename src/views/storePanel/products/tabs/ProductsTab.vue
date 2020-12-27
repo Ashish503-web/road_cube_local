@@ -222,7 +222,7 @@ export default {
                 },
                 {
                     text: this.translations.category[this.lang],
-                    value: "reward_points"
+                    value: `product_category.name[${this.lang}]`
                 },
                 {
                     text: this.translations.published[this.lang],

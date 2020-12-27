@@ -54,6 +54,16 @@
                 <span v-else v-text="translations.noData[lang]"></span>
             </template>
 
+            <template v-slot:item.product_buy="{ item }">
+                <div
+                    v-if="item.product_buy"
+                    v-text="item.product_buy.name[lang]"
+                ></div>
+                <div v-else class="text-center mb-2" style="width: 107px">
+                    _
+                </div>
+            </template>
+
             <template v-slot:item.actions="{ item }">
                 <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
@@ -124,7 +134,11 @@
                         description="This week, I’d like to introduce you to 'Vite', which means 'Fast'. It’s a brand new development setup created by Evan You."
                         quote="The hot reload is so fast it\'s near instant. - Evan You"
                         hashtags="vuejs,vite"
-                        style="color: white; text-decoration: none; font-size: 0.875rem"
+                        style="
+                            color: white;
+                            text-decoration: none;
+                            font-size: 0.875rem;
+                        "
                     >
                         {{ translations.share[lang] }}
                     </ShareNetwork>
@@ -207,7 +221,7 @@ export default {
                 },
                 {
                     text: this.translations.productForSale[this.lang],
-                    value: `product_buy.name[${this.lang}]`
+                    value: `product_buy`
                 },
                 {
                     text: this.translations.productForGift[this.lang],

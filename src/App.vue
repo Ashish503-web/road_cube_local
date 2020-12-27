@@ -2,11 +2,13 @@
     <v-app>
         <router-view name="header"></router-view>
 
-        <v-main :class="{ 'pa-0': $route.path === `/${lang}/` }">
+        <v-main :class="{ 'pa-0': noPadding }">
             <router-view></router-view>
             <Notification />
             <PermissionDialog />
         </v-main>
+
+        <router-view name="footer"></router-view>
     </v-app>
 </template>
 
@@ -27,6 +29,15 @@ export default {
     computed: {
         lang() {
             return this.$route.params.lang;
+        },
+
+        noPadding() {
+            return (
+                this.$route.path === `/${this.lang}/` ||
+                this.$route.path === `/${this.lang}` ||
+                this.$route.path === `/${this.lang}/points-pos` ||
+                this.$route.path === `/${this.lang}/points-pos/`
+            );
         }
     },
 

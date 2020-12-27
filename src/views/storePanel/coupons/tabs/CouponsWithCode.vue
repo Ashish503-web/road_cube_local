@@ -139,7 +139,11 @@
                         description="This week, I’d like to introduce you to 'Vite', which means 'Fast'. It’s a brand new development setup created by Evan You."
                         quote="The hot reload is so fast it\'s near instant. - Evan You"
                         hashtags="vuejs,vite"
-                        style="color: white; text-decoration: none; font-size: 0.875rem"
+                        style="
+                            color: white;
+                            text-decoration: none;
+                            font-size: 0.875rem;
+                        "
                     >
                         {{ translations.share[lang] }}
                     </ShareNetwork>
@@ -193,10 +197,10 @@ export default {
             icons: {
                 mdiPencilOutline,
                 mdiClose,
-                mdiFacebook
+                mdiFacebook,
             },
             page: +this.$route.query.page,
-            mode: 0
+            mode: 0,
         };
     },
 
@@ -220,21 +224,21 @@ export default {
                 { text: this.translations.points[this.lang], value: "points" },
                 {
                     text: this.translations.acquired[this.lang],
-                    value: "total_claimed"
+                    value: "total_claimed",
                 },
                 {
                     text: this.translations.redeemed[this.lang],
-                    value: "total_redeemed"
+                    value: "total_redeemed",
                 },
                 {
                     text: this.translations.available[this.lang],
-                    value: "available"
+                    value: "available",
                 },
                 {
                     text: this.translations.actions[this.lang],
-                    value: "actions"
+                    value: "actions",
                 },
-                { text: this.translations.social[this.lang], value: "social" }
+                { text: this.translations.social[this.lang], value: "social" },
             ];
         },
 
@@ -255,7 +259,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         deleteDialog: {
@@ -265,7 +269,7 @@ export default {
 
             set(val) {
                 this.setDeleteDialog(val);
-            }
+            },
         },
 
         couponWithCode: {
@@ -276,8 +280,8 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
@@ -286,11 +290,11 @@ export default {
             "setDeleteDialog",
             "setResetSuccess",
             "setResetValidation",
-            "setPermissionDialog"
+            "setPermissionDialog",
         ]),
         ...mapMutations("storePanel/couponsWithCode", [
             "setShowImageUpload",
-            "setItem"
+            "setItem",
         ]),
         ...mapActions("storePanel/couponsWithCode", ["getItems", "remove"]),
 
@@ -302,7 +306,7 @@ export default {
             setTimeout(() => this.setResetSuccess(true), 300);
             this.setResetValidation(true);
             this.dialog = true;
-        }
+        },
     },
 
     watch: {
@@ -319,8 +323,8 @@ export default {
                 this.$router.replace({
                     query: {
                         page: 1,
-                        ...this.$route.query
-                    }
+                        ...this.$route.query,
+                    },
                 });
             }
 
@@ -329,7 +333,7 @@ export default {
 
         page(page) {
             this.$router.replace({ query: { ...this.$route.query, page } });
-        }
+        },
     },
 
     beforeCreate() {
@@ -344,14 +348,14 @@ export default {
             this.$router.replace({
                 query: {
                     page: 1,
-                    ...this.$route.query
-                }
+                    ...this.$route.query,
+                },
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    }
+    },
 };
 </script>

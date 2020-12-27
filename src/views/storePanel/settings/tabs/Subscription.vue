@@ -5,6 +5,8 @@
         </v-row>
 
         <template v-else>
+            <PaymentMessage />
+
             <v-card
                 v-if="showPaymentMethods"
                 outlined
@@ -108,7 +110,7 @@
                     :items="billings"
                     :footer-props="{
                         itemsPerPageOptions: [12],
-                        showCurrentPage: true,
+                        showCurrentPage: true
                     }"
                     :page.sync="page"
                     class="b-outlined"
@@ -118,7 +120,7 @@
                             new Intl.NumberFormat("en-US", {
                                 style: "currency",
                                 currency: "EUR",
-                                minimumFractionDigits: 2,
+                                minimumFractionDigits: 2
                             }).format(item.total)
                         }}
                     </template>
@@ -156,20 +158,21 @@ import subscription from "@/store/modules/storePanel/settings/subscription";
 
 import { mapState, mapMutations, mapActions } from "vuex";
 
+import PaymentMessage from "@/components/storePanel/settings/subscription/PaymentMessage.vue";
 import SubscriptionPlan from "@/components/storePanel/settings/subscription/SubscriptionPlan.vue";
 import translations from "@/utils/translations/storePanel/settings/subscription";
 
 export default {
     name: "Subscription",
 
-    components: { SubscriptionPlan },
+    components: { PaymentMessage, SubscriptionPlan },
 
     mixins: [translations],
 
     data() {
         return {
             page: +this.$route.query.page,
-            store_payment_method_id: null,
+            store_payment_method_id: null
         };
     },
 
@@ -182,7 +185,7 @@ export default {
             "slug",
             "redirectForm",
             "showPaymentMethods",
-            "paymentMethods",
+            "paymentMethods"
         ]),
 
         lang() {
@@ -200,19 +203,19 @@ export default {
                 {
                     text: this.translations.total[this.lang],
                     value: "total",
-                    width: "20%",
+                    width: "20%"
                 },
                 {
                     text: this.translations.paymentStatus[this.lang],
                     value: "pending_payment",
-                    width: "50%",
+                    width: "50%"
                 },
                 {
                     text: this.translations.date[this.lang],
                     value: "updated_at",
                     width: "30%",
-                    align: "center",
-                },
+                    align: "center"
+                }
             ];
         },
 
@@ -237,16 +240,16 @@ export default {
             return new Intl.NumberFormat("en-US", {
                 style: "currency",
                 currency: "EUR",
-                minimumFractionDigits: 2,
+                minimumFractionDigits: 2
             }).format(planAmount);
-        },
+        }
     },
 
     methods: {
         ...mapActions("storePanel/subscription", [
             "getItem",
-            "attachPaymentMethod",
-        ]),
+            "attachPaymentMethod"
+        ])
     },
 
     watch: {
@@ -258,24 +261,27 @@ export default {
                         `/${this.lang}/storePanel/forbidden-gateway`
                     );
                 }
-            },
+            }
         },
 
-        $route(val) {
-            if (!val.query.page) {
+        $route(newVal, oldVal) {
+            if (!newVal.query.page) {
                 this.$router.replace({
                     query: {
                         page: 1,
-                        ...this.$route.query,
-                    },
+                        ...this.$route.query
+                    }
                 });
             }
-            this.getItem(this.query);
+
+            if (newVal.query.page !== oldVal.query.page) {
+                this.getItem(this.query);
+            }
         },
 
         page(page) {
             this.$router.replace({ query: { ...this.$route.query, page } });
-        },
+        }
     },
 
     beforeCreate() {
@@ -290,14 +296,14 @@ export default {
             this.$router.replace({
                 query: {
                     page: 1,
-                    ...this.$route.query,
-                },
+                    ...this.$route.query
+                }
             });
         }
     },
 
     mounted() {
         this.getItem();
-    },
+    }
 };
 </script>

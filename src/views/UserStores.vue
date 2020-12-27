@@ -53,7 +53,7 @@
                 <div class="text-right pb-10">
                     <b-animating-btn
                         type="submit"
-                        text="connect"
+                        text="Connect"
                         icon="mdiArrowRight"
                         small
                         :loading="loading"

@@ -144,27 +144,9 @@
                         ></b-text-field>
                     </div>
 
-                    <v-row
-                        v-if="generalCouponClaims.length"
-                        no-gutters
-                        class="px-10 pt-5 pb-7 b-bottom-outlined"
-                    >
-                        <v-col
-                            cols="12"
-                            class="subtitle-1 font-weight-bold pb-2"
-                            >General Coupons:</v-col
-                        >
-                        <b-select
-                            v-model="transaction.general_coupon_claims_for_use"
-                            :items="generalCouponClaims"
-                            item-text="gift_title"
-                            return-object
-                            :label="translations.generalCouponClaims[lang]"
-                            multiple
-                        ></b-select>
-                    </v-row>
+                    <GeneralCoupons />
 
-                    <SamplingCoupons v-if="samplingCoupons.length" />
+                    <SamplingCoupons />
 
                     <v-alert v-if="errorMessage" type="error" class="mt-4">{{
                         errorMessage
@@ -196,6 +178,7 @@ import { mapState, mapMutations, mapActions } from "vuex";
 import debounce from "lodash/debounce";
 
 import Products from "@/components/storePanel/newTransaction/Products.vue";
+import GeneralCoupons from "@/components/storePanel/newTransaction/GeneralCoupons.vue";
 import SamplingCoupons from "@/components/storePanel/newTransaction/SamplingCoupons.vue";
 import translations from "@/utils/translations/storePanel/newTransaction";
 import validators from "@/utils/validators/storePanel/newTransaction";
@@ -203,23 +186,19 @@ import validators from "@/utils/validators/storePanel/newTransaction";
 export default {
     name: "NewTransaction",
 
-    components: { SamplingCoupons, Products },
+    components: { Products, GeneralCoupons, SamplingCoupons },
 
     mixins: [translations, validators],
 
     data: () => ({
         icons: { mdiPlusThick },
         productsSuccess: false,
-        showVoucher: false
+        showVoucher: false,
     }),
 
     computed: {
         ...mapState(["loading", "errorMessage"]),
-        ...mapState("storePanel/transactions", [
-            "previewLoading",
-            "generalCouponClaims",
-            "samplingCoupons"
-        ]),
+        ...mapState("storePanel/transactions", ["previewLoading"]),
 
         lang() {
             return this.$route.params.lang;
@@ -249,7 +228,7 @@ export default {
 
             set(val) {
                 this.setTransactionPreview(val);
-            }
+            },
         },
 
         transaction: {
@@ -259,23 +238,23 @@ export default {
 
             set(val) {
                 this.setItem(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
         ...mapMutations("storePanel/transactions", [
             "setTransactionPreview",
-            "setItem"
+            "setItem",
         ]),
         ...mapActions("storePanel/transactions", [
             "create",
-            "getTransactionPreview"
+            "getTransactionPreview",
         ]),
 
         handleGetTransactionPreview() {
             this.getTransactionPreview(false);
-        }
+        },
     },
 
     watch: {
@@ -293,7 +272,7 @@ export default {
 
         ["transaction.amount"](val) {
             this.debouncedGetTransactionPreview();
-        }
+        },
     },
 
     beforeCreate() {
@@ -319,6 +298,6 @@ export default {
     beforeDestroy() {
         this.transactionPreview = {};
         this.transaction = {};
-    }
+    },
 };
 </script>

@@ -124,13 +124,13 @@ export default {
         PointDelivery,
         MobilePayments,
         ScanReceipt,
-        RewardWithPresence,
+        RewardWithPresence
     },
 
     mixins: [rewardMethods, translations],
 
     data: () => ({
-        currentComponent: "",
+        currentComponent: ""
     }),
 
     computed: {
@@ -151,7 +151,7 @@ export default {
                 this.translations.method[this.lang],
                 this.translations.description[this.lang],
                 this.translations.activation[this.lang],
-                this.translations.settings[this.lang],
+                this.translations.settings[this.lang]
             ];
         },
 
@@ -162,13 +162,13 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
         ...mapMutations(["setDialog"]),
-        ...mapActions("storePanel/reward", ["updateActivator"]),
+        ...mapActions("storePanel/reward", ["updateActivator"])
     },
 
     watch: {
@@ -180,7 +180,7 @@ export default {
                         `/${this.lang}/storePanel/forbidden-gateway`
                     );
                 }
-            },
+            }
         },
 
         ["$store.state.storePanel.store"]: {
@@ -201,14 +201,14 @@ export default {
                 this.rewardMethods[3].active = val.flags.reward.open_receipt;
                 this.rewardMethods[4].active = val.flags.reward.open_checkin;
                 this.rewardMethods[5].active = val.flags.reward.orders_allowed;
-            },
-        },
+            }
+        }
     },
 
     beforeCreate() {
         if (!this.$store.state.storePanel.reward) {
             this.$store.registerModule(["storePanel", "reward"], reward);
         }
-    },
+    }
 };
 </script>

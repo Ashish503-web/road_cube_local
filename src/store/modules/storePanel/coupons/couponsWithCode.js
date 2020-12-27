@@ -84,15 +84,18 @@ export default {
                 delete couponWithCode.image;
 
                 const { data } = await CouponWithCode.create(couponWithCode);
+                const { coupon } = data.data;
+                coupon.total_claimed = 0;
+                coupon.total_redeemed = 0;
 
                 if (image) {
                     dispatch("uploadImage", {
-                        item: data.data.coupon,
+                        item: coupon,
                         image,
                         mode: 1
                     });
                 } else {
-                    commit("addItem", data.data.coupon);
+                    commit("addItem", coupon);
                     commit(
                         "setServerItemsLength",
                         rootState.serverItemsLength + 1,
@@ -132,15 +135,18 @@ export default {
                 delete couponWithCode.maximum;
 
                 const { data } = await CouponWithCode.update(couponWithCode);
+                const { coupon } = data.data;
+                coupon.total_claimed = coupon.claimed;
+                coupon.total_redeemed = coupon.rewarded;
 
                 if (image) {
                     dispatch("uploadImage", {
-                        item: data.data.coupon,
+                        item: coupon,
                         image,
                         mode: 2
                     });
                 } else {
-                    commit("updateItem", data.data.coupon);
+                    commit("updateItem", coupon);
                     commit("setLoading", false, { root: true });
                     commit("setDialog", false, { root: true });
                     commit(

@@ -100,7 +100,6 @@ export default {
                     delete couponOnProduct.product_buy_id;
 
                 const { data } = await CouponOnProduct.create(couponOnProduct);
-
                 const { coupon } = data.data;
 
                 commit("addItem", coupon);
@@ -138,10 +137,12 @@ export default {
                 commit("setLoading", true, { root: true });
 
                 let couponOnProduct = { ...state.couponOnProduct };
+                if (couponOnProduct.action === "sample")
+                    delete couponOnProduct.product_buy_id;
 
                 const { data } = await CouponOnProduct.update(couponOnProduct);
 
-                commit("updateItem", data.data.product);
+                commit("updateItem", data.data.coupon);
                 commit("setLoading", false, { root: true });
                 commit("setDialog", false, { root: true });
                 commit(

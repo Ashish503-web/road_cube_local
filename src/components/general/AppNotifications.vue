@@ -3,14 +3,15 @@
         <v-menu offset-y left max-height="90%">
             <template v-slot:activator="{ on }">
                 <v-btn icon v-on="on">
-                    <v-badge
+                    <v-icon v-text="icons.mdiBellOutline"></v-icon>
+                    <!-- <v-badge
                         :content="transactions.length"
                         :value="transactions.length"
                         bordered
                         color="error"
                     >
                         <v-icon v-text="icons.mdiBellOutline"></v-icon>
-                    </v-badge>
+                    </v-badge> -->
                 </v-btn>
             </template>
 

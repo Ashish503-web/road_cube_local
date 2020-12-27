@@ -69,6 +69,7 @@ export default {
                     { root: true }
                 );
             } catch (ex) {
+                item.active = !item.active;
                 item.loading = false;
                 commit(
                     "setNotification",

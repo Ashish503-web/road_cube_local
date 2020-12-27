@@ -1,14 +1,14 @@
 <template>
-    <div id="header">
+    <div id="header" style="z-index: 101">
         <v-app-bar
             app
             height="134"
-            elevate-on-scroll
             shrink-on-scroll
+            flat
             class="b-header"
             :class="scrolled ? 'b-bg-white' : 'b-bg-transparent'"
         >
-            <v-container class="pa-0" style="min-height: 66px; height: 100%;">
+            <v-container class="pa-0" style="min-height: 66px; height: 100%">
                 <v-row
                     no-gutters
                     justify="space-between"
@@ -21,31 +21,62 @@
                             <router-link :to="`/${lang}/`">
                                 <v-img
                                     :src="scrolled ? blackLogo : whiteLogo"
-                                    width="140"
-                                    height="20"
+                                    width="170"
+                                    height="24"
                                 ></v-img>
                             </router-link>
                         </v-toolbar-title>
                     </v-col>
 
-                    <v-col cols="auto" :hidden="$vuetify.breakpoint.smAndDown">
-                        <a
-                            v-for="link in navLinks"
-                            :key="link.href"
-                            :href="link.href"
-                            v-text="link.text"
-                            class="b-nav-link"
-                            :class="[
-                                scrolled
-                                    ? 'b-nav-link--dark'
-                                    : 'b-nav-link--light',
-                                { 'b-active': link.href === $route.hash }
-                            ]"
-                        ></a>
+                    <v-col
+                        v-if="showNavLinks"
+                        :hidden="$vuetify.breakpoint.smAndDown"
+                        class="mb-1"
+                    >
+                        <ul class="b-list">
+                            <li
+                                v-for="link in navLinks"
+                                :key="link.text"
+                                class="b-list-item"
+                            >
+                                <router-link
+                                    v-if="link.to"
+                                    :to="link.to"
+                                    v-text="link.text"
+                                    class="b-nav-link"
+                                    :class="[
+                                        scrolled
+                                            ? 'b-nav-link--dark'
+                                            : 'b-nav-link--light',
+                                        {
+                                            'b-active':
+                                                link.href === $route.hash
+                                        }
+                                    ]"
+                                ></router-link>
+                                <a
+                                    v-else
+                                    :href="link.href"
+                                    v-text="link.text"
+                                    class="b-nav-link"
+                                    :class="[
+                                        scrolled
+                                            ? 'b-nav-link--dark'
+                                            : 'b-nav-link--light',
+                                        {
+                                            'b-active':
+                                                link.href === $route.hash
+                                        }
+                                    ]"
+                                ></a>
+                            </li>
+                        </ul>
+                    </v-col>
 
+                    <v-col cols="auto">
                         <b-animating-btn
-                            text="merchant login"
-                            icon="mdiArrowRight"
+                            :text="btnText"
+                            :icon="btnIcon"
                             class="ml-6"
                             :to="`/${lang}/sign-in`"
                         ></b-animating-btn>
@@ -109,6 +140,7 @@
 import { mdiClose, mdiMenu } from "@mdi/js";
 import whiteLogo from "@/assets/home/logo.png";
 import blackLogo from "@/assets/home/logo-sticky.png";
+import { mapMutations } from "vuex";
 
 export default {
     name: "Header",
@@ -117,14 +149,7 @@ export default {
         icons: { mdiClose, mdiMenu },
         whiteLogo,
         blackLogo,
-        navLinks: [
-            { href: "#home", text: "home" },
-            { href: "#products", text: "why roadcube" },
-            { href: "#about", text: "about" },
-            { href: "#featuress", text: "features" },
-            { href: "#quote", text: "quote" },
-            { href: "#cta", text: "contact" }
-        ],
+
         dialog: false,
         scrolled: false
     }),
@@ -132,10 +157,44 @@ export default {
     computed: {
         lang() {
             return this.$route.params.lang;
+        },
+
+        navLinks() {
+            return [
+                { href: "#home", text: "home" },
+                { href: "#products", text: "why roadcube" },
+                { to: `/${this.lang}/points-pos`, text: "points pos" },
+                { href: "#featuress", text: "features" },
+                { href: "#quote", text: "quote" },
+                { href: "#cta", text: "contact" }
+            ];
+        },
+
+        showNavLinks() {
+            return (
+                this.$route.path === `/${this.lang}/` ||
+                this.$route.path === `/${this.lang}`
+            );
+        },
+
+        btnText() {
+            return this.$route.path === `/${this.lang}/` ||
+                this.$route.path === `/${this.lang}`
+                ? "Merchant Login"
+                : "210 300 66 33";
+        },
+
+        btnIcon() {
+            return this.$route.path === `/${this.lang}/` ||
+                this.$route.path === `/${this.lang}`
+                ? "mdiArrowRight"
+                : "mdiPhoneInTalkOutline";
         }
     },
 
     methods: {
+        ...mapMutations(["setScrollPosition"]),
+
         hasScroll() {
             return (
                 document.body.scrollTop > 10 ||
@@ -178,6 +237,18 @@ export default {
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
 }
 
+.b-list {
+    list-style-type: none;
+    padding: 0;
+    text-align: right;
+}
+
+.b-list-item {
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+
 .b-nav-link {
     padding: 0 16px;
     text-decoration: none;
@@ -200,7 +271,7 @@ export default {
 }
 
 .b-nav-link--dark {
-    color: black;
+    color: #142752;
     opacity: 1;
 }
 

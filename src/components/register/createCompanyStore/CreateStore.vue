@@ -124,6 +124,8 @@
                             @blur="validateName"
                         ></v-text-field>
 
+                        <Places />
+
                         <v-text-field
                             v-model="storeDetails.address"
                             label="Address"
@@ -210,14 +212,21 @@
 </template>
 
 <script>
-import axios from "axios";
 import { mdiAccount, mdiLock, mdiLockOutline, mdiEye } from "@mdi/js";
-import validators from "@/utils/validators/storePanel/createStore";
 import { mapState, mapMutations, mapActions } from "vuex";
+
+import axios from "axios";
+
+import Places from "./Places.vue";
+import validators from "@/utils/validators/storePanel/createStore";
 
 export default {
     name: "CreateStore",
+
+    components: { Places },
+
     mixins: [validators],
+
     data() {
         return {
             icons: { mdiAccount, mdiLock, mdiLockOutline, mdiEye },

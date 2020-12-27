@@ -27,7 +27,29 @@ const routes = [
                     /* webpackChunkName: "header" */ "@/components/Header.vue"
                 ),
             default: () =>
-                import(/* webpackChunkName: "home" */ "@/views/Home.vue")
+                import(/* webpackChunkName: "home" */ "@/views/Home.vue"),
+            footer: () =>
+                import(
+                    /* webpackChunkName: "footer" */ "@/components/Footer.vue"
+                )
+        }
+    },
+    {
+        path: "/:lang/points-pos",
+        name: "PointsPos",
+        components: {
+            header: () =>
+                import(
+                    /* webpackChunkName: "header" */ "@/components/Header.vue"
+                ),
+            default: () =>
+                import(
+                    /* webpackChunkName: "pointsPos" */ "@/views/PointsPos.vue"
+                ),
+            footer: () =>
+                import(
+                    /* webpackChunkName: "footer" */ "@/components/Footer.vue"
+                )
         }
     },
     {

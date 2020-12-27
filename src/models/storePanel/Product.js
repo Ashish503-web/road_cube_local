@@ -1,10 +1,4 @@
-import axios from "axios";
-
-axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
-    "accessToken"
-)}`;
-
-const ApiEndpoint = `${process.env.VUE_APP_DEFAULT_API_URL}/stores`;
+import API from "@/models/API";
 
 export default class Product {
     constructor(item = {}) {
@@ -45,41 +39,34 @@ export default class Product {
     };
 
     static getCategories = () =>
-        axios.get(
-            `${ApiEndpoint}/${localStorage.getItem(
-                "storeId"
-            )}/product-categories`
+        API().get(
+            `/stores/${localStorage.getItem("storeId")}/product-categories`
         );
 
     static get = query =>
-        axios.get(
-            `${ApiEndpoint}/${localStorage.getItem("storeId")}/products${query}`
+        API().get(
+            `/stores/${localStorage.getItem("storeId")}/products${query}`
         );
 
     static create = item =>
-        axios.post(
-            `${ApiEndpoint}/${localStorage.getItem("storeId")}/products`,
-            item
-        );
+        API().post(`/stores/${localStorage.getItem("storeId")}/products`, item);
 
     static update = item =>
-        axios.put(
-            `${ApiEndpoint}/${localStorage.getItem("storeId")}/products/${
+        API().put(
+            `/stores/${localStorage.getItem("storeId")}/products/${
                 item.product_id
             }`,
             item
         );
 
     static delete = id =>
-        axios.delete(
-            `${ApiEndpoint}/${localStorage.getItem("storeId")}/products/${id}`
+        API().delete(
+            `/stores/${localStorage.getItem("storeId")}/products/${id}`
         );
 
     static uploadImage = (id, image) =>
-        axios.post(
-            `${ApiEndpoint}/${localStorage.getItem(
-                "storeId"
-            )}/products/${id}/images`,
+        API().post(
+            `/stores/${localStorage.getItem("storeId")}/products/${id}/images`,
             image
         );
 }

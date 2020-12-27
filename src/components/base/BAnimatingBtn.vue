@@ -10,6 +10,7 @@
         :loading="loading"
         :disabled="disabled"
         :to="to"
+        :href="href"
     >
         <template v-slot:loader>
             <v-progress-circular
@@ -43,7 +44,7 @@
 </template>
 
 <script>
-import { mdiArrowRight } from "@mdi/js";
+import { mdiArrowRight, mdiEmail, mdiPhoneInTalkOutline } from "@mdi/js";
 
 export default {
     name: "BAnimatingBtn",
@@ -54,12 +55,13 @@ export default {
         text: String,
         icon: String,
         to: String,
+        href: String,
         loading: Boolean,
         disabled: Boolean
     },
 
     data: () => ({
-        icons: { mdiArrowRight }
+        icons: { mdiArrowRight, mdiEmail, mdiPhoneInTalkOutline }
     })
 };
 </script>
@@ -72,7 +74,7 @@ export default {
     font-size: 17px !important;
     font-weight: bold;
     line-height: 22px;
-    text-transform: capitalize;
+    text-transform: none;
     transition: all 0.3s ease;
     overflow: hidden;
 }

@@ -105,7 +105,7 @@
 
                                 <b-animating-btn
                                     type="submit"
-                                    text="login user"
+                                    text="Login User"
                                     icon="mdiArrowRight"
                                     class="mt-7"
                                     small

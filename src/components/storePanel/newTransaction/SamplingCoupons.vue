@@ -1,5 +1,9 @@
 <template>
-    <v-row no-gutters class="px-10 pt-5 pb-7 b-bottom-outlined">
+    <v-row
+        v-if="samplingCoupons.length"
+        no-gutters
+        class="px-10 pt-5 pb-7 b-bottom-outlined"
+    >
         <v-col
             cols="12"
             class="subtitle-1 font-weight-bold pb-5"
@@ -32,20 +36,20 @@ export default {
             samplingCoupons: {
                 el: "",
                 en: "Sampling Coupons:",
-                it: ""
-            }
-        }
+                it: "",
+            },
+        },
     }),
 
     computed: {
         ...mapState("storePanel/transactions", [
             "samplingCoupons",
-            "transaction"
+            "transaction",
         ]),
 
         lang() {
             return this.$route.params.lang;
-        }
+        },
     },
 
     methods: {
@@ -53,7 +57,7 @@ export default {
             coupon.selected = !coupon.selected;
 
             let index = this.transaction.sampling_coupons_for_use.findIndex(
-                c => c.coupon_id === coupon.coupon_id
+                (c) => c.coupon_id === coupon.coupon_id
             );
 
             if (index === -1) {
@@ -61,8 +65,8 @@ export default {
             } else {
                 this.transaction.sampling_coupons_for_use.splice(index, 1);
             }
-        }
-    }
+        },
+    },
 };
 </script>
 

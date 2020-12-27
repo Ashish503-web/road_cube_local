@@ -49,11 +49,6 @@ export default {
                 en: "Amount",
                 it: ""
             },
-            generalCouponClaims: {
-                el: "",
-                en: "General Coupon Claims",
-                it: ""
-            },
             createOrder: {
                 el: "",
                 en: "Create Order",

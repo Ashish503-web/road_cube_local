@@ -130,7 +130,16 @@ export default {
         },
 
         setGeneralCouponClaims(state, payload) {
-            state.generalCouponClaims = payload;
+            state.generalCouponClaims = payload.map(g => {
+                let coupon = state.transaction.general_coupon_claims_for_use.find(
+                    c => c.coupon_id === g.coupon_id
+                );
+
+                if (coupon) g.selected = coupon.selected;
+                else g.selected = false;
+
+                return g;
+            });
         },
 
         setSamplingCoupons(state, payload) {

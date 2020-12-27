@@ -19,38 +19,10 @@
                         loyalty platform and reduce your customer acquisition
                         cost with our synergy tool.
                     </p>
-                    <v-btn
-                        class="text-capitalize pr-1 pl-0 b-btn-hover"
-                        height="auto"
-                        rounded
-                        href="#products"
-                    >
-                        <p
-                            class="ma-0"
-                            style="
-                                padding: 15px 70px 15px 20px;
-                                font-size: 17px;
-                                line-height: normal;
-                                text-transform: none;
-                            "
-                        >
-                            Learn More
-                        </p>
-                        <v-avatar size="38" class="b-icon-hover">
-                            <v-icon
-                                size="24"
-                                color="#fff"
-                                v-text="icons.mdiArrowRight"
-                                class="b-right-icon"
-                            ></v-icon>
-                            <v-icon
-                                size="24"
-                                color="#001266"
-                                v-text="icons.mdiArrowRight"
-                                class="b-right-icon"
-                            ></v-icon>
-                        </v-avatar>
-                    </v-btn>
+                    <b-animating-btn
+                        text="Learn More"
+                        icon="mdiArrowRight"
+                    ></b-animating-btn>
                 </v-col>
                 <v-col
                     data-aos="fade-left"
@@ -62,7 +34,7 @@
                     <v-img
                         max-width="100%"
                         style="vertical-align: middle; border-style: none"
-                        src="../../assets/home/video-bg-img.png"
+                        src="@/assets/home/video-bg-img.png"
                     ></v-img>
                     <div class="b-wrapper">
                         <div class="b-video-main">
@@ -130,7 +102,7 @@ import {
     mdiCheckCircleOutline,
     mdiClockOutline,
     mdiPlay,
-    mdiClose,
+    mdiClose
 } from "@mdi/js";
 
 export default {
@@ -142,21 +114,21 @@ export default {
                 mdiArrowRight,
                 mdiClockOutline,
                 mdiPlay,
-                mdiClose,
+                mdiClose
             },
-            dialog: false,
+            dialog: false
         };
-    },
+    }
 };
 
 setTimeout(() => {
     let playBtn = document.querySelector("#play");
 
-    playBtn.addEventListener("click", function () {
+    playBtn.addEventListener("click", function() {
         let video = document.querySelector("#video");
         let closeBtn = document.querySelector("#close-video-modal");
 
-        closeBtn.addEventListener("click", function () {
+        closeBtn.addEventListener("click", function() {
             video.setAttribute("src", "");
         });
 
@@ -280,51 +252,4 @@ h1 {
 .b-video-close-btn::before {
     background-color: transparent !important;
 }
-
-/*Hovered btn*/
-
-.b-btn-hover {
-    font-size: 1em;
-    background-color: white !important;
-    border-radius: 150px;
-    transition: all 0.3s ease;
-    overflow: hidden;
-    box-shadow: none;
-    border: 1px solid #e8eaee;
-}
-
-.b-btn-hover:hover {
-    border: 1px solid #142752;
-    background-color: #142752 !important;
-}
-
-.b-icon-hover {
-    position: absolute;
-    right: 0;
-    display: flex;
-    width: 40px !important;
-    height: 40px !important;
-    background-color: #c8f2fd !important;
-    transition: all 0.3s ease;
-    justify-items: center;
-    justify-content: flex-end;
-}
-
-.b-icon-hover .b-right-icon {
-    width: 40px !important;
-}
-
-.b-btn-hover:hover .b-icon-hover .b-right-icon {
-    transform: translateX(100%);
-}
-
-.b-btn-hover:hover .b-icon-hover {
-    background-color: #0089f3 !important;
-}
-
-.b-btn-hover:hover p {
-    color: white;
-}
-
-/*Hovered btn*/
 </style>

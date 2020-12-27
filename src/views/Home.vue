@@ -1,40 +1,38 @@
 <template>
-    <v-container fluid class="pa-0 homePage">
+    <v-container fluid class="homePage">
         <HomeSection />
-        <Quickfeatures />
+        <QuickFeatures />
         <Products />
         <About />
         <Cta />
         <Features />
         <Quote />
         <SimplePricing />
-        <Footer />
     </v-container>
 </template>
 
 <script>
-import HomeSection from "../components/home/HomeSection";
-import Quickfeatures from "../components/home/Quickfeatures";
-import Products from "../components/home/profucts/Products";
-import About from "../components/home/About";
-import Cta from "../components/home/Cta";
-import Features from "../components/home/Features";
-import Quote from "../components/home/Quote";
-import SimplePricing from "../components/home/SimplePricing";
-import Footer from "../components/home/Footer";
+import HomeSection from "../components/home/HomeSection.vue";
+import QuickFeatures from "../components/home/QuickFeatures.vue";
+import Products from "../components/home/Products.vue";
+import About from "../components/home/About.vue";
+import Cta from "../components/home/Cta.vue";
+import Features from "../components/home/Features.vue";
+import Quote from "../components/home/Quote.vue";
+import SimplePricing from "../components/home/SimplePricing.vue";
 
 export default {
     name: "Home",
+
     components: {
-        Footer,
+        HomeSection,
+        QuickFeatures,
         SimplePricing,
         Quote,
         Features,
         Cta,
         About,
-        Products,
-        Quickfeatures,
-        HomeSection,
+        Products
     },
 
     data: () => ({}),
@@ -47,12 +45,13 @@ export default {
         ) {
             this.$router.push("/en" + this.$route.fullPath);
         }
-    },
+    }
 };
 </script>
 
 <style scoped>
 .homePage {
     scroll-behavior: smooth;
+    padding: 0;
 }
 </style>
