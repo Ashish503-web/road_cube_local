@@ -6,8 +6,6 @@ export default {
                 description: false,
                 sellingPrice: false,
                 wholesalePrice: false,
-                deliveryCost: false,
-                shippingCost: false,
                 category: false
             },
             success: {
@@ -15,8 +13,6 @@ export default {
                 description: false,
                 sellingPrice: false,
                 wholesalePrice: false,
-                deliveryCost: false,
-                shippingCost: false,
                 category: false
             },
             error: {
@@ -24,8 +20,6 @@ export default {
                 description: "",
                 sellingPrice: "",
                 wholesalePrice: "",
-                deliveryCost: "",
-                shippingCost: "",
                 category: ""
             },
             errorMessages: {
@@ -54,16 +48,6 @@ export default {
                     en: "Wholesale Price must be minimum 0.1",
                     it: ""
                 },
-                deliveryCostMin: {
-                    el: "",
-                    en: "Delivery Cost must be minimum 0.1",
-                    it: ""
-                },
-                shippingCostMin: {
-                    el: "",
-                    en: "Shipping Cost must be minimum 0.1",
-                    it: ""
-                },
                 categoryRequired: {
                     el: "",
                     en: "Category is required",
@@ -80,8 +64,6 @@ export default {
                 this.valid.description &&
                 this.valid.sellingPrice &&
                 this.valid.wholesalePrice &&
-                this.valid.deliveryCost &&
-                this.valid.shippingCost &&
                 this.valid.category
             );
         }
@@ -135,30 +117,6 @@ export default {
                 ];
             } else {
                 this.error.wholesalePrice = "";
-            }
-        },
-
-        validateDeliveryCost() {
-            if (!this.product.delivery_cost) {
-                this.error.deliveryCost = "";
-            } else if (this.product.delivery_cost < 0.1) {
-                this.error.deliveryCost = this.errorMessages.deliveryCostMin[
-                    this.lang
-                ];
-            } else {
-                this.error.deliveryCost = "";
-            }
-        },
-
-        validateShippingCost() {
-            if (!this.product.shipping_cost) {
-                this.error.shippingCost = "";
-            } else if (this.product.shipping_cost < 0.1) {
-                this.error.shippingCost = this.errorMessages.shippingCostMin[
-                    this.lang
-                ];
-            } else {
-                this.error.shippingCost = "";
             }
         },
 
@@ -218,22 +176,6 @@ export default {
             }
         },
 
-        ["product.delivery_cost"]: {
-            immediate: true,
-            handler(val) {
-                this.valid.deliveryCost = val >= 0.1 || !val;
-                this.success.deliveryCost = val >= 0.1;
-            }
-        },
-
-        ["product.shipping_cost"]: {
-            immediate: true,
-            handler(val) {
-                this.valid.shippingCost = val >= 0.1 || !val;
-                this.success.shippingCost = val >= 0.1;
-            }
-        },
-
         ["product.product_category_id"]: {
             immediate: true,
             handler(val) {
@@ -249,8 +191,6 @@ export default {
                     description: false,
                     sellingPrice: false,
                     wholesalePrice: false,
-                    deliveryCost: false,
-                    shippingCost: false,
                     category: false
                 };
 
@@ -267,8 +207,6 @@ export default {
                         description: "",
                         sellingPrice: "",
                         wholesalePrice: "",
-                        deliveryCost: "",
-                        shippingCost: "",
                         category: ""
                     };
 

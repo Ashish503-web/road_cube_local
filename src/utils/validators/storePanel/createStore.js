@@ -59,11 +59,6 @@ export default {
                     en: "Address is required",
                     it: ""
                 },
-                addressLength: {
-                    el: "",
-                    en: "Address must be at least 5 characters long",
-                    it: ""
-                },
                 zipRequired: {
                     el: "",
                     en: "Zip Code is required",
@@ -178,10 +173,6 @@ export default {
                 this.error.address = this.errorMessages.addressRequired[
                     this.lang
                 ];
-            } else if (this.storeDetails.address.length < 5) {
-                this.error.address = this.errorMessages.addressLength[
-                    this.lang
-                ];
             } else {
                 this.error.address = "";
             }
@@ -267,11 +258,7 @@ export default {
         },
 
         ["storeDetails.address"](val) {
-            if (val) {
-                this.success.address = val.length >= 5;
-            } else {
-                this.success.address = false;
-            }
+            this.success.address = !!val;
         },
 
         ["storeDetails.zip"](val) {

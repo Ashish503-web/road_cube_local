@@ -172,7 +172,7 @@
         <v-checkbox
             v-model="product.published"
             color="secondary"
-            class="pt-0 mt-3"
+            class="mt-3 pt-0"
             hide-details="auto"
         >
             <template v-slot:label>

@@ -17,7 +17,7 @@ export default class Product {
         this.retail_price = item.retail_price || null;
         this.wholesale_price = item.wholesale_price || null;
         this.availability_days = item.availability_days || [];
-        this.published = item.published || false;
+        this.published = item.published || true;
         this.group_product = false;
         this.image = item.image || "";
     }

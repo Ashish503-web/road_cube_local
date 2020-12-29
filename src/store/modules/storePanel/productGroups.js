@@ -102,12 +102,12 @@ export default {
 
                 if (image) {
                     dispatch("uploadImage", {
-                        item: data.data.group_product,
+                        item: data.data.product,
                         image,
                         mode: 1
                     });
                 } else {
-                    commit("addItem", data.data.group_product);
+                    commit("addItem", data.data.product);
                     commit(
                         "setServerItemsLength",
                         rootState.serverItemsLength + 1,

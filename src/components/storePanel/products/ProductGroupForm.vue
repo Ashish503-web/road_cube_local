@@ -54,16 +54,38 @@
             </template>
         </b-textarea>
 
-        <b-text-field
-            v-model="productGroup.average_price"
-            :label="translations.averagePrice[lang]"
-            type="number"
-            prepend-inner-icon="mdiCurrencyEur"
-            :success="success.averagePrice"
-            :error-messages="error.averagePrice"
-            @focus="error.averagePrice = ''"
-            @blur="validateAveragePrice"
-        ></b-text-field>
+        <v-row no-gutters>
+            <v-col cols="12">
+                <h4
+                    class="secondary--text mt-3"
+                    v-text="translations.prices[lang]"
+                ></h4>
+            </v-col>
+            <v-col cols="6" class="pr-2">
+                <b-text-field
+                    v-model="productGroup.retail_price"
+                    :label="translations.sellingPrice[lang]"
+                    type="number"
+                    prepend-inner-icon="mdiCurrencyEur"
+                    :success="success.sellingPrice"
+                    :error-messages="error.sellingPrice"
+                    @focus="error.sellingPrice = ''"
+                    @blur="validateSellingPrice"
+                ></b-text-field>
+            </v-col>
+            <v-col cols="6" class="pl-2">
+                <b-text-field
+                    v-model="productGroup.wholesale_price"
+                    :label="translations.wholesalePrice[lang]"
+                    type="number"
+                    prepend-inner-icon="mdiCurrencyEur"
+                    :success="success.wholesalePrice"
+                    :error-messages="error.wholesalePrice"
+                    @focus="error.wholesalePrice = ''"
+                    @blur="validateWholesalePrice"
+                ></b-text-field>
+            </v-col>
+        </v-row>
 
         <v-checkbox
             v-model="showImageUpload"

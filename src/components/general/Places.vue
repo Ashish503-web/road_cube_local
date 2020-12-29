@@ -1,21 +1,22 @@
 <template>
-    <div>
-        <v-autocomplete
-            :search-input.sync="location"
-            label="Address"
-            color="secondary"
-            clearable
-            :prepend-inner-icon="icons.mdiMapMarker"
-            :outlined="outlined"
-            :dense="dense"
-        ></v-autocomplete>
-
-        <ul>
-            <li v-for="(result, i) in searchResults" :key="i">
-                {{ result }} // list of all places
-            </li>
-        </ul>
-    </div>
+    <v-autocomplete
+        :value="value"
+        :search-input.sync="location"
+        :items="searchResults"
+        :label="label"
+        color="secondary"
+        item-color="secondary"
+        clearable
+        :outlined="outlined"
+        :dense="dense"
+        :hide-details="hideDetails"
+        :success="success"
+        :error-messages="errorMessages"
+        :prepend-inner-icon="icons.mdiMapMarker"
+        @focus="$emit('focus')"
+        @blur="$emit('blur')"
+        @input="$emit('input', $event)"
+    ></v-autocomplete>
 </template>
 
 <script>
@@ -28,7 +29,7 @@ export default {
         return {
             script: [
                 {
-                    src: `https://maps.googleapis.com/maps/api/js?key=AIzaSyDKQwGY35TQ-jjbdZtrzZHAkVb5eZTkaVE&libraries=places`,
+                    src: `https://maps.googleapis.com/maps/api/js?key=AIzaSyBO7NVvj3D2unctftPpj-O0n3aoS0MbUEQ&libraries=places`,
                     async: true,
                     defer: true,
                     callback: () => this.MapsInit()
@@ -38,8 +39,13 @@ export default {
     },
 
     props: {
+        value: String,
+        label: String,
         outlined: Boolean,
-        dense: Boolean
+        dense: Boolean,
+        hideDetails: [String, Boolean],
+        success: Boolean,
+        errorMessages: String
     },
 
     data: () => ({
@@ -71,7 +77,7 @@ export default {
                 this.service.getPlacePredictions(
                     {
                         input: this.location,
-                        types: ["(cities)"]
+                        types: []
                     },
                     this.displaySuggestions
                 );

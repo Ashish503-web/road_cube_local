@@ -25,7 +25,7 @@ export default class Transaction {
 
     static getProducts = query =>
         API().get(
-            `/stores/${localStorage.getItem("storeId")}/products${query}`
+            `/stores/${localStorage.getItem("storeId")}/products/all${query}`
         );
 
     static getTransactionPreview = item =>

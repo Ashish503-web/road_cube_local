@@ -124,18 +124,14 @@
                             @blur="validateName"
                         ></v-text-field>
 
-                        <Places />
-
-                        <v-text-field
+                        <Places
                             v-model="storeDetails.address"
                             label="Address"
-                            color="secondary"
-                            clearable
                             :success="success.address"
                             :error-messages="error.address"
                             @focus="error.address = ''"
                             @blur="validateAddress"
-                        ></v-text-field>
+                        />
 
                         <v-text-field
                             v-model="storeDetails.zip"
@@ -217,7 +213,7 @@ import { mapState, mapMutations, mapActions } from "vuex";
 
 import axios from "axios";
 
-import Places from "./Places.vue";
+import Places from "@/components/general/Places.vue";
 import validators from "@/utils/validators/storePanel/createStore";
 
 export default {

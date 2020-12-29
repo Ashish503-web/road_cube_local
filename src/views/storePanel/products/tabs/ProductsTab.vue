@@ -161,6 +161,7 @@ import {
     mdiClose,
     mdiMagnify
 } from "@mdi/js";
+
 import { mapState, mapMutations, mapActions } from "vuex";
 import debounce from "lodash/debounce";
 import ProductForm from "@/components/storePanel/products/ProductForm.vue";

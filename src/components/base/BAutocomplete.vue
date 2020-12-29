@@ -29,7 +29,7 @@ export default {
 
     props: {
         value: {
-            type: [String, Number],
+            type: [String, Number]
         },
         items: Array,
         label: String,
@@ -37,11 +37,11 @@ export default {
         prependInnerIcon: String,
         appendIcon: String,
         appendOuterIcon: String,
-        noTopMargin: Boolean,
+        noTopMargin: Boolean
     },
 
     data: () => ({
-        icons: { mdiPlus },
-    }),
+        icons: { mdiPlus }
+    })
 };
 </script>

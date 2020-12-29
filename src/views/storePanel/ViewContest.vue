@@ -4,6 +4,6 @@
 
 <script>
 export default {
-    name: "ViewContests",
+    name: "ViewContests"
 };
 </script>

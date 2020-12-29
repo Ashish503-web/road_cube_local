@@ -14,9 +14,10 @@ export default class ProductGroup {
             en: "",
             it: ""
         };
-        this.average_price = item.average_price || null;
+        this.retail_price = item.retail_price || null;
+        this.wholesale_price = item.wholesale_price || null;
         this.availability_days = item.availability_days || [];
-        this.published = item.published || false;
+        this.published = item.published || true;
         this.group_product = true;
         this.image = item.image || "";
     }
@@ -32,10 +33,7 @@ export default class ProductGroup {
         );
 
     static create = item =>
-        API().post(
-            `/stores/${localStorage.getItem("storeId")}/group-products`,
-            item
-        );
+        API().post(`/stores/${localStorage.getItem("storeId")}/products`, item);
 
     static update = item =>
         API().put(

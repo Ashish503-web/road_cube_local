@@ -177,7 +177,10 @@
 
                     <div class="pt-1 pb-3">
                         <price-field
-                            v-if="product.reward_type_id === 4"
+                            v-if="
+                                product.reward_type_id === 4 ||
+                                    product.group_product
+                            "
                             v-model="product.retail_price"
                             :label="translations.purchasePrice[lang]"
                             prepend-inner-icon="mdiCurrencyEur"

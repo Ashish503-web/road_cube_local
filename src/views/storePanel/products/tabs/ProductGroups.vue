@@ -16,6 +16,7 @@
             :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
             :page.sync="page"
             :server-items-length="serverItemsLength"
+            disable-sort
             class="b-outlined"
         >
             <template v-slot:no-data>
@@ -27,14 +28,27 @@
                 <span v-else v-text="translations.noData[lang]"></span>
             </template>
 
-            <template v-slot:item.average_price="{ item }">
+            <template v-slot:item.retail_price="{ item }">
                 {{
                     new Intl.NumberFormat("en-US", {
                         style: "currency",
                         currency: "EUR",
                         minimumFractionDigits: 2
-                    }).format(item.average_price)
+                    }).format(item.retail_price)
                 }}
+            </template>
+
+            <template v-slot:item.published="{ item }">
+                <v-icon
+                    v-if="item.published"
+                    color="green"
+                    v-text="icons.mdiCheckCircleOutline"
+                ></v-icon>
+                <v-icon
+                    v-else
+                    color="red"
+                    v-text="icons.mdiMinusCircleOutline"
+                ></v-icon>
             </template>
 
             <template v-slot:item.actions="{ item }">
@@ -120,7 +134,13 @@
 <script>
 import productGroups from "@/store/modules/storePanel/productGroups";
 
-import { mdiPencilOutline, mdiClose } from "@mdi/js";
+import {
+    mdiCheckCircleOutline,
+    mdiMinusCircleOutline,
+    mdiPencilOutline,
+    mdiClose
+} from "@mdi/js";
+
 import { mapState, mapMutations, mapActions } from "vuex";
 import ProductGroupForm from "@/components/storePanel/products/ProductGroupForm.vue";
 import translations from "@/utils/translations/storePanel/products";
@@ -134,7 +154,12 @@ export default {
 
     data() {
         return {
-            icons: { mdiPencilOutline, mdiClose },
+            icons: {
+                mdiCheckCircleOutline,
+                mdiMinusCircleOutline,
+                mdiPencilOutline,
+                mdiClose
+            },
             page: +this.$route.query.page,
             mode: 0
         };
@@ -165,8 +190,21 @@ export default {
                     value: `description[${this.lang}]`
                 },
                 {
-                    text: this.translations.averagePrice[this.lang],
-                    value: "average_price"
+                    text: this.translations.sellingPrice[this.lang],
+                    value: "retail_price"
+                },
+                {
+                    text: this.translations.points[this.lang],
+                    value: "reward_points"
+                },
+                {
+                    text: this.translations.category[this.lang],
+                    value: `product_category.name[${this.lang}]`
+                },
+                {
+                    text: this.translations.published[this.lang],
+                    value: "published",
+                    align: "center"
                 },
                 {
                     text: this.translations.actions[this.lang],

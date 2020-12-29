@@ -24,7 +24,7 @@
             :items="productPoints"
             :footer-props="{
                 itemsPerPageOptions: [12],
-                showCurrentPage: true,
+                showCurrentPage: true
             }"
             :page.sync="page"
             :server-items-length="serverItemsLength"
@@ -53,11 +53,8 @@
                 <v-sheet>
                     <b-select
                         v-model="item.reward_type_id"
-                        :items="
-                            item.group_product
-                                ? groupRewardTypes
-                                : productRewardTypes
-                        "
+                        :items="rewardTypes"
+                        :disabled="item.group_product"
                         class="mb-3"
                     ></b-select>
                 </v-sheet>
@@ -85,6 +82,7 @@
                     class="text-capitalize"
                     depressed
                     :loading="item.loading"
+                    :disabled="item.group_product"
                     @click="update(item)"
                 >
                     {{ translations.change[lang] }}
@@ -107,7 +105,7 @@ export default {
 
     data() {
         return {
-            page: +this.$route.query.page,
+            page: +this.$route.query.page
         };
     },
 
@@ -130,43 +128,36 @@ export default {
                 {
                     text: this.translations.productName[this.lang],
                     value: `name[${this.lang}]`,
-                    width: "20%",
+                    width: "20%"
                 },
                 {
                     text: this.translations.points[this.lang],
                     value: "reward_points",
-                    width: "15%",
+                    width: "15%"
                 },
                 {
                     text: this.translations.type[this.lang],
                     value: "reward_type_id",
-                    width: "30%",
+                    width: "30%"
                 },
                 {
                     text: this.translations.pointSubsidy[this.lang],
-                    value: "reward_points_shared",
+                    value: "reward_points_shared"
                 },
                 {
                     text: this.translations.action[this.lang],
                     value: "save",
-                    width: "10%",
-                },
+                    width: "10%"
+                }
             ];
         },
 
-        groupRewardTypes() {
-            return [
-                { text: this.translations.perTransaction[this.lang], value: 1 },
-                { text: this.translations.perEuro[this.lang], value: 2 },
-            ];
-        },
-
-        productRewardTypes() {
+        rewardTypes() {
             return [
                 { text: this.translations.perTransaction[this.lang], value: 1 },
                 { text: this.translations.perEuro[this.lang], value: 2 },
                 { text: this.translations.piece[this.lang], value: 3 },
-                { text: this.translations.liters[this.lang], value: 4 },
+                { text: this.translations.liters[this.lang], value: 4 }
             ];
         },
 
@@ -178,11 +169,11 @@ export default {
             }
 
             return query.slice(0, query.length - 1);
-        },
+        }
     },
 
     methods: {
-        ...mapActions("storePanel/productPoints", ["getItems", "update"]),
+        ...mapActions("storePanel/productPoints", ["getItems", "update"])
     },
 
     watch: {
@@ -194,7 +185,7 @@ export default {
                         `/${this.lang}/storePanel/forbidden-gateway`
                     );
                 }
-            },
+            }
         },
 
         $route(val) {
@@ -202,8 +193,8 @@ export default {
                 this.$router.replace({
                     query: {
                         page: 1,
-                        ...this.$route.query,
-                    },
+                        ...this.$route.query
+                    }
                 });
             }
             this.getItems(this.query);
@@ -211,7 +202,7 @@ export default {
 
         page(page) {
             this.$router.replace({ query: { ...this.$route.query, page } });
-        },
+        }
     },
 
     beforeCreate() {
@@ -226,14 +217,14 @@ export default {
             this.$router.replace({
                 query: {
                     page: 1,
-                    ...this.$route.query,
-                },
+                    ...this.$route.query
+                }
             });
         }
     },
 
     mounted() {
         this.getItems(this.query);
-    },
+    }
 };
 </script>

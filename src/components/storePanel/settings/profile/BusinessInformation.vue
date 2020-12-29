@@ -68,15 +68,17 @@
             </v-col>
 
             <v-col cols="12" sm="5">
-                <b-text-field
+                <Places
                     v-model="businessInformation.address"
                     :label="translations.address[lang]"
-                    no-top-margin
+                    outlined
+                    dense
+                    hide-details="auto"
                     :success="success.address"
                     :error-messages="error.address"
                     @focus="error.address = ''"
                     @blur="validateAddress"
-                ></b-text-field>
+                />
 
                 <v-btn
                     :href="
@@ -133,11 +135,15 @@
 
 <script>
 import { mapMutations, mapActions } from "vuex";
+
+import Places from "@/components/general/Places.vue";
 import translations from "@/utils/translations/storePanel/settings/profile/businessInformation";
 import validators from "@/utils/validators/storePanel/businessInformation";
 
 export default {
     name: "BusinessInformation",
+
+    components: { Places },
 
     mixins: [translations, validators],
 

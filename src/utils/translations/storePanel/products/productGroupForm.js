@@ -21,9 +21,19 @@ export default {
                 en: "Product Group Description",
                 it: ""
             },
-            averagePrice: {
+            prices: {
                 el: "",
-                en: "Average Price",
+                en: "Prices",
+                it: ""
+            },
+            sellingPrice: {
+                el: "",
+                en: "Selling Price",
+                it: ""
+            },
+            wholesalePrice: {
+                el: "",
+                en: "Wholesale Price",
                 it: ""
             },
             selectCategory: {

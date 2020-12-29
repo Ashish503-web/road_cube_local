@@ -4,19 +4,22 @@ export default {
             valid: {
                 name: false,
                 description: false,
-                averagePrice: false,
+                sellingPrice: false,
+                wholesalePrice: false,
                 category: false
             },
             success: {
                 name: false,
                 description: false,
-                averagePrice: false,
+                sellingPrice: false,
+                wholesalePrice: false,
                 category: false
             },
             error: {
                 name: "",
                 description: "",
-                averagePrice: "",
+                sellingPrice: "",
+                wholesalePrice: false,
                 category: ""
             },
             errorMessages: {
@@ -30,14 +33,19 @@ export default {
                     en: "Description is required",
                     it: ""
                 },
-                averagePriceRequired: {
+                sellingPriceRequired: {
                     el: "",
-                    en: "Average Price is required",
+                    en: "Selling Price is required",
                     it: ""
                 },
-                averagePriceMin: {
+                sellingPriceMin: {
                     el: "",
-                    en: "Average Price must be minimum 0.1",
+                    en: "Selling Price must be minimum 0.1",
+                    it: ""
+                },
+                wholesalePriceMin: {
+                    el: "",
+                    en: "Wholesale Price must be minimum 0.1",
                     it: ""
                 },
                 categoryRequired: {
@@ -54,7 +62,8 @@ export default {
             return (
                 this.valid.name &&
                 this.valid.description &&
-                this.valid.averagePrice &&
+                this.valid.sellingPrice &&
+                this.valid.wholesalePrice &&
                 this.valid.category
             );
         }
@@ -85,17 +94,29 @@ export default {
             }
         },
 
-        validateAveragePrice() {
-            if (!this.productGroup.average_price) {
-                this.error.averagePrice = this.errorMessages.averagePriceRequired[
+        validateSellingPrice() {
+            if (!this.productGroup.retail_price) {
+                this.error.sellingPrice = this.errorMessages.sellingPriceRequired[
                     this.lang
                 ];
-            } else if (this.productGroup.average_price < 0.1) {
-                this.error.averagePrice = this.errorMessages.averagePriceMin[
+            } else if (this.productGroup.retail_price < 0.1) {
+                this.error.sellingPrice = this.errorMessages.sellingPriceMin[
                     this.lang
                 ];
             } else {
-                this.error.averagePrice = "";
+                this.error.sellingPrice = "";
+            }
+        },
+
+        validateWholesalePrice() {
+            if (!this.productGroup.wholesale_price) {
+                this.error.wholesalePrice = "";
+            } else if (this.productGroup.wholesale_price < 0.1) {
+                this.error.wholesalePrice = this.errorMessages.wholesalePriceMin[
+                    this.lang
+                ];
+            } else {
+                this.error.wholesalePrice = "";
             }
         },
 
@@ -139,11 +160,19 @@ export default {
             }
         },
 
-        ["productGroup.average_price"]: {
+        ["productGroup.retail_price"]: {
             immediate: true,
             handler(val) {
-                this.valid.averagePrice = val >= 0.1;
-                this.success.averagePrice = val >= 0.1;
+                this.valid.sellingPrice = val >= 0.1;
+                this.success.sellingPrice = val >= 0.1;
+            }
+        },
+
+        ["productGroup.wholesale_price"]: {
+            immediate: true,
+            handler(val) {
+                this.valid.wholesalePrice = val >= 0.1 || !val;
+                this.success.wholesalePrice = val >= 0.1;
             }
         },
 
@@ -160,7 +189,8 @@ export default {
                 this.success = {
                     name: false,
                     description: false,
-                    averagePrice: false,
+                    sellingPrice: false,
+                    wholesalePrice: false,
                     category: false
                 };
 
@@ -175,7 +205,8 @@ export default {
                     this.error = {
                         name: "",
                         description: "",
-                        averagePrice: "",
+                        sellingPrice: "",
+                        wholesalePrice: "",
                         category: ""
                     };
 
