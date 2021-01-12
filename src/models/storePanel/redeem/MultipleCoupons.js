@@ -7,6 +7,8 @@ export default class MultipleCoupons {
 
     static get = () =>
         API().get(
-            `/stores/${localStorage.getItem("storeId")}/coupons/redeemed`
+            `/stores/${localStorage.getItem(
+                "storeId"
+            )}/coupons/redeemed/multiple`
         );
 }

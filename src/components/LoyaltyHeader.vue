@@ -178,6 +178,8 @@
 </template>
 
 <script>
+import loyaltyPanel from "@/store/modules/loyaltyPanel";
+
 import { mdiChevronDown, mdiLogout, mdiCogOutline, mdiClose } from "@mdi/js";
 
 import navLinks from "@/utils/loyaltyPanel/navLinks";
@@ -254,6 +256,11 @@ export default {
                 console.log(ex.response.data);
             }
         }
+    },
+
+    beforeCreate() {
+        if (!this.$store.hasModule("loyaltyPanel"))
+            this.$store.registerModule("loyaltyPanel", loyaltyPanel);
     }
 };
 </script>

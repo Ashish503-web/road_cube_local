@@ -6,7 +6,7 @@
         @submit="
             updateInvoicing({
                 type: 'invoicing',
-                item: invoicing
+                item: invoicing,
             })
         "
     >
@@ -65,7 +65,7 @@ export default {
 
     data: () => ({
         countries: [{ text: "Greece 24%", value: 1 }],
-        invoicing: {}
+        invoicing: {},
     }),
 
     computed: {
@@ -79,11 +79,11 @@ export default {
 
         errorMessage() {
             return this.$store.state.storePanel.profile.errorMessage.invoicing;
-        }
+        },
     },
 
     methods: {
-        ...mapActions("storePanel/profile", ["updateInvoicing"])
+        ...mapActions("storePanel/profile", ["updateInvoicing"]),
     },
 
     watch: {
@@ -101,10 +101,10 @@ export default {
 
                     tax_office: val.billing_details.tax_office,
 
-                    country_id: val.billing_details.country_id
+                    country_id: val.billing_details.country_id,
                 };
-            }
-        }
-    }
+            },
+        },
+    },
 };
 </script>

@@ -4,18 +4,22 @@
         :search-input.sync="location"
         :items="searchResults"
         :label="label"
+        item-text="description"
+        return-object
         color="secondary"
         item-color="secondary"
         clearable
+        autocomplete="new-password"
         :outlined="outlined"
         :dense="dense"
         :hide-details="hideDetails"
         :success="success"
         :error-messages="errorMessages"
         :prepend-inner-icon="icons.mdiMapMarker"
+        @change="$emit('change', $event.place_id)"
         @focus="$emit('focus')"
         @blur="$emit('blur')"
-        @input="$emit('input', $event)"
+        @input="$emit('input', $event.description)"
     ></v-autocomplete>
 </template>
 
@@ -25,64 +29,54 @@ import { mdiMapMarker } from "@mdi/js";
 export default {
     name: "Places",
 
-    metaInfo() {
-        return {
-            script: [
-                {
-                    src: `https://maps.googleapis.com/maps/api/js?key=AIzaSyBO7NVvj3D2unctftPpj-O0n3aoS0MbUEQ&libraries=places`,
-                    async: true,
-                    defer: true,
-                    callback: () => this.MapsInit()
-                }
-            ]
-        };
-    },
-
     props: {
         value: String,
+        initialLocation: String,
         label: String,
         outlined: Boolean,
         dense: Boolean,
         hideDetails: [String, Boolean],
         success: Boolean,
-        errorMessages: String
+        errorMessages: String,
     },
 
     data: () => ({
         icons: { mdiMapMarker },
         location: "",
         searchResults: [],
-        service: null
+        placeService: null,
     }),
 
     methods: {
-        MapsInit() {
-            this.service = new window.google.maps.places.AutocompleteService();
-        },
-
         displaySuggestions(predictions, status) {
             if (status !== window.google.maps.places.PlacesServiceStatus.OK) {
                 this.searchResults = [];
                 return;
             }
-            this.searchResults = predictions.map(
-                prediction => prediction.description
-            );
-        }
+
+            this.searchResults = predictions;
+            // this.searchResults = predictions.map(
+            //     (prediction) => prediction.description
+            // );
+        },
     },
 
     watch: {
-        location(newValue) {
-            if (newValue) {
-                this.service.getPlacePredictions(
+        initialLocation(val) {
+            if (val) setTimeout(() => (this.location = val), 1000);
+        },
+
+        location(val) {
+            if (val) {
+                window.service.getPlacePredictions(
                     {
-                        input: this.location,
-                        types: []
+                        input: val,
+                        types: [],
                     },
                     this.displaySuggestions
                 );
             }
-        }
-    }
+        },
+    },
 };
 </script>

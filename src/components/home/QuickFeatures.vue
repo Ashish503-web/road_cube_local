@@ -40,7 +40,7 @@ export default {
                 text: `
                     Pay a simple monthly subscription for your software,
                     customer support and consultation from loyalty experts
-                `,
+                `
             },
             {
                 img: image2,
@@ -48,7 +48,7 @@ export default {
                 text: `
                     Our IoT devices convert more clients to registered users
                     of your program.
-                `,
+                `
             },
             {
                 img: image3,
@@ -56,10 +56,10 @@ export default {
                 text: `
                     Our synergy tool helps you invite partners to your
                     loyalty scheme without development costs
-                `,
-            },
-        ],
-    }),
+                `
+            }
+        ]
+    })
 };
 </script>
 

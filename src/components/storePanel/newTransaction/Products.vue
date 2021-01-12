@@ -103,7 +103,7 @@
                                     :key="product.product_id"
                                     class="pl-3"
                                     :class="{
-                                        'b-list-active': product.selected
+                                        'b-list-active': product.selected,
                                     }"
                                     @click="productSelect(product)"
                                 >
@@ -122,13 +122,40 @@
                                         ></v-icon>
                                     </v-list-item-icon>
                                     <v-list-item-title>
-                                        {{ product.name[lang] }} ({{
-                                            new Intl.NumberFormat("en-US", {
-                                                style: "currency",
-                                                currency: "EUR",
-                                                minimumFractionDigits: 2
-                                            }).format(product.retail_price)
-                                        }})
+                                        <v-row
+                                            no-gutters
+                                            justify="space-between"
+                                        >
+                                            <v-col cols="auto">
+                                                {{ product.name[lang] }} ({{
+                                                    new Intl.NumberFormat(
+                                                        "en-US",
+                                                        {
+                                                            style: "currency",
+                                                            currency: "EUR",
+                                                            minimumFractionDigits: 2,
+                                                        }
+                                                    ).format(
+                                                        product.retail_price
+                                                    )
+                                                }})
+                                            </v-col>
+
+                                            <v-col
+                                                cols="auto"
+                                                :class="
+                                                    product.available_today
+                                                        ? 'green--text'
+                                                        : 'red--text'
+                                                "
+                                            >
+                                                {{
+                                                    product.available_today
+                                                        ? "Available"
+                                                        : "Not available today"
+                                                }}
+                                            </v-col>
+                                        </v-row>
                                     </v-list-item-title>
                                 </v-list-item>
                             </template>
@@ -170,7 +197,12 @@
                         style="font-size: 0.8rem"
                         class="pl-3 mt-n2 text--secondary font-weight-medium"
                     >
-                        34 {{ translations.points[lang] }}
+                        {{
+                            transactionPreview.products.length
+                                ? transactionPreview.products[i].points_per_row
+                                : 0
+                        }}
+                        {{ translations.points[lang] }}
                     </div>
 
                     <v-divider class="mt-1"></v-divider>
@@ -179,7 +211,7 @@
                         <price-field
                             v-if="
                                 product.reward_type_id === 4 ||
-                                    product.group_product
+                                product.group_product
                             "
                             v-model="product.retail_price"
                             :label="translations.purchasePrice[lang]"
@@ -215,6 +247,18 @@
                 </v-card>
             </v-col>
         </v-row>
+
+        <v-snackbar v-model="showNotification" color="error" multi-line top>
+            <v-icon class="mr-1" v-text="icons.mdiAlert"></v-icon>
+            <span class="subtitle-1 font-weight-bold">
+                Sorry, the product you selected is not available today
+            </span>
+            <template v-slot:action>
+                <v-btn icon @click="showNotification = false">
+                    <v-icon v-text="icons.mdiClose"></v-icon>
+                </v-btn>
+            </template>
+        </v-snackbar>
     </fragment>
 </template>
 
@@ -225,7 +269,8 @@ import {
     mdiMenuUp,
     mdiMenuDown,
     mdiCheckBoxOutline,
-    mdiCheckboxBlankOutline
+    mdiCheckboxBlankOutline,
+    mdiAlert,
 } from "@mdi/js";
 
 import { mapState, mapMutations, mapActions } from "vuex";
@@ -251,7 +296,8 @@ export default {
             mdiMenuUp,
             mdiMenuDown,
             mdiCheckBoxOutline,
-            mdiCheckboxBlankOutline
+            mdiCheckboxBlankOutline,
+            mdiAlert,
         },
         menu: false,
         search: "",
@@ -260,8 +306,9 @@ export default {
         productRequired: {
             el: "",
             en: "You must choose at least 1 product",
-            it: ""
-        }
+            it: "",
+        },
+        showNotification: false,
     }),
 
     computed: {
@@ -271,7 +318,7 @@ export default {
             "transactionPreview",
             "productsLoading",
             "products",
-            "transaction"
+            "transaction",
         ]),
 
         lang() {
@@ -285,7 +332,7 @@ export default {
 
             set(val) {
                 this.setDialog(val);
-            }
+            },
         },
 
         selectedProducts: {
@@ -296,8 +343,8 @@ export default {
 
             set(val) {
                 this.setSelectedProducts(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
@@ -305,29 +352,33 @@ export default {
         ...mapMutations("storePanel/transactions", ["setSelectedProducts"]),
         ...mapActions("storePanel/transactions", [
             "getProducts",
-            "getTransactionPreview"
+            "getTransactionPreview",
         ]),
 
         productSelect(item) {
-            item.selected = !item.selected;
-
-            let index = this.selectedProducts.findIndex(
-                p => p.product_id === item.product_id
-            );
-
-            if (index === -1) {
-                this.selectedProducts.push(item);
+            if (!item.available_today) {
+                this.showNotification = true;
             } else {
-                this.selectedProducts.splice(index, 1);
-            }
+                item.selected = !item.selected;
 
-            if (!item.selected) this.debouncedGetTransactionPreview(true);
+                let index = this.selectedProducts.findIndex(
+                    (p) => p.product_id === item.product_id
+                );
+
+                if (index === -1) {
+                    this.selectedProducts.push(item);
+                } else {
+                    this.selectedProducts.splice(index, 1);
+                }
+
+                if (!item.selected) this.debouncedGetTransactionPreview(true);
+            }
         },
 
         productRemove(item, index) {
             this.selectedProducts.splice(index, 1);
             let product = this.products.find(
-                p => p.product_id === item.product_id
+                (p) => p.product_id === item.product_id
             );
             if (product) product.selected = false;
             this.debouncedGetTransactionPreview(true);
@@ -347,7 +398,7 @@ export default {
             } else {
                 this.error = "";
             }
-        }
+        },
     },
 
     watch: {
@@ -360,9 +411,9 @@ export default {
                 this.error = this.productRequired[this.lang];
             }
 
-            val.forEach(selected => {
+            val.forEach((selected) => {
                 let product = this.transaction.products.find(
-                    p => p.product_id === selected.product_id
+                    (p) => p.product_id === selected.product_id
                 );
 
                 if (product) {
@@ -376,7 +427,7 @@ export default {
 
             this.transaction.products = [];
 
-            val.forEach(p => {
+            val.forEach((p) => {
                 this.transaction.products.push(new TransactionProduct(p));
             });
         },
@@ -403,7 +454,7 @@ export default {
                 this.error = "";
                 this.setResetValidation(false);
             }
-        }
+        },
     },
 
     created() {
@@ -420,7 +471,7 @@ export default {
 
     beforeDestroy() {
         this.selectedProducts = [];
-    }
+    },
 };
 </script>
 

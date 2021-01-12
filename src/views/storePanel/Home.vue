@@ -54,7 +54,7 @@
                 v-bind:key="view.text['en']"
                 cols="12"
                 sm="6"
-                lg="3"
+                lg="4"
             >
                 <v-skeleton-loader
                     v-if="loading"
@@ -149,11 +149,11 @@ import {
     mdiAccountGroup,
     mdiDatabase,
     mdiCurrencyEur,
-    mdiBinoculars,
+    // mdiBinoculars,
     mdiCursorDefault,
     mdiCompassOutline,
     mdiPhone,
-    mdiWallet,
+    mdiWallet
 } from "@mdi/js";
 
 import Chart from "chart.js";
@@ -170,7 +170,7 @@ export default {
     data: () => ({
         statistics: {},
         labels: [],
-        values: [],
+        values: []
     }),
 
     computed: {
@@ -195,73 +195,73 @@ export default {
                     text: {
                         el: "",
                         en: "Customer",
-                        it: "",
+                        it: ""
                     },
-                    value: this.statistics.total_customers,
+                    value: this.statistics.total_customers
                 },
                 {
                     icon: mdiDatabase,
                     text: {
                         el: "",
                         en: "Transactions",
-                        it: "",
+                        it: ""
                     },
-                    value: this.statistics.total_transactions,
+                    value: this.statistics.total_transactions
                 },
                 {
                     icon: mdiCurrencyEur,
                     text: {
                         el: "",
                         en: "Total",
-                        it: "",
+                        it: ""
                     },
                     value: new Intl.NumberFormat("en-US", {
                         style: "currency",
                         currency: "EUR",
-                        minimumFractionDigits: 2,
-                    }).format(this.statistics.total_income),
-                },
+                        minimumFractionDigits: 2
+                    }).format(this.statistics.total_income)
+                }
             ];
         },
 
         views() {
             return [
-                {
-                    icon: mdiBinoculars,
-                    text: {
-                        el: "",
-                        en: "User map views",
-                        it: "",
-                    },
-                    value: this.statistics.views.map_views,
-                },
+                // {
+                //     icon: mdiBinoculars,
+                //     text: {
+                //         el: "",
+                //         en: "User map views",
+                //         it: "",
+                //     },
+                //     value: this.statistics.views.map_views,
+                // },
                 {
                     icon: mdiCursorDefault,
                     text: {
                         el: "",
                         en: "User store clicks",
-                        it: "",
+                        it: ""
                     },
-                    value: this.statistics.views.visits,
+                    value: this.statistics.views.visits
                 },
                 {
                     icon: mdiDatabase,
                     text: {
                         el: "",
                         en: "User navigation clicks",
-                        it: "",
+                        it: ""
                     },
-                    value: this.statistics.views.nav_clicks,
+                    value: this.statistics.views.nav_clicks
                 },
                 {
                     icon: mdiCompassOutline,
                     text: {
                         el: "",
                         en: "User phone clicks",
-                        it: "",
+                        it: ""
                     },
-                    value: this.statistics.views.phone_clicks,
-                },
+                    value: this.statistics.views.phone_clicks
+                }
             ];
         },
 
@@ -272,7 +272,7 @@ export default {
                     text: {
                         el: "",
                         en: "Payments Last 12 Hours",
-                        it: "",
+                        it: ""
                     },
                     value: `
                         ${
@@ -283,20 +283,20 @@ export default {
                         ${new Intl.NumberFormat("en-US", {
                             style: "currency",
                             currency: "EUR",
-                            minimumFractionDigits: 2,
+                            minimumFractionDigits: 2
                         }).format(
                             this.statistics.last_twelve_hours_payments
                                 .total_price
                         )}
                         ${this.translations.total[this.lang]}
-                    `,
+                    `
                 },
                 {
                     icon: mdiWallet,
                     text: {
                         el: "",
                         en: "Payments Last Week",
-                        it: "",
+                        it: ""
                     },
                     value: `
                         ${this.statistics.last_week_payments.total_transactions}
@@ -304,15 +304,15 @@ export default {
                         ${new Intl.NumberFormat("en-US", {
                             style: "currency",
                             currency: "EUR",
-                            minimumFractionDigits: 2,
+                            minimumFractionDigits: 2
                         }).format(
                             this.statistics.last_week_payments.total_price
                         )}
                         ${this.translations.total[this.lang]}
-                    `,
-                },
+                    `
+                }
             ];
-        },
+        }
     },
 
     methods: {
@@ -341,13 +341,13 @@ export default {
                             pointBackgroundColor: gradientStroke,
                             pointHoverBackgroundColor: gradientStroke,
                             pointHoverBorderColor: gradientStroke,
-                            borderWidth: 4,
-                        },
-                    ],
+                            borderWidth: 4
+                        }
+                    ]
                 },
                 options: {
                     legend: {
-                        position: "top",
+                        position: "top"
                     },
                     scales: {
                         yAxes: [
@@ -357,29 +357,29 @@ export default {
                                     fontStyle: "bold",
                                     beginAtZero: true,
                                     maxTicksLimit: 5,
-                                    padding: 20,
+                                    padding: 20
                                 },
                                 gridLines: {
-                                    drawTicks: false,
-                                },
-                            },
+                                    drawTicks: false
+                                }
+                            }
                         ],
                         xAxes: [
                             {
                                 gridLines: {
-                                    zeroLineColor: "transparent",
+                                    zeroLineColor: "transparent"
                                 },
                                 ticks: {
                                     padding: 20,
                                     fontColor: "rgba(0,0,0,0.5)",
-                                    fontStyle: "bold",
-                                },
-                            },
-                        ],
-                    },
-                },
+                                    fontStyle: "bold"
+                                }
+                            }
+                        ]
+                    }
+                }
             });
-        },
+        }
     },
 
     watch: {
@@ -398,7 +398,7 @@ export default {
                 this.statistics.name = val.app_name;
                 if (this.statistics.last_seven_days_revenue) {
                     if (!this.labels.length) {
-                        this.statistics.last_seven_days_revenue.forEach((r) =>
+                        this.statistics.last_seven_days_revenue.forEach(r =>
                             this.labels.push(
                                 moment(r.date).format("DD/MM/YYYY")
                             )
@@ -408,20 +408,20 @@ export default {
                     }
 
                     if (!this.values.length) {
-                        this.statistics.last_seven_days_revenue.forEach((r) =>
+                        this.statistics.last_seven_days_revenue.forEach(r =>
                             this.values.push(r.total_price)
                         );
 
                         this.values.reverse();
                     }
                 }
-            },
-        },
+            }
+        }
     },
 
     mounted() {
         this.getStore();
         setTimeout(() => this.createChart(), 1500);
-    },
+    }
 };
 </script>

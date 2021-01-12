@@ -30,7 +30,7 @@ export default {
     mixins: [translations],
 
     data: () => ({
-        redemption_type_id: null,
+        redemption_type_id: null
     }),
 
     computed: {
@@ -44,11 +44,11 @@ export default {
 
         errorMessage() {
             return this.$store.state.storePanel.profile.errorMessage.redemption;
-        },
+        }
     },
 
     methods: {
-        ...mapActions("storePanel/profile", ["updateRedemption"]),
+        ...mapActions("storePanel/profile", ["updateRedemption"])
     },
 
     watch: {
@@ -56,8 +56,8 @@ export default {
             immediate: true,
             handler(val) {
                 this.redemption_type_id = val;
-            },
-        },
-    },
+            }
+        }
+    }
 };
 </script>

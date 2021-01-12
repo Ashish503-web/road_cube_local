@@ -40,7 +40,7 @@ const routes = [
         components: {
             header: () =>
                 import(
-                    /* webpackChunkName: "header" */ "@/components/Header.vue"
+                    /* webpackChunkName: "posHeader" */ "@/components/PosHeader.vue"
                 ),
             default: () =>
                 import(

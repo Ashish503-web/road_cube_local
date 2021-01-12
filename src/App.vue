@@ -33,17 +33,18 @@ export default {
 
         noPadding() {
             return (
+                this.$route.path === `/` ||
                 this.$route.path === `/${this.lang}/` ||
                 this.$route.path === `/${this.lang}` ||
                 this.$route.path === `/${this.lang}/points-pos` ||
                 this.$route.path === `/${this.lang}/points-pos/`
             );
-        }
+        },
     },
 
     methods: {
         ...mapMutations(["setStoreId", "setAccessToken"]),
-        ...mapActions(["getUser"])
+        ...mapActions(["getUser"]),
     },
 
     // async beforeCreate() {
@@ -67,7 +68,7 @@ export default {
         if (storeId) {
             this.setStoreId(storeId);
         }
-    }
+    },
 };
 </script>
 

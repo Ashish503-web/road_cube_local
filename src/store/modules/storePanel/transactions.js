@@ -16,7 +16,7 @@ export default {
         transactionProfile: {},
         transactions: [],
         transaction: new Transaction(),
-        transactionPreview: {},
+        transactionPreview: { products: [] },
         generalCouponClaims: [],
         samplingCoupons: []
     }),
@@ -284,7 +284,7 @@ export default {
                 await Transaction.create(transaction);
 
                 commit("setItem", {});
-                commit("setTransactionPreview", {});
+                commit("setTransactionPreview", { products: [] });
                 commit("setSelectedProducts", []);
                 commit("setProducts", state.products);
                 commit("setGeneralCouponClaims", []);

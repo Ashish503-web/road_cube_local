@@ -7,7 +7,7 @@
         @submit="
             updatePassword({
                 type: 'changePassword',
-                item: changePassword
+                item: changePassword,
             })
         "
     >
@@ -65,13 +65,13 @@ export default {
         show: {
             password: false,
             newPassword: false,
-            confirmPassword: false
+            confirmPassword: false,
         },
         changePassword: {
             current_password: "",
             new_password: "",
-            new_password_confirm: ""
-        }
+            new_password_confirm: "",
+        },
     }),
 
     computed: {
@@ -91,12 +91,12 @@ export default {
         resetSuccess() {
             return this.$store.state.storePanel.profile.resetSuccess
                 .changePassword;
-        }
+        },
     },
 
     methods: {
         ...mapMutations("storePanel/profile", ["setResetSuccess"]),
-        ...mapActions("storePanel/profile", ["updatePassword"])
-    }
+        ...mapActions("storePanel/profile", ["updatePassword"]),
+    },
 };
 </script>

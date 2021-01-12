@@ -272,7 +272,7 @@ export default {
     },
 
     beforeCreate() {
-        if (!this.$store.state.storePanel)
+        if (!this.$store.hasModule("storePanel"))
             this.$store.registerModule("storePanel", storePanel);
     }
 };

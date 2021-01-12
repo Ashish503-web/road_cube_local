@@ -85,7 +85,7 @@ export default {
     props: {
         height: {
             type: String,
-            default: "100%"
+            default: "100%",
         },
         activatable: Boolean,
         switcher: Boolean,
@@ -93,7 +93,7 @@ export default {
         cancelText: Object,
         submitText: {
             type: Object,
-            default: () => ({ el: "", en: "update details", it: "" })
+            default: () => ({ el: "", en: "update details", it: "" }),
         },
         loading: Boolean,
         noBodyPadding: Boolean,
@@ -101,15 +101,15 @@ export default {
         errorMessage: String,
         disabled: {
             type: Boolean,
-            default: false
-        }
+            default: false,
+        },
     },
 
     computed: {
         lang() {
             return this.$route.params.lang;
-        }
-    }
+        },
+    },
 };
 </script>
 

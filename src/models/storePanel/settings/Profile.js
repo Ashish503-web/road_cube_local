@@ -1,5 +1,7 @@
 import API from "@/models/API";
 
+import axios from "axios";
+
 export default class Profile {
     static uploadImage = image =>
         API().post(`/stores/${localStorage.getItem("storeId")}/images`, image);
@@ -8,6 +10,12 @@ export default class Profile {
 
     static updateBusinessInformation = item =>
         API().put(`/stores/${localStorage.getItem("storeId")}`, item);
+
+    static getPlaceDetails = id =>
+        axios.get(`
+            https://maps.googleapis.com/maps/api/place/details/json
+            ?key=AIzaSyBO7NVvj3D2unctftPpj-O0n3aoS0MbUEQ&place_id=${id}
+        `);
 
     static updateTimetable = item =>
         API().put(`/stores/${localStorage.getItem("storeId")}/timetable`, item);

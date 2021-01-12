@@ -1,7 +1,6 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import register from "./modules/register";
-import loyaltyPanel from "./modules/loyaltyPanel";
 
 Vue.use(Vuex);
 
@@ -13,8 +12,7 @@ axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
 
 export default new Vuex.Store({
     modules: {
-        register,
-        loyaltyPanel
+        register
     },
 
     state: {

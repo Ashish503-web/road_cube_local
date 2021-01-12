@@ -1,4 +1,13 @@
-import API from "@/models/API";
+import axios from "axios";
+
+axios.defaults.headers.Authorization = `Bearer ${localStorage.getItem(
+    "accessToken"
+)}`;
+
+const API = () =>
+    axios.create({
+        baseURL: process.env.VUE_APP_DEFAULT_API_URL
+    });
 
 export default class Register {
     static getAppProviders = () => API().get(`/common/app-providers`);
@@ -19,6 +28,12 @@ export default class Register {
         API().get(`/common/companies/${companyId}/gift-categories`);
 
     static getStoreCategories = () => API().get(`/common/store-categories`);
+
+    static getPlaceDetails = id =>
+        axios.get(`
+            https://maps.googleapis.com/maps/api/place/details/json
+            ?key=AIzaSyBO7NVvj3D2unctftPpj-O0n3aoS0MbUEQ&place_id=${id}
+        `);
 
     static createStore = item => API().post(`/stores`, item);
 

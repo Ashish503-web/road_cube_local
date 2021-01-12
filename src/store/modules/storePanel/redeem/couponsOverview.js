@@ -37,7 +37,7 @@ export default {
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });
-                console.error(ex.response.data);
+                console.error(ex.response.data.message);
             }
         }
     }

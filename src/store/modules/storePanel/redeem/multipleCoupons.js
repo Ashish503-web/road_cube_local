@@ -24,19 +24,16 @@ export default {
 
                 const { data } = await MultipleCoupons.get();
 
-                const {
-                    data: multipleCoupons,
-                    pagination
-                } = data.data.redeemed_coupons;
+                const { multiple_redeemed_coupons, pagination } = data.data;
 
-                commit("setItems", multipleCoupons);
+                commit("setItems", multiple_redeemed_coupons);
                 commit("setServerItemsLength", pagination.total, {
                     root: true
                 });
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });
-                console.error(ex.response.data);
+                console.error(ex.response.data.message);
             }
         }
     }

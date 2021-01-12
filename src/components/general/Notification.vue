@@ -22,7 +22,7 @@
                     setNotification({
                         show: false,
                         type: notification.type,
-                        text: notification.text
+                        text: notification.text,
                     })
                 "
             >
@@ -40,17 +40,17 @@ export default {
     name: "Notification",
 
     data: () => ({
-        icons: { mdiCheckCircle, mdiAlert, mdiClose }
+        icons: { mdiCheckCircle, mdiAlert, mdiClose },
     }),
 
     computed: {
         notification() {
             return this.$store.state.notification;
-        }
+        },
     },
 
     methods: {
-        ...mapMutations(["setNotification"])
-    }
+        ...mapMutations(["setNotification"]),
+    },
 };
 </script>

@@ -28,51 +28,10 @@
                         </v-toolbar-title>
                     </v-col>
 
-                    <v-col :hidden="$vuetify.breakpoint.smAndDown" class="mb-1">
-                        <ul class="b-list">
-                            <li
-                                v-for="link in navLinks"
-                                :key="link.text"
-                                class="b-list-item"
-                            >
-                                <router-link
-                                    v-if="link.to"
-                                    :to="link.to"
-                                    v-text="link.text"
-                                    class="b-nav-link"
-                                    :class="[
-                                        scrolled
-                                            ? 'b-nav-link--dark'
-                                            : 'b-nav-link--light',
-                                        {
-                                            'b-active':
-                                                link.href === $route.hash,
-                                        },
-                                    ]"
-                                ></router-link>
-                                <a
-                                    v-else
-                                    :href="link.href"
-                                    v-text="link.text"
-                                    class="b-nav-link"
-                                    :class="[
-                                        scrolled
-                                            ? 'b-nav-link--dark'
-                                            : 'b-nav-link--light',
-                                        {
-                                            'b-active':
-                                                link.href === $route.hash,
-                                        },
-                                    ]"
-                                ></a>
-                            </li>
-                        </ul>
-                    </v-col>
-
                     <v-col cols="auto">
                         <b-animating-btn
-                            text="Merchant Login"
-                            icon="mdiArrowRight"
+                            text="210 300 66 33"
+                            icon="mdiPhoneInTalkOutline"
                             class="ml-6"
                             :to="`/${lang}/sign-in`"
                         ></b-animating-btn>
@@ -139,7 +98,7 @@ import blackLogo from "@/assets/home/logo-sticky.png";
 import { mapMutations } from "vuex";
 
 export default {
-    name: "Header",
+    name: "PosHeader",
 
     data: () => ({
         icons: { mdiClose, mdiMenu },
@@ -153,17 +112,6 @@ export default {
     computed: {
         lang() {
             return this.$route.params.lang;
-        },
-
-        navLinks() {
-            return [
-                { href: "#home", text: "home" },
-                { href: "#products", text: "why roadcube" },
-                { to: `/${this.lang}/points-pos`, text: "points pos" },
-                { href: "#featuress", text: "features" },
-                { href: "#quote", text: "quote" },
-                { href: "#cta", text: "contact" },
-            ];
         },
     },
 

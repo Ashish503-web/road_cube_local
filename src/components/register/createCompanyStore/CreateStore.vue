@@ -2,7 +2,7 @@
     <v-tab-item>
         <v-card-title class="justify-center"> Create a Store </v-card-title>
 
-        <v-form autocomplete="off" @submit.prevent="createStore">
+        <v-form @submit.prevent="createStore">
             <v-card-text class="pt-0">
                 <v-row
                     v-if="storeDetails.store_subscription_plan_id"
@@ -18,6 +18,7 @@
                             label="Full Name"
                             color="secondary"
                             clearable
+                            autocomplete="new-password"
                             :prepend-inner-icon="icons.mdiAccount"
                             :success="success.fullname"
                             :error-messages="error.fullname"
@@ -118,6 +119,7 @@
                             label="Store Name"
                             color="secondary"
                             clearable
+                            autocomplete="new-password"
                             :success="success.name"
                             :error-messages="error.name"
                             @focus="error.name = ''"
@@ -131,6 +133,7 @@
                             :error-messages="error.address"
                             @focus="error.address = ''"
                             @blur="validateAddress"
+                            @change="getPlaceDetails"
                         />
 
                         <v-text-field
@@ -139,6 +142,7 @@
                             label="Zip Code"
                             color="secondary"
                             clearable
+                            autocomplete="new-password"
                             :success="success.zip"
                             :error-messages="error.zip"
                             @focus="error.zip = ''"
@@ -151,6 +155,7 @@
                             label="Vat Number"
                             color="secondary"
                             clearable
+                            autocomplete="new-password"
                             :success="success.vatNumber"
                             :error-messages="error.vatNumber"
                             @focus="error.vatNumber = ''"
@@ -163,6 +168,7 @@
                             label="Email"
                             color="secondary"
                             clearable
+                            autocomplete="new-password"
                             :success="success.email"
                             :error-messages="error.email"
                             @focus="error.email = ''"
@@ -228,8 +234,8 @@ export default {
             icons: { mdiAccount, mdiLock, mdiLockOutline, mdiEye },
             show: {
                 password: false,
-                confirmPassword: false
-            }
+                confirmPassword: false,
+            },
         };
     },
 
@@ -247,7 +253,7 @@ export default {
 
             set(val) {
                 this.setAppProvider(val);
-            }
+            },
         },
 
         fullname: {
@@ -257,7 +263,7 @@ export default {
 
             set(val) {
                 this.setFullname(val);
-            }
+            },
         },
 
         password: {
@@ -267,7 +273,7 @@ export default {
 
             set(val) {
                 this.setPassword(val);
-            }
+            },
         },
 
         confirmPassword: {
@@ -277,8 +283,8 @@ export default {
 
             set(val) {
                 this.setConfirmPassword(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
@@ -286,13 +292,13 @@ export default {
             "setAppProvider",
             "setFullname",
             "setPassword",
-            "setConfirmPassword"
+            "setConfirmPassword",
         ]),
-        ...mapActions("register", ["createStore"])
+        ...mapActions("register", ["getPlaceDetails", "createStore"]),
     },
 
     mounted() {
         this.$clearFocus();
-    }
+    },
 };
 </script>

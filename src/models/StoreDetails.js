@@ -12,5 +12,6 @@ export default class StoreDetails {
         this.store_subscription_plan_id =
             item.store_subscription_plan_id || null;
         this.country_id = item.country_id || null;
+        this.store_company_network_region_id = null;
     }
 }

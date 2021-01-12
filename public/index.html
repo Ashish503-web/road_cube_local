@@ -12,6 +12,17 @@
             href="//fonts.googleapis.com/css?family=Muli:100,300,400,500,700,900"
         />
 
+        <script>
+            function MapsInit() {
+                window.service = new window.google.maps.places.AutocompleteService();
+            }
+        </script>
+        <script
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBO7NVvj3D2unctftPpj-O0n3aoS0MbUEQ&libraries=places&callback=MapsInit"
+            async
+            defer
+        ></script>
+
         <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     </head>
     <body>

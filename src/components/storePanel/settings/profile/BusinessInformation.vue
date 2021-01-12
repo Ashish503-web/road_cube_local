@@ -7,7 +7,7 @@
         @submit="
             updateBusinessInformation({
                 type: 'businessInformation',
-                item: businessInformation
+                item: businessInformation,
             })
         "
     >
@@ -71,6 +71,7 @@
                 <Places
                     v-model="businessInformation.address"
                     :label="translations.address[lang]"
+                    :initial-location="location"
                     outlined
                     dense
                     hide-details="auto"
@@ -78,12 +79,11 @@
                     :error-messages="error.address"
                     @focus="error.address = ''"
                     @blur="validateAddress"
+                    @change="getPlaceDetails"
                 />
 
                 <v-btn
-                    :href="
-                        `http://maps.google.com/?q=${businessInformation.address}`
-                    "
+                    :href="`http://maps.google.com/?q=${businessInformation.address}`"
                     target="_blank"
                     class="text-capitalize mt-3"
                     height="40"
@@ -149,7 +149,7 @@ export default {
 
     data: () => ({
         businessInformation: {},
-        validate: false
+        location: "",
     }),
 
     computed: {
@@ -174,15 +174,16 @@ export default {
 
         countries() {
             return this.$store.state.storePanel.profile.countries;
-        }
+        },
     },
 
     methods: {
         ...mapMutations("storePanel/profile", ["setResetSuccess"]),
         ...mapActions("storePanel/profile", [
             "getCountries",
-            "updateBusinessInformation"
-        ])
+            "getPlaceDetails",
+            "updateBusinessInformation",
+        ]),
     },
 
     watch: {
@@ -193,6 +194,10 @@ export default {
                     name: val.name,
 
                     address: val.address,
+
+                    coordinates: val.coordinates,
+
+                    zip: val.zip,
 
                     activity: val.billing_details.activity,
 
@@ -206,19 +211,21 @@ export default {
 
                     full_name: val.billing_details.full_name,
 
-                    email: val.email
+                    email: val.email,
                 };
+
+                this.location = val.address;
 
                 this.setResetSuccess({
                     value: true,
-                    type: "businessInformation"
+                    type: "businessInformation",
                 });
-            }
-        }
+            },
+        },
     },
 
     mounted() {
         this.getCountries();
-    }
+    },
 };
 </script>

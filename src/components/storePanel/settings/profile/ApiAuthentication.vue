@@ -55,7 +55,7 @@ export default {
     computed: {
         lang() {
             return this.$route.params.lang;
-        }
-    }
+        },
+    },
 };
 </script>
