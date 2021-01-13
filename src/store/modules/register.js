@@ -221,18 +221,6 @@ export default {
             }
         },
 
-        async getPlaceDetails({ commit }, id) {
-            try {
-                const data = await Register.getPlaceDetails(id);
-                console.log(data);
-
-                commit("setErrorMessage", "");
-            } catch (ex) {
-                commit("setErrorMessage", ex);
-                setTimeout(() => commit("setErrorMessage", ""), 5000);
-            }
-        },
-
         async createStore({ commit, state }) {
             try {
                 commit("setLoading", true);

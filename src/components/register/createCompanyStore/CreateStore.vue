@@ -127,27 +127,13 @@
                         ></v-text-field>
 
                         <Places
-                            v-model="storeDetails.address"
                             label="Address"
                             :success="success.address"
                             :error-messages="error.address"
                             @focus="error.address = ''"
                             @blur="validateAddress"
-                            @change="getPlaceDetails"
+                            @newAddress="setAddressDetails"
                         />
-
-                        <v-text-field
-                            v-model="storeDetails.zip"
-                            v-mask="'#####'"
-                            label="Zip Code"
-                            color="secondary"
-                            clearable
-                            autocomplete="new-password"
-                            :success="success.zip"
-                            :error-messages="error.zip"
-                            @focus="error.zip = ''"
-                            @blur="validateZip"
-                        ></v-text-field>
 
                         <v-text-field
                             v-model="storeDetails.vat_number"
@@ -234,8 +220,8 @@ export default {
             icons: { mdiAccount, mdiLock, mdiLockOutline, mdiEye },
             show: {
                 password: false,
-                confirmPassword: false,
-            },
+                confirmPassword: false
+            }
         };
     },
 
@@ -253,7 +239,7 @@ export default {
 
             set(val) {
                 this.setAppProvider(val);
-            },
+            }
         },
 
         fullname: {
@@ -263,7 +249,7 @@ export default {
 
             set(val) {
                 this.setFullname(val);
-            },
+            }
         },
 
         password: {
@@ -273,7 +259,7 @@ export default {
 
             set(val) {
                 this.setPassword(val);
-            },
+            }
         },
 
         confirmPassword: {
@@ -283,8 +269,8 @@ export default {
 
             set(val) {
                 this.setConfirmPassword(val);
-            },
-        },
+            }
+        }
     },
 
     methods: {
@@ -292,13 +278,20 @@ export default {
             "setAppProvider",
             "setFullname",
             "setPassword",
-            "setConfirmPassword",
+            "setConfirmPassword"
         ]),
-        ...mapActions("register", ["getPlaceDetails", "createStore"]),
+        ...mapActions("register", ["createStore"]),
+
+        setAddressDetails(place) {
+            this.storeDetails.address = place.address;
+            this.storeDetails.zip = place.zip;
+            this.storeDetails.lat = place.lat;
+            this.storeDetails.lon = place.lon;
+        }
     },
 
     mounted() {
         this.$clearFocus();
-    },
+    }
 };
 </script>

@@ -29,12 +29,6 @@ export default class Register {
 
     static getStoreCategories = () => API().get(`/common/store-categories`);
 
-    static getPlaceDetails = id =>
-        axios.get(`
-            https://maps.googleapis.com/maps/api/place/details/json
-            ?key=AIzaSyBO7NVvj3D2unctftPpj-O0n3aoS0MbUEQ&place_id=${id}
-        `);
-
     static createStore = item => API().post(`/stores`, item);
 
     static storeSignIn = item => API().post(`/users/login`, item);

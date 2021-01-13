@@ -9,12 +9,12 @@ export default {
     name: "LoyaltyPanel",
 
     methods: {
-        ...mapActions("loyaltyPanel", ["getCompany"]),
+        ...mapActions("loyaltyPanel", ["getCompany"])
     },
 
     mounted() {
         if (!this.$store.state.loyaltyPanel.company.store_id) this.getCompany();
-    },
+    }
 };
 </script>
 

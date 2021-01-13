@@ -60,6 +60,9 @@ export default {
         setBusinessInformation(state, payload) {
             state.store.name = payload.name;
             state.store.address = payload.address;
+            state.zip = payload.zip;
+            state.lat = payload.lat;
+            state.lon = payload.lon;
             state.store.billing_details.activity = payload.activity;
             state.store.country.country_id = payload.country_id;
             state.store.primary_phone = payload.primary_phone;

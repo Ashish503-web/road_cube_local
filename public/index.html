@@ -12,9 +12,22 @@
             href="//fonts.googleapis.com/css?family=Muli:100,300,400,500,700,900"
         />
 
+        <!-- Google Places Autocomplete, Place  Details -->
         <script>
             function MapsInit() {
-                window.service = new window.google.maps.places.AutocompleteService();
+                window.service = new google.maps.places.AutocompleteService();
+                // window.service.setComponentRestrictions({ country: ["gr"] });
+                const pyrmont = { lat: -33.866, lng: 151.196 };
+                const map = new google.maps.Map(
+                    document.getElementById("map"),
+                    {
+                        center: pyrmont,
+                        zoom: 17
+                    }
+                );
+                window.placesService = new google.maps.places.PlacesService(
+                    map
+                );
             }
         </script>
         <script
@@ -22,6 +35,7 @@
             async
             defer
         ></script>
+        <!--  -->
 
         <script src="https://js.pusher.com/7.0/pusher.min.js"></script>
     </head>

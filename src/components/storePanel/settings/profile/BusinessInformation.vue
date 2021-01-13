@@ -7,7 +7,7 @@
         @submit="
             updateBusinessInformation({
                 type: 'businessInformation',
-                item: businessInformation,
+                item: businessInformation
             })
         "
     >
@@ -40,10 +40,6 @@
                     item-text="name"
                     item-value="country_id"
                     :label="translations.country[lang]"
-                    :success="success.country"
-                    :error-messages="error.country"
-                    @focus="error.country = ''"
-                    @blur="validateCountry"
                 ></b-select>
 
                 <b-text-field
@@ -60,30 +56,22 @@
                 <b-text-field
                     v-model="businessInformation.full_name"
                     :label="translations.fullname[lang]"
-                    :success="success.fullname"
-                    :error-messages="error.fullname"
-                    @focus="error.fullname = ''"
-                    @blur="validateFullname"
                 ></b-text-field>
             </v-col>
 
             <v-col cols="12" sm="5">
                 <Places
-                    v-model="businessInformation.address"
                     :label="translations.address[lang]"
-                    :initial-location="location"
                     outlined
                     dense
                     hide-details="auto"
-                    :success="success.address"
-                    :error-messages="error.address"
-                    @focus="error.address = ''"
-                    @blur="validateAddress"
-                    @change="getPlaceDetails"
+                    @newAddress="setAddressDetails"
                 />
 
                 <v-btn
-                    :href="`http://maps.google.com/?q=${businessInformation.address}`"
+                    :href="
+                        `http://maps.google.com/?q=${businessInformation.address}`
+                    "
                     target="_blank"
                     class="text-capitalize mt-3"
                     height="40"
@@ -102,10 +90,6 @@
                 <b-text-field
                     v-model="businessInformation.activity"
                     :label="translations.activity[lang]"
-                    :success="success.activity"
-                    :error-messages="error.activity"
-                    @focus="error.activity = ''"
-                    @blur="validateActivity"
                 ></b-text-field>
 
                 <b-text-field
@@ -148,8 +132,7 @@ export default {
     mixins: [translations, validators],
 
     data: () => ({
-        businessInformation: {},
-        location: "",
+        businessInformation: {}
     }),
 
     computed: {
@@ -174,7 +157,7 @@ export default {
 
         countries() {
             return this.$store.state.storePanel.profile.countries;
-        },
+        }
     },
 
     methods: {
@@ -182,8 +165,15 @@ export default {
         ...mapActions("storePanel/profile", [
             "getCountries",
             "getPlaceDetails",
-            "updateBusinessInformation",
+            "updateBusinessInformation"
         ]),
+
+        setAddressDetails(place) {
+            this.businessInformation.address = place.address;
+            this.businessInformation.zip = place.zip;
+            this.businessInformation.lat = place.lat;
+            this.businessInformation.lon = place.lon;
+        }
     },
 
     watch: {
@@ -195,9 +185,11 @@ export default {
 
                     address: val.address,
 
-                    coordinates: val.coordinates,
-
                     zip: val.zip,
+
+                    lat: val.coordinates.lat,
+
+                    lon: val.coordinates.lon,
 
                     activity: val.billing_details.activity,
 
@@ -211,21 +203,19 @@ export default {
 
                     full_name: val.billing_details.full_name,
 
-                    email: val.email,
+                    email: val.email
                 };
-
-                this.location = val.address;
 
                 this.setResetSuccess({
                     value: true,
-                    type: "businessInformation",
+                    type: "businessInformation"
                 });
-            },
-        },
+            }
+        }
     },
 
     mounted() {
         this.getCountries();
-    },
+    }
 };
 </script>

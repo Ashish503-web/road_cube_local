@@ -2,9 +2,9 @@ export default class StoreDetails {
     constructor(item = {}) {
         this.name = item.name || "";
         this.address = item.address || "";
-        this.lat = item.lat || 35.124233;
-        this.lon = item.lon || 11.432112;
         this.zip = item.zip || null;
+        this.lat = item.lat || null;
+        this.lon = item.lon || null;
         this.vat_number = item.vat_number || null;
         this.email = item.email || "";
         this.primary_phone = item.primary_phone || null;

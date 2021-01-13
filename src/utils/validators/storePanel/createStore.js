@@ -7,7 +7,6 @@ export default {
                 confirmPassword: false,
                 name: false,
                 address: false,
-                zip: false,
                 vatNumber: false,
                 email: false,
                 primaryPhone: false
@@ -18,7 +17,6 @@ export default {
                 confirmPassword: "",
                 name: "",
                 address: "",
-                zip: "",
                 vatNumber: "",
                 email: "",
                 primaryPhone: ""
@@ -57,16 +55,6 @@ export default {
                 addressRequired: {
                     el: "",
                     en: "Address is required",
-                    it: ""
-                },
-                zipRequired: {
-                    el: "",
-                    en: "Zip Code is required",
-                    it: ""
-                },
-                zipLength: {
-                    el: "",
-                    en: "Zip Code must be 5 characters long",
                     it: ""
                 },
                 vatNumberRequired: {
@@ -111,7 +99,6 @@ export default {
                 this.success.confirmPassword &&
                 this.success.name &&
                 this.success.address &&
-                this.success.zip &&
                 this.success.vatNumber &&
                 this.success.email &&
                 this.success.primaryPhone
@@ -175,16 +162,6 @@ export default {
                 ];
             } else {
                 this.error.address = "";
-            }
-        },
-
-        validateZip() {
-            if (!this.storeDetails.zip) {
-                this.error.zip = this.errorMessages.zipRequired[this.lang];
-            } else if (this.storeDetails.zip.length < 5) {
-                this.error.zip = this.errorMessages.zipLength[this.lang];
-            } else {
-                this.error.zip = "";
             }
         },
 
@@ -259,14 +236,6 @@ export default {
 
         ["storeDetails.address"](val) {
             this.success.address = !!val;
-        },
-
-        ["storeDetails.zip"](val) {
-            if (val) {
-                this.success.zip = val.length >= 5;
-            } else {
-                this.success.zip = false;
-            }
         },
 
         ["storeDetails.vat_number"](val) {

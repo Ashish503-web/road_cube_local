@@ -103,7 +103,7 @@ export default {
                 commit("setCompany", data.data);
                 commit("setLoading", false);
             } catch (ex) {
-                console.error(ex.response.data);
+                console.error(ex.response.data.message);
             }
         }
     }

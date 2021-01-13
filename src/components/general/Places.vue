@@ -1,6 +1,6 @@
 <template>
     <v-autocomplete
-        :value="value"
+        v-model="place"
         :search-input.sync="location"
         :items="searchResults"
         :label="label"
@@ -16,10 +16,8 @@
         :success="success"
         :error-messages="errorMessages"
         :prepend-inner-icon="icons.mdiMapMarker"
-        @change="$emit('change', $event.place_id)"
         @focus="$emit('focus')"
         @blur="$emit('blur')"
-        @input="$emit('input', $event.description)"
     ></v-autocomplete>
 </template>
 
@@ -31,21 +29,22 @@ export default {
 
     props: {
         value: String,
-        initialLocation: String,
         label: String,
         outlined: Boolean,
         dense: Boolean,
         hideDetails: [String, Boolean],
         success: Boolean,
-        errorMessages: String,
+        errorMessages: String
     },
 
-    data: () => ({
-        icons: { mdiMapMarker },
-        location: "",
-        searchResults: [],
-        placeService: null,
-    }),
+    data() {
+        return {
+            icons: { mdiMapMarker },
+            location: "",
+            searchResults: [],
+            place: {}
+        };
+    },
 
     methods: {
         displaySuggestions(predictions, status) {
@@ -53,17 +52,16 @@ export default {
                 this.searchResults = [];
                 return;
             }
-
             this.searchResults = predictions;
-            // this.searchResults = predictions.map(
-            //     (prediction) => prediction.description
-            // );
-        },
+        }
     },
 
     watch: {
-        initialLocation(val) {
-            if (val) setTimeout(() => (this.location = val), 1000);
+        ["$store.state.storePanel.store.address"]: {
+            handler(val) {
+                this.location = val;
+                this.place = val;
+            }
         },
 
         location(val) {
@@ -71,12 +69,50 @@ export default {
                 window.service.getPlacePredictions(
                     {
                         input: val,
-                        types: [],
+                        types: ["address"]
                     },
                     this.displaySuggestions
                 );
             }
         },
+
+        place(val) {
+            if (val) {
+                if (val.place_id) {
+                    window.placesService.getDetails(
+                        {
+                            placeId: val.place_id,
+                            fields: ["address_component", "geometry"]
+                        },
+                        (place, status) => {
+                            if (
+                                status ==
+                                window.google.maps.places.PlacesServiceStatus.OK
+                            ) {
+                                this.$emit("newAddress", {
+                                    address: val.description,
+                                    zip:
+                                        place.address_components[
+                                            place.address_components.length - 1
+                                        ].long_name,
+                                    lat: place.geometry.location.lat(),
+                                    lon: place.geometry.location.lng()
+                                });
+                            }
+                        }
+                    );
+                }
+            }
+        }
     },
+
+    mounted() {
+        if (this.$store.state.storePanel) {
+            if (this.$store.state.storePanel.store.address) {
+                this.location = this.$store.state.storePanel.store.address;
+                this.place = this.$store.state.storePanel.store.address;
+            }
+        }
+    }
 };
 </script>

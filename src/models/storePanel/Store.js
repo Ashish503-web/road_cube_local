@@ -20,6 +20,7 @@ export default class Store {
             last_twelve_hours_payments: [],
             last_week_payments: []
         };
+        this.coordinates = item.coordinates || { lat: null, lon: null };
     }
 
     static get = () => API().get(`/stores/${localStorage.getItem("storeId")}`);

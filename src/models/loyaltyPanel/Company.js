@@ -1,4 +1,4 @@
-// import API from "@/models/API";
+import API from "@/models/API";
 
 export default class Company {
     constructor(item = {}) {
@@ -22,6 +22,6 @@ export default class Company {
         };
     }
 
-    // static get = () =>
-    //     API().get(`/companies/${localStorage.getItem("storeId")}`);
+    static get = () =>
+        API().get(`/companies/${localStorage.getItem("storeId")}`);
 }
