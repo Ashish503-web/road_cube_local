@@ -220,8 +220,9 @@ export default {
             icons: { mdiAccount, mdiLock, mdiLockOutline, mdiEye },
             show: {
                 password: false,
-                confirmPassword: false
-            }
+                confirmPassword: false,
+            },
+            isAddress: false,
         };
     },
 
@@ -239,7 +240,7 @@ export default {
 
             set(val) {
                 this.setAppProvider(val);
-            }
+            },
         },
 
         fullname: {
@@ -249,7 +250,7 @@ export default {
 
             set(val) {
                 this.setFullname(val);
-            }
+            },
         },
 
         password: {
@@ -259,7 +260,7 @@ export default {
 
             set(val) {
                 this.setPassword(val);
-            }
+            },
         },
 
         confirmPassword: {
@@ -269,8 +270,8 @@ export default {
 
             set(val) {
                 this.setConfirmPassword(val);
-            }
-        }
+            },
+        },
     },
 
     methods: {
@@ -278,20 +279,21 @@ export default {
             "setAppProvider",
             "setFullname",
             "setPassword",
-            "setConfirmPassword"
+            "setConfirmPassword",
         ]),
         ...mapActions("register", ["createStore"]),
 
         setAddressDetails(place) {
+            this.isAddress = place.isAddress;
             this.storeDetails.address = place.address;
             this.storeDetails.zip = place.zip;
             this.storeDetails.lat = place.lat;
             this.storeDetails.lon = place.lon;
-        }
+        },
     },
 
     mounted() {
         this.$clearFocus();
-    }
+    },
 };
 </script>

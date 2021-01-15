@@ -37,23 +37,23 @@ export default {
     name: "ProductsSeries",
     data: () => ({
         icons: {
-            mdiSwapVerticalBold
+            mdiSwapVerticalBold,
         },
         items: [
             {
-                text: "dd444"
+                text: "dd444",
             },
             {
-                text: "kst2"
+                text: "kst2",
             },
             {
                 icon: "mdi-send",
-                text: "Send"
+                text: "Send",
             },
             {
-                text: "Drafts"
-            }
-        ]
-    })
+                text: "Drafts",
+            },
+        ],
+    }),
 };
 </script>

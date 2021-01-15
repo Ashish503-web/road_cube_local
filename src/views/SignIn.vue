@@ -216,16 +216,16 @@ export default {
             disabled: true,
             loading: false,
             errorMessage: "",
-            mobile: "6904242444",
+            mobile: "6904242422",
             password: "secret",
             showPassword: false,
             success: {
                 mobile: false,
-                password: false
+                password: false,
             },
             rules: {
                 mobile: [
-                    v => {
+                    (v) => {
                         if (v) {
                             this.success.mobile = true;
                             return true;
@@ -233,12 +233,12 @@ export default {
                             return "Mobile Phone is required";
                         }
                     },
-                    v =>
+                    (v) =>
                         (v || "").length === 10 ||
-                        "Mobile Phone must be 10 characters long"
+                        "Mobile Phone must be 10 characters long",
                 ],
                 password: [
-                    v => {
+                    (v) => {
                         if (v) {
                             this.success.password = true;
                             return true;
@@ -246,19 +246,19 @@ export default {
                             return "Password is required";
                         }
                     },
-                    v =>
+                    (v) =>
                         (v || "").length >= 5 ||
-                        "Password must be 6 characters long"
-                ]
+                        "Password must be 6 characters long",
+                ],
             },
-            dialog: false
+            dialog: false,
         };
     },
 
     computed: {
         lang() {
             return this.$route.params.lang;
-        }
+        },
     },
 
     methods: {
@@ -273,7 +273,7 @@ export default {
                     {
                         app_provider_id: 1,
                         mobile: this.mobile,
-                        password: this.password
+                        password: this.password,
                     }
                 );
 
@@ -293,7 +293,7 @@ export default {
 
         forgotPassword() {
             this.$router.push("/password-recovery");
-        }
+        },
     },
 
     watch: {
@@ -303,8 +303,8 @@ export default {
             } else {
                 this.disabled = true;
             }
-        }
-    }
+        },
+    },
 };
 </script>
 

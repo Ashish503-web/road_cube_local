@@ -3,6 +3,9 @@ import API from "@/models/API";
 export default class Store {
     constructor(item = {}) {
         this.store_id = item.store_id || 53;
+        this.store_subscription_plan_id =
+            item.store_subscription_plan_id || null;
+        this.country_id = item.country_id || null;
         this.name = item.name || "";
         this.address = item.address || "";
         this.zip = item.zip || null;
@@ -12,11 +15,9 @@ export default class Store {
         this.email = item.email || "";
         this.primary_phone = item.primary_phone || null;
         this.parent_id = item.parent_id || 1;
-        this.store_subscription_plan_id =
-            item.store_subscription_plan_id || null;
-        this.country_id = item.country_id || null;
+        this.store_company_network_region_id =
+            item.store_company_network_region_id || null;
         this.bank_providers = item.bank_providers || [];
-        this.registration_date = item.registration_date || "";
     }
 
     static getSubscriptionPlans = () =>
@@ -32,9 +33,6 @@ export default class Store {
         API().get(
             `/companies/${localStorage.getItem("storeId")}/stores${query}`
         );
-
-    static getItem = id =>
-        API().get(`/companies/${localStorage.getItem("storeId")}/stores/${id}`);
 
     static getFinancialData = query =>
         API().get(
@@ -67,13 +65,5 @@ export default class Store {
     static delete = id =>
         API().delete(
             `/companies/${localStorage.getItem("storeId")}/stores/${id}`
-        );
-
-    static uploadImage = (id, image) =>
-        API().post(
-            `/companies/${localStorage.getItem(
-                "storeId"
-            )}/products/${id}/images`,
-            image
         );
 }

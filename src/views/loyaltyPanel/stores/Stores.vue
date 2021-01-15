@@ -59,6 +59,10 @@ export default {
                     name: { el: "", en: "Daily Transaction Limits", it: "" },
                     to: `/${this.lang}/loyaltyPanel/stores/daily-transaction-limits`,
                 },
+                {
+                    name: { el: "", en: "Network Regions", it: "" },
+                    to: `/${this.lang}/loyaltyPanel/stores/network-regions`,
+                },
             ];
         },
     },

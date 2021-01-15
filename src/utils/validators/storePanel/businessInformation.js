@@ -5,6 +5,7 @@ export default {
                 name: false,
                 primaryPhone: false,
                 secondaryPhone: false,
+                address: false,
                 mobile: false,
                 email: false
             },
@@ -12,6 +13,7 @@ export default {
                 name: false,
                 primaryPhone: false,
                 secondaryPhone: false,
+                address: false,
                 mobile: false,
                 email: false
             },
@@ -19,6 +21,7 @@ export default {
                 name: "",
                 primaryPhone: "",
                 secondaryPhone: "",
+                address: "",
                 mobile: "",
                 email: ""
             },
@@ -43,6 +46,11 @@ export default {
                     en: "Secondary Phone must be 10 characters long",
                     it: ""
                 },
+                addressIsPostal: {
+                    el: "",
+                    en: "Please select an address that has a postal code",
+                    it: ""
+                },
                 mobileLength: {
                     el: "",
                     en: "Owner's Mobile Phone must be 10 characters long",
@@ -63,6 +71,7 @@ export default {
                 this.valid.name &&
                 this.valid.primaryPhone &&
                 this.valid.secondaryPhone &&
+                this.valid.address &&
                 this.valid.mobile &&
                 this.valid.email
             );
@@ -101,6 +110,18 @@ export default {
                 ];
             } else {
                 this.error.secondaryPhone = "";
+            }
+        },
+
+        validateAddress() {
+            if (!this.businessInformation.address) {
+                this.error.address = "";
+            } else if (!this.isAddress) {
+                this.error.address = this.errorMessages.addressIsPostal[
+                    this.lang
+                ];
+            } else {
+                this.error.address = "";
             }
         },
 
@@ -156,6 +177,19 @@ export default {
                 } else {
                     this.valid.secondaryPhone = true;
                     this.success.secondaryPhone = false;
+                }
+            }
+        },
+
+        ["businessInformation.address"]: {
+            immediate: true,
+            handler(val) {
+                if (val) {
+                    this.valid.address = this.isAddress;
+                    this.success.address = this.isAddress;
+                } else {
+                    this.valid.address = true;
+                    this.success.address = false;
                 }
             }
         },

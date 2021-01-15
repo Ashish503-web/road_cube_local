@@ -192,10 +192,10 @@ import translations from "@/utils/translations/storePanel/products/productForm";
 import validators from "@/utils/validators/storePanel/product";
 
 export default {
-    name: "Product",
+    name: "ProductForm",
 
     props: {
-        mode: Number
+        mode: Number,
     },
 
     mixins: [translations, validators],
@@ -212,8 +212,8 @@ export default {
                 { el: "", en: "Thursday", it: "" },
                 { el: "", en: "Friday", it: "" },
                 { el: "", en: "Saturday", it: "" },
-                { el: "", en: "Sunday", it: "" }
-            ]
+                { el: "", en: "Sunday", it: "" },
+            ],
         };
     },
 
@@ -222,9 +222,9 @@ export default {
             "loading",
             "errorMessage",
             "resetSuccess",
-            "resetValidation"
+            "resetValidation",
         ]),
-        ...mapState("storePanel/products", ["categories"]),
+        ...mapState("storePanel/products", ["categories", "product"]),
 
         lang() {
             return this.$route.params.lang;
@@ -243,7 +243,7 @@ export default {
 
             set(val) {
                 this.setShowImageUpload(val);
-            }
+            },
         },
 
         showWeekdays: {
@@ -253,24 +253,20 @@ export default {
 
             set(val) {
                 this.setShowWeekdays(val);
-            }
+            },
         },
-
-        product() {
-            return this.$store.state.storePanel.products.product;
-        }
     },
 
     methods: {
         ...mapMutations(["setResetSuccess", "setResetValidation"]),
         ...mapMutations("storePanel/products", [
             "setShowImageUpload",
-            "setShowWeekdays"
+            "setShowWeekdays",
         ]),
         ...mapActions("storePanel/products", [
             "getCategories",
             "create",
-            "update"
+            "update",
         ]),
 
         onFileSelected(event) {
@@ -278,13 +274,13 @@ export default {
                 this.imageFile = event;
                 const reader = new FileReader();
                 reader.readAsDataURL(this.imageFile);
-                reader.onload = e => (this.product.image = e.target.result);
+                reader.onload = (e) => (this.product.image = e.target.result);
             }
-        }
+        },
     },
 
     mounted() {
         this.getCategories();
-    }
+    },
 };
 </script>

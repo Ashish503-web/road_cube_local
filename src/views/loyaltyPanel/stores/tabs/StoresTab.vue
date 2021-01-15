@@ -306,6 +306,17 @@ export default {
             },
         },
 
+        userDetails: {
+            get() {
+                return this.$store.state.loyaltyPanel.stores.storesTab
+                    .userDetails;
+            },
+
+            set(val) {
+                this.setUserDetails(val);
+            },
+        },
+
         query() {
             let query = "?";
 
@@ -324,12 +335,16 @@ export default {
             "setResetSuccess",
             "setResetValidation",
         ]),
-        ...mapMutations("loyaltyPanel/stores/storesTab", ["setItem"]),
+        ...mapMutations("loyaltyPanel/stores/storesTab", [
+            "setItem",
+            "setUserDetails",
+        ]),
         ...mapActions("loyaltyPanel/stores/storesTab", ["getItems", "remove"]),
 
-        open(mode, item) {
+        open(mode, item, userDetails) {
             this.mode = mode;
             this.store = item;
+            this.userDetails = userDetails;
             setTimeout(() => this.setResetSuccess(true), 300);
             this.setResetValidation(true);
             this.dialog = true;

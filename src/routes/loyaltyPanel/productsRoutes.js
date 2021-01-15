@@ -24,5 +24,14 @@ export default [
             import(
                 /* webpackChunkName: "productsSeries" */ "@/views/loyaltyPanel/products/tabs/ProductsSeries.vue"
             )
+    },
+
+    {
+        path: "products-tags",
+        name: "ProductsTags",
+        component: () =>
+            import(
+                /* webpackChunkName: "productsTags" */ "@/views/loyaltyPanel/products/tabs/ProductsTags.vue"
+            )
     }
 ];

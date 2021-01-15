@@ -117,7 +117,6 @@ export default {
                             type: "success",
                             text: "You have successfully created product!"
                         },
-
                         { root: true }
                     );
                 }

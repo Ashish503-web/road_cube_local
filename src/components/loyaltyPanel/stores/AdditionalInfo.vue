@@ -56,9 +56,7 @@
                 </div>
             </div>
 
-            <div v-else class="b-outlined pa-3 my-3">
-                No Banks Available
-            </div>
+            <div v-else class="b-outlined pa-3 my-3">No Banks Available</div>
         </v-card-text>
     </v-card>
 </template>
@@ -74,7 +72,7 @@ export default {
     mixins: [translations],
 
     data: () => ({
-        icons: { mdiClose }
+        icons: { mdiClose },
     }),
 
     computed: {
@@ -84,7 +82,7 @@ export default {
 
         store() {
             return this.$store.state.loyaltyPanel.stores.storesTab.store;
-        }
-    }
+        },
+    },
 };
 </script>

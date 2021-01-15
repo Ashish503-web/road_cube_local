@@ -1,5 +1,6 @@
 import stores from "./stores";
 import products from "./products";
+import productsTags from "./productsTags";
 import customers from "./customers";
 import catalogManagement from "./catalogManagement";
 import userRights from "./userRights";
@@ -12,6 +13,7 @@ export default {
     modules: {
         stores,
         products,
+        productsTags,
         customers,
         userRights,
         businessProfile,

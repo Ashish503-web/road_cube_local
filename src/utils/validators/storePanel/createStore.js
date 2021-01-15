@@ -57,6 +57,11 @@ export default {
                     en: "Address is required",
                     it: ""
                 },
+                addressIsPostal: {
+                    el: "",
+                    en: "Please select an address that has a postal code",
+                    it: ""
+                },
                 vatNumberRequired: {
                     el: "",
                     en: "Vat Number is required",
@@ -160,6 +165,10 @@ export default {
                 this.error.address = this.errorMessages.addressRequired[
                     this.lang
                 ];
+            } else if (!this.isAddress) {
+                this.error.address = this.errorMessages.addressIsPostal[
+                    this.lang
+                ];
             } else {
                 this.error.address = "";
             }
@@ -235,7 +244,7 @@ export default {
         },
 
         ["storeDetails.address"](val) {
-            this.success.address = !!val;
+            this.success.address = !!val && this.isAddress;
         },
 
         ["storeDetails.vat_number"](val) {

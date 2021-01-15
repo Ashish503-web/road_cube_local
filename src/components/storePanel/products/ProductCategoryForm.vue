@@ -62,7 +62,7 @@ import { mapState, mapMutations, mapActions } from "vuex";
 import translations from "@/utils/translations/storePanel/products/productCategoryForm";
 
 export default {
-    name: "Product",
+    name: "ProductCategoryForm",
 
     props: {
         mode: Number,

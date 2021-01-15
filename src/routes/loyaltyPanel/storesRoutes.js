@@ -42,5 +42,14 @@ export default [
             import(
                 /* webpackChunkName: "dailyTransactionLimits" */ "@/views/loyaltyPanel/stores/tabs/DailyTransactionLimits.vue"
             )
+    },
+
+    {
+        path: "network-regions",
+        name: "NetworkRegions",
+        component: () =>
+            import(
+                /* webpackChunkName: "networkRegions" */ "@/views/loyaltyPanel/stores/tabs/NetworkRegions.vue"
+            )
     }
 ];

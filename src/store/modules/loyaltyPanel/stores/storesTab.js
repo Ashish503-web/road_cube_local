@@ -1,4 +1,5 @@
 import Store from "@/models/loyaltyPanel/stores/Store";
+import UserDetails from "@/models/loyaltyPanel/stores/UserDetails";
 
 export default {
     namespaced: true,
@@ -7,7 +8,8 @@ export default {
         subscriptionPlans: [],
         countries: [],
         stores: [],
-        store: new Store()
+        store: new Store(),
+        userDetails: new UserDetails()
     }),
 
     mutations: {
@@ -25,6 +27,10 @@ export default {
 
         setItem(state, payload) {
             state.store = new Store(payload);
+        },
+
+        setUserDetails(state, payload) {
+            state.userDetails = new UserDetails(payload);
         },
 
         addItem(state, payload) {
@@ -85,27 +91,6 @@ export default {
             }
         },
 
-        async getItem({ commit }, id) {
-            try {
-                // commit("setLoading", true, { root: true });
-
-                const { data } = await Store.getItem(id);
-
-                // const { stores, pagination } = data.data;
-
-                console.log(data);
-
-                // commit("setItems", stores);
-                // commit("setServerItemsLength", pagination.total, {
-                //     root: true
-                // });
-                // commit("setLoading", false, { root: true });
-            } catch (ex) {
-                // commit("setLoading", false, { root: true });
-                console.error(ex.response.data.message);
-            }
-        },
-
         async getFinancialData({ commit }, query) {
             try {
                 commit("setLoading", true, { root: true });
@@ -127,31 +112,30 @@ export default {
             }
         },
 
-        async create({ commit, state, rootState }) {
+        async create({ commit, state, rootState }, newStoreManager) {
             try {
                 commit("setLoading", true, { root: true });
 
                 let store = { ...state.store };
+                let userDetails = { ...state.userDetails };
 
                 delete store.store_id;
                 delete store.bank_providers;
-                delete store.registration_date;
+                store.parent_id = rootState.loyaltyPanel.company.store_id;
 
-                let user = { ...rootState.user };
+                userDetails.app_provider_id = rootState.user.app_provider_id;
+
+                if (!newStoreManager) {
+                    userDetails.full_name = rootState.user.full_name;
+                    // userDetails.referral = rootState.user.referral;
+                }
+
+                state.userDetails;
 
                 const { data } = await Store.create({
                     store_details: store,
-                    user_details: {
-                        app_provider_id: user.app_provider_id,
-                        full_name: user.full_name,
-                        mobile: user.mobile,
-                        referral: "Other",
-                        tos: true,
-                        marketing: true
-                    }
+                    user_details: userDetails
                 });
-
-                console.log(data);
 
                 commit("addItem", data.data);
                 commit(
@@ -189,6 +173,7 @@ export default {
 
                 let product = { ...state.product };
                 delete product.image;
+
                 if (!product.name.en) product.name.en = product.name.el;
                 if (!product.name.it) product.name.it = product.name.el;
                 if (!product.description.en)

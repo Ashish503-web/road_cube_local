@@ -4,7 +4,8 @@ export default class Product {
     constructor(item = {}) {
         this.product_id = item.product_id || null;
         this.store_id = item.store_id || null;
-        this.published = item.published || false;
+        this.product_category_id = item.product_category_id || null;
+        this.product_tag_id = item.product_tag_id || null;
         this.name = item.name || {
             el: "",
             en: "",
@@ -17,22 +18,26 @@ export default class Product {
         };
         this.retail_price = item.retail_price || null;
         this.wholesale_price = item.wholesale_price || null;
-        this.shipping_cost = item.shipping_cost || null;
-        this.delivery_cost = item.delivery_cost || null;
-        this.product_category_id = item.product_category_id || null;
-        this.reward_points = item.reward_points || 30;
-        this.reward_type_id = item.reward_type_id || 1;
         this.product_identifier =
             item.product_identifier || "product_identifier";
-        this.add_to_stores = item.add_to_stores || true;
+        this.reward_points = item.reward_points || null;
+        this.reward_type_id = item.reward_type_id || null;
+        this.reward_points_shared = item.reward_points_shared || false;
         this.availability_days = item.availability_days || [];
-        this.image = item.image || "";
+        this.published = item.published || false;
         this.group_product = false;
+        this.add_to_stores = item.add_to_stores || true;
+        this.image = item.image || "";
     }
 
     static getCategories = () =>
         API().get(
             `/stores/${localStorage.getItem("storeId")}/product-categories`
+        );
+
+    static getProductsTags = () =>
+        API().get(
+            `/companies/${localStorage.getItem("storeId")}/products/tags?page=1`
         );
 
     static get = query =>
@@ -59,9 +64,16 @@ export default class Product {
             `/companies/${localStorage.getItem("storeId")}/products/${id}`
         );
 
+    static softDelete = id =>
+        API().delete(
+            `/companies/${localStorage.getItem(
+                "storeId"
+            )}/products/${id}/soft-delete`
+        );
+
     static uploadImage = (id, image) =>
         API().post(
-            `/companies${localStorage.getItem(
+            `/companies/${localStorage.getItem(
                 "storeId"
             )}/products/${id}/images`,
             image

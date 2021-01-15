@@ -7,7 +7,7 @@
         @submit="
             updateBusinessInformation({
                 type: 'businessInformation',
-                item: businessInformation
+                item: businessInformation,
             })
         "
     >
@@ -61,17 +61,20 @@
 
             <v-col cols="12" sm="5">
                 <Places
+                    :initial-address="businessInformation.address"
                     :label="translations.address[lang]"
                     outlined
                     dense
                     hide-details="auto"
+                    :success="success.address"
+                    :error-messages="error.address"
+                    @focus="error.address = ''"
+                    @blur="validateAddress"
                     @newAddress="setAddressDetails"
                 />
 
                 <v-btn
-                    :href="
-                        `http://maps.google.com/?q=${businessInformation.address}`
-                    "
+                    :href="`http://maps.google.com/?q=${businessInformation.address}`"
                     target="_blank"
                     class="text-capitalize mt-3"
                     height="40"
@@ -132,7 +135,8 @@ export default {
     mixins: [translations, validators],
 
     data: () => ({
-        businessInformation: {}
+        businessInformation: {},
+        isAddress: false,
     }),
 
     computed: {
@@ -157,7 +161,7 @@ export default {
 
         countries() {
             return this.$store.state.storePanel.profile.countries;
-        }
+        },
     },
 
     methods: {
@@ -165,15 +169,16 @@ export default {
         ...mapActions("storePanel/profile", [
             "getCountries",
             "getPlaceDetails",
-            "updateBusinessInformation"
+            "updateBusinessInformation",
         ]),
 
         setAddressDetails(place) {
+            this.isAddress = place.isAddress;
             this.businessInformation.address = place.address;
             this.businessInformation.zip = place.zip;
             this.businessInformation.lat = place.lat;
             this.businessInformation.lon = place.lon;
-        }
+        },
     },
 
     watch: {
@@ -203,19 +208,19 @@ export default {
 
                     full_name: val.billing_details.full_name,
 
-                    email: val.email
+                    email: val.email,
                 };
 
                 this.setResetSuccess({
                     value: true,
-                    type: "businessInformation"
+                    type: "businessInformation",
                 });
-            }
-        }
+            },
+        },
     },
 
     mounted() {
         this.getCountries();
-    }
+    },
 };
 </script>

@@ -7,6 +7,7 @@ export default {
         showImageUpload: false,
         showWeekdays: false,
         categories: [],
+        productsTags: [],
         products: [],
         product: new Product()
     }),
@@ -22,6 +23,10 @@ export default {
 
         setCategories(state, payload) {
             state.categories = payload;
+        },
+
+        setProductsTags(state, payload) {
+            state.productsTags = payload;
         },
 
         setItems(state, payload) {
@@ -60,14 +65,23 @@ export default {
             }
         },
 
+        async getProductsTags({ commit }) {
+            try {
+                const { data } = await Product.getProductsTags();
+
+                const { product_tags } = data.data;
+                commit("setProductsTags", product_tags);
+            } catch (ex) {
+                console.error(ex.response.data);
+            }
+        },
+
         async getItems({ commit }, query) {
             try {
                 commit("setLoading", true, { root: true });
 
                 const { data } = await Product.get(query);
                 const { products, pagination } = data.data;
-
-                console.log(data);
 
                 commit("setItems", products);
                 commit("setServerItemsLength", pagination.total, {
@@ -87,6 +101,8 @@ export default {
                 let product = { ...state.product };
                 delete product.product_id;
                 delete product.image;
+                product.store_id = rootState.loyaltyPanel.company.store_id;
+
                 if (!product.name.en) product.name.en = product.name.el;
                 if (!product.name.it) product.name.it = product.name.el;
                 if (!product.description.en)
@@ -118,7 +134,6 @@ export default {
                             type: "success",
                             text: "You have successfully created product!"
                         },
-
                         { root: true }
                     );
                 }
@@ -134,12 +149,14 @@ export default {
             }
         },
 
-        async update({ commit, dispatch, state }, image) {
+        async update({ commit, dispatch, state, rootState }, image) {
             try {
                 commit("setLoading", true, { root: true });
 
                 let product = { ...state.product };
                 delete product.image;
+                product.store_id = rootState.loyaltyPanel.company.store_id;
+
                 if (!product.name.en) product.name.en = product.name.el;
                 if (!product.name.it) product.name.it = product.name.el;
                 if (!product.description.en)
@@ -182,11 +199,16 @@ export default {
             }
         },
 
-        async remove({ commit, state, rootState }) {
+        async remove({ commit, state, rootState }, hardDelete) {
             try {
                 commit("setLoading", true, { root: true });
 
-                await Product.delete(state.product.product_id);
+                if (hardDelete) {
+                    await Product.delete(state.product.product_id);
+                } else {
+                    await Product.softDelete(state.product.product_id);
+                }
+
                 commit(
                     "setServerItemsLength",
                     rootState.serverItemsLength - 1,
