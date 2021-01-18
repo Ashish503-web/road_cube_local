@@ -19,7 +19,9 @@
             label="Select Category"
             no-top-margin
             :success="success.category"
-            :rules="rules.category"
+            :error-messages="error.category"
+            @focus="error.category = ''"
+            @blur="validateCategory"
         ></b-select>
 
         <b-select
@@ -28,14 +30,19 @@
             item-text="name"
             item-value="product_tag_id"
             label="Select Product Tag"
+            :success="success.tag"
+            :error-messages="error.tag"
+            @focus="error.tag = ''"
+            @blur="validateTag"
         ></b-select>
 
         <b-text-field
             v-model="product.name[productLang]"
             label="Product Name"
-            :success="success.name"
-            :rules="rules.name"
-            @cancel-success="success.name = false"
+            :success="productLang === 'el' ? success.name : false"
+            :error-messages="error.name"
+            @focus="error.name = ''"
+            @blur="validateName"
         >
             <template v-slot:append>
                 <b-lang-menu v-model="productLang" type="inner"></b-lang-menu>
@@ -45,9 +52,10 @@
         <b-textarea
             v-model="product.description[descriptionLang]"
             label="Product Description"
-            :success="success.description"
-            :rules="rules.description"
-            @cancel-success="success.description = false"
+            :success="descriptionLang === 'el' ? success.description : false"
+            :error-messages="error.description"
+            @focus="error.description = ''"
+            @blur="validateDescription"
         >
             <template v-slot:append>
                 <b-lang-menu
@@ -67,9 +75,6 @@
                     type="number"
                     label="Selling Price"
                     prepend-inner-icon="mdiCurrencyEur"
-                    :success="success.sellingPrice"
-                    :rules="rules.sellingPrice"
-                    @cancel-success="success.sellingPrice = false"
                 ></b-text-field>
             </v-col>
             <v-col cols="6" class="pl-2">
@@ -78,9 +83,6 @@
                     type="number"
                     label="Wholesale Price"
                     prepend-inner-icon="mdiCurrencyEur"
-                    :success="success.wholesalePrice"
-                    :rules="rules.wholesalePrice"
-                    @cancel-success="success.wholesalePrice = false"
                 ></b-text-field>
             </v-col>
 
@@ -108,7 +110,12 @@
             </v-col>
         </v-row>
 
-        <v-checkbox color="secondary" class="mt-3 pt-0" hide-details="auto">
+        <v-checkbox
+            v-model="product.reward_points_shared"
+            color="secondary"
+            class="mt-3 pt-0"
+            hide-details="auto"
+        >
             <template v-slot:label>
                 <h4 class="secondary--text">Subsidized Points</h4>
             </template>
@@ -237,7 +244,7 @@
 <script>
 import { mapState, mapMutations, mapActions } from "vuex";
 
-import validators from "./productValidators";
+import validators from "@/utils/validators/loyaltyPanel/product";
 
 export default {
     name: "Product",
@@ -276,7 +283,11 @@ export default {
             "resetSuccess",
             "resetValidation",
         ]),
-        ...mapState("loyaltyPanel/products", ["categories", "productsTags"]),
+        ...mapState("loyaltyPanel/products", [
+            "categories",
+            "productsTags",
+            "product",
+        ]),
 
         lang() {
             return this.$route.params.lang;
@@ -307,13 +318,10 @@ export default {
                 this.setShowWeekdays(val);
             },
         },
-
-        product() {
-            return this.$store.state.loyaltyPanel.products.product;
-        },
     },
 
     methods: {
+        ...mapMutations(["setResetSuccess", "setResetValidation"]),
         ...mapMutations("loyaltyPanel/products", [
             "setShowImageUpload",
             "setShowWeekdays",
@@ -331,22 +339,6 @@ export default {
                 const reader = new FileReader();
                 reader.readAsDataURL(this.imageFile);
                 reader.onload = (e) => (this.product.image = e.target.result);
-            }
-        },
-    },
-
-    watch: {
-        resetSuccess(val) {
-            if (val) {
-                this.success = {
-                    name: false,
-                    description: false,
-                    sellingPrice: false,
-                    wholesalePrice: false,
-                    deliveryCost: false,
-                    shippingCost: false,
-                    category: false,
-                };
             }
         },
     },

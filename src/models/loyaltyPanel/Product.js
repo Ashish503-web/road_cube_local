@@ -25,8 +25,8 @@ export default class Product {
         this.reward_points_shared = item.reward_points_shared || false;
         this.availability_days = item.availability_days || [];
         this.published = item.published || false;
-        this.group_product = false;
-        this.add_to_stores = item.add_to_stores || true;
+        this.group_product = item.group_product || false;
+        this.add_to_stores = item.add_to_stores || false;
         this.image = item.image || "";
     }
 

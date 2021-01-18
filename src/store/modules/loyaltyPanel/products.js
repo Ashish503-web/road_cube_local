@@ -111,7 +111,7 @@ export default {
                     product.description.it = product.description.el;
 
                 const { data } = await Product.create(product);
-
+                console.log(data.data.product);
                 if (image) {
                     dispatch("uploadImage", {
                         item: data.data.product,

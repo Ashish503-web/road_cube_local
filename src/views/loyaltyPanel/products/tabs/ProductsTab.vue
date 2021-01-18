@@ -267,6 +267,7 @@ export default {
         ...mapActions("loyaltyPanel/products", ["getItems", "remove"]),
 
         open(mode, item) {
+            console.log(item);
             if (mode === 2) {
                 item.product_category_id =
                     item.product_category.product_category_id;

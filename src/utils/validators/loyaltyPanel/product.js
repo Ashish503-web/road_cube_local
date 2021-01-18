@@ -3,29 +3,40 @@ export default {
         return {
             valid: {
                 category: false,
+                tag: false,
                 name: false,
                 description: false,
                 sellingPrice: false,
-                wholesalePrice: false
+                wholesalePrice: false,
+                productIdentifier: false
             },
             success: {
                 category: false,
+                tag: false,
                 name: false,
                 description: false,
                 sellingPrice: false,
-                wholesalePrice: false
+                wholesalePrice: false,
+                productIdentifier: false
             },
             error: {
                 category: "",
+                tag: "",
                 name: "",
                 description: "",
                 sellingPrice: "",
-                wholesalePrice: ""
+                wholesalePrice: "",
+                productIdentifier: ""
             },
             errorMessages: {
                 categoryRequired: {
                     el: "",
                     en: "Category is required",
+                    it: ""
+                },
+                tagRequired: {
+                    el: "",
+                    en: "Product Tag is required",
                     it: ""
                 },
                 nameRequired: {
@@ -58,15 +69,15 @@ export default {
     },
 
     computed: {
-        formValid() {
-            return (
-                this.valid.category &&
-                this.valid.name &&
-                this.valid.description &&
-                this.valid.sellingPrice &&
-                this.valid.wholesalePrice
-            );
-        }
+        // formValid() {
+        //     return (
+        //         this.valid.category &&
+        //         this.valid.name &&
+        //         this.valid.description &&
+        //         this.valid.sellingPrice &&
+        //         this.valid.wholesalePrice
+        //     );
+        // }
     },
 
     methods: {
@@ -77,6 +88,14 @@ export default {
                 ];
             } else {
                 this.error.category = "";
+            }
+        },
+
+        validateTag() {
+            if (!this.product.product_tag_id) {
+                this.error.tag = this.errorMessages.tagRequired[this.lang];
+            } else {
+                this.error.tag = "";
             }
         },
 

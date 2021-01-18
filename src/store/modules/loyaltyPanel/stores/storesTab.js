@@ -137,6 +137,8 @@ export default {
                     user_details: userDetails
                 });
 
+                console.log(data.data);
+
                 commit("addItem", data.data);
                 commit(
                     "setServerItemsLength",
