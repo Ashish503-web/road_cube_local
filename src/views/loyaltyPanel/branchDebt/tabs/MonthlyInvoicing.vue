@@ -53,6 +53,7 @@
 
 <script>
 import { mdiCalendarSearch } from "@mdi/js";
+import { mapState, mapMutations, mapActions } from "vuex";
 
 import ExportLinks from "@/components/general/ExportLinks.vue";
 import translations from "@/utils/translations/loyaltyPanel/branchDebt/monthlyInvoicing";
@@ -67,168 +68,47 @@ export default {
     data() {
         return {
             icons: { mdiCalendarSearch },
-            range: [],
-            items: [
-                {
-                    date: "14.09.2020",
-                    name: "Bill",
-                    street_address: "Moskovyan 14",
-                    product: "Phone",
-                    product_code: "12345",
-                    bank: "HSBC",
-                    with_subsidy: "yes",
-                    without_subsidy: "no",
-                    payment: "USD",
-                },
-                {
-                    date: "14.09.2020",
-                    name: "Bill",
-                    street_address: "Moskovyan 14",
-                    product: "Phone",
-                    product_code: "12345",
-                    bank: "HSBC",
-                    with_subsidy: "yes",
-                    without_subsidy: "no",
-                    payment: "USD",
-                },
-                {
-                    date: "14.09.2020",
-                    name: "Bill",
-                    street_address: "Moskovyan 14",
-                    product: "Phone",
-                    product_code: "12345",
-                    bank: "HSBC",
-                    with_subsidy: "yes",
-                    without_subsidy: "no",
-                    payment: "USD",
-                },
-                {
-                    date: "14.09.2020",
-                    name: "Bill",
-                    street_address: "Moskovyan 14",
-                    product: "Phone",
-                    product_code: "12345",
-                    bank: "HSBC",
-                    with_subsidy: "yes",
-                    without_subsidy: "no",
-                    payment: "USD",
-                },
-                {
-                    date: "14.09.2020",
-                    name: "Bill",
-                    street_address: "Moskovyan 14",
-                    product: "Phone",
-                    product_code: "12345",
-                    bank: "HSBC",
-                    with_subsidy: "yes",
-                    without_subsidy: "no",
-                    payment: "USD",
-                },
-                {
-                    date: "14.09.2020",
-                    name: "Bill",
-                    street_address: "Moskovyan 14",
-                    product: "Phone",
-                    product_code: "12345",
-                    bank: "HSBC",
-                    with_subsidy: "yes",
-                    without_subsidy: "no",
-                    payment: "USD",
-                },
-                {
-                    date: "14.09.2020",
-                    name: "Bill",
-                    street_address: "Moskovyan 14",
-                    product: "Phone",
-                    product_code: "12345",
-                    bank: "HSBC",
-                    with_subsidy: "yes",
-                    without_subsidy: "no",
-                    payment: "USD",
-                },
-                {
-                    date: "14.09.2020",
-                    name: "Bill",
-                    street_address: "Moskovyan 14",
-                    product: "Phone",
-                    product_code: "12345",
-                    bank: "HSBC",
-                    with_subsidy: "yes",
-                    without_subsidy: "no",
-                    payment: "USD",
-                },
-                {
-                    date: "14.09.2020",
-                    name: "Bill",
-                    street_address: "Moskovyan 14",
-                    product: "Phone",
-                    product_code: "12345",
-                    bank: "HSBC",
-                    with_subsidy: "yes",
-                    without_subsidy: "no",
-                    payment: "USD",
-                },
-                {
-                    date: "14.09.2020",
-                    name: "Bill",
-                    street_address: "Moskovyan 14",
-                    product: "Phone",
-                    product_code: "12345",
-                    bank: "HSBC",
-                    with_subsidy: "yes",
-                    without_subsidy: "no",
-                    payment: "USD",
-                },
-                {
-                    date: "14.09.2020",
-                    name: "Bill",
-                    street_address: "Moskovyan 14",
-                    product: "Phone",
-                    product_code: "12345",
-                    bank: "HSBC",
-                    with_subsidy: "yes",
-                    without_subsidy: "no",
-                    payment: "USD",
-                },
-            ],
+            range: " ",
             page: +this.$route.query.page,
         };
     },
 
     computed: {
+        ...mapState("loyaltyPanel/branchDebt", [
+            "items"
+        ]),
+
         lang() {
             return this.$route.params.lang;
         },
 
         headers() {
             return [
-                { text: this.translations.date[this.lang], value: "date" },
+                {
+                    text: this.translations.storeId[this.lang],
+                    value: "store_id",
+                },
                 { text: this.translations.name[this.lang], value: "name" },
                 {
                     text: this.translations.streetAddress[this.lang],
-                    value: "street_address",
+                    value: "address",
                 },
                 {
-                    text: this.translations.product[this.lang],
-                    value: "product",
+                    text: this.translations.productName[this.lang],
+                    value: `product_name[${this.lang}]`,
                 },
-                {
-                    text: this.translations.productCode[this.lang],
-                    value: "product_code",
+                { 
+                    text: this.translations.bank[this.lang], 
+                    value: `bank_provider_name[${this.lang}]` 
                 },
-                { text: this.translations.bank[this.lang], value: "bank" },
                 {
                     text: this.translations.withSubsidy[this.lang],
-                    value: "with_subsidy",
+                    value: "subsidy",
                 },
                 {
                     text: this.translations.withoutSubsidy[this.lang],
-                    value: "without_subsidy",
-                },
-                {
-                    text: this.translations.payment[this.lang],
-                    value: "payment",
-                },
+                    value: "non_subsidy",
+                }
             ];
         },
     },
@@ -259,6 +139,16 @@ export default {
                 }
             }
         },
+    },
+
+    methods: {
+        ...mapActions("loyaltyPanel/branchDebt", [
+            "getDebts"
+        ]),
+    },
+
+    mounted(){
+        this.getDebts(this.range)
     },
 
     beforeCreate() {

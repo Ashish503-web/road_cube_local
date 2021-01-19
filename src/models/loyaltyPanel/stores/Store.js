@@ -29,6 +29,12 @@ export default class Store {
 
     static getCountries = () => API().get(`/common/countries`);
 
+    static getNetworkRegions = () => API().get(
+        `/companies/${localStorage.getItem(
+            "storeId"
+        )}/network-regions?page=1`
+    );
+
     static get = query =>
         API().get(
             `/companies/${localStorage.getItem("storeId")}/stores${query}`

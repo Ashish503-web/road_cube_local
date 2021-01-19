@@ -3,7 +3,7 @@
         :title="title"
         :loading="loading"
         :error-message="errorMessage"
-        :disabled="!formValid"
+        :disabled="mode === 1 ? !formValid : false"
         @cancel="$emit('cancel')"
         @submit="mode === 1 ? create(newStoreManager) : update()"
     >
@@ -99,6 +99,16 @@
                     @focus="error.primaryPhone = ''"
                     @blur="validatePrimaryPhone"
                 ></b-text-field>
+            </v-col>
+
+            <v-col cols="6" class="pl-2">
+                <b-select
+                    v-model="store.store_company_network_region_id"
+                    :items="networkRegions"
+                    item-text="name"
+                    item-value="store_company_network_region_id"
+                    label="Network region"
+                ></b-select>
             </v-col>
 
             <v-col cols="12">
@@ -219,6 +229,7 @@ export default {
         ...mapState("loyaltyPanel/stores/storesTab", [
             "subscriptionPlans",
             "countries",
+            "networkRegions",
             "store",
             "userDetails",
         ]),
@@ -237,6 +248,7 @@ export default {
         ...mapActions("loyaltyPanel/stores/storesTab", [
             "getSubscriptionPlans",
             "getCountries",
+            "getNetworkRegions",
             "getItem",
             "create",
             "update",
@@ -251,9 +263,16 @@ export default {
         },
     },
 
+    watch: {
+        store(val){
+            console.log(val,'val;111')
+        }
+    },
+
     mounted() {
         this.getSubscriptionPlans();
         this.getCountries();
+        this.getNetworkRegions()
         if (this.mode === 2) this.isAddress = true;
     },
 };

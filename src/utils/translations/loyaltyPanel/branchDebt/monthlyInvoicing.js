@@ -21,14 +21,9 @@ export default {
                 en: "Street Address",
                 it: ""
             },
-            product: {
+            productName: {
                 el: "",
-                en: "Product",
-                it: ""
-            },
-            productCode: {
-                el: "",
-                en: "Product Code",
+                en: "Product Name",
                 it: ""
             },
             bank: {
@@ -49,6 +44,11 @@ export default {
             payment: {
                 el: "",
                 en: "Payment",
+                it: ""
+            },
+            storeId: {
+                el: "",
+                en: "Store ID",
                 it: ""
             }
         }

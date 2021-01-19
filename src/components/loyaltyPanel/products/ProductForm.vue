@@ -115,6 +115,7 @@
             color="secondary"
             class="mt-3 pt-0"
             hide-details="auto"
+            v-if="mode === 1"
         >
             <template v-slot:label>
                 <h4 class="secondary--text">Subsidized Points</h4>
@@ -220,9 +221,22 @@
             color="secondary"
             class="mt-3 pt-0"
             hide-details="auto"
+            v-if="mode === 1"
         >
             <template v-slot:label>
                 <h4 class="secondary--text">Group Product</h4>
+            </template>
+        </v-checkbox>
+
+        <v-checkbox
+            v-model="product.change_price_flag"
+            color="secondary"
+            class="mt-3 pt-0"
+            hide-details="auto"
+            v-if="mode === 2"
+        >
+            <template v-slot:label>
+                <h4 class="secondary--text">Change price flag</h4>
             </template>
         </v-checkbox>
 
@@ -231,6 +245,7 @@
             color="secondary"
             class="mt-3 pt-0"
             hide-details="auto"
+            v-if="mode === 1"
         >
             <template v-slot:label>
                 <h4 class="secondary--text">

@@ -7,6 +7,7 @@ export default {
     state: () => ({
         subscriptionPlans: [],
         countries: [],
+        networkRegions: [],
         stores: [],
         store: new Store(),
         userDetails: new UserDetails()
@@ -19,6 +20,10 @@ export default {
 
         setCountries(state, payload) {
             state.countries = payload;
+        },
+
+        setNetworkRegions(state, payload) {
+            state.networkRegions = payload;
         },
 
         setItems(state, payload) {
@@ -70,6 +75,16 @@ export default {
             }
         },
 
+        async getNetworkRegions({ commit }) {
+            try {
+                const { data } = await Store.getNetworkRegions();
+
+                commit("setNetworkRegions", data.data);
+            } catch (ex) {
+                console.error(ex.response.data.message);
+            }
+        },
+
         async getItems({ commit }, query) {
             try {
                 commit("setLoading", true, { root: true });
@@ -78,7 +93,7 @@ export default {
 
                 const { stores, pagination } = data.data;
 
-                console.log(stores);
+                console.log(stores,'stores555');
 
                 commit("setItems", stores);
                 commit("setServerItemsLength", pagination.total, {
@@ -169,29 +184,17 @@ export default {
             }
         },
 
-        async update({ commit, dispatch, state }, image) {
+        async update({ commit, dispatch, state }) {
             try {
                 commit("setLoading", true, { root: true });
 
-                let product = { ...state.product };
-                delete product.image;
+                let store = { ...state.store };
 
-                if (!product.name.en) product.name.en = product.name.el;
-                if (!product.name.it) product.name.it = product.name.el;
-                if (!product.description.en)
-                    product.description.en = product.description.el;
-                if (!product.description.it)
-                    product.description.it = product.description.el;
+                
+                console.log(store,'product555')
+                const { data } = await Store.update(store);
 
-                const { data } = await Store.update(product);
-
-                if (image) {
-                    dispatch("uploadImage", {
-                        item: data.data.product,
-                        image,
-                        mode: 2
-                    });
-                } else {
+                
                     commit("updateItem", data.data.product, { root: true });
                     commit("setLoading", false, { root: true });
                     commit("setDialog", false, { root: true });
@@ -205,7 +208,6 @@ export default {
 
                         { root: true }
                     );
-                }
             } catch (ex) {
                 commit("setLoading", false, { root: true });
                 commit("setErrorMessage", ex.response.data.message, {

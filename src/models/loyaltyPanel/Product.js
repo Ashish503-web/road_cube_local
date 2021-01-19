@@ -27,6 +27,7 @@ export default class Product {
         this.published = item.published || false;
         this.group_product = item.group_product || false;
         this.add_to_stores = item.add_to_stores || false;
+        this.change_price_flag = item.change_price_flag || false;
         this.image = item.image || "";
     }
 
