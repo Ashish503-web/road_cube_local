@@ -11,9 +11,9 @@ export default {
                 en: "Date",
                 it: ""
             },
-            nameOfShop: {
+            nameOfStore: {
                 el: "",
-                en: "Name of Shop",
+                en: "Name of Store",
                 it: ""
             },
             points: {

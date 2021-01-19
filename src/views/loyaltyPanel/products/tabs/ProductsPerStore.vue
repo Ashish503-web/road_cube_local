@@ -8,83 +8,17 @@
             </v-col>
         </v-toolbar>
         <v-data-table
-            :headers="headers"
-            :items="desserts"
+            :headers="stores"
+            :items="products"
             :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
             class="b-outlined"
         >
             <template v-slot:item="row">
                 <tr>
                     <td>{{ row.item.name }}</td>
-                    <td>
+                    <td v-for="(store,index) in stores" :key="index">
                         <v-checkbox
-                            v-model="row.item.market1"
-                            color="secondary"
-                        ></v-checkbox>
-                    </td>
-                    <td>
-                        <v-checkbox
-                            v-model="row.item.market2"
-                            color="secondary"
-                        ></v-checkbox>
-                    </td>
-                    <td>
-                        <v-checkbox
-                            v-model="row.item.market3"
-                            color="secondary"
-                        ></v-checkbox>
-                    </td>
-                    <td>
-                        <v-checkbox
-                            v-model="row.item.market4"
-                            color="secondary"
-                        ></v-checkbox>
-                    </td>
-                    <td>
-                        <v-checkbox
-                            v-model="row.item.market5"
-                            color="secondary"
-                        ></v-checkbox>
-                    </td>
-                    <td>
-                        <v-checkbox
-                            v-model="row.item.market6"
-                            color="secondary"
-                        ></v-checkbox>
-                    </td>
-                    <td>
-                        <v-checkbox
-                            v-model="row.item.market7"
-                            color="secondary"
-                        ></v-checkbox>
-                    </td>
-                    <td>
-                        <v-checkbox
-                            v-model="row.item.market8"
-                            color="secondary"
-                        ></v-checkbox>
-                    </td>
-                    <td>
-                        <v-checkbox
-                            v-model="row.item.market9"
-                            color="secondary"
-                        ></v-checkbox>
-                    </td>
-                    <td>
-                        <v-checkbox
-                            v-model="row.item.market10"
-                            color="secondary"
-                        ></v-checkbox>
-                    </td>
-                    <td>
-                        <v-checkbox
-                            v-model="row.item.market11"
-                            color="secondary"
-                        ></v-checkbox>
-                    </td>
-                    <td>
-                        <v-checkbox
-                            v-model="row.item.market12"
+                            v-model="row.item[store.text]"
                             color="secondary"
                         ></v-checkbox>
                     </td>
@@ -95,25 +29,12 @@
 </template>
 
 <script>
+import { mapState, mapMutations, mapActions } from "vuex";
+
 export default {
     name: "ProductsPerStore",
 
     data: () => ({
-        headers: [
-            { text: "Name" },
-            { text: "market1" },
-            { text: "market2" },
-            { text: "market3" },
-            { text: "market4" },
-            { text: "market5" },
-            { text: "market6" },
-            { text: "market7" },
-            { text: "market8" },
-            { text: "market9" },
-            { text: "market10" },
-            { text: "market11" },
-            { text: "market12" },
-        ],
         desserts: [
             {
                 id: 1,
@@ -229,6 +150,17 @@ export default {
             },
         ],
     }),
-    methods: {},
+
+    computed: {
+        ...mapState("loyaltyPanel/productsPerStore", ["products","stores"]),
+    },
+
+    methods: {
+        ...mapActions("loyaltyPanel/productsPerStore", ["getItems"]),
+    },
+
+    mounted(){
+        this.getItems()
+    }
 };
 </script>

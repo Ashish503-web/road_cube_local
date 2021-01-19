@@ -86,12 +86,12 @@
                 ></b-text-field>
             </v-col>
 
-            <v-col cols="12">
+            <!-- <v-col cols="12">
                 <b-text-field
                     v-model="product.product_identifier"
                     label="Product Id"
                 ></b-text-field>
-            </v-col>
+            </v-col> -->
 
             <v-col cols="6" class="pr-2">
                 <b-text-field

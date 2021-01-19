@@ -86,7 +86,7 @@ export default {
             return [
                 { text: this.translations.date[this.lang], value: "date" },
                 {
-                    text: this.translations.nameOfShop[this.lang],
+                    text: this.translations.nameOfStore[this.lang],
                     value: "name_of_shop",
                 },
                 { text: this.translations.points[this.lang], value: "points" },

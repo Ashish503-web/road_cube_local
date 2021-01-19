@@ -72,6 +72,19 @@
                 </v-tooltip>
             </template>
 
+            <template v-slot:item.active="{ item }">
+                <v-icon
+                    v-if="item.active"
+                    color="green"
+                    v-text="icons.mdiCheckCircleOutline"
+                ></v-icon>
+                <v-icon
+                    v-else
+                    color="red"
+                    v-text="icons.mdiMinusCircleOutline"
+                ></v-icon>
+            </template>
+
             <template v-slot:item.actions="{ item }">
                 <v-tooltip color="secondary" top>
                     <template v-slot:activator="{ on }">
@@ -201,7 +214,7 @@
 </template>
 
 <script>
-import { mdiEye, mdiPencilOutline, mdiOpenInNew, mdiClose } from "@mdi/js";
+import { mdiEye, mdiPencilOutline, mdiOpenInNew, mdiClose, mdiCheckCircleOutline, mdiMinusCircleOutline } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
 import debounce from "lodash/debounce";
 
@@ -219,7 +232,7 @@ export default {
 
     data() {
         return {
-            icons: { mdiEye, mdiPencilOutline, mdiOpenInNew, mdiClose },
+            icons: { mdiEye, mdiPencilOutline, mdiOpenInNew, mdiClose, mdiCheckCircleOutline, mdiMinusCircleOutline },
             searchTypes: [
                 "All Fields",
                 "Name",

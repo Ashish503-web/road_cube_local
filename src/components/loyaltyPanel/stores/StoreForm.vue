@@ -239,7 +239,7 @@ export default {
         },
 
         title() {
-            return this.mode === 1 ? "New Shop" : "Update Shop";
+            return this.mode === 1 ? "New Store" : "Update Store";
         },
     },
 
