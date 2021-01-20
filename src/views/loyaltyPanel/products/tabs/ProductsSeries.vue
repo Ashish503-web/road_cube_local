@@ -7,20 +7,23 @@
             </div>
             <v-list class="pr-3 pl-3" max-width="70%">
                 <v-list-item-group>
-                    <v-list-item
-                        class="grey lighten-3 mb-1"
-                        v-for="(item, i) in items"
-                        :key="i"
-                    >
-                        <v-list-item-icon>
-                            <v-icon v-text="icons.mdiSwapVerticalBold"></v-icon>
-                        </v-list-item-icon>
-                        <v-list-item-content>
-                            <v-list-item-title
-                                v-text="item.text"
-                            ></v-list-item-title>
-                        </v-list-item-content>
-                    </v-list-item>
+                    <draggable v-model="myArray">
+                        <v-list-item
+                            class="grey lighten-3 mb-1"
+                            v-for="(item, i) in items"
+                            :key="i"
+                        >
+                            <v-list-item-icon>
+                                <v-icon v-text="icons.mdiSwapVerticalBold"></v-icon>
+                            </v-list-item-icon>
+                            <v-list-item-content>
+                                <v-list-item-title
+                                    v-text="item.text"
+                                ></v-list-item-title>
+                            </v-list-item-content>
+                        </v-list-item>
+                    </draggable>
+                    
                 </v-list-item-group>
             </v-list>
             <div class="mb-5 pb-5 text-right">
@@ -32,6 +35,7 @@
 
 <script>
 import { mdiSwapVerticalBold } from "@mdi/js";
+import draggable from 'vuedraggable'
 
 export default {
     name: "ProductsSeries",
@@ -55,5 +59,9 @@ export default {
             },
         ],
     }),
+
+    components: {
+            draggable
+        },
 };
 </script>
