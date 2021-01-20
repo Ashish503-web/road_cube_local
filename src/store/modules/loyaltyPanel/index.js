@@ -22,7 +22,8 @@ export default {
         businessProfile,
         catalogManagement,
         branchDebt,
-        productSeries
+        productSeries,
+        productsPerStore
     },
 
     state: () => ({
