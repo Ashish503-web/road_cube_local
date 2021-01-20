@@ -3,7 +3,6 @@ import API from "@/models/API";
 export default class Product {
     constructor(item = {}) {
         this.product_id = item.product_id || null;
-        this.store_id = item.store_id || null;
         this.product_category_id = item.product_category_id || null;
         this.product_tag_id = item.product_tag_id || null;
         this.name = item.name || {

@@ -40,6 +40,10 @@ export default {
 
     computed: {
         ...mapState("loyaltyPanel/productsPerStore", ["products","stores"]),
+
+        lang() {
+            return this.$route.params.lang;
+        }
     },
 
     methods: {
@@ -47,7 +51,7 @@ export default {
     },
 
     mounted(){
-        this.getItems()
+        this.getItems(this.lang)
     }
 };
 </script>

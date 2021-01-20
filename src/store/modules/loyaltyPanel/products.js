@@ -101,7 +101,6 @@ export default {
                 let product = { ...state.product };
                 delete product.product_id;
                 delete product.image;
-                product.store_id = rootState.loyaltyPanel.company.store_id;
 
                 if (!product.name.en) product.name.en = product.name.el;
                 if (!product.name.it) product.name.it = product.name.el;
@@ -155,7 +154,6 @@ export default {
 
                 let product = { ...state.product };
                 delete product.image;
-                product.store_id = rootState.loyaltyPanel.company.store_id;
 
                 if (!product.name.en) product.name.en = product.name.el;
                 if (!product.name.it) product.name.it = product.name.el;

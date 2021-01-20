@@ -19,7 +19,7 @@ export default {
     },
 
     actions: {
-        async getItems({ commit }) {
+        async getItems({ commit }, lang) {
             try {
                 commit("setLoading", true, { root: true });
 
@@ -34,22 +34,22 @@ export default {
                     })
 
                     store.products.map(product => {
-                        if(productsIds.includes(product.product_id)){
+                        console.log(product,'product')
+                        if(productsIds.includes(product.parent_product_id)){
                             products.map(item => {
-                                if(item.id == product.product_id){
+                                if(item.id == product.parent_product_id){
                                     item[store.name] = true
                                 }
                             })
                         }else{
-                            productsIds.push(product.product_id)
+                            productsIds.push(product.parent_product_id)
                             let newProd = {
-                                id: product.product_id,
-                                name: product.name
+                                id: product.parent_product_id,
+                                name: product.name[lang]
                             }
                             newProd[store.name] = true
 
                             products.push(newProd)
-                            console.log(products,'products00000')
                         }
                     })
 

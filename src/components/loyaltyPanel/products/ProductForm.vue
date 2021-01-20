@@ -249,7 +249,7 @@
         >
             <template v-slot:label>
                 <h4 class="secondary--text">
-                    Add new product to existing companies
+                    Add this product to existing stores
                 </h4>
             </template>
         </v-checkbox>
