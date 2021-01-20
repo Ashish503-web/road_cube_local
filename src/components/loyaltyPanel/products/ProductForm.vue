@@ -229,14 +229,26 @@
         </v-checkbox>
 
         <v-checkbox
-            v-model="product.change_price_flag"
+            v-model="product.update_store_products.status"
             color="secondary"
             class="mt-3 pt-0"
             hide-details="auto"
             v-if="mode === 2"
         >
             <template v-slot:label>
-                <h4 class="secondary--text">Change price flag</h4>
+                <h4 class="secondary--text">Update product to existing stores</h4>
+            </template>
+        </v-checkbox>
+
+        <v-checkbox
+            v-model="product.update_store_products.prices_included"
+            color="secondary"
+            class="mt-3 pt-0"
+            hide-details="auto"
+            v-if="product.update_store_products.status"
+        >
+            <template v-slot:label>
+                <h4 class="secondary--text">Update prices as well?</h4>
             </template>
         </v-checkbox>
 
@@ -356,6 +368,17 @@ export default {
                 reader.onload = (e) => (this.product.image = e.target.result);
             }
         },
+    },
+
+    watch: {
+        product: {
+            handler(val){
+                if(!val.update_store_products.status){
+                    val.update_store_products.prices_included = false
+                }
+            },
+            deep: true
+        }
     },
 
     mounted() {
