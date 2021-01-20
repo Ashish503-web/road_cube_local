@@ -7,6 +7,7 @@ import userRights from "./userRights";
 import businessProfile from "./businessProfile";
 import branchDebt from "./branchDebt";
 import productsPerStore from "./productsPerStore";
+import productSeries from "./productSeries";
 
 import Company from "@/models/loyaltyPanel/Company.js";
 
@@ -21,7 +22,7 @@ export default {
         businessProfile,
         catalogManagement,
         branchDebt,
-        productsPerStore
+        productSeries
     },
 
     state: () => ({
