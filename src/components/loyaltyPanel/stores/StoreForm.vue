@@ -111,46 +111,10 @@
                 ></b-select>
             </v-col>
 
-            <v-col cols="12">
-                <v-checkbox
-                    v-model="newStoreManager"
-                    color="secondary"
-                    class="mt-3 pt-0"
-                    hide-details="auto"
-                >
-                    <template v-slot:label>
-                        <h4 class="secondary--text">Add new store manager</h4>
-                    </template>
-                </v-checkbox>
-            </v-col>
-
-            <template v-if="newStoreManager">
-                <v-col cols="6" class="pr-2">
-                    <b-text-field
-                        v-model="userDetails.full_name"
-                        label="Full Name"
-                        :success="success.fullname"
-                        :error-messages="error.fullname"
-                        @focus="error.fullname = ''"
-                        @blur="validateFullname"
-                    ></b-text-field>
-                </v-col>
-
-                <v-col cols="6" class="pl-2">
-                    <b-text-field
-                        v-model="userDetails.mobile"
-                        v-mask="'##########'"
-                        label="Mobile"
-                        :success="success.mobile"
-                        :error-messages="error.mobile"
-                        @focus="error.mobile = ''"
-                        @blur="validateMobile"
-                    ></b-text-field>
-                </v-col>
-            </template>
         </v-row>
 
         <v-checkbox
+            v-if="mode === 1"
             v-model="userDetails.tos"
             color="secondary"
             class="mt-3 pt-0"
@@ -177,6 +141,7 @@
         </v-checkbox>
 
         <v-checkbox
+            v-if="mode === 1"
             v-model="userDetails.marketing"
             color="secondary"
             class="mt-3 pt-0"
@@ -194,6 +159,49 @@
                 </router-link>
             </template>
         </v-checkbox>
+
+        <v-row no-gutters>
+
+            <v-col cols="12" v-if="mode === 1">
+                <v-checkbox
+                    v-model="newStoreManager"
+                    color="secondary"
+                    class="mt-3 pt-0"
+                    hide-details="auto"
+                >
+                    <template v-slot:label>
+                        <h4 class="secondary--text">Add new store manager</h4>
+                    </template>
+                </v-checkbox>
+            </v-col>
+
+            <template v-if="newStoreManager && mode === 1">
+                <v-col cols="6" class="pr-2">
+                    <b-text-field
+                        v-model="userDetails.full_name"
+                        label="Full Name"
+                        :success="success.fullname"
+                        :error-messages="error.fullname"
+                        @focus="error.fullname = ''"
+                        @blur="validateFullname"
+                    ></b-text-field>
+                </v-col>
+
+                <v-col cols="6" class="pl-2">
+                    <b-text-field
+                        v-model="userDetails.mobile"
+                        v-mask="'##########'"
+                        label="Mobile"
+                        :success="success.mobile"
+                        :error-messages="error.mobile"
+                        @focus="error.mobile = ''"
+                        @blur="validateMobile"
+                    ></b-text-field>
+                </v-col>
+            </template>
+        </v-row>
+
+        
     </b-card>
 </template>
 

@@ -72,6 +72,32 @@
                 </v-tooltip>
             </template>
 
+            <template v-slot:item.show_on_map="{ item }">
+                <v-icon
+                    v-if="item.show_on_map == 'true'"
+                    color="green"
+                    v-text="icons.mdiCheckCircleOutline"
+                ></v-icon>
+                <v-icon
+                    v-else
+                    color="red"
+                    v-text="icons.mdiMinusCircleOutline"
+                ></v-icon>
+            </template>
+
+            <template v-slot:item.online_payment_processing="{ item }">
+                <v-icon
+                    v-if="item.online_payment_processing == 'true'"
+                    color="green"
+                    v-text="icons.mdiCheckCircleOutline"
+                ></v-icon>
+                <v-icon
+                    v-else
+                    color="red"
+                    v-text="icons.mdiMinusCircleOutline"
+                ></v-icon>
+            </template>
+
             <template v-slot:item.active="{ item }">
                 <v-icon
                     v-if="item.active"
@@ -272,10 +298,10 @@ export default {
                     value: "app_name",
                     width: 200,
                 },
-                { text: this.translations.map[this.lang], value: "map" },
+                { text: this.translations.map[this.lang], value: "show_on_map" },
                 {
                     text: this.translations.payments[this.lang],
-                    value: "online_payment",
+                    value: "online_payment_processing",
                 },
                 {
                     text: this.translations.view[this.lang],

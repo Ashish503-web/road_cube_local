@@ -23,12 +23,12 @@ export default {
             },
             map: {
                 el: "",
-                en: "Map",
+                en: "Visible On Map",
                 it: ""
             },
             payments: {
                 el: "",
-                en: "Payments",
+                en: "Accept Online Payments",
                 it: ""
             },
             view: {

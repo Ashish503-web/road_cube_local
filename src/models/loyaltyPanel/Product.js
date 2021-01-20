@@ -18,8 +18,6 @@ export default class Product {
         };
         this.retail_price = item.retail_price || null;
         this.wholesale_price = item.wholesale_price || null;
-        this.product_identifier =
-            item.product_identifier || "product_identifier";
         this.reward_points = item.reward_points || null;
         this.reward_type_id = item.reward_type_id || null;
         this.reward_points_shared = item.reward_points_shared || false;

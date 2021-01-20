@@ -51,6 +51,10 @@ export default {
 
         removeItem(state, id) {
             state.stores = state.stores.filter(s => s.store_id !== id);
+        },
+
+        removeStoreAddress(state){
+            state.store.address = ''
         }
     },
 
@@ -152,8 +156,7 @@ export default {
                     user_details: userDetails
                 });
 
-                console.log(data.data);
-
+                commit("removeStoreAddress")
                 commit("addItem", data.data);
                 commit(
                     "setServerItemsLength",

@@ -42,11 +42,14 @@ export default {
                             })
                         }else{
                             productsIds.push(product.product_id)
-                            products.push({
+                            let newProd = {
                                 id: product.product_id,
-                                name: product.name,
-                                [store.name]: true
-                            })
+                                name: product.name
+                            }
+                            newProd[store.name] = true
+
+                            products.push(newProd)
+                            console.log(products,'products00000')
                         }
                     })
 
