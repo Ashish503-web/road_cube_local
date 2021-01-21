@@ -11,6 +11,8 @@
             :headers="stores"
             :items="products"
             :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
+            :page.sync="page"
+            :server-items-length="serverItemsLength"
             class="b-outlined"
         >
             <template v-slot:item="row">
@@ -34,15 +36,27 @@ import { mapState, mapMutations, mapActions } from "vuex";
 export default {
     name: "ProductsPerStore",
 
-    data: () => ({
-        
-    }),
+    data() {
+        return {
+            page: +this.$route.query.page
+        };
+    },
 
     computed: {
-        ...mapState("loyaltyPanel/productsPerStore", ["products","stores"]),
+        ...mapState("loyaltyPanel/productsPerStore", ["products","stores","serverItemsLength"]),
 
         lang() {
             return this.$route.params.lang;
+        },
+
+        query() {
+            let query = "?";
+
+            for (let key in this.$route.query) {
+                query += `${key}=${this.$route.query[key]}&`;
+            }
+
+            return query.slice(0, query.length - 1);
         }
     },
 
@@ -50,8 +64,35 @@ export default {
         ...mapActions("loyaltyPanel/productsPerStore", ["getItems"]),
     },
 
+    beforeCreate() {
+        if (!this.$route.query.page) {
+            this.$router.replace({
+                query: {
+                    page: 1,
+                    ...this.$route.query,
+                },
+            });
+        }
+    },
+
     mounted(){
-        this.getItems(this.lang)
+        let props = {
+            lang: this.lang,
+            query: this.query
+        }
+        this.getItems(props)
+    },
+
+    watch: {
+        page(page) {
+            this.$router.replace({ query: { ...this.$route.query, page } });
+            let props = {
+                lang: this.lang,
+                query: this.query
+            }
+
+            this.getItems(props);
+        }
     }
 };
 </script>

@@ -110,7 +110,7 @@ export default {
                     product.description.it = product.description.el;
 
                 const { data } = await Product.create(product);
-                console.log(data.data.product);
+                
                 if (image) {
                     dispatch("uploadImage", {
                         item: data.data.product,
@@ -148,8 +148,9 @@ export default {
             }
         },
 
-        async update({ commit, dispatch, state, rootState }, image) {
+        async update({ commit, dispatch, state, rootState }, image ) {
             try {
+                
                 commit("setLoading", true, { root: true });
 
                 let product = { ...state.product };
@@ -163,7 +164,7 @@ export default {
                     product.description.it = product.description.el;
 
                 const { data } = await Product.update(product);
-
+                
                 if (image) {
                     dispatch("uploadImage", {
                         item: data.data.product,
@@ -171,7 +172,7 @@ export default {
                         mode: 2
                     });
                 } else {
-                    commit("updateItem", data.data.product, { root: true });
+                    commit("updateItem", data.data.product);
                     commit("setLoading", false, { root: true });
                     commit("setDialog", false, { root: true });
                     commit(

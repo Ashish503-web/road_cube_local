@@ -5,8 +5,8 @@ export default class ProductPerStore {
         
     }
 
-    static get = () =>
+    static get = (query) =>
         API().get(
-            `/companies/${localStorage.getItem("storeId")}/stores/products?page=1`
+            `/companies/${localStorage.getItem("storeId")}/stores/products${query}`
         );
 }

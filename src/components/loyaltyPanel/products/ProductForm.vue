@@ -104,7 +104,7 @@
             <v-col cols="6" class="pl-2">
                 <b-select
                     v-model="product.reward_type_id"
-                    label="Percentage"
+                    label="Reward type"
                     :items="rewardTypes"
                 ></b-select>
             </v-col>
@@ -345,6 +345,16 @@ export default {
                 this.setShowWeekdays(val);
             },
         },
+
+        query() {
+            let query = "?";
+
+            for (let key in this.$route.query) {
+                query += `${key}=${this.$route.query[key]}&`;
+            }
+
+            return query.slice(0, query.length - 1);
+        }
     },
 
     methods: {

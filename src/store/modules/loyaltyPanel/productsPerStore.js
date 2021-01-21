@@ -5,7 +5,8 @@ export default {
 
     state: () => ({
         stores: [],
-        products: []
+        products: [],
+        serverItemsLength: 0
     }),
 
     mutations: {
@@ -16,15 +17,20 @@ export default {
         setProducts(state, payload) {
             state.products = payload;
         },
+
+        setServerItemsLength(state, payload) {
+            state.serverItemsLength = payload;
+        }
     },
 
     actions: {
-        async getItems({ commit }, lang) {
+        async getItems({ commit }, props) {
             try {
                 commit("setLoading", true, { root: true });
 
-                const { data } = await ProductPerStore.get();
+                const { data } = await ProductPerStore.get(props.query);
                 const items = data.data;
+                commit("setServerItemsLength", items.pagination.total);
                 let stores = []
                 let productsIds = []
                 let products = []
@@ -45,7 +51,7 @@ export default {
                             productsIds.push(product.parent_product_id)
                             let newProd = {
                                 id: product.parent_product_id,
-                                name: product.name[lang]
+                                name: product.name[props.lang]
                             }
                             newProd[store.name] = true
 
@@ -54,7 +60,6 @@ export default {
                     })
 
                 })
-                console.log(data,'data5464684')
                 
                 commit("setProducts",products)
                 commit("setStores",stores)
