@@ -54,6 +54,22 @@ export default class Store {
             )}/stores/daily-limits${query}`
         );
 
+    static updateDailyLimit = item =>
+        API().put(
+            `/companies/${localStorage.getItem(
+                "storeId"
+            )}/stores/${item.store_id}/daily-limits`,
+            item.daily_limits
+        );
+
+    static updateGlobalDailyLimits = item =>
+        API().put(
+            `/companies/${localStorage.getItem(
+                "storeId"
+            )}/stores/daily-limits`,
+            item
+        );
+
     static create = item =>
         API().post(
             `/companies/${localStorage.getItem("storeId")}/stores/create`,

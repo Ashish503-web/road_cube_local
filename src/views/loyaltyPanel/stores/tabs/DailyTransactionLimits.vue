@@ -6,12 +6,7 @@
                 class="text-capitalize px-5"
                 depressed
                 v-text="translations.generalLimits[lang]"
-                @click="
-                    () => {
-                        mode = 1;
-                        limitsDialog = true;
-                    }
-                "
+                @click="openGeneralModal()"
             ></v-btn>
 
             <v-spacer></v-spacer>
@@ -45,12 +40,7 @@
                     class="px-7"
                     small
                     depressed
-                    @click="
-                        () => {
-                            mode = 2;
-                            limitsDialog = true;
-                        }
-                    "
+                    @click="openModal(item,'online')"
                 >
                     {{
                         item.daily_limits.online.amount
@@ -70,12 +60,7 @@
                     class="px-7"
                     small
                     depressed
-                    @click="
-                        () => {
-                            mode = 2;
-                            limitsDialog = true;
-                        }
-                    "
+                    @click="openModal(item,'offline')"
                 >
                     {{
                         item.daily_limits.offline.amount
@@ -90,8 +75,8 @@
             </template>
         </v-data-table>
 
-        <v-dialog v-model="limitsDialog" max-width="600" scrollable>
-            <LimitsForm :mode="mode" @cancel="limitsDialog = false" />
+        <v-dialog v-model="updateDialog" max-width="600" scrollable>
+            <LimitsForm :mode="mode" :updateStatus="updateStatus" @cancel="this.setDialog(false)" />
         </v-dialog>
     </v-tab-item>
 </template>
@@ -111,26 +96,15 @@ export default {
 
     data() {
         return {
-            items: [
-                {
-                    name: "Vasilis",
-                },
-                {
-                    name: "Vasilis",
-                },
-                {
-                    name: "Vasilis",
-                },
-            ],
             page: +this.$route.query.page,
             mode: 0,
-            limitsDialog: false,
+            updateStatus: ''
         };
     },
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
-        ...mapState("loyaltyPanel/stores/dailyLimits", ["dailyLimits"]),
+        ...mapState("loyaltyPanel/stores/dailyLimits", ["dailyLimits","updateDialog"]),
 
         lang() {
             return this.$route.params.lang;
@@ -140,7 +114,7 @@ export default {
             return [
                 {
                     text: this.translations.name[this.lang],
-                    value: `app_name[${this.lang}]`,
+                    value: `app_name`,
                     width: "34%",
                 },
                 {
@@ -169,6 +143,19 @@ export default {
 
     methods: {
         ...mapActions("loyaltyPanel/stores/dailyLimits", ["getItems"]),
+        ...mapMutations("loyaltyPanel/stores/dailyLimits", ["setItem","setDialog"]),
+
+        openModal(item,status){
+            this.mode = 2;
+            this.setDialog(true);
+            this.setItem(item)
+            this.updateStatus = status
+        },
+
+        openGeneralModal(item,status){
+            this.mode = 1;
+            this.setDialog(true);
+        }
     },
 
     watch: {

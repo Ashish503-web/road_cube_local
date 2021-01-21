@@ -4,7 +4,9 @@ export default {
     namespaced: true,
 
     state: () => ({
-        dailyLimits: []
+        dailyLimits: [],
+        dailyLimit: {},
+        updateDialog: false
     }),
 
     mutations: {
@@ -13,27 +15,11 @@ export default {
         },
 
         setItem(state, payload) {
-            state.store = new Store(payload);
+            state.dailyLimit = payload;
         },
 
-        addItem(state, payload) {
-            payload.retail_price = new Intl.NumberFormat("en-US", {
-                style: "currency",
-                currency: "EUR",
-                minimumFractionDigits: 2
-            }).format(payload.retail_price);
-            state.products.unshift(payload);
-        },
-
-        updateItem(state, payload) {
-            let index = state.products.findIndex(
-                p => p.product_id === payload.product_id
-            );
-            state.products.splice(index, 1, payload);
-        },
-
-        removeItem(state, id) {
-            state.stores = state.stores.filter(s => s.store_id !== id);
+        setDialog(state, payload) {
+            state.updateDialog = payload;
         }
     },
 
@@ -50,6 +36,37 @@ export default {
                 commit("setServerItemsLength", pagination.total, {
                     root: true
                 });
+                commit("setLoading", false, { root: true });
+            } catch (ex) {
+                commit("setLoading", false, { root: true });
+                console.error(ex.response.data.message);
+            }
+        },
+
+        async updateLimit({ commit }, dailyLimit) {
+            try {
+                commit("setLoading", true, { root: true });
+
+                await Store.updateDailyLimit(dailyLimit);
+
+                commit("setDialog", false);
+
+                commit("setLoading", false, { root: true });
+            } catch (ex) {
+                commit("setLoading", false, { root: true });
+                console.error(ex.response.data.message);
+            }
+        },
+
+        async updateGlobalLimits({ commit, dispatch }, data) {
+            try {
+                commit("setLoading", true, { root: true });
+
+                await Store.updateGlobalDailyLimits(data.limits);
+
+                commit("setDialog", false);
+                dispatch("getItems", data.query);
+
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });
