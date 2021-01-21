@@ -31,9 +31,9 @@ export default {
                 en: "Transaction",
                 it: ""
             },
-            total: {
+            income: {
                 el: "",
-                en: "Total",
+                en: "Income",
                 it: ""
             },
             points: {

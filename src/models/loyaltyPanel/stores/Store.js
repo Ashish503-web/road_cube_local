@@ -44,7 +44,7 @@ export default class Store {
         API().get(
             `/companies/${localStorage.getItem(
                 "storeId"
-            )}/stores-summaries${query}`
+            )}/stores/summaries${query}`
         );
 
     static getDailyLimits = query =>

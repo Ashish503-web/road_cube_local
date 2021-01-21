@@ -10,7 +10,8 @@ export default {
         networkRegions: [],
         stores: [],
         store: new Store(),
-        userDetails: new UserDetails()
+        userDetails: new UserDetails(),
+        financialData: []
     }),
 
     mutations: {
@@ -28,6 +29,10 @@ export default {
 
         setItems(state, payload) {
             state.stores = payload;
+        },
+
+        setFinancialData(state, payload) {
+            state.financialData = payload;
         },
 
         setItem(state, payload) {
@@ -114,12 +119,12 @@ export default {
 
                 // const { stores, pagination } = data.data;
 
-                console.log(data);
+                console.log(data,'541684864864');
 
-                // commit("setItems", stores);
-                // commit("setServerItemsLength", pagination.total, {
-                //     root: true
-                // });
+                commit("setFinancialData", data.data.company[0].stores);
+                commit("setServerItemsLength", data.data.pagination.total, {
+                    root: true
+                });
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });

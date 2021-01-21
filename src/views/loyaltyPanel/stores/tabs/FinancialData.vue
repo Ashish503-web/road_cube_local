@@ -12,7 +12,7 @@
 
         <v-data-table
             :headers="headers"
-            :items="items"
+            :items="financialData"
             :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
             :page.sync="page"
             :server-items-length="serverItemsLength"
@@ -44,32 +44,6 @@ export default {
                 "Points",
             ],
             selectedSearchType: "All Fields",
-            items: [
-                {
-                    name: "Vasilis",
-                    name_of_shop: "katerina1",
-                    customer: "20",
-                    transaction: "34",
-                    total: "1905.18",
-                    points: "3836",
-                },
-                {
-                    name: "Vasilis",
-                    name_of_shop: "katerina1",
-                    customer: "20",
-                    transaction: "34",
-                    total: "1905.18",
-                    points: "3836",
-                },
-                {
-                    name: "Vasilis",
-                    name_of_shop: "katerina1",
-                    customer: "20",
-                    transaction: "34",
-                    total: "1905.18",
-                    points: "3836",
-                },
-            ],
             page: +this.$route.query.page,
             mode: 0,
         };
@@ -77,6 +51,7 @@ export default {
 
     computed: {
         ...mapState(["loading", "errorMessage", "serverItemsLength"]),
+        ...mapState("loyaltyPanel/stores/storesTab", ["financialData"]),
 
         lang() {
             return this.$route.params.lang;
@@ -90,17 +65,17 @@ export default {
                 },
                 {
                     text: this.translations.storeName[this.lang],
-                    value: "name_of_shop",
+                    value: "app_name",
                 },
                 {
                     text: this.translations.customer[this.lang],
-                    value: "customer",
+                    value: "customers",
                 },
                 {
                     text: this.translations.transaction[this.lang],
-                    value: "transaction",
+                    value: "transactions",
                 },
-                { text: this.translations.total[this.lang], value: "total" },
+                { text: this.translations.income[this.lang], value: "income" },
                 { text: this.translations.points[this.lang], value: "points" },
             ];
         },
@@ -130,7 +105,7 @@ export default {
                     },
                 });
             }
-            this.getItems(this.query);
+            this.getFinancialData(this.query);
         },
 
         page(page) {

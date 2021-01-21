@@ -106,7 +106,7 @@ export default {
 
                 const { data } = await Company.get();
 
-                console.log(data.data);
+                console.log(data.data,'dqwdqwdwqdwq');
 
                 commit("setCompany", data.data);
                 commit("setLoading", false);

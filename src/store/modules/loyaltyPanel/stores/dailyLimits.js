@@ -50,7 +50,16 @@ export default {
                 await Store.updateDailyLimit(dailyLimit);
 
                 commit("setDialog", false);
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated Transaction limit!"
+                    },
 
+                    { root: true }
+                );
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });
@@ -66,7 +75,16 @@ export default {
 
                 commit("setDialog", false);
                 dispatch("getItems", data.query);
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated Transaction limit!"
+                    },
 
+                    { root: true }
+                );
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });
