@@ -6,9 +6,9 @@ export default {
                 en: "Register User",
                 it: ""
             },
-            userName: {
+            user: {
                 el: "",
-                en: "User Name",
+                en: "User",
                 it: ""
             },
             userPassword: {

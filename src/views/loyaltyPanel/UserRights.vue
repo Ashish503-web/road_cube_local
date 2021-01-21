@@ -98,7 +98,7 @@
 
 <script>
 import { mdiPencilOutline, mdiClose } from "@mdi/js";
-import { mapMutations } from "vuex";
+import { mapState, mapMutations, mapActions } from "vuex";
 
 import UserForm from "@/components/loyaltyPanel/userRights/UserForm.vue";
 import translations from "@/utils/translations/loyaltyPanel/userRights";
@@ -112,28 +112,12 @@ export default {
 
     data: () => ({
         icons: { mdiPencilOutline, mdiClose },
-        users: [
-            {
-                username: "katerinanikos",
-                password: "pass1",
-                rights: "Press edit..."
-            },
-            {
-                username: "katerinanikos",
-                password: "pass2",
-                rights: "Press edit..."
-            },
-            {
-                username: "katerinanikos",
-                password: "pass3",
-                rights: "Press edit..."
-            }
-        ],
         mode: 0,
         itemsPerPageOptions: [10, 20, 30, -1]
     }),
 
     computed: {
+        ...mapState("loyaltyPanel/userRights", ["users"]),
         lang() {
             return this.$route.params.lang;
         },
@@ -141,8 +125,8 @@ export default {
         headers() {
             return [
                 {
-                    text: this.translations.userName[this.lang],
-                    value: "username"
+                    text: this.translations.user[this.lang],
+                    value: "user"
                 },
                 {
                     text: this.translations.userPassword[this.lang],
@@ -171,11 +155,55 @@ export default {
             set(val) {
                 this.setDeleteDialog(val);
             }
+        },
+
+        query() {
+            let query = "?";
+
+            for (let key in this.$route.query) {
+                query += `${key}=${this.$route.query[key]}&`;
+            }
+
+            return query.slice(0, query.length - 1);
+        }
+    },
+
+    watch: {
+        $route(val) {
+            if (!val.query.page) {
+                this.$router.replace({
+                    query: {
+                        page: 1,
+                        ...this.$route.query,
+                    },
+                });
+            }
+            this.getUsers(this.query);
+        },
+
+        page(page) {
+            this.$router.replace({ query: { ...this.$route.query, page } });
         }
     },
 
     methods: {
-        ...mapMutations(["setDialog", "setDeleteDialog"])
+        ...mapMutations(["setDialog", "setDeleteDialog"]),
+        ...mapActions("loyaltyPanel/userRights", ["getUsers"]),
+    },
+
+    mounted(){
+        this.getUsers(this.query)
+    },
+
+    beforeCreate() {
+        if (!this.$route.query.page) {
+            this.$router.replace({
+                query: {
+                    page: 1,
+                    ...this.$route.query,
+                },
+            });
+        }
     }
 };
 </script>
