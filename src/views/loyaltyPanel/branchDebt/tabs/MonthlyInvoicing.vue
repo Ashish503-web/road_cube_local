@@ -16,6 +16,7 @@
                             :label="translations.range[lang]"
                             color="secondary"
                             autocomplete="off"
+                            hint="YYYY/DD format"
                             rounded
                             outlined
                             dense
@@ -29,7 +30,6 @@
                     <v-date-picker
                         v-model="range"
                         color="secondary"
-                        range
                         no-title
                     ></v-date-picker>
                 </v-menu>
@@ -68,7 +68,7 @@ export default {
     data() {
         return {
             icons: { mdiCalendarSearch },
-            range: " ",
+            range: "",
             page: +this.$route.query.page,
         };
     },
@@ -84,10 +84,6 @@ export default {
 
         headers() {
             return [
-                {
-                    text: this.translations.storeId[this.lang],
-                    value: "store_id",
-                },
                 { text: this.translations.name[this.lang], value: "name" },
                 {
                     text: this.translations.streetAddress[this.lang],
@@ -139,6 +135,13 @@ export default {
                 }
             }
         },
+
+        range:{
+            handler(val){
+                this.getDebts(val)
+            },
+            deep: true      
+        }
     },
 
     methods: {

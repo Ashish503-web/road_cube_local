@@ -24,7 +24,6 @@ export default {
                 commit("setLoading", true, { root: true });
                 const { data } = await Debts.get(date);
                 
-                console.log(data, "data2222");
                 let debts = data.data
                 debts.map(item => {
                     item.product_name = JSON.parse(item.product_name)
