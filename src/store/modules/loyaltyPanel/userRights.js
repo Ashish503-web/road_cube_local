@@ -95,7 +95,7 @@ export default {
                     }
                 }
                 // user.permissions = new Permissions(user.permissions);
-                // user.permissions = [user.permissions];
+                user.permissions = [user.permissions];
 
                 const { data } = await UserRights.create(user);
                 data.data.permissions = user.permissions[0];
