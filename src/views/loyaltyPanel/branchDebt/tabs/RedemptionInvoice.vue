@@ -40,7 +40,7 @@
 
         <v-data-table
             :headers="headers"
-            :items="items"
+            :items="redemptionInvoice"
             :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
             :page.sync="page"
             class="b-outlined"
@@ -50,6 +50,7 @@
 
 <script>
 import { mdiCalendarSearch } from "@mdi/js";
+import { mapState, mapMutations, mapActions } from "vuex";
 
 import ExportLinks from "@/components/general/ExportLinks.vue";
 import translations from "@/utils/translations/loyaltyPanel/branchDebt/redemptionInvoice";
@@ -65,38 +66,56 @@ export default {
         return {
             icons: { mdiCalendarSearch },
             range: [],
-            items: [
-                {
-                    date: "14.09.2020",
-                    name_of_shop: "Bill",
-                    points: "Moskovyan 14",
-                    redeemed_coupons: "Phone",
-                },
-            ],
             page: +this.$route.query.page,
         };
     },
 
     computed: {
+        ...mapState("loyaltyPanel/branchDebt", [
+            "redemptionInvoice"
+        ]),
+
         lang() {
             return this.$route.params.lang;
         },
 
         headers() {
             return [
-                { text: this.translations.date[this.lang], value: "date" },
                 {
-                    text: this.translations.nameOfStore[this.lang],
-                    value: "name_of_shop",
+                    text: this.translations.storeId[this.lang],
+                    value: "store_id",
                 },
-                { text: this.translations.points[this.lang], value: "points" },
+                { text: this.translations.name[this.lang], value: "name" },
                 {
-                    text: this.translations.redeemedCoupons[this.lang],
-                    value: "redeemed_coupons",
+                    text: this.translations.address[this.lang],
+                    value: "address",
                 },
+                {
+                    text: this.translations.points[this.lang],
+                    value: "points",
+                },
+                { 
+                    text: this.translations.totalRedeemCoupons[this.lang], 
+                    value: "total_redeem_coupons" 
+                },
+                {
+                    text: this.translations.date[this.lang],
+                    value: "date_period",
+                }
             ];
         },
     },
+
+     methods: {
+        ...mapActions("loyaltyPanel/branchDebt", [
+            "getRedemptionInvoice"
+        ]),
+    },
+
+    mounted(){
+        this.getRedemptionInvoice()
+    },
+
 
     watch: {
         $route(val) {

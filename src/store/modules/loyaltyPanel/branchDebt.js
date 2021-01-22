@@ -4,12 +4,17 @@ export default {
     namespaced: true,
 
     state: () => ({
-        items: []
+        items: [],
+        redemptionInvoice: []
     }),
 
     mutations: {
         setDebts(state, payload) {
             state.items = payload;
+        },
+
+        setRedemptionInvoice(state, payload) {
+            state.redemptionInvoice = payload;
         }
     },
 
@@ -31,7 +36,22 @@ export default {
             } catch (ex) {
                 commit("setLoading", false, { root: true });
             }
-        }
+        },
+
+        async getRedemptionInvoice({ commit }, date){
+            try {
+                commit("setLoading", true, { root: true });
+                const { data } = await Debts.getRedemptionInvoice(date);
+                
+                console.log(data, "data2222");
+                let debts = data.data
+                
+                commit("setRedemptionInvoice", debts);
+                commit("setLoading", false, { root: true });
+            } catch (ex) {
+                commit("setLoading", false, { root: true });
+            }
+        },
     }
         
 };

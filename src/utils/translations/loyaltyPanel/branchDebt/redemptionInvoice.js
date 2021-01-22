@@ -11,9 +11,9 @@ export default {
                 en: "Date",
                 it: ""
             },
-            nameOfStore: {
+            storeId: {
                 el: "",
-                en: "Name of Store",
+                en: "Store ID",
                 it: ""
             },
             points: {
@@ -21,9 +21,19 @@ export default {
                 en: "Points",
                 it: ""
             },
-            redeemedCoupons: {
+            name: {
                 el: "",
-                en: "Redeemed Coupons",
+                en: "Name",
+                it: ""
+            },
+            address: {
+                el: "",
+                en: "Address",
+                it: ""
+            },
+            totalRedeemCoupons: {
+                el: "",
+                en: "Total Redeem Coupons",
                 it: ""
             }
         }

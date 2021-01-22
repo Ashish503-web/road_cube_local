@@ -28,19 +28,14 @@
                 :footer-props="{ itemsPerPageOptions }"
                 class="b-outlined"
             >
-                <template v-slot:item.actions>
+                <template v-slot:item.actions="{ item }">
                     <v-tooltip color="secondary" top>
                         <template v-slot:activator="{ on }">
                             <v-btn
                                 color="yellow darken-3"
                                 icon
                                 v-on="on"
-                                @click="
-                                    () => {
-                                        mode = 2;
-                                        userDialog = true;
-                                    }
-                                "
+                                @click="() => {open(2,item)}"
                             >
                                 <v-icon
                                     v-text="icons.mdiPencilOutline"
@@ -53,44 +48,11 @@
                             v-text="translations.update[lang]"
                         ></span>
                     </v-tooltip>
-
-                    <v-tooltip color="secondary" top>
-                        <template v-slot:activator="{ on }">
-                            <v-btn
-                                color="red"
-                                icon
-                                v-on="on"
-                                @click="deleteDialog = true"
-                            >
-                                <v-icon v-text="icons.mdiClose"></v-icon>
-                            </v-btn>
-                        </template>
-
-                        <span
-                            class="font-weight-bold"
-                            v-text="translations.delete[lang]"
-                        ></span>
-                    </v-tooltip>
                 </template>
             </v-data-table>
 
             <v-dialog v-model="dialog" max-width="600">
                 <UserForm :mode="mode" @cancel="dialog = false" />
-            </v-dialog>
-
-            <v-dialog v-model="deleteDialog" max-width="500">
-                <b-card
-                    type="delete"
-                    title="Delete Product"
-                    submit-text="delete"
-                    @cancel="deleteDialog = false"
-                >
-                    <div class="pl-2">
-                        Are you sure you want to delete User with name
-                        <span class="font-weight-bold text--primary">Edgar</span
-                        >?
-                    </div>
-                </b-card>
             </v-dialog>
         </v-sheet>
     </v-container>
@@ -129,12 +91,21 @@ export default {
                     value: "user"
                 },
                 {
-                    text: this.translations.userPassword[this.lang],
-                    value: "password"
+                    text: this.translations.userRole[this.lang],
+                    value: "role"
                 },
-                { text: this.translations.rights[this.lang], value: "rights" },
+                { text: this.translations.date[this.lang], value: "created_at" },
                 { text: this.translations.actions[this.lang], value: "actions" }
             ];
+        },
+
+        user: {
+            get(){
+                return this.$store.state.loyaltyPanel.userRights.user
+            },
+            set(val){
+                this.setUser(val)
+            }
         },
 
         dialog: {
@@ -188,7 +159,32 @@ export default {
 
     methods: {
         ...mapMutations(["setDialog", "setDeleteDialog"]),
+        ...mapMutations("loyaltyPanel/userRights", ["setUser"]),
         ...mapActions("loyaltyPanel/userRights", ["getUsers"]),
+
+        open(mode,item){
+            this.dialog = true;
+            this.mode = mode
+            for (let key in item.permissions) {
+                    if (typeof item.permissions[key] === "object") {
+                        item.permissions[key].open = false
+                        let subPermissions = item.permissions[key];
+
+                        for (let key in subPermissions) {
+                            if (typeof subPermissions[key] === "object") {
+                                subPermissions[key].open = false
+                                for (let subKey in subPermissions[key]) {
+                                    if (typeof subPermissions[key][subKey] === "object") {
+                                        subPermissions[key][subKey].open = false;
+                                    }  
+                                }
+                            }
+                        }
+                    }
+                }
+
+            this.user = item
+        }
     },
 
     mounted(){

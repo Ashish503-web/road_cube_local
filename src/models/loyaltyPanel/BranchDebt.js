@@ -5,4 +5,7 @@ export default class Debts {
 
     static get = () =>
         API().get(`/companies/${localStorage.getItem("storeId")}/store-debts/monthly-analysis?date=2021-01&paid=false`);
+
+    static getRedemptionInvoice = () =>
+        API().get(`/companies/${localStorage.getItem("storeId")}/store-debts/monthly-analysis-redemption?date=2021-01&paid=false`);
 }

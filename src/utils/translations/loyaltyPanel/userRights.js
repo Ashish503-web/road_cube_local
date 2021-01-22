@@ -11,14 +11,14 @@ export default {
                 en: "User",
                 it: ""
             },
-            userPassword: {
+            userRole: {
                 el: "",
-                en: "User Password",
+                en: "Role",
                 it: ""
             },
-            rights: {
+            date: {
                 el: "",
-                en: "Rights",
+                en: "Date",
                 it: ""
             },
             actions: {
@@ -39,6 +39,36 @@ export default {
             delete: {
                 el: "",
                 en: "Delete",
+                it: ""
+            },
+            newUser: {
+                el: "",
+                en: "New User",
+                it: ""
+            },
+            updateUser: {
+                el: "",
+                en: "Update User",
+                it: ""
+            },
+            mobile: {
+                el: "",
+                en: "Mobile",
+                it: ""
+            },
+            password: {
+                el: "",
+                en: "Password",
+                it: ""
+            },
+            permissions: {
+                el: "",
+                en: "Permissions",
+                it: ""
+            },
+            updateAll: {
+                el: "",
+                en: "Update All",
                 it: ""
             }
         }
