@@ -5,6 +5,17 @@
 
             <v-spacer></v-spacer>
 
+            <v-checkbox
+                v-model="query.paid"
+                color="secondary"
+                class="mt-1 mr-3 pt-0"
+                hide-details="auto"
+            >
+                <template v-slot:label>
+                    <h4 class="secondary--text">Paid</h4>
+                </template>
+            </v-checkbox>
+
             <v-col cols="12" sm="4">
                 <v-menu
                     :close-on-content-click="true"
@@ -29,14 +40,15 @@
                     <v-date-picker
                         v-model="query.date"
                         color="secondary"
+                        type="month"
                         no-title
                     ></v-date-picker>
                 </v-menu>
             </v-col>
 
-            <v-col cols="12" sm="4">
+            <!-- <v-col cols="12" sm="4">
                 <b-search-field></b-search-field>
-            </v-col>
+            </v-col> -->
         </v-toolbar>
 
         <v-data-table
@@ -71,7 +83,8 @@ export default {
             icons: { mdiCalendarSearch },
             query: {
                 page: +this.$route.query.page,
-                date: ""
+                date: "",
+                paid: false
             }
         };
     },
@@ -152,6 +165,7 @@ export default {
                 let page = val.page
                 this.$router.push({ query: { ...this.$route.query, page } }).catch(()=>{});
                 this.query.page = page
+                this.query.paid = val.paid
                 this.query.date = moment(val.date).format("YYYY-MM")
                 this.getRedemptionInvoice(this.query)
             },
