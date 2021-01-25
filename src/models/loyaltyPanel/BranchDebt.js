@@ -6,6 +6,6 @@ export default class Debts {
     static get = (date) =>
         API().get(`/companies/${localStorage.getItem("storeId")}/store-debts/monthly-analysis?date=${date}&paid=false`);
 
-    static getRedemptionInvoice = () =>
-        API().get(`/companies/${localStorage.getItem("storeId")}/store-debts/monthly-analysis-redemption?date=2021-01&paid=false`);
+    static getRedemptionInvoice = (date) =>
+        API().get(`/companies/${localStorage.getItem("storeId")}/store-debts/monthly-analysis-redemption?date=${date}&paid=false`);
 }

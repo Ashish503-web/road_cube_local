@@ -7,7 +7,7 @@
 
             <v-col cols="12" sm="4">
                 <v-menu
-                    :close-on-content-click="false"
+                    :close-on-content-click="true"
                     offset-y
                     max-width="290px"
                 >
@@ -22,13 +22,14 @@
                             hide-details
                             :prepend-inner-icon="icons.mdiCalendarSearch"
                             v-on="on"
+                            v-model="range"
                         ></v-text-field>
                     </template>
 
                     <v-date-picker
                         v-model="range"
                         color="secondary"
-                        range
+                        no-title
                     ></v-date-picker>
                 </v-menu>
             </v-col>
@@ -43,6 +44,7 @@
             :items="redemptionInvoice"
             :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
             :page.sync="page"
+            disable-sort
             class="b-outlined"
         ></v-data-table>
     </v-tab-item>
@@ -51,6 +53,7 @@
 <script>
 import { mdiCalendarSearch } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
+import moment from "moment"
 
 import ExportLinks from "@/components/general/ExportLinks.vue";
 import translations from "@/utils/translations/loyaltyPanel/branchDebt/redemptionInvoice";
@@ -65,7 +68,7 @@ export default {
     data() {
         return {
             icons: { mdiCalendarSearch },
-            range: [],
+            range: "",
             page: +this.$route.query.page,
         };
     },
@@ -113,7 +116,8 @@ export default {
     },
 
     mounted(){
-        this.getRedemptionInvoice()
+        this.range = moment().format("YYYY-MM")
+        this.getRedemptionInvoice(this.range)
     },
 
 
@@ -127,22 +131,30 @@ export default {
                     },
                 });
             }
-            this.getItems(this.query);
+            this.getRedemptionInvoice(this.range);
         },
 
         page(page) {
             this.$router.push({ query: { ...this.$route.query, page } });
         },
 
-        search(val, oldVal) {
-            if (val != oldVal) {
-                if (val == null) {
-                    this.getItems(this.query);
-                } else {
-                    this.debouncedSearch();
-                }
-            }
-        },
+        // search(val, oldVal) {
+        //     if (val != oldVal) {
+        //         if (val == null) {
+        //             this.getItems(this.query);
+        //         } else {
+        //             this.debouncedSearch();
+        //         }
+        //     }
+        // },
+
+        range:{
+            handler(val){
+                this.range = moment(val).format("YYYY-MM")
+                this.getRedemptionInvoice(this.range)
+            },
+            deep: true      
+        }
     },
 
     beforeCreate() {

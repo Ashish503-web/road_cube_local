@@ -7,7 +7,7 @@
 
             <v-col cols="12" sm="4">
                 <v-menu
-                    :close-on-content-click="false"
+                    :close-on-content-click="true"
                     offset-y
                     max-width="290px"
                 >
@@ -24,6 +24,7 @@
                             hide-details
                             :prepend-inner-icon="icons.mdiCalendarSearch"
                             v-on="on"
+                            v-model="range"
                         ></v-text-field>
                     </template>
 
@@ -54,6 +55,7 @@
 <script>
 import { mdiCalendarSearch } from "@mdi/js";
 import { mapState, mapMutations, mapActions } from "vuex";
+import moment from "moment"
 
 import ExportLinks from "@/components/general/ExportLinks.vue";
 import translations from "@/utils/translations/loyaltyPanel/branchDebt/monthlyInvoicing";
@@ -138,7 +140,8 @@ export default {
 
         range:{
             handler(val){
-                this.getDebts(val)
+                this.range = moment(val).format("YYYY-MM")
+                this.getDebts(moment(val).format("YYYY-MM"))
             },
             deep: true      
         }
@@ -151,6 +154,7 @@ export default {
     },
 
     mounted(){
+        this.range = moment().format("YYYY-MM")
         this.getDebts(this.range)
     },
 
