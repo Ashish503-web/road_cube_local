@@ -22,12 +22,12 @@
                             hide-details
                             :prepend-inner-icon="icons.mdiCalendarSearch"
                             v-on="on"
-                            v-model="range"
+                            v-model="query.date"
                         ></v-text-field>
                     </template>
 
                     <v-date-picker
-                        v-model="range"
+                        v-model="query.date"
                         color="secondary"
                         no-title
                     ></v-date-picker>
@@ -43,7 +43,8 @@
             :headers="headers"
             :items="redemptionInvoice"
             :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
-            :page.sync="page"
+            :page.sync="query.page"
+            :server-items-length="serverItemsLength"
             disable-sort
             class="b-outlined"
         ></v-data-table>
@@ -68,12 +69,15 @@ export default {
     data() {
         return {
             icons: { mdiCalendarSearch },
-            range: "",
-            page: +this.$route.query.page,
+            query: {
+                page: +this.$route.query.page,
+                date: ""
+            }
         };
     },
 
     computed: {
+        ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("loyaltyPanel/branchDebt", [
             "redemptionInvoice"
         ]),
@@ -116,8 +120,8 @@ export default {
     },
 
     mounted(){
-        this.range = moment().format("YYYY-MM")
-        this.getRedemptionInvoice(this.range)
+        this.query.date = moment().format("YYYY-MM")
+        this.getRedemptionInvoice(this.query)
     },
 
 
@@ -131,11 +135,6 @@ export default {
                     },
                 });
             }
-            this.getRedemptionInvoice(this.range);
-        },
-
-        page(page) {
-            this.$router.push({ query: { ...this.$route.query, page } });
         },
 
         // search(val, oldVal) {
@@ -148,10 +147,13 @@ export default {
         //     }
         // },
 
-        range:{
+        query:{
             handler(val){
-                this.range = moment(val).format("YYYY-MM")
-                this.getRedemptionInvoice(this.range)
+                let page = val.page
+                this.$router.push({ query: { ...this.$route.query, page } }).catch(()=>{});
+                this.query.page = page
+                this.query.date = moment(val.date).format("YYYY-MM")
+                this.getRedemptionInvoice(this.query)
             },
             deep: true      
         }

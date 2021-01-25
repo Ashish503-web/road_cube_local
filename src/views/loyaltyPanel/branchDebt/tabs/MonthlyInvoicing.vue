@@ -24,12 +24,12 @@
                             hide-details
                             :prepend-inner-icon="icons.mdiCalendarSearch"
                             v-on="on"
-                            v-model="range"
+                            v-model="query.date"
                         ></v-text-field>
                     </template>
 
                     <v-date-picker
-                        v-model="range"
+                        v-model="query.date"
                         color="secondary"
                         no-title
                     ></v-date-picker>
@@ -45,7 +45,8 @@
             :headers="headers"
             :items="items"
             :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
-            :page.sync="page"
+            :page.sync="query.page"
+            :server-items-length="serverItemsLength"
             disable-sort
             class="b-outlined"
         ></v-data-table>
@@ -70,12 +71,15 @@ export default {
     data() {
         return {
             icons: { mdiCalendarSearch },
-            range: "",
-            page: +this.$route.query.page,
+            query: {
+                page: +this.$route.query.page,
+                date: ""
+            }
         };
     },
 
     computed: {
+        ...mapState(["loading", "errorMessage", "serverItemsLength"]),
         ...mapState("loyaltyPanel/branchDebt", [
             "items"
         ]),
@@ -121,11 +125,6 @@ export default {
                     },
                 });
             }
-            this.getItems(this.query);
-        },
-
-        page(page) {
-            this.$router.push({ query: { ...this.$route.query, page } });
         },
 
         search(val, oldVal) {
@@ -138,10 +137,13 @@ export default {
             }
         },
 
-        range:{
+        query:{
             handler(val){
-                this.range = moment(val).format("YYYY-MM")
-                this.getDebts(moment(val).format("YYYY-MM"))
+                let page = val.page
+                this.$router.push({ query: { ...this.$route.query, page } }).catch(()=>{});
+                this.query.page = page
+                this.query.date = moment(val.date).format("YYYY-MM")
+                this.getDebts(this.query)
             },
             deep: true      
         }
@@ -154,8 +156,8 @@ export default {
     },
 
     mounted(){
-        this.range = moment().format("YYYY-MM")
-        this.getDebts(this.range)
+        this.query.date = moment().format("YYYY-MM")
+        this.getDebts(this.query)
     },
 
     beforeCreate() {

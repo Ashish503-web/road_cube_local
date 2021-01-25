@@ -19,18 +19,18 @@ export default {
     },
 
     actions: {
-        async getDebts({ commit }, date){
+        async getDebts({ commit }, query){
             try {
                 commit("setLoading", true, { root: true });
-                const { data } = await Debts.get(date);
+                const { data } = await Debts.get(query);
                 
-                let debts = data.data
-                debts.map(item => {
-                    item.product_name = JSON.parse(item.product_name)
-                    item.bank_provider_name = JSON.parse(item.bank_provider_name)
-                })
+                const debts = data.data.data
+                const pagination  = data.data.pagination;
                 
                 commit("setDebts", debts);
+                commit("setServerItemsLength", pagination.total, {
+                    root: true
+                });
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });
@@ -42,10 +42,13 @@ export default {
                 commit("setLoading", true, { root: true });
                 const { data } = await Debts.getRedemptionInvoice(date);
                 
-                console.log(data, "data2222");
-                let debts = data.data
+                const debts = data.data.data
+                const pagination  = data.data.pagination;
                 
                 commit("setRedemptionInvoice", debts);
+                commit("setServerItemsLength", pagination.total, {
+                    root: true
+                });
                 commit("setLoading", false, { root: true });
             } catch (ex) {
                 commit("setLoading", false, { root: true });
