@@ -68,14 +68,14 @@
             </v-col>
 
             <v-col
-                v-for="(value, name) in user.permissions"
-                :key="name"
+                v-for="(value, name1) in user.permissions"
+                :key="name1"
                 cols="12"
                 class="text-capitalize"
             >
                 <v-row no-gutters align="center">
                     <v-col v-if="typeof value === 'object'" cols="auto">
-                        <v-btn icon @click="value.open = !value.open">
+                        <v-btn icon @click="test(name1)">
                             <v-icon
                                 v-text="
                                     value.open
@@ -90,7 +90,7 @@
                             :color="value ? 'secondary' : ''"
                             icon
                             @click="
-                                user.permissions[name] = !user.permissions[name]
+                                user.permissions[name1] = !user.permissions[name1]
                             "
                         >
                             <v-icon
@@ -103,16 +103,16 @@
                         </v-btn>
                     </v-col>
                     <v-col>
-                        {{ name }}
+                        {{ name1 }}
                     </v-col>
                     <v-col
-                        v-for="(val, name) in value"
-                        :key="name"
+                        v-for="(val, name2) in value"
+                        :key="name2"
                         cols="10"
                         style="margin-left: 36px"
                     >
                         <v-row
-                            v-if="value.open && name !== 'open'"
+                            v-if="value.open && name2 !== 'open'"
                             no-gutters
                             align="center"
                         >
@@ -132,7 +132,7 @@
                                 <v-btn
                                     :color="val ? 'secondary' : ''"
                                     icon
-                                    @click="value[name] = !value[name]"
+                                    @click="value[name2] = !value[name2]"
                                 >
                                     <v-icon
                                         v-text="
@@ -145,24 +145,24 @@
                             </v-col>
 
                             <v-col>
-                                {{ name }}
+                                {{ name2 }}
                             </v-col>
 
                             <v-col
-                                v-for="(va, name) in val"
-                                :key="name"
+                                v-for="(va, name3) in val"
+                                :key="name3"
                                 cols="10"
                                 style="margin-left: 36px"
                             >
                                 <v-row
-                                    v-if="val.open && name !== 'open'"
+                                    v-if="val.open && name3 !== 'open'"
                                     no-gutters
                                     align="center"
                                 >
                                     <v-col cols="auto">
                                         <v-btn
                                             icon
-                                            @click="val[name] = !val[name]"
+                                            @click="val[name3] = !val[name3]"
                                         >
                                             <v-icon
                                                 :color="va ? 'secondary' : ''"
@@ -176,7 +176,7 @@
                                     </v-col>
 
                                     <v-col>
-                                        {{ name }}
+                                        {{ name3 }}
                                     </v-col>
                                 </v-row>
                             </v-col>
@@ -254,26 +254,39 @@ export default {
     methods: {
         ...mapMutations(["setResetSuccess", "setResetValidation"]),
         ...mapMutations("loyaltyPanel/userRights", ["setUser"]),
-        ...mapActions("loyaltyPanel/userRights", ["create", "update"])
+        ...mapActions("loyaltyPanel/userRights", ["create", "update"]),
+
+        test(name){
+            this.user.permissions[name].open = !this.user.permissions[name].open
+            console.log(this.user.permissions,'test')
+            this.setUser(this.user)
+        }
     },
     mounted() {
         if(this.mode == 1){
                 this.user.permissions = this.moderatorPermissions
-                console.log(this.user,'dqwdwqdqwd')
+            }else{
+                console.log(this.user,"mounted")
             }
         
     },
 
     watch: {
-        user(val) {
-            this.allPermissions = false;
+        user: {
+            handler(val){
+                console.log(val,'watch')
+            },
+            deep:true
+            // this.allPermissions = false;
+            
         },
 
         mode(val) {
             console.log(this.user,'userrrrrrrr')
-            if(val == 1){
+            if(val === 1){
                 this.user.permissions = this.moderatorPermissions
-            }
+            }  
+            
         },
 
         allPermissions(val) {

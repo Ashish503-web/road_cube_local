@@ -68,7 +68,7 @@
             </v-col>
 
             <v-col
-                v-for="(value, name) in user.permissions"
+                v-for="(value, name) in permissions"
                 :key="name"
                 cols="12"
                 class="text-capitalize"

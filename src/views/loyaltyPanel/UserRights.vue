@@ -99,15 +99,6 @@ export default {
             ];
         },
 
-        user: {
-            get(){
-                return this.$store.state.loyaltyPanel.userRights.user
-            },
-            set(val){
-                this.setUser(val)
-            }
-        },
-
         dialog: {
             get() {
                 return this.$store.state.dialog;
@@ -126,6 +117,16 @@ export default {
             set(val) {
                 this.setDeleteDialog(val);
             }
+        },
+
+        user: {
+            get() {
+                return this.$store.state.loyaltyPanel.users.user;
+            },
+
+            set(val) {
+                this.setUser(val);
+            },
         },
 
         query() {
@@ -158,12 +159,12 @@ export default {
     },
 
     methods: {
-        ...mapMutations(["setDialog", "setDeleteDialog"]),
+        ...mapMutations(["setDialog", "setDeleteDialog","setResetSuccess","setResetValidation"]),
         ...mapMutations("loyaltyPanel/userRights", ["setUser"]),
         ...mapActions("loyaltyPanel/userRights", ["getUsers"]),
 
         open(mode,item){
-            this.dialog = true;
+            
             this.mode = mode
             for (let key in item.permissions) {
                     if (typeof item.permissions[key] === "object") {
@@ -182,8 +183,10 @@ export default {
                         }
                     }
                 }
-
             this.user = item
+            setTimeout(() => this.setResetSuccess(true), 300);
+            this.setResetValidation(true);
+            this.dialog = true;
         }
     },
 

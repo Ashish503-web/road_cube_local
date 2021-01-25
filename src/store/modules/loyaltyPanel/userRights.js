@@ -6,7 +6,8 @@ export default {
     state: () => ({
         users: [],
         moderatorPermissions: {},
-        user: new UserRights()
+        user: new UserRights(),
+        permissions: []
     }),
 
     mutations: {
@@ -16,6 +17,11 @@ export default {
 
         setUser(state, payload) {
             state.user = payload;
+            console.log(payload,'payload111111111')
+        },
+
+        setPermissions(state, payload){
+            state.permissions = payload;
         },
 
         setModeratorPermissions(state, payload) {
