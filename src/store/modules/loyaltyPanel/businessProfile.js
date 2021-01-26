@@ -21,7 +21,8 @@ export default {
         initailPoint:'',
         returnPoint : '',
         pushNotifications:'',
-        compaignCrendential:[]
+        compaignCrendential:[],
+        authentication: ''
     }),
 
     mutations: {
@@ -42,7 +43,8 @@ export default {
         setIntialPoints : (state, payload) => (state.initailPoint = payload),
         setReturnPoint : (state, payload) => (state.returnPoint = payload),
         setPushNotification:(state, payload) => ( state.pushNotifications = payload),
-        setCompaignCrendential:(state , payload) => ( state.compaignCrendential = payload)
+        setCompaignCrendential:(state , payload) => ( state.compaignCrendential = payload),
+        setApiAuthentication : (state, payload) => ( state.authentication = payload )
 
     },
 
@@ -126,7 +128,8 @@ export default {
             commit("setIntialPoints" , data.data.init_user_points);
             commit("setReturnPoint", data.data.return_points_after_coupon_exp);
             commit("setPushNotification",data.data.push_notifications);
-            commit("setCompaignCrendential", data.data.campaign_email_notifications)
+            commit("setCompaignCrendential", data.data.campaign_email_notifications);
+            commit("setApiAuthentication", data.data.api_authentication);
             
         }
     }
