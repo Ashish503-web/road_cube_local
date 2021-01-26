@@ -51,6 +51,7 @@
 
 <script>
 import translations from "@/utils/translations/loyaltyPanel/businessProfile/apiAuthentication";
+import { mapState,mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
     name: "ApiAuthentication",
@@ -69,6 +70,11 @@ export default {
                 this.setApiAuthentication(val);
             }
         }
-    }
+    },
+     methods:{
+        ...mapActions("loyaltyPanel/businessProfile", [
+           "getBussinessProfile"
+        ]),  
+    },
 };
 </script>

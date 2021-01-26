@@ -22,7 +22,8 @@ export default {
         returnPoint : '',
         pushNotifications:'',
         compaignCrendential:[],
-        authentication: ''
+        authentication: '',
+        couponValues: '0'
     }),
 
     mutations: {
@@ -44,7 +45,8 @@ export default {
         setReturnPoint : (state, payload) => (state.returnPoint = payload),
         setPushNotification:(state, payload) => ( state.pushNotifications = payload),
         setCompaignCrendential:(state , payload) => ( state.compaignCrendential = payload),
-        setApiAuthentication : (state, payload) => ( state.authentication = payload )
+        setApiAuthentication : (state, payload) => ( state.authentication = payload ),
+        setCouponValues : (state, payload) => ( state.couponValues = payload)
 
     },
 
@@ -130,6 +132,7 @@ export default {
             commit("setPushNotification",data.data.push_notifications);
             commit("setCompaignCrendential", data.data.campaign_email_notifications);
             commit("setApiAuthentication", data.data.api_authentication);
+            commit("setCouponValues", data.data.coupon_creation_type_id);
             
         }
     }
