@@ -15,7 +15,14 @@ export default {
         resetSuccess: {
             logo: false,
             mapLogo: false
-        }
+        },
+        selectedPercent:'',
+        initailPoint:'',
+        returnPoint : '',
+        pushNotifications:'',
+        compaignCrendential:[],
+        authentication: '',
+        couponValues: '0'
     }),
 
     mutations: {
@@ -29,7 +36,17 @@ export default {
 
         setResetSuccess(state, { value, type }) {
             state.resetSuccess[type] = value;
-        }
+        },
+        
+        setBussinessProfile: (state, payload) => (state.selectedPercent = payload),
+
+        setIntialPoints : (state, payload) => (state.initailPoint = payload),
+        setReturnPoint : (state, payload) => (state.returnPoint = payload),
+        setPushNotification:(state, payload) => ( state.pushNotifications = payload),
+        setCompaignCrendential:(state , payload) => ( state.compaignCrendential = payload),
+        setApiAuthentication : (state, payload) => ( state.authentication = payload ),
+        setCouponValues : (state, payload) => ( state.couponValues = payload)
+
     },
 
     actions: {
@@ -103,6 +120,19 @@ export default {
                     5000
                 );
             }
+        },
+
+        async getBussinessProfile({ commit}){
+            const { data } = await BusinessProfile.getProfileData();
+            console.log('data', data)
+            commit("setBussinessProfile", data.data.online_offline_points_ratio);
+            commit("setIntialPoints" , data.data.init_user_points);
+            commit("setReturnPoint", data.data.return_points_after_coupon_exp);
+            commit("setPushNotification",data.data.push_notifications);
+            commit("setCompaignCrendential", data.data.campaign_email_notifications);
+            commit("setApiAuthentication", data.data.api_authentication);
+            commit("setCouponValues", data.data.coupon_creation_type_id);
+            
         }
     }
 };

@@ -10,9 +10,11 @@
                 <b-text-field
                     :label="translations.restApiKey[lang]"
                     no-top-margin
+                    v-model="pushNotifications.rest_api_key"
                 ></b-text-field>
                 <b-text-field
                     :label="translations.oneSignalAppId[lang]"
+                    v-model="pushNotifications.one_signal_app_id"
                 ></b-text-field>
             </v-col>
         </v-row>
@@ -21,6 +23,7 @@
 
 <script>
 import translations from "@/utils/translations/loyaltyPanel/businessProfile/pushNotifications";
+import { mapState,mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
     name: "PushNotifications",
@@ -30,7 +33,22 @@ export default {
     computed: {
         lang() {
             return this.$route.params.lang;
+        },
+
+        pushNotifications :{
+            get(){
+                return this.$store.state.loyaltyPanel.businessProfile.pushNotifications;
+            },
+            set(val){
+                this.setPushNotification(val);
+            }
         }
-    }
+    },
+     methods:{
+        ...mapActions("loyaltyPanel/businessProfile", [
+           "getBussinessProfile"
+        ]),  
+    },
+    
 };
 </script>

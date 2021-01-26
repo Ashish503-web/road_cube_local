@@ -9,7 +9,7 @@
         ></h4>
 
         {{ translations.notificationsInfo[lang] }}
-
+        
         <v-row v-for="n in 3" :key="n" no-gutters align="baseline">
             <v-col
                 cols="auto"
@@ -105,6 +105,7 @@
 
 <script>
 import translations from "@/utils/translations/loyaltyPanel/businessProfile/campaignCredentials";
+import { mapState,mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
     name: "CampaignCredentials",
@@ -114,7 +115,21 @@ export default {
     computed: {
         lang() {
             return this.$route.params.lang;
+        },
+
+        compaignCredentials :{
+            get(){
+                return this.$store.state.loyaltyPanel.businessProfile.compaignCrendential;
+            },
+            set(val){
+                this.setCompaignCrendential(val);
+            }
         }
-    }
+    },
+     methods:{
+        ...mapActions("loyaltyPanel/businessProfile", [
+           "getBussinessProfile"
+        ]),  
+    },
 };
 </script>

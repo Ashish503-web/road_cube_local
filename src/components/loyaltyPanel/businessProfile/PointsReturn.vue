@@ -11,6 +11,7 @@
                     <h4
                         class="subtitle-2 secondary--text"
                         v-text="translations.yes[lang]"
+                        
                     ></h4>
                 </template>
             </v-radio>
@@ -19,6 +20,7 @@
                     <h4
                         class="subtitle-2 secondary--text"
                         v-text="translations.no[lang]"
+                         
                     ></h4>
                 </template>
             </v-radio>
@@ -28,16 +30,34 @@
 
 <script>
 import translations from "@/utils/translations/loyaltyPanel/businessProfile/pointsReturn";
-
+import { mapState,mapGetters, mapMutations, mapActions } from "vuex";
 export default {
     name: "PointsReturn",
 
     mixins: [translations],
-
+   
+    
     computed: {
         lang() {
             return this.$route.params.lang;
+        },
+
+        returnPoint: {
+            get(){
+                 return this.$store.state.loyaltyPanel.businessProfile.initailPoint;
+            },
+            set(val){
+                this.setReturnPoint(val);
+            }
+        
         }
-    }
+        
+    },
+    methods:{
+        ...mapActions("loyaltyPanel/businessProfile", [
+           "getBussinessProfile"
+        ]),  
+    },
+    
 };
 </script>

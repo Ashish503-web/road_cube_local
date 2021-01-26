@@ -11,9 +11,11 @@
                 class="pr-2 subtitle-1 font-weight-bold"
                 v-text="translations.relation[lang]"
             ></v-col>
+
+
             <v-col cols="4" class="pl-2">
                 <b-select
-                    v-model="selectedPercent"
+                    v-model="selectedPercentage"
                     :items="percents"
                     append-outer-icon="mdiPercent"
                     no-clear-icon
@@ -25,6 +27,9 @@
 
 <script>
 import translations from "@/utils/translations/loyaltyPanel/businessProfile/pointsRelation";
+import Axios from 'axios';
+
+import { mapState,mapGetters, mapMutations, mapActions } from "vuex";
 
 export default {
     name: "PointsRelation",
@@ -32,7 +37,6 @@ export default {
     mixins: [translations],
 
     data: () => ({
-        selectedPercent: 50
     }),
 
     computed: {
@@ -46,9 +50,22 @@ export default {
             for (let i = 1; i < 101; i++) {
                 arr.push(i);
             }
-
             return arr;
+        },
+
+        selectedPercentage : {
+            get(){
+                    return this.$store.state.loyaltyPanel.businessProfile.selectedPercent;
+            },
+            set(val){
+                this.setBussinessProfile(val);
+            }
         }
-    }
+    },
+     methods:{
+        ...mapActions("loyaltyPanel/businessProfile", [
+           "getBussinessProfile"
+        ]),
+    },
 };
 </script>

@@ -8,4 +8,10 @@ export default class BusinessProfile {
             )}/settings/upload-images`,
             image
         );
+
+    static getProfileData = profile  => 
+            API().get(
+                '/companies/1/settings/all',profile
+            );
+
 }

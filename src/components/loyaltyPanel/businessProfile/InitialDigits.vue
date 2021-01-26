@@ -10,6 +10,10 @@
                 <b-text-field
                     type="number"
                     :label="translations.enterNumber[lang]"
+<<<<<<< HEAD
+=======
+                   
+>>>>>>> nbgspal-business-profile
                 ></b-text-field>
             </v-col>
         </v-row>
@@ -19,6 +23,11 @@
 <script>
 import translations from "@/utils/translations/loyaltyPanel/businessProfile/initialDigits";
 
+<<<<<<< HEAD
+=======
+import { mapState,mapGetters, mapMutations, mapActions } from "vuex";
+
+>>>>>>> nbgspal-business-profile
 export default {
     name: "InitialDigits",
 
@@ -27,7 +36,25 @@ export default {
     computed: {
         lang() {
             return this.$route.params.lang;
+<<<<<<< HEAD
         }
+=======
+        },
+
+        ...mapState("loyaltyPanel/businessProfile", [
+           "setBusiessProfile"
+        ]),
+        ...mapGetters("loyaltyPanel/businessProfile",["BusinessProfileData"]),
+    
+    },
+    methods:{
+        ...mapActions("loyaltyPanel/businessProfile", [
+           "getBussinessProfile"
+        ]),
+    },
+    created(){
+        this.getBussinessProfile();
+>>>>>>> nbgspal-business-profile
     }
 };
 </script>
