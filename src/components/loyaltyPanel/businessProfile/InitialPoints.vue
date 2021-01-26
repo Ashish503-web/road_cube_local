@@ -87,7 +87,7 @@
                 ></b-text-field>
             </v-col>
 
-            <v-col cols="12">
+            <!-- <v-col cols="12">
                 <v-checkbox
                     v-model="wholeUsers"
                     color="secondary"
@@ -108,7 +108,7 @@
                     type="number"
                     :label="translations.usersTotal[lang]"
                 ></b-text-field>
-            </v-col>
+            </v-col> -->
         </v-row>
     </b-standard-card>
 </template>

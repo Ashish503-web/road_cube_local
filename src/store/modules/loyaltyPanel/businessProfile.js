@@ -19,7 +19,9 @@ export default {
         },
         selectedPercent:'',
         initailPoint:'',
-        returnPoint : ''
+        returnPoint : '',
+        pushNotifications:'',
+        compaignCrendential:[]
     }),
 
     mutations: {
@@ -38,7 +40,9 @@ export default {
         setBussinessProfile: (state, payload) => (state.selectedPercent = payload),
 
         setIntialPoints : (state, payload) => (state.initailPoint = payload),
-        setReturnPoint : (state, payload) => (state.returnPoint = payload)
+        setReturnPoint : (state, payload) => (state.returnPoint = payload),
+        setPushNotification:(state, payload) => ( state.pushNotifications = payload),
+        setCompaignCrendential:(state , payload) => ( state.compaignCrendential = payload)
 
     },
 
@@ -121,6 +125,8 @@ export default {
             commit("setBussinessProfile", data.data.online_offline_points_ratio);
             commit("setIntialPoints" , data.data.init_user_points);
             commit("setReturnPoint", data.data.return_points_after_coupon_exp);
+            commit("setPushNotification",data.data.push_notifications);
+            commit("setCompaignCrendential", data.data.campaign_email_notifications)
             
         }
     }
