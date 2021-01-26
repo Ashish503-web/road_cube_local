@@ -126,36 +126,18 @@
                 <v-skeleton-loader
                     v-if="loading"
                     type="image"
-                    height="307"
                 ></v-skeleton-loader>
 
                 <v-card v-else tile outlined>
-                    <v-card tile flat>
-                        <v-card-title
-                            v-text="translations.transactions[lang]"
-                        ></v-card-title>
+                    <v-card-title
+                        v-text="translations.transactions[lang]"
+                    ></v-card-title>
 
-                        <v-divider></v-divider>
+                    <v-divider></v-divider>
 
-                        <v-sheet
-                            class="v-sheet--offset mx-auto"
-                            max-width="calc(100% - 32px)"
-                        >
-                            <v-sparkline
-                                :value="value"
-                                :gradient="gradient"
-                                :smooth="radius || false"
-                                :padding="padding"
-                                :line-width="width"
-                                :stroke-linecap="lineCap"
-                                :gradient-direction="gradientDirection"
-                                :fill="fill"
-                                :type="type"
-                                :auto-line-width="autoLineWidth"
-                                auto-draw
-                            ></v-sparkline>
-                        </v-sheet>
-                    </v-card>
+                    <v-card-text>
+                        <canvas ref="myChart"></canvas>
+                    </v-card-text>
                 </v-card>
             </v-col>
         </v-row>
@@ -174,6 +156,9 @@ import {
 } from "@mdi/js";
 
 import translations from "@/utils/translations/home";
+import { mapActions } from "vuex";
+import moment from "moment";
+import Chart from "chart.js";
 
 const gradients = [
     ["#222"],
@@ -190,18 +175,15 @@ export default {
     mixins: [translations],
 
     data: () => ({
-        width: 2,
-        radius: 10,
-        padding: 8,
-        lineCap: "round",
-        gradient: gradients[5],
-        value: [0, 2, 5, 9, 5, 10, 3, 5, 0, 0, 1, 8, 2, 9, 0],
-        gradientDirection: "top",
-        gradients,
-        fill: false,
-        type: "trend",
-        autoLineWidth: false,
+        statistics: {},
+        labels: [],
+        values: []
     }),
+
+    mounted() {
+        this.getCompany()
+        setTimeout(() => this.createChart(), 1500);
+    },
 
     computed: {
         lang() {
@@ -210,6 +192,12 @@ export default {
 
         loading() {
             return this.$store.state.loyaltyPanel.loading;
+        },
+
+        permission() {
+            return this.$store.state.permissions.homepage
+                ? this.$store.state.permissions.homepage.read
+                : null;
         },
 
         titleStatistics() {
@@ -221,7 +209,7 @@ export default {
                         en: "Customer",
                         it: "",
                     },
-                    value: 0,
+                    value: this.statistics.total_customers,
                 },
                 {
                     icon: mdiDatabase,
@@ -230,7 +218,7 @@ export default {
                         en: "Transactions",
                         it: "",
                     },
-                    value: 0,
+                    value: this.statistics.total_transactions,
                 },
                 {
                     icon: mdiCurrencyEur,
@@ -239,7 +227,11 @@ export default {
                         en: "Total",
                         it: "",
                     },
-                    value: "0,00",
+                    value: new Intl.NumberFormat("en-US", {
+                        style: "currency",
+                        currency: "EUR",
+                        minimumFractionDigits: 2
+                    }).format(this.statistics.total_income),
                 },
             ];
         },
@@ -253,7 +245,7 @@ export default {
                         en: "User views",
                         it: "",
                     },
-                    value: 0,
+                    value: this.statistics.views.visits,
                 },
                 {
                     icon: mdiCursorDefault,
@@ -262,25 +254,25 @@ export default {
                         en: "Clicks",
                         it: "",
                     },
-                    value: 0,
+                    value: this.statistics.views.nav_clicks,
                 },
                 {
                     icon: mdiDatabase,
                     text: {
                         el: "",
-                        en: "User leads",
+                        en: "Phone clicks",
                         it: "",
                     },
-                    value: 0,
+                    value: this.statistics.views.phone_click,
                 },
                 {
                     icon: mdiCompassOutline,
                     text: {
                         el: "",
-                        en: "Payments",
+                        en: "Map views",
                         it: "",
                     },
-                    value: 0,
+                    value: this.statistics.views.map_views,
                 },
             ];
         },
@@ -291,11 +283,23 @@ export default {
                     icon: mdiWallet,
                     text: {
                         el: "",
-                        en: "Last 24 hours",
+                        en: "Payments Last 12 Hours",
                         it: "",
                     },
                     value: `
-                        0 ${this.translations.transactions[this.lang]} / 0,00 
+                        ${
+                            this.statistics.last_twelve_hours_payments
+                                .total_transactions
+                        }
+                        ${this.translations.transactions[this.lang]} /
+                        ${new Intl.NumberFormat("en-US", {
+                            style: "currency",
+                            currency: "EUR",
+                            minimumFractionDigits: 2
+                        }).format(
+                            this.statistics.last_twelve_hours_payments
+                                .total_price
+                        )}
                         ${this.translations.total[this.lang]}
                     `,
                 },
@@ -303,16 +307,127 @@ export default {
                     icon: mdiWallet,
                     text: {
                         el: "",
-                        en: "Last 7 Days",
+                        en: "Payments Last Week",
                         it: "",
                     },
-                    value: `
-                        0 ${this.translations.transactions[this.lang]} / 0,00 
+                    value:  `
+                        ${this.statistics.last_week_payments.total_transactions}
+                        ${this.translations.transactions[this.lang]} /
+                        ${new Intl.NumberFormat("en-US", {
+                            style: "currency",
+                            currency: "EUR",
+                            minimumFractionDigits: 2
+                        }).format(
+                            this.statistics.last_week_payments.total_price
+                        )}
                         ${this.translations.total[this.lang]}
                     `,
                 },
             ];
         },
     },
+    watch: {
+        permission(val) {
+            if (!val) {
+                this.$router.replace(
+                    `/${this.lang}/loyaltyPanel/forbidden-gateway`
+                );
+            }
+        },
+
+        ["$store.state.loyaltyPanel.company"]: {
+            immediate: true,
+            handler(val) {
+                this.statistics = val.statistics;
+                this.statistics.name = val.app_name;
+                if (this.statistics.last_seven_days_revenue) {
+                    if (!this.labels.length) {
+                        this.statistics.last_seven_days_revenue.forEach(r =>
+                            this.labels.push(
+                                moment(r.date).format("DD/MM/YYYY")
+                            )
+                        );
+
+                        this.labels.reverse();
+                    }
+
+                    if (!this.values.length) {
+                        this.statistics.last_seven_days_revenue.forEach(r =>
+                            this.values.push(r.total_price)
+                        );
+
+                        this.values.reverse();
+                    }
+                }
+            }
+        }
+    },
+    methods: {
+        ...mapActions("loyaltyPanel", ["getCompany"]),
+
+        createChart() {
+            let ctx = this.$refs.myChart.getContext("2d");
+
+            var gradientStroke = ctx.createLinearGradient(500, -100, 100, 0);
+            gradientStroke.addColorStop(0, "#1feaea");
+            gradientStroke.addColorStop(0.33, "yellow");
+            gradientStroke.addColorStop(0.66, "orange");
+            gradientStroke.addColorStop(1, "red");
+
+            var myChart = new Chart(ctx, {
+                type: "line",
+                data: {
+                    labels: this.labels,
+                    datasets: [
+                        {
+                            label: "",
+                            data: this.values,
+                            backgroundColor: ["rgba(0, 0, 0, 0)"],
+                            borderColor: gradientStroke,
+                            pointBorderColor: gradientStroke,
+                            pointBackgroundColor: gradientStroke,
+                            pointHoverBackgroundColor: gradientStroke,
+                            pointHoverBorderColor: gradientStroke,
+                            borderWidth: 4
+                        }
+                    ]
+                },
+                options: {
+                    legend: {
+                        position: "top"
+                    },
+                    scales: {
+                        yAxes: [
+                            {
+                                ticks: {
+                                    fontColor: "rgba(0,0,0,0.5)",
+                                    fontStyle: "bold",
+                                    beginAtZero: true,
+                                    maxTicksLimit: 5,
+                                    padding: 20
+                                },
+                                gridLines: {
+                                    drawTicks: false
+                                }
+                            }
+                        ],
+                        xAxes: [
+                            {
+                                gridLines: {
+                                    zeroLineColor: "transparent"
+                                },
+                                ticks: {
+                                    padding: 20,
+                                    fontColor: "rgba(0,0,0,0.5)",
+                                    fontStyle: "bold"
+                                }
+                            }
+                        ]
+                    }
+                }
+            });
+        }
+    }
+
 };
 </script>
