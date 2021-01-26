@@ -29,15 +29,15 @@
                 </template>
 
                 <v-list dense>
-                    <v-list-item-group color="primary">
-                        <v-list-item color="red">
+                    <v-list-item-group color="primary"> 
+                        <v-list-item color="red" @click="logout">
                             <v-list-item-icon class="mr-3">
                                 <v-icon
                                     color="red"
                                     v-text="icons.mdiLogout"
                                 ></v-icon>
                             </v-list-item-icon>
-                            <v-list-item-title class="red--text" @click="logout"
+                            <v-list-item-title class="red--text"
                                 >Logout</v-list-item-title
                             >
                         </v-list-item>
@@ -251,7 +251,7 @@ export default {
                 localStorage.removeItem("storeId");
                 localStorage.removeItem("companyId");
                 localStorage.removeItem("accessToken");
-                this.$router.push("/");
+                this.$router.push(`/${this.lang}/`);
             } catch (ex) {
                 console.log(ex.response.data);
             }
