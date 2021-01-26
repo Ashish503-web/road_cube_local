@@ -7,7 +7,7 @@
         @cancel="$emit('cancel')"
         @submit="
             () => {
-                mode === 1 ? create(user) : update();
+                mode === 1 ? create(user) : update(user);
             }
         "
     >
@@ -75,7 +75,7 @@
             >
                 <v-row no-gutters align="center">
                     <v-col v-if="typeof value === 'object'" cols="auto">
-                        <v-btn icon @click="test(name1)">
+                        <v-btn icon @click="value.open = !value.open">
                             <v-icon
                                 v-text="
                                     value.open
@@ -199,6 +199,7 @@ import {
 import { mapState, mapMutations, mapActions } from "vuex";
 import translations from "@/utils/translations/loyaltyPanel/userRights";
 import validators from "@/utils/validators/loyaltyPanel/user";
+import UIPermissions from "@/models/loyaltyPanel/UIPermissions";
 
 export default {
     name: "UserForm",
@@ -229,16 +230,16 @@ export default {
             "resetSuccess",
             "resetValidation"
         ]),
-        ...mapState("loyaltyPanel/userRights", ["moderatorPermissions","user"]),
+        ...mapState("loyaltyPanel/userRights", ["moderatorPermissions"]),
 
-        // user: {
-        //     get(){
-        //         return this.$store.state.loyaltyPanel.userRights.user
-        //     },
-        //     set(val){
-        //         this.setUser(val)
-        //     }
-        // },
+        user: {
+            get(){
+                return this.$store.state.loyaltyPanel.userRights.user
+            },
+            set(val){
+                this.setUser(val)
+            }
+        },
 
         lang() {
             return this.$route.params.lang;
@@ -254,37 +255,22 @@ export default {
     methods: {
         ...mapMutations(["setResetSuccess", "setResetValidation"]),
         ...mapMutations("loyaltyPanel/userRights", ["setUser"]),
-        ...mapActions("loyaltyPanel/userRights", ["create", "update"]),
-
-        test(name){
-            this.user.permissions[name].open = !this.user.permissions[name].open
-            console.log(this.user.permissions,'test')
-            this.setUser(this.user)
-        }
+        ...mapActions("loyaltyPanel/userRights", ["create", "update"])
     },
     mounted() {
         if(this.mode == 1){
-                this.user.permissions = this.moderatorPermissions
-            }else{
-                console.log(this.user,"mounted")
+                this.user.permissions = new UIPermissions(this.moderatorPermissions);
             }
-        
     },
 
     watch: {
-        user: {
-            handler(val){
-                console.log(val,'watch')
-            },
-            deep:true
-            // this.allPermissions = false;
-            
+        user(val) {
+            this.allPermissions = false;
         },
 
         mode(val) {
-            console.log(this.user,'userrrrrrrr')
             if(val === 1){
-                this.user.permissions = this.moderatorPermissions
+                this.user.permissions = new UIPermissions(this.moderatorPermissions);
             }  
             
         },

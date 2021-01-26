@@ -64,6 +64,7 @@ import { mapState, mapMutations, mapActions } from "vuex";
 
 import UserForm from "@/components/loyaltyPanel/userRights/UserForm.vue";
 import translations from "@/utils/translations/loyaltyPanel/userRights";
+import UIPermissions from "@/models/loyaltyPanel/UIPermissions";
 
 export default {
     name: "UserRights",
@@ -160,33 +161,14 @@ export default {
 
     methods: {
         ...mapMutations(["setDialog", "setDeleteDialog","setResetSuccess","setResetValidation"]),
-        ...mapMutations("loyaltyPanel/userRights", ["setUser"]),
-        ...mapActions("loyaltyPanel/userRights", ["getUsers"]),
+        ...mapMutations("loyaltyPanel/userRights", ["setUser","setPermissions"]),
+        ...mapActions("loyaltyPanel/userRights", ["getUsers","getUser"]),
 
         open(mode,item){
-            
-            this.mode = mode
-            for (let key in item.permissions) {
-                    if (typeof item.permissions[key] === "object") {
-                        item.permissions[key].open = false
-                        let subPermissions = item.permissions[key];
-
-                        for (let key in subPermissions) {
-                            if (typeof subPermissions[key] === "object") {
-                                subPermissions[key].open = false
-                                for (let subKey in subPermissions[key]) {
-                                    if (typeof subPermissions[key][subKey] === "object") {
-                                        subPermissions[key][subKey].open = false;
-                                    }  
-                                }
-                            }
-                        }
-                    }
-                }
+            item.permissions = new UIPermissions(item.permissions);
             this.user = item
-            setTimeout(() => this.setResetSuccess(true), 300);
-            this.setResetValidation(true);
-            this.dialog = true;
+            this.mode = mode
+            this.dialog = true
         }
     },
 

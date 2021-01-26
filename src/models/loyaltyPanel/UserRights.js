@@ -25,4 +25,12 @@ export default class UserRights {
             )}/users`,
             item
         );
+
+    static update = item =>
+        API().put(
+            `/companies/${localStorage.getItem(
+                "storeId"
+            )}/users/${item.user_id}/permissions`,
+            item
+        );
 }
