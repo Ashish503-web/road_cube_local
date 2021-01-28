@@ -31,7 +31,8 @@
                 </v-col>
 
                 <v-col cols="6" class="pl-3 mt-6">
-                    <InitialDigits />
+<!--                    <InitialDigits />-->
+                    <PointsReturn />
                     <PushNotifications />
                 </v-col>
 
@@ -40,9 +41,9 @@
                 </v-col>
 
                 <v-col cols="6" class="pl-3 mt-6">
-                    <PointsReturn />
+
                     <CouponCreation />
-                    <ApiAuthentication />
+<!--                    <ApiAuthentication />-->
                     <UserPointsInApp />
                 </v-col>
             </v-row>
@@ -58,7 +59,7 @@ import PointsRelation from "@/components/loyaltyPanel/businessProfile/PointsRela
 import TermsOfUse from "@/components/loyaltyPanel/businessProfile/TermsOfUse.vue";
 import PrivacyPolicy from "@/components/loyaltyPanel/businessProfile/PrivacyPolicy.vue";
 import InitialPoints from "@/components/loyaltyPanel/businessProfile/InitialPoints.vue";
-import InitialDigits from "@/components/loyaltyPanel/businessProfile/InitialDigits.vue";
+// import InitialDigits from "@/components/loyaltyPanel/businessProfile/InitialDigits.vue";
 import PushNotifications from "@/components/loyaltyPanel/businessProfile/PushNotifications.vue";
 import CampaignCredentials from "@/components/loyaltyPanel/businessProfile/CampaignCredentials.vue";
 import PointsReturn from "@/components/loyaltyPanel/businessProfile/PointsReturn.vue";
@@ -77,12 +78,12 @@ export default {
         TermsOfUse,
         PrivacyPolicy,
         InitialPoints,
-        InitialDigits,
+        // InitialDigits,
         PushNotifications,
         CampaignCredentials,
         PointsReturn,
         CouponCreation,
-        ApiAuthentication,
+        // ApiAuthentication,
         UserPointsInApp
     },
 

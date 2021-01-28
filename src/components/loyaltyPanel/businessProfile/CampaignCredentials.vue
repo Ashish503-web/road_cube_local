@@ -9,16 +9,18 @@
         ></h4>
 
         {{ translations.notificationsInfo[lang] }}
-        
-        <v-row v-for="n in 3" :key="n" no-gutters align="baseline">
+
+
+
+        <v-row v-for="(item, index) in compaignCredentials" :key="index" no-gutters align="baseline">
             <v-col
                 cols="auto"
                 class="subtitle-1 font-weight-bold secondary--text"
             >
-                {{ n }}.
+                {{index}}
             </v-col>
             <v-col cols="7" class="pl-3">
-                <b-text-field></b-text-field>
+                <b-text-field :value="item"></b-text-field>
             </v-col>
         </v-row>
 
@@ -77,19 +79,22 @@
         </v-alert>
 
         {{ translations.emailSecondMethodInfo[lang] }}
-
+        
         <b-text-field
             :label="translations.host[lang]"
             class="mt-7"
+            v-model="emailSmsSettings.smtp_host"
         ></b-text-field>
-        <b-text-field :label="translations.name[lang]"></b-text-field>
+        <b-text-field :label="translations.name[lang]" v-model="emailSmsSettings.email_sender_alias_name"></b-text-field>
         <b-text-field
             :label="translations.email[lang]"
             type="email"
+            v-model="emailSmsSettings.email"
         ></b-text-field>
         <b-text-field
             :label="translations.password[lang]"
             type="password"
+            v-model="emailSmsSettings.password"
         ></b-text-field>
 
         <v-alert
@@ -111,6 +116,12 @@ export default {
     name: "CampaignCredentials",
 
     mixins: [translations],
+    data () {
+        return {
+            email_first_method:'null',
+            email_second_method:'null',
+        }
+    },
 
     computed: {
         lang() {
@@ -124,6 +135,14 @@ export default {
             set(val){
                 this.setCompaignCrendential(val);
             }
+        },
+        emailSmsSettings :{
+            get(){
+                return this.$store.state.loyaltyPanel.businessProfile.emailSmsSetting;
+            },
+            set(val){
+                this.setEmailSmsSettings(val);
+            }
         }
     },
      methods:{
@@ -131,5 +150,11 @@ export default {
            "getBussinessProfile"
         ]),  
     },
+    mounted() {
+        let email_sms_settings = this.$store.state.loyaltyPanel.businessProfile.emailSmsSetting;
+        this.email_first_method = email_sms_settings;
+        this.email_second_method = email_sms_settings.secondary_email_settings;
+
+    }
 };
 </script>

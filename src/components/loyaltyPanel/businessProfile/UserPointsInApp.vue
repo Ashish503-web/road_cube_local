@@ -9,16 +9,18 @@
             class="text--primary"
             v-text="translations.showUserPoints[lang]"
         ></h4>
-        <v-radio-group class="mt-3 pt-0" hide-details>
-            <v-radio color="secondary">
+{{userPointsData}}
+        <v-radio-group class="mt-3 pt-0" hide-details v-model="userPointsData" >
+            <v-radio color="secondary"  value="true">
                 <template v-slot:label>
                     <h4
                         class="subtitle-2 text--primary"
                         v-text="translations.yes[lang]"
+
                     ></h4>
                 </template>
             </v-radio>
-            <v-radio color="secondary">
+            <v-radio color="secondary" value="false">
                 <template v-slot:label>
                     <h4
                         class="subtitle-2 text--primary"
@@ -32,16 +34,49 @@
 
 <script>
 import translations from "@/utils/translations/loyaltyPanel/businessProfile/userPointsInApp";
+import { mapState,mapGetters, mapMutations, mapActions } from "vuex";
+
 
 export default {
     name: "UserPointsInApp",
 
     mixins: [translations],
+    data (){
+        return {
+            userPointsData : '',
+        }
+    },
 
     computed: {
+
         lang() {
             return this.$route.params.lang;
+        },
+
+        userPoints : {
+          get(){
+            return this.$store.state.loyaltyPanel.businessProfile.userPointValue;
+          },
+          set(val){
+            this.setUserPoints(val);
+          }
         }
+    },
+
+    methods:{
+      ...mapMutations("loyaltyPanel/businessProfile",["setUserPoints"]),
+      ...mapActions("loyaltyPanel/businessProfile", [
+        "getBussinessProfile"
+      ]),
+    },
+    mounted() {
+        let userPointsdataValue = this.$store.state.loyaltyPanel.businessProfile.userPointValue;
+        if(userPointsdataValue === true){
+            this.userPointsData = 'true';
+        }
+        //  = userPointsdataValue;
+        console.log(this.userPointsData)
+        this.getBussinessProfile();
     }
 };
 </script>
