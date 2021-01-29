@@ -84,7 +84,7 @@ export default {
             "resetSuccess",
             "resetValidation",
         ]),
-        ...mapState("loyaltyPanel/subscriptions", [
+        ...mapState("loyaltyPanel/subscriptions/paymentMethods", [
             "systemPaymentMethods"
         ]),
 
@@ -98,7 +98,7 @@ export default {
 
         paymentMethod: {
             get(){
-                return this.$store.state.loyaltyPanel.subscriptions.paymentMethod;
+                return this.$store.state.loyaltyPanel.subscriptions.paymentMethods.paymentMethod;
             },
             set(){
                 this.setPaymentMethod()
@@ -107,18 +107,14 @@ export default {
     },
 
     methods: {
-        ...mapActions("loyaltyPanel/subscriptions", [
+        ...mapActions("loyaltyPanel/subscriptions/paymentMethods", [
             "getSystemPaymentMethods",
             "createPaymentMethod",
             "updatePaymentMethod"
         ]),
-        ...mapMutations("loyaltyPanel/subscriptions", [
+        ...mapMutations("loyaltyPanel/subscriptions/paymentMethods", [
             "setPaymentMethod"
         ]),
-        
-    },
-
-    watch: {
         
     },
 

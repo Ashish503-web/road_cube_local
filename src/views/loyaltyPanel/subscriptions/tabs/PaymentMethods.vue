@@ -179,7 +179,7 @@ export default {
             "resetSuccess",
             "resetValidation",
         ]),
-        ...mapState("loyaltyPanel/subscriptions", [
+        ...mapState("loyaltyPanel/subscriptions/paymentMethods", [
             "companyPaymentMethods"
         ]),
 
@@ -189,7 +189,7 @@ export default {
 
         paymentMethodAdditionalInfo: {
             get(){
-                return this.$store.state.loyaltyPanel.subscriptions.paymentMethodAdditionalInfo;
+                return this.$store.state.loyaltyPanel.subscriptions.paymentMethods.paymentMethodAdditionalInfo;
             },
             set(val){
                 this.setPaymentMethodAdditionalInfo(val)
@@ -198,7 +198,7 @@ export default {
 
         paymentMethod: {
             get(){
-                return this.$store.state.loyaltyPanel.subscriptions.paymentMethod;
+                return this.$store.state.loyaltyPanel.subscriptions.paymentMethods.paymentMethod;
             },
             set(val){
                 this.setPaymentMethod(val)
@@ -254,11 +254,11 @@ export default {
             "setResetSuccess",
             "setResetValidation",
         ]),
-        ...mapMutations("loyaltyPanel/subscriptions", [
+        ...mapMutations("loyaltyPanel/subscriptions/paymentMethods", [
             "setPaymentMethodAdditionalInfo",
             "setPaymentMethod"
         ]),
-        ...mapActions("loyaltyPanel/subscriptions", [
+        ...mapActions("loyaltyPanel/subscriptions/paymentMethods", [
             "getCompanyPaymentMethods",
             "removePaymentMethod",
             "getPaymentMethodProfile"
@@ -269,7 +269,7 @@ export default {
             if(mode == 1){
                 this.paymentMethod = {};
             }else{
-                this.getPaymentMethodProfile(item.system_payment_method_id)
+                this.getPaymentMethodProfile(item.store_payment_method_id)
             }
             
             setTimeout(() => this.setResetSuccess(true), 300);
