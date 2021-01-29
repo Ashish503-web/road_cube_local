@@ -22,7 +22,7 @@ export default {
         },
         setPaymentMethodAdditionalInfo(state, payload) {
             state.paymentMethodAdditionalInfo = payload;
-        },
+        }
     },
 
     actions: {

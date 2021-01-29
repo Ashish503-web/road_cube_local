@@ -96,7 +96,7 @@ export default {
         },
 
         paymentMethodAdditionalInfo() {
-            return this.$store.state.loyaltyPanel.subscriptions.paymentMethodAdditionalInfo;
+            return this.$store.state.loyaltyPanel.subscriptions.paymentMethods.paymentMethodAdditionalInfo;
         },
     },
 };

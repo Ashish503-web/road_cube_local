@@ -3,7 +3,7 @@ export default {
         translations: {
             name: {
                 el: "",
-                en: "Name",
+                en: "Plan Name",
                 it: ""
             },
             storeName: {
@@ -11,9 +11,9 @@ export default {
                 en: "Name of Store(in app)",
                 it: ""
             },
-            map: {
+            description: {
                 el: "",
-                en: "Map",
+                en: "Plan Description",
                 it: ""
             },
             active: {
@@ -21,19 +21,19 @@ export default {
                 en: "Active",
                 it: ""
             },
-            address: {
+            price: {
                 el: "",
-                en: "Address",
+                en: "Plan Price",
                 it: ""
             },
-            phone: {
+            currency: {
                 el: "",
-                en: "Phone",
+                en: "Currency",
                 it: ""
             },
-            plan: {
+            vat: {
                 el: "",
-                en: "Plan",
+                en: "VAT",
                 it: ""
             },
             paymentMethod: {
@@ -41,9 +41,9 @@ export default {
                 en: "Payment Method",
                 it: ""
             },
-            onlineOffline: {
+            type: {
                 el: "",
-                en: "Online/Offline",
+                en: "Plan Type",
                 it: ""
             },
             payment: {
