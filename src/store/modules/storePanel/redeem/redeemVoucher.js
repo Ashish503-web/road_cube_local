@@ -21,19 +21,25 @@ export default {
                     {
                         show: true,
                         type: "success",
-                        text: "You have successfully created coupon on product!"
+                        text: "Success Redemption"
                     },
 
                     { root: true }
                 );
             } catch (ex) {
                 commit("setLoading", false, { root: true });
-                commit("setErrorMessage", ex.response.data.message, {
-                    root: true
-                });
-                setTimeout(
-                    () => commit("setErrorMessage", "", { root: true }),
-                    5000
+                // commit("setErrorMessage", ex.response.data.message, {
+                //     root: true
+                // });
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "error",
+                        text: ex.response.data.message
+                    },
+
+                    { root: true }
                 );
             }
         }

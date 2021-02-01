@@ -4,7 +4,9 @@
             <v-spacer></v-spacer>
 
             <v-col cols="12" sm="4" class="pa-0">
-                <b-search-field></b-search-field>
+                <b-search-field
+                    v-model="search"
+                ></b-search-field>
             </v-col>
         </v-toolbar>
 
@@ -12,9 +14,27 @@
             <v-sheet width="1550">
                 <v-data-table
                     :headers="headers"
-                    :footer-props="{ itemsPerPageOptions }"
+                    :items="storeSubscriptions"
+                    :footer-props="{ itemsPerPageOptions: [12], showCurrentPage: true }"
+                    :page.sync="page"
+                    :server-items-length="serverItemsLength"
                     class="b-bottom-outlined"
-                ></v-data-table>
+                >
+                
+                <template v-slot:item.store_subscription_plan.active="{ item }">
+                    <v-icon
+                        v-if="item.store_subscription_plan.active"
+                        color="green"
+                        v-text="icons.mdiCheckCircleOutline"
+                    ></v-icon>
+                    <v-icon
+                        v-else
+                        color="red"
+                        v-text="icons.mdiMinusCircleOutline"
+                    ></v-icon>
+                </template>
+
+                </v-data-table>
             </v-sheet>
         </v-sheet>
     </v-tab-item>
@@ -22,62 +42,141 @@
 
 <script>
 import translations from "@/utils/translations/loyaltyPanel/subscriptions/stores";
+import { mdiCheckCircleOutline, mdiMinusCircleOutline } from "@mdi/js";
+import { mapState, mapMutations, mapActions } from "vuex";
+import debounce from "lodash/debounce";
 
 export default {
     name: "Pending",
 
     mixins: [translations],
 
-    data: () => ({
-        itemsPerPageOptions: [10, 20, 30, -1],
-    }),
+    data() {
+        return{
+            icons: {mdiCheckCircleOutline,mdiMinusCircleOutline},
+            page: +this.$route.query.page,
+            search: ""
+        }
+    },
 
     computed: {
+        ...mapState(["loading", "errorMessage", "serverItemsLength"]),
+        ...mapState("loyaltyPanel/subscriptions/storeSubscriptions", [
+            "storeSubscriptions"
+        ]),
+
         lang() {
             return this.$route.params.lang;
         },
 
+        query() {
+            let query = "?";
+
+            for (let key in this.$route.query) {
+                query += `${key}=${this.$route.query[key]}&`;
+            }
+
+            return query.slice(0, query.length - 1);
+        },
+
         headers() {
             return [
-                { text: this.translations.name[this.lang], value: "name" },
+                { 
+                    text: this.translations.name[this.lang], 
+                    value: `store_subscription_plan.plan_name[${this.lang}]` 
+                },
                 {
                     text: this.translations.storeName[this.lang],
-                    value: "nameShop",
+                    value: `store.app_name`,
                 },
-                { text: this.translations.map[this.lang], value: "map" },
-                { text: this.translations.active[this.lang], value: "active" },
+                { 
+                    text: this.translations.description[this.lang], 
+                    value: `store_subscription_plan.plan_description[${this.lang}]` 
+                },
+                { 
+                    text: this.translations.active[this.lang], 
+                    value: `store_subscription_plan.active`
+                },
                 {
-                    text: this.translations.address[this.lang],
-                    value: "address",
+                    text: this.translations.type[this.lang],
+                    value: `store_subscription_plan.plan_type[${this.lang}]`,
                 },
                 {
-                    text: this.translations.phone[this.lang],
-                    value: "mobilePhone",
+                    text: this.translations.price[this.lang],
+                    value: `store_subscription_plan.plan_price`,
                 },
-                { text: this.translations.plan[this.lang], value: "plan" },
+                {
+                    text: this.translations.currency[this.lang],
+                    value: `store_subscription_plan.currency`,
+                },
+                {
+                    text: this.translations.vat[this.lang],
+                    value: `store_subscription_plan.vat`,
+                },
                 {
                     text: this.translations.paymentMethod[this.lang],
-                    value: "paymentMethod",
-                },
-                {
-                    text: this.translations.onlineOffline[this.lang],
-                    value: "onOff",
-                },
-                {
-                    text: this.translations.payment[this.lang],
-                    value: "payment",
-                },
-                {
-                    text: this.translations.nextPayment[this.lang],
-                    value: "paymentDate",
-                },
-                { text: this.translations.amount[this.lang], value: "amount" },
-                {
-                    text: this.translations.options[this.lang],
-                    value: "options",
-                },
+                    value: `store_payment_method.store_payment_method[${this.lang}]`,
+                }
             ];
         },
+  
     },
+
+    methods: {
+        ...mapActions("loyaltyPanel/subscriptions/storeSubscriptions", [
+            "getStoreSubscriptions",
+        ]),
+
+        handleSearch() {
+            this.getStoreSubscriptions(`?q=${this.search}`);
+        }
+    },
+
+    mounted(){
+        this.getStoreSubscriptions(this.query)
+    },
+
+    beforeCreate() {
+        if (!this.$route.query.page) {
+            this.$router.push({
+                query: {
+                    page: 1,
+                    ...this.$route.query,
+                },
+            });
+        }
+    },
+
+    created() {
+        this.debouncedSearch = debounce(this.handleSearch, 500);
+    },
+
+    watch: {
+        $route(val) {
+            if (!val.query.page) {
+                this.$router.push({
+                    query: {
+                        page: 1,
+                        ...this.$route.query,
+                    },
+                });
+            }
+            this.getStoreSubscriptions(this.query);
+        },
+
+        page(page) {
+            this.$router.push({ query: { ...this.$route.query, page } });
+        },
+
+        search(val) {
+            if (val == null) {
+                this.getStoreSubscriptions(this.query);
+            } else {
+                this.debouncedSearch();
+            }
+        }
+    }
+
+
 };
 </script>
