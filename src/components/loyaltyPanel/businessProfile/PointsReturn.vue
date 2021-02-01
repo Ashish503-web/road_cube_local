@@ -4,9 +4,10 @@
         :submit-text="{ el: '', en: 'save', it: '' }"
         height="auto"
     >
+
         <h4 class="secondary--text" v-text="translations.info[lang]"></h4>
-        <v-radio-group class="mt-3 pt-0" hide-details>
-            <v-radio color="secondary">
+        <v-radio-group class="mt-3 pt-0" hide-details v-model="returnPoint">
+            <v-radio color="secondary" value="true">
                 <template v-slot:label>
                     <h4
                         class="subtitle-2 secondary--text"
@@ -15,8 +16,8 @@
                     ></h4>
                 </template>
             </v-radio>
-            <v-radio color="secondary">
-                <template v-slot:label>
+            <v-radio color="secondary" value="false">
+                <template v-slot:label >
                     <h4
                         class="subtitle-2 secondary--text"
                         v-text="translations.no[lang]"
@@ -35,6 +36,11 @@ export default {
     name: "PointsReturn",
 
     mixins: [translations],
+    data (){
+        return {
+            returnPoint :null,
+        }
+    },
    
     
     computed: {
@@ -42,22 +48,36 @@ export default {
             return this.$route.params.lang;
         },
 
-        returnPoint: {
-            get(){
-                 return this.$store.state.loyaltyPanel.businessProfile.initailPoint;
-            },
-            set(val){
-                this.setReturnPoint(val);
-            }
-        
-        }
+        // returnPoint: {
+        //     get(){
+        //          return this.$store.state.loyaltyPanel.businessProfile.initailPoint;
+        //     },
+        //     set(val){
+        //         this.setReturnPoint(val);
+        //     }
+        //
+        // }
         
     },
     methods:{
         ...mapActions("loyaltyPanel/businessProfile", [
            "getBussinessProfile"
-        ]),  
+        ]),
+
+        selectedPointReturn(){
+            let returnPointData = this.$store.state.loyaltyPanel.businessProfile.returnPoint;
+            // this.returnPoint = returnPointData
+            if(returnPointData == true){
+                this.returnPoint = 'true'
+            }else{
+                this.returnPoint = 'false'
+            }
+
+        },
     },
+    mounted (){
+        this.selectedPointReturn();
+    }
     
 };
 </script>

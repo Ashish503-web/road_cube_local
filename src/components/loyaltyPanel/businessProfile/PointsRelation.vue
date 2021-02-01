@@ -2,6 +2,7 @@
     <b-standard-card
         :title="translations.title[lang]"
         :submit-text="{ el: '', en: 'save', it: '' }"
+        @submit = "updateRelation({ type: 'selectedPercent', item:selectedPercent})"
     >
         {{ translations.info[lang] }}
 
@@ -15,8 +16,8 @@
 
             <v-col cols="4" class="pl-2">
                 <b-select
-                    v-model="selectedPercentage"
-                    :items="percents"
+                    v-model="selectedPercent"
+                    :items="point_relation"
                     append-outer-icon="mdiPercent"
                     no-clear-icon
                 ></b-select>
@@ -36,36 +37,42 @@ export default {
 
     mixins: [translations],
 
-    data: () => ({
-    }),
+    data (){
+        return {
+            selectedPercent : null,
+            point_relation:[]
+        }
+    },
 
     computed: {
         lang() {
             return this.$route.params.lang;
         },
 
-        percents() {
-            let arr = [];
-
-            for (let i = 1; i < 101; i++) {
-                arr.push(i);
-            }
-            return arr;
-        },
-
-        selectedPercentage : {
-            get(){
-                    return this.$store.state.loyaltyPanel.businessProfile.selectedPercent;
-            },
-            set(val){
-                this.setBussinessProfile(val);
-            }
-        }
     },
      methods:{
         ...mapActions("loyaltyPanel/businessProfile", [
-           "getBussinessProfile"
+           "getBussinessProfile",
+            "updateRelation"
         ]),
+
+         selectedPoint(){
+             let points_data = this.$store.state.loyaltyPanel.businessProfile.selectedPercent;
+             this.selectedPercent = points_data
+         },
+
+         allPointRelation (){
+             for (let i = 1; i < 101; i++) {
+                 this.point_relation.push(i);
+             }
+             return this.point_relation;
+         }
+
     },
+    mounted(){
+        this.selectedPoint();
+        this.allPointRelation();
+    }
+
 };
 </script>

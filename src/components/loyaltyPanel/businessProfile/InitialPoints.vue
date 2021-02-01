@@ -2,7 +2,10 @@
     <b-standard-card
         :title="translations.title[lang]"
         :submit-text="{ el: '', en: 'save', it: '' }"
-        @submit="updateInitialPoint(init_user_point)"
+        :loading="loading"
+        :error-message="errorMessage"
+        @submit="updateInitialPoint({type: 'initailPoint',
+                item: init_user_point,})"
     >
         {{ translations.info[lang] }}
 
@@ -127,13 +130,27 @@ export default {
         unlimitedOnline: false,
         unlimitedOffline: false,
         wholeUsers: false,
-        init_user_point: []
+        init_user_point: [],
+
     }),
 
     computed: {
         lang() {
             return this.$route.params.lang;
-        },  
+        },
+        loading() {
+            return this.$store.state.loyaltyPanel.businessProfile.loading.initailPoint;
+        },
+
+        errorMessage() {
+            return this.$store.state.loyaltyPanel.businessProfile.errorMessage
+                .initailPoint;
+        },
+        resetSuccess() {
+            return this.$store.state.loyaltyPanel.businessProfile.resetSuccess
+                .initailPoint;
+        }
+
 
         // initialpoints : {
         //     get(){

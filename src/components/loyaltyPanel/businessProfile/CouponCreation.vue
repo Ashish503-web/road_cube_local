@@ -27,11 +27,11 @@
                 />
             </v-col>
         </v-row>
-        {{ coupon_creation_type_id }}
-        <v-radio-group class="mt-0 pt-0" hide-details v-model="coupon_creation_type_id" column>
+
+        <v-radio-group class="mt-0 pt-0" hide-details v-model="coupon_value" column>
             <v-row no-gutters class="font-weight-medium">
                 <v-col cols="4">
-                    <v-radio color="secondary" class="justify-center" value=0>
+                    <v-radio color="secondary" class="justify-center" value="1">
                     </v-radio>
                     <h4
                         class="subtitle-1 font-weight-bold text-center"
@@ -42,7 +42,7 @@
                     <v-radio
                         color="secondary"
                         class="justify-center"
-                        value=1
+                        value="2"
 
                     ></v-radio>
                     <h4
@@ -54,7 +54,7 @@
                     <v-radio
                         color="secondary"
                         class="justify-center"
-                        value="2"
+                        value="3"
                     ></v-radio>
                     <h4
                         class="subtitle-1 font-weight-bold text-center"
@@ -76,7 +76,7 @@ export default {
     mixins: [translations],
     data() {
         return {
-            coupon_creation_type_id: null,
+            coupon_value: null,
         }
     },
 
@@ -86,13 +86,21 @@ export default {
         },
 
     },
-    watch: {
-        ["$store.state.loyaltyPanel.businessProfile.businessProfileData"]: {
-            immediate: true,
-            handler(val) {
-                this.coupon_creation_type_id = val.coupon_creation_type_id;
+    methods:{
+        getCouponValue(){
+            let couponValue = this.$store.state.loyaltyPanel.businessProfile.couponValues;
+            if(couponValue == 1){
+                this.coupon_value = '1'
+            }else if(couponValue == 2){
+                this.coupon_value = '2'
+            }else{
+                this.coupon_value = '3'
             }
+
         },
+    },
+    mounted() {
+        this.getCouponValue();
     }
 
 };

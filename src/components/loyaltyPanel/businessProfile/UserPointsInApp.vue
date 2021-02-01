@@ -9,6 +9,7 @@
             class="text--primary"
             v-text="translations.showUserPoints[lang]"
         ></h4>
+
         <v-radio-group class="mt-3 pt-0" hide-details v-model="userPointsData" >
             <v-radio color="secondary"  value="true">
                 <template v-slot:label>

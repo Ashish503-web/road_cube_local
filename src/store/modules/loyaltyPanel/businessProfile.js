@@ -9,21 +9,24 @@ export default {
             mapLogo: false,
             instructions_file: false,
             terms_file: false,
-            privacy_policy_file: false
+            privacy_policy_file: false,
+            initailPoint:false
         },
         errorMessage: {
             logo: "",
             mapLogo: "",
             instructions_file: "",
             terms_file:"",
-            privacy_policy_file: ""
+            privacy_policy_file: "",
+            initailPoint:""
         },
         resetSuccess: {
             logo: false,
             mapLogo: false,
             instructions_file: false,
             terms_file: false,
-            privacy_policy_file:false
+            privacy_policy_file:false,
+            initailPoint: false
         },
         businessProfileData:'',
         selectedPercent: '',
@@ -32,7 +35,7 @@ export default {
         pushNotifications: '',
         compaignCrendential: null,
         authentication: '',
-        couponValues: '0',
+        couponValues: '',
         userPointValue:'',
         emailSmsSetting: '',
 
@@ -123,7 +126,7 @@ export default {
                     root: true
                 });
                 commit("setResetSuccess", {value: false, type});
-                commit("setLoading", {value: false, type});
+
                 commit(
                     "setNotification",
                     {
@@ -134,6 +137,7 @@ export default {
 
                     {root: true}
                 );
+                commit("setLoading", {value: false, type});
             } catch (ex) {
                 commit("setLoading", {value: false, type});
                 commit("setErrorMessage", {
@@ -279,9 +283,41 @@ export default {
 
         },
 
-        async updateInitialPoint({item}){
-           console.log('points', item)
-            // const {data} = await BusinessProfile.putInitialPoint(item);
+        async updateInitialPoint({commit},{type,item}){
+
+            try {
+                commit("setLoading", {value: true, type});
+                const {data} = await BusinessProfile.putInitialPoint(item);
+                commit("setIntialPoints", data.data.init_user_points);
+                commit("setResetSuccess", {value: false, type});
+                commit("setLoading", {value: false, type});
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated  Initial Online/Offline points!"
+                    },
+
+                    {root: true}
+                );
+            }catch( ex ){
+                commit("setLoading", {value: false, type});
+                console.log('error',type)
+                commit("setErrorMessage", {
+                    value: ex.response.data.message,
+                    type
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", {value: "", type}),
+                    5000
+                );
+            }
+
+        },
+
+        async updateRelation({commit},{type,item}){
+            console.log('value', item);
 
         }
 

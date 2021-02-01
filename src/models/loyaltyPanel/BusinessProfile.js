@@ -1,4 +1,5 @@
 import API from "@/models/API";
+import pointsRelation from "@/utils/translations/loyaltyPanel/businessProfile/pointsRelation";
 
 export default class BusinessProfile {
     static uploadImage = image =>
@@ -44,6 +45,13 @@ export default class BusinessProfile {
             `/companies/${localStorage.getItem(
                 "storeId"
             )}/settings/init-user-points`,points
+        );
+
+    static updatePointRelation = pointsRelation =>
+        API().put(
+            `/companies/${localStorage.getItem(
+                "storeId"
+            )}/settings/init-user-points`,pointsRelation
         );
 
 
