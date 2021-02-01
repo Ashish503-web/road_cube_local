@@ -4,9 +4,11 @@
         :submit-text="{ el: '', en: 'save', it: '' }"
         :loading="loading"
         :error-message="errorMessage"
-        @submit="updateInitialPoint({type: 'initailPoint',
-                item: init_user_point,})"
+
     >
+
+<!--        @submit="updateInitialPoint({type: 'initailPoint',-->
+<!--        item: init_user_point,})"-->
         {{ translations.info[lang] }}
 
         <br />
