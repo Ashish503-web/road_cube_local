@@ -14,4 +14,30 @@ export default class BusinessProfile {
                 '/companies/1/settings/all',profile
             );
 
+    static getUserManual = file =>
+        API().post(
+            `/companies/${localStorage.getItem(
+                "storeId"
+            )}/settings/upload-file`,
+            file
+        );
+
+
+    static getTermFile = file =>
+        API().post(
+            `/companies/${localStorage.getItem(
+                "storeId"
+            )}/settings/upload-file`,
+            file
+        );
+
+    static getPrivacyFile = file =>
+        API().post(
+            `/companies/${localStorage.getItem(
+                "storeId"
+            )}/settings/upload-file`,
+            file
+        );
+
+
 }

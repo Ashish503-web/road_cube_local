@@ -150,11 +150,6 @@ export default {
            "getBussinessProfile"
         ]),  
     },
-    mounted() {
-        let email_sms_settings = this.$store.state.loyaltyPanel.businessProfile.emailSmsSetting;
-        this.email_first_method = email_sms_settings;
-        this.email_second_method = email_sms_settings.secondary_email_settings;
 
-    }
 };
 </script>
