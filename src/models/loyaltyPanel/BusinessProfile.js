@@ -51,7 +51,7 @@ export default class BusinessProfile {
         API().put(
             `/companies/${localStorage.getItem(
                 "storeId"
-            )}/settings/init-user-points`,pointsRelation
+            )}/settings/online-offline-points-ratio`,pointsRelation
         );
 
 

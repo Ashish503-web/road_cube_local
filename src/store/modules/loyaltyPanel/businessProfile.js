@@ -10,7 +10,8 @@ export default {
             instructions_file: false,
             terms_file: false,
             privacy_policy_file: false,
-            initailPoint:false
+            initailPoint:false,
+            selectedPercent: false
         },
         errorMessage: {
             logo: "",
@@ -18,7 +19,8 @@ export default {
             instructions_file: "",
             terms_file:"",
             privacy_policy_file: "",
-            initailPoint:""
+            initailPoint:"",
+            selectedPercent:""
         },
         resetSuccess: {
             logo: false,
@@ -26,7 +28,8 @@ export default {
             instructions_file: false,
             terms_file: false,
             privacy_policy_file:false,
-            initailPoint: false
+            initailPoint: false,
+            selectedPercent:false
         },
         businessProfileData:'',
         selectedPercent: '',
@@ -287,6 +290,7 @@ export default {
 
             try {
                 commit("setLoading", {value: true, type});
+
                 const {data} = await BusinessProfile.putInitialPoint(item);
                 commit("setIntialPoints", data.data.init_user_points);
                 commit("setResetSuccess", {value: false, type});
@@ -317,7 +321,45 @@ export default {
         },
 
         async updateRelation({commit},{type,item}){
-            console.log('value', item);
+
+            try {
+                commit("setLoading", {value: true, type});
+                let pointRelation = {
+                    'value':item,
+                }
+
+                console.log('pointRelationValue', item)
+
+                const {data} = await BusinessProfile.updatePointRelation(pointRelation);
+
+                commit("setReturnPoint", data.data.return_points_after_coupon_exp);
+
+                commit("setResetSuccess", {value: false, type});
+                commit("setLoading", {value: false, type});
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated  Initial Online/Offline points!"
+                    },
+
+                    {root: true}
+                );
+
+
+            }catch (ex){
+                commit("setLoading", {value: false, type});
+                console.log('error',type)
+                commit("setErrorMessage", {
+                    value: ex.response.data.message,
+                    type
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", {value: "", type}),
+                    5000
+                );
+            }
 
         }
 

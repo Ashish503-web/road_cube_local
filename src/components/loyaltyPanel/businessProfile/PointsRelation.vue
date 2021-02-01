@@ -2,7 +2,9 @@
     <b-standard-card
         :title="translations.title[lang]"
         :submit-text="{ el: '', en: 'save', it: '' }"
-        @submit = "updateRelation({ type: 'selectedPercent', item:selectedPercent})"
+        :loading="loading"
+        :error-message="errorMessage"
+        @submit = "updateRelation({ type: 'online_offline_points_ratio', item:selectedPercent})"
     >
         {{ translations.info[lang] }}
 
@@ -48,6 +50,18 @@ export default {
         lang() {
             return this.$route.params.lang;
         },
+        loading() {
+            return this.$store.state.loyaltyPanel.businessProfile.loading.selectedPercent;
+        },
+
+        errorMessage() {
+            return this.$store.state.loyaltyPanel.businessProfile.errorMessage
+                .selectedPercent;
+        },
+        resetSuccess() {
+            return this.$store.state.loyaltyPanel.businessProfile.resetSuccess
+                .selectedPercent;
+        }
 
     },
      methods:{
