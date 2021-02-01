@@ -66,6 +66,7 @@ import PointsReturn from "@/components/loyaltyPanel/businessProfile/PointsReturn
 import CouponCreation from "@/components/loyaltyPanel/businessProfile/CouponCreation.vue";
 import ApiAuthentication from "@/components/loyaltyPanel/businessProfile/ApiAuthentication.vue";
 import UserPointsInApp from "@/components/loyaltyPanel/businessProfile/UserPointsInApp.vue";
+import {mapActions} from "vuex";
 
 export default {
     name: "BusinessProfile",
@@ -89,7 +90,9 @@ export default {
 
     data: () => ({}),
 
+
     mounted() {
+
         this.$clearFocus();
     }
 };

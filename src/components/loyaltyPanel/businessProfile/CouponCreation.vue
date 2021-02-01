@@ -27,10 +27,11 @@
                 />
             </v-col>
         </v-row>
-        <v-radio-group class="mt-0 pt-0" hide-details v-model="couponValue">
+        {{ coupon_creation_type_id }}
+        <v-radio-group class="mt-0 pt-0" hide-details v-model="coupon_creation_type_id" column>
             <v-row no-gutters class="font-weight-medium">
                 <v-col cols="4">
-                    <v-radio color="secondary" class="justify-center" name="coupon" value="0"  >
+                    <v-radio color="secondary" class="justify-center" value=0>
                     </v-radio>
                     <h4
                         class="subtitle-1 font-weight-bold text-center"
@@ -41,8 +42,8 @@
                     <v-radio
                         color="secondary"
                         class="justify-center"
-                        value="1"
-                       name="coupon"
+                        value=1
+
                     ></v-radio>
                     <h4
                         class="subtitle-1 font-weight-bold text-center"
@@ -54,7 +55,6 @@
                         color="secondary"
                         class="justify-center"
                         value="2"
-                        name="coupon"
                     ></v-radio>
                     <h4
                         class="subtitle-1 font-weight-bold text-center"
@@ -68,33 +68,32 @@
 
 <script>
 import translations from "@/utils/translations/loyaltyPanel/businessProfile/couponCreation";
-import { mapState,mapGetters, mapMutations, mapActions } from "vuex";
+import {mapState, mapGetters, mapMutations, mapActions} from "vuex";
 
 export default {
     name: "CouponCreation",
 
     mixins: [translations],
-    
+    data() {
+        return {
+            coupon_creation_type_id: null,
+        }
+    },
+
     computed: {
         lang() {
             return this.$route.params.lang;
         },
-        couponValue:{
-           
-            get(){
-               
-                 return this.$store.state.loyaltyPanel.businessProfile.couponValues;
-            },
-            set(val){
-                this.setCouponValue(val);
+
+    },
+    watch: {
+        ["$store.state.loyaltyPanel.businessProfile.businessProfileData"]: {
+            immediate: true,
+            handler(val) {
+                this.coupon_creation_type_id = val.coupon_creation_type_id;
             }
-        }
-    },
-     methods:{
-        ...mapActions("loyaltyPanel/businessProfile", [
-           "getBussinessProfile"
-        ]),
-    },
-    
+        },
+    }
+
 };
 </script>

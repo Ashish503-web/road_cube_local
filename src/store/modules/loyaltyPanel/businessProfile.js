@@ -279,6 +279,11 @@ export default {
 
         },
 
+        async updateInitialPoint({item}){
+           console.log('points', item)
+            // const {data} = await BusinessProfile.putInitialPoint(item);
+
+        }
 
     }
 };

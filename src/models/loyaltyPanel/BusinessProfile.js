@@ -39,5 +39,12 @@ export default class BusinessProfile {
             file
         );
 
+    static putInitialPoint = points =>
+        API().put(
+            `/companies/${localStorage.getItem(
+                "storeId"
+            )}/settings/init-user-points`,points
+        );
+
 
 }
