@@ -2,6 +2,7 @@
     <b-standard-card
         :title="translations.title[lang]"
         :submit-text="{ el: '', en: 'save', it: '' }"
+        @submit="updateInitialPoint(init_user_point)"
     >
         {{ translations.info[lang] }}
 
@@ -28,7 +29,7 @@
                     <template v-slot:label>
                         <h4
                             class="subtitle-2 secondary--text"
-                            v-text="translations.usersOnline[lang]" 
+                            v-text="translations.usersOnline[lang]"
                         ></h4>
                     </template>
                 </v-checkbox>
@@ -39,7 +40,7 @@
                     :disabled="wholeUsers"
                     type="number"
                     :label="translations.onlinePoints[lang]"
-                    v-model="initialpoints.first_online_user_points"
+                    v-model="init_user_point.first_online_user_points"
                 ></b-text-field>
             </v-col>
             <v-col cols="6" class="pl-2">
@@ -48,7 +49,7 @@
                     :disabled="wholeUsers"
                     type="number"
                     :label="translations.usersOnlineTotal[lang]"
-                    v-model="initialpoints.first_online_users_count"
+                    v-model="init_user_point.first_online_users_count"
                 ></b-text-field>
             </v-col>
 
@@ -74,7 +75,7 @@
                     :disabled="wholeUsers"
                     type="number"
                     :label="translations.offlinePoints[lang]"
-                    v-model="initialpoints.first_offline_user_points"
+                    v-model="init_user_point.first_offline_user_points"
                 ></b-text-field>
             </v-col>
             <v-col cols="6" class="pl-2">
@@ -83,7 +84,7 @@
                     :disabled="wholeUsers"
                     type="number"
                     :label="translations.usersOfflineTotal[lang]"
-                    v-model="initialpoints.first_offline_users_count"
+                    v-model="init_user_point.first_offline_users_count"
                 ></b-text-field>
             </v-col>
 
@@ -126,7 +127,7 @@ export default {
         unlimitedOnline: false,
         unlimitedOffline: false,
         wholeUsers: false,
-        
+        init_user_point: []
     }),
 
     computed: {
@@ -134,20 +135,33 @@ export default {
             return this.$route.params.lang;
         },  
 
-        initialpoints : {
-            get(){
-                    return this.$store.state.loyaltyPanel.businessProfile.initailPoint;
-            },
-            set(val){
-                this.setIntialPoints(val);
-            }
-        }
+        // initialpoints : {
+        //     get(){
+        //             return this.$store.state.loyaltyPanel.businessProfile.initailPoint;
+        //     },
+        //     set(val){
+        //         this.setIntialPoints(val);
+        //     }
+        // }
+
     },
     methods:{
         ...mapActions("loyaltyPanel/businessProfile", [
-           "getBussinessProfile"
-        ]),  
+           "getBussinessProfile",
+            "updateInitialPoint"
+        ]),
+
+        getInitialPoints(){
+            let points_data = this.$store.state.loyaltyPanel.businessProfile.initailPoint;
+            this.init_user_point = points_data
+
+        }
     },
+
+    mounted: function(){
+       this.getInitialPoints();
+    },
+
     
 };
 </script>

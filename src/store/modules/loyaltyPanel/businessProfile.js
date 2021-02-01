@@ -6,16 +6,26 @@ export default {
     state: () => ({
         loading: {
             logo: false,
-            mapLogo: false
+            mapLogo: false,
+            instructions_file: false,
+            terms_file: false,
+            privacy_policy_file: false
         },
         errorMessage: {
             logo: "",
-            mapLogo: ""
+            mapLogo: "",
+            instructions_file: "",
+            terms_file:"",
+            privacy_policy_file: ""
         },
         resetSuccess: {
             logo: false,
-            mapLogo: false
+            mapLogo: false,
+            instructions_file: false,
+            terms_file: false,
+            privacy_policy_file:false
         },
+        businessProfileData:'',
         selectedPercent: '',
         initailPoint: '',
         returnPoint: '',
@@ -25,9 +35,13 @@ export default {
         couponValues: '0',
         userPointValue:'',
         emailSmsSetting: '',
+
     }),
 
     mutations: {
+        setBusinessData ( state , data) {
+          state.businessProfileData = data;
+        },
         setLoading(state, {value, type}) {
             state.loading[type] = value;
         },
@@ -136,6 +150,8 @@ export default {
         async getBussinessProfile({commit}) {
             const {data} = await BusinessProfile.getProfileData();
 
+            commit("setBusinessData", data.data);
+
             commit("setBussinessProfile", data.data.online_offline_points_ratio);
 
             commit("setIntialPoints", data.data.init_user_points);
@@ -152,6 +168,122 @@ export default {
             commit("setUserPoints", data.data.app_points_visibility);
             commit("setEmailSmsSettings", data.data.email_sms_settings.secondary_email_settings);
 
+        },
+
+        async uploadInstructionFile({commit},{type,item}){
+           try{
+               commit("setLoading", {value: true, type});
+               const fd = new FormData();
+               fd.append("instructions_file", item);
+               const {data} = await BusinessProfile.getUserManual(fd);
+               console.log('file',data);
+
+               commit("setResetSuccess", {value: false, type});
+               commit("setLoading", {value: false, type});
+               commit(
+                   "setNotification",
+                   {
+                       show: true,
+                       type: "success",
+                       text: "You have successfully updated instruction file!"
+                   },
+
+                   {root: true}
+               );
+
+           }catch (ex) {
+               commit("setLoading", {value: false, type});
+               commit("setErrorMessage", {
+                   value: ex.response.data.message,
+                   type
+               });
+               setTimeout(
+                   () => commit("setErrorMessage", {value: "", type}),
+                   5000
+               );
+           }
+
+        },
+
+        async uploadTermsFile({commit},{type,item}){
+            try{
+                commit("setLoading", {value: true, type});
+                const fd = new FormData();
+                fd.append("terms_file", item);
+                const {data} = await BusinessProfile.getTermFile(fd);
+                console.log('file',data);
+
+                commit("setResetSuccess", {value: false, type});
+                commit("setLoading", {value: false, type});
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated term of use file!"
+                    },
+
+                    {root: true}
+                );
+
+            }catch (ex) {
+                commit("setLoading", {value: false, type});
+                console.log('error',type)
+                commit("setErrorMessage", {
+                    value: ex.response.data.message,
+                    type
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", {value: "", type}),
+                    5000
+                );
+            }
+
+        },
+
+        //
+
+        async uploadPrivacyFile({commit},{type,item}){
+            try{
+                commit("setLoading", {value: true, type});
+                const fd = new FormData();
+                fd.append("privacy_policy_file", item);
+                const {data} = await BusinessProfile.getPrivacyFile(fd);
+                console.log('file',data);
+
+                commit("setResetSuccess", {value: false, type});
+                commit("setLoading", {value: false, type});
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated privacy policy file!"
+                    },
+
+                    {root: true}
+                );
+
+            }catch (ex) {
+                commit("setLoading", {value: false, type});
+                console.log('error',type)
+                commit("setErrorMessage", {
+                    value: ex.response.data.message,
+                    type
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", {value: "", type}),
+                    5000
+                );
+            }
+
+        },
+
+        async updateInitialPoint({item}){
+           console.log('points', item)
+            // const {data} = await BusinessProfile.putInitialPoint(item);
+
         }
+
     }
 };
