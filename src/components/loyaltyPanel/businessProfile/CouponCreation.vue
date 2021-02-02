@@ -89,13 +89,8 @@ export default {
     methods:{
         getCouponValue(){
             let couponValue = this.$store.state.loyaltyPanel.businessProfile.couponValues;
-            if(couponValue == 1){
-                this.coupon_value = '1'
-            }else if(couponValue == 2){
-                this.coupon_value = '2'
-            }else{
-                this.coupon_value = '3'
-            }
+            this.coupon_value = couponValue.toString();
+
 
         },
     },

@@ -55,4 +55,10 @@ export default class BusinessProfile {
         );
 
 
+    static updateUserPointVisibility = userPoint =>
+        API().put(
+            `/companies/${localStorage.getItem(
+                "storeId"
+            )}/settings/app-points-visibility`,userPoint
+        );
 }

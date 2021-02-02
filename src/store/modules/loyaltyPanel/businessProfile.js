@@ -10,28 +10,31 @@ export default {
             instructions_file: false,
             terms_file: false,
             privacy_policy_file: false,
-            initailPoint:false,
-            selectedPercent: false
+            initailPoint: false,
+            selectedPercent: false,
+            app_points_visibility:false
         },
         errorMessage: {
             logo: "",
             mapLogo: "",
             instructions_file: "",
-            terms_file:"",
+            terms_file: "",
             privacy_policy_file: "",
-            initailPoint:"",
-            selectedPercent:""
+            initailPoint: "",
+            selectedPercent: "",
+            app_points_visibility: ""
         },
         resetSuccess: {
             logo: false,
             mapLogo: false,
             instructions_file: false,
             terms_file: false,
-            privacy_policy_file:false,
+            privacy_policy_file: false,
             initailPoint: false,
-            selectedPercent:false
+            selectedPercent: false,
+            app_points_visibility:false
         },
-        businessProfileData:'',
+        businessProfileData: '',
         selectedPercent: '',
         initailPoint: '',
         returnPoint: '',
@@ -39,14 +42,14 @@ export default {
         compaignCrendential: null,
         authentication: '',
         couponValues: '',
-        userPointValue:'',
+        userPointValue: '',
         emailSmsSetting: '',
 
     }),
 
     mutations: {
-        setBusinessData ( state , data) {
-          state.businessProfileData = data;
+        setBusinessData(state, data) {
+            state.businessProfileData = data;
         },
         setLoading(state, {value, type}) {
             state.loading[type] = value;
@@ -74,9 +77,9 @@ export default {
 
         setCouponValues: (state, payload) => (state.couponValues = payload),
 
-        setUserPoints : (state , payload ) => (state.userPointValue = payload),
+        setUserPoints: (state, payload) => (state.userPointValue = payload),
 
-        setEmailSmsSettings: (state , payload) => (state.emailSmsSetting = payload),
+        setEmailSmsSettings: (state, payload) => (state.emailSmsSetting = payload),
 
     },
 
@@ -177,48 +180,48 @@ export default {
 
         },
 
-        async uploadInstructionFile({commit},{type,item}){
-           try{
-               commit("setLoading", {value: true, type});
-               const fd = new FormData();
-               fd.append("instructions_file", item);
-               const {data} = await BusinessProfile.getUserManual(fd);
-               console.log('file',data);
+        async uploadInstructionFile({commit}, {type, item}) {
+            try {
+                commit("setLoading", {value: true, type});
+                const fd = new FormData();
+                fd.append("instructions_file", item);
+                const {data} = await BusinessProfile.getUserManual(fd);
+                console.log('file', data);
 
-               commit("setResetSuccess", {value: false, type});
-               commit("setLoading", {value: false, type});
-               commit(
-                   "setNotification",
-                   {
-                       show: true,
-                       type: "success",
-                       text: "You have successfully updated instruction file!"
-                   },
+                commit("setResetSuccess", {value: false, type});
+                commit("setLoading", {value: false, type});
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated instruction file!"
+                    },
 
-                   {root: true}
-               );
+                    {root: true}
+                );
 
-           }catch (ex) {
-               commit("setLoading", {value: false, type});
-               commit("setErrorMessage", {
-                   value: ex.response.data.message,
-                   type
-               });
-               setTimeout(
-                   () => commit("setErrorMessage", {value: "", type}),
-                   5000
-               );
-           }
+            } catch (ex) {
+                commit("setLoading", {value: false, type});
+                commit("setErrorMessage", {
+                    value: ex.response.data.message,
+                    type
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", {value: "", type}),
+                    5000
+                );
+            }
 
         },
 
-        async uploadTermsFile({commit},{type,item}){
-            try{
+        async uploadTermsFile({commit}, {type, item}) {
+            try {
                 commit("setLoading", {value: true, type});
                 const fd = new FormData();
                 fd.append("terms_file", item);
                 const {data} = await BusinessProfile.getTermFile(fd);
-                console.log('file',data);
+                console.log('file', data);
 
                 commit("setResetSuccess", {value: false, type});
                 commit("setLoading", {value: false, type});
@@ -233,9 +236,9 @@ export default {
                     {root: true}
                 );
 
-            }catch (ex) {
+            } catch (ex) {
                 commit("setLoading", {value: false, type});
-                console.log('error',type)
+                console.log('error', type)
                 commit("setErrorMessage", {
                     value: ex.response.data.message,
                     type
@@ -250,13 +253,13 @@ export default {
 
         //
 
-        async uploadPrivacyFile({commit},{type,item}){
-            try{
+        async uploadPrivacyFile({commit}, {type, item}) {
+            try {
                 commit("setLoading", {value: true, type});
                 const fd = new FormData();
                 fd.append("privacy_policy_file", item);
                 const {data} = await BusinessProfile.getPrivacyFile(fd);
-                console.log('file',data);
+                console.log('file', data);
 
                 commit("setResetSuccess", {value: false, type});
                 commit("setLoading", {value: false, type});
@@ -271,9 +274,9 @@ export default {
                     {root: true}
                 );
 
-            }catch (ex) {
+            } catch (ex) {
                 commit("setLoading", {value: false, type});
-                console.log('error',type)
+                console.log('error', type)
                 commit("setErrorMessage", {
                     value: ex.response.data.message,
                     type
@@ -286,7 +289,7 @@ export default {
 
         },
 
-        async updateInitialPoint({commit},{type,item}){
+        async updateInitialPoint({commit}, {type, item}) {
 
             try {
                 commit("setLoading", {value: true, type});
@@ -305,9 +308,9 @@ export default {
 
                     {root: true}
                 );
-            }catch( ex ){
+            } catch (ex) {
                 commit("setLoading", {value: false, type});
-                console.log('error',type)
+                console.log('error', type)
                 commit("setErrorMessage", {
                     value: ex.response.data.message,
                     type
@@ -320,15 +323,15 @@ export default {
 
         },
 
-        async updateRelation({commit},{type,item}){
+        async updateRelation({commit}, {type, item}) {
 
             try {
-                commit("setLoading", {value: true, type});
-                let pointRelation = {
-                    'value':item,
-                }
 
-                console.log('pointRelationValue', item)
+                commit("setLoading", {value: true, type});
+
+                let pointRelation = {
+                    'value': item,
+                }
 
                 const {data} = await BusinessProfile.updatePointRelation(pointRelation);
 
@@ -341,16 +344,15 @@ export default {
                     {
                         show: true,
                         type: "success",
-                        text: "You have successfully updated  Initial Online/Offline points!"
+                        text: "You have successfully updated  Offline-Online Points Relation!"
                     },
 
                     {root: true}
                 );
 
 
-            }catch (ex){
+            } catch (ex) {
                 commit("setLoading", {value: false, type});
-                console.log('error',type)
                 commit("setErrorMessage", {
                     value: ex.response.data.message,
                     type
@@ -361,6 +363,45 @@ export default {
                 );
             }
 
+        },
+
+        async updateUserPoints({commit}, {type, item}) {
+            try{
+
+                commit("setLoading", {value: true, type});
+                let userPoint = {
+                    'value': JSON.parse(item),
+                }
+                console.log('user_points', userPoint)
+
+                const {data} = await BusinessProfile.updateUserPointVisibility(userPoint);
+                commit("setUserPoints", data.data.app_points_visibility);
+
+                commit("setResetSuccess", {value: false, type});
+                commit("setLoading", {value: false, type});
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated  User Points!"
+                    },
+
+                    {root: true}
+                );
+
+            }catch (ex){
+
+                commit("setLoading", {value: false, type});
+                commit("setErrorMessage", {
+                    value: ex.response.data.message,
+                    type
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", {value: "", type}),
+                    5000
+                );
+            }
         }
 
     }

@@ -66,12 +66,7 @@ export default {
 
         selectedPointReturn(){
             let returnPointData = this.$store.state.loyaltyPanel.businessProfile.returnPoint;
-            // this.returnPoint = returnPointData
-            if(returnPointData == true){
-                this.returnPoint = 'true'
-            }else{
-                this.returnPoint = 'false'
-            }
+            this.returnPoint = returnPointData.toString();
 
         },
     },

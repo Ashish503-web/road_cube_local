@@ -4,7 +4,7 @@
         :submit-text="{ el: '', en: 'save', it: '' }"
         :loading="loading"
         :error-message="errorMessage"
-        @submit = "updateRelation({ type: 'online_offline_points_ratio', item:selectedPercent})"
+        @submit = "updateRelation({ type: 'selectedPercent', item:selectedPercent})"
     >
         {{ translations.info[lang] }}
 
