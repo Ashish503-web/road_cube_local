@@ -38,6 +38,11 @@ export default {
                 en: "Message Sender Name",
                 it: ""
             },
+            messageSenderEmail: {
+                el: "",
+                en: "Message Sender Email",
+                it: ""
+            },
             emailFirstMethod: {
                 el: "",
                 en: "Email (First method)",

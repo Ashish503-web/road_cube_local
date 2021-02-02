@@ -12,7 +12,11 @@ export default {
             privacy_policy_file: false,
             initailPoint: false,
             selectedPercent: false,
-            app_points_visibility:false
+            app_points_visibility: false,
+            coupon_creation_type_id: false,
+            return_points_after_coupon_exp: false,
+            push_notification: false,
+            campaign_credential: false
         },
         errorMessage: {
             logo: "",
@@ -22,7 +26,11 @@ export default {
             privacy_policy_file: "",
             initailPoint: "",
             selectedPercent: "",
-            app_points_visibility: ""
+            app_points_visibility: "",
+            coupon_creation_type_id: "",
+            return_points_after_coupon_exp: "",
+            push_notification: "",
+            campaign_credential:""
         },
         resetSuccess: {
             logo: false,
@@ -32,7 +40,11 @@ export default {
             privacy_policy_file: false,
             initailPoint: false,
             selectedPercent: false,
-            app_points_visibility:false
+            app_points_visibility: false,
+            coupon_creation_type_id: false,
+            return_points_after_coupon_exp: false,
+            push_notification: false,
+            campaign_credential:false
         },
         businessProfileData: '',
         selectedPercent: '',
@@ -44,6 +56,8 @@ export default {
         couponValues: '',
         userPointValue: '',
         emailSmsSetting: '',
+        email_sender_alias_name:''
+
 
     }),
 
@@ -80,6 +94,8 @@ export default {
         setUserPoints: (state, payload) => (state.userPointValue = payload),
 
         setEmailSmsSettings: (state, payload) => (state.emailSmsSetting = payload),
+
+        setEmailSenderName : (state , payload ) => ( state.email_sender_alias_name = payload)
 
     },
 
@@ -170,13 +186,15 @@ export default {
 
             commit("setPushNotification", data.data.push_notifications);
 
+            commit("setEmailSenderName", data.data.email_sms_settings.email_sender_alias_name);
+            commit("setEmailSmsSettings", data.data.email_sms_settings.secondary_email_settings);
             commit("setCompaignCrendential", data.data.campaign_email_notifications);
             commit("setApiAuthentication", data.data.api_authentication);
 
             commit("setCouponValues", data.data.coupon_creation_type_id);
 
             commit("setUserPoints", data.data.app_points_visibility);
-            commit("setEmailSmsSettings", data.data.email_sms_settings.secondary_email_settings);
+
 
         },
 
@@ -366,7 +384,7 @@ export default {
         },
 
         async updateUserPoints({commit}, {type, item}) {
-            try{
+            try {
 
                 commit("setLoading", {value: true, type});
                 let userPoint = {
@@ -390,8 +408,166 @@ export default {
                     {root: true}
                 );
 
-            }catch (ex){
+            } catch (ex) {
 
+                commit("setLoading", {value: false, type});
+                commit("setErrorMessage", {
+                    value: ex.response.data.message,
+                    type
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", {value: "", type}),
+                    5000
+                );
+            }
+        },
+
+        async updateCouponCreation({commit}, {type, item}) {
+            try {
+
+                commit("setLoading", {value: true, type});
+                let couponCretion = {
+                    'value': JSON.parse(item),
+                }
+                console.log('user_points', couponCretion)
+
+                const {data} = await BusinessProfile.updateCoupon(couponCretion);
+                commit("setCouponValues", data.data.coupon_creation_type_id);
+
+                commit("setResetSuccess", {value: false, type});
+                commit("setLoading", {value: false, type});
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated  Coupon Creation!"
+                    },
+
+                    {root: true}
+                );
+
+
+            } catch (ex) {
+                commit("setLoading", {value: false, type});
+                commit("setErrorMessage", {
+                    value: ex.response.data.message,
+                    type
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", {value: "", type}),
+                    5000
+                );
+            }
+        },
+
+        async updatePointReturn({commit}, {type, item}) {
+            try {
+
+                commit("setLoading", {value: true, type});
+                let pointReturn = {
+                    'value': JSON.parse(item),
+                }
+                console.log('user_points', pointReturn)
+
+                const {data} = await BusinessProfile.updatePointReturn(pointReturn);
+
+                commit("setReturnPoint", data.data.return_points_after_coupon_exp);
+                commit("setResetSuccess", {value: false, type});
+                commit("setLoading", {value: false, type});
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated  Points Return!"
+                    },
+
+                    {root: true}
+                )
+            } catch (ex) {
+
+                commit("setLoading", {value: false, type});
+                commit("setErrorMessage", {
+                    value: ex.response.data.message,
+                    type
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", {value: "", type}),
+                    5000
+                );
+            }
+        },
+
+        async updatePushNotification({commit}, {type, item}) {
+            try {
+
+                commit("setLoading", {value: true, type});
+
+                const {data} = await BusinessProfile.updatePushNotification(item);
+
+                commit("setPushNotification", data.data.push_notifications);
+
+                commit("setResetSuccess", {value: false, type});
+
+                commit("setLoading", {value: false, type});
+
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated  Push Notifications!"
+                    },
+
+                    {root: true}
+                )
+
+            } catch (ex) {
+
+                commit("setLoading", {value: false, type});
+                commit("setErrorMessage", {
+                    value: ex.response.data.message,
+                    type
+                });
+                setTimeout(
+                    () => commit("setErrorMessage", {value: "", type}),
+                    5000
+                );
+            }
+        },
+
+        async updateCampaignData({commit}, { type, item}){
+            try {
+
+                commit("setLoading", {value: true, type});
+
+                console.log('campaignData',item )
+
+                const {data} = await BusinessProfile.updateCredential(item.campaign_email_notifications);
+                const {emailSmsSetting} = await BusinessProfile.emailSmsSetting(item.email_sms_settings);
+
+                commit("setEmailSenderName", emailSmsSetting.data.email_sms_settings.email_sender_alias_name);
+                commit("setEmailSmsSettings", emailSmsSetting.data.email_sms_settings.secondary_email_settings);
+                commit("setCompaignCrendential", data.data.campaign_email_notifications);
+
+
+                commit("setResetSuccess", {value: false, type});
+
+                commit("setLoading", {value: false, type});
+
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully updated  Push Notifications!"
+                    },
+
+                    {root: true}
+                )
+
+            } catch (ex) {
                 commit("setLoading", {value: false, type});
                 commit("setErrorMessage", {
                     value: ex.response.data.message,

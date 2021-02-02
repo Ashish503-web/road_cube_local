@@ -61,4 +61,42 @@ export default class BusinessProfile {
                 "storeId"
             )}/settings/app-points-visibility`,userPoint
         );
-}
+
+    static  updateCoupon =  couponCreation =>
+        API().put(
+            `/companies/${localStorage.getItem(
+                "storeId"
+            )}/settings/coupon-creation-type-id`,couponCreation
+        );
+
+    static updatePointReturn = returnPoint =>
+        API().put(
+            `/companies/${localStorage.getItem(
+                "storeId"
+            )}/settings/return-points-after-coupon-exp`,returnPoint
+        );
+
+    static  updatePushNotification = pushNotification =>
+        API().put(
+            `/companies/${localStorage.getItem(
+                "storeId"
+            )}/settings/push_notifications`,pushNotification
+        );
+
+    static  updateCredential = campaignEmailMethod =>
+        API().put(
+            `/companies/${localStorage.getItem(
+                "storeId"
+            )}/settings/campaign_email_notifications`,campaignEmailMethod
+        );
+
+    static  emailSmsSetting = campaignCredential =>
+        API().put(
+            `/companies/${localStorage.getItem(
+                "storeId"
+            )}/settings/email-sms-settings`,campaignCredential
+        );
+
+
+
+ }

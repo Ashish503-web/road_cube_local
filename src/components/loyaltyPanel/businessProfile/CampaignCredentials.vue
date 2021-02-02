@@ -2,6 +2,10 @@
     <b-standard-card
         :title="translations.title[lang]"
         :submit-text="{ el: '', en: 'save', it: '' }"
+        :loading="loading"
+        :error-message="errorMessage"
+        @submit="updateCampaignData({type: 'push_notification',
+         item: campaign_credentials,})"
     >
         <h4
             class="subtitle-1 font-weight-bold text--primary"
@@ -9,15 +13,15 @@
         ></h4>
 
         {{ translations.notificationsInfo[lang] }}
+      
 
-
-
-        <v-row v-for="(item, index) in compaignCredentials" :key="index" no-gutters align="baseline">
+        <v-row v-for="(item, index) in campaign_credentials.campaign_email_notifications" :key="index" no-gutters
+               align="baseline">
             <v-col
                 cols="auto"
                 class="subtitle-1 font-weight-bold secondary--text"
             >
-                {{index}}
+                {{ index }}
             </v-col>
             <v-col cols="7" class="pl-3">
                 <b-text-field :value="item"></b-text-field>
@@ -33,6 +37,11 @@
 
         <b-text-field
             :label="translations.messageSenderName[lang]"
+            v-model="campaign_credentials.email_sms_settings.email_sender_alias_name"
+        ></b-text-field>
+        <b-text-field
+            :label="translations.messageSenderEmail[lang]"
+            v-model="campaign_credentials.email_sms_settings.email_sender_alias_email"
         ></b-text-field>
 
         <v-divider class="my-7"></v-divider>
@@ -79,22 +88,23 @@
         </v-alert>
 
         {{ translations.emailSecondMethodInfo[lang] }}
-        
+
         <b-text-field
             :label="translations.host[lang]"
             class="mt-7"
-            v-model="emailSmsSettings.smtp_host"
+            v-model="campaign_credentials.email_sms_settings.secondary_email_settings.smtp_host"
         ></b-text-field>
-        <b-text-field :label="translations.name[lang]" v-model="emailSmsSettings.email_sender_alias_name"></b-text-field>
+        <b-text-field :label="translations.name[lang]"
+                      v-model="campaign_credentials.email_sms_settings.secondary_email_settings.email_sender_alias_name"></b-text-field>
         <b-text-field
             :label="translations.email[lang]"
             type="email"
-            v-model="emailSmsSettings.email"
+            v-model="campaign_credentials.email_sms_settings.secondary_email_settings.email"
         ></b-text-field>
         <b-text-field
             :label="translations.password[lang]"
             type="password"
-            v-model="emailSmsSettings.password"
+            v-model="campaign_credentials.email_sms_settings.secondary_email_settings.password"
         ></b-text-field>
 
         <v-alert
@@ -110,16 +120,34 @@
 
 <script>
 import translations from "@/utils/translations/loyaltyPanel/businessProfile/campaignCredentials";
-import { mapState,mapGetters, mapMutations, mapActions } from "vuex";
+import {mapState, mapGetters, mapMutations, mapActions} from "vuex";
 
 export default {
     name: "CampaignCredentials",
 
     mixins: [translations],
-    data () {
+    data() {
         return {
-            email_first_method:'null',
-            email_second_method:'null',
+            email_first_method: 'null',
+            email_second_method: 'null',
+            campaign_credentials: {
+                campaign_email_notifications: {
+                    email1: null,
+                    email2: null,
+                    email3: null
+                },
+                email_sms_settings: {
+                    email_sender_alias_name: null,
+                    email_sender_alias_email:null,
+                    secondary_email_settings: {
+                        email: null,
+                        password: null,
+                        smtp_host: null,
+                        email_sender_alias_name: null,
+                    }
+                }
+
+            }
         }
     },
 
@@ -127,29 +155,51 @@ export default {
         lang() {
             return this.$route.params.lang;
         },
-
-        compaignCredentials :{
-            get(){
-                return this.$store.state.loyaltyPanel.businessProfile.compaignCrendential;
-            },
-            set(val){
-                this.setCompaignCrendential(val);
-            }
+        loading() {
+            return this.$store.state.loyaltyPanel.businessProfile.loading.push_notification;
         },
-        emailSmsSettings :{
-            get(){
-                return this.$store.state.loyaltyPanel.businessProfile.emailSmsSetting;
-            },
-            set(val){
-                this.setEmailSmsSettings(val);
-            }
+
+        errorMessage() {
+            return this.$store.state.loyaltyPanel.businessProfile.errorMessage
+                .push_notification;
+        },
+        resetSuccess() {
+            return this.$store.state.loyaltyPanel.businessProfile.resetSuccess
+                .push_notification;
+        },
+
+
+    },
+    methods: {
+        ...mapActions("loyaltyPanel/businessProfile", [
+            "getBussinessProfile",
+            "updateCampaignData"
+        ]),
+
+        getCampaignCredentials() {
+            let campaign_data = this.$store.state.loyaltyPanel.businessProfile;
+            this.campaign_credentials.campaign_email_notifications = campaign_data.compaignCrendential;
+            this.campaign_credentials.email_sms_settings.email_sender_alias_name = campaign_data.email_sender_alias_name;
+            this.campaign_credentials.email_sms_settings.secondary_email_settings = campaign_data.emailSmsSetting;
+            this.campaign_credentials.email_sms_settings.email_sender_alias_email = campaign_data.emailSmsSetting.email_sender_alias_email;
+
+
         }
     },
-     methods:{
-        ...mapActions("loyaltyPanel/businessProfile", [
-           "getBussinessProfile"
-        ]),  
-    },
+
+    // watch:{
+    //     ["$store.state.loyaltyPanel.businessProfile.businessProfileData"]: {
+    //         immediate: true,
+    //         handler(val) {
+    //             this.campaign_credentials.campaign_email_notifications = val.campaign_email_notifications;
+    //             this.campaign_credentials.email_sms_settings.email_sender_alias_name = val.email_sms_settings.email_sender_alias_name;
+    //             this.campaign_credentials.email_sms_settings.secondary_email_settings = val.email_sms_settings.secondary_email_settings;
+    //         }
+    //     },
+    // },
+    mounted() {
+        this.getCampaignCredentials();
+    }
 
 };
 </script>

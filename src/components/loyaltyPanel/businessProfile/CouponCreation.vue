@@ -4,7 +4,11 @@
         :submit-text="{ el: '', en: 'save', it: '' }"
         height="auto"
         class="mt-5"
+        :loading="loading"
+        :error-message="errorMessage"
+        @submit="updateCouponCreation({ type: 'coupon_creation_type_id', item:coupon_value})"
     >
+
         <v-row no-gutters>
             <v-col>
                 <img
@@ -81,12 +85,30 @@ export default {
     },
 
     computed: {
+
         lang() {
             return this.$route.params.lang;
+        },
+        loading() {
+            return this.$store.state.loyaltyPanel.businessProfile.loading.coupon_creation_type_id;
+        },
+
+        errorMessage() {
+            return this.$store.state.loyaltyPanel.businessProfile.errorMessage
+                .coupon_creation_type_id;
+        },
+        resetSuccess() {
+            return this.$store.state.loyaltyPanel.businessProfile.resetSuccess
+                .coupon_creation_type_id;
         },
 
     },
     methods:{
+        ...mapMutations("loyaltyPanel/businessProfile", ["setUserPoints"]),
+        ...mapActions("loyaltyPanel/businessProfile", [
+            "getBussinessProfile",
+            "updateCouponCreation"
+        ]),
         getCouponValue(){
             let couponValue = this.$store.state.loyaltyPanel.businessProfile.couponValues;
             this.coupon_value = couponValue.toString();

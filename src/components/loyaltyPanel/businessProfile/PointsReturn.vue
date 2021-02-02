@@ -3,6 +3,10 @@
         :title="translations.title[lang]"
         :submit-text="{ el: '', en: 'save', it: '' }"
         height="auto"
+        :loading="loading"
+        :error-message="errorMessage"
+        @submit="updatePointReturn({type: 'return_points_after_coupon_exp',
+         item: returnPoint,})"
     >
 
         <h4 class="secondary--text" v-text="translations.info[lang]"></h4>
@@ -48,20 +52,25 @@ export default {
             return this.$route.params.lang;
         },
 
-        // returnPoint: {
-        //     get(){
-        //          return this.$store.state.loyaltyPanel.businessProfile.initailPoint;
-        //     },
-        //     set(val){
-        //         this.setReturnPoint(val);
-        //     }
-        //
-        // }
+        loading() {
+            return this.$store.state.loyaltyPanel.businessProfile.loading.return_points_after_coupon_exp;
+        },
+
+        errorMessage() {
+            return this.$store.state.loyaltyPanel.businessProfile.errorMessage
+                .return_points_after_coupon_exp;
+        },
+        resetSuccess() {
+            return this.$store.state.loyaltyPanel.businessProfile.resetSuccess
+                .return_points_after_coupon_exp;
+        }
+
         
     },
     methods:{
         ...mapActions("loyaltyPanel/businessProfile", [
-           "getBussinessProfile"
+           "getBussinessProfile",
+            "updatePointReturn"
         ]),
 
         selectedPointReturn(){
