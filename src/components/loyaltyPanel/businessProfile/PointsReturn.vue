@@ -79,6 +79,14 @@ export default {
 
         },
     },
+    watch:{
+        ["$store.state.loyaltyPanel.businessProfile.businessProfileData"]: {
+
+            handler(val) {
+                this.returnPoint = val.return_points_after_coupon_exp.toString()
+            }
+        },
+    },
     mounted (){
         this.selectedPointReturn();
     }

@@ -83,6 +83,14 @@ export default {
          }
 
     },
+    watch:{
+        ["$store.state.loyaltyPanel.businessProfile.businessProfileData"]: {
+
+            handler(val) {
+                this.selectedPercent = val.online_offline_points_ratio
+            }
+        },
+    },
     mounted(){
         this.selectedPoint();
         this.allPointRelation();

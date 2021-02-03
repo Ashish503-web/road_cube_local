@@ -103,6 +103,14 @@ export default {
         },
 
     },
+    watch:{
+        ["$store.state.loyaltyPanel.businessProfile.businessProfileData"]: {
+
+            handler(val) {
+                this.coupon_value = val.coupon_creation_type_id.toString();
+            }
+        },
+    },
     methods:{
         ...mapMutations("loyaltyPanel/businessProfile", ["setUserPoints"]),
         ...mapActions("loyaltyPanel/businessProfile", [

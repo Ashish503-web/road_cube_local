@@ -74,6 +74,14 @@ export default {
          }
 
     },
+    watch:{
+        ["$store.state.loyaltyPanel.businessProfile.businessProfileData"]: {
+
+            handler(val) {
+                this.push_notification = val.push_notifications
+            }
+        },
+    },
     mounted() {
         this.getPushNotification();
     }

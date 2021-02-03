@@ -85,11 +85,17 @@ export default {
             "updateUserPoints"
         ]),
     },
+    watch:{
+        ["$store.state.loyaltyPanel.businessProfile.businessProfileData"]: {
+
+            handler(val) {
+                this.userPointsData = val.app_points_visibility.toString()
+            }
+        },
+    },
     mounted() {
         let userPointsdataValue = this.$store.state.loyaltyPanel.businessProfile.userPointValue;
         this.userPointsData = userPointsdataValue.toString();
-
-
         this.getBussinessProfile();
     }
 };

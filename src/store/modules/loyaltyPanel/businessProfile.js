@@ -56,7 +56,8 @@ export default {
         couponValues: '',
         userPointValue: '',
         emailSmsSetting: '',
-        email_sender_alias_name:''
+        email_sender_alias_name:'',
+        email_sender_alias_email:''
 
 
     }),
@@ -75,6 +76,10 @@ export default {
 
         setResetSuccess(state, {value, type}) {
             state.resetSuccess[type] = value;
+        },
+
+        setMessageSenderEmail (state, payload){
+          state.email_sender_alias_email =  payload ;
         },
 
         setBussinessProfile: (state, payload) => (state.selectedPercent = payload),
@@ -182,11 +187,13 @@ export default {
 
             commit("setIntialPoints", data.data.init_user_points);
 
+
             commit("setReturnPoint", data.data.return_points_after_coupon_exp);
 
             commit("setPushNotification", data.data.push_notifications);
 
             commit("setEmailSenderName", data.data.email_sms_settings.email_sender_alias_name);
+            commit("setMessageSenderEmail", data.data.email_sms_settings.email_sender_alias_email)
             commit("setEmailSmsSettings", data.data.email_sms_settings.secondary_email_settings);
             commit("setCompaignCrendential", data.data.campaign_email_notifications);
             commit("setApiAuthentication", data.data.api_authentication);
@@ -542,15 +549,20 @@ export default {
 
                 commit("setLoading", {value: true, type});
 
-                console.log('campaignData',item )
+
 
                 const {data} = await BusinessProfile.updateCredential(item.campaign_email_notifications);
-                const {emailSmsSetting} = await BusinessProfile.emailSmsSetting(item.email_sms_settings);
-
-                commit("setEmailSenderName", emailSmsSetting.data.email_sms_settings.email_sender_alias_name);
-                commit("setEmailSmsSettings", emailSmsSetting.data.email_sms_settings.secondary_email_settings);
                 commit("setCompaignCrendential", data.data.campaign_email_notifications);
 
+
+                let  email_data = await BusinessProfile.emailSmsSetting(item.email_sms_settings);
+                console.log('email_data',email_data.data.data)
+
+
+                commit("setEmailSenderName", email_data.data.data.email_sms_settings.email_sender_alias_name);
+                commit("setEmailSmsSettings", email_data.data.data.email_sms_settings.secondary_email_settings);
+
+                commit("setMessageSenderEmail", email_data.data.data.email_sms_settings.email_sender_alias_email)
 
                 commit("setResetSuccess", {value: false, type});
 
@@ -561,16 +573,18 @@ export default {
                     {
                         show: true,
                         type: "success",
-                        text: "You have successfully updated  Push Notifications!"
+                        text: "You have successfully updated Campaign Credentials!"
                     },
 
                     {root: true}
                 )
 
             } catch (ex) {
+
+                console.log('error', ex)
                 commit("setLoading", {value: false, type});
                 commit("setErrorMessage", {
-                    value: ex.response.data.message,
+                    value: ex.message,
                     type
                 });
                 setTimeout(

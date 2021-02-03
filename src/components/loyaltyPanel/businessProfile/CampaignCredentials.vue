@@ -7,13 +7,14 @@
         @submit="updateCampaignData({type: 'push_notification',
          item: campaign_credentials,})"
     >
+
         <h4
             class="subtitle-1 font-weight-bold text--primary"
             v-text="translations.notifications[lang]"
         ></h4>
 
         {{ translations.notificationsInfo[lang] }}
-      
+
 
         <v-row v-for="(item, index) in campaign_credentials.campaign_email_notifications" :key="index" no-gutters
                align="baseline">
@@ -39,8 +40,10 @@
             :label="translations.messageSenderName[lang]"
             v-model="campaign_credentials.email_sms_settings.email_sender_alias_name"
         ></b-text-field>
+
         <b-text-field
             :label="translations.messageSenderEmail[lang]"
+            type="email"
             v-model="campaign_credentials.email_sms_settings.email_sender_alias_email"
         ></b-text-field>
 
@@ -178,25 +181,29 @@ export default {
 
         getCampaignCredentials() {
             let campaign_data = this.$store.state.loyaltyPanel.businessProfile;
+            console.log('compign_data', campaign_data);
             this.campaign_credentials.campaign_email_notifications = campaign_data.compaignCrendential;
             this.campaign_credentials.email_sms_settings.email_sender_alias_name = campaign_data.email_sender_alias_name;
             this.campaign_credentials.email_sms_settings.secondary_email_settings = campaign_data.emailSmsSetting;
-            this.campaign_credentials.email_sms_settings.email_sender_alias_email = campaign_data.emailSmsSetting.email_sender_alias_email;
+            this.campaign_credentials.email_sms_settings.email_sender_alias_email = campaign_data.email_sender_alias_email;
 
 
         }
     },
 
-    // watch:{
-    //     ["$store.state.loyaltyPanel.businessProfile.businessProfileData"]: {
-    //         immediate: true,
-    //         handler(val) {
-    //             this.campaign_credentials.campaign_email_notifications = val.campaign_email_notifications;
-    //             this.campaign_credentials.email_sms_settings.email_sender_alias_name = val.email_sms_settings.email_sender_alias_name;
-    //             this.campaign_credentials.email_sms_settings.secondary_email_settings = val.email_sms_settings.secondary_email_settings;
-    //         }
-    //     },
-    // },
+    watch:{
+        ["$store.state.loyaltyPanel.businessProfile.businessProfileData"]: {
+
+            handler(val) {
+                console.log(val);
+                this.campaign_credentials.campaign_email_notifications = val.campaign_email_notifications;
+                this.campaign_credentials.email_sms_settings.email_sender_alias_name = val.email_sms_settings.email_sender_alias_name;
+                this.campaign_credentials.email_sms_settings.secondary_email_settings = val.email_sms_settings.secondary_email_settings;
+                this.campaign_credentials.email_sms_settings.email_sender_alias_email = val.email_sms_settings.email_sender_alias_email;
+
+            }
+        },
+    },
     mounted() {
         this.getCampaignCredentials();
     }

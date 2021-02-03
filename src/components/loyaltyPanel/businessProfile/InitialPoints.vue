@@ -174,6 +174,14 @@ export default {
 
         }
     },
+    watch:{
+        ["$store.state.loyaltyPanel.businessProfile.businessProfileData"]: {
+
+            handler(val) {
+                this.init_user_point = val.init_user_points
+            }
+        },
+    },
 
     mounted: function(){
        this.getInitialPoints();
