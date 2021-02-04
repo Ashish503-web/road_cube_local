@@ -6,9 +6,25 @@ export default {
     state: () => ({
         gifts: [],
         giftCategories: [],
-        gift: {},
-        deleteDialog: false
+        gift: '',
+        deleteDialog: false,
+        closeForm: false
     }),
+
+    getters:{
+        getGiftCategories(state){
+            return state.giftCategories;
+        },
+        getDeleteDialog(state){
+            return state.deleteDialog;
+        },
+        getGift(state){
+            return state.gift;
+        },
+        getCloseForm(state){
+            return state.closeForm;
+        }
+    },
 
     mutations: {
         setGifts(state, payload) {
@@ -22,14 +38,16 @@ export default {
         },
         setDeleteDialog(state, payload) {
             state.deleteDialog = payload;
+        },
+        setCloseForm(state, payload) {
+            state.closeForm = payload;
         }
     },
 
     actions: {
-        async getGifts({ commit }) {
+        async fetchGifts({ commit }) {
             try {
                 commit("setLoading", true, { root: true });
-
                 const { data } = await CatalogManagement.get();
                 const gifts = data.data.gifts;
                 commit("setGifts", gifts);
@@ -39,10 +57,9 @@ export default {
             }
         },
 
-        async getGiftCategories({ commit }) {
+        async fetchGiftCategories({ commit }) {
             try {
                 commit("setLoading", true, { root: true });
-
                 const { data } = await CatalogManagement.getCategories();
                 const giftCategories = data.data.gift_categories;
                 commit("setGiftCategories", giftCategories);
@@ -52,10 +69,9 @@ export default {
             }
         },
 
-        async getGiftData({ commit }, id) {
+        async fetchGiftData({ commit }, id) {
             try {
                 commit("setLoading", true, { root: true });
-
                 const { data } = await CatalogManagement.getGift(id);
                 const gift = data.data;
                 commit("setGiftData", gift);
@@ -69,26 +85,97 @@ export default {
             try {
                 commit("setLoading", true, { root: true });
 
-                await CatalogManagement.create(body);
+                const name = {
+                    "en": body.name.en || body.name.el || body.name.it,
+                    "el": body.name.el || body.name.en || body.name.it,
+                    "it": body.name.it || body.name.en || body.name.el
+                };
+                const item = {
+                    "name": name,
+                    "bg_color": body.bg_color,
+                    "text_color": body.text_color
+                };
+                const {data} = await CatalogManagement.create(item);
+                if(body.upload){
+                    const id = data.data.gift_category.gift_category_id;
+                    const fd = new FormData();
+                    fd.append("image", body.upload);
+                    await CatalogManagement.uploadImage(id, fd);
+                }
 
-                dispatch("getGifts");
+                dispatch("fetchGiftCategories");
                 commit("setLoading", false, { root: true });
+                commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully Created a new category!"
+                    },
+                    {root: true}
+                );
+                commit("setCloseForm", true);
+                setTimeout(
+                    () => commit("setCloseForm", false),
+                    10
+                );
             } catch (ex) {
                 commit("setLoading", false, { root: true });
+                commit("setErrorMessage",
+                    ex.response.data.message, { root: true }
+                );
+                setTimeout(
+                    () => commit("setErrorMessage", "", { root: true }),
+                    5000
+                );
             }
         },
 
         async update({ commit, dispatch }, body) {
             try {
-                console.log(body, "body");
                 commit("setLoading", true, { root: true });
-
-                await CatalogManagement.update(body.gift_id, body);
-
-                dispatch("getGifts");
-                commit("setLoading", false, { root: true });
+                const name = {
+                    "en": body.name.en || body.name.el || body.name.it,
+                    "el": body.name.el || body.name.en || body.name.it,
+                    "it": body.name.it || body.name.en || body.name.el
+                };
+                const item = {
+                    "name": name,
+                    "bg_color": body.bg_color,
+                    "text_color": body.text_color,
+                    "image": body.image
+                };
+                const id = body.gift_category_id;
+                await CatalogManagement.update(id, item);
+                if(body.upload){
+                    const fd = new FormData();
+                    fd.append("image", body.upload);
+                    await CatalogManagement.uploadImage(id, fd);
+                }
+                dispatch("fetchGiftCategories");
+                commit("setLoading", false, { root: true });commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "You have successfully Updated a category!"
+                    },
+                    {root: true}
+                );
+                commit("setCloseForm", true);
+                setTimeout(
+                    () => commit("setCloseForm", false),
+                    10
+                );
             } catch (ex) {
                 commit("setLoading", false, { root: true });
+                commit("setErrorMessage",
+                    ex.response.data.message, { root: true }
+                );
+                setTimeout(
+                    () => commit("setErrorMessage", "", { root: true }),
+                    5000
+                );
             }
         },
 
@@ -98,9 +185,18 @@ export default {
 
                 await CatalogManagement.delete(id);
 
-                dispatch("getGifts");
+                dispatch("fetchGiftCategories");
                 commit("setDeleteDialog", false);
                 commit("setLoading", false, { root: true });
+                commit("setLoading", false, { root: true });commit(
+                    "setNotification",
+                    {
+                        show: true,
+                        type: "success",
+                        text: "The Category is successfully deleted!"
+                    },
+                    {root: true}
+                );
             } catch (ex) {
                 commit("setLoading", false, { root: true });
             }

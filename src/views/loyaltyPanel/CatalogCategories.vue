@@ -32,7 +32,7 @@
                     class="text-capitalize d-flex mx-auto mx-sm-0"
                     depressed
                     v-text="translations.addCategory[lang]"
-                    @click="dialog = true"
+                    @click="addItem"
                 ></v-btn>
 
                 <v-spacer></v-spacer>
@@ -55,7 +55,7 @@
                                 color="yellow darken-3"
                                 icon
                                 v-on="on"
-                                @click="myFunc(item)"
+                                @click="editItem(item)"
                             >
                                 <v-icon
                                     v-text="icons.mdiPencilOutline"
@@ -75,7 +75,12 @@
                                 color="red"
                                 icon
                                 v-on="on"
-                                @click="deleteDialog = true"
+                                @click="
+                                () => {
+                                    gift = item;
+                                    deleteDialog = true;
+                                }
+                            "
                             >
                                 <v-icon v-text="icons.mdiClose"></v-icon>
                             </v-btn>
@@ -90,15 +95,35 @@
             </v-data-table>
 
             <v-dialog v-model="dialog" max-width="500" scrollable>
-                <CategoryForm @cancel="dialog = false" />
+                <CategoryForm @back="dialog = false" :item=newitem :mode=mode />
             </v-dialog>
+
+            <v-dialog v-model="deleteDialog" max-width="500">
+            <b-card
+                type="delete"
+                title="Delete Category"
+                :submit-text="{ el: '', en: 'delete', it: '' }"
+                :loading="loading"
+                :error-message="errorMessage"
+                @cancel="deleteDialog = false"
+                @submit="deleteItem(gift.gift_category_id)"
+            >
+                <div class="subtitle-1 font-weight-medium pt-2 px-2">
+                    Are you sure you want to delete
+                    <span class="font-weight-bold text--primary" v-if="gift">{{
+                        gift.name[lang]
+                    }}</span
+                    >?
+                </div>
+            </b-card>
+        </v-dialog>
         </v-sheet>
     </v-container>
 </template>
 
 <script>
 import { mdiPencilOutline, mdiClose } from "@mdi/js";
-import { mapMutations } from "vuex";
+import { mapMutations, mapGetters, mapActions, mapState } from "vuex";
 
 import CategoryForm from "@/components/loyaltyPanel/catalogCategories/CategoryForm.vue";
 import translations from "@/utils/translations/loyaltyPanel/catalogCategories";
@@ -112,49 +137,56 @@ export default {
 
     data: () => ({
         icons: { mdiPencilOutline, mdiClose },
-        items: [
-            {
-                categoryName: "Ένδυση, Υποδήματα, Αξεσουάρ",
-                fontColor: "#000000",
-                backgroundColor: "#ff0000",
-                english: 3123,
-                italian: 3123
-            }
-        ],
+        newitem: {},
+        mode: 0,
         itemsPerPageOptions: [10, 25, 50, 100],
         dialog: false
     }),
-
+    mounted(){
+        this.fetchGiftCategories();
+    },
     computed: {
+        ...mapState(["loading", "errorMessage"]),
+        ...mapGetters({
+            getGiftCategories: 'loyaltyPanel/catalogManagement/getGiftCategories',
+            getDeleteDialog: 'loyaltyPanel/catalogManagement/getDeleteDialog',
+            getGift: 'loyaltyPanel/catalogManagement/getGift'
+        }),
         lang() {
             return this.$route.params.lang;
         },
-
+        items(){
+            let items = [];
+            for(let category of this.getGiftCategories){
+                items.push({
+                    gift_category_id: category.gift_category_id,
+                    name: category.name,
+                    nameToShow: category.name[this.lang],
+                    text_color: category.text_color,
+                    bg_color: category.bg_color,
+                    image: category.image,
+                    upload: null,
+                });
+            }
+            return items;
+        },
         headers() {
             return [
                 {
                     text: this.translations.categoryName[this.lang],
-                    value: "categoryName"
+                    value: "nameToShow"
                 },
                 {
                     text: this.translations.fontColor[this.lang],
-                    value: "fontColor"
+                    value: "text_color"
                 },
                 {
                     text: this.translations.backgroundColor[this.lang],
-                    value: "backgroundColor"
+                    value: "bg_color"
                 },
                 {
                     text: this.translations.imageCategory[this.lang],
-                    value: "imageCategory"
-                },
-                {
-                    text: this.translations.english[this.lang],
-                    value: "english"
-                },
-                {
-                    text: this.translations.italian[this.lang],
-                    value: "italian"
+                    value: "image"
                 },
                 {
                     text: this.translations.actions[this.lang],
@@ -162,20 +194,56 @@ export default {
                 }
             ];
         },
+        gift: {
+            get() {
+                return this.getGift;
+            },
 
+            set(val) {
+                this.setGiftData(val);
+            },
+        },
         deleteDialog: {
             get() {
-                return this.$store.state.loyaltyPanel.userRights.deleteDialog;
+                return this.getDeleteDialog;
             },
 
             set(val) {
                 this.setDeleteDialog(val);
             }
-        }
+        },
     },
 
     methods: {
-        ...mapMutations("loyaltyPanel/userRights", ["setDeleteDialog"])
+        ...mapMutations("loyaltyPanel/catalogManagement", [
+            "setDeleteDialog",
+            'setGiftData'
+        ]),
+        ...mapActions({
+            fetchGiftCategories: "loyaltyPanel/catalogManagement/fetchGiftCategories",
+            deleteItem: "loyaltyPanel/catalogManagement/delete"
+        }),
+        addItem(){
+            this.dialog = true;
+            this.mode = 0;
+            this.newitem = {
+                name: {
+                    'el': '',
+                    'en': '',
+                    'it': ''
+                },
+                text_color: "#000000",
+                bg_color: "#FFFFFF",
+                image: '',
+                upload: null,
+                gift_category_id: undefined
+            };
+        },
+        editItem(item){
+            this.mode = 1;
+            this.dialog = true;
+            this.newitem = item;
+        }
     }
 };
 </script>

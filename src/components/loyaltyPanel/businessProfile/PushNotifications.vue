@@ -68,7 +68,6 @@ export default {
         ]),
          getPushNotification(){
              let push_notification_data = this.$store.state.loyaltyPanel.businessProfile.pushNotifications;
-             console.log('push_notification', push_notification_data)
              this.push_notification = push_notification_data
 
          }
